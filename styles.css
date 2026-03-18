@@ -6,7 +6,12 @@
     --color-accent-dim: #7a6340;
     --color-text: #e8e0d0;
     --color-text-muted: #9e9484;
+    --color-text-dark: #111111;
     --color-link: #c8a96e;
+    --matrix-1: rgba(122, 99, 64, 0.18);
+    --matrix-2: rgba(122, 99, 64, 0.34);
+    --matrix-3: rgba(200, 169, 110, 0.5);
+    --matrix-4: rgba(200, 169, 110, 0.78);
     --font-serif: 'Georgia', 'Times New Roman', serif;
     --font-mono: 'Courier New', monospace;
 }
@@ -273,6 +278,7 @@ p.wide { max-width: none; }
 .index-table td:first-child { color: var(--color-accent-dim); font-family: var(--font-mono); }
 .index-table a { color: var(--color-link); text-decoration: none; }
 .index-table a:hover { text-decoration: underline; }
+.index-table tbody tr:hover { background: rgba(255, 255, 255, 0.03); }
 
 /* ── NORMAS TABLE ── */
 .normas-table {
@@ -303,6 +309,95 @@ p.wide { max-width: none; }
     font-family: var(--font-mono);
     font-size: 0.75rem;
     white-space: nowrap;
+}
+.normas-table tbody tr:hover { background: rgba(255, 255, 255, 0.03); }
+
+/* ── MATRIX VISUALIZATION ── */
+.matrix-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    padding: 1.5rem;
+    margin: 1.75rem 0;
+}
+.matrix-card h3 { margin-top: 0; }
+.matrix-description {
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+    max-width: 72ch;
+}
+.matrix-scroll { overflow-x: auto; }
+.matrix-scroll:focus-visible {
+    outline: 2px solid var(--color-accent-dim);
+    outline-offset: 4px;
+}
+.matrix-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 560px;
+}
+.matrix-table th {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    text-align: center;
+    padding: 0 0.25rem;
+}
+.matrix-table th[scope="row"] {
+    text-align: left;
+    font-size: 0.7rem;
+    color: var(--color-text);
+    letter-spacing: 0.08em;
+    text-transform: none;
+}
+.matrix-table td {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    text-align: center;
+    border: 1px solid var(--color-border);
+    padding: 0.6rem 0.4rem;
+    background: transparent;
+    color: var(--color-text);
+}
+.matrix-table td[data-level="1"] { background: var(--matrix-1); color: var(--color-text-muted); }
+.matrix-table td[data-level="2"] { background: var(--matrix-2); }
+.matrix-table td[data-level="3"] { background: var(--matrix-3); }
+.matrix-table td[data-level="4"] { background: var(--matrix-4); color: var(--color-text-dark); font-weight: bold; }
+.matrix-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin: 0.75rem 0 0;
+    padding: 0;
+    list-style: none;
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+}
+.legend-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+.legend-swatch {
+    width: 0.75rem;
+    height: 0.75rem;
+    border: 1px solid var(--color-border);
+    border-radius: 2px;
+    background: transparent;
+}
+.legend-swatch.level-1 { background: var(--matrix-1); }
+.legend-swatch.level-2 { background: var(--matrix-2); }
+.legend-swatch.level-3 { background: var(--matrix-3); }
+.legend-swatch.level-4 { background: var(--matrix-4); }
+.matrix-note {
+    margin-top: 0.75rem;
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
 }
 
 /* ── RESEARCH LINES ── */
@@ -405,7 +500,12 @@ body.high-contrast {
     --color-accent-dim: #ccaa33;
     --color-text: #ffffff;
     --color-text-muted: #dddddd;
+    --color-text-dark: #000000;
     --color-link: #ffdd77;
+    --matrix-1: rgba(255, 221, 119, 0.25);
+    --matrix-2: rgba(255, 221, 119, 0.45);
+    --matrix-3: rgba(255, 221, 119, 0.62);
+    --matrix-4: rgba(255, 221, 119, 0.85);
 }
 
 /* ── ACTIVE NAV ITEM ── */
