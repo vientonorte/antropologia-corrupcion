@@ -1,6 +1,33 @@
-# Estado del Arte
+# Estado del Arte y Marco Teórico
 
-Esta carpeta contiene los documentos correspondientes al Estado del Arte del proyecto de investigación sobre Antropología y Corrupción.
+Esta carpeta contiene los documentos correspondientes al Estado del Arte y Marco Teórico de la tesis doctoral sobre Antropología y Corrupción.
+
+## Posicionamiento en la literatura
+
+El estado del arte articula tres tradiciones analíticas que, hasta ahora, han sido abordadas de forma separada en la literatura especializada:
+
+1. **Antropología política de la corrupción** — el estudio de cómo las instituciones producen, gestionan y naturalizan la opacidad. Se dialoga con los trabajos de Akhil Gupta (2012) sobre la burocracia como productora de arbitrariedad, y con las contribuciones de Didier Fassin (2015) sobre las economías morales del Estado.
+2. **Estudios de periodismo de investigación** — metodologías para documentar el crimen organizado y la corrupción institucional, con énfasis en la tradición latinoamericana del periodismo de investigación (CIPER Chile, GIJN).
+3. **Etnografía de instituciones y estudios de ciencia y tecnología (STS)** — el análisis de prácticas organizacionales desde dentro, en diálogo con la teoría del actor-red (ANT) de Bruno Latour (2005) y los estudios de infraestructura de Susan Leigh Star (1999).
+
+## Vacío en la literatura y contribución
+
+Si bien existe abundante literatura sobre corrupción institucional en América Latina (Mujica, 2011; Quiroz, 2013) y sobre etnografía de datos y gobernanza digital (Zuboff, 2019; Couldry & Mejias, 2019), el cruce entre ambos campos permanece inexplorado. Esta tesis propone el concepto de *mistranslation institucionalizada* como categoría analítica transversal.
+
+## Anclajes teóricos principales
+
+| Autor | Concepto | Relevancia |
+|-------|----------|------------|
+| Gupta (2012) | Burocracia y arbitrariedad | Producción institucional de opacidad |
+| Latour (2005) | Teoría del actor-red | Cadenas de traducción y mediadores |
+| Star (1999) | Infraestructura y categorías | Política embebida en sistemas técnicos |
+| Fassin (2015) | Economías morales | Dimensión moral del funcionamiento estatal |
+| Tsing (2005) | Fricción | Violencia en la traducción entre sistemas |
+| Marcus (1995) | Etnografía multi-situada | Diseño metodológico |
+| Riles (2006) | Documentos como artefactos | Materialidad de la norma |
+| Callon (1986) | Traducción y redes | Sociología de la traducción |
+| Derrida (1995) | Mal de archivo | Crítica del archivo institucional |
+| Rivera Cusicanqui (2010) | Colonialismo interno | Epistemicidio y despojo territorial |
 
 ## Contenido
 
@@ -20,13 +47,4 @@ Esta carpeta contiene los documentos correspondientes al Estado del Arte del pro
 
 ### Cartografía e Historia Territorial
 - **Distribución de Títulos de Merced — Región de Los Ríos** (`Distribución de titulos de merced en Región de los ríos.png`)  
-  Mapa de la distribución histórica de los títulos de merced asignados a comunidades mapuche en la Región de Los Ríos durante el proceso de radicación indígena (fines s. XIX — inicios s. XX).
-
-## Contexto teórico
-
-El estado del arte articula tres tradiciones analíticas:
-1. **Antropología política de la corrupción** — cómo las instituciones producen y gestionan la opacidad.
-2. **Estudios de periodismo de investigación** — metodologías para documentar el crimen organizado y la corrupción institucional.
-3. **Etnografía de instituciones** — el análisis de prácticas organizacionales desde dentro.
-
-Los marcos normativos en tensión incluyen la Ley 19.628 de Protección de Datos, la nueva Ley de Datos 2024, el Convenio OIT 169 y las garantías constitucionales del artículo 11 sobre privacidad y honor.
+  Mapa de la distribución histórica de los títulos de merced asignados a comunidades mapuche durante el proceso de radicación indígena (1884–1929). Documenta el resultado material de la traducción forzada del sistema comunal al régimen de propiedad privada.
