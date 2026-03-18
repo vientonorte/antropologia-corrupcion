@@ -6,6 +6,7 @@
     --color-accent-dim: #7a6340;
     --color-text: #e8e0d0;
     --color-text-muted: #9e9484;
+    --color-text-dark: #111111;
     --color-link: #c8a96e;
     --matrix-1: rgba(122, 99, 64, 0.18);
     --matrix-2: rgba(122, 99, 64, 0.34);
@@ -332,8 +333,7 @@ p.wide { max-width: none; }
 }
 .matrix-table {
     width: 100%;
-    border-collapse: separate;
-    border-spacing: 0.4rem 0.45rem;
+    border-collapse: collapse;
     min-width: 560px;
 }
 .matrix-table th {
@@ -357,20 +357,21 @@ p.wide { max-width: none; }
     font-size: 0.8rem;
     text-align: center;
     border: 1px solid var(--color-border);
-    border-radius: 8px;
     padding: 0.6rem 0.4rem;
-    background: var(--matrix-1);
+    background: transparent;
     color: var(--color-text);
 }
 .matrix-table td[data-level="1"] { background: var(--matrix-1); color: var(--color-text-muted); }
 .matrix-table td[data-level="2"] { background: var(--matrix-2); }
 .matrix-table td[data-level="3"] { background: var(--matrix-3); }
-.matrix-table td[data-level="4"] { background: var(--matrix-4); color: #111111; font-weight: bold; }
+.matrix-table td[data-level="4"] { background: var(--matrix-4); color: var(--color-text-dark); font-weight: bold; }
 .matrix-legend {
     display: flex;
     flex-wrap: wrap;
     gap: 0.75rem;
-    margin-top: 0.75rem;
+    margin: 0.75rem 0 0;
+    padding: 0;
+    list-style: none;
     font-family: var(--font-mono);
     font-size: 0.6rem;
     letter-spacing: 0.12em;
@@ -387,7 +388,7 @@ p.wide { max-width: none; }
     height: 0.75rem;
     border: 1px solid var(--color-border);
     border-radius: 2px;
-    background: var(--matrix-1);
+    background: transparent;
 }
 .legend-swatch.level-1 { background: var(--matrix-1); }
 .legend-swatch.level-2 { background: var(--matrix-2); }
@@ -499,6 +500,7 @@ body.high-contrast {
     --color-accent-dim: #ccaa33;
     --color-text: #ffffff;
     --color-text-muted: #dddddd;
+    --color-text-dark: #000000;
     --color-link: #ffdd77;
     --matrix-1: rgba(255, 221, 119, 0.25);
     --matrix-2: rgba(255, 221, 119, 0.45);
