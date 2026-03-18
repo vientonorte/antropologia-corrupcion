@@ -7,6 +7,11 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+<!-- Reading progress bar -->
+<div id="progress-bar" role="progressbar" aria-label="Progreso de lectura"></div>
+
+<!-- High contrast toggle -->
+<button class="hc-toggle" id="hc-toggle" aria-pressed="false" aria-label="Activar modo alto contraste">HC</button>
 
 <header>
     <p class="label">Repositorio de Investigación · Chile</p>
@@ -25,6 +30,12 @@
     <a href="#materiales">Materiales Visuales</a>
 </nav>
 
+<!-- Search bar -->
+<div class="search-bar" role="search">
+    <input type="search" id="search-input" placeholder="Buscar documentos, secciones, temas…" aria-label="Buscar en el archivo">
+    <span id="search-count" aria-live="polite"></span>
+</div>
+
 <main>
 
     <!-- PRESENTACIÓN -->
@@ -38,15 +49,22 @@
 
         <p>El proyecto cruza tres ejes principales: la <strong>gobernanza de datos y privacidad</strong> en instituciones financieras, la <strong>violación de derechos de pueblos indígenas</strong> consagrados en el Convenio 169 de la OIT, y las <strong>metodologías del periodismo de investigación</strong> como herramienta de denuncia y documentación.</p>
 
-        <div class="tags">
-            <span class="tag">Antropología</span>
-            <span class="tag">Corrupción</span>
-            <span class="tag">Chile</span>
-            <span class="tag">Derechos Indígenas</span>
-            <span class="tag">Periodismo de Investigación</span>
-            <span class="tag">Crimen Organizado</span>
-            <span class="tag">Etnografía</span>
-            <span class="tag">Gobernanza de Datos</span>
+        <div class="tags" role="group" aria-label="Filtrar por tema">
+            <button class="tag" data-filter="antropologia">Antropología</button>
+            <button class="tag" data-filter="corrupcion">Corrupción</button>
+            <button class="tag" data-filter="chile">Chile</button>
+            <button class="tag" data-filter="derechos-indigenas">Derechos Indígenas</button>
+            <button class="tag" data-filter="periodismo">Periodismo de Investigación</button>
+            <button class="tag" data-filter="crimen">Crimen Organizado</button>
+            <button class="tag" data-filter="etnografia">Etnografía</button>
+            <button class="tag" data-filter="datos">Gobernanza de Datos</button>
+        </div>
+
+        <div class="section-stats" aria-label="Estadísticas del archivo">
+            <div class="stat"><span class="stat-value">2</span><span class="stat-label">Documentos PDF</span></div>
+            <div class="stat"><span class="stat-value">4</span><span class="stat-label">Materiales visuales</span></div>
+            <div class="stat"><span class="stat-value">5</span><span class="stat-label">Ejes temáticos</span></div>
+            <div class="stat"><span class="stat-value">150</span><span class="stat-label">Págs. etnografía</span></div>
         </div>
 
         <h3>Índice general de materiales</h3>
@@ -119,14 +137,17 @@
         <p>El CIPER (Centro de Investigación Periodística) ha desarrollado metodologías específicas para la investigación del crimen organizado en América Latina. Su enfoque integra la revisión documental exhaustiva, el análisis de redes de poder y la corroboración de fuentes múltiples.</p>
 
         <div id="journalism-img" class="image-full">
-            <img src="Introduction Journalism.png" alt="Introduction to Journalism — material de referencia metodológica">
+            <img src="Introduction Journalism.png" alt="Introduction to Journalism — material de referencia metodológica"
+                 data-lightbox="true" data-caption="Introduction Journalism — Material de referencia metodológica · CIPER" tabindex="0" role="button" aria-label="Ver imagen ampliada: Introduction Journalism">
             <p class="img-caption">Introduction Journalism.png — Material de referencia metodológica para investigación periodística</p>
         </div>
 
         <div class="doc-grid" style="margin-top:2rem">
-            <a id="ciper-doc" class="doc-card" href="CIPER- Clase teórico prática - Investigación Crimen Organizado.pdf" target="_blank">
+            <a id="ciper-doc" class="doc-card" href="CIPER- Clase teórico prática - Investigación Crimen Organizado.pdf" target="_blank"
+               data-topics="periodismo crimen chile" data-searchtext="ciper crimen organizado periodismo investigacion chile">
                 <span class="doc-type">PDF · Periodismo de Investigación</span>
                 <span class="doc-title">CIPER — Clase Teórico-Práctica: Investigación del Crimen Organizado</span>
+                <span class="doc-abstract">Metodología para documentar redes criminales: fuentes documentales, análisis de redes de poder y corroboración de testimonios. Material didáctico del Centro de Investigación Periodística de Chile.</span>
                 <span class="doc-meta">Centro de Investigación Periodística · Chile</span>
             </a>
         </div>
@@ -135,12 +156,14 @@
         <p>El Convenio 169 de la Organización Internacional del Trabajo (OIT) establece el marco internacional de derechos de los pueblos indígenas y tribales. En Chile, la tensión entre este convenio —ratificado en 2008— y la legislación nacional ha sido uno de los ejes centrales del conflicto territorial en la Araucanía y la Región de Los Ríos.</p>
 
         <div id="oit-img" class="image-full">
-            <img src="UX RG - Desglose de derechos consagrados por el OIT 169.jpg" alt="Desglose de derechos consagrados por el Convenio OIT 169">
+            <img src="UX RG - Desglose de derechos consagrados por el OIT 169.jpg" alt="Desglose de derechos consagrados por el Convenio OIT 169"
+                 data-lightbox="true" data-caption="Desglose de derechos — Convenio OIT 169 · Elaboración: R. Gaete" tabindex="0" role="button" aria-label="Ver imagen ampliada: derechos OIT 169">
             <p class="img-caption">UX RG — Desglose de derechos consagrados por el Convenio OIT 169 · Elaboración: R. Gaete</p>
         </div>
 
         <div id="plurinacional-img" class="image-full" style="margin-top:1.5rem">
-            <img src="UX RG - ¿Comparativa Eº Plurinacional del marco legal vigente en Chile_.jpg" alt="Comparativa Estado Plurinacional vs marco legal vigente en Chile">
+            <img src="UX RG - ¿Comparativa Eº Plurinacional del marco legal vigente en Chile_.jpg" alt="Comparativa Estado Plurinacional vs marco legal vigente en Chile"
+                 data-lightbox="true" data-caption="Comparativa Eº Plurinacional / marco legal vigente en Chile · R. Gaete" tabindex="0" role="button" aria-label="Ver imagen ampliada: comparativa estado plurinacional">
             <p class="img-caption">UX RG — ¿Comparativa Eº Plurinacional del marco legal vigente en Chile? · Elaboración: R. Gaete</p>
         </div>
 
@@ -148,7 +171,8 @@
         <p>Los títulos de merced fueron la forma mediante la cual el Estado chileno asignó tierras a las comunidades mapuche a fines del siglo XIX y principios del XX, luego de la campaña militar de ocupación. La distribución de estos títulos en la Región de Los Ríos ilustra el proceso de reducción territorial que está en la base del conflicto contemporáneo.</p>
 
         <div id="merced-img" class="image-full" style="margin-top:1rem">
-            <img src="Distribución de titulos de merced en Región de los ríos.png" alt="Distribución de títulos de merced en la Región de Los Ríos">
+            <img src="Distribución de titulos de merced en Región de los ríos.png" alt="Distribución de títulos de merced en la Región de Los Ríos"
+                 data-lightbox="true" data-caption="Distribución de títulos de merced — Región de Los Ríos · Fuente cartográfica de archivo" tabindex="0" role="button" aria-label="Ver imagen ampliada: títulos de merced">
             <p class="img-caption">Distribución de títulos de merced en la Región de Los Ríos · Fuente cartográfica de archivo</p>
         </div>
     </section>
@@ -179,7 +203,8 @@
             <cite>SURA Compilado — Estrategia Gaona · Etnografía de Caso, p. 4</cite>
         </div>
 
-        <h3>Hallazgos principales de la etnografía digital</h3>
+        <h3 class="collapsible-trigger" aria-expanded="true" aria-controls="sura-findings">Hallazgos principales de la etnografía digital</h3>
+        <div id="sura-findings" class="collapsible-body">
         <ul class="findings">
             <li>Persistencia de conexiones heredadas a BD TN_PERFIL que vulneraban la finalidad previsional original de los datos.</li>
             <li>Falta de trazabilidad y consentimiento en flujos de datos entre AFP y SURA Investments.</li>
@@ -187,18 +212,22 @@
             <li>Ausencia de mandato formal de clientes para el traspaso de datos previsionales a fines de asesoría de inversiones.</li>
             <li>Efectividad demostrada de las intervenciones UX para corregir los flujos y garantizar trazabilidad normativa.</li>
         </ul>
+        </div><!-- /.collapsible-body#sura-findings -->
 
         <div id="sura-doc">
             <div class="doc-grid">
-                <a class="doc-card" href="SURA_Compilado_Estrategia_Gaona_Complete.pdf" target="_blank">
+                <a class="doc-card" href="SURA_Compilado_Estrategia_Gaona_Complete.pdf" target="_blank"
+                   data-topics="etnografia datos chile" data-searchtext="sura investments estrategia gaona ux datos privacidad afp etnografia digital">
                     <span class="doc-type">PDF · 150 páginas · Etnografía Digital</span>
                     <span class="doc-title">Documento Estratégico y Etnografía de Caso: Estrategia Gaona — SURA Investments, Estrategia Digital &amp; Gobernanza de Datos</span>
+                    <span class="doc-abstract">Etnografía digital de los flujos de datos entre SURA y su AFP vinculada. Documenta vulneraciones a la Ley 19.628 y propone un marco de gobernanza orientado a la privacidad por diseño.</span>
                     <span class="doc-meta">Autor: Rodrigo Gaete Gaona (UX Lead) · Compilado: 2025-10-09</span>
                 </a>
             </div>
         </div>
 
-        <h3>Estructura del documento etnográfico</h3>
+        <h3 class="collapsible-trigger" aria-expanded="true" aria-controls="sura-structure">Estructura del documento etnográfico</h3>
+        <div id="sura-structure" class="collapsible-body">
         <ul class="findings">
             <li>Resumen ejecutivo del caso AFP–SURA</li>
             <li>Etnografía de caso: metodología y hallazgos</li>
@@ -209,18 +238,47 @@
             <li>Buenas prácticas y checklist de accesibilidad (WCAG)</li>
             <li>Anexos (documentos originales y evidencias)</li>
         </ul>
+        </div><!-- /.collapsible-body#sura-structure -->
     </section>
 
     <!-- ENSAYO: TRADUCCIÓN DE SABERES -->
-    <section id="ensayo">
+    <section id="ensayo" data-topics="corrupcion antropologia datos derechos-indigenas chile">
         <div class="section-header">
             <span class="section-number">03</span>
             <h2>Ensayo: Traducción de Saberes</h2>
         </div>
 
+        <div class="abstract">
+            <span class="abstract-label">Resumen del ensayo</span>
+            Este ensayo propone que la corrupción institucional puede entenderse como una <strong>falla sistemática en la traducción</strong> entre marcos normativos, lenguajes técnicos y prácticas organizacionales. A partir de dos casos —la vulneración de datos en SURA Investments y el incumplimiento del Convenio 169 OIT en Chile— se argumenta que la opacidad y el despojo no son efectos colaterales sino resultados estructurales de la mistranslation institucionalizada.
+        </div>
+
+        <h3 class="collapsible-trigger" aria-expanded="true" aria-controls="ensayo-args">Argumentos centrales del ensayo</h3>
+        <div id="ensayo-args" class="collapsible-body">
+        <ol class="key-args">
+            <li>
+                <strong>La corrupción como problema de traducción</strong>
+                Las vulneraciones normativas no son solo infracciones: son brechas entre el lenguaje del derecho y el lenguaje de la arquitectura técnica o el diseño organizacional.
+            </li>
+            <li>
+                <strong>El despojo territorial como traducción forzada</strong>
+                El proceso de radicación mapuche (1884–1929) operó como una traducción coercitiva del sistema comunal de uso de la tierra al lenguaje jurídico de la propiedad privada individual, con pérdidas masivas de territorio.
+            </li>
+            <li>
+                <strong>La mistranslation como dispositivo de poder</strong>
+                Las instituciones explotan la incomprensibilidad técnica y jurídica para mantener la opacidad. La complejidad no es un defecto del sistema sino su mecanismo de reproducción.
+            </li>
+            <li>
+                <strong>El contra-archivo como traducción crítica</strong>
+                Frente a la mistranslation institucional, el contra-archivo propone un trabajo de re-traducción: poner en circulación los documentos y testimonios que permiten reconstruir lo que los marcos oficiales ocultan.
+            </li>
+        </ol>
+        </div><!-- /.collapsible-body#ensayo-args -->
+
         <p>El ensayo sobre <em>Traducción de Saberes</em> interroga los mecanismos mediante los cuales el conocimiento técnico y normativo es traducido —o <em>mistranslated</em>— entre distintos campos: el derecho, la informática, el diseño, la etnografía y el discurso público. La corrupción, desde esta perspectiva, opera también como una <strong>falla en la traducción entre marcos institucionales</strong>.</p>
 
-        <h3>La corrupción como problema de traducción</h3>
+        <h3 class="collapsible-trigger" aria-expanded="true" aria-controls="ensayo-corrupcion">La corrupción como problema de traducción</h3>
+        <div id="ensayo-corrupcion" class="collapsible-body">
         <p>Cuando la Ley 19.628 de Protección de Datos establece que el tratamiento de datos personales requiere autorización expresa del titular, y una empresa como SURA Investments opera sistemas que consultan directamente la base de datos de una AFP afiliada sin ese consentimiento, no se trata únicamente de una infracción legal: es una falla de traducción entre el lenguaje del derecho y el lenguaje de la arquitectura de sistemas.</p>
 
         <p>De manera análoga, cuando el Estado chileno ratificó el Convenio 169 de la OIT (2008) pero no implementa mecanismos efectivos de consulta previa a los pueblos indígenas, estamos ante otra falla de traducción: entre el compromiso internacional y la práctica institucional.</p>
@@ -229,8 +287,10 @@
             "La solución garantizó la separación de orígenes de datos, redujo errores normativos y mejoró la satisfacción del cliente según métricas internas."
             <cite>SURA Compilado — Estrategia Gaona · Resumen Ejecutivo, p. 3</cite>
         </div>
+        </div><!-- /.collapsible-body#ensayo-corrupcion -->
 
-        <h3>Marcos normativos en tensión</h3>
+        <h3 class="collapsible-trigger" aria-expanded="true" aria-controls="normas-table-body">Marcos normativos en tensión</h3>
+        <div id="normas-table-body" class="collapsible-body">
         <table class="normas-table">
             <thead>
                 <tr>
@@ -267,6 +327,7 @@
                 </tr>
             </tbody>
         </table>
+        </div><!-- /.collapsible-body#normas-table-body -->
 
         <h3>Traducción de saberes en el contexto indígena</h3>
         <p>El proceso de radicación mapuche (1884–1929) que produjo los títulos de merced es también legible como una operación de traducción forzada: el sistema comunal de uso de la tierra fue "traducido" al lenguaje jurídico de la propiedad privada individual, con pérdidas masivas de territorio y de formas de vida en el proceso. La cartografía de la Región de Los Ríos documenta el resultado de esa traducción violenta.</p>
@@ -342,14 +403,18 @@
         <p>Repositorio de documentos de investigación disponibles en este archivo. Los documentos pueden abrirse directamente desde el navegador.</p>
 
         <div class="doc-grid">
-            <a class="doc-card" href="SURA_Compilado_Estrategia_Gaona_Complete.pdf" target="_blank">
+            <a class="doc-card" href="SURA_Compilado_Estrategia_Gaona_Complete.pdf" target="_blank"
+               data-topics="etnografia datos chile" data-searchtext="sura investments estrategia gaona ux datos privacidad afp etnografia digital">
                 <span class="doc-type">PDF · 150 páginas</span>
                 <span class="doc-title">SURA Investments — Estrategia Digital &amp; Gobernanza de Datos (Estrategia Gaona) — Compilado completo</span>
+                <span class="doc-abstract">Etnografía digital de los flujos de datos entre SURA y su AFP vinculada. Documenta vulneraciones a la Ley 19.628 y propone un marco de gobernanza orientado a la privacidad por diseño.</span>
                 <span class="doc-meta">Autor: Rodrigo Gaete Gaona · 2025</span>
             </a>
-            <a class="doc-card" href="CIPER- Clase teórico prática - Investigación Crimen Organizado.pdf" target="_blank">
+            <a class="doc-card" href="CIPER- Clase teórico prática - Investigación Crimen Organizado.pdf" target="_blank"
+               data-topics="periodismo crimen chile" data-searchtext="ciper crimen organizado periodismo investigacion chile">
                 <span class="doc-type">PDF · Periodismo de Investigación</span>
                 <span class="doc-title">CIPER — Clase Teórico-Práctica: Investigación del Crimen Organizado</span>
+                <span class="doc-abstract">Metodología para documentar redes criminales: fuentes documentales, análisis de redes de poder y corroboración de testimonios. Material didáctico del Centro de Investigación Periodística de Chile.</span>
                 <span class="doc-meta">Centro de Investigación Periodística · Chile</span>
             </a>
         </div>
@@ -365,20 +430,24 @@
         <p>Imágenes de investigación, cartografías, esquemas y materiales visuales producidos o recopilados en el marco del proyecto.</p>
 
         <div class="image-grid">
-            <div class="image-card">
-                <img src="UX RG - Desglose de derechos consagrados por el OIT 169.jpg" alt="Desglose de derechos consagrados por el OIT 169">
+            <div class="image-card" data-topics="derechos-indigenas chile" data-searchtext="oit 169 derechos indigenas mapuche convenio">
+                <img src="UX RG - Desglose de derechos consagrados por el OIT 169.jpg" alt="Desglose de derechos consagrados por el OIT 169"
+                     data-lightbox="true" data-caption="Desglose de derechos — Convenio OIT 169 · R. Gaete" tabindex="0" role="button" aria-label="Ver imagen ampliada: derechos OIT 169">
                 <p class="img-caption">Desglose de derechos — OIT 169 · R. Gaete</p>
             </div>
-            <div class="image-card">
-                <img src="UX RG - ¿Comparativa Eº Plurinacional del marco legal vigente en Chile_.jpg" alt="Comparativa Estado Plurinacional vs marco legal Chile">
+            <div class="image-card" data-topics="derechos-indigenas chile" data-searchtext="estado plurinacional marco legal chile comparativa">
+                <img src="UX RG - ¿Comparativa Eº Plurinacional del marco legal vigente en Chile_.jpg" alt="Comparativa Estado Plurinacional vs marco legal Chile"
+                     data-lightbox="true" data-caption="Comparativa Eº Plurinacional / marco legal vigente en Chile · R. Gaete" tabindex="0" role="button" aria-label="Ver imagen ampliada: comparativa estado plurinacional">
                 <p class="img-caption">Comparativa Eº Plurinacional / marco legal Chile · R. Gaete</p>
             </div>
-            <div class="image-card">
-                <img src="Distribución de titulos de merced en Región de los ríos.png" alt="Distribución de títulos de merced — Región de Los Ríos">
+            <div class="image-card" data-topics="derechos-indigenas chile" data-searchtext="titulos merced region los rios cartografia mapuche huilliche">
+                <img src="Distribución de titulos de merced en Región de los ríos.png" alt="Distribución de títulos de merced — Región de Los Ríos"
+                     data-lightbox="true" data-caption="Distribución de títulos de merced — Región de Los Ríos · Fuente cartográfica de archivo" tabindex="0" role="button" aria-label="Ver imagen ampliada: títulos de merced">
                 <p class="img-caption">Títulos de merced — Región de Los Ríos</p>
             </div>
-            <div class="image-card">
-                <img src="Introduction Journalism.png" alt="Introduction to Journalism">
+            <div class="image-card" data-topics="periodismo" data-searchtext="introduccion periodismo journalism metodologia">
+                <img src="Introduction Journalism.png" alt="Introduction to Journalism"
+                     data-lightbox="true" data-caption="Introduction to Journalism — referencia metodológica" tabindex="0" role="button" aria-label="Ver imagen ampliada: Introduction to Journalism">
                 <p class="img-caption">Introduction to Journalism — referencia metodológica</p>
             </div>
         </div>
@@ -389,6 +458,213 @@
 <footer>
     <p>Contra-Archivo — Antropología y Corrupción · Chile · Repositorio de investigación</p>
 </footer>
+
+<!-- Lightbox overlay -->
+<div class="lightbox-overlay" id="lightbox" role="dialog" aria-modal="true" aria-label="Vista ampliada de imagen">
+    <span class="lightbox-close" id="lightbox-close" aria-label="Cerrar">✕ Cerrar</span>
+    <img src="" alt="" id="lightbox-img">
+    <p class="lightbox-caption" id="lightbox-caption"></p>
+</div>
+
+<!-- Back to top -->
+<button id="back-to-top" aria-label="Volver al inicio">↑ Inicio</button>
+
+<script>
+(function () {
+    'use strict';
+
+    /* ── READING PROGRESS ── */
+    var bar = document.getElementById('progress-bar');
+    function updateProgress() {
+        var scrollTop = window.scrollY || document.documentElement.scrollTop;
+        var docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        var pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+        bar.style.width = pct.toFixed(1) + '%';
+    }
+
+    /* ── BACK TO TOP ── */
+    var btt = document.getElementById('back-to-top');
+    btt.addEventListener('click', function () {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+    function updateBtt() {
+        if (window.scrollY > 400) {
+            btt.classList.add('visible');
+        } else {
+            btt.classList.remove('visible');
+        }
+    }
+
+    window.addEventListener('scroll', function () {
+        updateProgress();
+        updateBtt();
+    }, { passive: true });
+    updateProgress();
+
+    /* ── ACTIVE NAV HIGHLIGHT ── */
+    var sections = document.querySelectorAll('main section[id]');
+    var navLinks = document.querySelectorAll('nav a[href^="#"]');
+
+    if ('IntersectionObserver' in window) {
+        var observer = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                    var id = entry.target.getAttribute('id');
+                    navLinks.forEach(function (a) {
+                        if (a.getAttribute('href') === '#' + id) {
+                            a.classList.add('active');
+                        } else {
+                            a.classList.remove('active');
+                        }
+                    });
+                }
+            });
+        }, { rootMargin: '-30% 0px -60% 0px' });
+        sections.forEach(function (s) { observer.observe(s); });
+    }
+
+    /* ── HIGH CONTRAST TOGGLE ── */
+    var hcBtn = document.getElementById('hc-toggle');
+    var hcKey = 'contra-archivo-hc';
+    if (localStorage.getItem(hcKey) === '1') {
+        document.body.classList.add('high-contrast');
+        hcBtn.setAttribute('aria-pressed', 'true');
+    }
+    hcBtn.addEventListener('click', function () {
+        var on = document.body.classList.toggle('high-contrast');
+        hcBtn.setAttribute('aria-pressed', on ? 'true' : 'false');
+        localStorage.setItem(hcKey, on ? '1' : '0');
+    });
+
+    /* ── IMAGE LIGHTBOX ── */
+    var lightbox = document.getElementById('lightbox');
+    var lbImg = document.getElementById('lightbox-img');
+    var lbCap = document.getElementById('lightbox-caption');
+    var lbClose = document.getElementById('lightbox-close');
+
+    function openLightbox(src, alt, caption) {
+        lbImg.src = src;
+        lbImg.alt = alt || '';
+        lbCap.textContent = caption || '';
+        lightbox.classList.add('visible');
+        document.body.style.overflow = 'hidden';
+        lbClose.focus();
+    }
+    function closeLightbox() {
+        lightbox.classList.remove('visible');
+        document.body.style.overflow = '';
+        lbImg.src = '';
+    }
+
+    document.querySelectorAll('img[data-lightbox]').forEach(function (img) {
+        img.addEventListener('click', function () {
+            openLightbox(img.src, img.alt, img.getAttribute('data-caption'));
+        });
+        img.addEventListener('keydown', function (e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                openLightbox(img.src, img.alt, img.getAttribute('data-caption'));
+            }
+        });
+    });
+
+    lightbox.addEventListener('click', function (e) {
+        if (e.target === lightbox || e.target === lbClose) { closeLightbox(); }
+    });
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && lightbox.classList.contains('visible')) { closeLightbox(); }
+    });
+    lbClose.addEventListener('click', closeLightbox);
+
+    /* ── COLLAPSIBLE SUBSECTIONS ── */
+    document.querySelectorAll('.collapsible-trigger').forEach(function (trigger) {
+        var targetId = trigger.getAttribute('aria-controls');
+        var body = document.getElementById(targetId);
+        if (!body) return;
+
+        trigger.addEventListener('click', function () {
+            var collapsed = body.classList.toggle('collapsed');
+            trigger.classList.toggle('collapsed', collapsed);
+            trigger.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
+        });
+    });
+
+    /* ── SEARCH & FILTER ── */
+    var searchInput = document.getElementById('search-input');
+    var searchCount = document.getElementById('search-count');
+    var filterTags = document.querySelectorAll('.tag[data-filter]');
+    var activeFilter = null;
+
+    // All searchable/filterable items: doc cards, image cards, sections
+    var filterItems = Array.from(document.querySelectorAll(
+        '.doc-card[data-topics], .image-card[data-topics]'
+    ));
+
+    function normalize(str) {
+        return (str || '').toLowerCase()
+            .normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    }
+
+    function applyFilters() {
+        var query = normalize(searchInput.value.trim());
+        var visible = 0;
+
+        filterItems.forEach(function (item) {
+            var topics = (item.getAttribute('data-topics') || '').split(' ');
+            var text = normalize(
+                (item.getAttribute('data-searchtext') || '') + ' ' +
+                (item.textContent || '')
+            );
+
+            var topicMatch = !activeFilter || topics.indexOf(activeFilter) !== -1;
+            var searchMatch = !query || text.indexOf(query) !== -1;
+
+            if (topicMatch && searchMatch) {
+                item.classList.remove('filtered-out');
+                visible++;
+            } else {
+                item.classList.add('filtered-out');
+            }
+        });
+
+        if (query || activeFilter) {
+            searchCount.textContent = visible + ' resultado' + (visible !== 1 ? 's' : '');
+        } else {
+            searchCount.textContent = '';
+        }
+    }
+
+    searchInput.addEventListener('input', applyFilters);
+
+    filterTags.forEach(function (tag) {
+        tag.addEventListener('click', function () {
+            var filter = tag.getAttribute('data-filter');
+            if (activeFilter === filter) {
+                activeFilter = null;
+                tag.classList.remove('active');
+            } else {
+                filterTags.forEach(function (t) { t.classList.remove('active'); });
+                activeFilter = filter;
+                tag.classList.add('active');
+            }
+            applyFilters();
+        });
+    });
+
+    /* ── SMOOTH SCROLL for anchor links ── */
+    document.querySelectorAll('a[href^="#"]').forEach(function (a) {
+        a.addEventListener('click', function (e) {
+            var targetId = a.getAttribute('href').slice(1);
+            var target = document.getElementById(targetId);
+            if (target) {
+                e.preventDefault();
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                history.replaceState(null, '', '#' + targetId);
+            }
+        });
+    });
+}());
+</script>
 
 </body>
 </html>
