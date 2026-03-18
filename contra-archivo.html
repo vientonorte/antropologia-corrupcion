@@ -4,308 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contra-Archivo — Antropología y Corrupción</title>
-    <style>
-        :root {
-            --color-bg: #0d0d0d;
-            --color-surface: #1a1a1a;
-            --color-border: #2e2e2e;
-            --color-accent: #c8a96e;
-            --color-accent-dim: #7a6340;
-            --color-text: #e8e0d0;
-            --color-text-muted: #9e9484;
-            --color-link: #c8a96e;
-            --font-serif: 'Georgia', 'Times New Roman', serif;
-            --font-mono: 'Courier New', monospace;
-        }
-
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-        body {
-            background: var(--color-bg);
-            color: var(--color-text);
-            font-family: var(--font-serif);
-            line-height: 1.7;
-        }
-
-        /* ── HEADER ── */
-        header {
-            border-bottom: 1px solid var(--color-border);
-            padding: 3rem 2rem 2rem;
-            text-align: center;
-        }
-        header .label {
-            font-family: var(--font-mono);
-            font-size: 0.75rem;
-            letter-spacing: 0.25em;
-            color: var(--color-accent);
-            text-transform: uppercase;
-            margin-bottom: 1rem;
-        }
-        header h1 {
-            font-size: clamp(2rem, 5vw, 3.5rem);
-            font-weight: normal;
-            letter-spacing: 0.05em;
-            color: var(--color-text);
-            margin-bottom: 0.5rem;
-        }
-        header .subtitle {
-            color: var(--color-text-muted);
-            font-size: 1rem;
-            font-style: italic;
-        }
-
-        /* ── NAV ── */
-        nav {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0;
-            justify-content: center;
-            border-bottom: 1px solid var(--color-border);
-            padding: 0 2rem;
-        }
-        nav a {
-            font-family: var(--font-mono);
-            font-size: 0.7rem;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            color: var(--color-text-muted);
-            text-decoration: none;
-            padding: 0.75rem 1.25rem;
-            border-right: 1px solid var(--color-border);
-            transition: color 0.2s;
-        }
-        nav a:first-child { border-left: 1px solid var(--color-border); }
-        nav a:hover { color: var(--color-accent); }
-
-        /* ── LAYOUT ── */
-        main {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 3rem 2rem 6rem;
-        }
-
-        /* ── SECTIONS ── */
-        section {
-            margin-bottom: 5rem;
-            padding-bottom: 3rem;
-            border-bottom: 1px solid var(--color-border);
-        }
-        section:last-child { border-bottom: none; }
-
-        .section-header {
-            display: flex;
-            align-items: baseline;
-            gap: 1rem;
-            margin-bottom: 2rem;
-        }
-        .section-number {
-            font-family: var(--font-mono);
-            font-size: 0.7rem;
-            color: var(--color-accent-dim);
-            flex-shrink: 0;
-        }
-        h2 {
-            font-size: 1.5rem;
-            font-weight: normal;
-            color: var(--color-accent);
-            letter-spacing: 0.03em;
-        }
-        h3 {
-            font-size: 1rem;
-            font-weight: normal;
-            color: var(--color-text-muted);
-            font-family: var(--font-mono);
-            letter-spacing: 0.1em;
-            margin: 2rem 0 0.75rem;
-            text-transform: uppercase;
-        }
-
-        p { margin-bottom: 1rem; color: var(--color-text); max-width: 72ch; }
-        p.wide { max-width: none; }
-
-        /* ── DOCUMENT CARDS ── */
-        .doc-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 1.5rem;
-            margin-top: 1.5rem;
-        }
-        .doc-card {
-            background: var(--color-surface);
-            border: 1px solid var(--color-border);
-            padding: 1.5rem;
-            text-decoration: none;
-            color: inherit;
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-            transition: border-color 0.2s;
-        }
-        .doc-card:hover { border-color: var(--color-accent-dim); }
-        .doc-card .doc-type {
-            font-family: var(--font-mono);
-            font-size: 0.65rem;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            color: var(--color-accent);
-        }
-        .doc-card .doc-title {
-            font-size: 0.95rem;
-            color: var(--color-text);
-            line-height: 1.4;
-        }
-        .doc-card .doc-meta {
-            font-size: 0.8rem;
-            color: var(--color-text-muted);
-            margin-top: auto;
-            padding-top: 0.5rem;
-            border-top: 1px solid var(--color-border);
-            font-family: var(--font-mono);
-        }
-
-        /* ── IMAGES ── */
-        .image-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 1.5rem;
-            margin-top: 1.5rem;
-        }
-        .image-card {
-            background: var(--color-surface);
-            border: 1px solid var(--color-border);
-            overflow: hidden;
-        }
-        .image-card img {
-            width: 100%;
-            height: 220px;
-            object-fit: cover;
-            display: block;
-            filter: grayscale(20%);
-            transition: filter 0.3s;
-        }
-        .image-card:hover img { filter: grayscale(0%); }
-        .image-card .img-caption {
-            padding: 0.75rem 1rem;
-            font-size: 0.8rem;
-            color: var(--color-text-muted);
-            font-family: var(--font-mono);
-            border-top: 1px solid var(--color-border);
-        }
-
-        /* ── FULL-WIDTH IMAGE ── */
-        .image-full {
-            background: var(--color-surface);
-            border: 1px solid var(--color-border);
-            overflow: hidden;
-            margin-top: 1.5rem;
-        }
-        .image-full img {
-            width: 100%;
-            max-height: 500px;
-            object-fit: contain;
-            display: block;
-            background: #111;
-        }
-        .image-full .img-caption {
-            padding: 0.75rem 1.25rem;
-            font-size: 0.8rem;
-            color: var(--color-text-muted);
-            font-family: var(--font-mono);
-            border-top: 1px solid var(--color-border);
-        }
-
-        /* ── TEXT EXCERPT BLOCK ── */
-        .excerpt {
-            background: var(--color-surface);
-            border-left: 3px solid var(--color-accent-dim);
-            padding: 1.25rem 1.5rem;
-            margin: 1.5rem 0;
-            font-style: italic;
-            color: var(--color-text-muted);
-            font-size: 0.95rem;
-        }
-        .excerpt cite {
-            display: block;
-            margin-top: 0.75rem;
-            font-style: normal;
-            font-family: var(--font-mono);
-            font-size: 0.7rem;
-            letter-spacing: 0.1em;
-            color: var(--color-accent-dim);
-            text-transform: uppercase;
-        }
-
-        /* ── KEY FINDINGS LIST ── */
-        .findings {
-            list-style: none;
-            margin: 1rem 0 1.5rem;
-        }
-        .findings li {
-            padding: 0.6rem 0 0.6rem 1.5rem;
-            border-bottom: 1px solid var(--color-border);
-            position: relative;
-            font-size: 0.95rem;
-            color: var(--color-text);
-        }
-        .findings li::before {
-            content: '▸';
-            position: absolute;
-            left: 0;
-            color: var(--color-accent-dim);
-        }
-
-        /* ── INDEX TABLE ── */
-        .index-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.85rem;
-            margin-top: 1.5rem;
-        }
-        .index-table th {
-            text-align: left;
-            font-family: var(--font-mono);
-            font-size: 0.65rem;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            color: var(--color-accent);
-            border-bottom: 1px solid var(--color-border);
-            padding: 0.5rem 1rem 0.5rem 0;
-        }
-        .index-table td {
-            padding: 0.75rem 1rem 0.75rem 0;
-            border-bottom: 1px solid var(--color-border);
-            vertical-align: top;
-            color: var(--color-text);
-        }
-        .index-table td:first-child { color: var(--color-accent-dim); font-family: var(--font-mono); }
-        .index-table a { color: var(--color-link); text-decoration: none; }
-        .index-table a:hover { text-decoration: underline; }
-
-        /* ── FOOTER ── */
-        footer {
-            border-top: 1px solid var(--color-border);
-            padding: 2rem;
-            text-align: center;
-            font-family: var(--font-mono);
-            font-size: 0.7rem;
-            letter-spacing: 0.1em;
-            color: var(--color-text-muted);
-        }
-
-        /* ── UTILS ── */
-        .tag {
-            display: inline-block;
-            font-family: var(--font-mono);
-            font-size: 0.65rem;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            color: var(--color-accent-dim);
-            border: 1px solid var(--color-border);
-            padding: 0.15rem 0.5rem;
-            margin: 0.15rem;
-        }
-        .tags { margin: 0.5rem 0 1rem; }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
@@ -408,7 +107,13 @@
             <h2>Estado del Arte</h2>
         </div>
 
-        <p>El estado del arte del proyecto articula tres tradiciones analíticas: la antropología política de la corrupción, los estudios de periodismo de investigación y la etnografía de instituciones financieras. Se trabaja desde una perspectiva crítica que pone en tensión los marcos normativos vigentes con las prácticas efectivas de instituciones públicas y privadas.</p>
+        <p>El estado del arte del proyecto articula tres tradiciones analíticas:</p>
+        <ul class="findings">
+            <li><strong>Antropología política de la corrupción</strong> — cómo las instituciones producen y gestionan la opacidad.</li>
+            <li><strong>Estudios de periodismo de investigación</strong> — metodologías para documentar el crimen organizado y la corrupción institucional.</li>
+            <li><strong>Etnografía de instituciones</strong> — el análisis de prácticas organizacionales desde dentro.</li>
+        </ul>
+        <p>Se trabaja desde una perspectiva crítica que pone en tensión los marcos normativos vigentes con las prácticas efectivas de instituciones públicas y privadas.</p>
 
         <h3>Marco teórico: periodismo de investigación y crimen organizado</h3>
         <p>El CIPER (Centro de Investigación Periodística) ha desarrollado metodologías específicas para la investigación del crimen organizado en América Latina. Su enfoque integra la revisión documental exhaustiva, el análisis de redes de poder y la corroboración de fuentes múltiples.</p>
@@ -455,10 +160,19 @@
             <h2>Etnografía Audiovisual</h2>
         </div>
 
-        <p>La etnografía audiovisual es uno de los ejes metodológicos centrales de este proyecto. Se entiende la cámara y el registro sonoro no como herramientas neutras de documentación, sino como dispositivos que participan activamente en la producción de conocimiento y en la negociación de la representación con los sujetos investigados.</p>
+        <p>La etnografía audiovisual es uno de los ejes metodológicos centrales de este proyecto. Se entiende la cámara y el registro sonoro no como herramientas neutras de documentación, sino como dispositivos que participan activamente en la producción de conocimiento y en la negociación de la representación con los sujetos investigados. En el caso de la etnografía digital, el "campo" son los flujos de datos, las interfaces y las comunicaciones internas de las organizaciones.</p>
 
         <h3>Etnografía de caso: Estrategia Gaona — SURA Investments</h3>
         <p>La <em>Estrategia Gaona</em> constituye un caso paradigmático de etnografía digital aplicada al ámbito corporativo. El trabajo de Rodrigo Gaete Gaona como UX Lead en SURA Investments derivó en una investigación etnográfica de los flujos de datos internos, documentando prácticas que vulneraban la privacidad de los clientes y el marco normativo vigente.</p>
+
+        <h3>Metodología etnográfica utilizada</h3>
+        <ul class="findings">
+            <li>Revisión documental exhaustiva de actas y transcripciones internas.</li>
+            <li>Análisis cualitativo de comunicaciones organizacionales.</li>
+            <li>Etnografía digital de flujos de datos.</li>
+            <li>Entrevistas con actores clave (equipos de TI, Legal, UX, Negocio).</li>
+            <li>Principios de <em>Privacy by Design</em> y <em>Design Sprint</em>.</li>
+        </ul>
 
         <div class="excerpt">
             "Metodología: revisión documental, análisis cualitativo de actas y transcripciones, etnografía digital de flujos, y entrevistas con actores clave. Se aplicaron principios de Privacy by Design y Design Sprint."
@@ -469,9 +183,9 @@
         <ul class="findings">
             <li>Persistencia de conexiones heredadas a BD TN_PERFIL que vulneraban la finalidad previsional original de los datos.</li>
             <li>Falta de trazabilidad y consentimiento en flujos de datos entre AFP y SURA Investments.</li>
-            <li>Efectividad de intervenciones UX para minimizar captura excesiva y garantizar trazabilidad.</li>
             <li>El sitio web de SURA consultaba directamente la base de datos de la AFP vinculada, sin separación efectiva entre entidades.</li>
             <li>Ausencia de mandato formal de clientes para el traspaso de datos previsionales a fines de asesoría de inversiones.</li>
+            <li>Efectividad demostrada de las intervenciones UX para corregir los flujos y garantizar trazabilidad normativa.</li>
         </ul>
 
         <div id="sura-doc">
@@ -492,7 +206,7 @@
             <li>Flujos críticos (diagramas + descripciones)</li>
             <li>Organigrama de gobernanza y Comité de Datos</li>
             <li>KPIs, OKRs y métricas sugeridas</li>
-            <li>Buenas prácticas y checklist de accesibilidad</li>
+            <li>Buenas prácticas y checklist de accesibilidad (WCAG)</li>
             <li>Anexos (documentos originales y evidencias)</li>
         </ul>
     </section>
@@ -504,10 +218,12 @@
             <h2>Ensayo: Traducción de Saberes</h2>
         </div>
 
-        <p>El ensayo sobre <em>Traducción de Saberes</em> interroga los mecanismos mediante los cuales el conocimiento técnico y normativo es traducido —o mistranslated— entre distintos campos: el derecho, la informática, el diseño, la etnografía y el discurso público. La corrupción, desde esta perspectiva, opera también como una falla en la traducción entre marcos institucionales.</p>
+        <p>El ensayo sobre <em>Traducción de Saberes</em> interroga los mecanismos mediante los cuales el conocimiento técnico y normativo es traducido —o <em>mistranslated</em>— entre distintos campos: el derecho, la informática, el diseño, la etnografía y el discurso público. La corrupción, desde esta perspectiva, opera también como una <strong>falla en la traducción entre marcos institucionales</strong>.</p>
 
         <h3>La corrupción como problema de traducción</h3>
-        <p>El caso de la Estrategia Gaona ilustra cómo la falta de traducción entre los marcos legales (Ley 19.628 de Protección de Datos, Convenio OIT 169) y las prácticas técnicas-organizacionales produce zonas de opacidad en las que la corrupción —en su sentido amplio de desviación de la finalidad original de los datos o los territorios— puede instalarse sin ser detectada.</p>
+        <p>Cuando la Ley 19.628 de Protección de Datos establece que el tratamiento de datos personales requiere autorización expresa del titular, y una empresa como SURA Investments opera sistemas que consultan directamente la base de datos de una AFP afiliada sin ese consentimiento, no se trata únicamente de una infracción legal: es una falla de traducción entre el lenguaje del derecho y el lenguaje de la arquitectura de sistemas.</p>
+
+        <p>De manera análoga, cuando el Estado chileno ratificó el Convenio 169 de la OIT (2008) pero no implementa mecanismos efectivos de consulta previa a los pueblos indígenas, estamos ante otra falla de traducción: entre el compromiso internacional y la práctica institucional.</p>
 
         <div class="excerpt">
             "La solución garantizó la separación de orígenes de datos, redujo errores normativos y mejoró la satisfacción del cliente según métricas internas."
@@ -515,13 +231,45 @@
         </div>
 
         <h3>Marcos normativos en tensión</h3>
-        <ul class="findings">
-            <li><strong>Ley 19.628</strong> (Protección de Datos Chile): tratamiento de datos solo con autorización del titular o habilitación legal expresa.</li>
-            <li><strong>Nueva Ley de Datos 2024</strong>: creación de Agencia de Protección de Datos, sanciones de hasta 4% de los ingresos, coordinación con la CMF.</li>
-            <li><strong>Convenio OIT 169</strong>: derecho de consulta previa, libre e informada de los pueblos indígenas ante medidas que les afecten.</li>
-            <li><strong>Artículo 11 Constitución</strong>: derecho a la vida privada y al honor, incluyendo protección de datos personales.</li>
-            <li><strong>CIDH</strong>: jurisprudencia sobre tensión entre divulgación de información y marcos legales de protección.</li>
-        </ul>
+        <table class="normas-table">
+            <thead>
+                <tr>
+                    <th>Marco</th>
+                    <th>Contenido</th>
+                    <th>Relevancia</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Ley 19.628 (Chile, 1999)</td>
+                    <td>Tratamiento de datos solo con autorización del titular o habilitación legal expresa.</td>
+                    <td>Base legal para el caso SURA/AFP</td>
+                </tr>
+                <tr>
+                    <td>Nueva Ley de Datos 2024</td>
+                    <td>Creación de Agencia de Protección de Datos, sanciones de hasta 4% de ingresos, coordinación con la CMF.</td>
+                    <td>Marco actualizado de exigencia</td>
+                </tr>
+                <tr>
+                    <td>Convenio OIT 169 (ratificado Chile 2008)</td>
+                    <td>Consulta previa, libre e informada; derechos territoriales de pueblos indígenas.</td>
+                    <td>Marco de derechos indígenas</td>
+                </tr>
+                <tr>
+                    <td>Art. 11 Constitución</td>
+                    <td>Derecho a la vida privada y al honor, incluyendo protección de datos personales.</td>
+                    <td>Protección constitucional</td>
+                </tr>
+                <tr>
+                    <td>CIDH — Jurisprudencia</td>
+                    <td>Tensión entre divulgación de información y marcos legales de protección.</td>
+                    <td>Contexto interamericano</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>Traducción de saberes en el contexto indígena</h3>
+        <p>El proceso de radicación mapuche (1884–1929) que produjo los títulos de merced es también legible como una operación de traducción forzada: el sistema comunal de uso de la tierra fue "traducido" al lenguaje jurídico de la propiedad privada individual, con pérdidas masivas de territorio y de formas de vida en el proceso. La cartografía de la Región de Los Ríos documenta el resultado de esa traducción violenta.</p>
     </section>
 
     <!-- LA NEGRA -->
@@ -531,14 +279,34 @@
             <h2>La Negra</h2>
         </div>
 
-        <p>El proyecto <em>La Negra</em> es un trabajo de campo en curso que documenta memorias, territorios y resistencias en la Región de Los Ríos. El nombre refiere a una zona y a una forma de nombrar lo que el archivo oficial no registra: las historias de comunidades que han resistido el despojo territorial, la violencia institucional y las formas cotidianas de la corrupción.</p>
+        <p>El proyecto <em>La Negra</em> es un trabajo de campo en curso que documenta memorias, territorios y resistencias en la Región de Los Ríos, Chile. El nombre refiere a una zona y a una forma de nombrar lo que el archivo oficial no registra: las historias de comunidades que han resistido el despojo territorial, la violencia institucional y las formas cotidianas de la corrupción.</p>
 
-        <p>El cruce entre los títulos de merced —instrumento del despojo histórico— y las disputas contemporáneas por el territorio configura el núcleo del trabajo de campo. La cartografía de la distribución de títulos de merced en la Región de Los Ríos sirve como punto de partida para la investigación etnográfica en terreno.</p>
+        <p>El proceso de radicación indígena mapuche (1884–1929) asignó títulos de merced que redujeron drásticamente los territorios ancestrales a polígonos mínimos. La Región de Los Ríos, que incluye territorios de comunidades huilliche y mapuche, concentra una parte significativa de este despojo histórico. La cartografía disponible en este repositorio sirve como punto de partida para la investigación etnográfica en terreno.</p>
 
         <div class="excerpt">
             "La distribución de títulos de merced en la Región de Los Ríos expone la geometría del despojo: polígonos mínimos asignados a comunidades que habitaban y trabajaban territorios mucho más extensos, reducidas a islas en un mar de propiedad privada."
             <cite>Notas de campo · Proyecto La Negra</cite>
         </div>
+
+        <h3>Líneas de investigación</h3>
+        <ol class="research-lines">
+            <li>
+                <strong>Memoria territorial</strong>
+                Reconstrucción de los territorios ancestrales a partir de testimonios orales y documentos de archivo.
+            </li>
+            <li>
+                <strong>Violencia institucional</strong>
+                Documentación de las formas en que el Estado y las instituciones han perpetuado el despojo.
+            </li>
+            <li>
+                <strong>Resistencia y organización comunitaria</strong>
+                Registro de las formas contemporáneas de resistencia y demanda territorial.
+            </li>
+            <li>
+                <strong>El contra-archivo como práctica política</strong>
+                Producción de un archivo alternativo que pone en circulación lo que el archivo oficial silencia.
+            </li>
+        </ol>
     </section>
 
     <!-- POEMARIOS -->
@@ -550,7 +318,18 @@
 
         <p>Los poemarios integran el archivo como una forma de conocimiento que no se somete a la lógica de la evidencia documental, sino que trabaja con la memoria, el cuerpo y la voz. La poesía en este proyecto es también un método: una forma de aproximarse a experiencias que los documentos institucionales no capturan o deliberadamente oscurecen.</p>
 
-        <p>Se incluyen en este repositorio textos poéticos producidos en el marco de la investigación, a menudo en colaboración con personas y comunidades que forman parte del trabajo de campo. La <em>contrapoética</em> que propone este archivo trabaja contra la lengua de la tecnocracia, del informe, del expediente judicial —los idiomas de la corrupción institucional.</p>
+        <p>Se incluyen en este repositorio textos poéticos producidos en el marco de la investigación, a menudo en colaboración con personas y comunidades que forman parte del trabajo de campo.</p>
+
+        <h3>La contrapoética del archivo</h3>
+        <p>La <em>contrapoética</em> que propone este proyecto trabaja contra la lengua de la tecnocracia, del informe, del expediente judicial —los idiomas de la corrupción institucional. Si la corrupción opera también a través del lenguaje (el eufemismo, la tecnicidad que oscurece, la normalización del despojo), la poesía se propone como una intervención en ese campo lingüístico.</p>
+
+        <p>Los poemarios en este archivo dialogan con:</p>
+        <ul class="findings">
+            <li>Los <strong>títulos de merced</strong> y la geometría del despojo territorial en la Región de Los Ríos.</li>
+            <li>Las <strong>transcripciones de reuniones corporativas</strong> (caso SURA/AFP) en las que la jerga técnica encubre prácticas que vulneran derechos.</li>
+            <li>Los <strong>testimonios de comunidades</strong> recogidos en el trabajo de campo de <em>La Negra</em>.</li>
+            <li>Los <strong>marcos normativos</strong> (OIT 169, Ley de Datos) y su distancia con la experiencia vivida.</li>
+        </ul>
     </section>
 
     <!-- DOCUMENTOS -->
