@@ -636,33 +636,38 @@
         }
     }
 
-    window.addEventListener('scroll', function () {
-        updateProgress();
-        updateBtt();
-    }, { passive: true });
-    updateProgress();
-
     /* ── ACTIVE NAV HIGHLIGHT ── */
     var sections = document.querySelectorAll('main section[id]');
     var navLinks = document.querySelectorAll('nav a[href^="#"]');
 
-    if ('IntersectionObserver' in window) {
-        var observer = new IntersectionObserver(function (entries) {
-            entries.forEach(function (entry) {
-                if (entry.isIntersecting) {
-                    var id = entry.target.getAttribute('id');
-                    navLinks.forEach(function (a) {
-                        if (a.getAttribute('href') === '#' + id) {
-                            a.classList.add('active');
-                        } else {
-                            a.classList.remove('active');
-                        }
-                    });
-                }
-            });
-        }, { rootMargin: '-30% 0px -60% 0px' });
-        sections.forEach(function (s) { observer.observe(s); });
+    function updateActiveNav() {
+        var scrollY = window.scrollY;
+        var stickyOffset = window.innerHeight * 0.25;
+        var activeId = null;
+
+        sections.forEach(function (s) {
+            if (s.offsetTop - stickyOffset <= scrollY) {
+                activeId = s.getAttribute('id');
+            }
+        });
+
+        navLinks.forEach(function (a) {
+            var isActive = activeId && a.getAttribute('href') === '#' + activeId;
+            a.classList.toggle('active', !!isActive);
+            // scroll active link into view within the sticky nav
+            if (isActive) {
+                a.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+            }
+        });
     }
+
+    window.addEventListener('scroll', function () {
+        updateProgress();
+        updateBtt();
+        updateActiveNav();
+    }, { passive: true });
+    updateProgress();
+    updateActiveNav();
 
     /* ── HIGH CONTRAST TOGGLE ── */
     var hcBtn = document.getElementById('hc-toggle');
@@ -791,6 +796,25 @@
             applyFilters();
         });
     });
+
+    /* ── MATRIX OVERFLOW HINT ── */
+    var matrixCard = document.querySelector('.matrix-card');
+    var matrixScroll = document.querySelector('.matrix-scroll');
+    if (matrixCard && matrixScroll) {
+        function checkMatrixOverflow() {
+            if (matrixScroll.scrollWidth > matrixScroll.clientWidth) {
+                matrixCard.classList.add('overflows');
+            } else {
+                matrixCard.classList.remove('overflows');
+            }
+        }
+        matrixScroll.addEventListener('scroll', function () {
+            var atEnd = matrixScroll.scrollLeft + matrixScroll.clientWidth >= matrixScroll.scrollWidth - 4;
+            matrixCard.classList.toggle('overflows', !atEnd);
+        });
+        checkMatrixOverflow();
+        window.addEventListener('resize', checkMatrixOverflow, { passive: true });
+    }
 
     /* ── SMOOTH SCROLL for anchor links ── */
     document.querySelectorAll('a[href^="#"]').forEach(function (a) {
