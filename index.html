@@ -639,10 +639,14 @@
     /* ── ACTIVE NAV HIGHLIGHT ── */
     var sections = document.querySelectorAll('main section[id]');
     var navLinks = document.querySelectorAll('nav a[href^="#"]');
+    var stickyOffset = window.innerHeight * 0.25;
+    var lastActiveId = null;
+    window.addEventListener('resize', function () {
+        stickyOffset = window.innerHeight * 0.25;
+    }, { passive: true });
 
     function updateActiveNav() {
         var scrollY = window.scrollY;
-        var stickyOffset = window.innerHeight * 0.25;
         var activeId = null;
 
         sections.forEach(function (s) {
@@ -651,10 +655,12 @@
             }
         });
 
+        if (activeId === lastActiveId) return;
+        lastActiveId = activeId;
+
         navLinks.forEach(function (a) {
             var isActive = activeId && a.getAttribute('href') === '#' + activeId;
-            a.classList.toggle('active', !!isActive);
-            // scroll active link into view within the sticky nav
+            a.classList.toggle('active', isActive);
             if (isActive) {
                 a.scrollIntoView({ block: 'nearest', inline: 'nearest' });
             }
@@ -802,18 +808,13 @@
     var matrixScroll = document.querySelector('.matrix-scroll');
     if (matrixCard && matrixScroll) {
         function checkMatrixOverflow() {
-            if (matrixScroll.scrollWidth > matrixScroll.clientWidth) {
-                matrixCard.classList.add('overflows');
-            } else {
-                matrixCard.classList.remove('overflows');
-            }
-        }
-        matrixScroll.addEventListener('scroll', function () {
+            var hasOverflow = matrixScroll.scrollWidth > matrixScroll.clientWidth;
             var atEnd = matrixScroll.scrollLeft + matrixScroll.clientWidth >= matrixScroll.scrollWidth - 4;
-            matrixCard.classList.toggle('overflows', !atEnd);
-        });
-        checkMatrixOverflow();
+            matrixCard.classList.toggle('overflows', hasOverflow && !atEnd);
+        }
+        matrixScroll.addEventListener('scroll', checkMatrixOverflow, { passive: true });
         window.addEventListener('resize', checkMatrixOverflow, { passive: true });
+        checkMatrixOverflow();
     }
 
     /* ── SMOOTH SCROLL for anchor links ── */

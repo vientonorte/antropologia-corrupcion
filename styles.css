@@ -8,6 +8,7 @@
     --color-text-muted: #9e9484;
     --color-text-dark: #111111;
     --color-link: #c8a96e;
+    --color-accent-subtle: rgba(200, 169, 110, 0.04);
     --matrix-1: rgba(122, 99, 64, 0.18);
     --matrix-2: rgba(122, 99, 64, 0.34);
     --matrix-3: rgba(200, 169, 110, 0.5);
@@ -168,13 +169,9 @@ p.wide { max-width: none; }
 }
 .doc-card:hover {
     border-color: var(--color-accent-dim);
-    background: rgba(200, 169, 110, 0.04);
+    background: var(--color-accent-subtle);
 }
 .doc-card:hover::after { opacity: 1; }
-.doc-card:focus-visible {
-    outline: 2px solid var(--color-accent-dim);
-    outline-offset: 2px;
-}
 .doc-card .doc-type {
     font-family: var(--font-mono);
     font-size: 0.65rem;
@@ -555,6 +552,7 @@ body.high-contrast {
     --color-text-muted: #dddddd;
     --color-text-dark: #000000;
     --color-link: #ffdd77;
+    --color-accent-subtle: rgba(255, 221, 119, 0.06);
     --matrix-1: rgba(255, 221, 119, 0.25);
     --matrix-2: rgba(255, 221, 119, 0.45);
     --matrix-3: rgba(255, 221, 119, 0.62);
