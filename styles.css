@@ -600,6 +600,25 @@ nav a.active {
     align-self: center;
     white-space: nowrap;
 }
+.section-results {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    align-self: center;
+    min-height: 0;
+}
+.section-result-link {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.08em;
+    color: var(--color-accent-dim);
+    border: 1px solid var(--color-border);
+    padding: 0.15rem 0.5rem;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: color 0.15s, border-color 0.15s;
+}
+.section-result-link:hover { color: var(--color-accent); border-color: var(--color-accent-dim); }
 
 /* ── CLICKABLE FILTER TAGS ── */
 .tag {

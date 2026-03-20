@@ -38,6 +38,7 @@
 <div class="search-bar" role="search">
     <input type="search" id="search-input" placeholder="Buscar documentos, secciones, temas…" aria-label="Buscar en el archivo">
     <span id="search-count" aria-live="polite"></span>
+    <div id="section-results" class="section-results" aria-live="polite"></div>
 </div>
 
 <main>
@@ -186,6 +187,12 @@
                     <td><a href="#journalism-img">Introduction to Journalism</a></td>
                     <td>Imagen</td>
                     <td>Estado del Arte</td>
+                </tr>
+                <tr>
+                    <td>07</td>
+                    <td><a href="#arquitectura">Mapa de Arquitectura &amp; Inventario de Activos</a></td>
+                    <td>Sección · 21 activos</td>
+                    <td>Arquitectura §09</td>
                 </tr>
             </tbody>
         </table>
@@ -1118,13 +1125,25 @@
     /* ── SEARCH & FILTER ── */
     var searchInput = document.getElementById('search-input');
     var searchCount = document.getElementById('search-count');
+    var sectionResults = document.getElementById('section-results');
     var filterTags = document.querySelectorAll('.tag[data-filter]');
     var activeFilter = null;
 
-    // All searchable/filterable items: doc cards, image cards, sections
+    // All searchable/filterable items: doc cards, image cards
     var filterItems = Array.from(document.querySelectorAll(
         '.doc-card[data-topics], .image-card[data-topics]'
     ));
+
+    // Pre-index section text for full-text search
+    var sectionIndex = Array.from(document.querySelectorAll('main section[id]')).map(function (s) {
+        var num = s.querySelector('.section-number');
+        var h2  = s.querySelector('h2');
+        return {
+            id:    s.getAttribute('id'),
+            label: (num ? num.textContent.trim() + ' · ' : '') + (h2 ? h2.textContent.trim() : ''),
+            text:  normalize(s.textContent)
+        };
+    });
 
     function normalize(str) {
         return (str || '').toLowerCase()
@@ -1157,6 +1176,20 @@
             searchCount.textContent = visible + ' resultado' + (visible !== 1 ? 's' : '');
         } else {
             searchCount.textContent = '';
+        }
+
+        // Full-text section search (min 2 chars)
+        if (query && query.length >= 2) {
+            var matched = sectionIndex.filter(function (s) { return s.text.indexOf(query) !== -1; });
+            if (matched.length) {
+                sectionResults.innerHTML = matched.map(function (s) {
+                    return '<a href="#' + s.id + '" class="section-result-link">' + s.label + '</a>';
+                }).join('');
+            } else {
+                sectionResults.innerHTML = '';
+            }
+        } else {
+            sectionResults.innerHTML = '';
         }
     }
 
