@@ -1385,6 +1385,121 @@ nav a.active {
     .hc-toggle { top: 0.5rem; right: 0.75rem; }
 }
 
+/* ── POEM BLOCKS ── */
+.poem-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 2rem;
+    margin: 2rem 0;
+}
+.poem-card {
+    background: var(--color-surface);
+    border: 1px solid rgba(200,169,110,0.12);
+    border-top: 2px solid var(--color-accent-dim);
+    padding: 1.75rem 1.5rem 1.5rem;
+}
+.poem-number {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--color-accent-dim);
+    display: block;
+    margin-bottom: 0.5rem;
+}
+.poem-title {
+    font-size: 0.9rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    margin: 0 0 1.25rem;
+}
+.poem-text {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 0.9rem;
+    line-height: 1.9;
+    color: var(--color-text);
+    white-space: pre-line;
+    margin: 0 0 1.25rem;
+}
+.poem-meta {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    border-top: 1px solid rgba(200,169,110,0.1);
+    padding-top: 0.75rem;
+    margin-top: 0.5rem;
+}
+
+/* ── BIO SECTION ── */
+.bio-card {
+    background: var(--color-surface);
+    border: 1px solid rgba(200,169,110,0.15);
+    padding: 2rem 2.25rem;
+    margin: 2rem 0;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0 2rem;
+    align-items: start;
+}
+.bio-avatar {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: var(--color-accent-subtle);
+    border: 2px solid var(--color-accent-dim);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-size: 1.25rem;
+    color: var(--color-accent);
+    flex-shrink: 0;
+}
+.bio-name {
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: var(--color-accent);
+    margin: 0 0 0.25rem;
+}
+.bio-role {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    margin: 0 0 1rem;
+}
+.bio-description {
+    font-size: 0.9rem;
+    line-height: 1.7;
+    color: var(--color-text);
+    margin: 0 0 1rem;
+}
+.bio-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+}
+.bio-tag {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-accent-dim);
+    border: 1px solid rgba(200,169,110,0.25);
+    padding: 0.2rem 0.5rem;
+}
+@media (max-width: 600px) {
+    .poem-grid { grid-template-columns: 1fr; }
+    .bio-card { grid-template-columns: 1fr; }
+    .bio-avatar { display: none; }
+}
+
 /* ── ACCESSIBILITY: REDUCED MOTION ── */
 @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { transition-duration: 0.01ms !important; }
