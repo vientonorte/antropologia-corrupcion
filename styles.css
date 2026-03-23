@@ -116,9 +116,6 @@ nav a:first-child { border-left: 1px solid var(--color-border); }
 nav a:hover { color: var(--color-accent); }
 
 /* ── NAV OVERFLOW FADE INDICATORS ── */
-nav {
-    position: relative;
-}
 nav::before,
 nav::after {
     content: '';

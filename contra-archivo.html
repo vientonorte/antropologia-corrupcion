@@ -1048,8 +1048,17 @@
         navLinks.forEach(function (a) {
             var isActive = activeId && a.getAttribute('href') === '#' + activeId;
             a.classList.toggle('active', isActive);
-            if (isActive) {
-                a.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+            if (isActive && a.offsetParent) {
+                var nav = a.closest('nav');
+                if (nav) {
+                    var aLeft = a.offsetLeft;
+                    var aRight = aLeft + a.offsetWidth;
+                    if (aLeft < nav.scrollLeft) {
+                        nav.scrollLeft = aLeft;
+                    } else if (aRight > nav.scrollLeft + nav.clientWidth) {
+                        nav.scrollLeft = aRight - nav.clientWidth;
+                    }
+                }
             }
         });
     }
