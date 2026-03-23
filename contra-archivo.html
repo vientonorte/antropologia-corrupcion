@@ -9,6 +9,9 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+<!-- Skip to content (accessibility) -->
+<a class="skip-link" href="#presentacion">Saltar al contenido</a>
+
 <!-- Reading progress bar -->
 <div id="progress-bar" role="progressbar" aria-label="Progreso de lectura"></div>
 
@@ -21,7 +24,7 @@
     <p class="subtitle">Antropología y Corrupción — La mistranslation institucional como dispositivo de poder: etnografía, territorio y archivo crítico</p>
 </header>
     
-<nav>
+<nav id="main-nav" aria-label="Navegación principal">
     <a href="#presentacion">Presentación</a>
     <a href="#estado-del-arte">Estado del Arte</a>
     <a href="#etnografia">Etnografía Audiovisual</a>
@@ -36,7 +39,10 @@
 
 <!-- Search bar -->
 <div class="search-bar" role="search">
-    <input type="search" id="search-input" placeholder="Buscar documentos, secciones, temas…" aria-label="Buscar en el archivo">
+    <div class="search-wrapper">
+        <input type="search" id="search-input" placeholder="Buscar documentos, secciones, temas… (Ctrl+K)" aria-label="Buscar en el archivo">
+        <button type="button" class="search-clear" id="search-clear" aria-label="Limpiar búsqueda" hidden>×</button>
+    </div>
     <span id="search-count" aria-live="polite"></span>
     <div id="section-results" class="section-results" aria-live="polite"></div>
 </div>
@@ -242,7 +248,7 @@
         <p>El CIPER (Centro de Investigación Periodística) ha desarrollado metodologías específicas para la investigación del crimen organizado en América Latina. Su enfoque integra la revisión documental exhaustiva, el análisis de redes de poder y la corroboración de fuentes múltiples.</p>
 
         <div id="journalism-img" class="image-full">
-            <img src="Introduction Journalism.png" alt="Introduction to Journalism — material de referencia metodológica"
+            <img src="Introduction Journalism.png" alt="Introduction to Journalism — material de referencia metodológica" loading="lazy"
                  data-lightbox="true" data-caption="Introduction Journalism — Material de referencia metodológica · CIPER" tabindex="0" role="button" aria-label="Ver imagen ampliada: Introduction Journalism">
             <p class="img-caption">Introduction Journalism.png — Material de referencia metodológica para investigación periodística</p>
         </div>
@@ -261,13 +267,13 @@
         <p>El Convenio 169 de la Organización Internacional del Trabajo (OIT) establece el marco internacional de derechos de los pueblos indígenas y tribales. En Chile, la tensión entre este convenio —ratificado en 2008— y la legislación nacional ha sido uno de los ejes centrales del conflicto territorial en la Araucanía y la Región de Los Ríos.</p>
 
         <div id="oit-img" class="image-full">
-            <img src="UX RG - Desglose de derechos consagrados por el OIT 169.jpg" alt="Desglose de derechos consagrados por el Convenio OIT 169"
+            <img src="UX RG - Desglose de derechos consagrados por el OIT 169.jpg" alt="Desglose de derechos consagrados por el Convenio OIT 169" loading="lazy"
                  data-lightbox="true" data-caption="Desglose de derechos — Convenio OIT 169 · Elaboración: R. Gaete" tabindex="0" role="button" aria-label="Ver imagen ampliada: derechos OIT 169">
             <p class="img-caption">UX RG — Desglose de derechos consagrados por el Convenio OIT 169 · Elaboración: R. Gaete</p>
         </div>
 
         <div id="plurinacional-img" class="image-full" style="margin-top:1.5rem">
-            <img src="UX RG - ¿Comparativa Eº Plurinacional del marco legal vigente en Chile_.jpg" alt="Comparativa Estado Plurinacional vs marco legal vigente en Chile"
+            <img src="UX RG - ¿Comparativa Eº Plurinacional del marco legal vigente en Chile_.jpg" alt="Comparativa Estado Plurinacional vs marco legal vigente en Chile" loading="lazy"
                  data-lightbox="true" data-caption="Comparativa Eº Plurinacional / marco legal vigente en Chile · R. Gaete" tabindex="0" role="button" aria-label="Ver imagen ampliada: comparativa estado plurinacional">
             <p class="img-caption">UX RG — ¿Comparativa Eº Plurinacional del marco legal vigente en Chile? · Elaboración: R. Gaete</p>
         </div>
@@ -276,7 +282,7 @@
         <p>Los títulos de merced fueron la forma mediante la cual el Estado chileno asignó tierras a las comunidades mapuche a fines del siglo XIX y principios del XX, luego de la campaña militar de ocupación. La distribución de estos títulos en la Región de Los Ríos ilustra el proceso de reducción territorial que está en la base del conflicto contemporáneo.</p>
 
         <div id="merced-img" class="image-full" style="margin-top:1rem">
-            <img src="Distribución de titulos de merced en Región de los ríos.png" alt="Distribución de títulos de merced en la Región de Los Ríos"
+            <img src="Distribución de titulos de merced en Región de los ríos.png" alt="Distribución de títulos de merced en la Región de Los Ríos" loading="lazy"
                  data-lightbox="true" data-caption="Distribución de títulos de merced — Región de Los Ríos · Fuente cartográfica de archivo" tabindex="0" role="button" aria-label="Ver imagen ampliada: títulos de merced">
             <p class="img-caption">Distribución de títulos de merced en la Región de Los Ríos · Fuente cartográfica de archivo</p>
         </div>
@@ -556,22 +562,22 @@
 
         <div class="image-grid">
             <div class="image-card" data-topics="derechos-indigenas chile" data-searchtext="oit 169 derechos indigenas mapuche convenio">
-                <img src="UX RG - Desglose de derechos consagrados por el OIT 169.jpg" alt="Desglose de derechos consagrados por el OIT 169"
+                <img src="UX RG - Desglose de derechos consagrados por el OIT 169.jpg" alt="Desglose de derechos consagrados por el OIT 169" loading="lazy"
                      data-lightbox="true" data-caption="Desglose de derechos — Convenio OIT 169 · R. Gaete" tabindex="0" role="button" aria-label="Ver imagen ampliada: derechos OIT 169">
                 <p class="img-caption">Desglose de derechos — OIT 169 · R. Gaete</p>
             </div>
             <div class="image-card" data-topics="derechos-indigenas chile" data-searchtext="estado plurinacional marco legal chile comparativa">
-                <img src="UX RG - ¿Comparativa Eº Plurinacional del marco legal vigente en Chile_.jpg" alt="Comparativa Estado Plurinacional vs marco legal Chile"
+                <img src="UX RG - ¿Comparativa Eº Plurinacional del marco legal vigente en Chile_.jpg" alt="Comparativa Estado Plurinacional vs marco legal Chile" loading="lazy"
                      data-lightbox="true" data-caption="Comparativa Eº Plurinacional / marco legal vigente en Chile · R. Gaete" tabindex="0" role="button" aria-label="Ver imagen ampliada: comparativa estado plurinacional">
                 <p class="img-caption">Comparativa Eº Plurinacional / marco legal Chile · R. Gaete</p>
             </div>
             <div class="image-card" data-topics="derechos-indigenas chile" data-searchtext="titulos merced region los rios cartografia mapuche huilliche">
-                <img src="Distribución de titulos de merced en Región de los ríos.png" alt="Distribución de títulos de merced — Región de Los Ríos"
+                <img src="Distribución de titulos de merced en Región de los ríos.png" alt="Distribución de títulos de merced — Región de Los Ríos" loading="lazy"
                      data-lightbox="true" data-caption="Distribución de títulos de merced — Región de Los Ríos · Fuente cartográfica de archivo" tabindex="0" role="button" aria-label="Ver imagen ampliada: títulos de merced">
                 <p class="img-caption">Títulos de merced — Región de Los Ríos</p>
             </div>
             <div class="image-card" data-topics="periodismo" data-searchtext="introduccion periodismo journalism metodologia">
-                <img src="Introduction Journalism.png" alt="Introduction to Journalism"
+                <img src="Introduction Journalism.png" alt="Introduction to Journalism" loading="lazy"
                      data-lightbox="true" data-caption="Introduction to Journalism — referencia metodológica" tabindex="0" role="button" aria-label="Ver imagen ampliada: Introduction to Journalism">
                 <p class="img-caption">Introduction to Journalism — referencia metodológica</p>
             </div>
@@ -1122,8 +1128,62 @@
         });
     });
 
-    /* ── SEARCH & FILTER ── */
+    /* ── SEARCH CLEAR BUTTON ── */
+    var searchClear = document.getElementById('search-clear');
     var searchInput = document.getElementById('search-input');
+
+    function updateSearchClear() {
+        searchClear.hidden = !searchInput.value;
+    }
+    searchClear.addEventListener('click', function () {
+        searchInput.value = '';
+        searchClear.hidden = true;
+        searchInput.focus();
+        applyFilters();
+    });
+    searchInput.addEventListener('input', updateSearchClear);
+
+    /* ── KEYBOARD SHORTCUT: Ctrl+K → focus search ── */
+    document.addEventListener('keydown', function (e) {
+        if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+            e.preventDefault();
+            searchInput.focus();
+            searchInput.select();
+        }
+    });
+
+    /* ── SECTION REVEAL ON SCROLL ── */
+    if ('IntersectionObserver' in window) {
+        var revealObserver = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('revealed');
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.08 });
+        document.querySelectorAll('main section[id]').forEach(function (s) {
+            s.classList.add('reveal-ready');
+            revealObserver.observe(s);
+        });
+    }
+
+    /* ── NAV OVERFLOW INDICATORS ── */
+    var mainNav = document.getElementById('main-nav');
+    if (mainNav) {
+        function updateNavOverflow() {
+            var sl = mainNav.scrollLeft;
+            var sw = mainNav.scrollWidth;
+            var cw = mainNav.clientWidth;
+            mainNav.classList.toggle('nav-fade-right', sl + cw < sw - 4);
+            mainNav.classList.toggle('nav-fade-left', sl > 4);
+        }
+        mainNav.addEventListener('scroll', updateNavOverflow, { passive: true });
+        window.addEventListener('resize', updateNavOverflow, { passive: true });
+        updateNavOverflow();
+    }
+
+    /* ── SEARCH & FILTER ── */
     var searchCount = document.getElementById('search-count');
     var sectionResults = document.getElementById('section-results');
     var filterTags = document.querySelectorAll('.tag[data-filter]');
