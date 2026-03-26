@@ -496,6 +496,149 @@ p.wide { max-width: none; }
     color: var(--color-text-muted);
 }
 
+/* ── FRICTION INTERFACE (P3) ── */
+.friction-epigraph {
+    background: var(--color-surface);
+    border: 1px solid var(--color-accent-dim);
+    padding: 1.5rem 2rem;
+    margin: 2rem 0;
+    text-align: center;
+    position: relative;
+}
+.friction-epigraph::before {
+    content: 'Hipótesis P3';
+    position: absolute;
+    top: -0.6rem;
+    left: 1rem;
+    background: var(--color-bg);
+    padding: 0 0.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+}
+.friction-epigraph p {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: var(--color-text);
+    margin-bottom: 0.5rem;
+}
+.friction-epigraph p:last-child { margin-bottom: 0; }
+.friction-axiom {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    letter-spacing: 0.05em;
+    color: var(--color-accent);
+    margin-top: 0.75rem;
+}
+
+.friction-triad {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin: 1.5rem 0;
+}
+.friction-regime {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    padding: 1.25rem;
+    position: relative;
+    transition: border-color 0.3s;
+}
+.friction-regime:hover,
+.friction-regime:focus-within {
+    border-color: var(--color-accent-dim);
+}
+.regime-label {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--color-border);
+}
+.regime-desc {
+    font-size: 0.9rem;
+    line-height: 1.7;
+    color: var(--color-text-muted);
+}
+
+.friction-intro {
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+    max-width: 72ch;
+}
+.friction-zones {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin: 1.5rem 0;
+}
+.friction-zone {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-left: 3px solid var(--color-accent-dim);
+    padding: 1.25rem 1.5rem;
+    transition: border-left-color 0.3s;
+}
+.friction-zone:hover {
+    border-left-color: var(--color-accent);
+}
+.zone-header {
+    margin-bottom: 0.75rem;
+}
+.zone-pair {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    color: var(--color-accent);
+}
+.zone-operator {
+    display: inline-block;
+    margin: 0 0.25rem;
+    color: var(--color-accent-dim);
+}
+.zone-tension {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: var(--color-text);
+    margin-bottom: 0.5rem;
+}
+.zone-case {
+    font-size: 0.85rem;
+    line-height: 1.6;
+    color: var(--color-text-muted);
+    padding-left: 1rem;
+    border-left: 1px solid var(--color-border);
+    margin-top: 0.5rem;
+}
+
+.friction-coda {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-left: 3px solid var(--color-accent);
+    padding: 1.25rem 1.5rem;
+    margin: 2rem 0 1rem;
+}
+.friction-coda p {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: var(--color-text);
+}
+.friction-coda .hyp-label {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-accent-dim);
+    margin-bottom: 0.75rem;
+}
+
 /* ── RESEARCH LINES ── */
 .research-lines {
     list-style: none;
@@ -1436,6 +1579,7 @@ nav a.active {
 
     .doc-grid { grid-template-columns: 1fr; }
     .image-grid { grid-template-columns: 1fr; }
+    .friction-triad { grid-template-columns: 1fr; }
 
     .section-stats { gap: 1rem; justify-content: space-between; }
 
