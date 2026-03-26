@@ -1030,7 +1030,7 @@ nav a.active {
     transition: background 0.3s;
 }
 .friction-regime:hover {
-    background: rgba(200, 169, 110, 0.06);
+    background: var(--color-accent-subtle);
 }
 .regime-label {
     display: block;
