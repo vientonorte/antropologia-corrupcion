@@ -989,6 +989,129 @@ nav a.active {
     margin-bottom: 0;
 }
 
+/* ── HIPÓTESIS P3 — FRICTION INTERFACE ── */
+.friction-statement {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-left: 3px solid var(--color-accent);
+    padding: 1.5rem 2rem;
+    margin: 2rem 0;
+}
+.friction-statement p {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: var(--color-text);
+    margin-bottom: 0.5rem;
+}
+.friction-statement p:last-child {
+    margin-bottom: 0;
+}
+.friction-axiom {
+    font-family: var(--font-mono);
+    font-size: 1.05rem;
+    font-weight: bold;
+    letter-spacing: 0.04em;
+    color: var(--color-accent);
+    margin-bottom: 0.75rem;
+}
+.friction-diagram {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    margin: 2rem 0;
+    position: relative;
+    background: var(--color-border);
+    border: 1px solid var(--color-border);
+}
+.friction-regime {
+    background: var(--color-surface);
+    padding: 1.25rem 1.5rem;
+    position: relative;
+    transition: background 0.3s;
+}
+.friction-regime:hover {
+    background: var(--color-accent-subtle);
+}
+.regime-label {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    margin-bottom: 0.75rem;
+}
+.regime-desc {
+    font-size: 0.88rem;
+    line-height: 1.65;
+    color: var(--color-text-muted);
+}
+.friction-nexus {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    z-index: 1;
+    pointer-events: none;
+}
+.nexus-symbol {
+    font-size: 1.5rem;
+    color: var(--color-accent);
+    opacity: 0.6;
+    line-height: 1;
+}
+.nexus-label {
+    font-family: var(--font-mono);
+    font-size: 0.55rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-accent-dim);
+}
+.friction-closing {
+    background: var(--color-surface);
+    border: 1px solid var(--color-accent-dim);
+    padding: 1.5rem 2rem;
+    margin: 2rem 0;
+    position: relative;
+}
+.friction-closing::before {
+    content: 'Axioma';
+    position: absolute;
+    top: -0.6rem;
+    left: 1rem;
+    background: var(--color-bg);
+    padding: 0 0.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+}
+.friction-closing .friction-axiom {
+    margin-bottom: 0.75rem;
+}
+.friction-note {
+    font-size: 0.9rem;
+    line-height: 1.7;
+    color: var(--color-text-muted);
+}
+@media (max-width: 768px) {
+    .friction-diagram {
+        grid-template-columns: 1fr;
+    }
+    .friction-nexus {
+        display: none;
+    }
+    .friction-statement,
+    .friction-closing {
+        padding: 1rem 1.25rem;
+    }
+}
+
 .theoretical-anchor {
     display: inline-block;
     font-family: var(--font-mono);
@@ -1660,13 +1783,16 @@ nav a.active {
     .contribution-box,
     .abstract,
     .research-questions,
-    .hypothesis-box {
+    .hypothesis-box,
+    .friction-statement,
+    .friction-closing {
         background: #f5f5f5;
         border-color: #999;
     }
     .thesis-statement::before,
     .methodology-framework::before,
-    .contribution-box::before {
+    .contribution-box::before,
+    .friction-closing::before {
         background: #fff;
         color: #111;
     }
