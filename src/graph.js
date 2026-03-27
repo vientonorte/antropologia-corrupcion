@@ -41,7 +41,7 @@ class ForceSimulation {
     if (this.alpha < this.alphaMin) return false;
     this.alpha *= (1 - this.alphaDecay);
 
-    const k = Math.sqrt((this.width * this.height) / (this.nodes.length || 1));
+    const k = Math.min(Math.sqrt((this.width * this.height) / (this.nodes.length || 1)), 180);
 
     // Fuerza repulsiva entre nodos
     for (let i = 0; i < this.nodes.length; i++) {
@@ -73,8 +73,8 @@ class ForceSimulation {
     // Fuerza hacia el centro (gravedad suave)
     const cx = this.width / 2, cy = this.height / 2;
     for (const n of this.nodes) {
-      n.vx += (cx - n.x) * 0.01 * this.alpha;
-      n.vy += (cy - n.y) * 0.01 * this.alpha;
+      n.vx += (cx - n.x) * 0.06 * this.alpha;
+      n.vy += (cy - n.y) * 0.06 * this.alpha;
     }
 
     // Aplicar velocidades + decay + bounds
