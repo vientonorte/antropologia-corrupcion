@@ -2024,3 +2024,97 @@ nav a.active {
 .checkpoint-box p {
     margin-bottom: 0;
 }
+
+/* ── CRONOLOGÍA / TIMELINE ── */
+.cronologia {
+    margin: 2rem 0;
+    padding: 1.5rem 1.5rem 1.5rem 1rem;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-left: 3px solid var(--color-accent-dim);
+}
+.cronologia-title {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    color: var(--color-accent);
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    display: block;
+}
+.timeline {
+    list-style: none;
+    border-left: 2px solid var(--color-border);
+    padding-left: 1.75rem;
+    margin: 0;
+}
+.timeline-item {
+    position: relative;
+    padding-bottom: 1.75rem;
+}
+.timeline-item:last-child { padding-bottom: 0; }
+.timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -2.175rem;
+    top: 0.4rem;
+    width: 0.65rem;
+    height: 0.65rem;
+    background: var(--color-accent-dim);
+    border-radius: 50%;
+}
+.timeline-date {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    color: var(--color-accent);
+    margin-bottom: 0.25rem;
+    text-transform: uppercase;
+}
+.timeline-content strong {
+    color: var(--color-text);
+    display: block;
+    margin-bottom: 0.25rem;
+}
+.timeline-content p {
+    margin: 0;
+    color: var(--color-text-muted);
+    font-size: 0.93rem;
+    line-height: 1.6;
+}
+
+/* ── CONCLUSIONES — lectura comparada wrapper ── */
+.conclusion-intro {
+    max-width: 900px;
+    font-style: italic;
+    color: var(--color-text-muted);
+    margin-bottom: 2rem;
+    border-left: 3px solid var(--color-accent-dim);
+    padding-left: 1rem;
+}
+
+/* ── RESEARCH AGENDA LIST ── */
+.agenda-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    counter-reset: agenda-counter;
+}
+.agenda-list li {
+    padding: 1rem 1rem 1rem 3.5rem;
+    position: relative;
+    border-bottom: 1px solid var(--color-border);
+    counter-increment: agenda-counter;
+}
+.agenda-list li:last-child { border-bottom: none; }
+.agenda-list li::before {
+    content: counter(agenda-counter, upper-alpha);
+    position: absolute;
+    left: 1rem;
+    top: 1rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--color-accent);
+    letter-spacing: 0.1em;
+}
