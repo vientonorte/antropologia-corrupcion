@@ -1,0 +1,221 @@
+{
+  "_meta": {
+    "version": "1.0.0",
+    "schema": "contra-archivo/casos",
+    "description": "Casos del Contra-Archivo — dispositivo crítico de fricción entre regímenes incompatibles de verdad",
+    "capas": {
+      "etica": "Testimonio situado, cuidado, contexto vivido — lo que el archivo oficial no puede contener",
+      "institucional": "Registro oficial, clasificación, distorsión normativa — lo que la institución declara",
+      "material": "Territorio, evidencia, densidad histórica — lo que persiste en el cuerpo y la tierra"
+    },
+    "friccion": {
+      "tipos": {
+        "semantica": "Conflicto en el significado de términos clave entre capas (ej. 'consulta' vs 'consentimiento')",
+        "politica": "Conflicto en quién tiene autoridad para definir, clasificar, decidir",
+        "tecnica": "Conflicto entre datos, registros, mediciones — divergencia factual con consecuencias institucionales"
+      },
+      "intensidad": "0.0 (mínima) → 1.0 (crítica / irreductible)"
+    }
+  },
+  "casos": [
+    {
+      "id": "sura-gobernanza-datos",
+      "titulo": "SURA Investments: Gobernanza de Datos y Separación AFP",
+      "anio": 2024,
+      "actores": ["SURA Investments", "AFP", "CMF", "trabajadores afiliados", "comunidades mapuche"],
+      "instituciones": ["SURA Investments", "AFP UNO", "Comisión para el Mercado Financiero"],
+      "etica": {
+        "titulo": "Testimonio situado: el trabajador como dato",
+        "descripcion": "Los afiliados experimentan su relación con el sistema previsional como una caja negra opaca: no comprenden qué hacen sus fondos, dónde se invierten, qué territorios o comunidades financian. El sistema traduce su vida laboral en columnas de riesgo-retorno sin consentimiento informado real.",
+        "voces": [
+          "Afiliados que no conocen la cartera de inversión de su fondo",
+          "Trabajadores que descubren que su AFP financia proyectos en territorios en conflicto"
+        ],
+        "documentos_ref": ["SURA_Compilado_Estrategia_Gaona_Complete.pdf"],
+        "keywords": ["consentimiento", "transparencia", "autonomía", "opacidad"],
+        "color": "#c8a96e"
+      },
+      "institucional": {
+        "titulo": "Clasificación institucional: 'inversión responsable'",
+        "descripcion": "SURA Investments opera bajo clasificaciones ESG que permiten mantener inversiones en territorios en disputa. Los informes de sostenibilidad usan lenguaje técnico que absorbe el conflicto sin resolverlo: 'riesgo reputacional', 'gestión de stakeholders', 'diálogo comunitario'. La CMF regula los flujos pero no los territorios que financian.",
+        "documentos": ["Informes ESG anuales", "Resoluciones CMF", "Estatutos AFP"],
+        "clasificaciones": ["inversión sostenible", "cartera multifondo A-E", "riesgo moderado"],
+        "keywords": ["ESG", "CMF", "regulación", "mistranslation", "clasificación"],
+        "color": "#4a7fa5"
+      },
+      "material": {
+        "titulo": "Territorio: lo que financia el fondo",
+        "descripcion": "Los fondos de pensión chilenos son accionistas en empresas con proyectos en territorios mapuche, zonas de sacrificio ambiental y concesiones mineras. El dinero de los trabajadores viaja a territorios que muchos de ellos nunca visitarán y cuya historia desconocen. La densidad histórica del territorio no aparece en ningún prospecto de inversión.",
+        "evidencias": [
+          "Carteras de inversión AFP con exposición a sectores extractivos",
+          "Territorios en la Región de Los Ríos con concesiones forestales financiadas por fondos previsionales"
+        ],
+        "keywords": ["territorio", "extractivismo", "zona de sacrificio", "capital financiero", "tierras"],
+        "color": "#7a9e6e"
+      },
+      "friccion": {
+        "tipo": "politica",
+        "subtipo": "semantica",
+        "intensidad": 0.82,
+        "estado": "abierta",
+        "descripcion": "El sistema previsional traduce la vida de los trabajadores en instrumentos financieros; esos instrumentos financian territorios en disputa; pero ninguna capa del sistema reconoce esta cadena como un problema político. La fricción es máxima: tres regímenes de verdad (el del trabajador, el de la CMF, el del territorio) son incompatibles.",
+        "tension_central": "¿La 'inversión responsable' puede existir si no hay consentimiento del territorio que financia?",
+        "sin_resolver": true
+      },
+      "conexiones": ["la-negra-territorio-mapuche", "periodismo-datos-chile"],
+      "tags": ["previsión", "AFP", "ESG", "territorio", "datos", "corrupción sistémica"]
+    },
+    {
+      "id": "la-negra-territorio-mapuche",
+      "titulo": "La Negra — Memoria, Territorio y Resistencia Mapuche-Huilliche",
+      "anio": 2023,
+      "actores": ["comunidades mapuche-huilliche", "CONADI", "empresas forestales", "Ministerio de Bienes Nacionales", "jueces de letras"],
+      "instituciones": ["CONADI", "Poder Judicial", "Ministerio de Bienes Nacionales", "SII"],
+      "etica": {
+        "titulo": "Memorias que el archivo oficial no puede contener",
+        "descripcion": "Las comunidades de La Negra (Región de Los Ríos) mantienen memorias territoriales que preceden al Estado-nación chileno. Sus formas de nombrar el territorio, sus límites vivos, sus prácticas de cuidado del agua y del bosque no tienen equivalente en el sistema registral. El testimonio situado es la única evidencia de una soberanía que el derecho positivo chileno no puede reconocer sin negar sus propios fundamentos.",
+        "voces": [
+          "Relatos de lonkos y machis sobre límites territoriales precoloniales",
+          "Memorias de usurpación durante el proceso de 'pacificación' (1860-1900)",
+          "Testimonios de mujeres sobre el rol del agua en la práctica espiritual y productiva"
+        ],
+        "documentos_ref": ["La Negra/README.md", "Distribución de titulos de merced en Región de los ríos.png"],
+        "keywords": ["memoria", "soberanía", "territorio vivo", "testimonio", "lonko"],
+        "color": "#c8a96e"
+      },
+      "institucional": {
+        "titulo": "El registro catastral como dispositivo de borramiento",
+        "descripcion": "El Conservador de Bienes Raíces registra terrenos que el Estado entregó a colonos tras la 'pacificación'. Los títulos de merced (fragmentos de territorio devuelto a comunidades tras la usurpación) no coinciden con los límites que las comunidades reconocen. CONADI opera con criterios técnico-jurídicos que no pueden procesar la lógica territorial mapuche. La Ley Forestal (D.L. 701) convirtió suelos mapuche en plantaciones de pino y eucalipto reconocidas institucionalmente como 'usos productivos'.",
+        "documentos": ["Títulos de merced históricos", "Catastro CONADI", "Registros forestales D.L. 701"],
+        "clasificaciones": ["predio agrícola", "zona de amortiguación forestal", "terreno baldío fiscal"],
+        "keywords": ["títulos de merced", "CONADI", "DL701", "catastro", "borramiento"],
+        "color": "#4a7fa5"
+      },
+      "material": {
+        "titulo": "El territorio como organismo histórico",
+        "descripcion": "La Negra no es un predio: es una red de relaciones entre cuerpos, agua, bosque nativo, animales, siembras y muertos. Las plantaciones de pino reemplazaron ecosistemas que tardaron milenios en formarse. Las napas freáticas han descendido. El borde de los ríos ha cambiado. Esta densidad material es la prueba más contundente de la corrupción institucional —y la menos admisible como evidencia judicial.",
+        "evidencias": [
+          "Mapas de cambio de uso de suelo (1973-2023)",
+          "Fotografías aéreas de deforestación",
+          "Registros de caudal de ríos antes/después de plantaciones forestales",
+          "Distribución de títulos de merced en Región de Los Ríos (imagen)"
+        ],
+        "keywords": ["bosque nativo", "pino", "napa freática", "deforestación", "cuerpo-territorio"],
+        "color": "#7a9e6e"
+      },
+      "friccion": {
+        "tipo": "politica",
+        "subtipo": "semantica",
+        "intensidad": 0.94,
+        "estado": "abierta",
+        "descripcion": "La palabra 'territorio' tiene tres significados incompatibles: para la comunidad es un organismo vivo con historia propia; para el catastro es una superficie parcelable; para la empresa forestal es un factor de producción. Ninguna de estas definiciones puede aceptar a las otras sin destruirse. La fricción es constitutiva: no es un error del sistema, es el sistema.",
+        "tension_central": "¿Puede el derecho de propiedad chileno reconocer el territorio mapuche sin negarse a sí mismo?",
+        "sin_resolver": true
+      },
+      "conexiones": ["sura-gobernanza-datos", "periodismo-datos-chile"],
+      "tags": ["mapuche-huilliche", "territorio", "memoria", "CONADI", "forestales", "soberanía"]
+    },
+    {
+      "id": "periodismo-datos-chile",
+      "titulo": "Periodismo de Datos y la Corrupción como Mistranslation Institucional",
+      "anio": 2023,
+      "actores": ["periodistas de investigación", "CIPER Chile", "instituciones públicas", "fuentes anónimas", "Ministerio Público"],
+      "instituciones": ["CIPER Chile", "Ministerio Público", "Consejo para la Transparencia", "municipalidades"],
+      "etica": {
+        "titulo": "La fuente como sujeto en riesgo",
+        "descripcion": "El periodismo de datos en Chile opera en un campo minado: las fuentes que revelan corrupción enfrentan represalias laborales, judiciales y sociales. El testimonio de quien filtra un documento institucional es un acto político de alta exposición. La 'objetividad' periodística exige despersonalizar esa fuente —pero al despersonalizarla, el relato pierde su densidad ética.",
+        "voces": [
+          "Funcionarios públicos que filtraron irregularidades y fueron desvinculados",
+          "Periodistas amenazados tras publicaciones sobre municipios",
+          "Testigos de actos de corrupción que nunca declararon por miedo"
+        ],
+        "documentos_ref": ["CIPER- Clase teórico prática - Investigación Crimen Organizado.pdf", "Introduction Journalism.png"],
+        "keywords": ["fuente", "protección", "testimonio", "riesgo", "whistleblower"],
+        "color": "#c8a96e"
+      },
+      "institucional": {
+        "titulo": "El dato como ficción institucional",
+        "descripcion": "Las instituciones públicas chilenas producen datos según sus propios marcos de clasificación. Una licitación fraudulenta aparece en el sistema de ComprasPúblicas como 'proceso regular'. Un desvío de fondos municipales figura en la contabilidad como 'gasto operacional'. La corrupción no viola el registro: lo habita. Los datos institucionales son el dispositivo mediante el cual la corrupción se vuelve invisible.",
+        "documentos": ["Bases de datos ComprasPúblicas", "Cuentas públicas municipales", "OIRS", "Ley de Transparencia respuestas"],
+        "clasificaciones": ["licitación pública", "gasto corriente", "convenio marco", "transferencia corriente"],
+        "keywords": ["ComprasPúblicas", "contabilidad pública", "clasificación", "invisibilidad", "registro"],
+        "color": "#4a7fa5"
+      },
+      "material": {
+        "titulo": "El documento como cuerpo del delito",
+        "descripcion": "Un contrato firmado, una transferencia bancaria, un correo interno: estos son los objetos materiales que permiten rastrear la corrupción. Pero su interpretación es siempre disputada. El mismo contrato es 'irregular' para el periodista, 'conforme a derecho' para el abogado institucional, y 'normal' para el funcionario que lo firmó. La materialidad del documento no resuelve el conflicto —lo multiplica.",
+        "evidencias": [
+          "PDFs de licitaciones con irregularidades documentadas",
+          "Bases de datos filtradas de asignaciones municipales",
+          "Correos institucionales obtenidos por transparencia activa",
+          "Gráficas de redes de actores (quién firma con quién)"
+        ],
+        "keywords": ["documento", "contrato", "filtración", "red de actores", "evidencia material"],
+        "color": "#7a9e6e"
+      },
+      "friccion": {
+        "tipo": "semantica",
+        "subtipo": "tecnica",
+        "intensidad": 0.71,
+        "estado": "abierta",
+        "descripcion": "El dato es el campo de batalla. Cada institución produce sus propios datos según sus propias categorías. El periodismo de datos intenta hacer hablar a esos datos de formas que las instituciones no autorizaron. La fricción es técnica en su superficie (¿qué mide qué?) y política en su fondo (¿quién define qué merece ser medido?).",
+        "tension_central": "¿Puede el dato institucional ser evidencia de la corrupción que lo produjo?",
+        "sin_resolver": true
+      },
+      "conexiones": ["sura-gobernanza-datos", "la-negra-territorio-mapuche"],
+      "tags": ["periodismo", "CIPER", "datos", "transparencia", "corrupción", "documentos"]
+    },
+    {
+      "id": "oit169-consulta-previa",
+      "titulo": "OIT 169: La Consulta Previa como Dispositivo de Neutralización",
+      "anio": 2022,
+      "actores": ["comunidades indígenas", "Estado chileno", "empresas con proyectos en territorios indígenas", "CONADI", "Ministerio de Desarrollo Social"],
+      "instituciones": ["Ministerio de Desarrollo Social", "CONADI", "SEA", "juzgados ambientales"],
+      "etica": {
+        "titulo": "El consentimiento que nunca llega",
+        "descripcion": "El Convenio OIT 169 establece el derecho al consentimiento previo, libre e informado. En la práctica chilena, el mecanismo de 'consulta' se convierte en un proceso burocrático que las comunidades deben atravesar —con tiempos, formatos y vocabulario institucional— para poder decir no a algo que ya está decidido. La consulta es la forma que toma la violación del consentimiento en el derecho internacional.",
+        "voces": [
+          "Comunidades que participaron en 'consultas' cuyo resultado fue ignorado",
+          "Líderes que describen el proceso como 'teatro institucional'",
+          "Mujeres excluidas de mesas de consulta por criterios de representación externos a la comunidad"
+        ],
+        "documentos_ref": [
+          "UX RG - Desglose de derechos consagrados por el OIT 169.jpg",
+          "UX RG - ¿Comparativa Eº Plurinacional del marco legal vigente en Chile_.jpg"
+        ],
+        "keywords": ["consentimiento", "CPLI", "autonomía", "representación", "exclusión"],
+        "color": "#c8a96e"
+      },
+      "institucional": {
+        "titulo": "La consulta como proceso técnico-administrativo",
+        "descripcion": "El Estado chileno implementó el DS N°66 para operacionalizar el Convenio 169. El decreto traduce el derecho al consentimiento en un procedimiento con etapas, plazos, representantes reconocidos y criterios de admisibilidad. Esta traducción convierte un derecho político en un trámite burocrático. El Sistema de Evaluación de Impacto Ambiental (SEIA) incorpora la 'participación indígena' como una fase del proceso —no como condición para él.",
+        "documentos": ["DS N°66", "Ley N°19.253", "Reglamento SEIA", "Resoluciones SEA"],
+        "clasificaciones": ["proceso de consulta regular", "participación ciudadana indígena", "medidas de mitigación"],
+        "keywords": ["DS66", "SEIA", "proceso administrativo", "representación", "admisibilidad"],
+        "color": "#4a7fa5"
+      },
+      "material": {
+        "titulo": "Lo que el territorio perdió durante el proceso",
+        "descripcion": "Mientras duran los procesos de consulta, los proyectos avanzan. Se construyen caminos, se instalan faenas, se modifica el paisaje. La comunidad llega al 'acuerdo' —o al 'no acuerdo'— habiendo ya perdido algo que el proceso no contempla devolver. La consulta previa llega después de los hechos materiales que debía prevenir.",
+        "evidencias": [
+          "Registros fotográficos de obras en territorios en consulta",
+          "Informes de avance de proyectos durante proceso SEIA",
+          "Denuncias de daño ambiental previo a la resolución de consulta"
+        ],
+        "keywords": ["daño previo", "hechos consumados", "faena", "construcción", "irreversibilidad"],
+        "color": "#7a9e6e"
+      },
+      "friccion": {
+        "tipo": "politica",
+        "subtipo": "semantica",
+        "intensidad": 0.89,
+        "estado": "abierta",
+        "descripcion": "La palabra clave del conflicto es 'consulta'. Para el Convenio OIT 169, implica poder de veto. Para el Estado chileno, implica un proceso de diálogo sin poder decisorio. Para las empresas, implica un riesgo a gestionar. Tres definiciones que nunca se confrontan directamente pero que producen efectos devastadoramente reales sobre los territorios.",
+        "tension_central": "¿Puede existir 'consulta' sin posibilidad real de decir no?",
+        "sin_resolver": true
+      },
+      "conexiones": ["la-negra-territorio-mapuche", "sura-gobernanza-datos"],
+      "tags": ["OIT169", "CPLI", "consulta previa", "SEIA", "territorio indígena", "derechos"]
+    }
+  ]
+}
