@@ -1,1617 +1,1012 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contra-Archivo — Antropología y Corrupción · Tesis Doctoral</title>
-    <meta name="description" content="Contra-Archivo: dispositivo crítico de investigación doctoral en Antropología y Corrupción. Etnografía institucional, gobernanza de datos, derechos indígenas y periodismo de investigación en Chile.">
-    <meta name="keywords" content="tesis doctoral, antropología, corrupción, etnografía institucional, contra-archivo, gobernanza de datos, derechos indígenas, OIT 169, Chile">
-    <link rel="stylesheet" href="styles.css">
-    <!-- Graph system — progressive enhancement -->
-    <link rel="stylesheet" href="styles/graph.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contra-Archivo — Antropología y Corrupción · Tesis Doctoral</title>
+  <meta name="description" content="Instrumento cualitativo de análisis multi-situado para cuantificar tensiones de mistranslation institucional. Tesis doctoral en Antropología — Chile.">
+  <style>
+/* ══════════════════════════════════════ TOKENS */
+:root {
+  --bg:        #0c0c0c;
+  --s1:        #131313;
+  --s2:        #1a1a1a;
+  --border:    rgba(255,255,255,.07);
+  --text:      #e2e2e2;
+  --muted:     #888;
+  --dim:       #444;
+  --etica:     #c8a96e;
+  --inst:      #4a7fa5;
+  --mat:       #7a9e6e;
+  --crit:      #c85f4a;
+  --r:         8px;
+  --font-sans: -apple-system, 'Helvetica Neue', sans-serif;
+  --font-mono: 'SF Mono', 'Fira Code', monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--font-sans);font-size:15px;line-height:1.65;overflow-x:hidden}
+
+/* ══════════════════════════════════════ UTILITY */
+.mono{font-family:var(--font-mono);font-size:.85em}
+.muted{color:var(--muted)}
+.label{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.accent-e{color:var(--etica)}
+.accent-i{color:var(--inst)}
+.accent-m{color:var(--mat)}
+.accent-c{color:var(--crit)}
+
+/* ══════════════════════════════════════ NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 32px;height:52px;
+  background:rgba(12,12,12,.88);backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border)}
+.nav-brand{font-family:var(--font-mono);font-size:12px;color:var(--etica);letter-spacing:.06em}
+.nav-links{display:flex;gap:28px}
+.nav-links a{font-size:12px;color:var(--muted);text-decoration:none;letter-spacing:.04em;transition:color .15s}
+.nav-links a:hover{color:var(--text)}
+.nav-cta{font-size:11px;padding:6px 14px;border:1px solid var(--border);border-radius:4px;
+  color:var(--text);text-decoration:none;transition:all .15s;letter-spacing:.04em}
+.nav-cta:hover{background:var(--s2);border-color:var(--etica);color:var(--etica)}
+
+/* ══════════════════════════════════════ HERO */
+#hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;
+  padding:120px 40px 80px;max-width:960px;margin:0 auto}
+.hero-label{font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:28px}
+.hero-h1{font-size:clamp(32px,5vw,58px);font-weight:700;line-height:1.15;
+  letter-spacing:-.025em;color:var(--text);margin-bottom:28px}
+.hero-h1 em{font-style:normal;color:var(--etica)}
+.hero-thesis{font-size:18px;color:var(--muted);line-height:1.6;
+  max-width:640px;margin-bottom:48px;border-left:2px solid var(--etica);
+  padding-left:20px}
+.hero-thesis strong{color:var(--text)}
+
+/* Tensión-metro hero */
+.hero-meter{margin-bottom:56px}
+.hero-meter-label{font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:12px}
+.meter-cases{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.meter-case{background:var(--s1);border:1px solid var(--border);
+  border-radius:var(--r);padding:14px 16px;cursor:pointer;transition:border-color .2s}
+.meter-case:hover{border-color:var(--etica)}
+.mc-name{font-size:11px;color:var(--muted);margin-bottom:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mc-bar-wrap{height:4px;background:rgba(255,255,255,.06);border-radius:2px;overflow:hidden;margin-bottom:6px}
+.mc-bar{height:100%;border-radius:2px;transition:width 1.2s cubic-bezier(.4,0,.2,1)}
+.mc-val{font-family:var(--font-mono);font-size:16px;font-weight:700}
+.mc-tipo{font-size:10px;color:var(--dim);letter-spacing:.05em;text-transform:uppercase;margin-top:2px}
+
+.hero-ctas{display:flex;gap:12px;flex-wrap:wrap}
+.btn-primary{padding:12px 24px;background:var(--etica);color:#111;font-weight:600;
+  border-radius:var(--r);text-decoration:none;font-size:14px;transition:opacity .15s;border:none;cursor:pointer}
+.btn-primary:hover{opacity:.88}
+.btn-ghost{padding:11px 24px;border:1px solid var(--border);color:var(--text);
+  border-radius:var(--r);text-decoration:none;font-size:14px;transition:all .15s}
+.btn-ghost:hover{border-color:var(--etica);color:var(--etica)}
+
+/* ══════════════════════════════════════ SECTIONS */
+section{padding:80px 40px;max-width:960px;margin:0 auto}
+.section-eyebrow{display:flex;align-items:center;gap:12px;margin-bottom:40px}
+.eyebrow-num{font-family:var(--font-mono);font-size:11px;color:var(--dim)}
+.eyebrow-line{flex:1;height:1px;background:var(--border)}
+.eyebrow-text{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+h2{font-size:clamp(24px,3vw,36px);font-weight:700;letter-spacing:-.02em;line-height:1.2;
+  margin-bottom:16px}
+.section-lead{font-size:17px;color:var(--muted);line-height:1.7;max-width:680px;margin-bottom:40px}
+.section-lead strong{color:var(--text)}
+
+/* ══════════════════════════════════════ INSTRUMENTO */
+#instrumento{border-top:1px solid var(--border)}
+.instrument-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
+
+/* Las 3 capas */
+.capas-stack{display:flex;flex-direction:column;gap:3px}
+.capa-card{border-radius:var(--r);padding:20px 22px;border:1px solid transparent;
+  cursor:pointer;transition:all .2s;position:relative;overflow:hidden}
+.capa-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px}
+.capa-e{background:rgba(200,169,110,.07);border-color:rgba(200,169,110,.2)}
+.capa-e::before{background:var(--etica)}
+.capa-e:hover{background:rgba(200,169,110,.12);border-color:rgba(200,169,110,.35)}
+.capa-i{background:rgba(74,127,165,.07);border-color:rgba(74,127,165,.2)}
+.capa-i::before{background:var(--inst)}
+.capa-i:hover{background:rgba(74,127,165,.12);border-color:rgba(74,127,165,.35)}
+.capa-m{background:rgba(122,158,110,.07);border-color:rgba(122,158,110,.2)}
+.capa-m::before{background:var(--mat)}
+.capa-m:hover{background:rgba(122,158,110,.12);border-color:rgba(122,158,110,.35)}
+.capa-sym{font-size:11px;font-family:var(--font-mono);margin-bottom:4px}
+.capa-title{font-size:15px;font-weight:600;margin-bottom:6px}
+.capa-desc{font-size:12px;color:var(--muted);line-height:1.5}
+
+/* Fricción entre capas */
+.friction-indicator{
+  display:flex;align-items:center;justify-content:center;
+  padding:8px;position:relative}
+.fi-arrow{width:1px;height:28px;background:linear-gradient(to bottom,var(--etica),var(--inst));
+  margin:0 auto;position:relative}
+.fi-label{position:absolute;right:100%;margin-right:8px;
+  font-size:10px;color:var(--dim);letter-spacing:.08em;white-space:nowrap}
+
+/* Diagrama metodológico */
+.method-diagram{background:var(--s1);border:1px solid var(--border);border-radius:var(--r);
+  padding:24px;display:flex;flex-direction:column;gap:0}
+.md-step{display:flex;align-items:flex-start;gap:14px;padding:14px 0;
+  border-bottom:1px solid var(--border)}
+.md-step:last-child{border-bottom:none}
+.md-num{font-family:var(--font-mono);font-size:11px;color:var(--dim);
+  min-width:24px;margin-top:2px}
+.md-content{}
+.md-title{font-size:13px;font-weight:600;color:var(--text);margin-bottom:3px}
+.md-text{font-size:12px;color:var(--muted);line-height:1.5}
+
+/* ══════════════════════════════════════ CAMPOS */
+#campos{border-top:1px solid var(--border)}
+.campos-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.campo-card{background:var(--s1);border:1px solid var(--border);border-radius:var(--r);
+  padding:24px;cursor:pointer;transition:all .2s;position:relative;overflow:hidden}
+.campo-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px}
+.campo-card:nth-child(1)::after{background:linear-gradient(90deg,var(--etica),transparent)}
+.campo-card:nth-child(2)::after{background:linear-gradient(90deg,var(--mat),transparent)}
+.campo-card:nth-child(3)::after{background:linear-gradient(90deg,var(--inst),transparent)}
+.campo-card:nth-child(4)::after{background:linear-gradient(90deg,var(--crit),transparent)}
+.campo-card:hover{border-color:rgba(255,255,255,.15);transform:translateY(-2px)}
+.cc-tag{font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:10px}
+.cc-title{font-size:16px;font-weight:600;margin-bottom:8px;line-height:1.3}
+.cc-desc{font-size:12px;color:var(--muted);line-height:1.6;margin-bottom:16px}
+.cc-actors{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:14px}
+.cc-actor{font-size:10px;padding:2px 8px;background:rgba(255,255,255,.04);
+  border:1px solid var(--border);border-radius:3px;color:var(--dim)}
+.cc-friction{display:flex;align-items:center;gap:8px}
+.ccf-label{font-size:10px;color:var(--dim);letter-spacing:.05em;text-transform:uppercase}
+.ccf-bar{flex:1;height:3px;background:rgba(255,255,255,.06);border-radius:2px;overflow:hidden}
+.ccf-fill{height:100%;border-radius:2px}
+.ccf-val{font-family:var(--font-mono);font-size:12px;font-weight:700}
+
+/* ══════════════════════════════════════ TENSIONES */
+#tensiones{border-top:1px solid var(--border)}
+.tension-selector{display:flex;gap:8px;margin-bottom:32px;flex-wrap:wrap}
+.ts-btn{font-size:12px;padding:7px 16px;border:1px solid var(--border);border-radius:20px;
+  background:transparent;color:var(--muted);cursor:pointer;transition:all .15s;font-family:inherit}
+.ts-btn.active{border-color:var(--etica);color:var(--etica);background:rgba(200,169,110,.08)}
+.tension-viewer{display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;min-height:320px}
+.tv-capa{border-radius:var(--r);padding:22px;display:flex;flex-direction:column;gap:12px}
+.tv-e{background:rgba(200,169,110,.07);border:1px solid rgba(200,169,110,.2)}
+.tv-i{background:rgba(74,127,165,.07);border:1px solid rgba(74,127,165,.2)}
+.tv-m{background:rgba(122,158,110,.07);border:1px solid rgba(122,158,110,.2)}
+.tvc-sym{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.tvc-title{font-size:14px;font-weight:600}
+.tvc-body{font-size:12px;color:var(--muted);line-height:1.6}
+.tvc-kws{display:flex;flex-wrap:wrap;gap:4px;margin-top:auto}
+.kw{font-size:10px;padding:2px 7px;border-radius:3px;font-family:var(--font-mono)}
+.kw-e{background:rgba(200,169,110,.12);color:var(--etica)}
+.kw-i{background:rgba(74,127,165,.12);color:var(--inst)}
+.kw-m{background:rgba(122,158,110,.12);color:var(--mat)}
+
+.tension-meta{margin-top:20px;background:var(--s1);border:1px solid var(--border);
+  border-radius:var(--r);padding:20px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px}
+.tm-item{}
+.tm-label{font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--dim);margin-bottom:4px}
+.tm-val{font-size:14px;font-weight:600}
+.tm-sub{font-size:12px;color:var(--muted);margin-top:4px;line-height:1.4;font-style:italic}
+
+/* Intensidad visual */
+.intensity-bar{height:6px;border-radius:3px;overflow:hidden;
+  background:rgba(255,255,255,.05);margin-top:8px}
+.ib-fill{height:100%;border-radius:3px;
+  background:linear-gradient(90deg,var(--mat),var(--etica),var(--crit))}
+
+/* ══════════════════════════════════════ GRAFO EMBED */
+#grafo{border-top:1px solid var(--border)}
+.graph-wrap{
+  background:var(--s1);border:1px solid var(--border);border-radius:var(--r);
+  overflow:hidden;position:relative;height:460px}
+#ca-graph-canvas-embed{width:100%;height:100%}
+.graph-overlay-legend{
+  position:absolute;bottom:16px;right:16px;
+  background:rgba(12,12,12,.88);backdrop-filter:blur(8px);
+  border:1px solid var(--border);border-radius:6px;
+  padding:12px 14px;display:flex;flex-direction:column;gap:6px}
+.gl-item{display:flex;align-items:center;gap:7px;font-size:11px;color:var(--muted)}
+.gl-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.graph-controls{display:flex;gap:8px;margin-bottom:16px}
+.gc-btn{font-size:11px;padding:5px 13px;border:1px solid var(--border);border-radius:4px;
+  background:transparent;color:var(--muted);cursor:pointer;font-family:inherit;transition:all .15s}
+.gc-btn.active{border-color:var(--etica);color:var(--etica);background:rgba(200,169,110,.08)}
+
+/* ══════════════════════════════════════ PROTOCOLO */
+#protocolo{border-top:1px solid var(--border)}
+.protocolo-intro{font-size:15px;color:var(--muted);line-height:1.7;
+  max-width:680px;margin-bottom:40px}
+.protocolo-intro strong{color:var(--text)}
+
+.umbral-visual{
+  background:var(--s1);border:1px solid var(--border);border-radius:var(--r);
+  padding:24px;margin-bottom:32px}
+.uv-title{font-size:12px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:16px}
+.uv-scale{position:relative;height:40px;border-radius:4px;overflow:hidden;
+  background:linear-gradient(90deg,
+    rgba(122,158,110,.3) 0%,
+    rgba(200,169,110,.3) 55%,
+    rgba(200,95,74,.5) 75%,
+    rgba(200,95,74,.9) 100%)}
+.uv-markers{display:flex;position:relative;margin-top:8px;font-size:10px;color:var(--dim)}
+.uv-mk{position:absolute;transform:translateX(-50%);text-align:center}
+.uv-mk-line{width:1px;height:10px;background:var(--dim);margin:0 auto 3px}
+.uv-cases{display:flex;gap:6px;margin-top:16px;flex-wrap:wrap}
+.uvc{font-size:11px;padding:3px 10px;border-radius:3px;border:1px solid}
+.uvc-ok{border-color:var(--mat);color:var(--mat);background:rgba(122,158,110,.08)}
+.uvc-warn{border-color:var(--etica);color:var(--etica);background:rgba(200,169,110,.08)}
+.uvc-crit{border-color:var(--crit);color:var(--crit);background:rgba(200,95,74,.08)}
+
+.protocolo-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-bottom:32px}
+.pc{background:var(--s1);border:1px solid var(--border);border-radius:var(--r);
+  padding:22px;position:relative;overflow:hidden}
+.pc::before{content:'';position:absolute;top:0;left:0;right:0;height:2px}
+.pc:nth-child(1)::before{background:var(--inst)}
+.pc:nth-child(2)::before{background:var(--etica)}
+.pc:nth-child(3)::before{background:var(--mat)}
+.pc:nth-child(4)::before{background:var(--crit)}
+.pc-num{font-family:var(--font-mono);font-size:10px;color:var(--dim);margin-bottom:8px}
+.pc-title{font-size:14px;font-weight:600;margin-bottom:8px}
+.pc-body{font-size:12px;color:var(--muted);line-height:1.6;margin-bottom:12px}
+.pc-cond{font-size:11px;font-family:var(--font-mono);color:var(--dim);
+  padding:8px 10px;background:rgba(255,255,255,.03);border-radius:4px;
+  border-left:2px solid var(--border)}
+.pc-cond strong{color:var(--text)}
+
+.protocolo-output{
+  border:1px solid rgba(200,169,110,.3);border-radius:var(--r);
+  padding:28px;background:rgba(200,169,110,.04);
+  display:flex;flex-direction:column;gap:12px}
+.po-label{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--etica)}
+.po-title{font-size:20px;font-weight:700;color:var(--text)}
+.po-body{font-size:14px;color:var(--muted);line-height:1.7;max-width:640px}
+.po-body strong{color:var(--text)}
+
+/* ══════════════════════════════════════ ARCHIVO */
+#archivo{border-top:1px solid var(--border)}
+.archivo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.arc-dim{background:var(--s1);border:1px solid var(--border);border-radius:var(--r);
+  padding:18px;transition:border-color .2s}
+.arc-dim:hover{border-color:rgba(255,255,255,.15)}
+.arc-num{font-family:var(--font-mono);font-size:10px;color:var(--dim);margin-bottom:8px}
+.arc-title{font-size:13px;font-weight:600;margin-bottom:6px}
+.arc-count{font-size:11px;color:var(--muted);margin-bottom:10px}
+.arc-tags{display:flex;flex-wrap:wrap;gap:4px}
+.arc-tag{font-size:10px;padding:2px 6px;background:rgba(255,255,255,.04);
+  border-radius:3px;color:var(--dim)}
+.arc-link{display:inline-block;margin-top:12px;font-size:11px;color:var(--muted);
+  text-decoration:none;letter-spacing:.04em;
+  border-bottom:1px solid var(--border);padding-bottom:1px;transition:all .15s}
+.arc-link:hover{color:var(--etica);border-color:var(--etica)}
+
+/* ══════════════════════════════════════ FOOTER */
+footer{border-top:1px solid var(--border);padding:40px;
+  max-width:960px;margin:0 auto;
+  display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:20px}
+.footer-left{}
+.footer-title{font-size:13px;font-weight:600;margin-bottom:4px}
+.footer-sub{font-size:12px;color:var(--muted)}
+.footer-right{font-size:11px;color:var(--dim);text-align:right;line-height:1.8}
+
+/* ══════════════════════════════════════ DIVIDER */
+.full-divider{width:100%;height:1px;background:var(--border)}
+
+/* ══════════════════════════════════════ SCROLLBAR */
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:rgba(255,255,255,.1);border-radius:3px}
+
+/* ══════════════════════════════════════ RESPONSIVE */
+@media(max-width:768px){
+  nav .nav-links{display:none}
+  .meter-cases{grid-template-columns:1fr 1fr}
+  .instrument-grid{grid-template-columns:1fr}
+  .campos-grid{grid-template-columns:1fr}
+  .tension-viewer{grid-template-columns:1fr}
+  .protocolo-grid{grid-template-columns:1fr}
+  .archivo-grid{grid-template-columns:1fr 1fr}
+}
+  </style>
 </head>
 <body>
-<!-- Reading progress bar -->
-<div id="progress-bar" role="progressbar" aria-label="Progreso de lectura"></div>
 
-<!-- High contrast toggle -->
-<button class="hc-toggle" id="hc-toggle" aria-pressed="false" aria-label="Activar modo alto contraste">HC</button>
-
-<header>
-    <p class="label">Investigación Doctoral · Antropología · Chile</p>
-    <h1>Contra-Archivo</h1>
-    <p class="subtitle">Antropología y Corrupción — La mistranslation institucional como dispositivo de poder: etnografía, territorio y archivo crítico</p>
-</header>
-    
+<!-- NAV -->
 <nav>
-    <a href="#presentacion">Presentación</a>
-    <a href="#mejoras-tesis">Mejoras de Tesis</a>
-    <a href="#estado-del-arte">Estado del Arte</a>
-    <a href="#etnografia">Etnografía Audiovisual</a>
-    <a href="#ensayo">Ensayo</a>
-    <a href="#la-negra">La Negra</a>
-    <a href="#poemarios">Poemarios</a>
-    <a href="#documentos">Documentos</a>
-    <a href="#materiales">Materiales Visuales</a>
-    <a href="#referencias">Referencias</a>
-    <a href="#arquitectura">Arquitectura</a>
-    <a href="#investigador">Investigador</a>
-    <a href="#conclusiones">Conclusiones</a>
+  <span class="nav-brand">CONTRA-ARCHIVO</span>
+  <div class="nav-links">
+    <a href="#instrumento">Instrumento</a>
+    <a href="#campos">Campos</a>
+    <a href="#tensiones">Tensiones</a>
+    <a href="#grafo">Grafo</a>
+    <a href="#protocolo">Protocolo</a>
+    <a href="#archivo">Archivo</a>
+  </div>
+  <a class="nav-cta" href="admin.html">Admin ↗</a>
 </nav>
 
-<!-- Search bar -->
-<div class="search-bar" role="search">
-    <input type="search" id="search-input" placeholder="Buscar documentos, secciones, temas…" aria-label="Buscar en el archivo">
-    <span id="search-count" aria-live="polite"></span>
-    <div id="section-results" class="section-results" aria-live="polite"></div>
-</div>
+<!-- ══════════════════════════════════════ HERO -->
+<section id="hero">
+  <p class="hero-label">Tesis doctoral · Antropología · Chile · 2025</p>
+  <h1 class="hero-h1">La institución traduce.<br>La traducción falla.<br>El fallo <em>es el sistema</em>.</h1>
+  <p class="hero-thesis">Esta investigación demuestra que la corrupción institucional en Chile opera como un régimen de <strong>mistranslation</strong> —traducción fallida o deliberadamente distorsionada— entre tres regímenes de verdad incompatibles: el testimonio situado, el registro normativo y la evidencia material.</p>
 
-<main>
+  <div class="hero-meter">
+    <p class="hero-meter-label">Fricción epistemológica medida · 4 campos de investigación</p>
+    <div class="meter-cases" id="hero-meter"></div>
+  </div>
 
-    <!-- PRESENTACIÓN -->
-    <section id="presentacion">
-        <div class="section-header">
-            <span class="section-number">00</span>
-            <h2>Presentación del Proyecto Doctoral</h2>
+  <div class="hero-ctas">
+    <a class="btn-primary" href="#instrumento">Ver el instrumento</a>
+    <a class="btn-ghost" href="#protocolo">Protocolo de traducción</a>
+    <a class="btn-ghost" href="#tensiones">Explorar tensiones</a>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════ INSTRUMENTO -->
+<section id="instrumento">
+  <div class="section-eyebrow">
+    <span class="eyebrow-num">01</span>
+    <div class="eyebrow-line"></div>
+    <span class="eyebrow-text">El instrumento</span>
+  </div>
+  <h2>Análisis multi-situado de <span class="accent-e">3 capas</span></h2>
+  <p class="section-lead">El contra-archivo es un instrumento cualitativo que descompone cualquier situación institucional en <strong>tres regímenes de verdad simultáneos</strong> y mide la fricción entre ellos. Donde la fricción es alta, la mistranslation es estructural. Donde es crítica, el daño es irreversible.</p>
+
+  <div class="instrument-grid">
+    <div>
+      <div class="capas-stack">
+        <div class="capa-card capa-e">
+          <div class="capa-sym accent-e">◎ CAPA ÉTICA</div>
+          <div class="capa-title">Testimonio situado</div>
+          <div class="capa-desc">La experiencia vivida, la memoria corporal, el conocimiento que el archivo oficial no puede contener. Voces, prácticas, afectos, daño no reconocido.</div>
         </div>
-
-        <p>Este <strong>Contra-Archivo</strong> reúne los materiales, documentos de investigación, etnografías y materiales audiovisuales producidos en el marco del proyecto doctoral sobre <em>Antropología y Corrupción</em> en Chile. El archivo opera como un dispositivo crítico que pone en circulación evidencias, marcos teóricos y testimonios sobre las formas en que la corrupción se inscribe en los cuerpos, los territorios y las instituciones.</p>
-
-        <div class="thesis-statement">
-            <p>Esta investigación doctoral sostiene que la corrupción institucional en Chile opera fundamentalmente como un régimen de <strong>mistranslation</strong> —traducción fallida o deliberadamente distorsionada— entre marcos normativos, arquitecturas técnicas y prácticas organizacionales. A través de una etnografía multi-situada que articula la gobernanza de datos corporativos (caso SURA/AFP), el despojo territorial mapuche-huilliche (Región de Los Ríos) y las metodologías del periodismo de investigación, se demuestra que la opacidad y el despojo no son efectos colaterales del funcionamiento institucional, sino productos estructurales de la mistranslation institucionalizada como dispositivo de poder.</p>
+        <div class="friction-indicator">
+          <div class="fi-arrow"><span class="fi-label mono">← fricción →</span></div>
         </div>
-
-        <p>El proyecto cruza tres ejes principales: la <strong>gobernanza de datos y privacidad</strong> en instituciones financieras, la <strong>violación de derechos de pueblos indígenas</strong> consagrados en el Convenio 169 de la OIT, y las <strong>metodologías del periodismo de investigación</strong> como herramienta de denuncia y documentación.</p>
-
-        <div class="research-questions">
-            <p class="rq-label">Preguntas de investigación</p>
-            <ol>
-                <li>¿De qué manera la corrupción institucional puede ser comprendida analíticamente como un régimen de mistranslation entre marcos normativos, lenguajes técnicos y prácticas organizacionales?</li>
-                <li>¿Cómo operan los dispositivos de traducción fallida en la gobernanza de datos personales (caso SURA/AFP) y en el incumplimiento del Convenio 169 de la OIT en territorios mapuche-huilliche?</li>
-                <li>¿Qué papel desempeña el contra-archivo como práctica de re-traducción crítica capaz de restituir la legibilidad de las evidencias que la opacidad institucional suprime?</li>
-                <li>¿En qué medida la poesía y la etnografía audiovisual constituyen formas de conocimiento que desestabilizan los lenguajes institucionalizados de la corrupción?</li>
-            </ol>
+        <div class="capa-card capa-i">
+          <div class="capa-sym accent-i">▣ CAPA INSTITUCIONAL</div>
+          <div class="capa-title">Registro y clasificación</div>
+          <div class="capa-desc">Lo que la institución declara, clasifica y normaliza. Documentos, resoluciones, categorías técnico-jurídicas que absorben el conflicto sin resolverlo.</div>
         </div>
-
-        <div class="hypothesis-box">
-            <p class="hyp-label">Hipótesis de trabajo</p>
-            <p><strong>H1.</strong> La corrupción institucional no es una anomalía del sistema sino un producto estructural de la incompatibilidad deliberada entre registros normativos, técnicos y organizacionales —lo que esta tesis conceptualiza como <em>mistranslation institucionalizada</em>.</p>
-            <p><strong>H2.</strong> La etnografía multi-situada, al operar simultáneamente en el campo corporativo-digital y en el territorio indígena, permite visibilizar patrones transversales de opacidad que una aproximación disciplinaria única no podría capturar.</p>
-            <p><strong>H3.</strong> El contra-archivo, articulado como dispositivo de re-traducción crítica, constituye una intervención epistémica que restituye la agencia de los sujetos y comunidades cuyas experiencias son suprimidas por los archivos institucionales oficiales.</p>
+        <div class="friction-indicator">
+          <div class="fi-arrow"><span class="fi-label mono">← fricción →</span></div>
         </div>
-
-        <div class="tags" role="group" aria-label="Filtrar por tema">
-            <button class="tag" data-filter="antropologia">Antropología</button>
-            <button class="tag" data-filter="corrupcion">Corrupción</button>
-            <button class="tag" data-filter="chile">Chile</button>
-            <button class="tag" data-filter="derechos-indigenas">Derechos Indígenas</button>
-            <button class="tag" data-filter="periodismo">Periodismo de Investigación</button>
-            <button class="tag" data-filter="crimen">Crimen Organizado</button>
-            <button class="tag" data-filter="etnografia">Etnografía</button>
-            <button class="tag" data-filter="datos">Gobernanza de Datos</button>
+        <div class="capa-card capa-m">
+          <div class="capa-sym accent-m">◈ CAPA MATERIAL</div>
+          <div class="capa-title">Territorio y evidencia</div>
+          <div class="capa-desc">Lo que persiste en el cuerpo, la tierra, los datos. Evidencias físicas, densidad histórica, hechos que el proceso no contempla devolver.</div>
         </div>
+      </div>
+    </div>
 
-        <div class="section-stats" aria-label="Estadísticas del archivo">
-            <div class="stat"><span class="stat-value">2</span><span class="stat-label">Documentos PDF</span></div>
-            <div class="stat"><span class="stat-value">4</span><span class="stat-label">Materiales visuales</span></div>
-            <div class="stat"><span class="stat-value">4</span><span class="stat-label">Textos poéticos</span></div>
-            <div class="stat"><span class="stat-value">150</span><span class="stat-label">Págs. etnografía</span></div>
+    <div class="method-diagram">
+      <p class="label" style="margin-bottom:16px">Procedimiento analítico</p>
+      <div class="md-step">
+        <span class="md-num">01</span>
+        <div class="md-content">
+          <div class="md-title">Selección del campo multi-situado</div>
+          <div class="md-text">Identificar un fenómeno institucional con al menos dos sitios etnográficos (corporativo/digital + territorial) donde operen lógicas de traducción incompatibles.</div>
         </div>
-
-        <div class="matrix-card" aria-label="Matriz de tensiones institucionales">
-            <h3>Matriz de tensiones institucionales</h3>
-            <p class="matrix-description">Visualización matricial que cruza los ejes de la investigación con las dimensiones donde se producen fricciones entre norma, infraestructura, territorio y archivo. Los valores (1–4) indican intensidad de tensión observada.</p>
-            <ul id="matrix-legend" class="matrix-legend" aria-label="Leyenda de intensidades">
-                <li class="legend-item"><span class="legend-swatch level-1"></span>Bajo</li>
-                <li class="legend-item"><span class="legend-swatch level-2"></span>Medio</li>
-                <li class="legend-item"><span class="legend-swatch level-3"></span>Alto</li>
-                <li class="legend-item"><span class="legend-swatch level-4"></span>Crítico</li>
-            </ul>
-            <div class="matrix-scroll" role="region" aria-label="Matriz de ejes y dimensiones" tabindex="0">
-                <table class="matrix-table" aria-describedby="matrix-legend">
-                    <thead>
-                        <tr>
-                            <th></th>
-                            <th scope="col">Norma</th>
-                            <th scope="col">Infraestructura</th>
-                            <th scope="col">Territorio</th>
-                            <th scope="col">Archivo</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th scope="row">Gobernanza de datos</th>
-                            <td data-level="4" aria-label="Gobernanza de datos en Norma: nivel crítico (4)">4</td>
-                            <td data-level="4" aria-label="Gobernanza de datos en Infraestructura: nivel crítico (4)">4</td>
-                            <td data-level="2" aria-label="Gobernanza de datos en Territorio: nivel medio (2)">2</td>
-                            <td data-level="3" aria-label="Gobernanza de datos en Archivo: nivel alto (3)">3</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">Derechos indígenas</th>
-                            <td data-level="3" aria-label="Derechos indígenas en Norma: nivel alto (3)">3</td>
-                            <td data-level="2" aria-label="Derechos indígenas en Infraestructura: nivel medio (2)">2</td>
-                            <td data-level="4" aria-label="Derechos indígenas en Territorio: nivel crítico (4)">4</td>
-                            <td data-level="3" aria-label="Derechos indígenas en Archivo: nivel alto (3)">3</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">Periodismo de investigación</th>
-                            <td data-level="2" aria-label="Periodismo de investigación en Norma: nivel medio (2)">2</td>
-                            <td data-level="2" aria-label="Periodismo de investigación en Infraestructura: nivel medio (2)">2</td>
-                            <td data-level="1" aria-label="Periodismo de investigación en Territorio: nivel bajo (1)">1</td>
-                            <td data-level="4" aria-label="Periodismo de investigación en Archivo: nivel crítico (4)">4</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <p class="matrix-note">La matriz permite una lectura rápida de las zonas donde la mistranslation institucional se concentra con mayor intensidad.</p>
+      </div>
+      <div class="md-step">
+        <span class="md-num">02</span>
+        <div class="md-content">
+          <div class="md-title">Documentación por capas</div>
+          <div class="md-text">Recopilar evidencia separada para cada régimen de verdad: testimonios (ética), documentos institucionales (institucional), registros materiales/territoriales (material).</div>
         </div>
-
-        <h3>Índice general de materiales</h3>
-        <table class="index-table">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Material</th>
-                    <th>Tipo</th>
-                    <th>Sección</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>01</td>
-                    <td><a href="#sura-doc">SURA — Estrategia Digital &amp; Gobernanza de Datos (Estrategia Gaona)</a></td>
-                    <td>PDF · 150 págs.</td>
-                    <td>Estado del Arte / Etnografía</td>
-                </tr>
-                <tr>
-                    <td>02</td>
-                    <td><a href="#ciper-doc">CIPER — Clase teórico-práctica: Investigación Crimen Organizado</a></td>
-                    <td>PDF</td>
-                    <td>Estado del Arte</td>
-                </tr>
-                <tr>
-                    <td>03</td>
-                    <td><a href="#oit-img">Desglose de derechos consagrados por el OIT 169</a></td>
-                    <td>Imagen</td>
-                    <td>Materiales Visuales</td>
-                </tr>
-                <tr>
-                    <td>04</td>
-                    <td><a href="#plurinacional-img">¿Comparativa Eº Plurinacional del marco legal vigente en Chile?</a></td>
-                    <td>Imagen</td>
-                    <td>Materiales Visuales</td>
-                </tr>
-                <tr>
-                    <td>05</td>
-                    <td><a href="#merced-img">Distribución de títulos de merced en Región de los Ríos</a></td>
-                    <td>Imagen</td>
-                    <td>Materiales Visuales</td>
-                </tr>
-                <tr>
-                    <td>06</td>
-                    <td><a href="#journalism-img">Introduction to Journalism</a></td>
-                    <td>Imagen</td>
-                    <td>Estado del Arte</td>
-                </tr>
-                <tr>
-                    <td>07</td>
-                    <td><a href="#arquitectura">Mapa de Arquitectura &amp; Inventario de Activos</a></td>
-                    <td>Sección · 21 activos</td>
-                    <td>Arquitectura §09</td>
-                </tr>
-            </tbody>
-        </table>
-    </section>
-
-    <!-- MEJORAS DETECTADAS -->
-    <section id="mejoras-tesis">
-        <div class="section-header">
-            <span class="section-number">00B</span>
-            <h2>Mejoras detectadas a nivel tesis</h2>
+      </div>
+      <div class="md-step">
+        <span class="md-num">03</span>
+        <div class="md-content">
+          <div class="md-title">Extracción de keywords por capa</div>
+          <div class="md-text">Identificar los términos clave que cada capa usa para el mismo fenómeno. La distancia semántica entre keywords determina el tipo de fricción.</div>
         </div>
-
-        <p>Esta sección transforma hallazgos críticos en una hoja de ruta concreta para fortalecer la tesis como artefacto académico, público y metodológico.</p>
-
-        <div class="improvement-grid">
-            <article class="improvement-card">
-                <h3>1. Trazabilidad de evidencia</h3>
-                <p>Normalizar una bitácora por evidencia (documental, audiovisual, testimonial) con origen, fecha, nivel de validación y vínculo directo al argumento que sustenta.</p>
-                <ul>
-                    <li>Matriz de evidencia con identificadores únicos por pieza.</li>
-                    <li>Separación entre evidencia primaria, secundaria y notas analíticas.</li>
-                    <li>Control de versiones para evitar pérdidas o sobrescrituras.</li>
-                </ul>
-            </article>
-
-            <article class="improvement-card">
-                <h3>2. Robustecimiento metodológico</h3>
-                <p>Explicitar criterios de triangulación y límites del trabajo de campo para aumentar la auditabilidad de los resultados.</p>
-                <ul>
-                    <li>Tabla de sesgos potenciales y estrategias de mitigación.</li>
-                    <li>Protocolo de consentimiento y resguardo de anonimato.</li>
-                    <li>Criterios explícitos de saturación para entrevistas y corpus.</li>
-                </ul>
-            </article>
-
-            <article class="improvement-card">
-                <h3>3. Articulación entre capítulos</h3>
-                <p>Incrementar la continuidad entre caso SURA/AFP, campo territorial y producción poética mediante puentes analíticos recurrentes.</p>
-                <ul>
-                    <li>Subsección fija de “lectura comparada” en cada capítulo.</li>
-                    <li>Mapa conceptual único de mistranslation institucional.</li>
-                    <li>Síntesis transversal de hallazgos por eje: norma, infraestructura, territorio y archivo.</li>
-                </ul>
-            </article>
+      </div>
+      <div class="md-step">
+        <span class="md-num">04</span>
+        <div class="md-content">
+          <div class="md-title">Cálculo de intensidad (0.0 → 1.0)</div>
+          <div class="md-text">Motor de fricción: mide el overlap de vocabularios entre capas + detecta marcadores de fricción explícitos. A menor overlap + mayor marcador = mayor intensidad.</div>
         </div>
-
-        <h3>Plan de mejora (12 semanas)</h3>
-        <ol class="improvement-timeline">
-            <li><strong>Semanas 1–3:</strong> depuración del corpus y etiquetado de evidencias.</li>
-            <li><strong>Semanas 4–6:</strong> ajuste de marco metodológico y protocolo ético.</li>
-            <li><strong>Semanas 7–9:</strong> reescritura de transiciones comparadas entre casos.</li>
-            <li><strong>Semanas 10–12:</strong> cierre argumentativo, consistencia de citas y anexos finales.</li>
-        </ol>
-
-        <div class="checkpoint-box">
-            <p><strong>Checkpoint de calidad:</strong> cada capítulo debe responder explícitamente a una pregunta de investigación, presentar evidencia verificable y declarar su límite analítico.</p>
+      </div>
+      <div class="md-step">
+        <span class="md-num">05</span>
+        <div class="md-content">
+          <div class="md-title">Clasificación del tipo de fricción</div>
+          <div class="md-text"><span class="accent-i">Política</span> (¿quién define?) · <span class="accent-e">Semántica</span> (¿qué significa?) · <span class="accent-m">Técnica</span> (¿qué miden los datos?)</div>
         </div>
-    </section>
-
-    <!-- ESTADO DEL ARTE -->
-    <section id="estado-del-arte">
-        <div class="section-header">
-            <span class="section-number">01</span>
-            <h2>Estado del Arte y Marco Teórico</h2>
+      </div>
+      <div class="md-step">
+        <span class="md-num">06</span>
+        <div class="md-content">
+          <div class="md-title">Identificación de la tensión central</div>
+          <div class="md-text">Formular la pregunta que los tres regímenes no pueden responder simultáneamente. Esta pregunta irreductible es el núcleo del análisis.</div>
         </div>
-
-        <p>El estado del arte de esta investigación doctoral articula tres tradiciones analíticas y se posiciona en la intersección de debates que, hasta ahora, han sido abordados de forma separada en la literatura especializada:</p>
-        <ul class="findings">
-            <li><strong>Antropología política de la corrupción</strong> — el estudio de cómo las instituciones producen, gestionan y naturalizan la opacidad. Se dialoga con los trabajos de Akhil Gupta sobre la burocracia como productora de arbitrariedad, y con las contribuciones de Didier Fassin sobre las economías morales del Estado.</li>
-            <li><strong>Estudios de periodismo de investigación</strong> — metodologías para documentar el crimen organizado y la corrupción institucional, con énfasis en la tradición latinoamericana del periodismo de investigación (CIPER Chile, GIJN) y sus protocolos de verificación documental.</li>
-            <li><strong>Etnografía de instituciones y estudios de ciencia y tecnología (STS)</strong> — el análisis de prácticas organizacionales desde dentro, en diálogo con la teoría del actor-red (ANT) de Bruno Latour y los estudios de infraestructura de Susan Leigh Star sobre la política embebida en las categorías técnicas.</li>
-        </ul>
-        <p>Se trabaja desde una perspectiva crítica que pone en tensión los marcos normativos vigentes con las prácticas efectivas de instituciones públicas y privadas. La contribución teórica específica de esta tesis radica en conceptualizar la corrupción como <strong>mistranslation institucionalizada</strong>: un régimen sostenido de incompatibilidad entre registros normativos, técnicos y experienciales que no es un defecto del sistema sino su condición de reproducción.</p>
-
-        <h3>Posicionamiento epistemológico</h3>
-        <p>Esta investigación se inscribe en la tradición de la <strong>etnografía multi-situada</strong> (Marcus, 1995) y adopta un enfoque que combina la observación participante en contextos corporativos digitales con el trabajo de campo territorial en comunidades mapuche-huilliche. La tesis se distancia tanto del enfoque juridicista (que reduce la corrupción a la infracción normativa) como del enfoque economicista (que la modeliza como problema de incentivos), proponiendo en cambio una lectura antropológica que atiende a los dispositivos materiales, lingüísticos y técnicos mediante los cuales la opacidad se produce activamente.</p>
-
-        <div class="excerpt">
-            "La corrupción no es lo que queda cuando falla el sistema; es lo que el sistema produce cuando funciona según su lógica interna de traducción fallida."
-            <cite>Formulación teórica central · Tesis doctoral</cite>
-        </div>
-
-        <h3>Anclajes teóricos principales</h3>
-        <p>
-            <span class="theoretical-anchor">Gupta (2012) · Burocracia y arbitrariedad</span>
-            <span class="theoretical-anchor">Latour (2005) · Teoría del actor-red</span>
-            <span class="theoretical-anchor">Star (1999) · Infraestructura y categorías</span>
-            <span class="theoretical-anchor">Fassin (2015) · Economías morales</span>
-            <span class="theoretical-anchor">Tsing (2005) · Fricción y conexiones globales</span>
-            <span class="theoretical-anchor">Marcus (1995) · Etnografía multi-situada</span>
-            <span class="theoretical-anchor">Riles (2006) · Documentos como artefactos</span>
-            <span class="theoretical-anchor">Callon (1986) · Traducción y redes</span>
-            <span class="theoretical-anchor">Derrida (1995) · Mal de archivo</span>
-            <span class="theoretical-anchor">Rivera Cusicanqui (2010) · Colonialismo interno</span>
-        </p>
-
-        <h3>Vacío en la literatura y contribución</h3>
-        <p>Si bien existe una abundante literatura sobre corrupción institucional en América Latina (Mujica, 2011; Quiroz, 2013) y sobre etnografía de datos y gobernanza digital (Zuboff, 2019; Couldry &amp; Mejias, 2019), el cruce entre ambos campos —la etnografía de la opacidad en flujos de datos corporativos articulada con procesos de despojo territorial indígena— permanece inexplorado. Esta tesis llena ese vacío al proponer el concepto de <em>mistranslation institucionalizada</em> como categoría analítica transversal.</p>
-
-        <h3>Marco teórico: periodismo de investigación y crimen organizado</h3>
-        <p>El CIPER (Centro de Investigación Periodística) ha desarrollado metodologías específicas para la investigación del crimen organizado en América Latina. Su enfoque integra la revisión documental exhaustiva, el análisis de redes de poder y la corroboración de fuentes múltiples.</p>
-
-        <div id="journalism-img" class="image-full">
-            <img src="Introduction Journalism.png" alt="Introduction to Journalism — material de referencia metodológica"
-                 data-lightbox="true" data-caption="Introduction Journalism — Material de referencia metodológica · CIPER" tabindex="0" role="button" aria-label="Ver imagen ampliada: Introduction Journalism">
-            <p class="img-caption">Introduction Journalism.png — Material de referencia metodológica para investigación periodística</p>
-        </div>
-
-        <div class="doc-grid" style="margin-top:2rem">
-            <a id="ciper-doc" class="doc-card" href="CIPER- Clase teórico prática - Investigación Crimen Organizado.pdf" target="_blank"
-               data-topics="periodismo crimen chile" data-searchtext="ciper crimen organizado periodismo investigacion chile">
-                <span class="doc-type">PDF · Periodismo de Investigación</span>
-                <span class="doc-title">CIPER — Clase Teórico-Práctica: Investigación del Crimen Organizado</span>
-                <span class="doc-abstract">Metodología para documentar redes criminales: fuentes documentales, análisis de redes de poder y corroboración de testimonios. Material didáctico del Centro de Investigación Periodística de Chile.</span>
-                <span class="doc-meta">Centro de Investigación Periodística · Chile</span>
-            </a>
-        </div>
-
-        <h3>Marco normativo: Convenio 169 OIT y derechos indígenas</h3>
-        <p>El Convenio 169 de la Organización Internacional del Trabajo (OIT) establece el marco internacional de derechos de los pueblos indígenas y tribales. En Chile, la tensión entre este convenio —ratificado en 2008— y la legislación nacional ha sido uno de los ejes centrales del conflicto territorial en la Araucanía y la Región de Los Ríos.</p>
-
-        <div id="oit-img" class="image-full">
-            <img src="UX RG - Desglose de derechos consagrados por el OIT 169.jpg" alt="Desglose de derechos consagrados por el Convenio OIT 169"
-                 data-lightbox="true" data-caption="Desglose de derechos — Convenio OIT 169 · Elaboración: R. Gaete" tabindex="0" role="button" aria-label="Ver imagen ampliada: derechos OIT 169">
-            <p class="img-caption">UX RG — Desglose de derechos consagrados por el Convenio OIT 169 · Elaboración: R. Gaete</p>
-        </div>
-
-        <div id="plurinacional-img" class="image-full" style="margin-top:1.5rem">
-            <img src="UX RG - ¿Comparativa Eº Plurinacional del marco legal vigente en Chile_.jpg" alt="Comparativa Estado Plurinacional vs marco legal vigente en Chile"
-                 data-lightbox="true" data-caption="Comparativa Eº Plurinacional / marco legal vigente en Chile · R. Gaete" tabindex="0" role="button" aria-label="Ver imagen ampliada: comparativa estado plurinacional">
-            <p class="img-caption">UX RG — ¿Comparativa Eº Plurinacional del marco legal vigente en Chile? · Elaboración: R. Gaete</p>
-        </div>
-
-        <h3>Distribución histórica de tierras: títulos de merced</h3>
-        <p>Los títulos de merced fueron la forma mediante la cual el Estado chileno asignó tierras a las comunidades mapuche a fines del siglo XIX y principios del XX, luego de la campaña militar de ocupación. La distribución de estos títulos en la Región de Los Ríos ilustra el proceso de reducción territorial que está en la base del conflicto contemporáneo.</p>
-
-        <div id="merced-img" class="image-full" style="margin-top:1rem">
-            <img src="Distribución de titulos de merced en Región de los ríos.png" alt="Distribución de títulos de merced en la Región de Los Ríos"
-                 data-lightbox="true" data-caption="Distribución de títulos de merced — Región de Los Ríos · Fuente cartográfica de archivo" tabindex="0" role="button" aria-label="Ver imagen ampliada: títulos de merced">
-            <p class="img-caption">Distribución de títulos de merced en la Región de Los Ríos · Fuente cartográfica de archivo</p>
-        </div>
-    </section>
-
-    <!-- ETNOGRAFÍA AUDIOVISUAL -->
-    <section id="etnografia">
-        <div class="section-header">
-            <span class="section-number">02</span>
-            <h2>Etnografía Audiovisual y Diseño Metodológico</h2>
-        </div>
-
-        <p>La etnografía audiovisual constituye el eje metodológico central de esta tesis doctoral. Se entiende la cámara, el registro sonoro y las interfaces digitales no como herramientas neutras de documentación, sino como <strong>dispositivos de inscripción</strong> (Latour, 1987) que participan activamente en la producción de conocimiento y en la negociación de la representación con los sujetos investigados. En el caso de la etnografía digital, el "campo" son los flujos de datos, las interfaces y las comunicaciones internas de las organizaciones.</p>
-
-        <div class="methodology-framework">
-            <p>La investigación adopta un <strong>diseño etnográfico multi-situado</strong> (Marcus, 1995) con dos campos simultáneos: (a) la corporación financiera como espacio de producción de opacidad digital, y (b) el territorio mapuche-huilliche como espacio de inscripción del despojo histórico. El tránsito entre ambos campos permite identificar la mistranslation como patrón transversal: la misma lógica de incompatibilidad entre registros normativos y prácticas opera en la base de datos corporativa y en el título de merced colonial.</p>
-            <ul class="findings">
-                <li><strong>Fase 1 — Etnografía digital corporativa:</strong> observación participante como UX Lead, análisis documental de actas internas, cartografía de flujos de datos, entrevistas con actores clave.</li>
-                <li><strong>Fase 2 — Trabajo de campo territorial:</strong> recorridos etnográficos en comunidades huilliche, recopilación de testimonios orales, análisis de archivos históricos de títulos de merced.</li>
-                <li><strong>Fase 3 — Contra-archivo:</strong> producción del dispositivo archivístico crítico como resultado material de la investigación, articulando evidencia documental, visual y poética.</li>
-            </ul>
-        </div>
-
-        <h3>Etnografía de caso: Estrategia Gaona — SURA Investments</h3>
-        <p>La <em>Estrategia Gaona</em> constituye un caso paradigmático de <strong>etnografía digital aplicada al ámbito corporativo</strong>. El trabajo de Rodrigo Gaete Gaona como UX Lead en SURA Investments derivó en una investigación etnográfica de los flujos de datos internos, documentando prácticas que vulneraban la privacidad de los clientes y el marco normativo vigente. El caso funciona como <em>estudio de caso extendido</em> (Burawoy, 1998) que permite teorizar sobre las condiciones estructurales de la opacidad en instituciones financieras latinoamericanas.</p>
-
-        <h3>Instrumentos y técnicas de recolección</h3>
-        <ul class="findings">
-            <li>Revisión documental exhaustiva de actas y transcripciones internas (análisis de contenido cualitativo).</li>
-            <li>Análisis cualitativo de comunicaciones organizacionales con enfoque de <em>análisis del discurso institucional</em>.</li>
-            <li>Etnografía digital de flujos de datos: cartografía de conexiones entre bases de datos, APIs y sistemas heredados.</li>
-            <li>Entrevistas semiestructuradas con actores clave (equipos de TI, Legal, UX, Negocio) — triangulación de perspectivas.</li>
-            <li>Principios de <em>Privacy by Design</em> y <em>Design Sprint</em> como marcos de intervención etnográfica.</li>
-            <li>Observación participante prolongada en contexto corporativo (posición de UX Lead como acceso etnográfico privilegiado).</li>
-        </ul>
-
-        <div class="excerpt">
-            "Metodología: revisión documental, análisis cualitativo de actas y transcripciones, etnografía digital de flujos, y entrevistas con actores clave. Se aplicaron principios de Privacy by Design y Design Sprint."
-            <cite>SURA Compilado — Estrategia Gaona · Etnografía de Caso, p. 4</cite>
-        </div>
-
-        <h3 class="collapsible-trigger" aria-expanded="true" aria-controls="sura-findings">Hallazgos principales de la etnografía digital</h3>
-        <div id="sura-findings" class="collapsible-body">
-        <ul class="findings">
-            <li>Persistencia de conexiones heredadas a BD TN_PERFIL que vulneraban la finalidad previsional original de los datos.</li>
-            <li>Falta de trazabilidad y consentimiento en flujos de datos entre AFP y SURA Investments.</li>
-            <li>El sitio web de SURA consultaba directamente la base de datos de la AFP vinculada, sin separación efectiva entre entidades.</li>
-            <li>Ausencia de mandato formal de clientes para el traspaso de datos previsionales a fines de asesoría de inversiones.</li>
-            <li>Efectividad demostrada de las intervenciones UX para corregir los flujos y garantizar trazabilidad normativa.</li>
-        </ul>
-        </div><!-- /.collapsible-body#sura-findings -->
-
-        <div id="sura-doc">
-            <div class="doc-grid">
-                <a class="doc-card" href="SURA_Compilado_Estrategia_Gaona_Complete.pdf" target="_blank"
-                   data-topics="etnografia datos chile" data-searchtext="sura investments estrategia gaona ux datos privacidad afp etnografia digital">
-                    <span class="doc-type">PDF · 150 páginas · Etnografía Digital</span>
-                    <span class="doc-title">Documento Estratégico y Etnografía de Caso: Estrategia Gaona — SURA Investments, Estrategia Digital &amp; Gobernanza de Datos</span>
-                    <span class="doc-abstract">Etnografía digital de los flujos de datos entre SURA y su AFP vinculada. Documenta vulneraciones a la Ley 19.628 y propone un marco de gobernanza orientado a la privacidad por diseño.</span>
-                    <span class="doc-meta">Autor: Rodrigo Gaete Gaona (UX Lead) · Compilado: 2025-10-09</span>
-                </a>
-            </div>
-        </div>
-
-        <h3 class="collapsible-trigger" aria-expanded="true" aria-controls="sura-structure">Estructura del documento etnográfico</h3>
-        <div id="sura-structure" class="collapsible-body">
-        <ul class="findings">
-            <li>Resumen ejecutivo del caso AFP–SURA</li>
-            <li>Etnografía de caso: metodología y hallazgos</li>
-            <li>Documento ejecutivo: estrategia e innovación interna</li>
-            <li>Flujos críticos (diagramas + descripciones)</li>
-            <li>Organigrama de gobernanza y Comité de Datos</li>
-            <li>KPIs, OKRs y métricas sugeridas</li>
-            <li>Buenas prácticas y checklist de accesibilidad (WCAG)</li>
-            <li>Anexos (documentos originales y evidencias)</li>
-        </ul>
-        </div><!-- /.collapsible-body#sura-structure -->
-    </section>
-
-    <!-- ENSAYO: TRADUCCIÓN DE SABERES -->
-    <section id="ensayo" data-topics="corrupcion antropologia datos derechos-indigenas chile">
-        <div class="section-header">
-            <span class="section-number">03</span>
-            <h2>Ensayo: Traducción de Saberes — Núcleo Argumentativo de la Tesis</h2>
-        </div>
-
-        <div class="abstract">
-            <span class="abstract-label">Argumento central</span>
-            Este ensayo desarrolla el núcleo argumentativo de la tesis doctoral: la corrupción institucional puede entenderse como una <strong>falla sistemática en la traducción</strong> entre marcos normativos, lenguajes técnicos y prácticas organizacionales. A partir de dos casos —la vulneración de datos en SURA Investments y el incumplimiento del Convenio 169 OIT en Chile— se argumenta que la opacidad y el despojo no son efectos colaterales sino resultados estructurales de la mistranslation institucionalizada. Se propone una lectura que dialoga con la sociología de la traducción (Callon, 1986; Latour, 2005) pero la desplaza hacia el terreno de la antropología política: la traducción no es aquí un mecanismo neutro de enrolamiento de actores, sino un <strong>dispositivo de poder</strong> que produce y sostiene la opacidad.
-        </div>
-
-        <h3 class="collapsible-trigger" aria-expanded="true" aria-controls="ensayo-args">Argumentos centrales del ensayo</h3>
-        <div id="ensayo-args" class="collapsible-body">
-        <ol class="key-args">
-            <li>
-                <strong>La corrupción como problema de traducción</strong>
-                Las vulneraciones normativas no son solo infracciones jurídicas: son brechas estructurales entre el lenguaje del derecho y el lenguaje de la arquitectura técnica o el diseño organizacional. Siguiendo a Riles (2006), los documentos normativos no son representaciones transparentes de la realidad institucional, sino <em>artefactos</em> cuya eficacia depende de las cadenas de traducción que los conectan con las prácticas.
-            </li>
-            <li>
-                <strong>El despojo territorial como traducción forzada</strong>
-                El proceso de radicación mapuche (1884–1929) operó como una traducción coercitiva del sistema comunal de uso de la tierra al lenguaje jurídico de la propiedad privada individual, con pérdidas masivas de territorio. Este proceso es analizable con las herramientas de la <em>fricción</em> (Tsing, 2005): la traducción entre sistemas de conocimiento no es fluida sino violenta, y produce efectos materiales irreversibles.
-            </li>
-            <li>
-                <strong>La mistranslation como dispositivo de poder</strong>
-                Las instituciones explotan la incomprensibilidad técnica y jurídica para mantener la opacidad. La complejidad no es un defecto del sistema sino su mecanismo de reproducción. Esta tesis se distancia de las teorías de la corrupción como "falla de gobernanza" (World Bank, Transparency International) para proponer que la opacidad es un <em>producto activo</em> de la arquitectura institucional.
-            </li>
-            <li>
-                <strong>El contra-archivo como traducción crítica</strong>
-                Frente a la mistranslation institucional, el contra-archivo propone un trabajo de re-traducción: poner en circulación los documentos y testimonios que permiten reconstruir lo que los marcos oficiales ocultan. Inspirado en el concepto de <em>mal de archivo</em> (Derrida, 1995), el contra-archivo no pretende restituir una verdad original, sino producir nuevas legibilidades.
-            </li>
-        </ol>
-        </div><!-- /.collapsible-body#ensayo-args -->
-
-        <p>El ensayo sobre <em>Traducción de Saberes</em> interroga los mecanismos mediante los cuales el conocimiento técnico y normativo es traducido —o <em>mistranslated</em>— entre distintos campos: el derecho, la informática, el diseño, la etnografía y el discurso público. La corrupción, desde esta perspectiva, opera también como una <strong>falla en la traducción entre marcos institucionales</strong>.</p>
-
-        <div class="contribution-box">
-            <p><strong>Contribución teórica original:</strong> El concepto de <em>mistranslation institucionalizada</em> permite superar la dicotomía entre corrupción como anomalía (enfoque juridicista) y corrupción como cultura (enfoque culturalista). En su lugar, esta tesis propone una lectura <strong>infraestructural</strong> de la corrupción: ésta reside en las capas de traducción entre sistemas normativos, técnicos y experienciales, y se reproduce precisamente porque esas capas están diseñadas para ser opacas.</p>
-            <ul>
-                <li>Concepto de <em>mistranslation institucionalizada</em> como categoría analítica para la antropología de la corrupción.</li>
-                <li>Metodología de etnografía multi-situada que conecta flujos de datos corporativos con despojo territorial indígena.</li>
-                <li>El contra-archivo como resultado material de la investigación y como intervención epistémica.</li>
-                <li>Articulación de poesía y etnografía audiovisual como formas de conocimiento que desestabilizan los lenguajes de la opacidad.</li>
-            </ul>
-        </div>
-
-        <h3 class="collapsible-trigger" aria-expanded="true" aria-controls="ensayo-corrupcion">La corrupción como problema de traducción: análisis de casos</h3>
-        <div id="ensayo-corrupcion" class="collapsible-body">
-        <p>Cuando la Ley 19.628 de Protección de Datos establece que el tratamiento de datos personales requiere autorización expresa del titular, y una empresa como SURA Investments opera sistemas que consultan directamente la base de datos de una AFP afiliada sin ese consentimiento, no se trata únicamente de una infracción legal: es una <strong>falla de traducción entre el lenguaje del derecho y el lenguaje de la arquitectura de sistemas</strong>. La norma jurídica y la query SQL habitan registros semánticos incompatibles, y esa incompatibilidad es precisamente lo que permite la vulneración.</p>
-
-        <p>De manera análoga, cuando el Estado chileno ratificó el Convenio 169 de la OIT (2008) pero no implementa mecanismos efectivos de consulta previa a los pueblos indígenas, estamos ante otra falla de traducción: entre el compromiso internacional y la práctica institucional. En términos de la teoría del actor-red (Latour, 2005), los <em>intermediarios</em> que deberían conectar la norma con la práctica —protocolos de consulta, organismos de supervisión, mecanismos de reclamo— están ausentes o son inoperantes, produciendo una cadena de traducción rota.</p>
-
-        <div class="excerpt">
-            "La solución garantizó la separación de orígenes de datos, redujo errores normativos y mejoró la satisfacción del cliente según métricas internas."
-            <cite>SURA Compilado — Estrategia Gaona · Resumen Ejecutivo, p. 3</cite>
-        </div>
-        </div><!-- /.collapsible-body#ensayo-corrupcion -->
-
-        <h3 class="collapsible-trigger" aria-expanded="true" aria-controls="normas-table-body">Marcos normativos en tensión</h3>
-        <div id="normas-table-body" class="collapsible-body">
-        <table class="normas-table">
-            <thead>
-                <tr>
-                    <th>Marco</th>
-                    <th>Contenido</th>
-                    <th>Relevancia</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Ley 19.628 (Chile, 1999)</td>
-                    <td>Tratamiento de datos solo con autorización del titular o habilitación legal expresa.</td>
-                    <td>Base legal para el caso SURA/AFP</td>
-                </tr>
-                <tr>
-                    <td>Nueva Ley de Datos 2024</td>
-                    <td>Creación de Agencia de Protección de Datos, sanciones de hasta 4% de ingresos, coordinación con la CMF.</td>
-                    <td>Marco actualizado de exigencia</td>
-                </tr>
-                <tr>
-                    <td>Convenio OIT 169 (ratificado Chile 2008)</td>
-                    <td>Consulta previa, libre e informada; derechos territoriales de pueblos indígenas.</td>
-                    <td>Marco de derechos indígenas</td>
-                </tr>
-                <tr>
-                    <td>Art. 11 Constitución</td>
-                    <td>Derecho a la vida privada y al honor, incluyendo protección de datos personales.</td>
-                    <td>Protección constitucional</td>
-                </tr>
-                <tr>
-                    <td>CIDH — Jurisprudencia</td>
-                    <td>Tensión entre divulgación de información y marcos legales de protección.</td>
-                    <td>Contexto interamericano</td>
-                </tr>
-            </tbody>
-        </table>
-        </div><!-- /.collapsible-body#normas-table-body -->
-
-        <h3>Traducción de saberes en el contexto indígena: epistemicidio y despojo</h3>
-        <p>El proceso de radicación mapuche (1884–1929) que produjo los títulos de merced es también legible como una operación de <strong>traducción forzada</strong>: el sistema comunal de uso de la tierra fue "traducido" al lenguaje jurídico de la propiedad privada individual, con pérdidas masivas de territorio y de formas de vida en el proceso. Siguiendo a Rivera Cusicanqui (2010), esta traducción no es solo territorial sino <em>epistémica</em>: al imponer el catastro y la escritura como únicos registros válidos de la relación con la tierra, el Estado chileno invalidó los sistemas de conocimiento territorial mapuche-huilliche que organizaban la vida comunitaria. La cartografía de la Región de Los Ríos documenta el resultado material de esa traducción violenta.</p>
-    </section>
-
-    <!-- LA NEGRA -->
-    <section id="la-negra">
-        <div class="section-header">
-            <span class="section-number">04</span>
-            <h2>La Negra — Trabajo de Campo Territorial</h2>
-        </div>
-
-        <p>El proyecto <em>La Negra</em> es un trabajo de campo en curso que documenta memorias, territorios y resistencias en la Región de Los Ríos, Chile. El nombre refiere a una zona y a una forma de nombrar lo que el archivo oficial no registra: las historias de comunidades que han resistido el despojo territorial, la violencia institucional y las formas cotidianas de la corrupción. En la arquitectura de la tesis doctoral, La Negra constituye el <strong>segundo campo</strong> de la etnografía multi-situada: si el caso SURA/AFP revela la mistranslation en los flujos de datos corporativos, La Negra la documenta en la materialidad del territorio y la memoria oral.</p>
-
-        <p>El proceso de radicación indígena mapuche (1884–1929) asignó títulos de merced que redujeron drásticamente los territorios ancestrales a polígonos mínimos. La Región de Los Ríos, que incluye territorios de comunidades huilliche y mapuche, concentra una parte significativa de este despojo histórico. La cartografía disponible en este repositorio sirve como punto de partida para la investigación etnográfica en terreno.</p>
-
-        <div class="excerpt">
-            "La distribución de títulos de merced en la Región de Los Ríos expone la geometría del despojo: polígonos mínimos asignados a comunidades que habitaban y trabajaban territorios mucho más extensos, reducidas a islas en un mar de propiedad privada."
-            <cite>Notas de campo · Proyecto La Negra</cite>
-        </div>
-
-        <h3>Líneas de investigación doctoral</h3>
-        <ol class="research-lines">
-            <li>
-                <strong>Memoria territorial y contra-cartografía</strong>
-                Reconstrucción de los territorios ancestrales a partir de testimonios orales y documentos de archivo, produciendo cartografías alternativas que confronten el registro catastral oficial con las geografías vividas de las comunidades mapuche-huilliche.
-            </li>
-            <li>
-                <strong>Violencia institucional y dispositivos de despojo</strong>
-                Documentación etnográfica de las formas en que el Estado y las instituciones han perpetuado el despojo, identificando los mecanismos de mistranslation que operan entre el derecho internacional (OIT 169), la legislación nacional y las prácticas administrativas locales.
-            </li>
-            <li>
-                <strong>Resistencia, organización comunitaria y agencia</strong>
-                Registro de las formas contemporáneas de resistencia y demanda territorial, atendiendo a los modos en que las comunidades producen sus propios marcos de legibilidad frente a la opacidad institucional.
-            </li>
-            <li>
-                <strong>El contra-archivo como práctica política y epistémica</strong>
-                Producción de un archivo alternativo que pone en circulación lo que el archivo oficial silencia, articulando el concepto de <em>mal de archivo</em> (Derrida) con las prácticas de memoria de las comunidades investigadas.
-            </li>
-        </ol>
-
-        <h3>Cronología del despojo territorial</h3>
-        <p>El territorio de La Negra y las comunidades mapuche-huilliche de la Región de Los Ríos acumulan más de un siglo de despojo institucionalizado. La siguiente cronología reconstruye los hitos normativos y sus efectos materiales, poniendo en evidencia la continuidad de los mecanismos de mistranslation a través del tiempo.</p>
-        <div class="cronologia">
-            <span class="cronologia-title">Hitos del despojo · Región de Los Ríos · 1884–presente</span>
-            <ol class="timeline">
-                <li class="timeline-item">
-                    <span class="timeline-date">1884–1929</span>
-                    <div class="timeline-content">
-                        <strong>Proceso de radicación mapuche: producción del título de merced</strong>
-                        <p>El Estado chileno, a través de la Comisión Radicadora de Indígenas, asigna títulos de merced que reducen los territorios ancestrales a polígonos mínimos. La Región de Los Ríos pierde entre el 80% y el 95% de su territorio huilliche. El catastro y la escritura se imponen como únicos registros válidos de la relación con la tierra: primera gran mistranslation epistémica que invalida los sistemas de conocimiento territorial mapuche-huilliche.</p>
-                    </div>
-                </li>
-                <li class="timeline-item">
-                    <span class="timeline-date">1930–1973</span>
-                    <div class="timeline-content">
-                        <strong>Leyes de división de comunidades: fragmentación de la reducción</strong>
-                        <p>Sucesivas leyes de "división de comunidades" fragmentan las reducciones en hijuelas individuales, destruyendo el sistema comunal de gestión territorial. Los herederos reciben porciones que no permiten subsistencia autónoma. La lógica de la propiedad privada individual opera como mecanismo de dispersión: lo que el título de merced confinó en un polígono, la división disuelve en el mercado.</p>
-                    </div>
-                </li>
-                <li class="timeline-item">
-                    <span class="timeline-date">1974–1993</span>
-                    <div class="timeline-content">
-                        <strong>Decreto Ley 2.568 (1979): liquidación y expansión forestal</strong>
-                        <p>La dictadura de Pinochet promueve la liquidación de comunidades indígenas mediante el DL 2.568, que elimina el concepto jurídico de "comunidad indígena". Miles de hectáreas son adquiridas a bajo precio por empresas forestales bajo amparo del DL 701 de fomento forestal. El monocultivo de pino y eucalipto reemplaza el bosque nativo y transforma el paisaje de la región de manera irreversible.</p>
-                    </div>
-                </li>
-                <li class="timeline-item">
-                    <span class="timeline-date">1993–2008</span>
-                    <div class="timeline-content">
-                        <strong>Ley Indígena 19.253 y mecanismos insuficientes de recuperación</strong>
-                        <p>La nueva ley crea la CONADI y el Fondo de Tierras, pero el proceso de recuperación opera con criterios de mercado. Las comunidades de La Negra documentan que los predios disponibles no corresponden a los territorios ancestrales demandados, y que los plazos y montos del subsidio son insuficientes frente a los precios del mercado forestal.</p>
-                    </div>
-                </li>
-                <li class="timeline-item">
-                    <span class="timeline-date">2008–presente</span>
-                    <div class="timeline-content">
-                        <strong>Ratificación del Convenio OIT 169: norma sin mecanismo</strong>
-                        <p>Chile ratifica el Convenio 169, que establece la consulta previa libre e informada. Sin embargo, en la Región de Los Ríos, proyectos de infraestructura se aprueban sin procesos de consulta real. La norma internacional y la práctica administrativa local habitan registros incompatibles: nueva mistranslation que produce el despojo contemporáneo como procedimiento regular.</p>
-                    </div>
-                </li>
-            </ol>
-        </div>
-
-        <h3>Agentes e intermediarios institucionales</h3>
-        <p>La etnografía de La Negra identifica una cadena de actores que median entre el marco normativo del Convenio 169 OIT y las prácticas efectivas en el territorio. Siguiendo la teoría del actor-red (Latour, 2005), estos intermediarios no facilitan la traducción entre norma y práctica: la producen deliberadamente defectuosa, convirtiendo la brecha en condición de reproducción del sistema.</p>
-        <ul class="findings">
-            <li><strong>CONADI (Corporación Nacional de Desarrollo Indígena):</strong> organismo estatal encargado de gestionar el Fondo de Tierras y Aguas. Su procedimiento de compra-subsidio opera con criterios de mercado que privilegian la disponibilidad de vendedores por sobre las necesidades territoriales de las comunidades. La CONADI actúa como intermediario que convierte la demanda de restitución en transacción comercial: mistranslation del derecho territorial en derecho de compraventa.</li>
-            <li><strong>Empresas forestales (Arauco, CMPC, otros):</strong> actores privados que controlan extensas superficies en la Región de Los Ríos. Su presencia produce externalidades documentadas —reducción de napas freáticas, pérdida de biodiversidad nativa, acidificación de suelos— que no figuran en registros oficiales de impacto ambiental. La etnografía documenta que estas externalidades son conocidas localmente pero invisibilizadas normativamente.</li>
-            <li><strong>Juzgados de Letras:</strong> la judicialización de conflictos territoriales traslada la disputa al registro del derecho privado de propiedad, que estructuralmente desfavorece a las comunidades. El acceso desigual a asesoría jurídica agrava esta asimetría: la norma del Convenio 169 no puede invocarse en los juzgados civiles con la misma eficacia que el título de dominio.</li>
-            <li><strong>Municipios y gobernaciones:</strong> las instituciones de gobierno local son con frecuencia intermediarios capturados: sus planes de desarrollo comunal reproducen los intereses del sector forestal sin consultar a las comunidades indígenas. El lenguaje del "desarrollo local" opera como dispositivo de legitimación del despojo contemporáneo.</li>
-            <li><strong>Medios de comunicación regionales:</strong> la cobertura periodística del conflicto territorial privilegia el encuadre de "seguridad pública" sobre el de "derechos territoriales", reproduciendo la narrativa del Estado y las empresas. El periodismo de investigación regional enfrenta la presión de dependencia publicitaria con los mismos actores que documenta.</li>
-        </ul>
-    </section>
-
-    <!-- POEMARIOS -->
-    <section id="poemarios">
-        <div class="section-header">
-            <span class="section-number">05</span>
-            <h2>Poemarios — Poesía como Método de Investigación</h2>
-        </div>
-
-        <p>Los poemarios integran el archivo como una forma de conocimiento que no se somete a la lógica de la evidencia documental, sino que trabaja con la memoria, el cuerpo y la voz. La poesía en esta tesis doctoral es también un <strong>método de investigación</strong>: una forma de aproximarse a experiencias que los documentos institucionales no capturan o deliberadamente oscurecen. Esta decisión metodológica se inscribe en la tradición de la <em>investigación basada en artes</em> (arts-based research) y la <em>autoetnografía</em> (Ellis &amp; Bochner, 2000), que reconocen formas de conocimiento que exceden el registro analítico convencional.</p>
-
-        <p>Se incluyen en este repositorio textos poéticos producidos en el marco de la investigación, a menudo en colaboración con personas y comunidades que forman parte del trabajo de campo.</p>
-
-        <h3>La contrapoética del archivo: justificación epistémica</h3>
-        <p>La <em>contrapoética</em> que propone este proyecto trabaja contra la lengua de la tecnocracia, del informe, del expediente judicial —los idiomas de la corrupción institucional. Si la corrupción opera también a través del lenguaje (el eufemismo, la tecnicidad que oscurece, la normalización del despojo), la poesía se propone como una <strong>intervención en ese campo lingüístico</strong>. En términos de la tesis doctoral, los poemarios cumplen una función analítica precisa: demuestran que la mistranslation institucional no opera solo en el plano técnico-jurídico, sino también en el plano <em>sensible</em> —en las formas de nombrar, de silenciar, de hacer invisible la experiencia del daño.</p>
-
-        <p>Los poemarios en este archivo dialogan con:</p>
-        <ul class="findings">
-            <li>Los <strong>títulos de merced</strong> y la geometría del despojo territorial en la Región de Los Ríos — la poesía como contra-cartografía afectiva.</li>
-            <li>Las <strong>transcripciones de reuniones corporativas</strong> (caso SURA/AFP) en las que la jerga técnica encubre prácticas que vulneran derechos — la poesía como desciframiento del lenguaje institucional opaco.</li>
-            <li>Los <strong>testimonios de comunidades</strong> recogidos en el trabajo de campo de <em>La Negra</em> — la poesía como forma de restitución de la voz.</li>
-            <li>Los <strong>marcos normativos</strong> (OIT 169, Ley de Datos) y su distancia con la experiencia vivida — la poesía como medición de la brecha entre norma y práctica.</li>
-        </ul>
-
-        <h3>Textos</h3>
-        <div class="poem-grid">
-
-            <article class="poem-card" data-topics="derechos-indigenas chile etnografia" data-searchtext="geometria despojo titulos merced poligonos territorio mapuche huilliche">
-                <span class="poem-number">I · Contra-cartografía</span>
-                <h4 class="poem-title">Geometría del despojo</h4>
-                <p class="poem-text">Ellos midieron el territorio
-con instrumentos que no conocían
-la conversación de la lluvia con el fundo,
-el mapa que el fuego traza en el verano.
-
-Dibujaron polígonos
-donde antes había un sistema:
-la roca que marca el límite de los vivos,
-el río que nombra lo que el catastro ignora.
-
-Dijeron: esto es tuyo.
-Y entregaron un rectángulo mínimo,
-una isla en la escritura de la propiedad,
-rodeada de un mar que antes fue tuyo también.
-
-El título de merced
-es el nombre legal del robo.
-La geometría del despojo
-cabe en un folio firmado por el Estado.</p>
-                <p class="poem-meta">Serie Títulos de Merced · Región de Los Ríos · R. Gaete Gaona, 2025</p>
-            </article>
-
-            <article class="poem-card" data-topics="datos chile etnografia" data-searchtext="query sql datos afp sura privacy datos personales base datos">
-                <span class="poem-number">II · Etnografía corporativa</span>
-                <h4 class="poem-title">Query</h4>
-                <p class="poem-text">SELECT * FROM afiliados
-WHERE rut = :rut_cliente
-AND fecha_nacimiento = :fecha
-AND —no hay campo para el consentimiento—
-AND —no hay campo para saber si sabe—
-
-La consulta llega limpia
-desde el servidor de SURA
-hasta la base de datos de la AFP
-sin cruzar por la voluntad de nadie.
-
-El derecho dice: autorización expresa.
-La arquitectura dice: conexión directa.
-Entre los dos
-vive la mistranslation:
-el lugar donde la ley se pierde
-en el cable.</p>
-                <p class="poem-meta">Serie Estrategia Gaona · Caso SURA/AFP · R. Gaete Gaona, 2025</p>
-            </article>
-
-            <article class="poem-card" data-topics="derechos-indigenas chile" data-searchtext="consulta previa oit 169 convenio derechos indigenas territorio">
-                <span class="poem-number">III · Marco normativo</span>
-                <h4 class="poem-title">Consulta previa</h4>
-                <p class="poem-text">Artículo 6, párrafo 1, letra a:
-los gobiernos deberán consultar
-a los pueblos interesados,
-mediante procedimientos apropiados,
-de buena fe.
-
-Chile ratificó el Convenio en 2008.
-
-En 2024 aún se discute
-qué es un procedimiento apropiado,
-qué es buena fe,
-quién es pueblo interesado.
-
-Mientras tanto
-la retroexcavadora no espera
-la definición del Convenio.
-
-Artículo 6, párrafo 1, letra a
-es otra forma de decir
-que el papel acepta todo
-menos el ruido de las máquinas.</p>
-                <p class="poem-meta">Serie Marcos Normativos · OIT 169 · R. Gaete Gaona, 2025</p>
-            </article>
-
-            <article class="poem-card" data-topics="etnografia chile derechos-indigenas" data-searchtext="la negra trabajo de campo notas campo memoria oral territorio resistencia">
-                <span class="poem-number">IV · Trabajo de campo</span>
-                <h4 class="poem-title">Notas de campo: La Negra</h4>
-                <p class="poem-text">Ella dice el nombre del cerro
-que ya no tiene ese nombre en el mapa.
-
-Yo anoto en mi libreta
-el nombre que tiene en el mapa.
-
-Después anoto el nombre que ella dijo.
-
-Entre los dos nombres
-hay ciento cuarenta años
-y un proceso de radicación
-que tradujo el territorio
-al idioma de la propiedad privada.
-
-Yo soy el investigador
-que llega a documentar la brecha.
-Ella es la que vive en la brecha.
-
-La pregunta metodológica
-que no cabe en la libreta:
-¿qué hace el contra-archivo
-con lo que no sabe anotar?</p>
-                <p class="poem-meta">Serie La Negra · Notas de campo · R. Gaete Gaona, 2025</p>
-            </article>
-
-        </div>
-    </section>
-
-    <!-- DOCUMENTOS -->
-    <section id="documentos">
-        <div class="section-header">
-            <span class="section-number">06</span>
-            <h2>Documentos</h2>
-        </div>
-
-        <p>Repositorio de documentos de investigación disponibles en este archivo. Los documentos pueden abrirse directamente desde el navegador.</p>
-
-        <div class="doc-grid">
-            <a class="doc-card" href="SURA_Compilado_Estrategia_Gaona_Complete.pdf" target="_blank"
-               data-topics="etnografia datos chile" data-searchtext="sura investments estrategia gaona ux datos privacidad afp etnografia digital">
-                <span class="doc-type">PDF · 150 páginas</span>
-                <span class="doc-title">SURA Investments — Estrategia Digital &amp; Gobernanza de Datos (Estrategia Gaona) — Compilado completo</span>
-                <span class="doc-abstract">Etnografía digital de los flujos de datos entre SURA y su AFP vinculada. Documenta vulneraciones a la Ley 19.628 y propone un marco de gobernanza orientado a la privacidad por diseño.</span>
-                <span class="doc-meta">Autor: Rodrigo Gaete Gaona · 2025</span>
-            </a>
-            <a class="doc-card" href="CIPER- Clase teórico prática - Investigación Crimen Organizado.pdf" target="_blank"
-               data-topics="periodismo crimen chile" data-searchtext="ciper crimen organizado periodismo investigacion chile">
-                <span class="doc-type">PDF · Periodismo de Investigación</span>
-                <span class="doc-title">CIPER — Clase Teórico-Práctica: Investigación del Crimen Organizado</span>
-                <span class="doc-abstract">Metodología para documentar redes criminales: fuentes documentales, análisis de redes de poder y corroboración de testimonios. Material didáctico del Centro de Investigación Periodística de Chile.</span>
-                <span class="doc-meta">Centro de Investigación Periodística · Chile</span>
-            </a>
-        </div>
-    </section>
-
-    <!-- MATERIALES VISUALES -->
-    <section id="materiales">
-        <div class="section-header">
-            <span class="section-number">07</span>
-            <h2>Materiales Visuales</h2>
-        </div>
-
-        <p>Imágenes de investigación, cartografías, esquemas y materiales visuales producidos o recopilados en el marco del proyecto.</p>
-
-        <div class="image-grid">
-            <div class="image-card" data-topics="derechos-indigenas chile" data-searchtext="oit 169 derechos indigenas mapuche convenio">
-                <img src="UX RG - Desglose de derechos consagrados por el OIT 169.jpg" alt="Desglose de derechos consagrados por el OIT 169"
-                     data-lightbox="true" data-caption="Desglose de derechos — Convenio OIT 169 · R. Gaete" tabindex="0" role="button" aria-label="Ver imagen ampliada: derechos OIT 169">
-                <p class="img-caption">Desglose de derechos — OIT 169 · R. Gaete</p>
-            </div>
-            <div class="image-card" data-topics="derechos-indigenas chile" data-searchtext="estado plurinacional marco legal chile comparativa">
-                <img src="UX RG - ¿Comparativa Eº Plurinacional del marco legal vigente en Chile_.jpg" alt="Comparativa Estado Plurinacional vs marco legal Chile"
-                     data-lightbox="true" data-caption="Comparativa Eº Plurinacional / marco legal vigente en Chile · R. Gaete" tabindex="0" role="button" aria-label="Ver imagen ampliada: comparativa estado plurinacional">
-                <p class="img-caption">Comparativa Eº Plurinacional / marco legal Chile · R. Gaete</p>
-            </div>
-            <div class="image-card" data-topics="derechos-indigenas chile" data-searchtext="titulos merced region los rios cartografia mapuche huilliche">
-                <img src="Distribución de titulos de merced en Región de los ríos.png" alt="Distribución de títulos de merced — Región de Los Ríos"
-                     data-lightbox="true" data-caption="Distribución de títulos de merced — Región de Los Ríos · Fuente cartográfica de archivo" tabindex="0" role="button" aria-label="Ver imagen ampliada: títulos de merced">
-                <p class="img-caption">Títulos de merced — Región de Los Ríos</p>
-            </div>
-            <div class="image-card" data-topics="periodismo" data-searchtext="introduccion periodismo journalism metodologia">
-                <img src="Introduction Journalism.png" alt="Introduction to Journalism"
-                     data-lightbox="true" data-caption="Introduction to Journalism — referencia metodológica" tabindex="0" role="button" aria-label="Ver imagen ampliada: Introduction to Journalism">
-                <p class="img-caption">Introduction to Journalism — referencia metodológica</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- REFERENCIAS BIBLIOGRÁFICAS -->
-    <section id="referencias">
-        <div class="section-header">
-            <span class="section-number">08</span>
-            <h2>Referencias Bibliográficas Principales</h2>
-        </div>
-        <div class="biblio-ref">Callon, M. (1986). Some elements of a sociology of translation: Domestication of the scallops and the fishermen of St Brieuc Bay. En J. Law (Ed.), <em>Power, Action and Belief</em> (pp. 196–233). Routledge.</div>
-        <div class="biblio-ref">Couldry, N. &amp; Mejias, U. A. (2019). <em>The Costs of Connection: How Data Is Colonizing Human Life and Appropriating It for Capitalism</em>. Stanford University Press.</div>
-        <div class="biblio-ref">Derrida, J. (1995). <em>Mal de archivo: Una impresión freudiana</em>. Trotta.</div>
-        <div class="biblio-ref">Ellis, C. &amp; Bochner, A. P. (2000). Autoethnography, personal narrative, reflexivity. En N. K. Denzin &amp; Y. S. Lincoln (Eds.), <em>Handbook of Qualitative Research</em> (2.ª ed., pp. 733–768). Sage.</div>
-        <div class="biblio-ref">Fassin, D. (2015). <em>At the Heart of the State: The Moral World of Institutions</em>. Pluto Press.</div>
-        <div class="biblio-ref">Gupta, A. (2012). <em>Red Tape: Bureaucracy, Structural Violence, and Poverty in India</em>. Duke University Press.</div>
-        <div class="biblio-ref">Latour, B. (2005). <em>Reassembling the Social: An Introduction to Actor-Network-Theory</em>. Oxford University Press.</div>
-        <div class="biblio-ref">Marcus, G. E. (1995). Ethnography in/of the World System: The Emergence of Multi-Sited Ethnography. <em>Annual Review of Anthropology</em>, 24, 95–117.</div>
-        <div class="biblio-ref">Mujica, J. (2011). <em>Micropolíticas de la corrupción: Redes de poder y corrupción en el Palacio de Justicia</em>. Asamblea Nacional de Rectores.</div>
-        <div class="biblio-ref">Quiroz, A. W. (2013). <em>Historia de la corrupción en el Perú</em>. Instituto de Estudios Peruanos.</div>
-        <div class="biblio-ref">Riles, A. (2006). <em>Documents: Artifacts of Modern Knowledge</em>. University of Michigan Press.</div>
-        <div class="biblio-ref">Rivera Cusicanqui, S. (2010). <em>Ch'ixinakax utxiwa: Una reflexión sobre prácticas y discursos descolonizadores</em>. Tinta Limón.</div>
-        <div class="biblio-ref">Star, S. L. (1999). The Ethnography of Infrastructure. <em>American Behavioral Scientist</em>, 43(3), 377–391.</div>
-        <div class="biblio-ref">Tsing, A. L. (2005). <em>Friction: An Ethnography of Global Connection</em>. Princeton University Press.</div>
-        <div class="biblio-ref">Zuboff, S. (2019). <em>The Age of Surveillance Capitalism: The Fight for a Human Future at the New Frontier of Power</em>. PublicAffairs.</div>
-    </section>
-
-    <!-- ARQUITECTURA & INVENTARIO -->
-    <section id="arquitectura">
-        <div class="section-header">
-            <span class="section-number">09</span>
-            <h2>Arquitectura del Proyecto &amp; Inventario de Activos</h2>
-        </div>
-
-        <p>Mapa estructural de los tres ejes de investigación doctoral y catálogo completo de los materiales que los componen.</p>
-
-        <!-- ── ARCHITECTURE MAP ── -->
-        <div class="arch-map" aria-label="Mapa de arquitectura de la investigación doctoral">
-
-            <!-- Central concept -->
-            <div class="arch-concept">
-                <strong>Mistranslation Institucionalizada</strong>
-                <span class="arch-concept-sub">La corrupción como falla estructural de traducción entre registros normativos, técnicos y experienciales · Dispositivo conceptual central</span>
-            </div>
-
-            <!-- Connector row -->
-            <div class="arch-connector-row" aria-hidden="true">
-                <span></span><span></span><span>↓</span>
-            </div>
-
-            <!-- Three axes -->
-            <div class="arch-axes">
-
-                <div class="arch-axis" data-thesis="t1">
-                    <div class="arch-axis-header">
-                        <span class="arch-thesis-badge">T1</span>
-                        <h3>Gobernanza de Datos</h3>
-                    </div>
-                    <p class="arch-axis-frame">Etnografía digital de flujos de datos corporativos · Caso SURA Investments / AFP vinculada · Vulneraciones a la privacidad y mistranslation técnico-normativa</p>
-                    <ul class="arch-asset-list">
-                        <li class="arch-asset arch-asset--pdf">
-                            <a href="SURA_Compilado_Estrategia_Gaona_Complete.pdf" target="_blank">SURA_Compilado_Estrategia_Gaona_Complete.pdf</a>
-                            <span class="arch-asset-meta">PDF · 150 págs. · Etnografía de caso</span>
-                        </li>
-                        <li class="arch-asset arch-asset--section">
-                            <a href="#etnografia">§02 Etnografía Audiovisual y Diseño Metodológico</a>
-                            <span class="arch-asset-meta">Sección principal del caso</span>
-                        </li>
-                        <li class="arch-asset arch-asset--section">
-                            <a href="#ensayo">§03 Ensayo — eje datos / Ley 19.628</a>
-                            <span class="arch-asset-meta">Análisis teórico</span>
-                        </li>
-                        <li class="arch-asset arch-asset--doc">
-                            Etnografía Audiovisual/README.md
-                            <span class="arch-asset-meta">Documento metodológico</span>
-                        </li>
-                    </ul>
-                    <span class="arch-law-badge">Ley 19.628 · Nueva Ley de Datos 2024 · CMF</span>
-                </div>
-
-                <div class="arch-axis" data-thesis="t2">
-                    <div class="arch-axis-header">
-                        <span class="arch-thesis-badge">T2</span>
-                        <h3>Territorio Indígena</h3>
-                    </div>
-                    <p class="arch-axis-frame">Despojo territorial mapuche-huilliche, Región de Los Ríos · Contra-cartografía y memoria oral · Traducción forzada del sistema comunal al régimen de propiedad privada</p>
-                    <ul class="arch-asset-list">
-                        <li class="arch-asset arch-asset--img">
-                            <a href="#merced-img">Distribución títulos de merced — Región de Los Ríos</a>
-                            <span class="arch-asset-meta">PNG · Cartografía histórica</span>
-                        </li>
-                        <li class="arch-asset arch-asset--img">
-                            <a href="#oit-img">UX RG — Desglose derechos OIT 169</a>
-                            <span class="arch-asset-meta">JPG · Esquema normativo</span>
-                        </li>
-                        <li class="arch-asset arch-asset--img">
-                            <a href="#plurinacional-img">UX RG — Comparativa Eº Plurinacional</a>
-                            <span class="arch-asset-meta">JPG · Análisis comparativo</span>
-                        </li>
-                        <li class="arch-asset arch-asset--section">
-                            <a href="#la-negra">§04 La Negra — Trabajo de Campo Territorial</a>
-                            <span class="arch-asset-meta">Sección principal del eje</span>
-                        </li>
-                        <li class="arch-asset arch-asset--section">
-                            <a href="#ensayo">§03 Ensayo — eje territorio / OIT 169</a>
-                            <span class="arch-asset-meta">Análisis teórico</span>
-                        </li>
-                        <li class="arch-asset arch-asset--doc">
-                            La Negra/README.md
-                            <span class="arch-asset-meta">Documento de campo</span>
-                        </li>
-                    </ul>
-                    <span class="arch-law-badge">Convenio OIT 169 · Art. 11 Constitución · CIDH</span>
-                </div>
-
-                <div class="arch-axis" data-thesis="t3">
-                    <div class="arch-axis-header">
-                        <span class="arch-thesis-badge">T3</span>
-                        <h3>Periodismo de Investigación</h3>
-                    </div>
-                    <p class="arch-axis-frame">Metodologías CIPER para documentar crimen organizado y corrupción institucional · Verificación documental · Análisis de redes de poder</p>
-                    <ul class="arch-asset-list">
-                        <li class="arch-asset arch-asset--pdf">
-                            <a href="CIPER- Clase teórico prática - Investigación Crimen Organizado.pdf" target="_blank">CIPER — Investigación Crimen Organizado</a>
-                            <span class="arch-asset-meta">PDF · Material didáctico CIPER Chile</span>
-                        </li>
-                        <li class="arch-asset arch-asset--img">
-                            <a href="#journalism-img">Introduction to Journalism</a>
-                            <span class="arch-asset-meta">PNG · Referencia metodológica</span>
-                        </li>
-                        <li class="arch-asset arch-asset--section">
-                            <a href="#estado-del-arte">§01 Estado del Arte — eje periodismo</a>
-                            <span class="arch-asset-meta">Marco teórico-metodológico</span>
-                        </li>
-                        <li class="arch-asset arch-asset--doc">
-                            Estado del Arte/README.md
-                            <span class="arch-asset-meta">Documento de referencia</span>
-                        </li>
-                    </ul>
-                    <span class="arch-law-badge">CIPER · GIJN · Protocolos de verificación</span>
-                </div>
-
-            </div><!-- /.arch-axes -->
-
-            <!-- Transversal methodology band -->
-            <div class="arch-crosscut">
-                <span class="arch-crosscut-label">Metodología transversal · Articulan los tres ejes</span>
-                <div class="arch-crosscut-items">
-                    <div class="arch-crosscut-item">
-                        <a href="#presentacion">§00 Presentación</a>
-                        <span>Marco doctoral</span>
-                    </div>
-                    <div class="arch-crosscut-item">
-                        <a href="#estado-del-arte">§01 Estado del Arte</a>
-                        <span>T1 · T2 · T3</span>
-                    </div>
-                    <div class="arch-crosscut-item">
-                        <a href="#ensayo">§03 Ensayo</a>
-                        <span>Núcleo teórico</span>
-                    </div>
-                    <div class="arch-crosscut-item">
-                        <a href="#poemarios">§05 Poemarios</a>
-                        <span>Poesía como método</span>
-                    </div>
-                    <div class="arch-crosscut-item">
-                        Ensayo Traducción de Saberes/README.md
-                        <span>Doc teórico</span>
-                    </div>
-                    <div class="arch-crosscut-item">
-                        Poemarios/README.md
-                        <span>Doc metodológico</span>
-                    </div>
-                    <div class="arch-crosscut-item">
-                        repositorio_antropologia_corrupcion.zip
-                        <span>Archivo completo</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Synthesis -->
-            <div class="arch-synthesis">
-                <span class="arch-synthesis-label">Producto material de la investigación</span>
-                <strong>Contra-Archivo</strong>
-                <span class="arch-synthesis-sub">Dispositivo de re-traducción crítica · Intervención epistémica · Restitución de agencia</span>
-            </div>
-
-        </div><!-- /.arch-map -->
-
-        <!-- ── ASSET INVENTORY ── -->
-        <h3>Inventario completo de activos</h3>
-        <p>Todos los materiales del contra-archivo con su tipo, ejes temáticos que sustentan y estado actual.</p>
-
-        <div class="matrix-scroll" role="region" aria-label="Inventario de activos de la investigación" tabindex="0">
-        <table class="asset-table">
-            <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Activo</th>
-                    <th scope="col">Tipo</th>
-                    <th scope="col">T1 Datos</th>
-                    <th scope="col">T2 Territorio</th>
-                    <th scope="col">T3 Periodismo</th>
-                    <th scope="col">Estado</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>01</td>
-                    <td><a href="SURA_Compilado_Estrategia_Gaona_Complete.pdf" target="_blank">SURA_Compilado_Estrategia_Gaona_Complete.pdf</a></td>
-                    <td><span class="asset-type asset-type--pdf">PDF</span></td>
-                    <td class="asset-check asset-check--yes" aria-label="Sí">✓</td>
-                    <td class="asset-check" aria-label="No">—</td>
-                    <td class="asset-check" aria-label="No">—</td>
-                    <td><span class="asset-status asset-status--done">Completo</span></td>
-                </tr>
-                <tr>
-                    <td>02</td>
-                    <td><a href="CIPER- Clase teórico prática - Investigación Crimen Organizado.pdf" target="_blank">CIPER — Clase Teórico-Práctica: Investigación del Crimen Organizado</a></td>
-                    <td><span class="asset-type asset-type--pdf">PDF</span></td>
-                    <td class="asset-check" aria-label="No">—</td>
-                    <td class="asset-check" aria-label="No">—</td>
-                    <td class="asset-check asset-check--yes" aria-label="Sí">✓</td>
-                    <td><span class="asset-status asset-status--done">Completo</span></td>
-                </tr>
-                <tr>
-                    <td>03</td>
-                    <td><a href="#merced-img">Distribución de títulos de merced — Región de Los Ríos</a></td>
-                    <td><span class="asset-type asset-type--img">Imagen</span></td>
-                    <td class="asset-check" aria-label="No">—</td>
-                    <td class="asset-check asset-check--yes" aria-label="Sí">✓</td>
-                    <td class="asset-check" aria-label="No">—</td>
-                    <td><span class="asset-status asset-status--done">Completo</span></td>
-                </tr>
-                <tr>
-                    <td>04</td>
-                    <td><a href="#oit-img">UX RG — Desglose de derechos consagrados por el OIT 169</a></td>
-                    <td><span class="asset-type asset-type--img">Imagen</span></td>
-                    <td class="asset-check" aria-label="No">—</td>
-                    <td class="asset-check asset-check--yes" aria-label="Sí">✓</td>
-                    <td class="asset-check" aria-label="No">—</td>
-                    <td><span class="asset-status asset-status--done">Completo</span></td>
-                </tr>
-                <tr>
-                    <td>05</td>
-                    <td><a href="#plurinacional-img">UX RG — Comparativa Eº Plurinacional / Marco Legal Chile</a></td>
-                    <td><span class="asset-type asset-type--img">Imagen</span></td>
-                    <td class="asset-check" aria-label="No">—</td>
-                    <td class="asset-check asset-check--yes" aria-label="Sí">✓</td>
-                    <td class="asset-check" aria-label="No">—</td>
-                    <td><span class="asset-status asset-status--done">Completo</span></td>
-                </tr>
-                <tr>
-                    <td>06</td>
-                    <td><a href="#journalism-img">Introduction to Journalism</a></td>
-                    <td><span class="asset-type asset-type--img">Imagen</span></td>
-                    <td class="asset-check" aria-label="No">—</td>
-                    <td class="asset-check" aria-label="No">—</td>
-                    <td class="asset-check asset-check--yes" aria-label="Sí">✓</td>
-                    <td><span class="asset-status asset-status--done">Completo</span></td>
-                </tr>
-                <tr>
-                    <td>07</td>
-                    <td>repositorio_antropologia_corrupcion.zip</td>
-                    <td><span class="asset-type asset-type--archive">Archivo</span></td>
-                    <td class="asset-check asset-check--yes" aria-label="Sí">✓</td>
-                    <td class="asset-check asset-check--yes" aria-label="Sí">✓</td>
-                    <td class="asset-check asset-check--yes" aria-label="Sí">✓</td>
-                    <td><span class="asset-status asset-status--done">Completo</span></td>
-                </tr>
-                <tr>
-                    <td>08</td>
-                    <td>Etnografía Audiovisual/README.md</td>
-                    <td><span class="asset-type asset-type--doc">Doc</span></td>
-                    <td class="asset-check asset-check--yes" aria-label="Sí">✓</td>
-                    <td class="asset-check" aria-label="No">—</td>
-                    <td class="asset-check" aria-label="No">—</td>
-                    <td><span class="asset-status asset-status--progress">En desarrollo</span></td>
-                </tr>
-                <tr>
-                    <td>09</td>
-                    <td>Estado del Arte/README.md</td>
-                    <td><span class="asset-type asset-type--doc">Doc</span></td>
-                    <td class="asset-check asset-check--yes" aria-label="Sí">✓</td>
-                    <td class="asset-check asset-check--yes" aria-label="Sí">✓</td>
-                    <td class="asset-check asset-check--yes" aria-label="Sí">✓</td>
-                    <td><span class="asset-status asset-status--progress">En desarrollo</span></td>
-                </tr>
-                <tr>
-                    <td>10</td>
-                    <td>Ensayo Traducción de Saberes/README.md</td>
-                    <td><span class="asset-type asset-type--doc">Doc</span></td>
-                    <td class="asset-check asset-check--yes" aria-label="Sí">✓</td>
-                    <td class="asset-check asset-check--yes" aria-label="Sí">✓</td>
-                    <td class="asset-check" aria-label="No">—</td>
-                    <td><span class="asset-status asset-status--progress">En desarrollo</span></td>
-                </tr>
-                <tr>
-                    <td>11</td>
-                    <td>La Negra/README.md</td>
-                    <td><span class="asset-type asset-type--doc">Doc</span></td>
-                    <td class="asset-check" aria-label="No">—</td>
-                    <td class="asset-check asset-check--yes" aria-label="Sí">✓</td>
-                    <td class="asset-check" aria-label="No">—</td>
-                    <td><span class="asset-status asset-status--progress">En desarrollo</span></td>
-                </tr>
-                <tr>
-                    <td>12</td>
-                    <td>Poemarios/README.md</td>
-                    <td><span class="asset-type asset-type--doc">Doc</span></td>
-                    <td class="asset-check asset-check--yes" aria-label="Sí">✓</td>
-                    <td class="asset-check asset-check--yes" aria-label="Sí">✓</td>
-                    <td class="asset-check" aria-label="No">—</td>
-                    <td><span class="asset-status asset-status--progress">En desarrollo</span></td>
-                </tr>
-                <tr>
-                    <td>13</td>
-                    <td><a href="#presentacion">§00 Presentación del Proyecto Doctoral</a></td>
-                    <td><span class="asset-type asset-type--section">Sección</span></td>
-                    <td class="asset-check asset-check--yes" aria-label="Sí">✓</td>
-                    <td class="asset-check asset-check--yes" aria-label="Sí">✓</td>
-                    <td class="asset-check asset-check--yes" aria-label="Sí">✓</td>
-                    <td><span class="asset-status asset-status--done">Completo</span></td>
-                </tr>
-                <tr>
-                    <td>14</td>
-                    <td><a href="#estado-del-arte">§01 Estado del Arte y Marco Teórico</a></td>
-                    <td><span class="asset-type asset-type--section">Sección</span></td>
-                    <td class="asset-check asset-check--yes" aria-label="Sí">✓</td>
-                    <td class="asset-check asset-check--yes" aria-label="Sí">✓</td>
-                    <td class="asset-check asset-check--yes" aria-label="Sí">✓</td>
-                    <td><span class="asset-status asset-status--done">Completo</span></td>
-                </tr>
-                <tr>
-                    <td>15</td>
-                    <td><a href="#etnografia">§02 Etnografía Audiovisual y Diseño Metodológico</a></td>
-                    <td><span class="asset-type asset-type--section">Sección</span></td>
-                    <td class="asset-check asset-check--yes" aria-label="Sí">✓</td>
-                    <td class="asset-check" aria-label="No">—</td>
-                    <td class="asset-check" aria-label="No">—</td>
-                    <td><span class="asset-status asset-status--done">Completo</span></td>
-                </tr>
-                <tr>
-                    <td>16</td>
-                    <td><a href="#ensayo">§03 Ensayo: Traducción de Saberes</a></td>
-                    <td><span class="asset-type asset-type--section">Sección</span></td>
-                    <td class="asset-check asset-check--yes" aria-label="Sí">✓</td>
-                    <td class="asset-check asset-check--yes" aria-label="Sí">✓</td>
-                    <td class="asset-check" aria-label="No">—</td>
-                    <td><span class="asset-status asset-status--done">Completo</span></td>
-                </tr>
-                <tr>
-                    <td>17</td>
-                    <td><a href="#la-negra">§04 La Negra — Trabajo de Campo Territorial</a></td>
-                    <td><span class="asset-type asset-type--section">Sección</span></td>
-                    <td class="asset-check" aria-label="No">—</td>
-                    <td class="asset-check asset-check--yes" aria-label="Sí">✓</td>
-                    <td class="asset-check" aria-label="No">—</td>
-                    <td><span class="asset-status asset-status--done">Completo</span></td>
-                </tr>
-                <tr>
-                    <td>18</td>
-                    <td><a href="#poemarios">§05 Poemarios — Poesía como Método</a></td>
-                    <td><span class="asset-type asset-type--section">Sección</span></td>
-                    <td class="asset-check asset-check--yes" aria-label="Sí">✓</td>
-                    <td class="asset-check asset-check--yes" aria-label="Sí">✓</td>
-                    <td class="asset-check" aria-label="No">—</td>
-                    <td><span class="asset-status asset-status--done">Completo</span></td>
-                </tr>
-                <tr>
-                    <td>19</td>
-                    <td><a href="#documentos">§06 Documentos</a></td>
-                    <td><span class="asset-type asset-type--section">Sección</span></td>
-                    <td class="asset-check asset-check--yes" aria-label="Sí">✓</td>
-                    <td class="asset-check" aria-label="No">—</td>
-                    <td class="asset-check asset-check--yes" aria-label="Sí">✓</td>
-                    <td><span class="asset-status asset-status--done">Completo</span></td>
-                </tr>
-                <tr>
-                    <td>20</td>
-                    <td><a href="#materiales">§07 Materiales Visuales</a></td>
-                    <td><span class="asset-type asset-type--section">Sección</span></td>
-                    <td class="asset-check" aria-label="No">—</td>
-                    <td class="asset-check asset-check--yes" aria-label="Sí">✓</td>
-                    <td class="asset-check asset-check--yes" aria-label="Sí">✓</td>
-                    <td><span class="asset-status asset-status--done">Completo</span></td>
-                </tr>
-                <tr>
-                    <td>21</td>
-                    <td><a href="#referencias">§08 Referencias Bibliográficas</a></td>
-                    <td><span class="asset-type asset-type--section">Sección</span></td>
-                    <td class="asset-check asset-check--yes" aria-label="Sí">✓</td>
-                    <td class="asset-check asset-check--yes" aria-label="Sí">✓</td>
-                    <td class="asset-check asset-check--yes" aria-label="Sí">✓</td>
-                    <td><span class="asset-status asset-status--done">Completo</span></td>
-                </tr>
-                <tr>
-                    <td>22</td>
-                    <td><a href="#conclusiones">§11 Conclusiones — Síntesis Transversal</a></td>
-                    <td><span class="asset-type asset-type--section">Sección</span></td>
-                    <td class="asset-check asset-check--yes" aria-label="Sí">✓</td>
-                    <td class="asset-check asset-check--yes" aria-label="Sí">✓</td>
-                    <td class="asset-check asset-check--yes" aria-label="Sí">✓</td>
-                    <td><span class="asset-status asset-status--done">Completo</span></td>
-                </tr>
-            </tbody>
-        </table>
-        </div><!-- /.matrix-scroll -->
-
-    </section>
-
-
-    <!-- INVESTIGADOR -->
-    <section id="investigador">
-        <div class="section-header">
-            <span class="section-number">10</span>
-            <h2>El Investigador</h2>
-        </div>
-
-        <div class="bio-card">
-            <div class="bio-avatar" aria-hidden="true">RG</div>
-            <div>
-                <p class="bio-name">Rodrigo Gaete Gaona</p>
-                <p class="bio-role">Investigador doctoral · Antropología y Corrupción · Chile</p>
-                <p class="bio-description">Rodrigo Gaete Gaona es investigador doctoral en antropología con especialización en etnografía institucional, gobernanza de datos y derechos de pueblos indígenas en Chile. Su trabajo articula el análisis crítico de arquitecturas técnicas con la documentación etnográfica de territorios en disputa, abordando la corrupción institucional como un régimen de <em>mistranslation</em> —traducción fallida o deliberadamente distorsionada— entre marcos normativos, sistemas tecnológicos y prácticas organizacionales.</p>
-                <p class="bio-description">Como UX Lead en SURA Investments, realizó una etnografía digital de los flujos de datos entre la empresa y su AFP vinculada, documentando vulneraciones a la Ley 19.628 de Protección de Datos y proponiendo un marco de gobernanza orientado a la privacidad por diseño. Paralelamente, desarrolla trabajo de campo territorial con comunidades mapuche-huilliche en la Región de Los Ríos, investigando las formas contemporáneas del despojo como continuación de los dispositivos coloniales de traducción forzada.</p>
-                <p class="bio-description">El proyecto doctoral <em>Contra-Archivo</em> integra etnografía institucional, periodismo de investigación, cartografía crítica y poesía como métodos articulados de producción de conocimiento.</p>
-                <div class="bio-tags">
-                    <span class="bio-tag">Antropología política</span>
-                    <span class="bio-tag">Etnografía institucional</span>
-                    <span class="bio-tag">Gobernanza de datos</span>
-                    <span class="bio-tag">Derechos indígenas</span>
-                    <span class="bio-tag">Periodismo de investigación</span>
-                    <span class="bio-tag">UX Research</span>
-                    <span class="bio-tag">Poesía como método</span>
-                    <span class="bio-tag">Chile</span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- CONCLUSIONES — SÍNTESIS TRANSVERSAL -->
-    <section id="conclusiones" data-topics="antropologia corrupcion chile" data-searchtext="conclusiones sintesis transversal mistranslation lectura comparada agenda investigacion preguntas">
-        <div class="section-header">
-            <span class="section-number">11</span>
-            <h2>Conclusiones — Síntesis Transversal</h2>
-        </div>
-
-        <p class="conclusion-intro">Esta sección sistematiza los hallazgos de los tres ejes de investigación a través de una lectura comparada que demuestra la operatividad transversal del concepto de <em>mistranslation institucionalizada</em> como dispositivo analítico para la antropología de la corrupción.</p>
-
-        <h3>Lectura comparada: la mistranslation en tres registros</h3>
-        <div class="matrix-scroll" role="region" aria-label="Lectura comparada de los tres ejes de investigación" tabindex="0">
-        <table class="normas-table">
-            <thead>
-                <tr>
-                    <th>Dimensión</th>
-                    <th>T1 · Gobernanza de Datos (SURA/AFP)</th>
-                    <th>T2 · Territorio Indígena (La Negra)</th>
-                    <th>T3 · Periodismo de Investigación (CIPER)</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><strong>Registro normativo</strong></td>
-                    <td>Ley 19.628 · Privacy by Design · Nueva Ley de Datos 2024</td>
-                    <td>Convenio OIT 169 · Consulta previa libre e informada</td>
-                    <td>Protocolos de verificación documental · GIJN · Libertad de prensa</td>
-                </tr>
-                <tr>
-                    <td><strong>Práctica efectiva</strong></td>
-                    <td>Consulta directa BD AFP sin consentimiento; datos previsionales como activo comercial</td>
-                    <td>Proyectos ejecutados sin consulta real; CONADI con criterios de mercado</td>
-                    <td>Opacidad documental; obstrucción de fuentes; dependencia publicitaria</td>
-                </tr>
-                <tr>
-                    <td><strong>Mecanismo de mistranslation</strong></td>
-                    <td>Incompatibilidad SQL / norma jurídica; ausencia de intermediarios técnicos fiables</td>
-                    <td>Sustitución del procedimiento de consulta por una formalidad vacía</td>
-                    <td>Control de acceso a información pública; selección interesada de los datos publicables</td>
-                </tr>
-                <tr>
-                    <td><strong>Efecto producido</strong></td>
-                    <td>Vulneración de privacidad; acumulación de datos como capital corporativo</td>
-                    <td>Despojo territorial y epistémico continuado</td>
-                    <td>Opacidad estructural; impunidad normalizada; dificultad de accountability</td>
-                </tr>
-                <tr>
-                    <td><strong>Intervención del contra-archivo</strong></td>
-                    <td>Documentación de flujos irregulares; propuesta de gobernanza con Privacy by Design</td>
-                    <td>Contra-cartografía; cronología del despojo; archivo de testimonios orales</td>
-                    <td>Compilación de evidencias; verificación cruzada de fuentes; publicación crítica</td>
-                </tr>
-            </tbody>
-        </table>
-        </div><!-- /.matrix-scroll -->
-
-        <h3>Respuestas a las preguntas de investigación</h3>
-        <ol class="key-args">
-            <li>
-                <strong>¿De qué manera la corrupción institucional puede ser comprendida como un régimen de mistranslation?</strong>
-                <p>Los tres casos demuestran que la corrupción no radica en la infracción de normas sino en la arquitectura que hace imposible su cumplimiento. En SURA/AFP, la incompatibilidad entre el lenguaje jurídico del consentimiento expreso y el lenguaje técnico de la query sin campo de consentimiento <em>es</em> la corrupción misma, no su consecuencia. En el territorio mapuche-huilliche, la brecha entre la consulta previa como derecho y la consulta como trámite produce el despojo como procedimiento regular. La <em>mistranslation institucionalizada</em> nombra este patrón estructural: la incompatibilidad entre registros no es accidente del sistema sino condición de su reproducción.</p>
-            </li>
-            <li>
-                <strong>¿Cómo operan los dispositivos de traducción fallida en la gobernanza de datos y en el incumplimiento del Convenio 169?</strong>
-                <p>En ambos casos, los dispositivos de mistranslation operan en las capas de mediación: los sistemas técnicos —bases de datos, APIs, arquitecturas de software— que deberían conectar norma y práctica en el caso SURA/AFP; los organismos institucionales —CONADI, Juzgados, municipios— que median entre el derecho internacional y las comunidades en el caso territorial. La ausencia o la captura de estos intermediarios es el mecanismo de la opacidad. Sin intermediarios fiables, la norma no llega a la práctica, y la práctica no es auditable desde la norma. La ANT (Latour, 2005) permite visualizar estos nodos rotos como puntos donde la cadena de traducción se interrumpe deliberadamente.</p>
-            </li>
-            <li>
-                <strong>¿Qué papel desempeña el contra-archivo como práctica de re-traducción crítica?</strong>
-                <p>El contra-archivo cumple la función que Riles (2006) atribuye a los documentos críticos: no restituye una verdad previa a la mistranslation, sino que produce nuevas legibilidades. Al poner en circulación el PDF de la Estrategia Gaona junto con el mapa de títulos de merced y los poemarios, el contra-archivo hace visible el patrón transversal que cada archivo sectorial obscurece. La re-traducción no es recuperación de un original perdido: es intervención epistémica que abre la posibilidad de otros lenguajes institucionales.</p>
-            </li>
-            <li>
-                <strong>¿En qué medida la poesía y la etnografía audiovisual desestabilizan los lenguajes de la corrupción?</strong>
-                <p>Los poemarios demuestran que la mistranslation opera también en el registro sensible: la jerga técnica corporativa y el lenguaje administrativo del catastro producen invisibilidad afectiva además de jurídica. La poesía como método (Ellis &amp; Bochner, 2000) interviene en ese campo: "Query" traduce el SQL al registro del daño; "Geometría del despojo" convierte el folio del título de merced en evidencia del robo; "Notas de campo: La Negra" expone la posición del investigador en la brecha que documenta. La etnografía audiovisual completa este trabajo haciendo visible lo que el documento no puede capturar: el cuerpo, el paisaje, la voz que nomina el cerro con nombre que no tiene en el mapa.</p>
-            </li>
-        </ol>
-
-        <div class="contribution-box">
-            <p><strong>Contribución teórica a la disciplina:</strong> Esta tesis propone el concepto de <em>mistranslation institucionalizada</em> como categoría analítica que supera la dicotomía corrupción-anomalía / corrupción-cultura. Al relocalizarla en las capas de traducción entre sistemas normativos, técnicos y experienciales, la tesis ofrece a la antropología política un instrumento para estudiar la opacidad como producto activo de la arquitectura institucional, aplicable más allá del caso chileno.</p>
-        </div>
-
-        <h3>Agenda de investigación futura</h3>
-        <ol class="agenda-list">
-            <li><strong>Comparación transnacional:</strong> extender el análisis de la mistranslation a casos de gobernanza de datos indígenas en otros países de América Latina —Bolivia, Perú, Guatemala— donde el conflicto entre el Convenio 169 y los sistemas de información estatal adquiere formas distintas pero estructuralmente análogas.</li>
-            <li><strong>Etnografía de reguladores:</strong> investigar las prácticas internas de los organismos de supervisión —CMF, CONADI, futura Agencia de Protección de Datos— como espacios donde la mistranslation se produce en tiempo real, identificando los actores y procedimientos que sostienen la opacidad desde dentro.</li>
-            <li><strong>Contra-cartografía digital participativa:</strong> desarrollar herramientas de cartografía participativa con comunidades mapuche-huilliche que articulen Sistemas de Información Geográfica (SIG) con memoria oral, produciendo registros alternativos al catastro oficial legibles tanto para las comunidades como para los tribunales.</li>
-            <li><strong>Formalización metodológica del contra-archivo:</strong> sistematizar la metodología del contra-archivo para su aplicación en otros contextos de investigación crítica sobre corrupción institucional, incluyendo protocolos de ética del archivo, gestión de evidencias sensibles y criterios de publicación responsable.</li>
-        </ol>
-
-        <div class="thesis-statement">
-            <p>La corrupción institucional en Chile —como en otros contextos— no esperará a ser comprendida para seguir operando. Lo que esta tesis ofrece no es un diagnóstico definitivo sino un <strong>dispositivo de lectura</strong>: el concepto de mistranslation institucionalizada como herramienta para identificar, en cualquier arquitectura normativa y técnica, los nodos donde la traducción falla deliberadamente y produce opacidad como condición de reproducción del sistema. El contra-archivo no cierra el caso: lo abre al examen colectivo.</p>
-        </div>
-
-    </section>
-
-</main>
-
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════ CAMPOS -->
+<section id="campos">
+  <div class="section-eyebrow">
+    <span class="eyebrow-num">02</span>
+    <div class="eyebrow-line"></div>
+    <span class="eyebrow-text">Campos de investigación</span>
+  </div>
+  <h2>4 sitios etnográficos, <span class="accent-e">un mismo mecanismo</span></h2>
+  <p class="section-lead">La etnografía multi-situada articula campos que van desde la corporación financiera hasta el territorio indígena, pasando por el periodismo de datos y el derecho internacional. En cada uno, <strong>los mismos mecanismos de poder</strong> producen invisibilidad a través de la traducción fallida.</p>
+
+  <div class="campos-grid" id="campos-grid"></div>
+</section>
+
+<!-- ══════════════════════════════════════ TENSIONES -->
+<section id="tensiones">
+  <div class="section-eyebrow">
+    <span class="eyebrow-num">03</span>
+    <div class="eyebrow-line"></div>
+    <span class="eyebrow-text">Tensiones medidas</span>
+  </div>
+  <h2>La fricción como <span class="accent-c">evidencia cuantificable</span></h2>
+  <p class="section-lead">Para cada campo, el instrumento despliega las tres capas y mide su incompatibilidad. La fricción no se resuelve: <strong>se documenta, clasifica e incorpora al protocolo</strong> de intervención.</p>
+
+  <div class="tension-selector" id="tension-selector"></div>
+  <div class="tension-viewer" id="tension-viewer"></div>
+  <div class="tension-meta" id="tension-meta"></div>
+</section>
+
+<!-- ══════════════════════════════════════ GRAFO -->
+<section id="grafo">
+  <div class="section-eyebrow">
+    <span class="eyebrow-num">04</span>
+    <div class="eyebrow-line"></div>
+    <span class="eyebrow-text">Grafo de conexiones</span>
+  </div>
+  <h2>Los campos están <span class="accent-i">conectados</span></h2>
+  <p class="section-lead">Los mismos actores, instituciones y mecanismos de traducción aparecen en múltiples campos. El grafo visualiza estas conexiones transversales, demostrando que la mistranslation no es un problema local sino <strong>un sistema articulado</strong>.</p>
+
+  <div class="graph-controls" id="graph-controls">
+    <button class="gc-btn active" data-layer="all">Todas las capas</button>
+    <button class="gc-btn" data-layer="etica">◎ Ética</button>
+    <button class="gc-btn" data-layer="institucional">▣ Institucional</button>
+    <button class="gc-btn" data-layer="material">◈ Material</button>
+  </div>
+  <div class="graph-wrap">
+    <div id="ca-graph-canvas" style="width:100%;height:100%;"></div>
+    <div id="ca-preview"></div>
+    <div class="graph-overlay-legend">
+      <div class="gl-item"><div class="gl-dot" style="background:var(--etica)"></div>Ética</div>
+      <div class="gl-item"><div class="gl-dot" style="background:var(--inst)"></div>Institucional</div>
+      <div class="gl-item"><div class="gl-dot" style="background:var(--mat)"></div>Material</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════ PROTOCOLO -->
+<section id="protocolo">
+  <div class="section-eyebrow">
+    <span class="eyebrow-num">05</span>
+    <div class="eyebrow-line"></div>
+    <span class="eyebrow-text">Protocolo de buena traducción</span>
+  </div>
+  <h2>De la fricción a la <span class="accent-m">intervención</span></h2>
+  <p class="protocolo-intro">
+    Si la mistranslation es el problema, la <strong>buena traducción institucional</strong> es el horizonte de la intervención. El protocolo no propone eliminar la diferencia entre capas —eso sería epistemicidio—, sino crear condiciones mínimas de equivalencia que hagan el daño legible y la reparación posible.
+  </p>
+
+  <!-- Umbral visual -->
+  <div class="umbral-visual">
+    <div class="uv-title">Umbrales de intervención según intensidad de fricción</div>
+    <div class="uv-scale"></div>
+    <div class="uv-markers" style="height:32px">
+      <span class="uv-mk" style="left:25%"><div class="uv-mk-line"></div>0.25<br><span style="font-size:9px">baja</span></span>
+      <span class="uv-mk" style="left:50%"><div class="uv-mk-line"></div>0.50<br><span style="font-size:9px">media</span></span>
+      <span class="uv-mk" style="left:70%"><div class="uv-mk-line"></div>0.70<br><span style="font-size:9px;color:var(--etica)">umbral crítico</span></span>
+      <span class="uv-mk" style="left:90%"><div class="uv-mk-line"></div>0.90<br><span style="font-size:9px;color:var(--crit)">irreductible</span></span>
+    </div>
+    <div class="uv-cases" id="uv-cases"></div>
+  </div>
+
+  <!-- 4 condiciones -->
+  <div class="protocolo-grid">
+    <div class="pc">
+      <div class="pc-num">C.01 — FRICCIÓN POLÍTICA</div>
+      <div class="pc-title">Reconocimiento de autoridad epistémica</div>
+      <div class="pc-body">La traducción institucional solo es válida si reconoce la autoridad de quien produce el conocimiento situado para definir los términos del intercambio. Sin este reconocimiento, toda traducción es colonización.</div>
+      <div class="pc-cond"><strong>Condición:</strong> el sujeto cuya experiencia se traduce debe participar en la definición del vocabulario de la traducción</div>
+    </div>
+    <div class="pc">
+      <div class="pc-num">C.02 — FRICCIÓN SEMÁNTICA</div>
+      <div class="pc-title">Equivalencia sin asimilación</div>
+      <div class="pc-body">No se trata de que todos usen los mismos términos, sino de que cada régimen de verdad pueda reconocer el término del otro sin perder el suyo. La buena traducción preserva la diferencia.</div>
+      <div class="pc-cond"><strong>Condición:</strong> el glosario institucional debe incluir las definiciones propias de cada capa, no solo la definición técnico-jurídica</div>
+    </div>
+    <div class="pc">
+      <div class="pc-num">C.03 — FRICCIÓN TÉCNICA</div>
+      <div class="pc-title">Trazabilidad del daño, no solo del proceso</div>
+      <div class="pc-body">Los sistemas de datos institucionales registran procesos (licitación, consulta, resolución) pero no daños (territorio perdido, consentimiento violado, memoria borrada). La buena traducción hace el daño rastreable.</div>
+      <div class="pc-cond"><strong>Condición:</strong> los registros institucionales deben incorporar indicadores de daño en la capa material, no solo indicadores de cumplimiento procedimental</div>
+    </div>
+    <div class="pc">
+      <div class="pc-num">C.04 — FRICCIÓN IRREDUCTIBLE</div>
+      <div class="pc-title">Nombrar lo que no puede traducirse</div>
+      <div class="pc-body">Cuando la fricción supera 0.85, hay dimensiones de la experiencia que ninguna traducción puede restituir. La buena práctica institucional reconoce explícitamente esta irreductibilidad en lugar de simular equivalencia donde no la hay.</div>
+      <div class="pc-cond"><strong>Condición:</strong> cuando fricción &gt; 0.85, los acuerdos institucionales deben incluir un registro explícito de lo que permanece irreducible e incompensable</div>
+    </div>
+  </div>
+
+  <!-- Output del protocolo -->
+  <div class="protocolo-output">
+    <span class="po-label">Output del instrumento</span>
+    <div class="po-title">El contra-archivo como dispositivo de re-traducción crítica</div>
+    <p class="po-body">
+      El protocolo no produce acuerdos —produce <strong>legibilidad</strong>. Al hacer visible la fricción entre capas, el contra-archivo permite que las instituciones, comunidades y organismos de supervisión identifiquen con precisión <strong>qué tipo de daño produce qué tipo de traducción fallida</strong>, y qué condiciones mínimas deben cumplirse para que la comunicación institucional no sea, en sí misma, un acto de violencia epistemológica.
+    </p>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════ ARCHIVO -->
+<section id="archivo">
+  <div class="section-eyebrow">
+    <span class="eyebrow-num">06</span>
+    <div class="eyebrow-line"></div>
+    <span class="eyebrow-text">Archivo de investigación</span>
+  </div>
+  <h2>Todos los <span class="accent-e">materiales</span> disponibles</h2>
+  <p class="section-lead">El archivo organiza los materiales de investigación por dimensión. Cada dimensión documenta una forma de conocimiento que el análisis multi-situado articula.</p>
+
+  <div class="archivo-grid">
+    <div class="arc-dim">
+      <div class="arc-num">D1</div>
+      <div class="arc-title">Marco Conceptual</div>
+      <div class="arc-count">5 archivos · Interfaz principal</div>
+      <div class="arc-tags">
+        <span class="arc-tag">index.html</span>
+        <span class="arc-tag">_config.yml</span>
+      </div>
+    </div>
+    <div class="arc-dim">
+      <div class="arc-num">D2</div>
+      <div class="arc-title">Estado del Arte</div>
+      <div class="arc-count">6 archivos · Marco teórico</div>
+      <div class="arc-tags">
+        <span class="arc-tag">CIPER PDF</span>
+        <span class="arc-tag">OIT 169</span>
+        <span class="arc-tag">Gupta · Latour · Tsing</span>
+      </div>
+    </div>
+    <div class="arc-dim">
+      <div class="arc-num">D3</div>
+      <div class="arc-title">Etnografía Audiovisual</div>
+      <div class="arc-count">3 archivos · Caso SURA/AFP</div>
+      <div class="arc-tags">
+        <span class="arc-tag">PDF 150 págs.</span>
+        <span class="arc-tag">Privacy by Design</span>
+      </div>
+    </div>
+    <div class="arc-dim">
+      <div class="arc-num">D4</div>
+      <div class="arc-title">Ensayo: Traducción de Saberes</div>
+      <div class="arc-count">18 archivos · Marco decolonial</div>
+      <div class="arc-tags">
+        <span class="arc-tag">Artículo etnográfico</span>
+        <span class="arc-tag">Dussel · Hall · Butler · Scott</span>
+      </div>
+    </div>
+    <div class="arc-dim">
+      <div class="arc-num">D5</div>
+      <div class="arc-title">La Negra</div>
+      <div class="arc-count">20 archivos · Investigación territorial</div>
+      <div class="arc-tags">
+        <span class="arc-tag">Caso Catrillanca</span>
+        <span class="arc-tag">ACAB</span>
+        <span class="arc-tag">Lof Ñanco</span>
+        <span class="arc-tag">Infografías</span>
+      </div>
+    </div>
+    <div class="arc-dim">
+      <div class="arc-num">D6</div>
+      <div class="arc-title">Poemarios</div>
+      <div class="arc-count">3 archivos · Método artístico</div>
+      <div class="arc-tags">
+        <span class="arc-tag">Los números no existen</span>
+        <span class="arc-tag">Contrapoética</span>
+      </div>
+    </div>
+    <div class="arc-dim" style="grid-column:1/-1;border-color:rgba(200,169,110,.2)">
+      <div class="arc-num" style="color:var(--etica)">D7</div>
+      <div class="arc-title">Dispositivo Contra-Archivo</div>
+      <div class="arc-count">9 archivos · Motor de fricción + Grafo + 4 casos</div>
+      <div class="arc-tags">
+        <span class="arc-tag">frictionEngine.js</span>
+        <span class="arc-tag">graph.js</span>
+        <span class="arc-tag">casos.json</span>
+        <span class="arc-tag">4 nodos</span>
+        <span class="arc-tag">0.71–0.94 fricción</span>
+      </div>
+      <a class="arc-link" href="admin.html">Ver inventario completo en Admin →</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
 <footer>
-    <p>Contra-Archivo — Antropología y Corrupción · Investigación Doctoral · Chile</p>
-    <p class="footer-subtitle">La mistranslation institucionalizada como dispositivo de poder: etnografía multi-situada, territorio y archivo crítico · Rodrigo Gaete Gaona</p>
+  <div class="footer-left">
+    <div class="footer-title">Contra-Archivo · Antropología y Corrupción</div>
+    <div class="footer-sub">Tesis Doctoral · Rodrigo Gaete Gaona · Chile · 2025</div>
+    <div class="footer-sub" style="margin-top:4px">La mistranslation institucional como dispositivo de poder</div>
+  </div>
+  <div class="footer-right">
+    <div>Etnografía multi-situada</div>
+    <div>Motor de fricción epistemológica</div>
+    <div>Protocolo de buena traducción</div>
+    <div style="margin-top:8px"><a href="https://github.com/vientonorte/antropologia-corrupcion" style="color:var(--dim);text-decoration:none;">github.com/vientonorte/antropologia-corrupcion ↗</a></div>
+  </div>
 </footer>
 
-<!-- Lightbox overlay -->
-<div class="lightbox-overlay" id="lightbox" role="dialog" aria-modal="true" aria-label="Vista ampliada de imagen">
-    <span class="lightbox-close" id="lightbox-close" aria-label="Cerrar">✕ Cerrar</span>
-    <img src="" alt="" id="lightbox-img">
-    <p class="lightbox-caption" id="lightbox-caption"></p>
-</div>
-
-<!-- Back to top -->
-<button id="back-to-top" aria-label="Volver al inicio">↑ Inicio</button>
+<!-- ══════════════════════════════════════ SCRIPTS: módulos del sistema -->
+<script src="src/frictionEngine.js"></script>
+<script src="src/graph.js"></script>
+<script src="src/nodeRenderer.js"></script>
 
 <script>
-(function () {
-    'use strict';
+'use strict';
 
-    /* ── READING PROGRESS ── */
-    var bar = document.getElementById('progress-bar');
-    function updateProgress() {
-        var scrollTop = window.scrollY || document.documentElement.scrollTop;
-        var docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-        var pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
-        bar.style.width = pct.toFixed(1) + '%';
+/* ══════════════ DATOS (inline para GitHub Pages sin CORS) ══════════════ */
+const CASOS_DATA = {
+  "_meta": {
+    "capas": {
+      "etica": "Testimonio situado, cuidado, contexto vivido",
+      "institucional": "Registro oficial, clasificación, distorsión normativa",
+      "material": "Territorio, evidencia, densidad histórica"
     }
-
-    /* ── BACK TO TOP ── */
-    var btt = document.getElementById('back-to-top');
-    btt.addEventListener('click', function () {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-    function updateBtt() {
-        if (window.scrollY > 400) {
-            btt.classList.add('visible');
-        } else {
-            btt.classList.remove('visible');
-        }
+  },
+  "casos": [
+    {
+      "id": "sura-gobernanza-datos",
+      "titulo": "SURA Investments: Gobernanza de Datos y Separación AFP",
+      "anio": 2024,
+      "actores": ["SURA Investments","AFP","CMF","trabajadores afiliados","comunidades mapuche"],
+      "instituciones": ["SURA Investments","AFP UNO","Comisión para el Mercado Financiero"],
+      "etica": {
+        "titulo": "El trabajador como dato",
+        "descripcion": "Los afiliados experimentan su relación con el sistema previsional como una caja negra opaca: no comprenden qué hacen sus fondos, dónde se invierten, qué territorios financian. Su vida laboral traducida en columnas de riesgo-retorno sin consentimiento informado real.",
+        "voces": ["Afiliados que desconocen la cartera de inversión de su fondo","Trabajadores que descubren que su AFP financia proyectos en territorios en conflicto"],
+        "documentos_ref": ["SURA_Compilado_Estrategia_Gaona_Complete.pdf"],
+        "keywords": ["consentimiento","transparencia","autonomía","opacidad"],
+        "color": "#c8a96e"
+      },
+      "institucional": {
+        "titulo": "Clasificación: 'inversión responsable'",
+        "descripcion": "SURA opera bajo clasificaciones ESG que permiten mantener inversiones en territorios en disputa. Los informes de sostenibilidad usan lenguaje técnico que absorbe el conflicto sin resolverlo: 'riesgo reputacional', 'gestión de stakeholders'. La CMF regula los flujos pero no los territorios que financian.",
+        "documentos": ["Informes ESG anuales","Resoluciones CMF","Estatutos AFP"],
+        "clasificaciones": ["inversión sostenible","cartera multifondo A-E","riesgo moderado"],
+        "keywords": ["ESG","CMF","regulación","mistranslation","clasificación"],
+        "color": "#4a7fa5"
+      },
+      "material": {
+        "titulo": "Lo que financia el fondo",
+        "descripcion": "Los fondos de pensión chilenos son accionistas en empresas con proyectos en territorios mapuche, zonas de sacrificio ambiental y concesiones mineras. El dinero de los trabajadores viaja a territorios que muchos nunca visitarán y cuya historia desconocen.",
+        "evidencias": ["Carteras con exposición a sectores extractivos","Territorios en Los Ríos con concesiones forestales financiadas por fondos previsionales"],
+        "keywords": ["territorio","extractivismo","zona de sacrificio","capital financiero"],
+        "color": "#7a9e6e"
+      },
+      "friccion": {
+        "tipo": "politica","subtipo": "semantica","intensidad": 0.82,
+        "estado": "abierta",
+        "descripcion": "El sistema previsional traduce la vida de los trabajadores en instrumentos financieros que financian territorios en disputa, sin que ninguna capa del sistema reconozca esta cadena como problema político.",
+        "tension_central": "¿La 'inversión responsable' puede existir si no hay consentimiento del territorio que financia?",
+        "sin_resolver": true
+      },
+      "conexiones": ["la-negra-territorio-mapuche","periodismo-datos-chile"],
+      "tags": ["previsión","AFP","ESG","territorio","datos","corrupción sistémica"]
+    },
+    {
+      "id": "la-negra-territorio-mapuche",
+      "titulo": "La Negra — Memoria, Territorio y Resistencia Mapuche-Huilliche",
+      "anio": 2023,
+      "actores": ["comunidades mapuche-huilliche","CONADI","empresas forestales","Ministerio de Bienes Nacionales"],
+      "instituciones": ["CONADI","Poder Judicial","Ministerio de Bienes Nacionales","SII"],
+      "etica": {
+        "titulo": "Memorias que el archivo no puede contener",
+        "descripcion": "Las comunidades de La Negra mantienen memorias territoriales que preceden al Estado-nación. Sus formas de nombrar el territorio, sus límites vivos, sus prácticas de cuidado del agua y el bosque no tienen equivalente en el sistema registral. El testimonio situado es la única evidencia de una soberanía que el derecho positivo no puede reconocer sin negar sus propios fundamentos.",
+        "voces": ["Lonkos y machis sobre límites territoriales precoloniales","Memorias de usurpación durante la 'pacificación' (1860-1900)","Mujeres sobre el rol del agua en la práctica espiritual y productiva"],
+        "documentos_ref": ["La Negra/inv./INFOGRAFÍAS/Catrillanca Infografía Movil.png"],
+        "keywords": ["memoria","soberanía","territorio vivo","testimonio","lonko"],
+        "color": "#c8a96e"
+      },
+      "institucional": {
+        "titulo": "El catastro como borramiento",
+        "descripcion": "El Conservador de Bienes Raíces registra terrenos entregados a colonos tras la 'pacificación'. Los títulos de merced no coinciden con los límites que las comunidades reconocen. La Ley Forestal (D.L. 701) convirtió suelos mapuche en plantaciones reconocidas institucionalmente como 'usos productivos'.",
+        "documentos": ["Títulos de merced históricos","Catastro CONADI","Registros forestales D.L. 701"],
+        "clasificaciones": ["predio agrícola","zona de amortiguación forestal","terreno baldío fiscal"],
+        "keywords": ["títulos de merced","CONADI","DL701","catastro","borramiento"],
+        "color": "#4a7fa5"
+      },
+      "material": {
+        "titulo": "El territorio como organismo histórico",
+        "descripcion": "La Negra no es un predio: es una red de relaciones entre cuerpos, agua, bosque nativo, animales y muertos. Las plantaciones de pino reemplazaron ecosistemas que tardaron milenios en formarse. Las napas freáticas han descendido. Esta densidad material es la prueba más contundente de la corrupción institucional —y la menos admisible como evidencia judicial.",
+        "evidencias": ["Mapas de cambio de uso de suelo (1973-2023)","Fotografías aéreas de deforestación","Registros de caudal antes/después de plantaciones"],
+        "keywords": ["bosque nativo","pino","napa freática","deforestación","cuerpo-territorio"],
+        "color": "#7a9e6e"
+      },
+      "friccion": {
+        "tipo": "politica","subtipo": "semantica","intensidad": 0.94,
+        "estado": "abierta",
+        "descripcion": "'Territorio' tiene tres significados incompatibles: organismo vivo con historia propia (comunidad), superficie parcelable (catastro), factor de producción (empresa forestal). Ninguna puede aceptar a las otras sin destruirse.",
+        "tension_central": "¿Puede el derecho de propiedad chileno reconocer el territorio mapuche sin negarse a sí mismo?",
+        "sin_resolver": true
+      },
+      "conexiones": ["sura-gobernanza-datos","periodismo-datos-chile"],
+      "tags": ["mapuche-huilliche","territorio","memoria","CONADI","forestales","soberanía"]
+    },
+    {
+      "id": "periodismo-datos-chile",
+      "titulo": "Periodismo de Datos — La Corrupción como Mistranslation Institucional",
+      "anio": 2023,
+      "actores": ["periodistas de investigación","CIPER Chile","instituciones públicas","fuentes anónimas"],
+      "instituciones": ["CIPER Chile","Ministerio Público","Consejo para la Transparencia"],
+      "etica": {
+        "titulo": "La fuente como sujeto en riesgo",
+        "descripcion": "El periodismo de datos opera en un campo minado: las fuentes que revelan corrupción enfrentan represalias laborales, judiciales y sociales. La 'objetividad' periodística exige despersonalizar la fuente —pero al despersonalizarla, el relato pierde su densidad ética.",
+        "voces": ["Funcionarios que filtraron irregularidades y fueron desvinculados","Periodistas amenazados tras publicaciones sobre municipios"],
+        "documentos_ref": ["CIPER- Clase teórico prática - Investigación Crimen Organizado.pdf"],
+        "keywords": ["fuente","protección","testimonio","riesgo","whistleblower"],
+        "color": "#c8a96e"
+      },
+      "institucional": {
+        "titulo": "El dato como ficción institucional",
+        "descripcion": "Las instituciones producen datos según sus propios marcos. Una licitación fraudulenta aparece en ComprasPúblicas como 'proceso regular'. Un desvío de fondos figura como 'gasto operacional'. La corrupción no viola el registro: lo habita.",
+        "documentos": ["Bases de datos ComprasPúblicas","Cuentas públicas municipales","Ley de Transparencia respuestas"],
+        "clasificaciones": ["licitación pública","gasto corriente","convenio marco"],
+        "keywords": ["ComprasPúblicas","contabilidad pública","clasificación","invisibilidad","registro"],
+        "color": "#4a7fa5"
+      },
+      "material": {
+        "titulo": "El documento como cuerpo del delito",
+        "descripcion": "El mismo contrato es 'irregular' para el periodista, 'conforme a derecho' para el abogado institucional y 'normal' para el funcionario que lo firmó. La materialidad del documento no resuelve el conflicto —lo multiplica.",
+        "evidencias": ["PDFs de licitaciones con irregularidades documentadas","Bases de datos filtradas de asignaciones municipales","Correos obtenidos por transparencia activa"],
+        "keywords": ["documento","contrato","filtración","red de actores","evidencia material"],
+        "color": "#7a9e6e"
+      },
+      "friccion": {
+        "tipo": "semantica","subtipo": "tecnica","intensidad": 0.71,
+        "estado": "abierta",
+        "descripcion": "El dato es el campo de batalla. Cada institución produce sus propios datos según sus categorías. El periodismo intenta hacer hablar a esos datos de formas que las instituciones no autorizaron.",
+        "tension_central": "¿Puede el dato institucional ser evidencia de la corrupción que lo produjo?",
+        "sin_resolver": true
+      },
+      "conexiones": ["sura-gobernanza-datos","la-negra-territorio-mapuche"],
+      "tags": ["periodismo","CIPER","datos","transparencia","corrupción"]
+    },
+    {
+      "id": "oit169-consulta-previa",
+      "titulo": "OIT 169 — La Consulta Previa como Dispositivo de Neutralización",
+      "anio": 2022,
+      "actores": ["comunidades indígenas","Estado chileno","empresas extractivas","CONADI","Ministerio de Desarrollo Social"],
+      "instituciones": ["Ministerio de Desarrollo Social","CONADI","SEA","juzgados ambientales"],
+      "etica": {
+        "titulo": "El consentimiento que nunca llega",
+        "descripcion": "El Convenio OIT 169 establece el derecho al consentimiento previo, libre e informado. En la práctica chilena, la 'consulta' se convierte en un proceso burocrático que las comunidades deben atravesar —con tiempos, formatos y vocabulario institucional— para poder decir no a algo que ya está decidido.",
+        "voces": ["Comunidades que participaron en 'consultas' cuyo resultado fue ignorado","Líderes que describen el proceso como 'teatro institucional'","Mujeres excluidas por criterios de representación externos"],
+        "documentos_ref": ["UX RG - Desglose de derechos consagrados por el OIT 169.jpg","UX RG - ¿Comparativa Eº Plurinacional del marco legal vigente en Chile_.jpg"],
+        "keywords": ["consentimiento","CPLI","autonomía","representación","exclusión"],
+        "color": "#c8a96e"
+      },
+      "institucional": {
+        "titulo": "La consulta como trámite administrativo",
+        "descripcion": "El DS N°66 traduce el derecho al consentimiento en un procedimiento con etapas, plazos y representantes reconocidos. Esta traducción convierte un derecho político en un trámite burocrático. El SEIA incorpora la 'participación indígena' como fase del proceso, no como condición para él.",
+        "documentos": ["DS N°66","Ley N°19.253","Reglamento SEIA"],
+        "clasificaciones": ["proceso de consulta regular","participación ciudadana indígena","medidas de mitigación"],
+        "keywords": ["DS66","SEIA","proceso administrativo","representación","admisibilidad"],
+        "color": "#4a7fa5"
+      },
+      "material": {
+        "titulo": "Lo que el territorio perdió durante el proceso",
+        "descripcion": "Mientras duran los procesos de consulta, los proyectos avanzan. Se construyen caminos, se instalan faenas, se modifica el paisaje. La comunidad llega al 'acuerdo' habiendo ya perdido algo que el proceso no contempla devolver.",
+        "evidencias": ["Registros fotográficos de obras en territorios en consulta","Informes de avance de proyectos durante SEIA","Denuncias de daño ambiental previo a la resolución"],
+        "keywords": ["daño previo","hechos consumados","faena","construcción","irreversibilidad"],
+        "color": "#7a9e6e"
+      },
+      "friccion": {
+        "tipo": "politica","subtipo": "semantica","intensidad": 0.89,
+        "estado": "abierta",
+        "descripcion": "'Consulta': veto (OIT 169) · diálogo sin decisión (Estado) · riesgo a gestionar (empresas). Tres definiciones que nunca se confrontan directamente pero producen efectos devastadores sobre los territorios.",
+        "tension_central": "¿Puede existir 'consulta' sin posibilidad real de decir no?",
+        "sin_resolver": true
+      },
+      "conexiones": ["la-negra-territorio-mapuche","sura-gobernanza-datos"],
+      "tags": ["OIT169","CPLI","consulta previa","SEIA","territorio indígena","derechos"]
     }
+  ]
+};
 
-    /* ── ACTIVE NAV HIGHLIGHT ── */
-    var sections = document.querySelectorAll('main section[id]');
-    var navLinks = document.querySelectorAll('nav a[href^="#"]');
-    var stickyOffset = window.innerHeight * 0.25;
-    var lastActiveId = null;
-    window.addEventListener('resize', function () {
-        stickyOffset = window.innerHeight * 0.25;
-    }, { passive: true });
+/* ══════════════ INIT ══════════════ */
+const CASOS = CASOS_DATA.casos;
 
-    function updateActiveNav() {
-        var scrollY = window.scrollY;
-        var activeId = null;
+function frictionColor(v) {
+  if (v >= 0.85) return 'var(--crit)';
+  if (v >= 0.70) return 'var(--etica)';
+  if (v >= 0.45) return '#9e8a4a';
+  return 'var(--mat)';
+}
 
-        sections.forEach(function (s) {
-            if (s.offsetTop - stickyOffset <= scrollY) {
-                activeId = s.getAttribute('id');
-            }
-        });
+/* ── HERO METER ── */
+function initHeroMeter() {
+  const el = document.getElementById('hero-meter');
+  el.innerHTML = CASOS.map(c => `
+    <div class="meter-case" onclick="scrollToTension('${c.id}')">
+      <div class="mc-name">${c.titulo.split('—')[0].trim()}</div>
+      <div class="mc-bar-wrap">
+        <div class="mc-bar" data-val="${c.friccion.intensidad}"
+          style="width:0%;background:${frictionColor(c.friccion.intensidad)}"></div>
+      </div>
+      <div class="mc-val" style="color:${frictionColor(c.friccion.intensidad)}">${c.friccion.intensidad.toFixed(2)}</div>
+      <div class="mc-tipo">${c.friccion.tipo}${c.friccion.subtipo ? ' · ' + c.friccion.subtipo : ''}</div>
+    </div>
+  `).join('');
 
-        if (activeId === lastActiveId) return;
-        lastActiveId = activeId;
+  // Animar barras
+  setTimeout(() => {
+    document.querySelectorAll('.mc-bar').forEach(b => {
+      b.style.width = (parseFloat(b.dataset.val) * 100) + '%';
+    });
+  }, 200);
+}
 
-        navLinks.forEach(function (a) {
-            var isActive = activeId && a.getAttribute('href') === '#' + activeId;
-            a.classList.toggle('active', isActive);
-            if (isActive && a.offsetParent) {
-                var nav = a.closest('nav');
-                if (nav) {
-                    var aLeft = a.offsetLeft;
-                    var aRight = aLeft + a.offsetWidth;
-                    if (aLeft < nav.scrollLeft) {
-                        nav.scrollLeft = aLeft;
-                    } else if (aRight > nav.scrollLeft + nav.clientWidth) {
-                        nav.scrollLeft = aRight - nav.clientWidth;
-                    }
-                }
-            }
-        });
+function scrollToTension(id) {
+  document.getElementById('tensiones')?.scrollIntoView({behavior:'smooth'});
+  setTimeout(() => activateTension(id), 600);
+}
+
+/* ── CAMPOS ── */
+function initCampos() {
+  const el = document.getElementById('campos-grid');
+  el.innerHTML = CASOS.map(c => `
+    <div class="campo-card" onclick="scrollToTension('${c.id}')">
+      <div class="cc-tag">${c.anio} · Campo ${CASOS.indexOf(c)+1} de 4</div>
+      <div class="cc-title">${c.titulo}</div>
+      <div class="cc-desc">${c.etica.descripcion.substring(0, 140)}…</div>
+      <div class="cc-actors">${c.actores.slice(0,4).map(a => `<span class="cc-actor">${a}</span>`).join('')}</div>
+      <div class="cc-friction">
+        <span class="ccf-label">Fricción</span>
+        <div class="ccf-bar"><div class="ccf-fill" style="width:${c.friccion.intensidad*100}%;background:${frictionColor(c.friccion.intensidad)}"></div></div>
+        <span class="ccf-val" style="color:${frictionColor(c.friccion.intensidad)}">${c.friccion.intensidad.toFixed(2)}</span>
+      </div>
+    </div>
+  `).join('');
+}
+
+/* ── TENSIONES ── */
+let activeCasoId = CASOS[0].id;
+
+function initTensiones() {
+  const sel = document.getElementById('tension-selector');
+  sel.innerHTML = CASOS.map(c => `
+    <button class="ts-btn${c.id === activeCasoId ? ' active' : ''}"
+      data-id="${c.id}" onclick="activateTension('${c.id}')">
+      ${c.titulo.split('—')[0].split(':')[0].trim()}
+      <span style="font-family:var(--font-mono);font-size:10px;color:${frictionColor(c.friccion.intensidad)};margin-left:5px">${c.friccion.intensidad.toFixed(2)}</span>
+    </button>
+  `).join('');
+  renderTension(activeCasoId);
+}
+
+function activateTension(id) {
+  activeCasoId = id;
+  document.querySelectorAll('.ts-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.id === id);
+  });
+  renderTension(id);
+}
+
+function renderTension(id) {
+  const c = CASOS.find(x => x.id === id);
+  if (!c) return;
+
+  const viewer = document.getElementById('tension-viewer');
+  viewer.innerHTML = [
+    { key:'etica', cls:'tv-e', sym:'◎ ÉTICA', acc:'kw-e' },
+    { key:'institucional', cls:'tv-i', sym:'▣ INSTITUCIONAL', acc:'kw-i' },
+    { key:'material', cls:'tv-m', sym:'◈ MATERIAL', acc:'kw-m' },
+  ].map(({key,cls,sym,acc}) => {
+    const capa = c[key];
+    return `
+      <div class="tv-capa ${cls}">
+        <div class="tvc-sym">${sym}</div>
+        <div class="tvc-title">${capa.titulo}</div>
+        <div class="tvc-body">${capa.descripcion.substring(0, 240)}…</div>
+        <div class="tvc-kws">
+          ${(capa.keywords||[]).map(k => `<span class="kw ${acc}">${k}</span>`).join('')}
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  const meta = document.getElementById('tension-meta');
+  const col = frictionColor(c.friccion.intensidad);
+  meta.innerHTML = `
+    <div class="tm-item">
+      <div class="tm-label">Intensidad de fricción</div>
+      <div class="tm-val" style="color:${col}">${c.friccion.intensidad.toFixed(2)} / 1.00</div>
+      <div class="intensity-bar"><div class="ib-fill" style="width:${c.friccion.intensidad*100}%"></div></div>
+    </div>
+    <div class="tm-item">
+      <div class="tm-label">Tipo de fricción</div>
+      <div class="tm-val">${c.friccion.tipo}${c.friccion.subtipo ? ' · ' + c.friccion.subtipo : ''}</div>
+      <div class="tm-sub">${frictionTypeDesc(c.friccion.tipo, c.friccion.subtipo)}</div>
+    </div>
+    <div class="tm-item">
+      <div class="tm-label">Tensión central</div>
+      <div class="tm-sub" style="font-size:13px;color:var(--text)">${c.friccion.tension_central}</div>
+    </div>
+  `;
+}
+
+function frictionTypeDesc(tipo, subtipo) {
+  const descs = {
+    politica: 'Conflicto de autoridad: ¿quién tiene derecho a definir?',
+    semantica: 'Conflicto de significado: ¿qué significa el mismo término?',
+    tecnica: 'Conflicto de medición: ¿qué cuentan los datos y para quién?',
+  };
+  if (subtipo && descs[subtipo]) return descs[tipo] + ' / ' + descs[subtipo];
+  return descs[tipo] || '';
+}
+
+/* ── PROTOCOLO UMBRAL ── */
+function initUmbral() {
+  const el = document.getElementById('uv-cases');
+  el.innerHTML = CASOS.map(c => {
+    const v = c.friccion.intensidad;
+    const cls = v >= 0.85 ? 'uvc-crit' : v >= 0.7 ? 'uvc-warn' : 'uvc-ok';
+    const label = v >= 0.85 ? 'irreductible' : v >= 0.7 ? 'crítico' : 'alto';
+    return `<span class="uvc ${cls}">${c.titulo.split('—')[0].split(':')[0].trim()} ${v.toFixed(2)} — ${label}</span>`;
+  }).join('');
+}
+
+/* ── GRAFO ── */
+function initGrafo() {
+  function tryInit() {
+    if (!window.frictionEngine || !window.FrictionGraph) {
+      setTimeout(tryInit, 120); return;
     }
-
-    window.addEventListener('scroll', function () {
-        updateProgress();
-        updateBtt();
-        updateActiveNav();
-    }, { passive: true });
-    updateProgress();
-    updateActiveNav();
-
-    /* ── HIGH CONTRAST TOGGLE ── */
-    var hcBtn = document.getElementById('hc-toggle');
-    var hcKey = 'contra-archivo-hc';
-    if (localStorage.getItem(hcKey) === '1') {
-        document.body.classList.add('high-contrast');
-        hcBtn.setAttribute('aria-pressed', 'true');
-    }
-    hcBtn.addEventListener('click', function () {
-        var on = document.body.classList.toggle('high-contrast');
-        hcBtn.setAttribute('aria-pressed', on ? 'true' : 'false');
-        localStorage.setItem(hcKey, on ? '1' : '0');
+    const gd = window.frictionEngine.buildGraph(CASOS);
+    const canvas = document.getElementById('ca-graph-canvas');
+    if (!canvas) return;
+    const G = new window.FrictionGraph({
+      container: canvas,
+      nodes: gd.nodes,
+      links: gd.links,
+      onNodeClick: (node) => {
+        activateTension(node.id);
+        document.getElementById('tensiones')?.scrollIntoView({behavior:'smooth'});
+      },
+      onNodeHover: () => {},
     });
 
-    /* ── IMAGE LIGHTBOX ── */
-    var lightbox = document.getElementById('lightbox');
-    var lbImg = document.getElementById('lightbox-img');
-    var lbCap = document.getElementById('lightbox-caption');
-    var lbClose = document.getElementById('lightbox-close');
-
-    function openLightbox(src, alt, caption) {
-        lbImg.src = src;
-        lbImg.alt = alt || '';
-        lbCap.textContent = caption || '';
-        lightbox.classList.add('visible');
-        document.body.style.overflow = 'hidden';
-        lbClose.focus();
-    }
-    function closeLightbox() {
-        lightbox.classList.remove('visible');
-        document.body.style.overflow = '';
-        lbImg.src = '';
-    }
-
-    document.querySelectorAll('img[data-lightbox]').forEach(function (img) {
-        img.addEventListener('click', function () {
-            openLightbox(img.src, img.alt, img.getAttribute('data-caption'));
-        });
-        img.addEventListener('keydown', function (e) {
-            if (e.key === 'Enter' || e.key === ' ') {
-                e.preventDefault();
-                openLightbox(img.src, img.alt, img.getAttribute('data-caption'));
-            }
-        });
+    document.querySelectorAll('#graph-controls .gc-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('#graph-controls .gc-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        G.setActiveLayer(btn.dataset.layer);
+      });
     });
+  }
+  tryInit();
+}
 
-    lightbox.addEventListener('click', function (e) {
-        if (e.target === lightbox || e.target === lbClose) { closeLightbox(); }
-    });
-    document.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape' && lightbox.classList.contains('visible')) { closeLightbox(); }
-    });
-    lbClose.addEventListener('click', closeLightbox);
-
-    /* ── COLLAPSIBLE SUBSECTIONS ── */
-    document.querySelectorAll('.collapsible-trigger').forEach(function (trigger) {
-        var targetId = trigger.getAttribute('aria-controls');
-        var body = document.getElementById(targetId);
-        if (!body) return;
-
-        trigger.addEventListener('click', function () {
-            var collapsed = body.classList.toggle('collapsed');
-            trigger.classList.toggle('collapsed', collapsed);
-            trigger.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
-        });
-    });
-
-    /* ── SEARCH & FILTER ── */
-    var searchInput = document.getElementById('search-input');
-    var searchCount = document.getElementById('search-count');
-    var sectionResults = document.getElementById('section-results');
-    var filterTags = document.querySelectorAll('.tag[data-filter]');
-    var activeFilter = null;
-
-    // All searchable/filterable items: doc cards, image cards
-    var filterItems = Array.from(document.querySelectorAll(
-        '.doc-card[data-topics], .image-card[data-topics]'
-    ));
-
-    // Pre-index section text for full-text search
-    var sectionIndex = Array.from(document.querySelectorAll('main section[id]')).map(function (s) {
-        var num = s.querySelector('.section-number');
-        var h2  = s.querySelector('h2');
-        return {
-            id:    s.getAttribute('id'),
-            label: (num ? num.textContent.trim() + ' · ' : '') + (h2 ? h2.textContent.trim() : ''),
-            text:  normalize(s.textContent)
-        };
-    });
-
-    function normalize(str) {
-        return (str || '').toLowerCase()
-            .normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-    }
-
-    function applyFilters() {
-        var query = normalize(searchInput.value.trim());
-        var visible = 0;
-
-        filterItems.forEach(function (item) {
-            var topics = (item.getAttribute('data-topics') || '').split(' ');
-            var text = normalize(
-                (item.getAttribute('data-searchtext') || '') + ' ' +
-                (item.textContent || '')
-            );
-
-            var topicMatch = !activeFilter || topics.indexOf(activeFilter) !== -1;
-            var searchMatch = !query || text.indexOf(query) !== -1;
-
-            if (topicMatch && searchMatch) {
-                item.classList.remove('filtered-out');
-                visible++;
-            } else {
-                item.classList.add('filtered-out');
-            }
-        });
-
-        if (query || activeFilter) {
-            searchCount.textContent = visible + ' resultado' + (visible !== 1 ? 's' : '');
-        } else {
-            searchCount.textContent = '';
-        }
-
-        // Full-text section search (min 2 chars)
-        if (query && query.length >= 2) {
-            var matched = sectionIndex.filter(function (s) { return s.text.indexOf(query) !== -1; });
-            if (matched.length) {
-                sectionResults.innerHTML = matched.map(function (s) {
-                    return '<a href="#' + s.id + '" class="section-result-link">' + s.label + '</a>';
-                }).join('');
-            } else {
-                sectionResults.innerHTML = '';
-            }
-        } else {
-            sectionResults.innerHTML = '';
-        }
-    }
-
-    searchInput.addEventListener('input', applyFilters);
-
-    filterTags.forEach(function (tag) {
-        tag.addEventListener('click', function () {
-            var filter = tag.getAttribute('data-filter');
-            if (activeFilter === filter) {
-                activeFilter = null;
-                tag.classList.remove('active');
-            } else {
-                filterTags.forEach(function (t) { t.classList.remove('active'); });
-                activeFilter = filter;
-                tag.classList.add('active');
-            }
-            applyFilters();
-        });
-    });
-
-    /* ── MATRIX OVERFLOW HINT ── */
-    var matrixCard = document.querySelector('.matrix-card');
-    var matrixScroll = document.querySelector('.matrix-scroll');
-    if (matrixCard && matrixScroll) {
-        function checkMatrixOverflow() {
-            var hasOverflow = matrixScroll.scrollWidth > matrixScroll.clientWidth;
-            var atEnd = matrixScroll.scrollLeft + matrixScroll.clientWidth >= matrixScroll.scrollWidth - 4;
-            matrixCard.classList.toggle('overflows', hasOverflow && !atEnd);
-        }
-        matrixScroll.addEventListener('scroll', checkMatrixOverflow, { passive: true });
-        window.addEventListener('resize', checkMatrixOverflow, { passive: true });
-        checkMatrixOverflow();
-    }
-
-    /* ── SMOOTH SCROLL for anchor links ── */
-    document.querySelectorAll('a[href^="#"]').forEach(function (a) {
-        a.addEventListener('click', function (e) {
-            var targetId = a.getAttribute('href').slice(1);
-            var target = document.getElementById(targetId);
-            if (target) {
-                e.preventDefault();
-                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                history.replaceState(null, '', '#' + targetId);
-            }
-        });
-    });
-}());
+/* ══════════════ BOOTSTRAP ══════════════ */
+document.addEventListener('DOMContentLoaded', () => {
+  initHeroMeter();
+  initCampos();
+  initTensiones();
+  initUmbral();
+  initGrafo();
+});
 </script>
-
-<!-- ═══════════════════════════════════════════════════════════
-     GRAPH SYSTEM — Progressive Enhancement
-     Módulos diferidos: no bloquean la experiencia narrativa.
-     Sistema de grafo epistemológico: 3 capas por nodo,
-     fricción cuantificada, contradicciones explorables.
-═══════════════════════════════════════════════════════════ -->
-<a id="skip-to-graph" href="#ca-graph-canvas" class="skip-link" style="display:none" aria-label="Saltar al grafo de fricción">Ir al grafo →</a>
-<script src="src/frictionEngine.js" type="module"></script>
-<script src="src/graph.js" type="module"></script>
-<script src="src/nodeRenderer.js" type="module"></script>
-<script src="src/main.js" type="module"></script>
-
 </body>
 </html>
