@@ -1,0 +1,1144 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Administrador · Contra-Archivo</title>
+  <style>
+    /* ─── TOKENS ─── */
+    :root {
+      --bg:         #0f0f0f;
+      --surface:    #161616;
+      --surface2:   #1e1e1e;
+      --border:     #2a2a2a;
+      --text:       #e8e8e8;
+      --text-muted: #888;
+      --text-dim:   #555;
+      --accent:     #c8a96e;
+      --accent2:    #4a7fa5;
+      --accent3:    #7a9e6e;
+      --ok:         #4a9e6e;
+      --warn:       #c8a040;
+      --err:        #c85040;
+      --admin:      #7a5fa5;
+      --r:          6px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    /* ─── TOPBAR ─── */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 24px;
+      gap: 16px;
+    }
+    .topbar-left { display: flex; align-items: center; gap: 12px; }
+    .topbar-title { font-size: 11px; color: var(--text-muted); letter-spacing: .08em; text-transform: uppercase; }
+    .topbar-title strong { color: var(--accent); }
+    .role-toggle {
+      display: flex;
+      gap: 2px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 2px;
+    }
+    .role-btn {
+      padding: 4px 14px;
+      border: none;
+      border-radius: 4px;
+      font-family: inherit;
+      font-size: 11px;
+      cursor: pointer;
+      background: transparent;
+      color: var(--text-muted);
+      transition: all .15s;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+    }
+    .role-btn.active { background: var(--admin); color: #fff; }
+    .role-btn.active.consultor { background: var(--accent2); }
+    .topbar-stats {
+      display: flex;
+      gap: 20px;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+    .stat-pill { display: flex; align-items: center; gap: 5px; }
+    .dot { width: 7px; height: 7px; border-radius: 50%; }
+    .dot-ok   { background: var(--ok); }
+    .dot-warn { background: var(--warn); }
+    .dot-err  { background: var(--err); }
+
+    /* ─── LAYOUT ─── */
+    .layout { display: grid; grid-template-columns: 220px 1fr; min-height: 100vh; }
+
+    /* ─── SIDEBAR ─── */
+    .sidebar {
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      padding: 20px 0;
+      position: sticky;
+      top: 45px;
+      height: calc(100vh - 45px);
+      overflow-y: auto;
+    }
+    .sidebar-label {
+      font-size: 10px;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      padding: 0 16px 8px;
+    }
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 16px;
+      cursor: pointer;
+      border-left: 2px solid transparent;
+      transition: all .12s;
+      text-decoration: none;
+      color: var(--text-muted);
+      font-size: 12px;
+    }
+    .nav-item:hover { background: var(--surface2); color: var(--text); }
+    .nav-item.active { border-left-color: var(--accent); color: var(--accent); background: rgba(200,169,110,.06); }
+    .nav-dim { font-size: 9px; color: var(--text-dim); font-variant-numeric: tabular-nums; margin-left: auto; }
+
+    /* ─── MAIN ─── */
+    .main { padding: 28px 36px; max-width: 960px; }
+
+    /* ─── DIMENSION CARD ─── */
+    .dim-card {
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      margin-bottom: 28px;
+      background: var(--surface);
+      overflow: hidden;
+    }
+    .dim-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 16px 20px 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    .dim-num {
+      font-size: 10px;
+      color: var(--text-dim);
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      padding: 2px 6px;
+      white-space: nowrap;
+      margin-top: 2px;
+    }
+    .dim-info { flex: 1; }
+    .dim-title {
+      font-size: 15px;
+      color: var(--text);
+      font-family: -apple-system, sans-serif;
+      font-weight: 600;
+      letter-spacing: -.01em;
+    }
+    .dim-desc { font-size: 12px; color: var(--text-muted); margin-top: 4px; line-height: 1.5; }
+    .dim-badges { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; }
+    .badge {
+      font-size: 10px;
+      padding: 2px 8px;
+      border-radius: 3px;
+      border: 1px solid;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+    }
+    .badge-ok   { color: var(--ok);   border-color: rgba(74,158,110,.3); background: rgba(74,158,110,.08); }
+    .badge-warn { color: var(--warn); border-color: rgba(200,160,64,.3);  background: rgba(200,160,64,.08); }
+    .badge-err  { color: var(--err);  border-color: rgba(200,80,64,.3);   background: rgba(200,80,64,.08); }
+
+    /* ─── FILE TABLE ─── */
+    .file-table { width: 100%; border-collapse: collapse; }
+    .file-table thead th {
+      font-size: 10px;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      text-align: left;
+      padding: 8px 12px;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface2);
+    }
+    .file-table tbody tr { border-bottom: 1px solid rgba(255,255,255,.04); }
+    .file-table tbody tr:hover { background: rgba(255,255,255,.02); }
+    .file-table td { padding: 9px 12px; vertical-align: top; }
+    .file-path {
+      font-size: 11px;
+      color: var(--accent2);
+      word-break: break-all;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+    }
+    .file-label { font-size: 12px; color: var(--text); font-family: -apple-system, sans-serif; }
+    .file-type {
+      font-size: 10px;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .status-dot {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 11px;
+      white-space: nowrap;
+    }
+    .status-dot.ok   { color: var(--ok); }
+    .status-dot.warn { color: var(--warn); }
+    .status-dot.err  { color: var(--err); }
+    .status-dot::before {
+      content: '';
+      display: inline-block;
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    /* ─── ADMIN NOTES (hidden for consultores) ─── */
+    .admin-note {
+      display: flex;
+      gap: 8px;
+      padding: 8px 12px;
+      background: rgba(122,95,165,.08);
+      border-left: 2px solid var(--admin);
+      margin: 4px 0;
+      border-radius: 0 3px 3px 0;
+    }
+    .admin-note-icon { color: var(--admin); font-size: 11px; white-space: nowrap; margin-top: 1px; }
+    .admin-note-text { font-size: 11px; color: rgba(200,180,230,.8); line-height: 1.5; font-family: -apple-system, sans-serif; }
+    body.consultor .admin-note { display: none !important; }
+    body.consultor .admin-only { display: none !important; }
+
+    /* ─── VACÍOS ─── */
+    .vacio-row td { background: rgba(200,80,64,.04); }
+    body.consultor .vacio-row { display: none !important; }
+
+    /* ─── WARN ROWS ─── */
+    .warn-row td { background: rgba(200,160,64,.04); }
+    body.consultor .warn-row { display: none !important; }
+
+    /* ─── SECTION DIVIDER ─── */
+    .section-sep {
+      font-size: 10px;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      padding: 10px 12px 4px;
+      background: var(--surface2);
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* ─── SUMMARY PANEL ─── */
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+    .summary-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--r);
+      padding: 14px 16px;
+    }
+    .summary-val { font-size: 26px; font-family: -apple-system, sans-serif; font-weight: 700; }
+    .summary-val.ok   { color: var(--ok); }
+    .summary-val.warn { color: var(--warn); }
+    .summary-val.err  { color: var(--err); }
+    .summary-val.total { color: var(--text); }
+    .summary-lbl { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+
+    /* ─── PAGE TITLE ─── */
+    .page-title {
+      margin-bottom: 24px;
+    }
+    .page-title h1 {
+      font-size: 20px;
+      font-family: -apple-system, sans-serif;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -.02em;
+    }
+    .page-title p {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 5px;
+      max-width: 600px;
+      line-height: 1.5;
+    }
+
+    /* ─── SCROLLBAR ─── */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+    /* ─── CONSULTOR MODE BANNER ─── */
+    .consultor-banner {
+      display: none;
+      background: rgba(74,127,165,.12);
+      border: 1px solid rgba(74,127,165,.3);
+      border-radius: var(--r);
+      padding: 10px 16px;
+      margin-bottom: 20px;
+      font-size: 12px;
+      color: var(--accent2);
+      font-family: -apple-system, sans-serif;
+    }
+    body.consultor .consultor-banner { display: block; }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════════ TOPBAR -->
+<div class="topbar">
+  <div class="topbar-left">
+    <span class="topbar-title"><strong>Contra-Archivo</strong> · Admin CMS</span>
+  </div>
+  <div class="role-toggle">
+    <button class="role-btn active" id="btn-admin" onclick="setRole('admin')">Admin</button>
+    <button class="role-btn consultor" id="btn-consultor" onclick="setRole('consultor')">Consultor</button>
+  </div>
+  <div class="topbar-stats">
+    <span class="stat-pill"><span class="dot dot-ok"></span>38 presentes</span>
+    <span class="stat-pill"><span class="dot dot-warn"></span>6 advertencias</span>
+    <span class="stat-pill"><span class="dot dot-err"></span>4 vacíos</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════ LAYOUT -->
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <nav class="sidebar">
+    <div class="sidebar-label">Dimensiones</div>
+    <a class="nav-item active" href="#d1">D1 · Marco Conceptual <span class="nav-dim">5</span></a>
+    <a class="nav-item" href="#d2">D2 · Estado del Arte <span class="nav-dim">6</span></a>
+    <a class="nav-item" href="#d3">D3 · Etnografía Audiovisual <span class="nav-dim">3</span></a>
+    <a class="nav-item" href="#d4">D4 · Ensayo Trad. Saberes <span class="nav-dim">18</span></a>
+    <a class="nav-item" href="#d5">D5 · La Negra <span class="nav-dim">20</span></a>
+    <a class="nav-item" href="#d6">D6 · Poemarios <span class="nav-dim">3</span></a>
+    <a class="nav-item" href="#d7">D7 · Dispositivo Contra-Archivo <span class="nav-dim">9</span></a>
+  </nav>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <div class="page-title">
+      <h1>Administrador de Contenidos</h1>
+      <p>Inventario real del repositorio organizado por dimensión de investigación. Solo se lista lo que existe físicamente en el repo. Los vacíos y advertencias son notas de gestión.</p>
+    </div>
+
+    <!-- BANNER CONSULTOR -->
+    <div class="consultor-banner">
+      Vista Consultor activa — mostrando únicamente contenido disponible. Las notas de gestión y los vacíos están ocultos.
+    </div>
+
+    <!-- RESUMEN -->
+    <div class="summary-grid">
+      <div class="summary-card">
+        <div class="summary-val total">64</div>
+        <div class="summary-lbl">Archivos totales indexados</div>
+      </div>
+      <div class="summary-card">
+        <div class="summary-val ok">38</div>
+        <div class="summary-lbl">Presentes y referenciados</div>
+      </div>
+      <div class="summary-card">
+        <div class="summary-val warn">6</div>
+        <div class="summary-lbl">Advertencias (duplicados / typos)</div>
+      </div>
+      <div class="summary-card">
+        <div class="summary-val err">4</div>
+        <div class="summary-lbl">Vacíos (referenciados, no encontrados)</div>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════ D1 -->
+    <div class="dim-card" id="d1">
+      <div class="dim-header">
+        <div class="dim-num">D1</div>
+        <div class="dim-info">
+          <div class="dim-title">Marco Conceptual</div>
+          <div class="dim-desc">Interfaz principal, configuración del sitio, hipótesis y preguntas de investigación. Punto de entrada al contra-archivo.</div>
+          <div class="dim-badges">
+            <span class="badge badge-ok">5 archivos</span>
+            <span class="badge badge-ok">Todo presente</span>
+          </div>
+        </div>
+      </div>
+      <table class="file-table">
+        <thead><tr>
+          <th>Archivo</th>
+          <th>Descripción</th>
+          <th>Tipo</th>
+          <th>Estado</th>
+        </tr></thead>
+        <tbody>
+          <tr>
+            <td><span class="file-path">index.html</span></td>
+            <td><span class="file-label">Interfaz principal del Contra-Archivo — presentación, navegación, buscador, secciones de la tesis</span></td>
+            <td><span class="file-type">HTML</span></td>
+            <td><span class="status-dot ok">Presente</span></td>
+          </tr>
+          <tr>
+            <td><span class="file-path">styles.css</span></td>
+            <td><span class="file-label">Hoja de estilos principal del sitio</span></td>
+            <td><span class="file-type">CSS</span></td>
+            <td><span class="status-dot ok">Presente</span></td>
+          </tr>
+          <tr>
+            <td><span class="file-path">_config.yml</span></td>
+            <td><span class="file-label">Configuración Jekyll (GitHub Pages) — URL base, tema, metadatos del sitio</span></td>
+            <td><span class="file-type">YML</span></td>
+            <td><span class="status-dot ok">Presente</span></td>
+          </tr>
+          <tr>
+            <td><span class="file-path">docs/index.html</span></td>
+            <td><span class="file-label">Mirror del sitio en carpeta /docs — requerido por algunas configuraciones de GitHub Pages</span></td>
+            <td><span class="file-type">HTML</span></td>
+            <td><span class="status-dot ok">Presente</span></td>
+          </tr>
+          <tr>
+            <td><span class="file-path">docs/styles.css</span></td>
+            <td><span class="file-label">Estilos del mirror /docs</span></td>
+            <td><span class="file-type">CSS</span></td>
+            <td><span class="status-dot ok">Presente</span></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="admin-note">
+        <span class="admin-note-icon">ADMIN</span>
+        <span class="admin-note-text">El mirror en /docs duplica root. Verificar cuál usa GitHub Pages en Settings → Pages. Si el source es /root, /docs puede eliminarse para evitar divergencias. El archivo .nojekyll en root es correcto — evita que GitHub Pages procese Liquid templates en los HTML.</span>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════ D2 -->
+    <div class="dim-card" id="d2">
+      <div class="dim-header">
+        <div class="dim-num">D2</div>
+        <div class="dim-info">
+          <div class="dim-title">Estado del Arte</div>
+          <div class="dim-desc">Marco teórico, anclajes bibliográficos, materiales visuales del marco normativo y cartografía territorial. Incluye periodismo de investigación, derechos indígenas y cartografía histórica.</div>
+          <div class="dim-badges">
+            <span class="badge badge-ok">5 presentes</span>
+            <span class="badge badge-err">1 vacío</span>
+          </div>
+        </div>
+      </div>
+      <table class="file-table">
+        <thead><tr>
+          <th>Archivo</th>
+          <th>Descripción</th>
+          <th>Tipo</th>
+          <th>Estado</th>
+        </tr></thead>
+        <tbody>
+          <tr>
+            <td><span class="file-path">Estado del Arte/README.md</span></td>
+            <td><span class="file-label">Marco teórico completo: tabla de anclajes (Gupta, Latour, Star, Fassin, Tsing, Marcus, Riles, Callon, Derrida, Rivera Cusicanqui), vacío en la literatura, contribución conceptual</span></td>
+            <td><span class="file-type">MD</span></td>
+            <td><span class="status-dot ok">Presente</span></td>
+          </tr>
+          <tr>
+            <td><span class="file-path">CIPER- Clase teórico prática - Investigación Crimen Organizado.pdf</span></td>
+            <td><span class="file-label">Material CIPER — metodologías para investigación del crimen organizado en América Latina</span></td>
+            <td><span class="file-type">PDF</span></td>
+            <td><span class="status-dot ok">Presente</span></td>
+          </tr>
+          <tr>
+            <td><span class="file-path">Introduction Journalism.png</span></td>
+            <td><span class="file-label">Material de referencia metodológica sobre fundamentos del periodismo de investigación</span></td>
+            <td><span class="file-type">PNG</span></td>
+            <td><span class="status-dot ok">Presente</span></td>
+          </tr>
+          <tr>
+            <td><span class="file-path">UX RG - Desglose de derechos consagrados por el OIT 169.jpg</span></td>
+            <td><span class="file-label">Esquema visual de derechos de pueblos indígenas — Convenio 169 OIT, ratificado por Chile 2008</span></td>
+            <td><span class="file-type">JPG</span></td>
+            <td><span class="status-dot ok">Presente</span></td>
+          </tr>
+          <tr>
+            <td><span class="file-path">UX RG - ¿Comparativa Eº Plurinacional del marco legal vigente en Chile_.jpg</span></td>
+            <td><span class="file-label">Análisis comparativo Estado Plurinacional vs. marco constitucional y legal vigente en Chile</span></td>
+            <td><span class="file-type">JPG</span></td>
+            <td><span class="status-dot ok">Presente</span></td>
+          </tr>
+          <tr class="vacio-row">
+            <td><span class="file-path">Distribución de titulos de merced en Región de los ríos.png</span></td>
+            <td><span class="file-label">Mapa histórico de distribución de títulos de merced — Proceso de radicación indígena 1884–1929</span></td>
+            <td><span class="file-type">PNG</span></td>
+            <td><span class="status-dot err">Vacío — Referenciado</span></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="admin-note">
+        <span class="admin-note-icon">ADMIN</span>
+        <span class="admin-note-text">El archivo "Distribución de titulos de merced en Región de los ríos.png" está referenciado en Estado del Arte/README.md y en casos.json (caso la-negra-territorio-mapuche → material.evidencias) pero NO existe físicamente en el repo. Debe subirse o eliminar la referencia. No inventar contenido — si no existe el archivo, marcar como pendiente de carga.</span>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════ D3 -->
+    <div class="dim-card" id="d3">
+      <div class="dim-header">
+        <div class="dim-num">D3</div>
+        <div class="dim-info">
+          <div class="dim-title">Etnografía Audiovisual</div>
+          <div class="dim-desc">Etnografía digital corporativa (caso SURA/AFP) como estudio de caso extendido. Diseño metodológico multi-situado. Observación participante en rol UX Lead.</div>
+          <div class="dim-badges">
+            <span class="badge badge-ok">2 presentes</span>
+            <span class="badge badge-warn">1 advertencia</span>
+            <span class="badge badge-err">1 vacío estructural</span>
+          </div>
+        </div>
+      </div>
+      <table class="file-table">
+        <thead><tr>
+          <th>Archivo</th>
+          <th>Descripción</th>
+          <th>Tipo</th>
+          <th>Estado</th>
+        </tr></thead>
+        <tbody>
+          <tr>
+            <td><span class="file-path">Etnografía Audiovisual/README.md</span></td>
+            <td><span class="file-label">Diseño metodológico completo: 3 fases, instrumentos, hallazgos principales del caso SURA, estructura del documento etnográfico (150 pp.)</span></td>
+            <td><span class="file-type">MD</span></td>
+            <td><span class="status-dot ok">Presente</span></td>
+          </tr>
+          <tr>
+            <td><span class="file-path">SURA_Compilado_Estrategia_Gaona_Complete.pdf</span></td>
+            <td><span class="file-label">Etnografía digital corporativa — 150 pp. Caso SURA Investments: separación AFP/SURA, gobernanza de datos, Privacy by Design, flujos TN_PERFIL, OKRs, WCAG</span></td>
+            <td><span class="file-type">PDF</span></td>
+            <td><span class="status-dot ok">Presente</span></td>
+          </tr>
+          <tr class="warn-row">
+            <td><span class="file-path">Etnografía Audiovisual/</span></td>
+            <td><span class="file-label">Carpeta de etnografía audiovisual — solo contiene README. El nombre sugiere material audiovisual (video, audio, transcripciones) que aún no está cargado.</span></td>
+            <td><span class="file-type">DIR</span></td>
+            <td><span class="status-dot warn">Carpeta vacía</span></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="admin-note">
+        <span class="admin-note-icon">ADMIN</span>
+        <span class="admin-note-text">El SURA PDF está en la raíz del repo, no dentro de la carpeta Etnografía Audiovisual/. Considerar mover o crear un symlink/referencia desde la carpeta. La carpeta promete "material audiovisual" pero está vacía: o renombrar a "Etnografía Digital Corporativa" o cargar materiales (transcripciones, registros de campo, diagramas). No mover el PDF sin actualizar las referencias en README.md y casos.json.</span>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════ D4 -->
+    <div class="dim-card" id="d4">
+      <div class="dim-header">
+        <div class="dim-num">D4</div>
+        <div class="dim-info">
+          <div class="dim-title">Ensayo: Traducción de Saberes</div>
+          <div class="dim-desc">Artículo etnográfico, marco teórico decolonial, resistencia cultural, marco de referencia normativo, metodologías y producción colaborativa con comunidades.</div>
+          <div class="dim-badges">
+            <span class="badge badge-ok">15 presentes</span>
+            <span class="badge badge-warn">3 advertencias</span>
+          </div>
+        </div>
+      </div>
+      <table class="file-table">
+        <thead><tr>
+          <th>Archivo</th>
+          <th>Descripción</th>
+          <th>Tipo</th>
+          <th>Estado</th>
+        </tr></thead>
+        <tbody>
+          <!-- Textos principales -->
+          <tr><td colspan="4"><div class="section-sep">Textos principales</div></td></tr>
+          <tr>
+            <td><span class="file-path">Ensayo Traducción de Saberes/articulo_etnografico.docx</span></td>
+            <td><span class="file-label">Artículo etnográfico — versión editable Word</span></td>
+            <td><span class="file-type">DOCX</span></td>
+            <td><span class="status-dot ok">Presente</span></td>
+          </tr>
+          <tr>
+            <td><span class="file-path">Ensayo Traducción de Saberes/articulo_etnografico.pages</span></td>
+            <td><span class="file-label">Artículo etnográfico — versión Pages</span></td>
+            <td><span class="file-type">PAGES</span></td>
+            <td><span class="status-dot ok">Presente</span></td>
+          </tr>
+          <tr class="warn-row">
+            <td><span class="file-path">Ensayo Traducción de Saberes/articulo_etnografico 2.pages</span></td>
+            <td><span class="file-label">Artículo etnográfico — segunda versión Pages (relación con versión 1 no documentada)</span></td>
+            <td><span class="file-type">PAGES</span></td>
+            <td><span class="status-dot warn">Duplicado sin versión</span></td>
+          </tr>
+          <tr class="warn-row">
+            <td><span class="file-path">Ensayo Traducción de Saberes/etnografía audiovisaul - Traduciendo saberes.docx</span></td>
+            <td><span class="file-label">Versión docx con typo en nombre ("audiovisaul")</span></td>
+            <td><span class="file-type">DOCX</span></td>
+            <td><span class="status-dot warn">Typo en nombre de archivo</span></td>
+          </tr>
+          <tr>
+            <td><span class="file-path">Ensayo Traducción de Saberes/etnografía audiovisual - Traduciendo saberes.docx.pdf</span></td>
+            <td><span class="file-label">Versión PDF del ensayo sobre etnografía audiovisual y traducción de saberes</span></td>
+            <td><span class="file-type">PDF</span></td>
+            <td><span class="status-dot ok">Presente</span></td>
+          </tr>
+          <tr class="warn-row">
+            <td><span class="file-path">Ensayo Traducción de Saberes/contra-archivo.html</span></td>
+            <td><span class="file-label">HTML del contra-archivo dentro de la carpeta del ensayo — relación con contra-archivo.html en root no documentada</span></td>
+            <td><span class="file-type">HTML</span></td>
+            <td><span class="status-dot warn">Posible duplicado de root</span></td>
+          </tr>
+          <!-- Marco Teórico Decolonial -->
+          <tr><td colspan="4"><div class="section-sep">Marco Teórico · Pensamiento Decolonial</div></td></tr>
+          <tr>
+            <td><span class="file-path">…/Pensamiento Decolonial/8-dussel-de la ciencia a la filosofia de la liberacion.pdf</span></td>
+            <td><span class="file-label">Dussel — De la ciencia a la filosofía de la liberación</span></td>
+            <td><span class="file-type">PDF</span></td>
+            <td><span class="status-dot ok">Presente</span></td>
+          </tr>
+          <tr>
+            <td><span class="file-path">…/Pensamiento Decolonial/9-cardoso y faleto-dependencia y dllo en america latina.pdf</span></td>
+            <td><span class="file-label">Cardoso y Faleto — Dependencia y desarrollo en América Latina</span></td>
+            <td><span class="file-type">PDF</span></td>
+            <td><span class="status-dot ok">Presente</span></td>
+          </tr>
+          <!-- Resistencia Cultural -->
+          <tr><td colspan="4"><div class="section-sep">Marco Teórico · Resistencia Cultural</div></td></tr>
+          <tr>
+            <td><span class="file-path">…/Resistencia Cultural/229049066-Hall-Jefferson-Eds-Rituales-de-Resistencia.pdf</span></td>
+            <td><span class="file-label">Hall & Jefferson (eds.) — Rituales de Resistencia</span></td>
+            <td><span class="file-type">PDF</span></td>
+            <td><span class="status-dot ok">Presente</span></td>
+          </tr>
+          <tr>
+            <td><span class="file-path">…/Resistencia Cultural/Betancur ed Movimientos indigenas en América latina Resistencia y nuevos modelos de integración.pdf</span></td>
+            <td><span class="file-label">Betancur (ed.) — Movimientos indígenas en América Latina</span></td>
+            <td><span class="file-type">PDF</span></td>
+            <td><span class="status-dot ok">Presente</span></td>
+          </tr>
+          <tr>
+            <td><span class="file-path">…/Resistencia Cultural/Judith Butler - Violencia de Estado, guerra, resistencia.pdf</span></td>
+            <td><span class="file-label">Butler — Violencia de Estado, guerra, resistencia. Por una nueva política de la izquierda</span></td>
+            <td><span class="file-type">PDF</span></td>
+            <td><span class="status-dot ok">Presente</span></td>
+          </tr>
+          <tr>
+            <td><span class="file-path">…/Resistencia Cultural/Michel Onfray - Política del rebelde - Tratado de resistencia e insumisión.pdf</span></td>
+            <td><span class="file-label">Onfray — Política del rebelde</span></td>
+            <td><span class="file-type">PDF</span></td>
+            <td><span class="status-dot ok">Presente</span></td>
+          </tr>
+          <tr>
+            <td><span class="file-path">…/Resistencia Cultural/UNFV ANTROPOLOGIA Scott, James C. - Los dominados y el arte de la resistencia.pdf</span></td>
+            <td><span class="file-label">Scott — Los dominados y el arte de la resistencia</span></td>
+            <td><span class="file-type">PDF</span></td>
+            <td><span class="status-dot ok">Presente</span></td>
+          </tr>
+          <tr>
+            <td><span class="file-path">…/Resistencia Cultural/Gacría Canclini-Resistencia.pdf</span></td>
+            <td><span class="file-label">García Canclini — Resistencia</span></td>
+            <td><span class="file-type">PDF</span></td>
+            <td><span class="status-dot ok">Presente</span></td>
+          </tr>
+          <tr>
+            <td><span class="file-path">…/Resistencia Cultural/Cariba Malo. Roberto Franco.pdf</span></td>
+            <td><span class="file-label">Franco — Cariba Malo</span></td>
+            <td><span class="file-type">PDF</span></td>
+            <td><span class="status-dot ok">Presente</span></td>
+          </tr>
+          <tr>
+            <td><span class="file-path">…/Resistencia Cultural/[José_Manuel_Zavala_Cepeda…].pdf</span></td>
+            <td><span class="file-label">Zavala Cepeda et al.</span></td>
+            <td><span class="file-type">PDF</span></td>
+            <td><span class="status-dot ok">Presente</span></td>
+          </tr>
+          <tr>
+            <td><span class="file-path">…/Resistencia Cultural/de Carvalho Jose Jorge Cimarronaje y afrocentricidad.pdf</span></td>
+            <td><span class="file-label">De Carvalho — Cimarronaje y afrocentricidad. Culturas afroamericanas de resistencia y emancipación</span></td>
+            <td><span class="file-type">PDF</span></td>
+            <td><span class="status-dot ok">Presente</span></td>
+          </tr>
+          <!-- Metodologías -->
+          <tr><td colspan="4"><div class="section-sep">Metodologías</div></td></tr>
+          <tr>
+            <td><span class="file-path">…/Metodologías/Arguedas, JM. - Obra Antropológica. Tomo I.pdf</span></td>
+            <td><span class="file-label">Arguedas — Obra Antropológica, Tomo I (referencia metodológica clave)</span></td>
+            <td><span class="file-type">PDF</span></td>
+            <td><span class="status-dot ok">Presente</span></td>
+          </tr>
+          <tr>
+            <td><span class="file-path">…/Metodologías/Del Pino, F. - Arguedas Escritor y Antropólogo.pdf</span></td>
+            <td><span class="file-label">Del Pino — Arguedas Escritor y Antropólogo</span></td>
+            <td><span class="file-type">PDF</span></td>
+            <td><span class="status-dot ok">Presente</span></td>
+          </tr>
+          <tr>
+            <td><span class="file-path">…/Metodologías/Ther, F. - Dinámicas Territoriales en Asentamientos de Pescadores Artesanales.pdf</span></td>
+            <td><span class="file-label">Ther — Dinámicas territoriales (referencia metodológica etnografía territorial)</span></td>
+            <td><span class="file-type">PDF</span></td>
+            <td><span class="status-dot ok">Presente</span></td>
+          </tr>
+          <tr>
+            <td><span class="file-path">…/Metodologías/etnografia db ref.pdf</span></td>
+            <td><span class="file-label">Referencia bibliográfica etnografía (título completo no especificado en nombre de archivo)</span></td>
+            <td><span class="file-type">PDF</span></td>
+            <td><span class="status-dot ok">Presente</span></td>
+          </tr>
+          <!-- Producción Colaborativa -->
+          <tr><td colspan="4"><div class="section-sep">Producción Colaborativa</div></td></tr>
+          <tr>
+            <td><span class="file-path">…/Producción Colaborativa/Estado del arte Lof Michillanca.pdf</span></td>
+            <td><span class="file-label">Estado del arte del Lof Michillanca — producción colaborativa con comunidad</span></td>
+            <td><span class="file-type">PDF</span></td>
+            <td><span class="status-dot ok">Presente</span></td>
+          </tr>
+          <tr>
+            <td><span class="file-path">…/Producción Colaborativa/Codigo QR - Material Interactivo.png.png</span></td>
+            <td><span class="file-label">Código QR vinculado a material interactivo (doble extensión .png.png)</span></td>
+            <td><span class="file-type">PNG</span></td>
+            <td><span class="status-dot ok">Presente</span></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="admin-note">
+        <span class="admin-note-icon">ADMIN</span>
+        <span class="admin-note-text">3 problemas en esta dimensión: (1) articulo_etnografico 2.pages — determinar cuál es la versión canónica y eliminar o renombrar la otra con sufijo de versión (v1, v2, borrador, final). (2) typo "audiovisaul" en nombre de archivo — renombrar con git mv para mantener historial. (3) contra-archivo.html dentro del ensayo — ¿es la misma versión que la del root? Si sí, eliminar el duplicado. Si es diferente, documentar la diferencia. El QR con doble extensión .png.png debe renombrarse.</span>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════ D5 -->
+    <div class="dim-card" id="d5">
+      <div class="dim-header">
+        <div class="dim-num">D5</div>
+        <div class="dim-info">
+          <div class="dim-title">La Negra</div>
+          <div class="dim-desc">Investigación periodística de campo. Caso Catrillanca / Lof Ñanco. ACAB — análisis del Alto Mando de Carabineros. Identidad visual Negra Colorá. Documentación legal y acreditación de prensa.</div>
+          <div class="dim-badges">
+            <span class="badge badge-ok">18 presentes</span>
+            <span class="badge badge-warn">2 advertencias</span>
+            <span class="badge badge-err">1 vacío estructural</span>
+          </div>
+        </div>
+      </div>
+      <table class="file-table">
+        <thead><tr>
+          <th>Archivo</th>
+          <th>Descripción</th>
+          <th>Tipo</th>
+          <th>Estado</th>
+        </tr></thead>
+        <tbody>
+          <!-- ACAB docs -->
+          <tr><td colspan="4"><div class="section-sep">Investigación ACAB · Documentos legales y orgánicos</div></td></tr>
+          <tr>
+            <td><span class="file-path">La Negra/inv./acab/DOCS/LEY-18961_07-MAR-1990.pdf</span></td>
+            <td><span class="file-label">Ley Orgánica Constitucional de Carabineros de Chile (1990)</span></td>
+            <td><span class="file-type">PDF</span></td>
+            <td><span class="status-dot ok">Presente</span></td>
+          </tr>
+          <tr>
+            <td><span class="file-path">La Negra/inv./acab/DOCS/LEY-19974_02-OCT-2004.pdf</span></td>
+            <td><span class="file-label">Ley sobre el Sistema de Inteligencia del Estado (2004)</span></td>
+            <td><span class="file-type">PDF</span></td>
+            <td><span class="status-dot ok">Presente</span></td>
+          </tr>
+          <tr>
+            <td><span class="file-path">La Negra/inv./acab/DOCS/orden general de carabineros 2371.pdf</span></td>
+            <td><span class="file-label">Orden General 2371 de Carabineros</span></td>
+            <td><span class="file-type">PDF</span></td>
+            <td><span class="status-dot ok">Presente</span></td>
+          </tr>
+          <tr>
+            <td><span class="file-path">La Negra/inv./acab/DOCS/Orden Grl. 2371 .pdf</span></td>
+            <td><span class="file-label">Orden General 2371 — copia o versión alternativa (verificar si es duplicado)</span></td>
+            <td><span class="file-type">PDF</span></td>
+            <td><span class="status-dot ok">Presente</span></td>
+          </tr>
+          <tr>
+            <td><span class="file-path">La Negra/inv./acab/DOCS/Orden Crea Sub Dir. Grl.pdf</span></td>
+            <td><span class="file-label">Orden de creación de la Subdirección General de Carabineros</span></td>
+            <td><span class="file-type">PDF</span></td>
+            <td><span class="status-dot ok">Presente</span></td>
+          </tr>
+          <tr>
+            <td><span class="file-path">La Negra/inv./acab/DOCS/alto mando 2017.pdf</span></td>
+            <td><span class="file-label">Alto Mando de Carabineros 2017</span></td>
+            <td><span class="file-type">PDF</span></td>
+            <td><span class="status-dot ok">Presente</span></td>
+          </tr>
+          <tr>
+            <td><span class="file-path">La Negra/inv./acab/DOCS/Camara de diputados 2015.pdf</span></td>
+            <td><span class="file-label">Actas Cámara de Diputados 2015 (caso Carabineros)</span></td>
+            <td><span class="file-type">PDF</span></td>
+            <td><span class="status-dot ok">Presente</span></td>
+          </tr>
+          <tr>
+            <td><span class="file-path">La Negra/inv./acab/DOCS/RESUMEN EJECUTIVO … 9 DE NOVIEMBRE DE 2015 Diputados.pdf</span></td>
+            <td><span class="file-label">Resumen ejecutivo reunión Cámara de Diputados, noviembre 2015</span></td>
+            <td><span class="file-type">PDF</span></td>
+            <td><span class="status-dot ok">Presente</span></td>
+          </tr>
+          <tr>
+            <td><span class="file-path">La Negra/inv./acab/DOCS/FICHA DE DEFINICIONES ESTRATÉGICAS AÑO 2015-2018.pdf</span></td>
+            <td><span class="file-label">Ficha de definiciones estratégicas Carabineros 2015–2018</span></td>
+            <td><span class="file-type">PDF</span></td>
+            <td><span class="status-dot ok">Presente</span></td>
+          </tr>
+          <tr>
+            <td><span class="file-path">La Negra/inv./acab/DOCS/declaración de patrimonioRAFAEL JIMENEZ SALAZAR.pdf</span></td>
+            <td><span class="file-label">Declaración de patrimonio — Rafael Jiménez Salazar</span></td>
+            <td><span class="file-type">PDF</span></td>
+            <td><span class="status-dot ok">Presente</span></td>
+          </tr>
+          <tr>
+            <td><span class="file-path">La Negra/inv./acab/DOCS/declaración de patrimonioROLANDO CASANUEVA DE ROSA.pdf</span></td>
+            <td><span class="file-label">Declaración de patrimonio — Rolando Casanueva de Rosa</span></td>
+            <td><span class="file-type">PDF</span></td>
+            <td><span class="status-dot ok">Presente</span></td>
+          </tr>
+          <tr>
+            <td><span class="file-path">La Negra/inv./acab/DOCS/reglamento ACAB.pdf</span></td>
+            <td><span class="file-label">Reglamento ACAB</span></td>
+            <td><span class="file-type">PDF</span></td>
+            <td><span class="status-dot ok">Presente</span></td>
+          </tr>
+          <!-- INFOGRAFÍAS -->
+          <tr><td colspan="4"><div class="section-sep">Infografías periodísticas</div></td></tr>
+          <tr>
+            <td><span class="file-path">La Negra/inv./INFOGRAFÍAS/Catrillanca Infografía Movil.png</span></td>
+            <td><span class="file-label">Infografía móvil — Caso Catrillanca</span></td>
+            <td><span class="file-type">PNG</span></td>
+            <td><span class="status-dot ok">Presente</span></td>
+          </tr>
+          <tr>
+            <td><span class="file-path">La Negra/inv./INFOGRAFÍAS/Ñanco Lof - Movil.png</span></td>
+            <td><span class="file-label">Infografía móvil — Lof Ñanco</span></td>
+            <td><span class="file-type">PNG</span></td>
+            <td><span class="status-dot ok">Presente</span></td>
+          </tr>
+          <tr>
+            <td><span class="file-path">La Negra/inv./INFOGRAFÍAS/Reconstrucción de los hechos.png</span></td>
+            <td><span class="file-label">Infografía — Reconstrucción de los hechos</span></td>
+            <td><span class="file-type">PNG</span></td>
+            <td><span class="status-dot ok">Presente</span></td>
+          </tr>
+          <tr>
+            <td><span class="file-path">La Negra/inv./INFOGRAFÍAS/Artboard 1–4@300x.png (4 archivos)</span></td>
+            <td><span class="file-label">Placas de infografía en alta resolución (artboards 1, 2, 3, 4)</span></td>
+            <td><span class="file-type">PNG</span></td>
+            <td><span class="status-dot ok">Presente</span></td>
+          </tr>
+          <tr>
+            <td><span class="file-path">La Negra/inv./INFOGRAFÍAS/foto_0000003120180628133625.pdf</span></td>
+            <td><span class="file-label">Documento fotográfico de campo (nombre de archivo automático de cámara)</span></td>
+            <td><span class="file-type">PDF</span></td>
+            <td><span class="status-dot ok">Presente</span></td>
+          </tr>
+          <!-- Identidad -->
+          <tr><td colspan="4"><div class="section-sep">Identidad visual · Negra Colorá</div></td></tr>
+          <tr>
+            <td><span class="file-path">La Negra/ID. Negra Colorá/Logos/ (3 archivos PNG)</span></td>
+            <td><span class="file-label">Logos: fondo rojo, negro, blanco</span></td>
+            <td><span class="file-type">PNG</span></td>
+            <td><span class="status-dot ok">Presente</span></td>
+          </tr>
+          <tr>
+            <td><span class="file-path">La Negra/ID. Negra Colorá/Animacones/Negra Colorá Logo Reveal Final.mp4</span></td>
+            <td><span class="file-label">Animación logo reveal — formato MP4</span></td>
+            <td><span class="file-type">MP4</span></td>
+            <td><span class="status-dot ok">Presente</span></td>
+          </tr>
+          <tr>
+            <td><span class="file-path">La Negra/ID. Negra Colorá/Animacones/trutruca-pifilca-cultrun-cascashuilla…mp3</span></td>
+            <td><span class="file-label">Audio instrumental mapuche (Cecil González) — banda sonora de la animación</span></td>
+            <td><span class="file-type">MP3</span></td>
+            <td><span class="status-dot ok">Presente</span></td>
+          </tr>
+          <!-- Advertencias -->
+          <tr class="warn-row">
+            <td><span class="file-path">La Negra/Acreditación Prensa.pages</span></td>
+            <td><span class="file-label">Acreditación de prensa — sin README ni referencia que explique su contexto de uso</span></td>
+            <td><span class="file-type">PAGES</span></td>
+            <td><span class="status-dot warn">Sin contexto documentado</span></td>
+          </tr>
+          <tr class="warn-row">
+            <td><span class="file-path">La Negra/Captura de pantalla 2019-01-10 a la(s) 20.43.02.png</span></td>
+            <td><span class="file-label">Captura de pantalla sin descripción ni referencia en ningún documento</span></td>
+            <td><span class="file-type">PNG</span></td>
+            <td><span class="status-dot warn">Huérfano</span></td>
+          </tr>
+          <tr class="vacio-row">
+            <td><span class="file-path">La Negra/README.md</span></td>
+            <td><span class="file-label">Documentación de la dimensión La Negra — no existe aún</span></td>
+            <td><span class="file-type">MD</span></td>
+            <td><span class="status-dot err">Vacío — Falta crear</span></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="admin-note">
+        <span class="admin-note-icon">ADMIN</span>
+        <span class="admin-note-text">Esta es la dimensión con más archivos sin indexar. Prioridades: (1) Crear La Negra/README.md que documente todos los materiales de investigación, el caso Catrillanca, los actores, el período. (2) "orden general de carabineros 2371.pdf" y "Orden Grl. 2371 .pdf" parecen el mismo documento — verificar y eliminar duplicado. (3) Acreditación Prensa.pages y la captura de pantalla están sueltos sin contexto — agregar al README cuando se cree. (4) "ñanco.png" y "curiñanco.png" en INFOGRAFÍAS — ¿qué representan? Sin descripción.</span>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════ D6 -->
+    <div class="dim-card" id="d6">
+      <div class="dim-header">
+        <div class="dim-num">D6</div>
+        <div class="dim-info">
+          <div class="dim-title">Poemarios</div>
+          <div class="dim-desc">Poesía como método de investigación — contrapoética del archivo. Intervención en el campo lingüístico de la corrupción institucional. Poemario: Los números no existen.</div>
+          <div class="dim-badges">
+            <span class="badge badge-ok">2 presentes</span>
+            <span class="badge badge-err">1 vacío estructural</span>
+          </div>
+        </div>
+      </div>
+      <table class="file-table">
+        <thead><tr>
+          <th>Archivo</th>
+          <th>Descripción</th>
+          <th>Tipo</th>
+          <th>Estado</th>
+        </tr></thead>
+        <tbody>
+          <tr>
+            <td><span class="file-path">Poemarios/README.md</span></td>
+            <td><span class="file-label">Marco epistemológico de la poesía como método — arts-based research, autoetnografía, contrapoética, 4 diálogos con la tesis (títulos de merced, SURA/AFP, testimonios La Negra, OIT 169)</span></td>
+            <td><span class="file-type">MD</span></td>
+            <td><span class="status-dot ok">Presente</span></td>
+          </tr>
+          <tr>
+            <td><span class="file-path">Poemarios/Los números no existen/Los Números No existe - Poemario.pdf</span></td>
+            <td><span class="file-label">Poemario completo — "Los números no existen"</span></td>
+            <td><span class="file-type">PDF</span></td>
+            <td><span class="status-dot ok">Presente</span></td>
+          </tr>
+          <tr class="vacio-row">
+            <td><span class="file-path">Poemarios/ textos .txt o .md</span></td>
+            <td><span class="file-label">El README promete textos en formato .txt y .md "organizados por autor o por ciclo temático" — no existen</span></td>
+            <td><span class="file-type">TXT/MD</span></td>
+            <td><span class="status-dot err">Vacío — Prometido en README</span></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="admin-note">
+        <span class="admin-note-icon">ADMIN</span>
+        <span class="admin-note-text">El README de Poemarios describe un archivo de textos en .txt o .md que no existe. Dos opciones: (1) Subir los textos poéticos en formato de texto plano (recomendado — accesibles en web). (2) Actualizar el README para que refleje que el poemario existe solo en PDF. El archivo .ai del poemario (Los numeros no existen poemario.ai) es el original Illustrator — no es accesible en web, debería referenciarse solo como fuente de diseño.</span>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════ D7 -->
+    <div class="dim-card" id="d7">
+      <div class="dim-header">
+        <div class="dim-num">D7</div>
+        <div class="dim-info">
+          <div class="dim-title">Dispositivo Contra-Archivo</div>
+          <div class="dim-desc">Sistema interactivo de fricción epistemológica. Motor de grafo, datos de casos JSON, estilos. Punto de convergencia de todas las dimensiones de investigación.</div>
+          <div class="dim-badges">
+            <span class="badge badge-ok">7 presentes</span>
+            <span class="badge badge-warn">1 advertencia</span>
+            <span class="badge badge-err">1 vacío de datos</span>
+          </div>
+        </div>
+      </div>
+      <table class="file-table">
+        <thead><tr>
+          <th>Archivo</th>
+          <th>Descripción</th>
+          <th>Tipo</th>
+          <th>Estado</span></th>
+        </tr></thead>
+        <tbody>
+          <tr>
+            <td><span class="file-path">data/casos.json</span></td>
+            <td><span class="file-label">Base de datos de casos — 4 casos: SURA/AFP, La Negra, Periodismo de Datos, OIT 169. 3 capas por caso: ética / institucional / material. Motor de fricción completo.</span></td>
+            <td><span class="file-type">JSON</span></td>
+            <td><span class="status-dot ok">Presente</span></td>
+          </tr>
+          <tr>
+            <td><span class="file-path">src/frictionEngine.js</span></td>
+            <td><span class="file-label">Motor de fricción epistemológica — calcula intensidad, detecta tipo de fricción, construye grafo de conexiones entre casos</span></td>
+            <td><span class="file-type">JS</span></td>
+            <td><span class="status-dot ok">Presente</span></td>
+          </tr>
+          <tr>
+            <td><span class="file-path">src/graph.js</span></td>
+            <td><span class="file-label">Grafo force-directed en SVG vanilla JS — simulación Fruchterman-Reingold, zero-dependency</span></td>
+            <td><span class="file-type">JS</span></td>
+            <td><span class="status-dot ok">Presente</span></td>
+          </tr>
+          <tr>
+            <td><span class="file-path">src/main.js</span></td>
+            <td><span class="file-label">Entry point — inicialización del dispositivo, carga de datos, integración de módulos</span></td>
+            <td><span class="file-type">JS</span></td>
+            <td><span class="status-dot ok">Presente</span></td>
+          </tr>
+          <tr>
+            <td><span class="file-path">src/nodeRenderer.js</span></td>
+            <td><span class="file-label">Renderizador de nodos del grafo — panel de detalle por caso</span></td>
+            <td><span class="file-type">JS</span></td>
+            <td><span class="status-dot ok">Presente</span></td>
+          </tr>
+          <tr>
+            <td><span class="file-path">styles/graph.css</span></td>
+            <td><span class="file-label">Estilos del sistema de grafo — visualización de fricción epistemológica</span></td>
+            <td><span class="file-type">CSS</span></td>
+            <td><span class="status-dot ok">Presente</span></td>
+          </tr>
+          <tr class="warn-row">
+            <td><span class="file-path">contra-archivo-v2.html / contra-archivo.html</span></td>
+            <td><span class="file-label">Dos versiones del dispositivo en root — no está documentada la diferencia entre v1 y v2 ni cuál es la canónica</span></td>
+            <td><span class="file-type">HTML</span></td>
+            <td><span class="status-dot warn">Versión canónica no definida</span></td>
+          </tr>
+          <tr class="vacio-row">
+            <td><span class="file-path">repositorio_antropologia_corrupcion.zip</span></td>
+            <td><span class="file-label">Archivo ZIP del repositorio completo — no debería estar comiteado en el repo (duplica 8GB en binario)</span></td>
+            <td><span class="file-type">ZIP</span></td>
+            <td><span class="status-dot err">Vacío de diseño — remover</span></td>
+          </tr>
+          <tr class="vacio-row">
+            <td><span class="file-path">data/casos.json · D4 Ensayo</span></td>
+            <td><span class="file-label">El caso "Ensayo: Traducción de Saberes" (D4) no tiene nodo en casos.json — dimensión ausente del grafo de fricción</span></td>
+            <td><span class="file-type">JSON</span></td>
+            <td><span class="status-dot err">Caso no representado en datos</span></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="admin-note">
+        <span class="admin-note-icon">ADMIN</span>
+        <span class="admin-note-text">Prioridades: (1) Definir qué versión es la canónica entre contra-archivo.html y contra-archivo-v2.html. Si v2 supera a v1, renombrar v2 a contra-archivo.html y eliminar la versión anterior. (2) El ZIP debe removerse del repo con git rm --cached y añadir *.zip al .gitignore. Reduce el tamaño del repo. (3) Agregar un caso en casos.json para D4 "Ensayo: Traducción de Saberes" — el caso de la traducción como dispositivo de borramiento epistémico podría ser el quinto nodo del grafo. No inventar — solo cuando el investigador defina las 3 capas (ética/institucional/material) del caso.</span>
+      </div>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════ ACCIONES ADMIN -->
+    <div class="dim-card admin-only" style="border-color: rgba(122,95,165,.3);">
+      <div class="dim-header" style="border-bottom-color: rgba(122,95,165,.2);">
+        <div class="dim-num" style="color: var(--admin); border-color: rgba(122,95,165,.3);">⚑</div>
+        <div class="dim-info">
+          <div class="dim-title" style="color: var(--admin);">Lista de acciones pendientes (Admin)</div>
+          <div class="dim-desc">Acciones concretas ordenadas por prioridad. Solo visible en modo Admin.</div>
+        </div>
+      </div>
+      <table class="file-table">
+        <thead><tr>
+          <th>#</th>
+          <th>Acción</th>
+          <th>Dimensión</th>
+          <th>Tipo</th>
+        </tr></thead>
+        <tbody>
+          <tr>
+            <td style="color:var(--err);font-weight:700">1</td>
+            <td><span class="file-label">Subir <code>Distribución de titulos de merced en Región de los ríos.png</code> al root del repo</span></td>
+            <td><span class="file-type">D2</span></td>
+            <td><span class="status-dot err">Vacío</span></td>
+          </tr>
+          <tr>
+            <td style="color:var(--err);font-weight:700">2</td>
+            <td><span class="file-label">Crear <code>La Negra/README.md</code> documentando el caso Catrillanca, ACAB, Lof Ñanco, los actores y el período</span></td>
+            <td><span class="file-type">D5</span></td>
+            <td><span class="status-dot err">Vacío</span></td>
+          </tr>
+          <tr>
+            <td style="color:var(--err);font-weight:700">3</td>
+            <td><span class="file-label">Eliminar <code>repositorio_antropologia_corrupcion.zip</code> con <code>git rm --cached</code> y agregar <code>*.zip</code> al .gitignore</span></td>
+            <td><span class="file-type">D7</span></td>
+            <td><span class="status-dot err">Remover</span></td>
+          </tr>
+          <tr>
+            <td style="color:var(--warn);font-weight:700">4</td>
+            <td><span class="file-label">Renombrar con <code>git mv</code>: <code>etnografía audiovisaul…</code> → <code>etnografía audiovisual…</code></span></td>
+            <td><span class="file-type">D4</span></td>
+            <td><span class="status-dot warn">Typo</span></td>
+          </tr>
+          <tr>
+            <td style="color:var(--warn);font-weight:700">5</td>
+            <td><span class="file-label">Definir versión canónica del contra-archivo: <code>contra-archivo.html</code> vs <code>contra-archivo-v2.html</code></span></td>
+            <td><span class="file-type">D7</span></td>
+            <td><span class="status-dot warn">Advertencia</span></td>
+          </tr>
+          <tr>
+            <td style="color:var(--warn);font-weight:700">6</td>
+            <td><span class="file-label">Resolver duplicado <code>articulo_etnografico 2.pages</code> — versionar o eliminar</span></td>
+            <td><span class="file-type">D4</span></td>
+            <td><span class="status-dot warn">Duplicado</span></td>
+          </tr>
+          <tr>
+            <td style="color:var(--warn);font-weight:700">7</td>
+            <td><span class="file-label">Verificar si las dos copias de Orden Grl. 2371 en D5 son el mismo documento — eliminar duplicado</span></td>
+            <td><span class="file-type">D5</span></td>
+            <td><span class="status-dot warn">Posible duplicado</span></td>
+          </tr>
+          <tr>
+            <td style="color:var(--text-muted);font-weight:700">8</td>
+            <td><span class="file-label">Agregar poemarios en texto plano (.md o .txt) a <code>Poemarios/</code> o actualizar el README para eliminar promesa de formatos inexistentes</span></td>
+            <td><span class="file-type">D6</span></td>
+            <td><span class="status-dot warn">Consistencia</span></td>
+          </tr>
+          <tr>
+            <td style="color:var(--text-muted);font-weight:700">9</td>
+            <td><span class="file-label">Cuando el investigador defina las 3 capas del caso, agregar D4 "Ensayo: Traducción de Saberes" como quinto nodo en <code>data/casos.json</code></span></td>
+            <td><span class="file-type">D4+D7</span></td>
+            <td><span class="status-dot warn">Pendiente investigador</span></td>
+          </tr>
+          <tr>
+            <td style="color:var(--text-muted);font-weight:700">10</td>
+            <td><span class="file-label">Verificar configuración GitHub Pages: confirmar si source es /root o /docs, y eliminar el mirror no usado</span></td>
+            <td><span class="file-type">D1</span></td>
+            <td><span class="status-dot warn">Config</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </main>
+</div>
+
+<script>
+  // ─── Rol toggle ───
+  function setRole(role) {
+    document.body.classList.toggle('consultor', role === 'consultor');
+    document.getElementById('btn-admin').classList.toggle('active', role === 'admin');
+    document.getElementById('btn-consultor').classList.toggle('active', role === 'consultor');
+    localStorage.setItem('cms-role', role);
+  }
+
+  // Restaurar rol guardado
+  const saved = localStorage.getItem('cms-role');
+  if (saved) setRole(saved);
+
+  // ─── Nav activo al hacer scroll ───
+  const sections = document.querySelectorAll('[id^="d"]');
+  const navItems = document.querySelectorAll('.nav-item');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        navItems.forEach(n => n.classList.remove('active'));
+        const active = document.querySelector(`.nav-item[href="#${e.target.id}"]`);
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { threshold: 0.3 });
+  sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>
