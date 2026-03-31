@@ -57,6 +57,9 @@ async function init() {
             onNodeHover: (node) => {
                 STATE.renderer.showPreview(node);
             },
+            onLinkHover: (link) => {
+                STATE.renderer.showLinkPreview(link);
+            },
         });
 
         // 5. Instanciar renderer de paneles
