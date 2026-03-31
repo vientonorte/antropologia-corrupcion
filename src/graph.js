@@ -27,8 +27,8 @@ class ForceSimulation {
         }));
         this.links = links.map(l => ({
             ...l,
-            source: this.nodes.find(n => n.id === (l.source?.id ?? l.source)),
-            target: this.nodes.find(n => n.id === (l.target?.id ?? l.target)),
+            source: this.nodes.find(n => n.id === (l.source ? .id ? ? l.source)),
+            target: this.nodes.find(n => n.id === (l.target ? .id ? ? l.target)),
         })).filter(l => l.source && l.target);
         this.width = width;
         this.height = height;
@@ -88,6 +88,7 @@ class ForceSimulation {
         // Aplicar velocidades + decay + bounds
         const margin = 80;
         for (const n of this.nodes) {
+            if (n.fixed) continue;
             n.vx *= (1 - this.velocityDecay);
             n.vy *= (1 - this.velocityDecay);
             n.x = Math.max(margin, Math.min(this.width - margin, n.x + n.vx));
@@ -100,11 +101,13 @@ class ForceSimulation {
     // Fijar un nodo (drag)
     fix(id, x, y) {
         const n = this.nodes.find(n => n.id === id);
-        if (n) { n.x = x;
+        if (n) {
+            n.x = x;
             n.y = y;
             n.vx = 0;
             n.vy = 0;
-            n.fixed = true; }
+            n.fixed = true;
+        }
     }
 
     release(id) {
@@ -137,6 +140,24 @@ class FrictionGraph {
         this.selectedId = null;
         this.animFrame = null;
         this.field = null;
+        this._dragNode = null;
+        this._nodeElMap = new Map();
+        this._labelElMap = new Map();
+        this._linkElMap = new Map();
+
+        // Shared drag handlers (una sola instancia, no N)
+        this._onMouseMove = (e) => {
+            if (!this._dragNode) return;
+            const rect = this.svg.getBoundingClientRect();
+            this.sim.fix(this._dragNode.id, e.clientX - rect.left, e.clientY - rect.top);
+            this._updatePositions();
+        };
+        this._onMouseUp = () => {
+            if (this._dragNode) {
+                this.sim.release(this._dragNode.id);
+                this._dragNode = null;
+            }
+        };
 
         this._init();
     }
@@ -179,6 +200,10 @@ class FrictionGraph {
 
         // Resize
         this._setupResize();
+
+        // Drag global (un solo par de listeners)
+        window.addEventListener('mousemove', this._onMouseMove);
+        window.addEventListener('mouseup', this._onMouseUp);
     }
 
     _dims() {
@@ -233,6 +258,7 @@ class FrictionGraph {
 
     _renderLinks() {
         this.linkLayer.innerHTML = '';
+        this._linkElMap.clear();
         for (const link of this.sim.links) {
             const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
             line.classList.add('ca-link');
@@ -260,6 +286,7 @@ class FrictionGraph {
             });
 
             this.linkLayer.appendChild(line);
+            this._linkElMap.set(`${link.source.id}|${link.target.id}`, line);
         }
     }
 
@@ -268,11 +295,17 @@ class FrictionGraph {
     _renderNodes() {
         this.nodeLayer.innerHTML = '';
         this.labelLayer.innerHTML = '';
+        this._nodeElMap.clear();
+        this._labelElMap.clear();
 
         for (const node of this.sim.nodes) {
             const g = this._createNodeGroup(node);
             this.nodeLayer.appendChild(g);
-            this.labelLayer.appendChild(this._createLabel(node));
+            this._nodeElMap.set(node.id, g);
+
+            const lbl = this._createLabel(node);
+            this.labelLayer.appendChild(lbl);
+            this._labelElMap.set(node.id, lbl);
         }
     }
 
@@ -309,19 +342,19 @@ class FrictionGraph {
 
         // Capa ética (arriba-izquierda)
         g.appendChild(this._layerCircle(-offset * 0.6, -offset * 0.7, r * 0.85,
-            node.colorEtica, 'etica', node.etica?.titulo
+            node.colorEtica, 'etica', node.etica ? .titulo
         ));
 
         // Capa institucional (arriba-derecha)
         g.appendChild(this._layerCircle(
             offset * 0.6, -offset * 0.7, r * 0.85,
-            node.colorInstitucional, 'institucional', node.institucional?.titulo
+            node.colorInstitucional, 'institucional', node.institucional ? .titulo
         ));
 
         // Capa material (abajo-centro)
         g.appendChild(this._layerCircle(
             0, offset * 0.7, r * 0.85,
-            node.colorMaterial, 'material', node.material?.titulo
+            node.colorMaterial, 'material', node.material ? .titulo
         ));
 
         // Zona de fricción central
@@ -423,24 +456,11 @@ class FrictionGraph {
             }
         });
 
-        // Drag
-        let dragging = false;
+        // Drag (usa shared handler en lugar de N listeners en window)
         g.addEventListener('mousedown', (e) => {
-            dragging = true;
+            this._dragNode = node;
             this.sim.reheat();
             e.preventDefault();
-        });
-        window.addEventListener('mousemove', (e) => {
-            if (!dragging) return;
-            const rect = this.svg.getBoundingClientRect();
-            this.sim.fix(node.id, e.clientX - rect.left, e.clientY - rect.top);
-            this._updatePositions();
-        });
-        window.addEventListener('mouseup', () => {
-            if (dragging) {
-                dragging = false;
-                this.sim.release(node.id);
-            }
         });
 
         // Touch drag
@@ -467,10 +487,10 @@ class FrictionGraph {
             g.classList.toggle('ca-node--selected', id === node.id);
             g.classList.toggle('ca-node--dimmed',
                 id !== node.id && this.rawLinks.every(l =>
-                    (l.source?.id ?? l.source) !== node.id &&
-                    (l.target?.id ?? l.target) !== node.id ||
-                    (l.source?.id ?? l.source) !== id &&
-                    (l.target?.id ?? l.target) !== id
+                    (l.source ? .id ? ? l.source) !== node.id &&
+                    (l.target ? .id ? ? l.target) !== node.id ||
+                    (l.source ? .id ? ? l.source) !== id &&
+                    (l.target ? .id ? ? l.target) !== id
                 )
             );
         });
@@ -500,20 +520,15 @@ class FrictionGraph {
     }
 
     _updatePositions() {
-        const nodeEls = this.nodeLayer.querySelectorAll('.ca-node');
-        const labelEls = this.labelLayer.querySelectorAll('.ca-label');
-
         for (const n of this.sim.nodes) {
-            const g = this.nodeLayer.querySelector(`.ca-node[data-id="${n.id}"]`);
-            const lb = this.labelLayer.querySelector(`.ca-label[data-id="${n.id}"]`);
+            const g = this._nodeElMap.get(n.id);
+            const lb = this._labelElMap.get(n.id);
             if (g) g.setAttribute('transform', `translate(${n.x.toFixed(1)},${n.y.toFixed(1)})`);
             if (lb) lb.setAttribute('transform', `translate(${n.x.toFixed(1)},${n.y.toFixed(1)})`);
         }
 
         for (const link of this.sim.links) {
-            const line = this.linkLayer.querySelector(
-                `.ca-link[data-source="${link.source.id}"][data-target="${link.target.id}"]`
-            );
+            const line = this._linkElMap.get(`${link.source.id}|${link.target.id}`);
             if (line) {
                 line.setAttribute('x1', link.source.x.toFixed(1));
                 line.setAttribute('y1', link.source.y.toFixed(1));
@@ -535,8 +550,8 @@ class FrictionGraph {
     setActiveLayer(layer) {
         this.activeLayer = layer;
         this.nodeLayer.querySelectorAll('.ca-layer-circle').forEach(c => {
-            const capaName = [...c.classList].find(cl => cl.startsWith('ca-layer-') && cl !== 'ca-layer-circle')
-                ?.replace('ca-layer-', '');
+            const capaName = [...c.classList].find(cl => cl.startsWith('ca-layer-') && cl !== 'ca-layer-circle') ?
+                .replace('ca-layer-', '');
             if (layer === 'all') {
                 c.setAttribute('opacity', '0.55');
             } else if (capaName === layer) {
@@ -609,8 +624,10 @@ class FrictionGraph {
 
     destroy() {
         if (this.animFrame) cancelAnimationFrame(this.animFrame);
+        window.removeEventListener('mousemove', this._onMouseMove);
+        window.removeEventListener('mouseup', this._onMouseUp);
         if (this.field) this.field.destroy();
-        this.svg?.remove();
+        this.svg ? .remove();
     }
 }
 

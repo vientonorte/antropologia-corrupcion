@@ -124,6 +124,14 @@ class FrictionField {
         this.fieldImageData = null;
         this._needsFieldUpdate = true;
         this._frameCount = 0;
+        this._cachedStreamlines = null;
+        this._streamlinesDirty = true;
+        this._lastNodePositions = '';
+        this._gridW = 0;
+        this._gridH = 0;
+        this._gridRes = FIELD_CONFIG.GRID_RESOLUTION;
+        this._potentialGrid = null;
+        this._potentialMax = 0;
 
         this._init();
     }
@@ -186,7 +194,7 @@ class FrictionField {
         for (const link of this.links) {
             const s = link.source,
                 t = link.target;
-            if (!s?.x || !t?.x) continue;
+            if (!s ? .x || !t ? .x) continue;
             const mx = (s.x + t.x) / 2;
             const my = (s.y + t.y) / 2;
             const dx = x - mx;
@@ -210,16 +218,15 @@ class FrictionField {
     }
 
     /**
-     * Calcula y renderiza el campo escalar como heatmap en ImageData
+     * Calcula el grid de potencial (reutilizable por partículas y heatmap)
      */
-    _computeField() {
-        if (!this.showField || !this.visible) return;
-
-        const res = FIELD_CONFIG.GRID_RESOLUTION;
+    _computePotentialGrid() {
+        const res = this._gridRes;
         const gw = Math.ceil(this.width / res);
         const gh = Math.ceil(this.height / res);
+        this._gridW = gw;
+        this._gridH = gh;
 
-        // Calcular potencial en grid de baja resolución
         const grid = new Float32Array(gw * gh);
         let maxPhi = 0;
 
@@ -230,6 +237,44 @@ class FrictionField {
                 if (phi > maxPhi) maxPhi = phi;
             }
         }
+        this._potentialGrid = grid;
+        this._potentialMax = maxPhi;
+    }
+
+    /**
+     * Interpola el potencial desde el grid pre-calculado (O(1) en lugar de O(N))
+     */
+    _potentialFromGrid(x, y) {
+        if (!this._potentialGrid) return 0;
+        const res = this._gridRes;
+        const gw = this._gridW;
+        const gh = this._gridH;
+        const gxf = x / res - 0.5;
+        const gyf = y / res - 0.5;
+        const gx0 = Math.max(0, Math.min(gw - 1, gxf | 0));
+        const gy0 = Math.max(0, Math.min(gh - 1, gyf | 0));
+        const gx1 = Math.min(gw - 1, gx0 + 1);
+        const gy1 = Math.min(gh - 1, gy0 + 1);
+        const fx = gxf - gx0;
+        const fy = gyf - gy0;
+        return this._potentialGrid[gy0 * gw + gx0] * (1 - fx) * (1 - fy) +
+            this._potentialGrid[gy0 * gw + gx1] * fx * (1 - fy) +
+            this._potentialGrid[gy1 * gw + gx0] * (1 - fx) * fy +
+            this._potentialGrid[gy1 * gw + gx1] * fx * fy;
+    }
+
+    /**
+     * Calcula y renderiza el campo escalar como heatmap en ImageData
+     */
+    _computeField() {
+        if (!this.showField || !this.visible) return;
+
+        this._computePotentialGrid();
+        const res = this._gridRes;
+        const gw = this._gridW;
+        const gh = this._gridH;
+        const grid = this._potentialGrid;
+        const maxPhi = this._potentialMax;
 
         // Crear ImageData a resolución completa
         const imgData = this.ctx.createImageData(this.width, this.height);
@@ -361,8 +406,8 @@ class FrictionField {
         const angle = Math.random() * Math.PI * 2;
         const dist = 20 + Math.random() * 80;
 
-        p.x = (spawnNode?.x || this.width / 2) + Math.cos(angle) * dist;
-        p.y = (spawnNode?.y || this.height / 2) + Math.sin(angle) * dist;
+        p.x = (spawnNode ? .x || this.width / 2) + Math.cos(angle) * dist;
+        p.y = (spawnNode ? .y || this.height / 2) + Math.sin(angle) * dist;
         p.vx = 0;
         p.vy = 0;
         p.life = Math.random() * FIELD_CONFIG.PARTICLE_LIFE;
@@ -407,9 +452,12 @@ class FrictionField {
 
             this._frameCount++;
 
-            // Recomputar campo estático cada 30 frames (o cuando se marca dirty)
-            if (this._needsFieldUpdate || this._frameCount % 30 === 0) {
+            // Solo recomputar si las posiciones de nodos realmente cambiaron
+            const posKey = this.nodes.map(n => `${(n.x||0).toFixed(0)},${(n.y||0).toFixed(0)}`).join('|');
+            if (this._needsFieldUpdate || posKey !== this._lastNodePositions) {
+                this._lastNodePositions = posKey;
                 this._computeField();
+                this._streamlinesDirty = true;
             }
 
             this._updateParticles();
@@ -429,9 +477,10 @@ class FrictionField {
             ctx.putImageData(this.fieldImageData, 0, 0);
         }
 
-        // 2. Streamlines
-        if (this.showStreamlines && this._frameCount % 5 === 0) {
+        // 2. Streamlines (solo recalcular cuando dirty)
+        if (this.showStreamlines && this._streamlinesDirty) {
             this._cachedStreamlines = this._computeStreamlines();
+            this._streamlinesDirty = false;
         }
         if (this._cachedStreamlines && this.showStreamlines) {
             this._renderStreamlines(ctx, this._cachedStreamlines);
@@ -473,7 +522,7 @@ class FrictionField {
         for (const link of this.links) {
             const s = link.source,
                 t = link.target;
-            if (!s?.x || !t?.x) continue;
+            if (!s ? .x || !t ? .x) continue;
 
             const dx = t.x - s.x;
             const dy = t.y - s.y;
@@ -529,9 +578,9 @@ class FrictionField {
                 lifeRatio < 0.2 ? lifeRatio * 5 : 1;
             const finalAlpha = alpha * 0.6;
 
-            // Color depende de en qué zona del campo está
-            const phi = this._potential(p.x, p.y);
-            const normPhi = Math.min(phi / 200, 1);
+            // Color depende de en qué zona del campo está (grid interpolado, O(1))
+            const phi = this._potentialFromGrid(p.x, p.y);
+            const normPhi = this._potentialMax > 0 ? Math.min(phi / this._potentialMax, 1) : 0;
 
             ctx.beginPath();
             ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
@@ -663,8 +712,10 @@ class FrictionField {
     /**
      * Toggle de componentes individuales
      */
-    toggleField(v) { this.showField = v;
-        this._needsFieldUpdate = true; }
+    toggleField(v) {
+        this.showField = v;
+        this._needsFieldUpdate = true;
+    }
     toggleStreamlines(v) { this.showStreamlines = v; }
     toggleParticles(v) { this.showParticles = v; }
 
@@ -684,7 +735,7 @@ class FrictionField {
      */
     destroy() {
         if (this.animFrame) cancelAnimationFrame(this.animFrame);
-        if (this.canvas?.parentNode) this.canvas.parentNode.removeChild(this.canvas);
+        if (this.canvas ? .parentNode) this.canvas.parentNode.removeChild(this.canvas);
     }
 }
 
