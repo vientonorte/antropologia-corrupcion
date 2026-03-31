@@ -152,6 +152,26 @@ class SocialField {
         this.width = Math.max(rect.width || 600, 300);
         this.height = Math.max(rect.height || 500, 300);
 
+        // Asignar posiciones a nodos (layout circular centrado)
+        const cx = this.width / 2;
+        const cy = this.height / 2;
+        const radius = Math.min(this.width, this.height) * 0.32;
+        const n = this.nodes.length || 1;
+        for (let i = 0; i < this.nodes.length; i++) {
+            const angle = (2 * Math.PI * i) / n - Math.PI / 2;
+            this.nodes[i].x = cx + radius * Math.cos(angle);
+            this.nodes[i].y = cy + radius * Math.sin(angle);
+        }
+
+        // Resolver links: convertir string IDs a referencias de objeto nodo
+        const nodeMap = new Map(this.nodes.map(nd => [nd.id, nd]));
+        this.links = this.links.map(lk => {
+            const src = typeof lk.source === 'string' ? nodeMap.get(lk.source) : lk.source;
+            const tgt = typeof lk.target === 'string' ? nodeMap.get(lk.target) : lk.target;
+            return Object.assign({}, lk, { source: src, target: tgt });
+        }).filter(lk => lk.source && lk.target);
+
+
         // Canvas sobre el SVG (z-index alto)
         this.canvas = document.createElement('canvas');
         this.canvas.width = this.width;
