@@ -1,0 +1,52 @@
+# === SISTEMA ===
+.DS_Store
+**/.DS_Store
+.claude/
+*.swp
+*.swo
+*~
+
+# === DATOS PERSONALES SENSIBLES (nunca trackear) ===
+Estado del Arte/Proyectos/Terapia/
+Estado del Arte/Proyectos/Mila/
+Estado del Arte/Proyectos/SD/
+Estado del Arte/Proyectos/ZOOM Financiero/
+Estado del Arte/Proyectos/B/
+
+# === ARCHIVOS MASIVOS (almacenamiento externo) ===
+Estado del Arte/Proyectos/Estrategia Gaona/
+Estado del Arte/Proyectos/ESPE/
+Estado del Arte/Proyectos/Foto Retrato Karina/
+
+# === FORMATOS BINARIOS PESADOS ===
+*.CR2
+*.pages
+*.ai
+*.mov
+*.mp4
+*.mp3
+*.zip
+*.HEIC
+
+# === CONTENIDO NO-DEPLOY (archivo académico local) ===
+# Se mantiene local pero no se sube a GitHub
+Ensayo Traducción de Saberes/
+Estado del Arte/Ensayo Traducción de Saberes/
+Estado del Arte/Proyectos/Ensayo Traducción de Saberes/
+Estado del Arte/Proyectos/Fotografías/
+Estado del Arte/Proyectos/La Negra/
+Estado del Arte/Proyectos/Proyecto Pasos de Gigante/
+Estado del Arte/Proyectos/Chillax_Complete/
+Estado del Arte/Proyectos/dihe-extension/
+Estado del Arte/Etnografía Audiovisual/
+Estado del Arte/La Negra/
+Estado del Arte/Poemarios/
+
+# === ARCHIVO ACADÉMICO (no-deploy, solo referencia local) ===
+Estado del Arte/
+
+# === MIRROR REDUNDANTE ===
+docs/
+
+# === INVENTARIO (herramienta de trabajo, no deploy) ===
+INVENTARIO_CARD_SORTING_MVP.md
