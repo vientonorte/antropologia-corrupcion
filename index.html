@@ -1395,6 +1395,62 @@
             background: rgba(200, 169, 110, .15);
             color: rgba(200, 169, 110, .95)
         }
+        /* ═══════════════ BOTTOM NAVIGATION (MOBILE) ═══════════════ */
+        
+        .bottom-nav {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 200;
+            background: rgba(12, 12, 12, .92);
+            backdrop-filter: blur(12px);
+            border-top: 1px solid var(--border);
+            padding: 6px 8px calc(6px + env(safe-area-inset-bottom));
+            justify-content: space-around;
+            align-items: center;
+            gap: 2px
+        }
+        
+        .bottom-nav a {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+            font-size: 9px;
+            color: var(--muted);
+            text-decoration: none;
+            padding: 4px 6px;
+            border-radius: 6px;
+            transition: color .15s, background .15s;
+            letter-spacing: .02em;
+            min-width: 48px;
+            text-align: center
+        }
+        
+        .bottom-nav a .bn-icon {
+            font-size: 16px;
+            line-height: 1
+        }
+        
+        .bottom-nav a.active {
+            color: var(--etica);
+            background: rgba(200, 169, 110, .08)
+        }
+        
+        .bottom-nav a:hover {
+            color: var(--text)
+        }
+        
+        @media(max-width:768px) {
+            .bottom-nav {
+                display: flex
+            }
+            body {
+                padding-bottom: 72px
+            }
+        }
     </style>
 </head>
 
@@ -1408,6 +1464,7 @@
             <a href="#campos">Campos</a>
             <a href="#tensiones">Tensiones</a>
             <a href="#grafo">Grafo</a>
+            <a href="#campo-social">Entropía</a>
             <a href="#protocolo">Protocolo</a>
             <a href="#archivo">Archivo</a>
         </div>
@@ -1766,6 +1823,17 @@
             <div style="margin-top:8px"><a href="https://github.com/vientonorte/antropologia-corrupcion" style="color:var(--dim);text-decoration:none;">github.com/vientonorte/antropologia-corrupcion ↗</a></div>
         </div>
     </footer>
+
+    <!-- ══════════════════════════════════════ BOTTOM NAV (MOBILE) -->
+    <nav class="bottom-nav" id="bottom-nav" aria-label="Navegación mobile">
+        <a href="#hero"><span class="bn-icon">◉</span>Inicio</a>
+        <a href="#instrumento"><span class="bn-icon">◎</span>Instr.</a>
+        <a href="#campos"><span class="bn-icon">▦</span>Campos</a>
+        <a href="#grafo"><span class="bn-icon">⬡</span>Grafo</a>
+        <a href="#campo-social"><span class="bn-icon">☷</span>Entropía</a>
+        <a href="#protocolo"><span class="bn-icon">▣</span>Protocolo</a>
+        <a href="#archivo"><span class="bn-icon">◈</span>Archivo</a>
+    </nav>
 
     <!-- ══════════════════════════════════════ SCRIPTS: módulos del sistema -->
     <script src="src/frictionEngine.js"></script>
@@ -2155,6 +2223,32 @@ function initSocialField() {
   tryInit();
 }
 
+/* ══════════════ BOTTOM NAV — SCROLL TRACKER ══════════════ */
+function initBottomNav() {
+  const nav = document.getElementById('bottom-nav');
+  if (!nav) return;
+  const links = nav.querySelectorAll('a');
+  const sectionIds = Array.from(links).map(a => a.getAttribute('href').slice(1));
+  const sections = sectionIds.map(id => document.getElementById(id)).filter(Boolean);
+  let ticking = false;
+  function update() {
+    const y = window.scrollY + window.innerHeight * 0.4;
+    let current = sections[0];
+    for (const s of sections) {
+      if (s.offsetTop <= y) current = s;
+    }
+    links.forEach(a => {
+      const target = a.getAttribute('href').slice(1);
+      a.classList.toggle('active', target === current?.id);
+    });
+    ticking = false;
+  }
+  window.addEventListener('scroll', () => {
+    if (!ticking) { ticking = true; requestAnimationFrame(update); }
+  }, { passive: true });
+  update();
+}
+
 /* ══════════════ BOOTSTRAP ══════════════ */
 document.addEventListener('DOMContentLoaded', () => {
   initHeroMeter();
@@ -2163,6 +2257,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initUmbral();
   initGrafo();
   initSocialField();
+  initBottomNav();
 });
     </script>
 </body>
