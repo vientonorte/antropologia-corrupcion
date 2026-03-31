@@ -1284,6 +1284,117 @@
                 grid-template-columns: 1fr 1fr
             }
         }
+        /* ═══════════════ SOCIAL FIELD — ENTROPÍA SOCIAL ═══════════════ */
+        
+        .social-field-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            pointer-events: none
+        }
+        
+        #campo-social-wrap {
+            position: relative;
+            height: 500px;
+            overflow: hidden;
+            border-radius: 8px;
+            background: #0a0c0e;
+            border: 1px solid rgba(200, 169, 110, .12)
+        }
+        
+        #campo-social-canvas {
+            position: relative;
+            width: 100%;
+            height: 100%
+        }
+        
+        .sf-metrics {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            padding: 14px 0 0
+        }
+        
+        .sf-metric {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            min-width: 90px
+        }
+        
+        .sf-label {
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+            color: rgba(200, 169, 110, .5)
+        }
+        
+        .sf-value {
+            font-family: "SF Mono", "Fira Code", monospace;
+            font-size: 18px;
+            color: rgba(200, 169, 110, .9)
+        }
+        
+        .sf-sub {
+            font-size: 10px;
+            color: rgba(200, 169, 110, .35)
+        }
+        
+        .sf-spark {
+            margin-top: 4px
+        }
+        
+        .sf-status--stable {
+            color: rgba(120, 180, 200, .8)
+        }
+        
+        .sf-status--degraded {
+            color: rgba(200, 169, 110, .9)
+        }
+        
+        .sf-status--critical {
+            color: rgba(200, 100, 60, .9)
+        }
+        
+        .sf-status--collapse {
+            color: rgba(180, 50, 40, .95);
+            animation: sf-pulse 1.2s ease-in-out infinite
+        }
+        
+        @keyframes sf-pulse {
+            0%,
+            100% {
+                opacity: 1
+            }
+            50% {
+                opacity: .5
+            }
+        }
+        
+        .sf-controls {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px
+        }
+        
+        .sf-btn {
+            background: rgba(200, 169, 110, .08);
+            border: 1px solid rgba(200, 169, 110, .18);
+            color: rgba(200, 169, 110, .7);
+            font-size: 11px;
+            padding: 5px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all .2s ease
+        }
+        
+        .sf-btn:hover {
+            background: rgba(200, 169, 110, .15);
+            color: rgba(200, 169, 110, .95)
+        }
     </style>
 </head>
 
@@ -1467,6 +1578,31 @@
         </div>
     </section>
 
+    <!-- ══════════════════════════════════════ CAMPO SOCIAL — ENTROPÍA -->
+    <section id="campo-social">
+        <div class="section-eyebrow">
+            <span class="eyebrow-num">04b</span>
+            <div class="eyebrow-line"></div>
+            <span class="eyebrow-text">Simulación termodinámica</span>
+        </div>
+        <h2>La <span class="accent-i">entropía</span> de la fricción social</h2>
+        <p class="section-lead">
+            La corrupción modela un sistema termodinámico: cada interacción informal reduce la fricción local (resuelve un trámite) pero incrementa el desorden global del sistema.
+            <strong>Ley de Ohm Social: I&nbsp;=&nbsp;V/R</strong> — la corriente informal &lpar;I&rpar; crece cuando la necesidad &lpar;V&rpar; supera la integridad institucional &lpar;R&rpar;. Cuando la entropía S alcanza el umbral crítico, la institución
+            colapsa en
+            <em>muerte térmica</em>: toda transacción requiere soborno.
+        </p>
+
+        <div id="campo-social-wrap">
+            <div id="campo-social-canvas"></div>
+        </div>
+        <div id="sf-metrics-panel"></div>
+        <div class="sf-controls">
+            <button class="sf-btn" id="sf-reset">↺ Reset termodinámico</button>
+            <button class="sf-btn" id="sf-toggle">⏸ Pausar</button>
+        </div>
+    </section>
+
     <!-- ══════════════════════════════════════ PROTOCOLO -->
     <section id="protocolo">
         <div class="section-eyebrow">
@@ -1636,6 +1772,7 @@
     <script src="src/fieldPhysics.js"></script>
     <script src="src/graph.js"></script>
     <script src="src/nodeRenderer.js"></script>
+    <script src="src/socialField.js"></script>
 
     <script>
         'use strict';
@@ -1988,6 +2125,36 @@ function initGrafo() {
   tryInit();
 }
 
+/* ══════════════ CAMPO SOCIAL — ENTROPÍA ══════════════ */
+function initSocialField() {
+  function tryInit() {
+    if (!window.frictionEngine || !window.SocialField) {
+      setTimeout(tryInit, 150); return;
+    }
+    const gd = window.frictionEngine.buildGraph(CASOS);
+    const wrap = document.getElementById('campo-social-canvas');
+    if (!wrap) return;
+    const SF = new window.SocialField({
+      container: wrap,
+      nodes: gd.nodes,
+      links: gd.links,
+      metricsEl: document.getElementById('sf-metrics-panel'),
+    });
+
+    // Controles
+    const resetBtn = document.getElementById('sf-reset');
+    const toggleBtn = document.getElementById('sf-toggle');
+    let paused = false;
+    if (resetBtn) resetBtn.addEventListener('click', () => SF.reset());
+    if (toggleBtn) toggleBtn.addEventListener('click', () => {
+      paused = !paused;
+      SF.setVisible(!paused);
+      toggleBtn.textContent = paused ? '▶ Reanudar' : '⏸ Pausar';
+    });
+  }
+  tryInit();
+}
+
 /* ══════════════ BOOTSTRAP ══════════════ */
 document.addEventListener('DOMContentLoaded', () => {
   initHeroMeter();
@@ -1995,6 +2162,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initTensiones();
   initUmbral();
   initGrafo();
+  initSocialField();
 });
     </script>
 </body>
