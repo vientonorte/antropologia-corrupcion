@@ -111,6 +111,22 @@ class NodeRenderer {
   }
 
   /**
+   * Muestra preview de conexión (link) en hover
+   * @param {Object|null} link
+   */
+  showLinkPreview(link) {
+    if (!this.previewEl) return;
+    if (!link) {
+      this.previewEl.classList.remove('ca-preview--visible');
+      this.previewEl.innerHTML = '';
+      return;
+    }
+    this.previewEl.innerHTML = this._buildLinkPreview(link);
+    this.previewEl.classList.add('ca-preview--visible');
+    this.previewEl.setAttribute('aria-live', 'polite');
+  }
+
+  /**
    * Abre el panel completo con las 3 capas del caso
    * @param {Object} node
    */
@@ -174,11 +190,37 @@ class NodeRenderer {
 
   _previewLayerChip(capa, color, titulo) {
     const cfg = LAYER_CONFIG[capa];
+    const displayTitle = titulo ? this._esc(titulo) : cfg.label;
     return `
-      <div class="ca-preview__layer-chip" style="border-color:${color || cfg.default}">
+      <div class="ca-preview__layer-chip" style="border-color:${color || cfg.default}" title="${displayTitle}">
         <span class="ca-preview__layer-icon" style="color:${color || cfg.default}">${cfg.icon}</span>
-        <span class="ca-preview__layer-name">${cfg.label}</span>
+        <span class="ca-preview__layer-name">${displayTitle}</span>
       </div>
+    `;
+  }
+
+  _buildLinkPreview(link) {
+    const sourceName = this._esc(link.source?.titulo || link.source?.id || '');
+    const targetName = this._esc(link.target?.titulo || link.target?.id || '');
+    const weightPct = Math.round((link.weight || 0) * 100);
+
+    const items = [
+      ...((link.actores || []).map(a => `<span class="ca-preview__link-tag">Actor: ${this._esc(a)}</span>`)),
+      ...((link.instituciones || []).map(i => `<span class="ca-preview__link-tag">Institución: ${this._esc(i)}</span>`)),
+      ...((link.tags || []).map(t => `<span class="ca-preview__link-tag">Tema: ${this._esc(t)}</span>`)),
+    ];
+
+    return `
+      <div class="ca-preview__header">
+        <span class="ca-preview__titulo">Conexión</span>
+        <span class="ca-preview__anio">${weightPct}% vínculo</span>
+      </div>
+      <div class="ca-preview__link-nodes">
+        <span class="ca-preview__link-node">${sourceName}</span>
+        <span class="ca-preview__link-arrow">⟷</span>
+        <span class="ca-preview__link-node">${targetName}</span>
+      </div>
+      ${items.length ? `<div class="ca-preview__link-shared">${items.join('')}</div>` : ''}
     `;
   }
 
@@ -260,7 +302,7 @@ class NodeRenderer {
           <span class="ca-panel__estado ca-panel__estado--${node.estado}">${node.estado}</span>
         </div>
         <p class="ca-panel__friction-desc">
-          ${node.material?.descripcion ? this._esc(node.etica?.descripcion?.slice(0, 120) + '…') : ''}
+          ${node.tension ? this._esc(node.tension) : ''}
         </p>
         ${node.marcadores?.length ? `
           <ul class="ca-panel__marcadores" aria-label="Marcadores de fricción detectados">
