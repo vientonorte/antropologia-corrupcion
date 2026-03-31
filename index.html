@@ -1846,7 +1846,7 @@
         }
 
         function scrollToTension(id) {
-            document.getElementById('tensiones') ? .scrollIntoView({
+            document.getElementById('tensiones')?.scrollIntoView({
                 behavior: 'smooth'
             });
             setTimeout(() => activateTension(id), 600);
