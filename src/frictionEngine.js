@@ -122,7 +122,7 @@ function detectMarkers(kwA, kwB) {
  * @param {Object} material
  * @returns {number} intensidad 0.0 → 1.0
  */
-export function calculateFrictionIntensity(etica, institucional, material) {
+function calculateFrictionIntensity(etica, institucional, material) {
   const kwE = extractKeywords(etica);
   const kwI = extractKeywords(institucional);
   const kwM = extractKeywords(material);
@@ -154,7 +154,7 @@ export function calculateFrictionIntensity(etica, institucional, material) {
  * @param {Object} caso - caso completo del JSON
  * @returns {{ tipo: string, subtipo: string|null, marcadores: string[] }}
  */
-export function detectFrictionType(caso) {
+function detectFrictionType(caso) {
   const { etica, institucional, material } = caso;
   const kwE = extractKeywords(etica);
   const kwI = extractKeywords(institucional);
@@ -246,7 +246,7 @@ function connectionWeight(casoA, casoB) {
  * @param {Object[]} casos - array de casos del JSON
  * @returns {{ nodes: Object[], links: Object[] }}
  */
-export function buildGraph(casos) {
+function buildGraph(casos) {
   const nodes = casos.map(caso => {
     const intensity = caso.friccion?.intensidad
       ?? calculateFrictionIntensity(caso.etica, caso.institucional, caso.material);
@@ -303,7 +303,7 @@ export function buildGraph(casos) {
  * @param {'etica'|'institucional'|'material'|'all'} capa
  * @returns {Object[]} nodos filtrados (con opacidad reducida en las demás capas)
  */
-export function filterByLayer(nodes, capa) {
+function filterByLayer(nodes, capa) {
   if (capa === 'all') return nodes.map(n => ({ ...n, _dimmed: false }));
   return nodes.map(n => {
     const hasCapa = !!n[capa];
@@ -314,7 +314,7 @@ export function filterByLayer(nodes, capa) {
 /**
  * Filtra por tipo de fricción
  */
-export function filterByFrictionType(nodes, tipo) {
+function filterByFrictionType(nodes, tipo) {
   if (!tipo || tipo === 'all') return nodes.map(n => ({ ...n, _dimmed: false }));
   return nodes.map(n => ({ ...n, _dimmed: n.tipo !== tipo }));
 }
@@ -322,7 +322,7 @@ export function filterByFrictionType(nodes, tipo) {
 /**
  * Filtra por umbral de intensidad mínima
  */
-export function filterByIntensity(nodes, minIntensidad) {
+function filterByIntensity(nodes, minIntensidad) {
   return nodes.map(n => ({ ...n, _dimmed: n.intensidad < minIntensidad }));
 }
 

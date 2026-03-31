@@ -52,7 +52,7 @@ const FRICTION_TYPE_LABELS = {
 
 /* ─── CLASE PRINCIPAL ─── */
 
-export class NodeRenderer {
+class NodeRenderer {
   /**
    * @param {Object} options
    * @param {HTMLElement} options.panel       - elemento contenedor del panel de detalle

@@ -105,7 +105,7 @@ class ForceSimulation {
 
 /* ─── GRAFO SVG ─── */
 
-export class FrictionGraph {
+class FrictionGraph {
   /**
    * @param {Object} options
    * @param {HTMLElement} options.container - elemento donde se monta el SVG
