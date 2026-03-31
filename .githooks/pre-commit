@@ -1,0 +1,11 @@
+#!/bin/sh
+# Pre-commit hook: bloquea commits si el formatter corrompió ?. o ??
+BROKEN=$(grep -rn '? \.\|? ?' src/*.js 2>/dev/null | grep -v '//' | wc -l)
+if [ "$BROKEN" -gt 0 ]; then
+  echo "❌ BLOCKED: formatter corrompió optional chaining (?. → ? .) en:"
+  grep -rn '? \.\|? ?' src/*.js 2>/dev/null | grep -v '//'
+  echo ""
+  echo "Fix: perl -i -pe 's/\\? \\./\\?\\./g; s/\\? \\?/\\?\\?/g' src/*.js"
+  exit 1
+fi
+exit 0
