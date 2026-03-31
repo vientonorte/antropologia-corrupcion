@@ -550,8 +550,8 @@ class FrictionGraph {
     setActiveLayer(layer) {
         this.activeLayer = layer;
         this.nodeLayer.querySelectorAll('.ca-layer-circle').forEach(c => {
-            const capaName = [...c.classList].find(cl => cl.startsWith('ca-layer-') && cl !== 'ca-layer-circle') ?
-                .replace('ca-layer-', '');
+            const found = [...c.classList].find(cl => cl.startsWith('ca-layer-') && cl !== 'ca-layer-circle');
+            const capaName = found ? found.replace('ca-layer-', '') : undefined;
             if (layer === 'all') {
                 c.setAttribute('opacity', '0.55');
             } else if (capaName === layer) {

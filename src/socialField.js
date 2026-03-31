@@ -516,7 +516,7 @@ class SocialField {
         for (const link of this.links) {
             const s = link.source;
             const t = link.target;
-            if (!s ?.x || !t ?.x) continue;
+            if (!s?.x || !t?.x) continue;
 
             const sState = this.nodeState.get(s.id);
             const tState = this.nodeState.get(t.id);
@@ -750,7 +750,7 @@ class SocialField {
 
     destroy() {
         if (this.animFrame) cancelAnimationFrame(this.animFrame);
-        if (this.canvas ?.parentNode) this.canvas.parentNode.removeChild(this.canvas);
+        if (this.canvas?.parentNode) this.canvas.parentNode.removeChild(this.canvas);
     }
 }
 
