@@ -9,7 +9,7 @@
     <style>
         /* ══════════════════════════════════════ TOKENS */
         
-        :root {
+         :root {
             --bg: #0c0c0c;
             --s1: #131313;
             --s2: #1a1a1a;
@@ -806,9 +806,75 @@
             height: 460px
         }
         
+        #ca-graph-canvas,
         #ca-graph-canvas-embed {
+            position: relative;
             width: 100%;
             height: 100%
+        }
+        
+        .friction-field-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0
+        }
+        
+        .friction-graph-svg {
+            position: relative;
+            z-index: 1;
+            display: block;
+            width: 100%;
+            height: 100%;
+            cursor: grab
+        }
+        
+        .friction-graph-svg:active {
+            cursor: grabbing
+        }
+        
+        .ca-link {
+            stroke: var(--muted);
+            stroke-opacity: 0.5
+        }
+        
+        .ca-link--active {
+            stroke: var(--etica);
+            stroke-opacity: 0.9
+        }
+        
+        .ca-link--dimmed {
+            stroke-opacity: 0.12
+        }
+        
+        .ca-node {
+            cursor: pointer;
+            transition: opacity .2s
+        }
+        
+        .ca-node--hovered {
+            filter: brightness(1.15)
+        }
+        
+        .ca-node--selected .ca-friction-center {
+            stroke: var(--etica);
+            stroke-width: 2
+        }
+        
+        .ca-node--dimmed {
+            opacity: 0.2;
+            pointer-events: none
+        }
+        
+        .ca-label text {
+            fill: var(--muted);
+            font-family: var(--font-mono);
+            font-size: 9px;
+            pointer-events: none;
+            user-select: none
         }
         
         .graph-overlay-legend {
@@ -1181,15 +1247,15 @@
         }
         /* ══════════════════════════════════════ SCROLLBAR */
         
-        ::-webkit-scrollbar {
+         ::-webkit-scrollbar {
             width: 5px
         }
         
-        ::-webkit-scrollbar-track {
+         ::-webkit-scrollbar-track {
             background: transparent
         }
         
-        ::-webkit-scrollbar-thumb {
+         ::-webkit-scrollbar-thumb {
             background: rgba(255, 255, 255, .1);
             border-radius: 3px
         }
@@ -1388,7 +1454,7 @@
             <button class="gc-btn" data-layer="material">◈ Material</button>
         </div>
         <div class="graph-wrap">
-            <div id="ca-graph-canvas" style="width:100%;height:100%;"></div>
+            <div id="ca-graph-canvas"></div>
             <div id="ca-preview"></div>
             <div class="graph-overlay-legend">
                 <div class="gl-item">
