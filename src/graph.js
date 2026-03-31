@@ -126,12 +126,13 @@ class FrictionGraph {
      * @param {Function} options.onNodeClick  - callback(node)
      * @param {Function} options.onNodeHover  - callback(node|null)
      */
-    constructor({ container, nodes, links, onNodeClick, onNodeHover }) {
+    constructor({ container, nodes, links, onNodeClick, onNodeHover, onLinkHover }) {
         this.container = container;
         this.rawNodes = nodes;
         this.rawLinks = links;
         this.onNodeClick = onNodeClick || (() => {});
         this.onNodeHover = onNodeHover || (() => {});
+        this.onLinkHover = onLinkHover || (() => {});
         this.activeLayer = 'all'; // 'all' | 'etica' | 'institucional' | 'material'
         this.selectedId = null;
         this.animFrame = null;
@@ -239,7 +240,7 @@ class FrictionGraph {
             line.setAttribute('data-source', link.source.id);
             line.setAttribute('data-target', link.target.id);
 
-            // Tooltip de conexión
+            // Tooltip de conexión (fallback nativo)
             const title = document.createElementNS('http://www.w3.org/2000/svg', 'title');
             const shared = [
                 ...link.actores.map(a => `Actor: ${a}`),
@@ -248,6 +249,15 @@ class FrictionGraph {
             ].join(' · ');
             title.textContent = shared || 'Conflictos conectados';
             line.appendChild(title);
+
+            // Custom hover tooltip for links
+            line.style.cursor = 'pointer';
+            line.addEventListener('mouseenter', () => {
+                this.onLinkHover(link);
+            });
+            line.addEventListener('mouseleave', () => {
+                this.onLinkHover(null);
+            });
 
             this.linkLayer.appendChild(line);
         }
@@ -572,7 +582,7 @@ class FrictionGraph {
     _frictionColor(intensity) {
         // 0 = azul frío → 1 = dorado intenso
         if (intensity < 0.4) return '#4a7fa5';
-        if (intensity < 0.65) return '#9e7a40';
+        if (intensity < 0.65) return '#b8922e';
         if (intensity < 0.8) return '#c8a96e';
         return '#e8c47a';
     }
