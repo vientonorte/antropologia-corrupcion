@@ -2087,7 +2087,8 @@
         }
 
         function scrollToTension(id) {
-            document.getElementById('tensiones') ? .scrollIntoView({
+            var el = document.getElementById('tensiones');
+            if (el) el.scrollIntoView({
                 behavior: 'smooth'
             });
             setTimeout(() => activateTension(id), 600);
@@ -2213,7 +2214,8 @@ function initGrafo() {
       links: gd.links,
       onNodeClick: (node) => {
         activateTension(node.id);
-        document.getElementById('tensiones')?.scrollIntoView({behavior:'smooth'});
+        var t = document.getElementById('tensiones');
+        if (t) t.scrollIntoView({behavior:'smooth'});
       },
       onNodeHover: () => {},
     });
@@ -2275,7 +2277,7 @@ function initBottomNav() {
     }
     links.forEach(a => {
       const target = a.getAttribute('href').slice(1);
-      a.classList.toggle('active', target === current?.id);
+      a.classList.toggle('active', current && target === current.id);
     });
     ticking = false;
   }
