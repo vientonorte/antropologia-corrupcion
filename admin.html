@@ -569,7 +569,7 @@
             <a class="nav-item" href="#d5">D5 · La Negra <span class="nav-dim">20</span></a>
             <a class="nav-item" href="#d6">D6 · Poemarios <span class="nav-dim">3</span></a>
             <a class="nav-item" href="#d7">D7 · Dispositivo Contra-Archivo <span class="nav-dim">9</span></a>
-            <a class="nav-item" href="#changelog" style="color: var(--accent2);">LOG · Changelog <span class="nav-dim">11</span></a>
+            <a class="nav-item" href="#changelog" style="color: var(--accent2);">LOG · Changelog <span class="nav-dim">21</span></a>
         </nav>
 
         <!-- MAIN -->
@@ -1409,10 +1409,75 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- 31 marzo 2026 -->
+                        <!-- 31 marzo 2026 — QA & Accesibilidad -->
                         <tr>
                             <td colspan="4">
-                                <div class="section-sep">31 marzo 2026 — Sanitización y reorganización</div>
+                                <div class="section-sep">31 marzo 2026 — QA, Accesibilidad & Simulaciones</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span class="file-type">31/03/26</span></td>
+                            <td><span class="dim-num">Sprint 6</span></td>
+                            <td><span class="file-label">Motor de física de campos: potencial Coulomb, streamlines, partículas de energía (<code>src/fieldPhysics.js</code>)</span></td>
+                            <td><span class="file-path">ecdd9cb</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="file-type">31/03/26</span></td>
+                            <td><span class="dim-num">Sprint 6</span></td>
+                            <td><span class="file-label">CSS del grafo SVG + canvas field physics agregado a <code>index.html</code></span></td>
+                            <td><span class="file-path">6c5a1ff</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="file-type">31/03/26</span></td>
+                            <td><span class="dim-num">Sprint 7</span></td>
+                            <td><span class="file-label">Fix: optional chaining roto por formatter en <code>scrollToTension</code></span></td>
+                            <td><span class="file-path">636e622</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="file-type">31/03/26</span></td>
+                            <td><span class="dim-num">Sprint 7</span></td>
+                            <td><span class="file-label">Desactivar <code>formatOnSave</code> para evitar corrupción de <code>?.</code> y <code>??</code></span></td>
+                            <td><span class="file-path">e862945</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="file-type">31/03/26</span></td>
+                            <td><span class="dim-num">Sprint 8</span></td>
+                            <td><span class="file-label">Optimización de rendimiento: caché DOM, listeners globales únicos, rAF throttling (<code>graph.js</code>, <code>fieldPhysics.js</code>)</span></td>
+                            <td><span class="file-path">ecf9b1c</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="file-type">31/03/26</span></td>
+                            <td><span class="dim-num">Sprint 9</span></td>
+                            <td><span class="file-label">Simulación termodinámica de entropía social — Ley de Ohm Social I=V/R (<code>src/socialField.js</code>, 763 líneas)</span></td>
+                            <td><span class="file-path">f9d655c</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="file-type">31/03/26</span></td>
+                            <td><span class="dim-num">Sprint 9</span></td>
+                            <td><span class="file-label">Reforzar deshabilitación de formatter (<code>formatOnPaste</code>, <code>formatOnType</code>, <code>defaultFormatter:null</code>)</span></td>
+                            <td><span class="file-path">a82a7ae</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="file-type">31/03/26</span></td>
+                            <td><span class="dim-num">Sprint 10</span></td>
+                            <td><span class="file-label">Bottom navigation mobile + documentación README completa (arquitectura, 5 módulos, formatter warning)</span></td>
+                            <td><span class="file-path">bb6dfa1</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="file-type">31/03/26</span></td>
+                            <td><span class="dim-num">Sprint 10</span></td>
+                            <td><span class="file-label">Fix: restaurar optional chaining corrompido en <code>graph.js</code> (10) y <code>fieldPhysics.js</code> (5)</span></td>
+                            <td><span class="file-path">d7fec1f</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="file-type">31/03/26</span></td>
+                            <td><span class="dim-num">Sprint 11</span></td>
+                            <td><span class="file-label">Accessibility-first: skip-link, <code>:focus-visible</code>, <code>&lt;main&gt;</code> landmark, <code>aria-label</code> en nav + fix <code>socialField.js</code> + pre-commit hook anti-formatter</span></td>
+                            <td><span class="file-path">7dbe0c9</span></td>
+                        </tr>
+                        <tr>
+                            <td colspan="4">
+                                <div class="section-sep" style="margin-top:16px">31 marzo 2026 — Sanitización y reorganización</div>
                             </td>
                         </tr>
                         <tr>
@@ -1485,7 +1550,7 @@
                 </table>
                 <div class="admin-note">
                     <span class="admin-note-icon">ADMIN</span>
-                    <span class="admin-note-text">Este changelog registra únicamente cambios estructurales al repositorio (sanitización, configuración, documentación). Los cambios de contenido académico (nuevos casos, textos, ensayos) deben registrarse como entradas separadas cuando ocurran. Pendiente: consolidar duplicados de Ensayo Traducción de Saberes vía Finder (iCloud Drive bloquea operaciones de terminal). 8 acciones pendientes de las 10 originales.</span>
+                    <span class="admin-note-text">Este changelog registra cambios estructurales al repositorio (sanitización, configuración, documentación, simulaciones, accesibilidad). Sprint 11 completado: 5 módulos JS, navigation, a11y, pre-commit hook. Pendiente: consolidar duplicados de Ensayo Traducción de Saberes vía Finder (iCloud Drive bloquea operaciones de terminal).</span>
                 </div>
             </div>
 
