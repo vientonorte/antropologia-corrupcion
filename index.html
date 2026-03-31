@@ -1,844 +1,1765 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Contra-Archivo — Antropología y Corrupción · Tesis Doctoral</title>
-  <meta name="description" content="Instrumento cualitativo de análisis multi-situado para cuantificar tensiones de mistranslation institucional. Tesis doctoral en Antropología — Chile.">
-  <style>
-/* ══════════════════════════════════════ TOKENS */
-:root {
-  --bg:        #0c0c0c;
-  --s1:        #131313;
-  --s2:        #1a1a1a;
-  --border:    rgba(255,255,255,.07);
-  --text:      #e2e2e2;
-  --muted:     #888;
-  --dim:       #444;
-  --etica:     #c8a96e;
-  --inst:      #4a7fa5;
-  --mat:       #7a9e6e;
-  --crit:      #c85f4a;
-  --r:         8px;
-  --font-sans: -apple-system, 'Helvetica Neue', sans-serif;
-  --font-mono: 'SF Mono', 'Fira Code', monospace;
-}
-*{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--text);font-family:var(--font-sans);font-size:15px;line-height:1.65;overflow-x:hidden}
-
-/* ══════════════════════════════════════ UTILITY */
-.mono{font-family:var(--font-mono);font-size:.85em}
-.muted{color:var(--muted)}
-.label{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
-.accent-e{color:var(--etica)}
-.accent-i{color:var(--inst)}
-.accent-m{color:var(--mat)}
-.accent-c{color:var(--crit)}
-
-/* ══════════════════════════════════════ NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:200;
-  display:flex;align-items:center;justify-content:space-between;
-  padding:0 32px;height:52px;
-  background:rgba(12,12,12,.88);backdrop-filter:blur(12px);
-  border-bottom:1px solid var(--border)}
-.nav-brand{font-family:var(--font-mono);font-size:12px;color:var(--etica);letter-spacing:.06em}
-.nav-links{display:flex;gap:28px}
-.nav-links a{font-size:12px;color:var(--muted);text-decoration:none;letter-spacing:.04em;transition:color .15s}
-.nav-links a:hover{color:var(--text)}
-.nav-cta{font-size:11px;padding:6px 14px;border:1px solid var(--border);border-radius:4px;
-  color:var(--text);text-decoration:none;transition:all .15s;letter-spacing:.04em}
-.nav-cta:hover{background:var(--s2);border-color:var(--etica);color:var(--etica)}
-
-/* ══════════════════════════════════════ HERO */
-#hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;
-  padding:120px 40px 80px;max-width:960px;margin:0 auto}
-.hero-label{font-size:11px;letter-spacing:.16em;text-transform:uppercase;
-  color:var(--muted);margin-bottom:28px}
-.hero-h1{font-size:clamp(32px,5vw,58px);font-weight:700;line-height:1.15;
-  letter-spacing:-.025em;color:var(--text);margin-bottom:28px}
-.hero-h1 em{font-style:normal;color:var(--etica)}
-.hero-thesis{font-size:18px;color:var(--muted);line-height:1.6;
-  max-width:640px;margin-bottom:48px;border-left:2px solid var(--etica);
-  padding-left:20px}
-.hero-thesis strong{color:var(--text)}
-
-/* Tensión-metro hero */
-.hero-meter{margin-bottom:56px}
-.hero-meter-label{font-size:11px;letter-spacing:.1em;text-transform:uppercase;
-  color:var(--muted);margin-bottom:12px}
-.meter-cases{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-.meter-case{background:var(--s1);border:1px solid var(--border);
-  border-radius:var(--r);padding:14px 16px;cursor:pointer;transition:border-color .2s}
-.meter-case:hover{border-color:var(--etica)}
-.mc-name{font-size:11px;color:var(--muted);margin-bottom:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.mc-bar-wrap{height:4px;background:rgba(255,255,255,.06);border-radius:2px;overflow:hidden;margin-bottom:6px}
-.mc-bar{height:100%;border-radius:2px;transition:width 1.2s cubic-bezier(.4,0,.2,1)}
-.mc-val{font-family:var(--font-mono);font-size:16px;font-weight:700}
-.mc-tipo{font-size:10px;color:var(--dim);letter-spacing:.05em;text-transform:uppercase;margin-top:2px}
-
-.hero-ctas{display:flex;gap:12px;flex-wrap:wrap}
-.btn-primary{padding:12px 24px;background:var(--etica);color:#111;font-weight:600;
-  border-radius:var(--r);text-decoration:none;font-size:14px;transition:opacity .15s;border:none;cursor:pointer}
-.btn-primary:hover{opacity:.88}
-.btn-ghost{padding:11px 24px;border:1px solid var(--border);color:var(--text);
-  border-radius:var(--r);text-decoration:none;font-size:14px;transition:all .15s}
-.btn-ghost:hover{border-color:var(--etica);color:var(--etica)}
-
-/* ══════════════════════════════════════ SECTIONS */
-section{padding:80px 40px;max-width:960px;margin:0 auto}
-.section-eyebrow{display:flex;align-items:center;gap:12px;margin-bottom:40px}
-.eyebrow-num{font-family:var(--font-mono);font-size:11px;color:var(--dim)}
-.eyebrow-line{flex:1;height:1px;background:var(--border)}
-.eyebrow-text{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
-h2{font-size:clamp(24px,3vw,36px);font-weight:700;letter-spacing:-.02em;line-height:1.2;
-  margin-bottom:16px}
-.section-lead{font-size:17px;color:var(--muted);line-height:1.7;max-width:680px;margin-bottom:40px}
-.section-lead strong{color:var(--text)}
-
-/* ══════════════════════════════════════ INSTRUMENTO */
-#instrumento{border-top:1px solid var(--border)}
-.instrument-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
-
-/* Las 3 capas */
-.capas-stack{display:flex;flex-direction:column;gap:3px}
-.capa-card{border-radius:var(--r);padding:20px 22px;border:1px solid transparent;
-  cursor:pointer;transition:all .2s;position:relative;overflow:hidden}
-.capa-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px}
-.capa-e{background:rgba(200,169,110,.07);border-color:rgba(200,169,110,.2)}
-.capa-e::before{background:var(--etica)}
-.capa-e:hover{background:rgba(200,169,110,.12);border-color:rgba(200,169,110,.35)}
-.capa-i{background:rgba(74,127,165,.07);border-color:rgba(74,127,165,.2)}
-.capa-i::before{background:var(--inst)}
-.capa-i:hover{background:rgba(74,127,165,.12);border-color:rgba(74,127,165,.35)}
-.capa-m{background:rgba(122,158,110,.07);border-color:rgba(122,158,110,.2)}
-.capa-m::before{background:var(--mat)}
-.capa-m:hover{background:rgba(122,158,110,.12);border-color:rgba(122,158,110,.35)}
-.capa-sym{font-size:11px;font-family:var(--font-mono);margin-bottom:4px}
-.capa-title{font-size:15px;font-weight:600;margin-bottom:6px}
-.capa-desc{font-size:12px;color:var(--muted);line-height:1.5}
-
-/* Fricción entre capas */
-.friction-indicator{
-  display:flex;align-items:center;justify-content:center;
-  padding:8px;position:relative}
-.fi-arrow{width:1px;height:28px;background:linear-gradient(to bottom,var(--etica),var(--inst));
-  margin:0 auto;position:relative}
-.fi-label{position:absolute;right:100%;margin-right:8px;
-  font-size:10px;color:var(--dim);letter-spacing:.08em;white-space:nowrap}
-
-/* Diagrama metodológico */
-.method-diagram{background:var(--s1);border:1px solid var(--border);border-radius:var(--r);
-  padding:24px;display:flex;flex-direction:column;gap:0}
-.md-step{display:flex;align-items:flex-start;gap:14px;padding:14px 0;
-  border-bottom:1px solid var(--border)}
-.md-step:last-child{border-bottom:none}
-.md-num{font-family:var(--font-mono);font-size:11px;color:var(--dim);
-  min-width:24px;margin-top:2px}
-.md-content{}
-.md-title{font-size:13px;font-weight:600;color:var(--text);margin-bottom:3px}
-.md-text{font-size:12px;color:var(--muted);line-height:1.5}
-
-/* ══════════════════════════════════════ CAMPOS */
-#campos{border-top:1px solid var(--border)}
-.campos-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
-.campo-card{background:var(--s1);border:1px solid var(--border);border-radius:var(--r);
-  padding:24px;cursor:pointer;transition:all .2s;position:relative;overflow:hidden}
-.campo-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px}
-.campo-card:nth-child(1)::after{background:linear-gradient(90deg,var(--etica),transparent)}
-.campo-card:nth-child(2)::after{background:linear-gradient(90deg,var(--mat),transparent)}
-.campo-card:nth-child(3)::after{background:linear-gradient(90deg,var(--inst),transparent)}
-.campo-card:nth-child(4)::after{background:linear-gradient(90deg,var(--crit),transparent)}
-.campo-card:hover{border-color:rgba(255,255,255,.15);transform:translateY(-2px)}
-.cc-tag{font-size:10px;letter-spacing:.1em;text-transform:uppercase;
-  color:var(--muted);margin-bottom:10px}
-.cc-title{font-size:16px;font-weight:600;margin-bottom:8px;line-height:1.3}
-.cc-desc{font-size:12px;color:var(--muted);line-height:1.6;margin-bottom:16px}
-.cc-actors{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:14px}
-.cc-actor{font-size:10px;padding:2px 8px;background:rgba(255,255,255,.04);
-  border:1px solid var(--border);border-radius:3px;color:var(--dim)}
-.cc-friction{display:flex;align-items:center;gap:8px}
-.ccf-label{font-size:10px;color:var(--dim);letter-spacing:.05em;text-transform:uppercase}
-.ccf-bar{flex:1;height:3px;background:rgba(255,255,255,.06);border-radius:2px;overflow:hidden}
-.ccf-fill{height:100%;border-radius:2px}
-.ccf-val{font-family:var(--font-mono);font-size:12px;font-weight:700}
-
-/* ══════════════════════════════════════ TENSIONES */
-#tensiones{border-top:1px solid var(--border)}
-.tension-selector{display:flex;gap:8px;margin-bottom:32px;flex-wrap:wrap}
-.ts-btn{font-size:12px;padding:7px 16px;border:1px solid var(--border);border-radius:20px;
-  background:transparent;color:var(--muted);cursor:pointer;transition:all .15s;font-family:inherit}
-.ts-btn.active{border-color:var(--etica);color:var(--etica);background:rgba(200,169,110,.08)}
-.tension-viewer{display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;min-height:320px}
-.tv-capa{border-radius:var(--r);padding:22px;display:flex;flex-direction:column;gap:12px}
-.tv-e{background:rgba(200,169,110,.07);border:1px solid rgba(200,169,110,.2)}
-.tv-i{background:rgba(74,127,165,.07);border:1px solid rgba(74,127,165,.2)}
-.tv-m{background:rgba(122,158,110,.07);border:1px solid rgba(122,158,110,.2)}
-.tvc-sym{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
-.tvc-title{font-size:14px;font-weight:600}
-.tvc-body{font-size:12px;color:var(--muted);line-height:1.6}
-.tvc-kws{display:flex;flex-wrap:wrap;gap:4px;margin-top:auto}
-.kw{font-size:10px;padding:2px 7px;border-radius:3px;font-family:var(--font-mono)}
-.kw-e{background:rgba(200,169,110,.12);color:var(--etica)}
-.kw-i{background:rgba(74,127,165,.12);color:var(--inst)}
-.kw-m{background:rgba(122,158,110,.12);color:var(--mat)}
-
-.tension-meta{margin-top:20px;background:var(--s1);border:1px solid var(--border);
-  border-radius:var(--r);padding:20px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px}
-.tm-item{}
-.tm-label{font-size:10px;letter-spacing:.1em;text-transform:uppercase;
-  color:var(--dim);margin-bottom:4px}
-.tm-val{font-size:14px;font-weight:600}
-.tm-sub{font-size:12px;color:var(--muted);margin-top:4px;line-height:1.4;font-style:italic}
-
-/* Intensidad visual */
-.intensity-bar{height:6px;border-radius:3px;overflow:hidden;
-  background:rgba(255,255,255,.05);margin-top:8px}
-.ib-fill{height:100%;border-radius:3px;
-  background:linear-gradient(90deg,var(--mat),var(--etica),var(--crit))}
-
-/* ══════════════════════════════════════ GRAFO EMBED */
-#grafo{border-top:1px solid var(--border)}
-.graph-wrap{
-  background:var(--s1);border:1px solid var(--border);border-radius:var(--r);
-  overflow:hidden;position:relative;height:460px}
-#ca-graph-canvas-embed{width:100%;height:100%}
-.graph-overlay-legend{
-  position:absolute;bottom:16px;right:16px;
-  background:rgba(12,12,12,.88);backdrop-filter:blur(8px);
-  border:1px solid var(--border);border-radius:6px;
-  padding:12px 14px;display:flex;flex-direction:column;gap:6px}
-.gl-item{display:flex;align-items:center;gap:7px;font-size:11px;color:var(--muted)}
-.gl-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
-.graph-controls{display:flex;gap:8px;margin-bottom:16px}
-.gc-btn{font-size:11px;padding:5px 13px;border:1px solid var(--border);border-radius:4px;
-  background:transparent;color:var(--muted);cursor:pointer;font-family:inherit;transition:all .15s}
-.gc-btn.active{border-color:var(--etica);color:var(--etica);background:rgba(200,169,110,.08)}
-
-/* ══════════════════════════════════════ PROTOCOLO */
-#protocolo{border-top:1px solid var(--border)}
-.protocolo-intro{font-size:15px;color:var(--muted);line-height:1.7;
-  max-width:680px;margin-bottom:40px}
-.protocolo-intro strong{color:var(--text)}
-
-.umbral-visual{
-  background:var(--s1);border:1px solid var(--border);border-radius:var(--r);
-  padding:24px;margin-bottom:32px}
-.uv-title{font-size:12px;letter-spacing:.1em;text-transform:uppercase;
-  color:var(--muted);margin-bottom:16px}
-.uv-scale{position:relative;height:40px;border-radius:4px;overflow:hidden;
-  background:linear-gradient(90deg,
-    rgba(122,158,110,.3) 0%,
-    rgba(200,169,110,.3) 55%,
-    rgba(200,95,74,.5) 75%,
-    rgba(200,95,74,.9) 100%)}
-.uv-markers{display:flex;position:relative;margin-top:8px;font-size:10px;color:var(--dim)}
-.uv-mk{position:absolute;transform:translateX(-50%);text-align:center}
-.uv-mk-line{width:1px;height:10px;background:var(--dim);margin:0 auto 3px}
-.uv-cases{display:flex;gap:6px;margin-top:16px;flex-wrap:wrap}
-.uvc{font-size:11px;padding:3px 10px;border-radius:3px;border:1px solid}
-.uvc-ok{border-color:var(--mat);color:var(--mat);background:rgba(122,158,110,.08)}
-.uvc-warn{border-color:var(--etica);color:var(--etica);background:rgba(200,169,110,.08)}
-.uvc-crit{border-color:var(--crit);color:var(--crit);background:rgba(200,95,74,.08)}
-
-.protocolo-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-bottom:32px}
-.pc{background:var(--s1);border:1px solid var(--border);border-radius:var(--r);
-  padding:22px;position:relative;overflow:hidden}
-.pc::before{content:'';position:absolute;top:0;left:0;right:0;height:2px}
-.pc:nth-child(1)::before{background:var(--inst)}
-.pc:nth-child(2)::before{background:var(--etica)}
-.pc:nth-child(3)::before{background:var(--mat)}
-.pc:nth-child(4)::before{background:var(--crit)}
-.pc-num{font-family:var(--font-mono);font-size:10px;color:var(--dim);margin-bottom:8px}
-.pc-title{font-size:14px;font-weight:600;margin-bottom:8px}
-.pc-body{font-size:12px;color:var(--muted);line-height:1.6;margin-bottom:12px}
-.pc-cond{font-size:11px;font-family:var(--font-mono);color:var(--dim);
-  padding:8px 10px;background:rgba(255,255,255,.03);border-radius:4px;
-  border-left:2px solid var(--border)}
-.pc-cond strong{color:var(--text)}
-
-.protocolo-output{
-  border:1px solid rgba(200,169,110,.3);border-radius:var(--r);
-  padding:28px;background:rgba(200,169,110,.04);
-  display:flex;flex-direction:column;gap:12px}
-.po-label{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--etica)}
-.po-title{font-size:20px;font-weight:700;color:var(--text)}
-.po-body{font-size:14px;color:var(--muted);line-height:1.7;max-width:640px}
-.po-body strong{color:var(--text)}
-
-/* ══════════════════════════════════════ ARCHIVO */
-#archivo{border-top:1px solid var(--border)}
-.archivo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-.arc-dim{background:var(--s1);border:1px solid var(--border);border-radius:var(--r);
-  padding:18px;transition:border-color .2s}
-.arc-dim:hover{border-color:rgba(255,255,255,.15)}
-.arc-num{font-family:var(--font-mono);font-size:10px;color:var(--dim);margin-bottom:8px}
-.arc-title{font-size:13px;font-weight:600;margin-bottom:6px}
-.arc-count{font-size:11px;color:var(--muted);margin-bottom:10px}
-.arc-tags{display:flex;flex-wrap:wrap;gap:4px}
-.arc-tag{font-size:10px;padding:2px 6px;background:rgba(255,255,255,.04);
-  border-radius:3px;color:var(--dim)}
-.arc-link{display:inline-block;margin-top:12px;font-size:11px;color:var(--muted);
-  text-decoration:none;letter-spacing:.04em;
-  border-bottom:1px solid var(--border);padding-bottom:1px;transition:all .15s}
-.arc-link:hover{color:var(--etica);border-color:var(--etica)}
-
-/* ══════════════════════════════════════ FOOTER */
-footer{border-top:1px solid var(--border);padding:40px;
-  max-width:960px;margin:0 auto;
-  display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:20px}
-.footer-left{}
-.footer-title{font-size:13px;font-weight:600;margin-bottom:4px}
-.footer-sub{font-size:12px;color:var(--muted)}
-.footer-right{font-size:11px;color:var(--dim);text-align:right;line-height:1.8}
-
-/* ══════════════════════════════════════ DIVIDER */
-.full-divider{width:100%;height:1px;background:var(--border)}
-
-/* ══════════════════════════════════════ SCROLLBAR */
-::-webkit-scrollbar{width:5px}
-::-webkit-scrollbar-track{background:transparent}
-::-webkit-scrollbar-thumb{background:rgba(255,255,255,.1);border-radius:3px}
-
-/* ══════════════════════════════════════ RESPONSIVE */
-@media(max-width:768px){
-  nav .nav-links{display:none}
-  .meter-cases{grid-template-columns:1fr 1fr}
-  .instrument-grid{grid-template-columns:1fr}
-  .campos-grid{grid-template-columns:1fr}
-  .tension-viewer{grid-template-columns:1fr}
-  .protocolo-grid{grid-template-columns:1fr}
-  .archivo-grid{grid-template-columns:1fr 1fr}
-}
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contra-Archivo — Antropología y Corrupción · Tesis Doctoral</title>
+    <meta name="description" content="Instrumento cualitativo de análisis multi-situado para cuantificar tensiones de mistranslation institucional. Tesis doctoral en Antropología — Chile.">
+    <style>
+        /* ══════════════════════════════════════ TOKENS */
+        
+        :root {
+            --bg: #0c0c0c;
+            --s1: #131313;
+            --s2: #1a1a1a;
+            --border: rgba(255, 255, 255, .07);
+            --text: #e2e2e2;
+            --muted: #888;
+            --dim: #444;
+            --etica: #c8a96e;
+            --inst: #4a7fa5;
+            --mat: #7a9e6e;
+            --crit: #c85f4a;
+            --r: 8px;
+            --font-sans: -apple-system, 'Helvetica Neue', sans-serif;
+            --font-mono: 'SF Mono', 'Fira Code', monospace;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0
+        }
+        
+        html {
+            scroll-behavior: smooth
+        }
+        
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--font-sans);
+            font-size: 15px;
+            line-height: 1.65;
+            overflow-x: hidden
+        }
+        /* ══════════════════════════════════════ UTILITY */
+        
+        .mono {
+            font-family: var(--font-mono);
+            font-size: .85em
+        }
+        
+        .muted {
+            color: var(--muted)
+        }
+        
+        .label {
+            font-size: 11px;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            color: var(--muted)
+        }
+        
+        .accent-e {
+            color: var(--etica)
+        }
+        
+        .accent-i {
+            color: var(--inst)
+        }
+        
+        .accent-m {
+            color: var(--mat)
+        }
+        
+        .accent-c {
+            color: var(--crit)
+        }
+        /* ══════════════════════════════════════ NAV */
+        
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 200;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 32px;
+            height: 52px;
+            background: rgba(12, 12, 12, .88);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border)
+        }
+        
+        .nav-brand {
+            font-family: var(--font-mono);
+            font-size: 12px;
+            color: var(--etica);
+            letter-spacing: .06em
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 28px
+        }
+        
+        .nav-links a {
+            font-size: 12px;
+            color: var(--muted);
+            text-decoration: none;
+            letter-spacing: .04em;
+            transition: color .15s
+        }
+        
+        .nav-links a:hover {
+            color: var(--text)
+        }
+        
+        .nav-cta {
+            font-size: 11px;
+            padding: 6px 14px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            color: var(--text);
+            text-decoration: none;
+            transition: all .15s;
+            letter-spacing: .04em
+        }
+        
+        .nav-cta:hover {
+            background: var(--s2);
+            border-color: var(--etica);
+            color: var(--etica)
+        }
+        /* ══════════════════════════════════════ HERO */
+        
+        #hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 120px 40px 80px;
+            max-width: 960px;
+            margin: 0 auto
+        }
+        
+        .hero-label {
+            font-size: 11px;
+            letter-spacing: .16em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 28px
+        }
+        
+        .hero-h1 {
+            font-size: clamp(32px, 5vw, 58px);
+            font-weight: 700;
+            line-height: 1.15;
+            letter-spacing: -.025em;
+            color: var(--text);
+            margin-bottom: 28px
+        }
+        
+        .hero-h1 em {
+            font-style: normal;
+            color: var(--etica)
+        }
+        
+        .hero-thesis {
+            font-size: 18px;
+            color: var(--muted);
+            line-height: 1.6;
+            max-width: 640px;
+            margin-bottom: 48px;
+            border-left: 2px solid var(--etica);
+            padding-left: 20px
+        }
+        
+        .hero-thesis strong {
+            color: var(--text)
+        }
+        /* Tensión-metro hero */
+        
+        .hero-meter {
+            margin-bottom: 56px
+        }
+        
+        .hero-meter-label {
+            font-size: 11px;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 12px
+        }
+        
+        .meter-cases {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px
+        }
+        
+        .meter-case {
+            background: var(--s1);
+            border: 1px solid var(--border);
+            border-radius: var(--r);
+            padding: 14px 16px;
+            cursor: pointer;
+            transition: border-color .2s
+        }
+        
+        .meter-case:hover {
+            border-color: var(--etica)
+        }
+        
+        .mc-name {
+            font-size: 11px;
+            color: var(--muted);
+            margin-bottom: 8px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis
+        }
+        
+        .mc-bar-wrap {
+            height: 4px;
+            background: rgba(255, 255, 255, .06);
+            border-radius: 2px;
+            overflow: hidden;
+            margin-bottom: 6px
+        }
+        
+        .mc-bar {
+            height: 100%;
+            border-radius: 2px;
+            transition: width 1.2s cubic-bezier(.4, 0, .2, 1)
+        }
+        
+        .mc-val {
+            font-family: var(--font-mono);
+            font-size: 16px;
+            font-weight: 700
+        }
+        
+        .mc-tipo {
+            font-size: 10px;
+            color: var(--dim);
+            letter-spacing: .05em;
+            text-transform: uppercase;
+            margin-top: 2px
+        }
+        
+        .hero-ctas {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap
+        }
+        
+        .btn-primary {
+            padding: 12px 24px;
+            background: var(--etica);
+            color: #111;
+            font-weight: 600;
+            border-radius: var(--r);
+            text-decoration: none;
+            font-size: 14px;
+            transition: opacity .15s;
+            border: none;
+            cursor: pointer
+        }
+        
+        .btn-primary:hover {
+            opacity: .88
+        }
+        
+        .btn-ghost {
+            padding: 11px 24px;
+            border: 1px solid var(--border);
+            color: var(--text);
+            border-radius: var(--r);
+            text-decoration: none;
+            font-size: 14px;
+            transition: all .15s
+        }
+        
+        .btn-ghost:hover {
+            border-color: var(--etica);
+            color: var(--etica)
+        }
+        /* ══════════════════════════════════════ SECTIONS */
+        
+        section {
+            padding: 80px 40px;
+            max-width: 960px;
+            margin: 0 auto
+        }
+        
+        .section-eyebrow {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 40px
+        }
+        
+        .eyebrow-num {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: var(--dim)
+        }
+        
+        .eyebrow-line {
+            flex: 1;
+            height: 1px;
+            background: var(--border)
+        }
+        
+        .eyebrow-text {
+            font-size: 11px;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            color: var(--muted)
+        }
+        
+        h2 {
+            font-size: clamp(24px, 3vw, 36px);
+            font-weight: 700;
+            letter-spacing: -.02em;
+            line-height: 1.2;
+            margin-bottom: 16px
+        }
+        
+        .section-lead {
+            font-size: 17px;
+            color: var(--muted);
+            line-height: 1.7;
+            max-width: 680px;
+            margin-bottom: 40px
+        }
+        
+        .section-lead strong {
+            color: var(--text)
+        }
+        /* ══════════════════════════════════════ INSTRUMENTO */
+        
+        #instrumento {
+            border-top: 1px solid var(--border)
+        }
+        
+        .instrument-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            align-items: start
+        }
+        /* Las 3 capas */
+        
+        .capas-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 3px
+        }
+        
+        .capa-card {
+            border-radius: var(--r);
+            padding: 20px 22px;
+            border: 1px solid transparent;
+            cursor: pointer;
+            transition: all .2s;
+            position: relative;
+            overflow: hidden
+        }
+        
+        .capa-card::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px
+        }
+        
+        .capa-e {
+            background: rgba(200, 169, 110, .07);
+            border-color: rgba(200, 169, 110, .2)
+        }
+        
+        .capa-e::before {
+            background: var(--etica)
+        }
+        
+        .capa-e:hover {
+            background: rgba(200, 169, 110, .12);
+            border-color: rgba(200, 169, 110, .35)
+        }
+        
+        .capa-i {
+            background: rgba(74, 127, 165, .07);
+            border-color: rgba(74, 127, 165, .2)
+        }
+        
+        .capa-i::before {
+            background: var(--inst)
+        }
+        
+        .capa-i:hover {
+            background: rgba(74, 127, 165, .12);
+            border-color: rgba(74, 127, 165, .35)
+        }
+        
+        .capa-m {
+            background: rgba(122, 158, 110, .07);
+            border-color: rgba(122, 158, 110, .2)
+        }
+        
+        .capa-m::before {
+            background: var(--mat)
+        }
+        
+        .capa-m:hover {
+            background: rgba(122, 158, 110, .12);
+            border-color: rgba(122, 158, 110, .35)
+        }
+        
+        .capa-sym {
+            font-size: 11px;
+            font-family: var(--font-mono);
+            margin-bottom: 4px
+        }
+        
+        .capa-title {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 6px
+        }
+        
+        .capa-desc {
+            font-size: 12px;
+            color: var(--muted);
+            line-height: 1.5
+        }
+        /* Fricción entre capas */
+        
+        .friction-indicator {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px;
+            position: relative
+        }
+        
+        .fi-arrow {
+            width: 1px;
+            height: 28px;
+            background: linear-gradient(to bottom, var(--etica), var(--inst));
+            margin: 0 auto;
+            position: relative
+        }
+        
+        .fi-label {
+            position: absolute;
+            right: 100%;
+            margin-right: 8px;
+            font-size: 10px;
+            color: var(--dim);
+            letter-spacing: .08em;
+            white-space: nowrap
+        }
+        /* Diagrama metodológico */
+        
+        .method-diagram {
+            background: var(--s1);
+            border: 1px solid var(--border);
+            border-radius: var(--r);
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 0
+        }
+        
+        .md-step {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            padding: 14px 0;
+            border-bottom: 1px solid var(--border)
+        }
+        
+        .md-step:last-child {
+            border-bottom: none
+        }
+        
+        .md-num {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: var(--dim);
+            min-width: 24px;
+            margin-top: 2px
+        }
+        
+        .md-content {}
+        
+        .md-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 3px
+        }
+        
+        .md-text {
+            font-size: 12px;
+            color: var(--muted);
+            line-height: 1.5
+        }
+        /* ══════════════════════════════════════ CAMPOS */
+        
+        #campos {
+            border-top: 1px solid var(--border)
+        }
+        
+        .campos-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px
+        }
+        
+        .campo-card {
+            background: var(--s1);
+            border: 1px solid var(--border);
+            border-radius: var(--r);
+            padding: 24px;
+            cursor: pointer;
+            transition: all .2s;
+            position: relative;
+            overflow: hidden
+        }
+        
+        .campo-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 3px
+        }
+        
+        .campo-card:nth-child(1)::after {
+            background: linear-gradient(90deg, var(--etica), transparent)
+        }
+        
+        .campo-card:nth-child(2)::after {
+            background: linear-gradient(90deg, var(--mat), transparent)
+        }
+        
+        .campo-card:nth-child(3)::after {
+            background: linear-gradient(90deg, var(--inst), transparent)
+        }
+        
+        .campo-card:nth-child(4)::after {
+            background: linear-gradient(90deg, var(--crit), transparent)
+        }
+        
+        .campo-card:hover {
+            border-color: rgba(255, 255, 255, .15);
+            transform: translateY(-2px)
+        }
+        
+        .cc-tag {
+            font-size: 10px;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 10px
+        }
+        
+        .cc-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            line-height: 1.3
+        }
+        
+        .cc-desc {
+            font-size: 12px;
+            color: var(--muted);
+            line-height: 1.6;
+            margin-bottom: 16px
+        }
+        
+        .cc-actors {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-bottom: 14px
+        }
+        
+        .cc-actor {
+            font-size: 10px;
+            padding: 2px 8px;
+            background: rgba(255, 255, 255, .04);
+            border: 1px solid var(--border);
+            border-radius: 3px;
+            color: var(--dim)
+        }
+        
+        .cc-friction {
+            display: flex;
+            align-items: center;
+            gap: 8px
+        }
+        
+        .ccf-label {
+            font-size: 10px;
+            color: var(--dim);
+            letter-spacing: .05em;
+            text-transform: uppercase
+        }
+        
+        .ccf-bar {
+            flex: 1;
+            height: 3px;
+            background: rgba(255, 255, 255, .06);
+            border-radius: 2px;
+            overflow: hidden
+        }
+        
+        .ccf-fill {
+            height: 100%;
+            border-radius: 2px
+        }
+        
+        .ccf-val {
+            font-family: var(--font-mono);
+            font-size: 12px;
+            font-weight: 700
+        }
+        /* ══════════════════════════════════════ TENSIONES */
+        
+        #tensiones {
+            border-top: 1px solid var(--border)
+        }
+        
+        .tension-selector {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 32px;
+            flex-wrap: wrap
+        }
+        
+        .ts-btn {
+            font-size: 12px;
+            padding: 7px 16px;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            background: transparent;
+            color: var(--muted);
+            cursor: pointer;
+            transition: all .15s;
+            font-family: inherit
+        }
+        
+        .ts-btn.active {
+            border-color: var(--etica);
+            color: var(--etica);
+            background: rgba(200, 169, 110, .08)
+        }
+        
+        .tension-viewer {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 2px;
+            min-height: 320px
+        }
+        
+        .tv-capa {
+            border-radius: var(--r);
+            padding: 22px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px
+        }
+        
+        .tv-e {
+            background: rgba(200, 169, 110, .07);
+            border: 1px solid rgba(200, 169, 110, .2)
+        }
+        
+        .tv-i {
+            background: rgba(74, 127, 165, .07);
+            border: 1px solid rgba(74, 127, 165, .2)
+        }
+        
+        .tv-m {
+            background: rgba(122, 158, 110, .07);
+            border: 1px solid rgba(122, 158, 110, .2)
+        }
+        
+        .tvc-sym {
+            font-size: 10px;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            color: var(--muted)
+        }
+        
+        .tvc-title {
+            font-size: 14px;
+            font-weight: 600
+        }
+        
+        .tvc-body {
+            font-size: 12px;
+            color: var(--muted);
+            line-height: 1.6
+        }
+        
+        .tvc-kws {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            margin-top: auto
+        }
+        
+        .kw {
+            font-size: 10px;
+            padding: 2px 7px;
+            border-radius: 3px;
+            font-family: var(--font-mono)
+        }
+        
+        .kw-e {
+            background: rgba(200, 169, 110, .12);
+            color: var(--etica)
+        }
+        
+        .kw-i {
+            background: rgba(74, 127, 165, .12);
+            color: var(--inst)
+        }
+        
+        .kw-m {
+            background: rgba(122, 158, 110, .12);
+            color: var(--mat)
+        }
+        
+        .tension-meta {
+            margin-top: 20px;
+            background: var(--s1);
+            border: 1px solid var(--border);
+            border-radius: var(--r);
+            padding: 20px;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px
+        }
+        
+        .tm-item {}
+        
+        .tm-label {
+            font-size: 10px;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            color: var(--dim);
+            margin-bottom: 4px
+        }
+        
+        .tm-val {
+            font-size: 14px;
+            font-weight: 600
+        }
+        
+        .tm-sub {
+            font-size: 12px;
+            color: var(--muted);
+            margin-top: 4px;
+            line-height: 1.4;
+            font-style: italic
+        }
+        /* Intensidad visual */
+        
+        .intensity-bar {
+            height: 6px;
+            border-radius: 3px;
+            overflow: hidden;
+            background: rgba(255, 255, 255, .05);
+            margin-top: 8px
+        }
+        
+        .ib-fill {
+            height: 100%;
+            border-radius: 3px;
+            background: linear-gradient(90deg, var(--mat), var(--etica), var(--crit))
+        }
+        /* ══════════════════════════════════════ GRAFO EMBED */
+        
+        #grafo {
+            border-top: 1px solid var(--border)
+        }
+        
+        .graph-wrap {
+            background: var(--s1);
+            border: 1px solid var(--border);
+            border-radius: var(--r);
+            overflow: hidden;
+            position: relative;
+            height: 460px
+        }
+        
+        #ca-graph-canvas-embed {
+            width: 100%;
+            height: 100%
+        }
+        
+        .graph-overlay-legend {
+            position: absolute;
+            bottom: 16px;
+            right: 16px;
+            background: rgba(12, 12, 12, .88);
+            backdrop-filter: blur(8px);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 12px 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px
+        }
+        
+        .gl-item {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            font-size: 11px;
+            color: var(--muted)
+        }
+        
+        .gl-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            flex-shrink: 0
+        }
+        
+        .graph-controls {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px
+        }
+        
+        .gc-btn {
+            font-size: 11px;
+            padding: 5px 13px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            background: transparent;
+            color: var(--muted);
+            cursor: pointer;
+            font-family: inherit;
+            transition: all .15s
+        }
+        
+        .gc-btn.active {
+            border-color: var(--etica);
+            color: var(--etica);
+            background: rgba(200, 169, 110, .08)
+        }
+        /* ══════════════════════════════════════ PROTOCOLO */
+        
+        #protocolo {
+            border-top: 1px solid var(--border)
+        }
+        
+        .protocolo-intro {
+            font-size: 15px;
+            color: var(--muted);
+            line-height: 1.7;
+            max-width: 680px;
+            margin-bottom: 40px
+        }
+        
+        .protocolo-intro strong {
+            color: var(--text)
+        }
+        
+        .umbral-visual {
+            background: var(--s1);
+            border: 1px solid var(--border);
+            border-radius: var(--r);
+            padding: 24px;
+            margin-bottom: 32px
+        }
+        
+        .uv-title {
+            font-size: 12px;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 16px
+        }
+        
+        .uv-scale {
+            position: relative;
+            height: 40px;
+            border-radius: 4px;
+            overflow: hidden;
+            background: linear-gradient(90deg, rgba(122, 158, 110, .3) 0%, rgba(200, 169, 110, .3) 55%, rgba(200, 95, 74, .5) 75%, rgba(200, 95, 74, .9) 100%)
+        }
+        
+        .uv-markers {
+            display: flex;
+            position: relative;
+            margin-top: 8px;
+            font-size: 10px;
+            color: var(--dim)
+        }
+        
+        .uv-mk {
+            position: absolute;
+            transform: translateX(-50%);
+            text-align: center
+        }
+        
+        .uv-mk-line {
+            width: 1px;
+            height: 10px;
+            background: var(--dim);
+            margin: 0 auto 3px
+        }
+        
+        .uv-cases {
+            display: flex;
+            gap: 6px;
+            margin-top: 16px;
+            flex-wrap: wrap
+        }
+        
+        .uvc {
+            font-size: 11px;
+            padding: 3px 10px;
+            border-radius: 3px;
+            border: 1px solid
+        }
+        
+        .uvc-ok {
+            border-color: var(--mat);
+            color: var(--mat);
+            background: rgba(122, 158, 110, .08)
+        }
+        
+        .uvc-warn {
+            border-color: var(--etica);
+            color: var(--etica);
+            background: rgba(200, 169, 110, .08)
+        }
+        
+        .uvc-crit {
+            border-color: var(--crit);
+            color: var(--crit);
+            background: rgba(200, 95, 74, .08)
+        }
+        
+        .protocolo-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-bottom: 32px
+        }
+        
+        .pc {
+            background: var(--s1);
+            border: 1px solid var(--border);
+            border-radius: var(--r);
+            padding: 22px;
+            position: relative;
+            overflow: hidden
+        }
+        
+        .pc::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px
+        }
+        
+        .pc:nth-child(1)::before {
+            background: var(--inst)
+        }
+        
+        .pc:nth-child(2)::before {
+            background: var(--etica)
+        }
+        
+        .pc:nth-child(3)::before {
+            background: var(--mat)
+        }
+        
+        .pc:nth-child(4)::before {
+            background: var(--crit)
+        }
+        
+        .pc-num {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            color: var(--dim);
+            margin-bottom: 8px
+        }
+        
+        .pc-title {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 8px
+        }
+        
+        .pc-body {
+            font-size: 12px;
+            color: var(--muted);
+            line-height: 1.6;
+            margin-bottom: 12px
+        }
+        
+        .pc-cond {
+            font-size: 11px;
+            font-family: var(--font-mono);
+            color: var(--dim);
+            padding: 8px 10px;
+            background: rgba(255, 255, 255, .03);
+            border-radius: 4px;
+            border-left: 2px solid var(--border)
+        }
+        
+        .pc-cond strong {
+            color: var(--text)
+        }
+        
+        .protocolo-output {
+            border: 1px solid rgba(200, 169, 110, .3);
+            border-radius: var(--r);
+            padding: 28px;
+            background: rgba(200, 169, 110, .04);
+            display: flex;
+            flex-direction: column;
+            gap: 12px
+        }
+        
+        .po-label {
+            font-size: 11px;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            color: var(--etica)
+        }
+        
+        .po-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text)
+        }
+        
+        .po-body {
+            font-size: 14px;
+            color: var(--muted);
+            line-height: 1.7;
+            max-width: 640px
+        }
+        
+        .po-body strong {
+            color: var(--text)
+        }
+        /* ══════════════════════════════════════ ARCHIVO */
+        
+        #archivo {
+            border-top: 1px solid var(--border)
+        }
+        
+        .archivo-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px
+        }
+        
+        .arc-dim {
+            background: var(--s1);
+            border: 1px solid var(--border);
+            border-radius: var(--r);
+            padding: 18px;
+            transition: border-color .2s
+        }
+        
+        .arc-dim:hover {
+            border-color: rgba(255, 255, 255, .15)
+        }
+        
+        .arc-num {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            color: var(--dim);
+            margin-bottom: 8px
+        }
+        
+        .arc-title {
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 6px
+        }
+        
+        .arc-count {
+            font-size: 11px;
+            color: var(--muted);
+            margin-bottom: 10px
+        }
+        
+        .arc-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px
+        }
+        
+        .arc-tag {
+            font-size: 10px;
+            padding: 2px 6px;
+            background: rgba(255, 255, 255, .04);
+            border-radius: 3px;
+            color: var(--dim)
+        }
+        
+        .arc-link {
+            display: inline-block;
+            margin-top: 12px;
+            font-size: 11px;
+            color: var(--muted);
+            text-decoration: none;
+            letter-spacing: .04em;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 1px;
+            transition: all .15s
+        }
+        
+        .arc-link:hover {
+            color: var(--etica);
+            border-color: var(--etica)
+        }
+        /* ══════════════════════════════════════ FOOTER */
+        
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 40px;
+            max-width: 960px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 20px
+        }
+        
+        .footer-left {}
+        
+        .footer-title {
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 4px
+        }
+        
+        .footer-sub {
+            font-size: 12px;
+            color: var(--muted)
+        }
+        
+        .footer-right {
+            font-size: 11px;
+            color: var(--dim);
+            text-align: right;
+            line-height: 1.8
+        }
+        /* ══════════════════════════════════════ DIVIDER */
+        
+        .full-divider {
+            width: 100%;
+            height: 1px;
+            background: var(--border)
+        }
+        /* ══════════════════════════════════════ SCROLLBAR */
+        
+        ::-webkit-scrollbar {
+            width: 5px
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: transparent
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, .1);
+            border-radius: 3px
+        }
+        /* ══════════════════════════════════════ RESPONSIVE */
+        
+        @media(max-width:768px) {
+            nav .nav-links {
+                display: none
+            }
+            .meter-cases {
+                grid-template-columns: 1fr 1fr
+            }
+            .instrument-grid {
+                grid-template-columns: 1fr
+            }
+            .campos-grid {
+                grid-template-columns: 1fr
+            }
+            .tension-viewer {
+                grid-template-columns: 1fr
+            }
+            .protocolo-grid {
+                grid-template-columns: 1fr
+            }
+            .archivo-grid {
+                grid-template-columns: 1fr 1fr
+            }
+        }
+    </style>
 </head>
+
 <body>
 
-<!-- NAV -->
-<nav>
-  <span class="nav-brand">CONTRA-ARCHIVO</span>
-  <div class="nav-links">
-    <a href="#instrumento">Instrumento</a>
-    <a href="#campos">Campos</a>
-    <a href="#tensiones">Tensiones</a>
-    <a href="#grafo">Grafo</a>
-    <a href="#protocolo">Protocolo</a>
-    <a href="#archivo">Archivo</a>
-  </div>
-  <a class="nav-cta" href="admin.html">Admin ↗</a>
-</nav>
-
-<!-- ══════════════════════════════════════ HERO -->
-<section id="hero">
-  <p class="hero-label">Tesis doctoral · Antropología · Chile · 2025</p>
-  <h1 class="hero-h1">La institución traduce.<br>La traducción falla.<br>El fallo <em>es el sistema</em>.</h1>
-  <p class="hero-thesis">Esta investigación demuestra que la corrupción institucional en Chile opera como un régimen de <strong>mistranslation</strong> —traducción fallida o deliberadamente distorsionada— entre tres regímenes de verdad incompatibles: el testimonio situado, el registro normativo y la evidencia material.</p>
-
-  <div class="hero-meter">
-    <p class="hero-meter-label">Fricción epistemológica medida · 4 campos de investigación</p>
-    <div class="meter-cases" id="hero-meter"></div>
-  </div>
-
-  <div class="hero-ctas">
-    <a class="btn-primary" href="#instrumento">Ver el instrumento</a>
-    <a class="btn-ghost" href="#protocolo">Protocolo de traducción</a>
-    <a class="btn-ghost" href="#tensiones">Explorar tensiones</a>
-  </div>
-</section>
-
-<!-- ══════════════════════════════════════ INSTRUMENTO -->
-<section id="instrumento">
-  <div class="section-eyebrow">
-    <span class="eyebrow-num">01</span>
-    <div class="eyebrow-line"></div>
-    <span class="eyebrow-text">El instrumento</span>
-  </div>
-  <h2>Análisis multi-situado de <span class="accent-e">3 capas</span></h2>
-  <p class="section-lead">El contra-archivo es un instrumento cualitativo que descompone cualquier situación institucional en <strong>tres regímenes de verdad simultáneos</strong> y mide la fricción entre ellos. Donde la fricción es alta, la mistranslation es estructural. Donde es crítica, el daño es irreversible.</p>
-
-  <div class="instrument-grid">
-    <div>
-      <div class="capas-stack">
-        <div class="capa-card capa-e">
-          <div class="capa-sym accent-e">◎ CAPA ÉTICA</div>
-          <div class="capa-title">Testimonio situado</div>
-          <div class="capa-desc">La experiencia vivida, la memoria corporal, el conocimiento que el archivo oficial no puede contener. Voces, prácticas, afectos, daño no reconocido.</div>
+    <!-- NAV -->
+    <nav>
+        <span class="nav-brand">CONTRA-ARCHIVO</span>
+        <div class="nav-links">
+            <a href="#instrumento">Instrumento</a>
+            <a href="#campos">Campos</a>
+            <a href="#tensiones">Tensiones</a>
+            <a href="#grafo">Grafo</a>
+            <a href="#protocolo">Protocolo</a>
+            <a href="#archivo">Archivo</a>
         </div>
-        <div class="friction-indicator">
-          <div class="fi-arrow"><span class="fi-label mono">← fricción →</span></div>
+        <a class="nav-cta" href="admin.html">Admin ↗</a>
+    </nav>
+
+    <!-- ══════════════════════════════════════ HERO -->
+    <section id="hero">
+        <p class="hero-label">Tesis doctoral · Antropología · Chile · 2025</p>
+        <h1 class="hero-h1">La institución traduce.<br>La traducción falla.<br>El fallo <em>es el sistema</em>.</h1>
+        <p class="hero-thesis">Esta investigación demuestra que la corrupción institucional en Chile opera como un régimen de <strong>mistranslation</strong> —traducción fallida o deliberadamente distorsionada— entre tres regímenes de verdad incompatibles: el testimonio situado,
+            el registro normativo y la evidencia material.</p>
+
+        <div class="hero-meter">
+            <p class="hero-meter-label">Fricción epistemológica medida · 4 campos de investigación</p>
+            <div class="meter-cases" id="hero-meter"></div>
         </div>
-        <div class="capa-card capa-i">
-          <div class="capa-sym accent-i">▣ CAPA INSTITUCIONAL</div>
-          <div class="capa-title">Registro y clasificación</div>
-          <div class="capa-desc">Lo que la institución declara, clasifica y normaliza. Documentos, resoluciones, categorías técnico-jurídicas que absorben el conflicto sin resolverlo.</div>
+
+        <div class="hero-ctas">
+            <a class="btn-primary" href="#instrumento">Ver el instrumento</a>
+            <a class="btn-ghost" href="#protocolo">Protocolo de traducción</a>
+            <a class="btn-ghost" href="#tensiones">Explorar tensiones</a>
         </div>
-        <div class="friction-indicator">
-          <div class="fi-arrow"><span class="fi-label mono">← fricción →</span></div>
+    </section>
+
+    <!-- ══════════════════════════════════════ INSTRUMENTO -->
+    <section id="instrumento">
+        <div class="section-eyebrow">
+            <span class="eyebrow-num">01</span>
+            <div class="eyebrow-line"></div>
+            <span class="eyebrow-text">El instrumento</span>
         </div>
-        <div class="capa-card capa-m">
-          <div class="capa-sym accent-m">◈ CAPA MATERIAL</div>
-          <div class="capa-title">Territorio y evidencia</div>
-          <div class="capa-desc">Lo que persiste en el cuerpo, la tierra, los datos. Evidencias físicas, densidad histórica, hechos que el proceso no contempla devolver.</div>
+        <h2>Análisis multi-situado de <span class="accent-e">3 capas</span></h2>
+        <p class="section-lead">El contra-archivo es un instrumento cualitativo que descompone cualquier situación institucional en <strong>tres regímenes de verdad simultáneos</strong> y mide la fricción entre ellos. Donde la fricción es alta, la mistranslation es estructural.
+            Donde es crítica, el daño es irreversible.</p>
+
+        <div class="instrument-grid">
+            <div>
+                <div class="capas-stack">
+                    <div class="capa-card capa-e">
+                        <div class="capa-sym accent-e">◎ CAPA ÉTICA</div>
+                        <div class="capa-title">Testimonio situado</div>
+                        <div class="capa-desc">La experiencia vivida, la memoria corporal, el conocimiento que el archivo oficial no puede contener. Voces, prácticas, afectos, daño no reconocido.</div>
+                    </div>
+                    <div class="friction-indicator">
+                        <div class="fi-arrow"><span class="fi-label mono">← fricción →</span></div>
+                    </div>
+                    <div class="capa-card capa-i">
+                        <div class="capa-sym accent-i">▣ CAPA INSTITUCIONAL</div>
+                        <div class="capa-title">Registro y clasificación</div>
+                        <div class="capa-desc">Lo que la institución declara, clasifica y normaliza. Documentos, resoluciones, categorías técnico-jurídicas que absorben el conflicto sin resolverlo.</div>
+                    </div>
+                    <div class="friction-indicator">
+                        <div class="fi-arrow"><span class="fi-label mono">← fricción →</span></div>
+                    </div>
+                    <div class="capa-card capa-m">
+                        <div class="capa-sym accent-m">◈ CAPA MATERIAL</div>
+                        <div class="capa-title">Territorio y evidencia</div>
+                        <div class="capa-desc">Lo que persiste en el cuerpo, la tierra, los datos. Evidencias físicas, densidad histórica, hechos que el proceso no contempla devolver.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="method-diagram">
+                <p class="label" style="margin-bottom:16px">Procedimiento analítico</p>
+                <div class="md-step">
+                    <span class="md-num">01</span>
+                    <div class="md-content">
+                        <div class="md-title">Selección del campo multi-situado</div>
+                        <div class="md-text">Identificar un fenómeno institucional con al menos dos sitios etnográficos (corporativo/digital + territorial) donde operen lógicas de traducción incompatibles.</div>
+                    </div>
+                </div>
+                <div class="md-step">
+                    <span class="md-num">02</span>
+                    <div class="md-content">
+                        <div class="md-title">Documentación por capas</div>
+                        <div class="md-text">Recopilar evidencia separada para cada régimen de verdad: testimonios (ética), documentos institucionales (institucional), registros materiales/territoriales (material).</div>
+                    </div>
+                </div>
+                <div class="md-step">
+                    <span class="md-num">03</span>
+                    <div class="md-content">
+                        <div class="md-title">Extracción de keywords por capa</div>
+                        <div class="md-text">Identificar los términos clave que cada capa usa para el mismo fenómeno. La distancia semántica entre keywords determina el tipo de fricción.</div>
+                    </div>
+                </div>
+                <div class="md-step">
+                    <span class="md-num">04</span>
+                    <div class="md-content">
+                        <div class="md-title">Cálculo de intensidad (0.0 → 1.0)</div>
+                        <div class="md-text">Motor de fricción: mide el overlap de vocabularios entre capas + detecta marcadores de fricción explícitos. A menor overlap + mayor marcador = mayor intensidad.</div>
+                    </div>
+                </div>
+                <div class="md-step">
+                    <span class="md-num">05</span>
+                    <div class="md-content">
+                        <div class="md-title">Clasificación del tipo de fricción</div>
+                        <div class="md-text"><span class="accent-i">Política</span> (¿quién define?) · <span class="accent-e">Semántica</span> (¿qué significa?) · <span class="accent-m">Técnica</span> (¿qué miden los datos?)</div>
+                    </div>
+                </div>
+                <div class="md-step">
+                    <span class="md-num">06</span>
+                    <div class="md-content">
+                        <div class="md-title">Identificación de la tensión central</div>
+                        <div class="md-text">Formular la pregunta que los tres regímenes no pueden responder simultáneamente. Esta pregunta irreductible es el núcleo del análisis.</div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
+    </section>
 
-    <div class="method-diagram">
-      <p class="label" style="margin-bottom:16px">Procedimiento analítico</p>
-      <div class="md-step">
-        <span class="md-num">01</span>
-        <div class="md-content">
-          <div class="md-title">Selección del campo multi-situado</div>
-          <div class="md-text">Identificar un fenómeno institucional con al menos dos sitios etnográficos (corporativo/digital + territorial) donde operen lógicas de traducción incompatibles.</div>
+    <!-- ══════════════════════════════════════ CAMPOS -->
+    <section id="campos">
+        <div class="section-eyebrow">
+            <span class="eyebrow-num">02</span>
+            <div class="eyebrow-line"></div>
+            <span class="eyebrow-text">Campos de investigación</span>
         </div>
-      </div>
-      <div class="md-step">
-        <span class="md-num">02</span>
-        <div class="md-content">
-          <div class="md-title">Documentación por capas</div>
-          <div class="md-text">Recopilar evidencia separada para cada régimen de verdad: testimonios (ética), documentos institucionales (institucional), registros materiales/territoriales (material).</div>
+        <h2>4 sitios etnográficos, <span class="accent-e">un mismo mecanismo</span></h2>
+        <p class="section-lead">La etnografía multi-situada articula campos que van desde la corporación financiera hasta el territorio indígena, pasando por el periodismo de datos y el derecho internacional. En cada uno, <strong>los mismos mecanismos de poder</strong> producen
+            invisibilidad a través de la traducción fallida.</p>
+
+        <div class="campos-grid" id="campos-grid"></div>
+    </section>
+
+    <!-- ══════════════════════════════════════ TENSIONES -->
+    <section id="tensiones">
+        <div class="section-eyebrow">
+            <span class="eyebrow-num">03</span>
+            <div class="eyebrow-line"></div>
+            <span class="eyebrow-text">Tensiones medidas</span>
         </div>
-      </div>
-      <div class="md-step">
-        <span class="md-num">03</span>
-        <div class="md-content">
-          <div class="md-title">Extracción de keywords por capa</div>
-          <div class="md-text">Identificar los términos clave que cada capa usa para el mismo fenómeno. La distancia semántica entre keywords determina el tipo de fricción.</div>
+        <h2>La fricción como <span class="accent-c">evidencia cuantificable</span></h2>
+        <p class="section-lead">Para cada campo, el instrumento despliega las tres capas y mide su incompatibilidad. La fricción no se resuelve: <strong>se documenta, clasifica e incorpora al protocolo</strong> de intervención.</p>
+
+        <div class="tension-selector" id="tension-selector"></div>
+        <div class="tension-viewer" id="tension-viewer"></div>
+        <div class="tension-meta" id="tension-meta"></div>
+    </section>
+
+    <!-- ══════════════════════════════════════ GRAFO -->
+    <section id="grafo">
+        <div class="section-eyebrow">
+            <span class="eyebrow-num">04</span>
+            <div class="eyebrow-line"></div>
+            <span class="eyebrow-text">Grafo de conexiones</span>
         </div>
-      </div>
-      <div class="md-step">
-        <span class="md-num">04</span>
-        <div class="md-content">
-          <div class="md-title">Cálculo de intensidad (0.0 → 1.0)</div>
-          <div class="md-text">Motor de fricción: mide el overlap de vocabularios entre capas + detecta marcadores de fricción explícitos. A menor overlap + mayor marcador = mayor intensidad.</div>
+        <h2>Los campos están <span class="accent-i">conectados</span></h2>
+        <p class="section-lead">Los mismos actores, instituciones y mecanismos de traducción aparecen en múltiples campos. El grafo visualiza estas conexiones transversales, demostrando que la mistranslation no es un problema local sino <strong>un sistema articulado</strong>.</p>
+
+        <div class="graph-controls" id="graph-controls">
+            <button class="gc-btn active" data-layer="all">Todas las capas</button>
+            <button class="gc-btn" data-layer="etica">◎ Ética</button>
+            <button class="gc-btn" data-layer="institucional">▣ Institucional</button>
+            <button class="gc-btn" data-layer="material">◈ Material</button>
         </div>
-      </div>
-      <div class="md-step">
-        <span class="md-num">05</span>
-        <div class="md-content">
-          <div class="md-title">Clasificación del tipo de fricción</div>
-          <div class="md-text"><span class="accent-i">Política</span> (¿quién define?) · <span class="accent-e">Semántica</span> (¿qué significa?) · <span class="accent-m">Técnica</span> (¿qué miden los datos?)</div>
+        <div class="graph-wrap">
+            <div id="ca-graph-canvas" style="width:100%;height:100%;"></div>
+            <div id="ca-preview"></div>
+            <div class="graph-overlay-legend">
+                <div class="gl-item">
+                    <div class="gl-dot" style="background:var(--etica)"></div>Ética</div>
+                <div class="gl-item">
+                    <div class="gl-dot" style="background:var(--inst)"></div>Institucional</div>
+                <div class="gl-item">
+                    <div class="gl-dot" style="background:var(--mat)"></div>Material</div>
+            </div>
         </div>
-      </div>
-      <div class="md-step">
-        <span class="md-num">06</span>
-        <div class="md-content">
-          <div class="md-title">Identificación de la tensión central</div>
-          <div class="md-text">Formular la pregunta que los tres regímenes no pueden responder simultáneamente. Esta pregunta irreductible es el núcleo del análisis.</div>
+    </section>
+
+    <!-- ══════════════════════════════════════ PROTOCOLO -->
+    <section id="protocolo">
+        <div class="section-eyebrow">
+            <span class="eyebrow-num">05</span>
+            <div class="eyebrow-line"></div>
+            <span class="eyebrow-text">Protocolo de buena traducción</span>
         </div>
-      </div>
-    </div>
-  </div>
-</section>
+        <h2>De la fricción a la <span class="accent-m">intervención</span></h2>
+        <p class="protocolo-intro">
+            Si la mistranslation es el problema, la <strong>buena traducción institucional</strong> es el horizonte de la intervención. El protocolo no propone eliminar la diferencia entre capas —eso sería epistemicidio—, sino crear condiciones mínimas
+            de equivalencia que hagan el daño legible y la reparación posible.
+        </p>
 
-<!-- ══════════════════════════════════════ CAMPOS -->
-<section id="campos">
-  <div class="section-eyebrow">
-    <span class="eyebrow-num">02</span>
-    <div class="eyebrow-line"></div>
-    <span class="eyebrow-text">Campos de investigación</span>
-  </div>
-  <h2>4 sitios etnográficos, <span class="accent-e">un mismo mecanismo</span></h2>
-  <p class="section-lead">La etnografía multi-situada articula campos que van desde la corporación financiera hasta el territorio indígena, pasando por el periodismo de datos y el derecho internacional. En cada uno, <strong>los mismos mecanismos de poder</strong> producen invisibilidad a través de la traducción fallida.</p>
+        <!-- Umbral visual -->
+        <div class="umbral-visual">
+            <div class="uv-title">Umbrales de intervención según intensidad de fricción</div>
+            <div class="uv-scale"></div>
+            <div class="uv-markers" style="height:32px">
+                <span class="uv-mk" style="left:25%"><div class="uv-mk-line"></div>0.25<br><span style="font-size:9px">baja</span></span>
+                <span class="uv-mk" style="left:50%"><div class="uv-mk-line"></div>0.50<br><span style="font-size:9px">media</span></span>
+                <span class="uv-mk" style="left:70%"><div class="uv-mk-line"></div>0.70<br><span style="font-size:9px;color:var(--etica)">umbral crítico</span></span>
+                <span class="uv-mk" style="left:90%"><div class="uv-mk-line"></div>0.90<br><span style="font-size:9px;color:var(--crit)">irreductible</span></span>
+            </div>
+            <div class="uv-cases" id="uv-cases"></div>
+        </div>
 
-  <div class="campos-grid" id="campos-grid"></div>
-</section>
+        <!-- 4 condiciones -->
+        <div class="protocolo-grid">
+            <div class="pc">
+                <div class="pc-num">C.01 — FRICCIÓN POLÍTICA</div>
+                <div class="pc-title">Reconocimiento de autoridad epistémica</div>
+                <div class="pc-body">La traducción institucional solo es válida si reconoce la autoridad de quien produce el conocimiento situado para definir los términos del intercambio. Sin este reconocimiento, toda traducción es colonización.</div>
+                <div class="pc-cond"><strong>Condición:</strong> el sujeto cuya experiencia se traduce debe participar en la definición del vocabulario de la traducción</div>
+            </div>
+            <div class="pc">
+                <div class="pc-num">C.02 — FRICCIÓN SEMÁNTICA</div>
+                <div class="pc-title">Equivalencia sin asimilación</div>
+                <div class="pc-body">No se trata de que todos usen los mismos términos, sino de que cada régimen de verdad pueda reconocer el término del otro sin perder el suyo. La buena traducción preserva la diferencia.</div>
+                <div class="pc-cond"><strong>Condición:</strong> el glosario institucional debe incluir las definiciones propias de cada capa, no solo la definición técnico-jurídica</div>
+            </div>
+            <div class="pc">
+                <div class="pc-num">C.03 — FRICCIÓN TÉCNICA</div>
+                <div class="pc-title">Trazabilidad del daño, no solo del proceso</div>
+                <div class="pc-body">Los sistemas de datos institucionales registran procesos (licitación, consulta, resolución) pero no daños (territorio perdido, consentimiento violado, memoria borrada). La buena traducción hace el daño rastreable.</div>
+                <div class="pc-cond"><strong>Condición:</strong> los registros institucionales deben incorporar indicadores de daño en la capa material, no solo indicadores de cumplimiento procedimental</div>
+            </div>
+            <div class="pc">
+                <div class="pc-num">C.04 — FRICCIÓN IRREDUCTIBLE</div>
+                <div class="pc-title">Nombrar lo que no puede traducirse</div>
+                <div class="pc-body">Cuando la fricción supera 0.85, hay dimensiones de la experiencia que ninguna traducción puede restituir. La buena práctica institucional reconoce explícitamente esta irreductibilidad en lugar de simular equivalencia donde no la hay.</div>
+                <div class="pc-cond"><strong>Condición:</strong> cuando fricción &gt; 0.85, los acuerdos institucionales deben incluir un registro explícito de lo que permanece irreducible e incompensable</div>
+            </div>
+        </div>
 
-<!-- ══════════════════════════════════════ TENSIONES -->
-<section id="tensiones">
-  <div class="section-eyebrow">
-    <span class="eyebrow-num">03</span>
-    <div class="eyebrow-line"></div>
-    <span class="eyebrow-text">Tensiones medidas</span>
-  </div>
-  <h2>La fricción como <span class="accent-c">evidencia cuantificable</span></h2>
-  <p class="section-lead">Para cada campo, el instrumento despliega las tres capas y mide su incompatibilidad. La fricción no se resuelve: <strong>se documenta, clasifica e incorpora al protocolo</strong> de intervención.</p>
+        <!-- Output del protocolo -->
+        <div class="protocolo-output">
+            <span class="po-label">Output del instrumento</span>
+            <div class="po-title">El contra-archivo como dispositivo de re-traducción crítica</div>
+            <p class="po-body">
+                El protocolo no produce acuerdos —produce <strong>legibilidad</strong>. Al hacer visible la fricción entre capas, el contra-archivo permite que las instituciones, comunidades y organismos de supervisión identifiquen con precisión <strong>qué tipo de daño produce qué tipo de traducción fallida</strong>,
+                y qué condiciones mínimas deben cumplirse para que la comunicación institucional no sea, en sí misma, un acto de violencia epistemológica.
+            </p>
+        </div>
+    </section>
 
-  <div class="tension-selector" id="tension-selector"></div>
-  <div class="tension-viewer" id="tension-viewer"></div>
-  <div class="tension-meta" id="tension-meta"></div>
-</section>
+    <!-- ══════════════════════════════════════ ARCHIVO -->
+    <section id="archivo">
+        <div class="section-eyebrow">
+            <span class="eyebrow-num">06</span>
+            <div class="eyebrow-line"></div>
+            <span class="eyebrow-text">Archivo de investigación</span>
+        </div>
+        <h2>Todos los <span class="accent-e">materiales</span> disponibles</h2>
+        <p class="section-lead">El archivo organiza los materiales de investigación por dimensión. Cada dimensión documenta una forma de conocimiento que el análisis multi-situado articula.</p>
 
-<!-- ══════════════════════════════════════ GRAFO -->
-<section id="grafo">
-  <div class="section-eyebrow">
-    <span class="eyebrow-num">04</span>
-    <div class="eyebrow-line"></div>
-    <span class="eyebrow-text">Grafo de conexiones</span>
-  </div>
-  <h2>Los campos están <span class="accent-i">conectados</span></h2>
-  <p class="section-lead">Los mismos actores, instituciones y mecanismos de traducción aparecen en múltiples campos. El grafo visualiza estas conexiones transversales, demostrando que la mistranslation no es un problema local sino <strong>un sistema articulado</strong>.</p>
+        <div class="archivo-grid">
+            <div class="arc-dim">
+                <div class="arc-num">D1</div>
+                <div class="arc-title">Marco Conceptual</div>
+                <div class="arc-count">5 archivos · Interfaz principal</div>
+                <div class="arc-tags">
+                    <span class="arc-tag">index.html</span>
+                    <span class="arc-tag">_config.yml</span>
+                </div>
+            </div>
+            <div class="arc-dim">
+                <div class="arc-num">D2</div>
+                <div class="arc-title">Estado del Arte</div>
+                <div class="arc-count">6 archivos · Marco teórico</div>
+                <div class="arc-tags">
+                    <span class="arc-tag">CIPER PDF</span>
+                    <span class="arc-tag">OIT 169</span>
+                    <span class="arc-tag">Gupta · Latour · Tsing</span>
+                </div>
+            </div>
+            <div class="arc-dim">
+                <div class="arc-num">D3</div>
+                <div class="arc-title">Etnografía Audiovisual</div>
+                <div class="arc-count">3 archivos · Caso SURA/AFP</div>
+                <div class="arc-tags">
+                    <span class="arc-tag">PDF 150 págs.</span>
+                    <span class="arc-tag">Privacy by Design</span>
+                </div>
+            </div>
+            <div class="arc-dim">
+                <div class="arc-num">D4</div>
+                <div class="arc-title">Ensayo: Traducción de Saberes</div>
+                <div class="arc-count">18 archivos · Marco decolonial</div>
+                <div class="arc-tags">
+                    <span class="arc-tag">Artículo etnográfico</span>
+                    <span class="arc-tag">Dussel · Hall · Butler · Scott</span>
+                </div>
+            </div>
+            <div class="arc-dim">
+                <div class="arc-num">D5</div>
+                <div class="arc-title">La Negra</div>
+                <div class="arc-count">20 archivos · Investigación territorial</div>
+                <div class="arc-tags">
+                    <span class="arc-tag">Caso Catrillanca</span>
+                    <span class="arc-tag">ACAB</span>
+                    <span class="arc-tag">Lof Ñanco</span>
+                    <span class="arc-tag">Infografías</span>
+                </div>
+            </div>
+            <div class="arc-dim">
+                <div class="arc-num">D6</div>
+                <div class="arc-title">Poemarios</div>
+                <div class="arc-count">3 archivos · Método artístico</div>
+                <div class="arc-tags">
+                    <span class="arc-tag">Los números no existen</span>
+                    <span class="arc-tag">Contrapoética</span>
+                </div>
+            </div>
+            <div class="arc-dim" style="grid-column:1/-1;border-color:rgba(200,169,110,.2)">
+                <div class="arc-num" style="color:var(--etica)">D7</div>
+                <div class="arc-title">Dispositivo Contra-Archivo</div>
+                <div class="arc-count">9 archivos · Motor de fricción + Grafo + 4 casos</div>
+                <div class="arc-tags">
+                    <span class="arc-tag">frictionEngine.js</span>
+                    <span class="arc-tag">graph.js</span>
+                    <span class="arc-tag">casos.json</span>
+                    <span class="arc-tag">4 nodos</span>
+                    <span class="arc-tag">0.71–0.94 fricción</span>
+                </div>
+                <a class="arc-link" href="admin.html">Ver inventario completo en Admin →</a>
+            </div>
+        </div>
+    </section>
 
-  <div class="graph-controls" id="graph-controls">
-    <button class="gc-btn active" data-layer="all">Todas las capas</button>
-    <button class="gc-btn" data-layer="etica">◎ Ética</button>
-    <button class="gc-btn" data-layer="institucional">▣ Institucional</button>
-    <button class="gc-btn" data-layer="material">◈ Material</button>
-  </div>
-  <div class="graph-wrap">
-    <div id="ca-graph-canvas" style="width:100%;height:100%;"></div>
-    <div id="ca-preview"></div>
-    <div class="graph-overlay-legend">
-      <div class="gl-item"><div class="gl-dot" style="background:var(--etica)"></div>Ética</div>
-      <div class="gl-item"><div class="gl-dot" style="background:var(--inst)"></div>Institucional</div>
-      <div class="gl-item"><div class="gl-dot" style="background:var(--mat)"></div>Material</div>
-    </div>
-  </div>
-</section>
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-left">
+            <div class="footer-title">Contra-Archivo · Antropología y Corrupción</div>
+            <div class="footer-sub">Tesis Doctoral · Rodrigo Gaete Gaona · Chile · 2025</div>
+            <div class="footer-sub" style="margin-top:4px">La mistranslation institucional como dispositivo de poder</div>
+        </div>
+        <div class="footer-right">
+            <div>Etnografía multi-situada</div>
+            <div>Motor de fricción epistemológica</div>
+            <div>Protocolo de buena traducción</div>
+            <div style="margin-top:8px"><a href="https://github.com/vientonorte/antropologia-corrupcion" style="color:var(--dim);text-decoration:none;">github.com/vientonorte/antropologia-corrupcion ↗</a></div>
+        </div>
+    </footer>
 
-<!-- ══════════════════════════════════════ PROTOCOLO -->
-<section id="protocolo">
-  <div class="section-eyebrow">
-    <span class="eyebrow-num">05</span>
-    <div class="eyebrow-line"></div>
-    <span class="eyebrow-text">Protocolo de buena traducción</span>
-  </div>
-  <h2>De la fricción a la <span class="accent-m">intervención</span></h2>
-  <p class="protocolo-intro">
-    Si la mistranslation es el problema, la <strong>buena traducción institucional</strong> es el horizonte de la intervención. El protocolo no propone eliminar la diferencia entre capas —eso sería epistemicidio—, sino crear condiciones mínimas de equivalencia que hagan el daño legible y la reparación posible.
-  </p>
+    <!-- ══════════════════════════════════════ SCRIPTS: módulos del sistema -->
+    <script src="src/frictionEngine.js"></script>
+    <script src="src/fieldPhysics.js"></script>
+    <script src="src/graph.js"></script>
+    <script src="src/nodeRenderer.js"></script>
 
-  <!-- Umbral visual -->
-  <div class="umbral-visual">
-    <div class="uv-title">Umbrales de intervención según intensidad de fricción</div>
-    <div class="uv-scale"></div>
-    <div class="uv-markers" style="height:32px">
-      <span class="uv-mk" style="left:25%"><div class="uv-mk-line"></div>0.25<br><span style="font-size:9px">baja</span></span>
-      <span class="uv-mk" style="left:50%"><div class="uv-mk-line"></div>0.50<br><span style="font-size:9px">media</span></span>
-      <span class="uv-mk" style="left:70%"><div class="uv-mk-line"></div>0.70<br><span style="font-size:9px;color:var(--etica)">umbral crítico</span></span>
-      <span class="uv-mk" style="left:90%"><div class="uv-mk-line"></div>0.90<br><span style="font-size:9px;color:var(--crit)">irreductible</span></span>
-    </div>
-    <div class="uv-cases" id="uv-cases"></div>
-  </div>
+    <script>
+        'use strict';
 
-  <!-- 4 condiciones -->
-  <div class="protocolo-grid">
-    <div class="pc">
-      <div class="pc-num">C.01 — FRICCIÓN POLÍTICA</div>
-      <div class="pc-title">Reconocimiento de autoridad epistémica</div>
-      <div class="pc-body">La traducción institucional solo es válida si reconoce la autoridad de quien produce el conocimiento situado para definir los términos del intercambio. Sin este reconocimiento, toda traducción es colonización.</div>
-      <div class="pc-cond"><strong>Condición:</strong> el sujeto cuya experiencia se traduce debe participar en la definición del vocabulario de la traducción</div>
-    </div>
-    <div class="pc">
-      <div class="pc-num">C.02 — FRICCIÓN SEMÁNTICA</div>
-      <div class="pc-title">Equivalencia sin asimilación</div>
-      <div class="pc-body">No se trata de que todos usen los mismos términos, sino de que cada régimen de verdad pueda reconocer el término del otro sin perder el suyo. La buena traducción preserva la diferencia.</div>
-      <div class="pc-cond"><strong>Condición:</strong> el glosario institucional debe incluir las definiciones propias de cada capa, no solo la definición técnico-jurídica</div>
-    </div>
-    <div class="pc">
-      <div class="pc-num">C.03 — FRICCIÓN TÉCNICA</div>
-      <div class="pc-title">Trazabilidad del daño, no solo del proceso</div>
-      <div class="pc-body">Los sistemas de datos institucionales registran procesos (licitación, consulta, resolución) pero no daños (territorio perdido, consentimiento violado, memoria borrada). La buena traducción hace el daño rastreable.</div>
-      <div class="pc-cond"><strong>Condición:</strong> los registros institucionales deben incorporar indicadores de daño en la capa material, no solo indicadores de cumplimiento procedimental</div>
-    </div>
-    <div class="pc">
-      <div class="pc-num">C.04 — FRICCIÓN IRREDUCTIBLE</div>
-      <div class="pc-title">Nombrar lo que no puede traducirse</div>
-      <div class="pc-body">Cuando la fricción supera 0.85, hay dimensiones de la experiencia que ninguna traducción puede restituir. La buena práctica institucional reconoce explícitamente esta irreductibilidad en lugar de simular equivalencia donde no la hay.</div>
-      <div class="pc-cond"><strong>Condición:</strong> cuando fricción &gt; 0.85, los acuerdos institucionales deben incluir un registro explícito de lo que permanece irreducible e incompensable</div>
-    </div>
-  </div>
+        /* ══════════════ DATOS (inline para GitHub Pages sin CORS) ══════════════ */
+        const CASOS_DATA = {
+            "_meta": {
+                "capas": {
+                    "etica": "Testimonio situado, cuidado, contexto vivido",
+                    "institucional": "Registro oficial, clasificación, distorsión normativa",
+                    "material": "Territorio, evidencia, densidad histórica"
+                }
+            },
+            "casos": [{
+                "id": "sura-gobernanza-datos",
+                "titulo": "SURA Investments: Gobernanza de Datos y Separación AFP",
+                "anio": 2024,
+                "actores": ["SURA Investments", "AFP", "CMF", "trabajadores afiliados", "comunidades mapuche"],
+                "instituciones": ["SURA Investments", "AFP UNO", "Comisión para el Mercado Financiero"],
+                "etica": {
+                    "titulo": "El trabajador como dato",
+                    "descripcion": "Los afiliados experimentan su relación con el sistema previsional como una caja negra opaca: no comprenden qué hacen sus fondos, dónde se invierten, qué territorios financian. Su vida laboral traducida en columnas de riesgo-retorno sin consentimiento informado real.",
+                    "voces": ["Afiliados que desconocen la cartera de inversión de su fondo", "Trabajadores que descubren que su AFP financia proyectos en territorios en conflicto"],
+                    "documentos_ref": ["SURA_Compilado_Estrategia_Gaona_Complete.pdf"],
+                    "keywords": ["consentimiento", "transparencia", "autonomía", "opacidad"],
+                    "color": "#c8a96e"
+                },
+                "institucional": {
+                    "titulo": "Clasificación: 'inversión responsable'",
+                    "descripcion": "SURA opera bajo clasificaciones ESG que permiten mantener inversiones en territorios en disputa. Los informes de sostenibilidad usan lenguaje técnico que absorbe el conflicto sin resolverlo: 'riesgo reputacional', 'gestión de stakeholders'. La CMF regula los flujos pero no los territorios que financian.",
+                    "documentos": ["Informes ESG anuales", "Resoluciones CMF", "Estatutos AFP"],
+                    "clasificaciones": ["inversión sostenible", "cartera multifondo A-E", "riesgo moderado"],
+                    "keywords": ["ESG", "CMF", "regulación", "mistranslation", "clasificación"],
+                    "color": "#4a7fa5"
+                },
+                "material": {
+                    "titulo": "Lo que financia el fondo",
+                    "descripcion": "Los fondos de pensión chilenos son accionistas en empresas con proyectos en territorios mapuche, zonas de sacrificio ambiental y concesiones mineras. El dinero de los trabajadores viaja a territorios que muchos nunca visitarán y cuya historia desconocen.",
+                    "evidencias": ["Carteras con exposición a sectores extractivos", "Territorios en Los Ríos con concesiones forestales financiadas por fondos previsionales"],
+                    "keywords": ["territorio", "extractivismo", "zona de sacrificio", "capital financiero"],
+                    "color": "#7a9e6e"
+                },
+                "friccion": {
+                    "tipo": "politica",
+                    "subtipo": "semantica",
+                    "intensidad": 0.82,
+                    "estado": "abierta",
+                    "descripcion": "El sistema previsional traduce la vida de los trabajadores en instrumentos financieros que financian territorios en disputa, sin que ninguna capa del sistema reconozca esta cadena como problema político.",
+                    "tension_central": "¿La 'inversión responsable' puede existir si no hay consentimiento del territorio que financia?",
+                    "sin_resolver": true
+                },
+                "conexiones": ["la-negra-territorio-mapuche", "periodismo-datos-chile"],
+                "tags": ["previsión", "AFP", "ESG", "territorio", "datos", "corrupción sistémica"]
+            }, {
+                "id": "la-negra-territorio-mapuche",
+                "titulo": "La Negra — Memoria, Territorio y Resistencia Mapuche-Huilliche",
+                "anio": 2023,
+                "actores": ["comunidades mapuche-huilliche", "CONADI", "empresas forestales", "Ministerio de Bienes Nacionales"],
+                "instituciones": ["CONADI", "Poder Judicial", "Ministerio de Bienes Nacionales", "SII"],
+                "etica": {
+                    "titulo": "Memorias que el archivo no puede contener",
+                    "descripcion": "Las comunidades de La Negra mantienen memorias territoriales que preceden al Estado-nación. Sus formas de nombrar el territorio, sus límites vivos, sus prácticas de cuidado del agua y el bosque no tienen equivalente en el sistema registral. El testimonio situado es la única evidencia de una soberanía que el derecho positivo no puede reconocer sin negar sus propios fundamentos.",
+                    "voces": ["Lonkos y machis sobre límites territoriales precoloniales", "Memorias de usurpación durante la 'pacificación' (1860-1900)", "Mujeres sobre el rol del agua en la práctica espiritual y productiva"],
+                    "documentos_ref": ["La Negra/inv./INFOGRAFÍAS/Catrillanca Infografía Movil.png"],
+                    "keywords": ["memoria", "soberanía", "territorio vivo", "testimonio", "lonko"],
+                    "color": "#c8a96e"
+                },
+                "institucional": {
+                    "titulo": "El catastro como borramiento",
+                    "descripcion": "El Conservador de Bienes Raíces registra terrenos entregados a colonos tras la 'pacificación'. Los títulos de merced no coinciden con los límites que las comunidades reconocen. La Ley Forestal (D.L. 701) convirtió suelos mapuche en plantaciones reconocidas institucionalmente como 'usos productivos'.",
+                    "documentos": ["Títulos de merced históricos", "Catastro CONADI", "Registros forestales D.L. 701"],
+                    "clasificaciones": ["predio agrícola", "zona de amortiguación forestal", "terreno baldío fiscal"],
+                    "keywords": ["títulos de merced", "CONADI", "DL701", "catastro", "borramiento"],
+                    "color": "#4a7fa5"
+                },
+                "material": {
+                    "titulo": "El territorio como organismo histórico",
+                    "descripcion": "La Negra no es un predio: es una red de relaciones entre cuerpos, agua, bosque nativo, animales y muertos. Las plantaciones de pino reemplazaron ecosistemas que tardaron milenios en formarse. Las napas freáticas han descendido. Esta densidad material es la prueba más contundente de la corrupción institucional —y la menos admisible como evidencia judicial.",
+                    "evidencias": ["Mapas de cambio de uso de suelo (1973-2023)", "Fotografías aéreas de deforestación", "Registros de caudal antes/después de plantaciones"],
+                    "keywords": ["bosque nativo", "pino", "napa freática", "deforestación", "cuerpo-territorio"],
+                    "color": "#7a9e6e"
+                },
+                "friccion": {
+                    "tipo": "politica",
+                    "subtipo": "semantica",
+                    "intensidad": 0.94,
+                    "estado": "abierta",
+                    "descripcion": "'Territorio' tiene tres significados incompatibles: organismo vivo con historia propia (comunidad), superficie parcelable (catastro), factor de producción (empresa forestal). Ninguna puede aceptar a las otras sin destruirse.",
+                    "tension_central": "¿Puede el derecho de propiedad chileno reconocer el territorio mapuche sin negarse a sí mismo?",
+                    "sin_resolver": true
+                },
+                "conexiones": ["sura-gobernanza-datos", "periodismo-datos-chile"],
+                "tags": ["mapuche-huilliche", "territorio", "memoria", "CONADI", "forestales", "soberanía"]
+            }, {
+                "id": "periodismo-datos-chile",
+                "titulo": "Periodismo de Datos — La Corrupción como Mistranslation Institucional",
+                "anio": 2023,
+                "actores": ["periodistas de investigación", "CIPER Chile", "instituciones públicas", "fuentes anónimas"],
+                "instituciones": ["CIPER Chile", "Ministerio Público", "Consejo para la Transparencia"],
+                "etica": {
+                    "titulo": "La fuente como sujeto en riesgo",
+                    "descripcion": "El periodismo de datos opera en un campo minado: las fuentes que revelan corrupción enfrentan represalias laborales, judiciales y sociales. La 'objetividad' periodística exige despersonalizar la fuente —pero al despersonalizarla, el relato pierde su densidad ética.",
+                    "voces": ["Funcionarios que filtraron irregularidades y fueron desvinculados", "Periodistas amenazados tras publicaciones sobre municipios"],
+                    "documentos_ref": ["CIPER- Clase teórico prática - Investigación Crimen Organizado.pdf"],
+                    "keywords": ["fuente", "protección", "testimonio", "riesgo", "whistleblower"],
+                    "color": "#c8a96e"
+                },
+                "institucional": {
+                    "titulo": "El dato como ficción institucional",
+                    "descripcion": "Las instituciones producen datos según sus propios marcos. Una licitación fraudulenta aparece en ComprasPúblicas como 'proceso regular'. Un desvío de fondos figura como 'gasto operacional'. La corrupción no viola el registro: lo habita.",
+                    "documentos": ["Bases de datos ComprasPúblicas", "Cuentas públicas municipales", "Ley de Transparencia respuestas"],
+                    "clasificaciones": ["licitación pública", "gasto corriente", "convenio marco"],
+                    "keywords": ["ComprasPúblicas", "contabilidad pública", "clasificación", "invisibilidad", "registro"],
+                    "color": "#4a7fa5"
+                },
+                "material": {
+                    "titulo": "El documento como cuerpo del delito",
+                    "descripcion": "El mismo contrato es 'irregular' para el periodista, 'conforme a derecho' para el abogado institucional y 'normal' para el funcionario que lo firmó. La materialidad del documento no resuelve el conflicto —lo multiplica.",
+                    "evidencias": ["PDFs de licitaciones con irregularidades documentadas", "Bases de datos filtradas de asignaciones municipales", "Correos obtenidos por transparencia activa"],
+                    "keywords": ["documento", "contrato", "filtración", "red de actores", "evidencia material"],
+                    "color": "#7a9e6e"
+                },
+                "friccion": {
+                    "tipo": "semantica",
+                    "subtipo": "tecnica",
+                    "intensidad": 0.71,
+                    "estado": "abierta",
+                    "descripcion": "El dato es el campo de batalla. Cada institución produce sus propios datos según sus categorías. El periodismo intenta hacer hablar a esos datos de formas que las instituciones no autorizaron.",
+                    "tension_central": "¿Puede el dato institucional ser evidencia de la corrupción que lo produjo?",
+                    "sin_resolver": true
+                },
+                "conexiones": ["sura-gobernanza-datos", "la-negra-territorio-mapuche"],
+                "tags": ["periodismo", "CIPER", "datos", "transparencia", "corrupción"]
+            }, {
+                "id": "oit169-consulta-previa",
+                "titulo": "OIT 169 — La Consulta Previa como Dispositivo de Neutralización",
+                "anio": 2022,
+                "actores": ["comunidades indígenas", "Estado chileno", "empresas extractivas", "CONADI", "Ministerio de Desarrollo Social"],
+                "instituciones": ["Ministerio de Desarrollo Social", "CONADI", "SEA", "juzgados ambientales"],
+                "etica": {
+                    "titulo": "El consentimiento que nunca llega",
+                    "descripcion": "El Convenio OIT 169 establece el derecho al consentimiento previo, libre e informado. En la práctica chilena, la 'consulta' se convierte en un proceso burocrático que las comunidades deben atravesar —con tiempos, formatos y vocabulario institucional— para poder decir no a algo que ya está decidido.",
+                    "voces": ["Comunidades que participaron en 'consultas' cuyo resultado fue ignorado", "Líderes que describen el proceso como 'teatro institucional'", "Mujeres excluidas por criterios de representación externos"],
+                    "documentos_ref": ["UX RG - Desglose de derechos consagrados por el OIT 169.jpg", "UX RG - ¿Comparativa Eº Plurinacional del marco legal vigente en Chile_.jpg"],
+                    "keywords": ["consentimiento", "CPLI", "autonomía", "representación", "exclusión"],
+                    "color": "#c8a96e"
+                },
+                "institucional": {
+                    "titulo": "La consulta como trámite administrativo",
+                    "descripcion": "El DS N°66 traduce el derecho al consentimiento en un procedimiento con etapas, plazos y representantes reconocidos. Esta traducción convierte un derecho político en un trámite burocrático. El SEIA incorpora la 'participación indígena' como fase del proceso, no como condición para él.",
+                    "documentos": ["DS N°66", "Ley N°19.253", "Reglamento SEIA"],
+                    "clasificaciones": ["proceso de consulta regular", "participación ciudadana indígena", "medidas de mitigación"],
+                    "keywords": ["DS66", "SEIA", "proceso administrativo", "representación", "admisibilidad"],
+                    "color": "#4a7fa5"
+                },
+                "material": {
+                    "titulo": "Lo que el territorio perdió durante el proceso",
+                    "descripcion": "Mientras duran los procesos de consulta, los proyectos avanzan. Se construyen caminos, se instalan faenas, se modifica el paisaje. La comunidad llega al 'acuerdo' habiendo ya perdido algo que el proceso no contempla devolver.",
+                    "evidencias": ["Registros fotográficos de obras en territorios en consulta", "Informes de avance de proyectos durante SEIA", "Denuncias de daño ambiental previo a la resolución"],
+                    "keywords": ["daño previo", "hechos consumados", "faena", "construcción", "irreversibilidad"],
+                    "color": "#7a9e6e"
+                },
+                "friccion": {
+                    "tipo": "politica",
+                    "subtipo": "semantica",
+                    "intensidad": 0.89,
+                    "estado": "abierta",
+                    "descripcion": "'Consulta': veto (OIT 169) · diálogo sin decisión (Estado) · riesgo a gestionar (empresas). Tres definiciones que nunca se confrontan directamente pero producen efectos devastadores sobre los territorios.",
+                    "tension_central": "¿Puede existir 'consulta' sin posibilidad real de decir no?",
+                    "sin_resolver": true
+                },
+                "conexiones": ["la-negra-territorio-mapuche", "sura-gobernanza-datos"],
+                "tags": ["OIT169", "CPLI", "consulta previa", "SEIA", "territorio indígena", "derechos"]
+            }]
+        };
 
-  <!-- Output del protocolo -->
-  <div class="protocolo-output">
-    <span class="po-label">Output del instrumento</span>
-    <div class="po-title">El contra-archivo como dispositivo de re-traducción crítica</div>
-    <p class="po-body">
-      El protocolo no produce acuerdos —produce <strong>legibilidad</strong>. Al hacer visible la fricción entre capas, el contra-archivo permite que las instituciones, comunidades y organismos de supervisión identifiquen con precisión <strong>qué tipo de daño produce qué tipo de traducción fallida</strong>, y qué condiciones mínimas deben cumplirse para que la comunicación institucional no sea, en sí misma, un acto de violencia epistemológica.
-    </p>
-  </div>
-</section>
+        /* ══════════════ INIT ══════════════ */
+        const CASOS = CASOS_DATA.casos;
 
-<!-- ══════════════════════════════════════ ARCHIVO -->
-<section id="archivo">
-  <div class="section-eyebrow">
-    <span class="eyebrow-num">06</span>
-    <div class="eyebrow-line"></div>
-    <span class="eyebrow-text">Archivo de investigación</span>
-  </div>
-  <h2>Todos los <span class="accent-e">materiales</span> disponibles</h2>
-  <p class="section-lead">El archivo organiza los materiales de investigación por dimensión. Cada dimensión documenta una forma de conocimiento que el análisis multi-situado articula.</p>
+        function frictionColor(v) {
+            if (v >= 0.85) return 'var(--crit)';
+            if (v >= 0.70) return 'var(--etica)';
+            if (v >= 0.45) return '#9e8a4a';
+            return 'var(--mat)';
+        }
 
-  <div class="archivo-grid">
-    <div class="arc-dim">
-      <div class="arc-num">D1</div>
-      <div class="arc-title">Marco Conceptual</div>
-      <div class="arc-count">5 archivos · Interfaz principal</div>
-      <div class="arc-tags">
-        <span class="arc-tag">index.html</span>
-        <span class="arc-tag">_config.yml</span>
-      </div>
-    </div>
-    <div class="arc-dim">
-      <div class="arc-num">D2</div>
-      <div class="arc-title">Estado del Arte</div>
-      <div class="arc-count">6 archivos · Marco teórico</div>
-      <div class="arc-tags">
-        <span class="arc-tag">CIPER PDF</span>
-        <span class="arc-tag">OIT 169</span>
-        <span class="arc-tag">Gupta · Latour · Tsing</span>
-      </div>
-    </div>
-    <div class="arc-dim">
-      <div class="arc-num">D3</div>
-      <div class="arc-title">Etnografía Audiovisual</div>
-      <div class="arc-count">3 archivos · Caso SURA/AFP</div>
-      <div class="arc-tags">
-        <span class="arc-tag">PDF 150 págs.</span>
-        <span class="arc-tag">Privacy by Design</span>
-      </div>
-    </div>
-    <div class="arc-dim">
-      <div class="arc-num">D4</div>
-      <div class="arc-title">Ensayo: Traducción de Saberes</div>
-      <div class="arc-count">18 archivos · Marco decolonial</div>
-      <div class="arc-tags">
-        <span class="arc-tag">Artículo etnográfico</span>
-        <span class="arc-tag">Dussel · Hall · Butler · Scott</span>
-      </div>
-    </div>
-    <div class="arc-dim">
-      <div class="arc-num">D5</div>
-      <div class="arc-title">La Negra</div>
-      <div class="arc-count">20 archivos · Investigación territorial</div>
-      <div class="arc-tags">
-        <span class="arc-tag">Caso Catrillanca</span>
-        <span class="arc-tag">ACAB</span>
-        <span class="arc-tag">Lof Ñanco</span>
-        <span class="arc-tag">Infografías</span>
-      </div>
-    </div>
-    <div class="arc-dim">
-      <div class="arc-num">D6</div>
-      <div class="arc-title">Poemarios</div>
-      <div class="arc-count">3 archivos · Método artístico</div>
-      <div class="arc-tags">
-        <span class="arc-tag">Los números no existen</span>
-        <span class="arc-tag">Contrapoética</span>
-      </div>
-    </div>
-    <div class="arc-dim" style="grid-column:1/-1;border-color:rgba(200,169,110,.2)">
-      <div class="arc-num" style="color:var(--etica)">D7</div>
-      <div class="arc-title">Dispositivo Contra-Archivo</div>
-      <div class="arc-count">9 archivos · Motor de fricción + Grafo + 4 casos</div>
-      <div class="arc-tags">
-        <span class="arc-tag">frictionEngine.js</span>
-        <span class="arc-tag">graph.js</span>
-        <span class="arc-tag">casos.json</span>
-        <span class="arc-tag">4 nodos</span>
-        <span class="arc-tag">0.71–0.94 fricción</span>
-      </div>
-      <a class="arc-link" href="admin.html">Ver inventario completo en Admin →</a>
-    </div>
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer>
-  <div class="footer-left">
-    <div class="footer-title">Contra-Archivo · Antropología y Corrupción</div>
-    <div class="footer-sub">Tesis Doctoral · Rodrigo Gaete Gaona · Chile · 2025</div>
-    <div class="footer-sub" style="margin-top:4px">La mistranslation institucional como dispositivo de poder</div>
-  </div>
-  <div class="footer-right">
-    <div>Etnografía multi-situada</div>
-    <div>Motor de fricción epistemológica</div>
-    <div>Protocolo de buena traducción</div>
-    <div style="margin-top:8px"><a href="https://github.com/vientonorte/antropologia-corrupcion" style="color:var(--dim);text-decoration:none;">github.com/vientonorte/antropologia-corrupcion ↗</a></div>
-  </div>
-</footer>
-
-<!-- ══════════════════════════════════════ SCRIPTS: módulos del sistema -->
-<script src="src/frictionEngine.js"></script>
-<script src="src/graph.js"></script>
-<script src="src/nodeRenderer.js"></script>
-
-<script>
-'use strict';
-
-/* ══════════════ DATOS (inline para GitHub Pages sin CORS) ══════════════ */
-const CASOS_DATA = {
-  "_meta": {
-    "capas": {
-      "etica": "Testimonio situado, cuidado, contexto vivido",
-      "institucional": "Registro oficial, clasificación, distorsión normativa",
-      "material": "Territorio, evidencia, densidad histórica"
-    }
-  },
-  "casos": [
-    {
-      "id": "sura-gobernanza-datos",
-      "titulo": "SURA Investments: Gobernanza de Datos y Separación AFP",
-      "anio": 2024,
-      "actores": ["SURA Investments","AFP","CMF","trabajadores afiliados","comunidades mapuche"],
-      "instituciones": ["SURA Investments","AFP UNO","Comisión para el Mercado Financiero"],
-      "etica": {
-        "titulo": "El trabajador como dato",
-        "descripcion": "Los afiliados experimentan su relación con el sistema previsional como una caja negra opaca: no comprenden qué hacen sus fondos, dónde se invierten, qué territorios financian. Su vida laboral traducida en columnas de riesgo-retorno sin consentimiento informado real.",
-        "voces": ["Afiliados que desconocen la cartera de inversión de su fondo","Trabajadores que descubren que su AFP financia proyectos en territorios en conflicto"],
-        "documentos_ref": ["SURA_Compilado_Estrategia_Gaona_Complete.pdf"],
-        "keywords": ["consentimiento","transparencia","autonomía","opacidad"],
-        "color": "#c8a96e"
-      },
-      "institucional": {
-        "titulo": "Clasificación: 'inversión responsable'",
-        "descripcion": "SURA opera bajo clasificaciones ESG que permiten mantener inversiones en territorios en disputa. Los informes de sostenibilidad usan lenguaje técnico que absorbe el conflicto sin resolverlo: 'riesgo reputacional', 'gestión de stakeholders'. La CMF regula los flujos pero no los territorios que financian.",
-        "documentos": ["Informes ESG anuales","Resoluciones CMF","Estatutos AFP"],
-        "clasificaciones": ["inversión sostenible","cartera multifondo A-E","riesgo moderado"],
-        "keywords": ["ESG","CMF","regulación","mistranslation","clasificación"],
-        "color": "#4a7fa5"
-      },
-      "material": {
-        "titulo": "Lo que financia el fondo",
-        "descripcion": "Los fondos de pensión chilenos son accionistas en empresas con proyectos en territorios mapuche, zonas de sacrificio ambiental y concesiones mineras. El dinero de los trabajadores viaja a territorios que muchos nunca visitarán y cuya historia desconocen.",
-        "evidencias": ["Carteras con exposición a sectores extractivos","Territorios en Los Ríos con concesiones forestales financiadas por fondos previsionales"],
-        "keywords": ["territorio","extractivismo","zona de sacrificio","capital financiero"],
-        "color": "#7a9e6e"
-      },
-      "friccion": {
-        "tipo": "politica","subtipo": "semantica","intensidad": 0.82,
-        "estado": "abierta",
-        "descripcion": "El sistema previsional traduce la vida de los trabajadores en instrumentos financieros que financian territorios en disputa, sin que ninguna capa del sistema reconozca esta cadena como problema político.",
-        "tension_central": "¿La 'inversión responsable' puede existir si no hay consentimiento del territorio que financia?",
-        "sin_resolver": true
-      },
-      "conexiones": ["la-negra-territorio-mapuche","periodismo-datos-chile"],
-      "tags": ["previsión","AFP","ESG","territorio","datos","corrupción sistémica"]
-    },
-    {
-      "id": "la-negra-territorio-mapuche",
-      "titulo": "La Negra — Memoria, Territorio y Resistencia Mapuche-Huilliche",
-      "anio": 2023,
-      "actores": ["comunidades mapuche-huilliche","CONADI","empresas forestales","Ministerio de Bienes Nacionales"],
-      "instituciones": ["CONADI","Poder Judicial","Ministerio de Bienes Nacionales","SII"],
-      "etica": {
-        "titulo": "Memorias que el archivo no puede contener",
-        "descripcion": "Las comunidades de La Negra mantienen memorias territoriales que preceden al Estado-nación. Sus formas de nombrar el territorio, sus límites vivos, sus prácticas de cuidado del agua y el bosque no tienen equivalente en el sistema registral. El testimonio situado es la única evidencia de una soberanía que el derecho positivo no puede reconocer sin negar sus propios fundamentos.",
-        "voces": ["Lonkos y machis sobre límites territoriales precoloniales","Memorias de usurpación durante la 'pacificación' (1860-1900)","Mujeres sobre el rol del agua en la práctica espiritual y productiva"],
-        "documentos_ref": ["La Negra/inv./INFOGRAFÍAS/Catrillanca Infografía Movil.png"],
-        "keywords": ["memoria","soberanía","territorio vivo","testimonio","lonko"],
-        "color": "#c8a96e"
-      },
-      "institucional": {
-        "titulo": "El catastro como borramiento",
-        "descripcion": "El Conservador de Bienes Raíces registra terrenos entregados a colonos tras la 'pacificación'. Los títulos de merced no coinciden con los límites que las comunidades reconocen. La Ley Forestal (D.L. 701) convirtió suelos mapuche en plantaciones reconocidas institucionalmente como 'usos productivos'.",
-        "documentos": ["Títulos de merced históricos","Catastro CONADI","Registros forestales D.L. 701"],
-        "clasificaciones": ["predio agrícola","zona de amortiguación forestal","terreno baldío fiscal"],
-        "keywords": ["títulos de merced","CONADI","DL701","catastro","borramiento"],
-        "color": "#4a7fa5"
-      },
-      "material": {
-        "titulo": "El territorio como organismo histórico",
-        "descripcion": "La Negra no es un predio: es una red de relaciones entre cuerpos, agua, bosque nativo, animales y muertos. Las plantaciones de pino reemplazaron ecosistemas que tardaron milenios en formarse. Las napas freáticas han descendido. Esta densidad material es la prueba más contundente de la corrupción institucional —y la menos admisible como evidencia judicial.",
-        "evidencias": ["Mapas de cambio de uso de suelo (1973-2023)","Fotografías aéreas de deforestación","Registros de caudal antes/después de plantaciones"],
-        "keywords": ["bosque nativo","pino","napa freática","deforestación","cuerpo-territorio"],
-        "color": "#7a9e6e"
-      },
-      "friccion": {
-        "tipo": "politica","subtipo": "semantica","intensidad": 0.94,
-        "estado": "abierta",
-        "descripcion": "'Territorio' tiene tres significados incompatibles: organismo vivo con historia propia (comunidad), superficie parcelable (catastro), factor de producción (empresa forestal). Ninguna puede aceptar a las otras sin destruirse.",
-        "tension_central": "¿Puede el derecho de propiedad chileno reconocer el territorio mapuche sin negarse a sí mismo?",
-        "sin_resolver": true
-      },
-      "conexiones": ["sura-gobernanza-datos","periodismo-datos-chile"],
-      "tags": ["mapuche-huilliche","territorio","memoria","CONADI","forestales","soberanía"]
-    },
-    {
-      "id": "periodismo-datos-chile",
-      "titulo": "Periodismo de Datos — La Corrupción como Mistranslation Institucional",
-      "anio": 2023,
-      "actores": ["periodistas de investigación","CIPER Chile","instituciones públicas","fuentes anónimas"],
-      "instituciones": ["CIPER Chile","Ministerio Público","Consejo para la Transparencia"],
-      "etica": {
-        "titulo": "La fuente como sujeto en riesgo",
-        "descripcion": "El periodismo de datos opera en un campo minado: las fuentes que revelan corrupción enfrentan represalias laborales, judiciales y sociales. La 'objetividad' periodística exige despersonalizar la fuente —pero al despersonalizarla, el relato pierde su densidad ética.",
-        "voces": ["Funcionarios que filtraron irregularidades y fueron desvinculados","Periodistas amenazados tras publicaciones sobre municipios"],
-        "documentos_ref": ["CIPER- Clase teórico prática - Investigación Crimen Organizado.pdf"],
-        "keywords": ["fuente","protección","testimonio","riesgo","whistleblower"],
-        "color": "#c8a96e"
-      },
-      "institucional": {
-        "titulo": "El dato como ficción institucional",
-        "descripcion": "Las instituciones producen datos según sus propios marcos. Una licitación fraudulenta aparece en ComprasPúblicas como 'proceso regular'. Un desvío de fondos figura como 'gasto operacional'. La corrupción no viola el registro: lo habita.",
-        "documentos": ["Bases de datos ComprasPúblicas","Cuentas públicas municipales","Ley de Transparencia respuestas"],
-        "clasificaciones": ["licitación pública","gasto corriente","convenio marco"],
-        "keywords": ["ComprasPúblicas","contabilidad pública","clasificación","invisibilidad","registro"],
-        "color": "#4a7fa5"
-      },
-      "material": {
-        "titulo": "El documento como cuerpo del delito",
-        "descripcion": "El mismo contrato es 'irregular' para el periodista, 'conforme a derecho' para el abogado institucional y 'normal' para el funcionario que lo firmó. La materialidad del documento no resuelve el conflicto —lo multiplica.",
-        "evidencias": ["PDFs de licitaciones con irregularidades documentadas","Bases de datos filtradas de asignaciones municipales","Correos obtenidos por transparencia activa"],
-        "keywords": ["documento","contrato","filtración","red de actores","evidencia material"],
-        "color": "#7a9e6e"
-      },
-      "friccion": {
-        "tipo": "semantica","subtipo": "tecnica","intensidad": 0.71,
-        "estado": "abierta",
-        "descripcion": "El dato es el campo de batalla. Cada institución produce sus propios datos según sus categorías. El periodismo intenta hacer hablar a esos datos de formas que las instituciones no autorizaron.",
-        "tension_central": "¿Puede el dato institucional ser evidencia de la corrupción que lo produjo?",
-        "sin_resolver": true
-      },
-      "conexiones": ["sura-gobernanza-datos","la-negra-territorio-mapuche"],
-      "tags": ["periodismo","CIPER","datos","transparencia","corrupción"]
-    },
-    {
-      "id": "oit169-consulta-previa",
-      "titulo": "OIT 169 — La Consulta Previa como Dispositivo de Neutralización",
-      "anio": 2022,
-      "actores": ["comunidades indígenas","Estado chileno","empresas extractivas","CONADI","Ministerio de Desarrollo Social"],
-      "instituciones": ["Ministerio de Desarrollo Social","CONADI","SEA","juzgados ambientales"],
-      "etica": {
-        "titulo": "El consentimiento que nunca llega",
-        "descripcion": "El Convenio OIT 169 establece el derecho al consentimiento previo, libre e informado. En la práctica chilena, la 'consulta' se convierte en un proceso burocrático que las comunidades deben atravesar —con tiempos, formatos y vocabulario institucional— para poder decir no a algo que ya está decidido.",
-        "voces": ["Comunidades que participaron en 'consultas' cuyo resultado fue ignorado","Líderes que describen el proceso como 'teatro institucional'","Mujeres excluidas por criterios de representación externos"],
-        "documentos_ref": ["UX RG - Desglose de derechos consagrados por el OIT 169.jpg","UX RG - ¿Comparativa Eº Plurinacional del marco legal vigente en Chile_.jpg"],
-        "keywords": ["consentimiento","CPLI","autonomía","representación","exclusión"],
-        "color": "#c8a96e"
-      },
-      "institucional": {
-        "titulo": "La consulta como trámite administrativo",
-        "descripcion": "El DS N°66 traduce el derecho al consentimiento en un procedimiento con etapas, plazos y representantes reconocidos. Esta traducción convierte un derecho político en un trámite burocrático. El SEIA incorpora la 'participación indígena' como fase del proceso, no como condición para él.",
-        "documentos": ["DS N°66","Ley N°19.253","Reglamento SEIA"],
-        "clasificaciones": ["proceso de consulta regular","participación ciudadana indígena","medidas de mitigación"],
-        "keywords": ["DS66","SEIA","proceso administrativo","representación","admisibilidad"],
-        "color": "#4a7fa5"
-      },
-      "material": {
-        "titulo": "Lo que el territorio perdió durante el proceso",
-        "descripcion": "Mientras duran los procesos de consulta, los proyectos avanzan. Se construyen caminos, se instalan faenas, se modifica el paisaje. La comunidad llega al 'acuerdo' habiendo ya perdido algo que el proceso no contempla devolver.",
-        "evidencias": ["Registros fotográficos de obras en territorios en consulta","Informes de avance de proyectos durante SEIA","Denuncias de daño ambiental previo a la resolución"],
-        "keywords": ["daño previo","hechos consumados","faena","construcción","irreversibilidad"],
-        "color": "#7a9e6e"
-      },
-      "friccion": {
-        "tipo": "politica","subtipo": "semantica","intensidad": 0.89,
-        "estado": "abierta",
-        "descripcion": "'Consulta': veto (OIT 169) · diálogo sin decisión (Estado) · riesgo a gestionar (empresas). Tres definiciones que nunca se confrontan directamente pero producen efectos devastadores sobre los territorios.",
-        "tension_central": "¿Puede existir 'consulta' sin posibilidad real de decir no?",
-        "sin_resolver": true
-      },
-      "conexiones": ["la-negra-territorio-mapuche","sura-gobernanza-datos"],
-      "tags": ["OIT169","CPLI","consulta previa","SEIA","territorio indígena","derechos"]
-    }
-  ]
-};
-
-/* ══════════════ INIT ══════════════ */
-const CASOS = CASOS_DATA.casos;
-
-function frictionColor(v) {
-  if (v >= 0.85) return 'var(--crit)';
-  if (v >= 0.70) return 'var(--etica)';
-  if (v >= 0.45) return '#9e8a4a';
-  return 'var(--mat)';
-}
-
-/* ── HERO METER ── */
-function initHeroMeter() {
-  const el = document.getElementById('hero-meter');
-  el.innerHTML = CASOS.map(c => `
+        /* ── HERO METER ── */
+        function initHeroMeter() {
+            const el = document.getElementById('hero-meter');
+            el.innerHTML = CASOS.map(c => `
     <div class="meter-case" onclick="scrollToTension('${c.id}')">
       <div class="mc-name">${c.titulo.split('—')[0].trim()}</div>
       <div class="mc-bar-wrap">
@@ -850,23 +1771,25 @@ function initHeroMeter() {
     </div>
   `).join('');
 
-  // Animar barras
-  setTimeout(() => {
-    document.querySelectorAll('.mc-bar').forEach(b => {
-      b.style.width = (parseFloat(b.dataset.val) * 100) + '%';
-    });
-  }, 200);
-}
+            // Animar barras
+            setTimeout(() => {
+                document.querySelectorAll('.mc-bar').forEach(b => {
+                    b.style.width = (parseFloat(b.dataset.val) * 100) + '%';
+                });
+            }, 200);
+        }
 
-function scrollToTension(id) {
-  document.getElementById('tensiones')?.scrollIntoView({behavior:'smooth'});
-  setTimeout(() => activateTension(id), 600);
-}
+        function scrollToTension(id) {
+            document.getElementById('tensiones') ? .scrollIntoView({
+                behavior: 'smooth'
+            });
+            setTimeout(() => activateTension(id), 600);
+        }
 
-/* ── CAMPOS ── */
-function initCampos() {
-  const el = document.getElementById('campos-grid');
-  el.innerHTML = CASOS.map(c => `
+        /* ── CAMPOS ── */
+        function initCampos() {
+            const el = document.getElementById('campos-grid');
+            el.innerHTML = CASOS.map(c => `
     <div class="campo-card" onclick="scrollToTension('${c.id}')">
       <div class="cc-tag">${c.anio} · Campo ${CASOS.indexOf(c)+1} de 4</div>
       <div class="cc-title">${c.titulo}</div>
@@ -1007,6 +1930,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initUmbral();
   initGrafo();
 });
-</script>
+    </script>
 </body>
+
 </html>
