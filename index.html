@@ -44,6 +44,38 @@
             line-height: 1.65;
             overflow-x: hidden
         }
+        /* ══════════════════════════════════════ ACCESSIBILITY */
+        
+        .skip-link {
+            position: absolute;
+            top: -100%;
+            left: 16px;
+            z-index: 9999;
+            padding: 8px 16px;
+            background: var(--etica);
+            color: var(--bg);
+            font-weight: 600;
+            border-radius: 0 0 var(--r) var(--r);
+            text-decoration: none;
+            transition: top .15s
+        }
+        
+        .skip-link:focus {
+            top: 0
+        }
+        
+         :focus-visible {
+            outline: 2px solid var(--etica);
+            outline-offset: 2px
+        }
+        
+        button:focus-visible,
+        a:focus-visible,
+        [tabindex]:focus-visible {
+            outline: 2px solid var(--etica);
+            outline-offset: 2px;
+            border-radius: 3px
+        }
         /* ══════════════════════════════════════ UTILITY */
         
         .mono {
@@ -1455,9 +1487,10 @@
 </head>
 
 <body>
+    <a class="skip-link" href="#instrumento">Saltar al contenido</a>
 
     <!-- NAV -->
-    <nav>
+    <nav aria-label="Navegación principal">
         <span class="nav-brand">CONTRA-ARCHIVO</span>
         <div class="nav-links">
             <a href="#instrumento">Instrumento</a>
@@ -1471,360 +1504,363 @@
         <a class="nav-cta" href="admin.html">Admin ↗</a>
     </nav>
 
-    <!-- ══════════════════════════════════════ HERO -->
-    <section id="hero">
-        <p class="hero-label">Tesis doctoral · Antropología · Chile · 2025</p>
-        <h1 class="hero-h1">La institución traduce.<br>La traducción falla.<br>El fallo <em>es el sistema</em>.</h1>
-        <p class="hero-thesis">Esta investigación demuestra que la corrupción institucional en Chile opera como un régimen de <strong>mistranslation</strong> —traducción fallida o deliberadamente distorsionada— entre tres regímenes de verdad incompatibles: el testimonio situado,
-            el registro normativo y la evidencia material.</p>
+    <main>
+        <!-- ══════════════════════════════════════ HERO -->
+        <section id="hero">
+            <p class="hero-label">Tesis doctoral · Antropología · Chile · 2025</p>
+            <h1 class="hero-h1">La institución traduce.<br>La traducción falla.<br>El fallo <em>es el sistema</em>.</h1>
+            <p class="hero-thesis">Esta investigación demuestra que la corrupción institucional en Chile opera como un régimen de <strong>mistranslation</strong> —traducción fallida o deliberadamente distorsionada— entre tres regímenes de verdad incompatibles: el testimonio
+                situado, el registro normativo y la evidencia material.</p>
 
-        <div class="hero-meter">
-            <p class="hero-meter-label">Fricción epistemológica medida · 4 campos de investigación</p>
-            <div class="meter-cases" id="hero-meter"></div>
-        </div>
+            <div class="hero-meter">
+                <p class="hero-meter-label">Fricción epistemológica medida · 4 campos de investigación</p>
+                <div class="meter-cases" id="hero-meter"></div>
+            </div>
 
-        <div class="hero-ctas">
-            <a class="btn-primary" href="#instrumento">Ver el instrumento</a>
-            <a class="btn-ghost" href="#protocolo">Protocolo de traducción</a>
-            <a class="btn-ghost" href="#tensiones">Explorar tensiones</a>
-        </div>
-    </section>
+            <div class="hero-ctas">
+                <a class="btn-primary" href="#instrumento">Ver el instrumento</a>
+                <a class="btn-ghost" href="#protocolo">Protocolo de traducción</a>
+                <a class="btn-ghost" href="#tensiones">Explorar tensiones</a>
+            </div>
+        </section>
 
-    <!-- ══════════════════════════════════════ INSTRUMENTO -->
-    <section id="instrumento">
-        <div class="section-eyebrow">
-            <span class="eyebrow-num">01</span>
-            <div class="eyebrow-line"></div>
-            <span class="eyebrow-text">El instrumento</span>
-        </div>
-        <h2>Análisis multi-situado de <span class="accent-e">3 capas</span></h2>
-        <p class="section-lead">El contra-archivo es un instrumento cualitativo que descompone cualquier situación institucional en <strong>tres regímenes de verdad simultáneos</strong> y mide la fricción entre ellos. Donde la fricción es alta, la mistranslation es estructural.
-            Donde es crítica, el daño es irreversible.</p>
+        <!-- ══════════════════════════════════════ INSTRUMENTO -->
+        <section id="instrumento">
+            <div class="section-eyebrow">
+                <span class="eyebrow-num">01</span>
+                <div class="eyebrow-line"></div>
+                <span class="eyebrow-text">El instrumento</span>
+            </div>
+            <h2>Análisis multi-situado de <span class="accent-e">3 capas</span></h2>
+            <p class="section-lead">El contra-archivo es un instrumento cualitativo que descompone cualquier situación institucional en <strong>tres regímenes de verdad simultáneos</strong> y mide la fricción entre ellos. Donde la fricción es alta, la mistranslation es estructural.
+                Donde es crítica, el daño es irreversible.</p>
 
-        <div class="instrument-grid">
-            <div>
-                <div class="capas-stack">
-                    <div class="capa-card capa-e">
-                        <div class="capa-sym accent-e">◎ CAPA ÉTICA</div>
-                        <div class="capa-title">Testimonio situado</div>
-                        <div class="capa-desc">La experiencia vivida, la memoria corporal, el conocimiento que el archivo oficial no puede contener. Voces, prácticas, afectos, daño no reconocido.</div>
+            <div class="instrument-grid">
+                <div>
+                    <div class="capas-stack">
+                        <div class="capa-card capa-e">
+                            <div class="capa-sym accent-e">◎ CAPA ÉTICA</div>
+                            <div class="capa-title">Testimonio situado</div>
+                            <div class="capa-desc">La experiencia vivida, la memoria corporal, el conocimiento que el archivo oficial no puede contener. Voces, prácticas, afectos, daño no reconocido.</div>
+                        </div>
+                        <div class="friction-indicator">
+                            <div class="fi-arrow"><span class="fi-label mono">← fricción →</span></div>
+                        </div>
+                        <div class="capa-card capa-i">
+                            <div class="capa-sym accent-i">▣ CAPA INSTITUCIONAL</div>
+                            <div class="capa-title">Registro y clasificación</div>
+                            <div class="capa-desc">Lo que la institución declara, clasifica y normaliza. Documentos, resoluciones, categorías técnico-jurídicas que absorben el conflicto sin resolverlo.</div>
+                        </div>
+                        <div class="friction-indicator">
+                            <div class="fi-arrow"><span class="fi-label mono">← fricción →</span></div>
+                        </div>
+                        <div class="capa-card capa-m">
+                            <div class="capa-sym accent-m">◈ CAPA MATERIAL</div>
+                            <div class="capa-title">Territorio y evidencia</div>
+                            <div class="capa-desc">Lo que persiste en el cuerpo, la tierra, los datos. Evidencias físicas, densidad histórica, hechos que el proceso no contempla devolver.</div>
+                        </div>
                     </div>
-                    <div class="friction-indicator">
-                        <div class="fi-arrow"><span class="fi-label mono">← fricción →</span></div>
+                </div>
+
+                <div class="method-diagram">
+                    <p class="label" style="margin-bottom:16px">Procedimiento analítico</p>
+                    <div class="md-step">
+                        <span class="md-num">01</span>
+                        <div class="md-content">
+                            <div class="md-title">Selección del campo multi-situado</div>
+                            <div class="md-text">Identificar un fenómeno institucional con al menos dos sitios etnográficos (corporativo/digital + territorial) donde operen lógicas de traducción incompatibles.</div>
+                        </div>
                     </div>
-                    <div class="capa-card capa-i">
-                        <div class="capa-sym accent-i">▣ CAPA INSTITUCIONAL</div>
-                        <div class="capa-title">Registro y clasificación</div>
-                        <div class="capa-desc">Lo que la institución declara, clasifica y normaliza. Documentos, resoluciones, categorías técnico-jurídicas que absorben el conflicto sin resolverlo.</div>
+                    <div class="md-step">
+                        <span class="md-num">02</span>
+                        <div class="md-content">
+                            <div class="md-title">Documentación por capas</div>
+                            <div class="md-text">Recopilar evidencia separada para cada régimen de verdad: testimonios (ética), documentos institucionales (institucional), registros materiales/territoriales (material).</div>
+                        </div>
                     </div>
-                    <div class="friction-indicator">
-                        <div class="fi-arrow"><span class="fi-label mono">← fricción →</span></div>
+                    <div class="md-step">
+                        <span class="md-num">03</span>
+                        <div class="md-content">
+                            <div class="md-title">Extracción de keywords por capa</div>
+                            <div class="md-text">Identificar los términos clave que cada capa usa para el mismo fenómeno. La distancia semántica entre keywords determina el tipo de fricción.</div>
+                        </div>
                     </div>
-                    <div class="capa-card capa-m">
-                        <div class="capa-sym accent-m">◈ CAPA MATERIAL</div>
-                        <div class="capa-title">Territorio y evidencia</div>
-                        <div class="capa-desc">Lo que persiste en el cuerpo, la tierra, los datos. Evidencias físicas, densidad histórica, hechos que el proceso no contempla devolver.</div>
+                    <div class="md-step">
+                        <span class="md-num">04</span>
+                        <div class="md-content">
+                            <div class="md-title">Cálculo de intensidad (0.0 → 1.0)</div>
+                            <div class="md-text">Motor de fricción: mide el overlap de vocabularios entre capas + detecta marcadores de fricción explícitos. A menor overlap + mayor marcador = mayor intensidad.</div>
+                        </div>
+                    </div>
+                    <div class="md-step">
+                        <span class="md-num">05</span>
+                        <div class="md-content">
+                            <div class="md-title">Clasificación del tipo de fricción</div>
+                            <div class="md-text"><span class="accent-i">Política</span> (¿quién define?) · <span class="accent-e">Semántica</span> (¿qué significa?) · <span class="accent-m">Técnica</span> (¿qué miden los datos?)</div>
+                        </div>
+                    </div>
+                    <div class="md-step">
+                        <span class="md-num">06</span>
+                        <div class="md-content">
+                            <div class="md-title">Identificación de la tensión central</div>
+                            <div class="md-text">Formular la pregunta que los tres regímenes no pueden responder simultáneamente. Esta pregunta irreductible es el núcleo del análisis.</div>
+                        </div>
                     </div>
                 </div>
             </div>
+        </section>
 
-            <div class="method-diagram">
-                <p class="label" style="margin-bottom:16px">Procedimiento analítico</p>
-                <div class="md-step">
-                    <span class="md-num">01</span>
-                    <div class="md-content">
-                        <div class="md-title">Selección del campo multi-situado</div>
-                        <div class="md-text">Identificar un fenómeno institucional con al menos dos sitios etnográficos (corporativo/digital + territorial) donde operen lógicas de traducción incompatibles.</div>
-                    </div>
+        <!-- ══════════════════════════════════════ CAMPOS -->
+        <section id="campos">
+            <div class="section-eyebrow">
+                <span class="eyebrow-num">02</span>
+                <div class="eyebrow-line"></div>
+                <span class="eyebrow-text">Campos de investigación</span>
+            </div>
+            <h2>4 sitios etnográficos, <span class="accent-e">un mismo mecanismo</span></h2>
+            <p class="section-lead">La etnografía multi-situada articula campos que van desde la corporación financiera hasta el territorio indígena, pasando por el periodismo de datos y el derecho internacional. En cada uno, <strong>los mismos mecanismos de poder</strong> producen
+                invisibilidad a través de la traducción fallida.</p>
+
+            <div class="campos-grid" id="campos-grid"></div>
+        </section>
+
+        <!-- ══════════════════════════════════════ TENSIONES -->
+        <section id="tensiones">
+            <div class="section-eyebrow">
+                <span class="eyebrow-num">03</span>
+                <div class="eyebrow-line"></div>
+                <span class="eyebrow-text">Tensiones medidas</span>
+            </div>
+            <h2>La fricción como <span class="accent-c">evidencia cuantificable</span></h2>
+            <p class="section-lead">Para cada campo, el instrumento despliega las tres capas y mide su incompatibilidad. La fricción no se resuelve: <strong>se documenta, clasifica e incorpora al protocolo</strong> de intervención.</p>
+
+            <div class="tension-selector" id="tension-selector"></div>
+            <div class="tension-viewer" id="tension-viewer"></div>
+            <div class="tension-meta" id="tension-meta"></div>
+        </section>
+
+        <!-- ══════════════════════════════════════ GRAFO -->
+        <section id="grafo">
+            <div class="section-eyebrow">
+                <span class="eyebrow-num">04</span>
+                <div class="eyebrow-line"></div>
+                <span class="eyebrow-text">Grafo de conexiones</span>
+            </div>
+            <h2>Los campos están <span class="accent-i">conectados</span></h2>
+            <p class="section-lead">Los mismos actores, instituciones y mecanismos de traducción aparecen en múltiples campos. El grafo visualiza estas conexiones transversales, demostrando que la mistranslation no es un problema local sino <strong>un sistema articulado</strong>.</p>
+
+            <div class="graph-controls" id="graph-controls">
+                <button class="gc-btn active" data-layer="all">Todas las capas</button>
+                <button class="gc-btn" data-layer="etica">◎ Ética</button>
+                <button class="gc-btn" data-layer="institucional">▣ Institucional</button>
+                <button class="gc-btn" data-layer="material">◈ Material</button>
+            </div>
+            <div class="graph-wrap">
+                <div id="ca-graph-canvas"></div>
+                <div id="ca-preview"></div>
+                <div class="graph-overlay-legend">
+                    <div class="gl-item">
+                        <div class="gl-dot" style="background:var(--etica)"></div>Ética</div>
+                    <div class="gl-item">
+                        <div class="gl-dot" style="background:var(--inst)"></div>Institucional</div>
+                    <div class="gl-item">
+                        <div class="gl-dot" style="background:var(--mat)"></div>Material</div>
                 </div>
-                <div class="md-step">
-                    <span class="md-num">02</span>
-                    <div class="md-content">
-                        <div class="md-title">Documentación por capas</div>
-                        <div class="md-text">Recopilar evidencia separada para cada régimen de verdad: testimonios (ética), documentos institucionales (institucional), registros materiales/territoriales (material).</div>
-                    </div>
-                </div>
-                <div class="md-step">
-                    <span class="md-num">03</span>
-                    <div class="md-content">
-                        <div class="md-title">Extracción de keywords por capa</div>
-                        <div class="md-text">Identificar los términos clave que cada capa usa para el mismo fenómeno. La distancia semántica entre keywords determina el tipo de fricción.</div>
-                    </div>
-                </div>
-                <div class="md-step">
-                    <span class="md-num">04</span>
-                    <div class="md-content">
-                        <div class="md-title">Cálculo de intensidad (0.0 → 1.0)</div>
-                        <div class="md-text">Motor de fricción: mide el overlap de vocabularios entre capas + detecta marcadores de fricción explícitos. A menor overlap + mayor marcador = mayor intensidad.</div>
-                    </div>
-                </div>
-                <div class="md-step">
-                    <span class="md-num">05</span>
-                    <div class="md-content">
-                        <div class="md-title">Clasificación del tipo de fricción</div>
-                        <div class="md-text"><span class="accent-i">Política</span> (¿quién define?) · <span class="accent-e">Semántica</span> (¿qué significa?) · <span class="accent-m">Técnica</span> (¿qué miden los datos?)</div>
-                    </div>
-                </div>
-                <div class="md-step">
-                    <span class="md-num">06</span>
-                    <div class="md-content">
-                        <div class="md-title">Identificación de la tensión central</div>
-                        <div class="md-text">Formular la pregunta que los tres regímenes no pueden responder simultáneamente. Esta pregunta irreductible es el núcleo del análisis.</div>
-                    </div>
-                </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- ══════════════════════════════════════ CAMPOS -->
-    <section id="campos">
-        <div class="section-eyebrow">
-            <span class="eyebrow-num">02</span>
-            <div class="eyebrow-line"></div>
-            <span class="eyebrow-text">Campos de investigación</span>
-        </div>
-        <h2>4 sitios etnográficos, <span class="accent-e">un mismo mecanismo</span></h2>
-        <p class="section-lead">La etnografía multi-situada articula campos que van desde la corporación financiera hasta el territorio indígena, pasando por el periodismo de datos y el derecho internacional. En cada uno, <strong>los mismos mecanismos de poder</strong> producen
-            invisibilidad a través de la traducción fallida.</p>
-
-        <div class="campos-grid" id="campos-grid"></div>
-    </section>
-
-    <!-- ══════════════════════════════════════ TENSIONES -->
-    <section id="tensiones">
-        <div class="section-eyebrow">
-            <span class="eyebrow-num">03</span>
-            <div class="eyebrow-line"></div>
-            <span class="eyebrow-text">Tensiones medidas</span>
-        </div>
-        <h2>La fricción como <span class="accent-c">evidencia cuantificable</span></h2>
-        <p class="section-lead">Para cada campo, el instrumento despliega las tres capas y mide su incompatibilidad. La fricción no se resuelve: <strong>se documenta, clasifica e incorpora al protocolo</strong> de intervención.</p>
-
-        <div class="tension-selector" id="tension-selector"></div>
-        <div class="tension-viewer" id="tension-viewer"></div>
-        <div class="tension-meta" id="tension-meta"></div>
-    </section>
-
-    <!-- ══════════════════════════════════════ GRAFO -->
-    <section id="grafo">
-        <div class="section-eyebrow">
-            <span class="eyebrow-num">04</span>
-            <div class="eyebrow-line"></div>
-            <span class="eyebrow-text">Grafo de conexiones</span>
-        </div>
-        <h2>Los campos están <span class="accent-i">conectados</span></h2>
-        <p class="section-lead">Los mismos actores, instituciones y mecanismos de traducción aparecen en múltiples campos. El grafo visualiza estas conexiones transversales, demostrando que la mistranslation no es un problema local sino <strong>un sistema articulado</strong>.</p>
-
-        <div class="graph-controls" id="graph-controls">
-            <button class="gc-btn active" data-layer="all">Todas las capas</button>
-            <button class="gc-btn" data-layer="etica">◎ Ética</button>
-            <button class="gc-btn" data-layer="institucional">▣ Institucional</button>
-            <button class="gc-btn" data-layer="material">◈ Material</button>
-        </div>
-        <div class="graph-wrap">
-            <div id="ca-graph-canvas"></div>
-            <div id="ca-preview"></div>
-            <div class="graph-overlay-legend">
-                <div class="gl-item">
-                    <div class="gl-dot" style="background:var(--etica)"></div>Ética</div>
-                <div class="gl-item">
-                    <div class="gl-dot" style="background:var(--inst)"></div>Institucional</div>
-                <div class="gl-item">
-                    <div class="gl-dot" style="background:var(--mat)"></div>Material</div>
+        <!-- ══════════════════════════════════════ CAMPO SOCIAL — ENTROPÍA -->
+        <section id="campo-social">
+            <div class="section-eyebrow">
+                <span class="eyebrow-num">04b</span>
+                <div class="eyebrow-line"></div>
+                <span class="eyebrow-text">Simulación termodinámica</span>
             </div>
-        </div>
-    </section>
-
-    <!-- ══════════════════════════════════════ CAMPO SOCIAL — ENTROPÍA -->
-    <section id="campo-social">
-        <div class="section-eyebrow">
-            <span class="eyebrow-num">04b</span>
-            <div class="eyebrow-line"></div>
-            <span class="eyebrow-text">Simulación termodinámica</span>
-        </div>
-        <h2>La <span class="accent-i">entropía</span> de la fricción social</h2>
-        <p class="section-lead">
-            La corrupción modela un sistema termodinámico: cada interacción informal reduce la fricción local (resuelve un trámite) pero incrementa el desorden global del sistema.
-            <strong>Ley de Ohm Social: I&nbsp;=&nbsp;V/R</strong> — la corriente informal &lpar;I&rpar; crece cuando la necesidad &lpar;V&rpar; supera la integridad institucional &lpar;R&rpar;. Cuando la entropía S alcanza el umbral crítico, la institución
-            colapsa en
-            <em>muerte térmica</em>: toda transacción requiere soborno.
-        </p>
-
-        <div id="campo-social-wrap">
-            <div id="campo-social-canvas"></div>
-        </div>
-        <div id="sf-metrics-panel"></div>
-        <div class="sf-controls">
-            <button class="sf-btn" id="sf-reset">↺ Reset termodinámico</button>
-            <button class="sf-btn" id="sf-toggle">⏸ Pausar</button>
-        </div>
-    </section>
-
-    <!-- ══════════════════════════════════════ PROTOCOLO -->
-    <section id="protocolo">
-        <div class="section-eyebrow">
-            <span class="eyebrow-num">05</span>
-            <div class="eyebrow-line"></div>
-            <span class="eyebrow-text">Protocolo de buena traducción</span>
-        </div>
-        <h2>De la fricción a la <span class="accent-m">intervención</span></h2>
-        <p class="protocolo-intro">
-            Si la mistranslation es el problema, la <strong>buena traducción institucional</strong> es el horizonte de la intervención. El protocolo no propone eliminar la diferencia entre capas —eso sería epistemicidio—, sino crear condiciones mínimas
-            de equivalencia que hagan el daño legible y la reparación posible.
-        </p>
-
-        <!-- Umbral visual -->
-        <div class="umbral-visual">
-            <div class="uv-title">Umbrales de intervención según intensidad de fricción</div>
-            <div class="uv-scale"></div>
-            <div class="uv-markers" style="height:32px">
-                <span class="uv-mk" style="left:25%"><div class="uv-mk-line"></div>0.25<br><span style="font-size:9px">baja</span></span>
-                <span class="uv-mk" style="left:50%"><div class="uv-mk-line"></div>0.50<br><span style="font-size:9px">media</span></span>
-                <span class="uv-mk" style="left:70%"><div class="uv-mk-line"></div>0.70<br><span style="font-size:9px;color:var(--etica)">umbral crítico</span></span>
-                <span class="uv-mk" style="left:90%"><div class="uv-mk-line"></div>0.90<br><span style="font-size:9px;color:var(--crit)">irreductible</span></span>
-            </div>
-            <div class="uv-cases" id="uv-cases"></div>
-        </div>
-
-        <!-- 4 condiciones -->
-        <div class="protocolo-grid">
-            <div class="pc">
-                <div class="pc-num">C.01 — FRICCIÓN POLÍTICA</div>
-                <div class="pc-title">Reconocimiento de autoridad epistémica</div>
-                <div class="pc-body">La traducción institucional solo es válida si reconoce la autoridad de quien produce el conocimiento situado para definir los términos del intercambio. Sin este reconocimiento, toda traducción es colonización.</div>
-                <div class="pc-cond"><strong>Condición:</strong> el sujeto cuya experiencia se traduce debe participar en la definición del vocabulario de la traducción</div>
-            </div>
-            <div class="pc">
-                <div class="pc-num">C.02 — FRICCIÓN SEMÁNTICA</div>
-                <div class="pc-title">Equivalencia sin asimilación</div>
-                <div class="pc-body">No se trata de que todos usen los mismos términos, sino de que cada régimen de verdad pueda reconocer el término del otro sin perder el suyo. La buena traducción preserva la diferencia.</div>
-                <div class="pc-cond"><strong>Condición:</strong> el glosario institucional debe incluir las definiciones propias de cada capa, no solo la definición técnico-jurídica</div>
-            </div>
-            <div class="pc">
-                <div class="pc-num">C.03 — FRICCIÓN TÉCNICA</div>
-                <div class="pc-title">Trazabilidad del daño, no solo del proceso</div>
-                <div class="pc-body">Los sistemas de datos institucionales registran procesos (licitación, consulta, resolución) pero no daños (territorio perdido, consentimiento violado, memoria borrada). La buena traducción hace el daño rastreable.</div>
-                <div class="pc-cond"><strong>Condición:</strong> los registros institucionales deben incorporar indicadores de daño en la capa material, no solo indicadores de cumplimiento procedimental</div>
-            </div>
-            <div class="pc">
-                <div class="pc-num">C.04 — FRICCIÓN IRREDUCTIBLE</div>
-                <div class="pc-title">Nombrar lo que no puede traducirse</div>
-                <div class="pc-body">Cuando la fricción supera 0.85, hay dimensiones de la experiencia que ninguna traducción puede restituir. La buena práctica institucional reconoce explícitamente esta irreductibilidad en lugar de simular equivalencia donde no la hay.</div>
-                <div class="pc-cond"><strong>Condición:</strong> cuando fricción &gt; 0.85, los acuerdos institucionales deben incluir un registro explícito de lo que permanece irreducible e incompensable</div>
-            </div>
-        </div>
-
-        <!-- Output del protocolo -->
-        <div class="protocolo-output">
-            <span class="po-label">Output del instrumento</span>
-            <div class="po-title">El contra-archivo como dispositivo de re-traducción crítica</div>
-            <p class="po-body">
-                El protocolo no produce acuerdos —produce <strong>legibilidad</strong>. Al hacer visible la fricción entre capas, el contra-archivo permite que las instituciones, comunidades y organismos de supervisión identifiquen con precisión <strong>qué tipo de daño produce qué tipo de traducción fallida</strong>,
-                y qué condiciones mínimas deben cumplirse para que la comunicación institucional no sea, en sí misma, un acto de violencia epistemológica.
+            <h2>La <span class="accent-i">entropía</span> de la fricción social</h2>
+            <p class="section-lead">
+                La corrupción modela un sistema termodinámico: cada interacción informal reduce la fricción local (resuelve un trámite) pero incrementa el desorden global del sistema.
+                <strong>Ley de Ohm Social: I&nbsp;=&nbsp;V/R</strong> — la corriente informal &lpar;I&rpar; crece cuando la necesidad &lpar;V&rpar; supera la integridad institucional &lpar;R&rpar;. Cuando la entropía S alcanza el umbral crítico, la institución
+                colapsa en
+                <em>muerte térmica</em>: toda transacción requiere soborno.
             </p>
-        </div>
-    </section>
 
-    <!-- ══════════════════════════════════════ ARCHIVO -->
-    <section id="archivo">
-        <div class="section-eyebrow">
-            <span class="eyebrow-num">06</span>
-            <div class="eyebrow-line"></div>
-            <span class="eyebrow-text">Archivo de investigación</span>
-        </div>
-        <h2>Todos los <span class="accent-e">materiales</span> disponibles</h2>
-        <p class="section-lead">El archivo organiza los materiales de investigación por dimensión. Cada dimensión documenta una forma de conocimiento que el análisis multi-situado articula.</p>
+            <div id="campo-social-wrap">
+                <div id="campo-social-canvas"></div>
+            </div>
+            <div id="sf-metrics-panel"></div>
+            <div class="sf-controls">
+                <button class="sf-btn" id="sf-reset">↺ Reset termodinámico</button>
+                <button class="sf-btn" id="sf-toggle">⏸ Pausar</button>
+            </div>
+        </section>
 
-        <div class="archivo-grid">
-            <div class="arc-dim">
-                <div class="arc-num">D1</div>
-                <div class="arc-title">Marco Conceptual</div>
-                <div class="arc-count">5 archivos · Interfaz principal</div>
-                <div class="arc-tags">
-                    <span class="arc-tag">index.html</span>
-                    <span class="arc-tag">_config.yml</span>
-                </div>
+        <!-- ══════════════════════════════════════ PROTOCOLO -->
+        <section id="protocolo">
+            <div class="section-eyebrow">
+                <span class="eyebrow-num">05</span>
+                <div class="eyebrow-line"></div>
+                <span class="eyebrow-text">Protocolo de buena traducción</span>
             </div>
-            <div class="arc-dim">
-                <div class="arc-num">D2</div>
-                <div class="arc-title">Estado del Arte</div>
-                <div class="arc-count">6 archivos · Marco teórico</div>
-                <div class="arc-tags">
-                    <span class="arc-tag">CIPER PDF</span>
-                    <span class="arc-tag">OIT 169</span>
-                    <span class="arc-tag">Gupta · Latour · Tsing</span>
-                </div>
-            </div>
-            <div class="arc-dim">
-                <div class="arc-num">D3</div>
-                <div class="arc-title">Etnografía Audiovisual</div>
-                <div class="arc-count">3 archivos · Caso SURA/AFP</div>
-                <div class="arc-tags">
-                    <span class="arc-tag">PDF 150 págs.</span>
-                    <span class="arc-tag">Privacy by Design</span>
-                </div>
-            </div>
-            <div class="arc-dim">
-                <div class="arc-num">D4</div>
-                <div class="arc-title">Ensayo: Traducción de Saberes</div>
-                <div class="arc-count">18 archivos · Marco decolonial</div>
-                <div class="arc-tags">
-                    <span class="arc-tag">Artículo etnográfico</span>
-                    <span class="arc-tag">Dussel · Hall · Butler · Scott</span>
-                </div>
-            </div>
-            <div class="arc-dim">
-                <div class="arc-num">D5</div>
-                <div class="arc-title">La Negra</div>
-                <div class="arc-count">20 archivos · Investigación territorial</div>
-                <div class="arc-tags">
-                    <span class="arc-tag">Caso Catrillanca</span>
-                    <span class="arc-tag">ACAB</span>
-                    <span class="arc-tag">Lof Ñanco</span>
-                    <span class="arc-tag">Infografías</span>
-                </div>
-            </div>
-            <div class="arc-dim">
-                <div class="arc-num">D6</div>
-                <div class="arc-title">Poemarios</div>
-                <div class="arc-count">3 archivos · Método artístico</div>
-                <div class="arc-tags">
-                    <span class="arc-tag">Los números no existen</span>
-                    <span class="arc-tag">Contrapoética</span>
-                </div>
-            </div>
-            <div class="arc-dim" style="grid-column:1/-1;border-color:rgba(200,169,110,.2)">
-                <div class="arc-num" style="color:var(--etica)">D7</div>
-                <div class="arc-title">Dispositivo Contra-Archivo</div>
-                <div class="arc-count">9 archivos · Motor de fricción + Grafo + 4 casos</div>
-                <div class="arc-tags">
-                    <span class="arc-tag">frictionEngine.js</span>
-                    <span class="arc-tag">graph.js</span>
-                    <span class="arc-tag">casos.json</span>
-                    <span class="arc-tag">4 nodos</span>
-                    <span class="arc-tag">0.71–0.94 fricción</span>
-                </div>
-                <a class="arc-link" href="admin.html">Ver inventario completo en Admin →</a>
-            </div>
-        </div>
-    </section>
+            <h2>De la fricción a la <span class="accent-m">intervención</span></h2>
+            <p class="protocolo-intro">
+                Si la mistranslation es el problema, la <strong>buena traducción institucional</strong> es el horizonte de la intervención. El protocolo no propone eliminar la diferencia entre capas —eso sería epistemicidio—, sino crear condiciones mínimas
+                de equivalencia que hagan el daño legible y la reparación posible.
+            </p>
 
-    <!-- FOOTER -->
-    <footer>
-        <div class="footer-left">
-            <div class="footer-title">Contra-Archivo · Antropología y Corrupción</div>
-            <div class="footer-sub">Tesis Doctoral · Rodrigo Gaete Gaona · Chile · 2025</div>
-            <div class="footer-sub" style="margin-top:4px">La mistranslation institucional como dispositivo de poder</div>
-        </div>
-        <div class="footer-right">
-            <div>Etnografía multi-situada</div>
-            <div>Motor de fricción epistemológica</div>
-            <div>Protocolo de buena traducción</div>
-            <div style="margin-top:8px"><a href="https://github.com/vientonorte/antropologia-corrupcion" style="color:var(--dim);text-decoration:none;">github.com/vientonorte/antropologia-corrupcion ↗</a></div>
-        </div>
-    </footer>
+            <!-- Umbral visual -->
+            <div class="umbral-visual">
+                <div class="uv-title">Umbrales de intervención según intensidad de fricción</div>
+                <div class="uv-scale"></div>
+                <div class="uv-markers" style="height:32px">
+                    <span class="uv-mk" style="left:25%"><div class="uv-mk-line"></div>0.25<br><span style="font-size:9px">baja</span></span>
+                    <span class="uv-mk" style="left:50%"><div class="uv-mk-line"></div>0.50<br><span style="font-size:9px">media</span></span>
+                    <span class="uv-mk" style="left:70%"><div class="uv-mk-line"></div>0.70<br><span style="font-size:9px;color:var(--etica)">umbral crítico</span></span>
+                    <span class="uv-mk" style="left:90%"><div class="uv-mk-line"></div>0.90<br><span style="font-size:9px;color:var(--crit)">irreductible</span></span>
+                </div>
+                <div class="uv-cases" id="uv-cases"></div>
+            </div>
 
-    <!-- ══════════════════════════════════════ BOTTOM NAV (MOBILE) -->
+            <!-- 4 condiciones -->
+            <div class="protocolo-grid">
+                <div class="pc">
+                    <div class="pc-num">C.01 — FRICCIÓN POLÍTICA</div>
+                    <div class="pc-title">Reconocimiento de autoridad epistémica</div>
+                    <div class="pc-body">La traducción institucional solo es válida si reconoce la autoridad de quien produce el conocimiento situado para definir los términos del intercambio. Sin este reconocimiento, toda traducción es colonización.</div>
+                    <div class="pc-cond"><strong>Condición:</strong> el sujeto cuya experiencia se traduce debe participar en la definición del vocabulario de la traducción</div>
+                </div>
+                <div class="pc">
+                    <div class="pc-num">C.02 — FRICCIÓN SEMÁNTICA</div>
+                    <div class="pc-title">Equivalencia sin asimilación</div>
+                    <div class="pc-body">No se trata de que todos usen los mismos términos, sino de que cada régimen de verdad pueda reconocer el término del otro sin perder el suyo. La buena traducción preserva la diferencia.</div>
+                    <div class="pc-cond"><strong>Condición:</strong> el glosario institucional debe incluir las definiciones propias de cada capa, no solo la definición técnico-jurídica</div>
+                </div>
+                <div class="pc">
+                    <div class="pc-num">C.03 — FRICCIÓN TÉCNICA</div>
+                    <div class="pc-title">Trazabilidad del daño, no solo del proceso</div>
+                    <div class="pc-body">Los sistemas de datos institucionales registran procesos (licitación, consulta, resolución) pero no daños (territorio perdido, consentimiento violado, memoria borrada). La buena traducción hace el daño rastreable.</div>
+                    <div class="pc-cond"><strong>Condición:</strong> los registros institucionales deben incorporar indicadores de daño en la capa material, no solo indicadores de cumplimiento procedimental</div>
+                </div>
+                <div class="pc">
+                    <div class="pc-num">C.04 — FRICCIÓN IRREDUCTIBLE</div>
+                    <div class="pc-title">Nombrar lo que no puede traducirse</div>
+                    <div class="pc-body">Cuando la fricción supera 0.85, hay dimensiones de la experiencia que ninguna traducción puede restituir. La buena práctica institucional reconoce explícitamente esta irreductibilidad en lugar de simular equivalencia donde no la hay.</div>
+                    <div class="pc-cond"><strong>Condición:</strong> cuando fricción &gt; 0.85, los acuerdos institucionales deben incluir un registro explícito de lo que permanece irreducible e incompensable</div>
+                </div>
+            </div>
+
+            <!-- Output del protocolo -->
+            <div class="protocolo-output">
+                <span class="po-label">Output del instrumento</span>
+                <div class="po-title">El contra-archivo como dispositivo de re-traducción crítica</div>
+                <p class="po-body">
+                    El protocolo no produce acuerdos —produce <strong>legibilidad</strong>. Al hacer visible la fricción entre capas, el contra-archivo permite que las instituciones, comunidades y organismos de supervisión identifiquen con precisión <strong>qué tipo de daño produce qué tipo de traducción fallida</strong>,
+                    y qué condiciones mínimas deben cumplirse para que la comunicación institucional no sea, en sí misma, un acto de violencia epistemológica.
+                </p>
+            </div>
+        </section>
+
+        <!-- ══════════════════════════════════════ ARCHIVO -->
+        <section id="archivo">
+            <div class="section-eyebrow">
+                <span class="eyebrow-num">06</span>
+                <div class="eyebrow-line"></div>
+                <span class="eyebrow-text">Archivo de investigación</span>
+            </div>
+            <h2>Todos los <span class="accent-e">materiales</span> disponibles</h2>
+            <p class="section-lead">El archivo organiza los materiales de investigación por dimensión. Cada dimensión documenta una forma de conocimiento que el análisis multi-situado articula.</p>
+
+            <div class="archivo-grid">
+                <div class="arc-dim">
+                    <div class="arc-num">D1</div>
+                    <div class="arc-title">Marco Conceptual</div>
+                    <div class="arc-count">5 archivos · Interfaz principal</div>
+                    <div class="arc-tags">
+                        <span class="arc-tag">index.html</span>
+                        <span class="arc-tag">_config.yml</span>
+                    </div>
+                </div>
+                <div class="arc-dim">
+                    <div class="arc-num">D2</div>
+                    <div class="arc-title">Estado del Arte</div>
+                    <div class="arc-count">6 archivos · Marco teórico</div>
+                    <div class="arc-tags">
+                        <span class="arc-tag">CIPER PDF</span>
+                        <span class="arc-tag">OIT 169</span>
+                        <span class="arc-tag">Gupta · Latour · Tsing</span>
+                    </div>
+                </div>
+                <div class="arc-dim">
+                    <div class="arc-num">D3</div>
+                    <div class="arc-title">Etnografía Audiovisual</div>
+                    <div class="arc-count">3 archivos · Caso SURA/AFP</div>
+                    <div class="arc-tags">
+                        <span class="arc-tag">PDF 150 págs.</span>
+                        <span class="arc-tag">Privacy by Design</span>
+                    </div>
+                </div>
+                <div class="arc-dim">
+                    <div class="arc-num">D4</div>
+                    <div class="arc-title">Ensayo: Traducción de Saberes</div>
+                    <div class="arc-count">18 archivos · Marco decolonial</div>
+                    <div class="arc-tags">
+                        <span class="arc-tag">Artículo etnográfico</span>
+                        <span class="arc-tag">Dussel · Hall · Butler · Scott</span>
+                    </div>
+                </div>
+                <div class="arc-dim">
+                    <div class="arc-num">D5</div>
+                    <div class="arc-title">La Negra</div>
+                    <div class="arc-count">20 archivos · Investigación territorial</div>
+                    <div class="arc-tags">
+                        <span class="arc-tag">Caso Catrillanca</span>
+                        <span class="arc-tag">ACAB</span>
+                        <span class="arc-tag">Lof Ñanco</span>
+                        <span class="arc-tag">Infografías</span>
+                    </div>
+                </div>
+                <div class="arc-dim">
+                    <div class="arc-num">D6</div>
+                    <div class="arc-title">Poemarios</div>
+                    <div class="arc-count">3 archivos · Método artístico</div>
+                    <div class="arc-tags">
+                        <span class="arc-tag">Los números no existen</span>
+                        <span class="arc-tag">Contrapoética</span>
+                    </div>
+                </div>
+                <div class="arc-dim" style="grid-column:1/-1;border-color:rgba(200,169,110,.2)">
+                    <div class="arc-num" style="color:var(--etica)">D7</div>
+                    <div class="arc-title">Dispositivo Contra-Archivo</div>
+                    <div class="arc-count">9 archivos · Motor de fricción + Grafo + 4 casos</div>
+                    <div class="arc-tags">
+                        <span class="arc-tag">frictionEngine.js</span>
+                        <span class="arc-tag">graph.js</span>
+                        <span class="arc-tag">casos.json</span>
+                        <span class="arc-tag">4 nodos</span>
+                        <span class="arc-tag">0.71–0.94 fricción</span>
+                    </div>
+                    <a class="arc-link" href="admin.html">Ver inventario completo en Admin →</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer>
+            <div class="footer-left">
+                <div class="footer-title">Contra-Archivo · Antropología y Corrupción</div>
+                <div class="footer-sub">Tesis Doctoral · Rodrigo Gaete Gaona · Chile · 2025</div>
+                <div class="footer-sub" style="margin-top:4px">La mistranslation institucional como dispositivo de poder</div>
+            </div>
+            <div class="footer-right">
+                <div>Etnografía multi-situada</div>
+                <div>Motor de fricción epistemológica</div>
+                <div>Protocolo de buena traducción</div>
+                <div style="margin-top:8px"><a href="https://github.com/vientonorte/antropologia-corrupcion" style="color:var(--dim);text-decoration:none;">github.com/vientonorte/antropologia-corrupcion ↗</a></div>
+            </div>
+        </footer>
+
+        <!-- ══════════════════════════════════════ BOTTOM NAV (MOBILE) -->
+    </main>
+
     <nav class="bottom-nav" id="bottom-nav" aria-label="Navegación mobile">
         <a href="#hero"><span class="bn-icon">◉</span>Inicio</a>
         <a href="#instrumento"><span class="bn-icon">◎</span>Instr.</a>
@@ -2051,7 +2087,7 @@
         }
 
         function scrollToTension(id) {
-            document.getElementById('tensiones')?.scrollIntoView({
+            document.getElementById('tensiones') ? .scrollIntoView({
                 behavior: 'smooth'
             });
             setTimeout(() => activateTension(id), 600);
