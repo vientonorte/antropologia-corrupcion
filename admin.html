@@ -339,6 +339,7 @@
     <a class="nav-item" href="#d5">D5 · La Negra <span class="nav-dim">20</span></a>
     <a class="nav-item" href="#d6">D6 · Poemarios <span class="nav-dim">3</span></a>
     <a class="nav-item" href="#d7">D7 · Dispositivo Contra-Archivo <span class="nav-dim">9</span></a>
+    <a class="nav-item" href="#changelog" style="color: var(--accent2);">LOG · Changelog <span class="nav-dim">11</span></a>
   </nav>
 
   <!-- MAIN -->
@@ -1059,10 +1060,10 @@
             <td><span class="status-dot err">Vacío</span></td>
           </tr>
           <tr>
-            <td style="color:var(--err);font-weight:700">3</td>
-            <td><span class="file-label">Eliminar <code>repositorio_antropologia_corrupcion.zip</code> con <code>git rm --cached</code> y agregar <code>*.zip</code> al .gitignore</span></td>
+            <td style="color:var(--ok);font-weight:700">3</td>
+            <td><span class="file-label"><s>Eliminar <code>repositorio_antropologia_corrupcion.zip</code> con <code>git rm --cached</code> y agregar <code>*.zip</code> al .gitignore</s> — <strong style="color:var(--ok)">✓ Resuelto Sprint 1</strong> (commit 4b68939)</span></td>
             <td><span class="file-type">D7</span></td>
-            <td><span class="status-dot err">Remover</span></td>
+            <td><span class="status-dot ok">Hecho</span></td>
           </tr>
           <tr>
             <td style="color:var(--warn);font-weight:700">4</td>
@@ -1101,13 +1102,106 @@
             <td><span class="status-dot warn">Pendiente investigador</span></td>
           </tr>
           <tr>
-            <td style="color:var(--text-muted);font-weight:700">10</td>
-            <td><span class="file-label">Verificar configuración GitHub Pages: confirmar si source es /root o /docs, y eliminar el mirror no usado</span></td>
+            <td style="color:var(--ok);font-weight:700">10</td>
+            <td><span class="file-label"><s>Verificar configuración GitHub Pages: confirmar si source es /root o /docs, y eliminar el mirror no usado</s> — <strong style="color:var(--ok)">✓ Resuelto Sprint 1</strong> (source: /root, .nojekyll activo, docs/ en .gitignore)</span></td>
             <td><span class="file-type">D1</span></td>
-            <td><span class="status-dot warn">Config</span></td>
+            <td><span class="status-dot ok">Hecho</span></td>
           </tr>
         </tbody>
       </table>
+    </div>
+
+    <!-- ══════════════════════════════════════════════════ CHANGELOG -->
+    <div class="dim-card" id="changelog">
+      <div class="dim-header">
+        <div class="dim-num" style="color: var(--accent2); border-color: rgba(74,127,165,.3);">LOG</div>
+        <div class="dim-info">
+          <div class="dim-title" style="color: var(--accent2);">Changelog</div>
+          <div class="dim-desc">Registro cronológico de cambios estructurales al repositorio. Cada entrada documenta el sprint, la acción ejecutada y el commit asociado.</div>
+        </div>
+      </div>
+      <table class="file-table">
+        <thead><tr>
+          <th>Fecha</th>
+          <th>Sprint</th>
+          <th>Acción</th>
+          <th>Commit</th>
+        </tr></thead>
+        <tbody>
+          <!-- 31 marzo 2026 -->
+          <tr><td colspan="4"><div class="section-sep">31 marzo 2026 — Sanitización y reorganización</div></td></tr>
+          <tr>
+            <td><span class="file-type">31/03/26</span></td>
+            <td><span class="dim-num">Sprint 0</span></td>
+            <td><span class="file-label">Backup: tag <code>pre-cleanup-backup-20260331</code> creado y pusheado como punto de restauración</span></td>
+            <td><span class="file-path">a005d32</span></td>
+          </tr>
+          <tr>
+            <td><span class="file-type">31/03/26</span></td>
+            <td><span class="dim-num">Sprint 0</span></td>
+            <td><span class="file-label">Restaurados <code>index.html</code>, <code>admin.html</code>, <code>contra-archivo-v2.html</code> desde HEAD (habían sido eliminados del filesystem)</span></td>
+            <td><span class="file-path">—</span></td>
+          </tr>
+          <tr>
+            <td><span class="file-type">31/03/26</span></td>
+            <td><span class="dim-num">Sprint 1</span></td>
+            <td><span class="file-label">Creado <code>.gitignore</code> — protege Estado del Arte/, Ensayo Traducción de Saberes/, docs/, binarios pesados (.zip, .ai, .mov, .cr2, .pages), y carpetas con datos sensibles</span></td>
+            <td><span class="file-path">4b68939</span></td>
+          </tr>
+          <tr>
+            <td><span class="file-type">31/03/26</span></td>
+            <td><span class="dim-num">Sprint 1</span></td>
+            <td><span class="file-label">Creado <code>.nojekyll</code> — evita procesamiento Liquid en GitHub Pages (compatible con HTML vanilla)</span></td>
+            <td><span class="file-path">4b68939</span></td>
+          </tr>
+          <tr>
+            <td><span class="file-type">31/03/26</span></td>
+            <td><span class="dim-num">Sprint 2</span></td>
+            <td><span class="file-label">Removidas sentencias <code>export</code> de <code>src/frictionEngine.js</code>, <code>src/graph.js</code>, <code>src/nodeRenderer.js</code> — archivos cargados como scripts clásicos, no ES modules</span></td>
+            <td><span class="file-path">4b68939</span></td>
+          </tr>
+          <tr>
+            <td><span class="file-type">31/03/26</span></td>
+            <td><span class="dim-num">Sprint 2</span></td>
+            <td><span class="file-label"><code>repositorio_antropologia_corrupcion.zip</code> eliminado del tracking con <code>git rm --cached</code> y añadido <code>*.zip</code> al .gitignore</span></td>
+            <td><span class="file-path">4b68939</span></td>
+          </tr>
+          <tr>
+            <td><span class="file-type">31/03/26</span></td>
+            <td><span class="dim-num">Sprint 3</span></td>
+            <td><span class="file-label">Push a origin/main — deploy verificado funcional en <code>https://vientonorte.github.io/antropologia-corrupcion/</code></span></td>
+            <td><span class="file-path">4b68939</span></td>
+          </tr>
+          <tr>
+            <td><span class="file-type">31/03/26</span></td>
+            <td><span class="dim-num">Sprint 4</span></td>
+            <td><span class="file-label">Creado <code>README.md</code> con documentación de arquitectura, stack técnico, descripción del instrumento de fricción, archivos tracked y estructura del proyecto</span></td>
+            <td><span class="file-path">be7af06</span></td>
+          </tr>
+          <tr>
+            <td><span class="file-type">31/03/26</span></td>
+            <td><span class="dim-num">Sprint 4</span></td>
+            <td><span class="file-label">Simplificado <code>.gitignore</code> — consolidadas reglas redundantes, documentadas secciones</span></td>
+            <td><span class="file-path">be7af06</span></td>
+          </tr>
+          <tr>
+            <td><span class="file-type">31/03/26</span></td>
+            <td><span class="dim-num">Sprint 5</span></td>
+            <td><span class="file-label">QA documental: auditoría de los 13 archivos tracked — HTML (meta, accesibilidad, refs), JS (sin export/import), CSS (tokens), JSON (schema), README (arquitectura). Puntuación: 7.5/10</span></td>
+            <td><span class="file-path">—</span></td>
+          </tr>
+          <tr>
+            <td><span class="file-type">31/03/26</span></td>
+            <td><span class="dim-num">Sprint 5</span></td>
+            <td><span class="file-label">Actualizadas acciones pendientes: #3 (ZIP) y #10 (GitHub Pages config) marcadas como resueltas. Agregada sección Changelog al CMS</span></td>
+            <td><span class="file-path">—</span></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="admin-note">
+        <span class="admin-note-icon">ADMIN</span>
+        <span class="admin-note-text">Este changelog registra únicamente cambios estructurales al repositorio (sanitización, configuración, documentación). Los cambios de contenido académico (nuevos casos, textos, ensayos) deben registrarse como entradas separadas cuando ocurran. Pendiente: consolidar duplicados de Ensayo Traducción de Saberes vía Finder (iCloud Drive bloquea operaciones de terminal). 8 acciones pendientes de las 10 originales.</span>
+      </div>
     </div>
 
   </main>
