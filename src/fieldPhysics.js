@@ -194,7 +194,7 @@ class FrictionField {
         for (const link of this.links) {
             const s = link.source,
                 t = link.target;
-            if (!s ?.x || !t ?.x) continue;
+            if (!s?.x || !t?.x) continue;
             const mx = (s.x + t.x) / 2;
             const my = (s.y + t.y) / 2;
             const dx = x - mx;
@@ -406,8 +406,8 @@ class FrictionField {
         const angle = Math.random() * Math.PI * 2;
         const dist = 20 + Math.random() * 80;
 
-        p.x = (spawnNode ?.x || this.width / 2) + Math.cos(angle) * dist;
-        p.y = (spawnNode ?.y || this.height / 2) + Math.sin(angle) * dist;
+        p.x = (spawnNode?.x || this.width / 2) + Math.cos(angle) * dist;
+        p.y = (spawnNode?.y || this.height / 2) + Math.sin(angle) * dist;
         p.vx = 0;
         p.vy = 0;
         p.life = Math.random() * FIELD_CONFIG.PARTICLE_LIFE;
@@ -522,7 +522,7 @@ class FrictionField {
         for (const link of this.links) {
             const s = link.source,
                 t = link.target;
-            if (!s ?.x || !t ?.x) continue;
+            if (!s?.x || !t?.x) continue;
 
             const dx = t.x - s.x;
             const dy = t.y - s.y;
@@ -735,7 +735,7 @@ class FrictionField {
      */
     destroy() {
         if (this.animFrame) cancelAnimationFrame(this.animFrame);
-        if (this.canvas ?.parentNode) this.canvas.parentNode.removeChild(this.canvas);
+        if (this.canvas?.parentNode) this.canvas.parentNode.removeChild(this.canvas);
     }
 }
 
