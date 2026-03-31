@@ -137,6 +137,10 @@ class FrictionGraph {
         this.selectedId = null;
         this.animFrame = null;
         this.field = null;
+        this._windowListeners = []; // Track window listeners for cleanup
+        this._nodeElMap = new Map();   // Cache node SVG elements
+        this._labelElMap = new Map();  // Cache label SVG elements
+        this._linkElMap = new Map();   // Cache link SVG elements
 
         this._init();
     }
@@ -233,6 +237,7 @@ class FrictionGraph {
 
     _renderLinks() {
         this.linkLayer.innerHTML = '';
+        this._linkElMap.clear();
         for (const link of this.sim.links) {
             const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
             line.classList.add('ca-link');
@@ -260,6 +265,7 @@ class FrictionGraph {
             });
 
             this.linkLayer.appendChild(line);
+            this._linkElMap.set(`${link.source.id}:${link.target.id}`, line);
         }
     }
 
@@ -268,11 +274,16 @@ class FrictionGraph {
     _renderNodes() {
         this.nodeLayer.innerHTML = '';
         this.labelLayer.innerHTML = '';
+        this._nodeElMap.clear();
+        this._labelElMap.clear();
 
         for (const node of this.sim.nodes) {
             const g = this._createNodeGroup(node);
             this.nodeLayer.appendChild(g);
-            this.labelLayer.appendChild(this._createLabel(node));
+            this._nodeElMap.set(node.id, g);
+            const label = this._createLabel(node);
+            this.labelLayer.appendChild(label);
+            this._labelElMap.set(node.id, label);
         }
     }
 
@@ -430,18 +441,24 @@ class FrictionGraph {
             this.sim.reheat();
             e.preventDefault();
         });
-        window.addEventListener('mousemove', (e) => {
+        const onMouseMove = (e) => {
             if (!dragging) return;
             const rect = this.svg.getBoundingClientRect();
             this.sim.fix(node.id, e.clientX - rect.left, e.clientY - rect.top);
             this._updatePositions();
-        });
-        window.addEventListener('mouseup', () => {
+        };
+        const onMouseUp = () => {
             if (dragging) {
                 dragging = false;
                 this.sim.release(node.id);
             }
-        });
+        };
+        window.addEventListener('mousemove', onMouseMove);
+        window.addEventListener('mouseup', onMouseUp);
+        this._windowListeners.push(
+            { type: 'mousemove', handler: onMouseMove },
+            { type: 'mouseup', handler: onMouseUp }
+        );
 
         // Touch drag
         g.addEventListener('touchstart', (e) => {
@@ -500,20 +517,15 @@ class FrictionGraph {
     }
 
     _updatePositions() {
-        const nodeEls = this.nodeLayer.querySelectorAll('.ca-node');
-        const labelEls = this.labelLayer.querySelectorAll('.ca-label');
-
         for (const n of this.sim.nodes) {
-            const g = this.nodeLayer.querySelector(`.ca-node[data-id="${n.id}"]`);
-            const lb = this.labelLayer.querySelector(`.ca-label[data-id="${n.id}"]`);
+            const g = this._nodeElMap.get(n.id);
+            const lb = this._labelElMap.get(n.id);
             if (g) g.setAttribute('transform', `translate(${n.x.toFixed(1)},${n.y.toFixed(1)})`);
             if (lb) lb.setAttribute('transform', `translate(${n.x.toFixed(1)},${n.y.toFixed(1)})`);
         }
 
         for (const link of this.sim.links) {
-            const line = this.linkLayer.querySelector(
-                `.ca-link[data-source="${link.source.id}"][data-target="${link.target.id}"]`
-            );
+            const line = this._linkElMap.get(`${link.source.id}:${link.target.id}`);
             if (line) {
                 line.setAttribute('x1', link.source.x.toFixed(1));
                 line.setAttribute('y1', link.source.y.toFixed(1));
@@ -609,6 +621,14 @@ class FrictionGraph {
 
     destroy() {
         if (this.animFrame) cancelAnimationFrame(this.animFrame);
+        // Remove all tracked window listeners
+        for (const { type, handler } of this._windowListeners) {
+            window.removeEventListener(type, handler);
+        }
+        this._windowListeners = [];
+        this._nodeElMap.clear();
+        this._labelElMap.clear();
+        this._linkElMap.clear();
         if (this.field) this.field.destroy();
         this.svg?.remove();
     }
