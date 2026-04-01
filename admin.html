@@ -569,7 +569,7 @@
             <a class="nav-item" href="#d5">D5 · La Negra <span class="nav-dim">20</span></a>
             <a class="nav-item" href="#d6">D6 · Poemarios <span class="nav-dim">3</span></a>
             <a class="nav-item" href="#d7">D7 · Dispositivo Contra-Archivo <span class="nav-dim">9</span></a>
-            <a class="nav-item" href="#changelog" style="color: var(--accent2);">LOG · Changelog <span class="nav-dim">21</span></a>
+            <a class="nav-item" href="#changelog" style="color: var(--accent2);">LOG · Changelog <span class="nav-dim">29</span></a>
         </nav>
 
         <!-- MAIN -->
@@ -1409,6 +1409,60 @@
                         </tr>
                     </thead>
                     <tbody>
+                        <!-- 1 abril 2026 — QA integral, simbología & debug -->
+                        <tr>
+                            <td colspan="4">
+                                <div class="section-sep">1 abril 2026 — QA integral, Simbología Aplicada & Debug</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span class="file-type">01/04/26</span></td>
+                            <td><span class="dim-num">Sprint 14</span></td>
+                            <td><span class="file-label">Fix: reiniciar <code>_animate()</code> en IntersectionObserver de <code>socialField.js</code> — el loop moría al salir de pantalla y no se reiniciaba. Detectado con Playwright QA. Metrics panel ahora rinde 1251 chars post-scroll.</span></td>
+                            <td><span class="file-path">d5a09dd</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="file-type">01/04/26</span></td>
+                            <td><span class="dim-num">Sprint 14</span></td>
+                            <td><span class="file-label">QA integral con Playwright: 8 secciones visibles, 0 console errors, 4 campos dinámicos, 28 nodos SVG + 4 links, botones interactivos OK, skip-link OK, 0 formatter corruption en 6 archivos</span></td>
+                            <td><span class="file-path">d5a09dd</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="file-type">31/03/26</span></td>
+                            <td><span class="dim-num">Sprint 14</span></td>
+                            <td><span class="file-label">Simbología aplicada en 8 secciones: ⊘ ◬ ⊞ ⟐ ⚡ ◎ ▣ ◈ ◇ ✧. Narrativa mejorada — eyebrows, h2, leads, CTAs, condiciones del protocolo, dimensiones del archivo, bottom nav renombrado</span></td>
+                            <td><span class="file-path">6296040</span></td>
+                        </tr>
+                        <!-- 31 marzo 2026 — Performance & Fixes -->
+                        <tr>
+                            <td colspan="4">
+                                <div class="section-sep">31 marzo 2026 — Performance, Rendering & Fixes</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span class="file-type">31/03/26</span></td>
+                            <td><span class="dim-num">Sprint 13</span></td>
+                            <td><span class="file-label">Perf P0+P1: IntersectionObserver (pausa real rAF offscreen), <code>defer</code> en 5 scripts, loop fusion <code>_gravityAt</code>, object pool, Math.sqrt eliminado, batch draw calls en <code>_renderNodeHeat</code></span></td>
+                            <td><span class="file-path">cf3d8f0</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="file-type">31/03/26</span></td>
+                            <td><span class="dim-num">Sprint 13</span></td>
+                            <td><span class="file-label">Fix: <code>socialField.js</code> — nodos sin coordenadas x/y + links como strings. Inyectado circular layout + resolución string→objeto en <code>_init()</code></span></td>
+                            <td><span class="file-path">1253a35</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="file-type">31/03/26</span></td>
+                            <td><span class="dim-num">Sprint 12</span></td>
+                            <td><span class="file-label">Docs: changelog actualizado en admin.html — sprints 6-11 documentados</span></td>
+                            <td><span class="file-path">04f6a13</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="file-type">31/03/26</span></td>
+                            <td><span class="dim-num">Sprint 12</span></td>
+                            <td><span class="file-label">Fix: eliminar optional chaining <code>?.</code> vulnerable al formatter — 3 instancias en inline script reemplazadas con alternativas seguras, 23 en JS externos vía perl</span></td>
+                            <td><span class="file-path">f921dc7</span></td>
+                        </tr>
                         <!-- 31 marzo 2026 — QA & Accesibilidad -->
                         <tr>
                             <td colspan="4">
