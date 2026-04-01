@@ -378,6 +378,7 @@
     transform: translateY(6px);
     transition: opacity var(--ca-transition), transform var(--ca-transition);
     z-index: 100;
+    -webkit-backdrop-filter: blur(8px);
     backdrop-filter: blur(8px);
 }
 
@@ -971,6 +972,7 @@
     font-size: 0.58rem;
     letter-spacing: 0.08em;
     z-index: 100;
+    -webkit-backdrop-filter: blur(8px);
     backdrop-filter: blur(8px);
 }
 

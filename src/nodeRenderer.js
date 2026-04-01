@@ -87,9 +87,10 @@ class NodeRenderer {
     closeBtn.addEventListener('click', () => this.close());
 
     // ESC para cerrar
-    document.addEventListener('keydown', (e) => {
+    this._handleEsc = (e) => {
       if (e.key === 'Escape') this.close();
-    });
+    };
+    document.addEventListener('keydown', this._handleEsc);
   }
 
   /* ─── API PÚBLICA ─── */
@@ -453,6 +454,15 @@ class NodeRenderer {
       .replace(/>/g, '&gt;')
       .replace(/"/g, '&quot;')
       .replace(/'/g, '&#39;');
+  }
+
+  /**
+   * Limpieza de listeners globales
+   */
+  destroy() {
+    if (this._handleEsc) {
+      document.removeEventListener('keydown', this._handleEsc);
+    }
   }
 }
 
