@@ -161,6 +161,21 @@ class FrictionField {
 
         // Arrancar loop de animación
         this._animate();
+
+        // Pausar cuando offscreen
+        this._io = new IntersectionObserver(entries => {
+            const vis = entries[0].isIntersecting;
+            if (vis && !this.visible) {
+                this.visible = true;
+                this.canvas.style.display = 'block';
+                this._needsFieldUpdate = true;
+                this._animate();
+            } else if (!vis && this.visible) {
+                this.visible = false;
+                if (this.animFrame) { cancelAnimationFrame(this.animFrame); this.animFrame = null; }
+            }
+        }, { threshold: 0.05 });
+        this._io.observe(this.container);
     }
 
     /* ─── CAMPO ESCALAR (POTENCIAL) ─── */
@@ -446,8 +461,8 @@ class FrictionField {
     _animate() {
         const frame = () => {
             if (!this.visible) {
-                this.animFrame = requestAnimationFrame(frame);
-                return;
+                this.animFrame = null;
+                return; // Pausa real: no solicitar frames
             }
 
             this._frameCount++;
@@ -735,7 +750,8 @@ class FrictionField {
      */
     destroy() {
         if (this.animFrame) cancelAnimationFrame(this.animFrame);
-        if (this.canvas?.parentNode) this.canvas.parentNode.removeChild(this.canvas);
+        if (this._io) this._io.disconnect();
+        if (this.canvas && this.canvas.parentNode) this.canvas.parentNode.removeChild(this.canvas);
     }
 }
 

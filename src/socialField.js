@@ -190,6 +190,18 @@ class SocialField {
 
         // Loop
         this._animate();
+
+        // Pausar cuando offscreen (IntersectionObserver)
+        this._io = new IntersectionObserver(entries => {
+            const vis = entries[0].isIntersecting;
+            if (vis && !this.visible) {
+                this.visible = true;
+                this.canvas.style.display = 'block';
+            } else if (!vis && this.visible) {
+                this.visible = false;
+            }
+        }, { threshold: 0.05 });
+        this._io.observe(this.container);
     }
 
     /* ─── ESTADO DE NODOS ─── */
@@ -290,10 +302,14 @@ class SocialField {
      * Campo gravitacional de poder: g(r) = G·M / r²
      * Atrae agentes hacia nodos con alta masa de poder
      */
+    // Reusable result object (evita 80 allocs/frame)
+    _gravResult = { gx: 0, gy: 0, closestNode: null, closestDistSq: Infinity };
+
     _gravityAt(x, y) {
-        let gx = 0,
-            gy = 0;
-        const softSq = 900; // softening² para evitar singularidad
+        const res = this._gravResult;
+        res.gx = 0; res.gy = 0; res.closestNode = null; res.closestDistSq = Infinity;
+        const softSq = 900;
+        const gravRadSq = THERMO_CONFIG.GRAVITY_RADIUS * THERMO_CONFIG.GRAVITY_RADIUS;
 
         for (const node of this.nodes) {
             if (!node.x || !node.y) continue;
@@ -302,17 +318,24 @@ class SocialField {
 
             const dx = node.x - x;
             const dy = node.y - y;
-            const rSq = dx * dx + dy * dy + softSq;
+            const rawDistSq = dx * dx + dy * dy;
+
+            // Closest node (sin sqrt)
+            if (rawDistSq < res.closestDistSq) {
+                res.closestDistSq = rawDistSq;
+                res.closestNode = node;
+            }
+
+            if (rawDistSq > gravRadSq) continue;
+
+            const rSq = rawDistSq + softSq;
             const r = Math.sqrt(rSq);
-
-            if (r > THERMO_CONFIG.GRAVITY_RADIUS) continue;
-
             const force = THERMO_CONFIG.G_SOCIAL * state.powerMass / rSq;
-            gx += (dx / r) * force;
-            gy += (dy / r) * force;
+            res.gx += (dx / r) * force;
+            res.gy += (dy / r) * force;
         }
 
-        return { gx, gy };
+        return res;
     }
 
     /* ─── TERMODINÁMICA ─── */
@@ -384,7 +407,10 @@ class SocialField {
     _updateAgents() {
         for (const agent of this.agents) {
             // Gravedad de poder atrae al agente
-            const { gx, gy } = this._gravityAt(agent.x, agent.y);
+            const grav = this._gravityAt(agent.x, agent.y);
+            const gx = grav.gx, gy = grav.gy;
+            agent._closestNode = grav.closestNode;
+            agent._closestDistSq = grav.closestDistSq;
             const speed = THERMO_CONFIG.AGENT_SPEED;
 
             agent.vx = agent.vx * 0.9 + gx * 0.005;
@@ -406,23 +432,11 @@ class SocialField {
             agent.life--;
             agent.patience -= 0.001;
 
-            // Detectar cercanía a nodos → interacción
-            let closestNode = null;
-            let closestDist = Infinity;
-            for (const node of this.nodes) {
-                if (!node.x || !node.y) continue;
-                const dx = agent.x - node.x;
-                const dy = agent.y - node.y;
-                const dist = Math.sqrt(dx * dx + dy * dy);
-                if (dist < closestDist) {
-                    closestDist = dist;
-                    closestNode = node;
-                }
-            }
-            agent.nearNode = closestNode;
+            // Detectar cercanía a nodos (reutiliza datos de _gravityAt fusionado)
+            agent.nearNode = agent._closestNode || null;
 
             // Interacción si está suficientemente cerca
-            if (closestDist < 50 && closestNode) {
+            if (agent._closestDistSq < 2500 && agent.nearNode) { // 50² = 2500
                 this._processInteraction(agent, closestNode);
             }
 
@@ -457,8 +471,7 @@ class SocialField {
     _animate() {
         const frame = () => {
             if (!this.visible) {
-                this.animFrame = requestAnimationFrame(frame);
-                return;
+                return; // Pausa real: no solicitar frames cuando offscreen
             }
             this._frameCount++;
 
@@ -605,50 +618,58 @@ class SocialField {
     }
 
     _renderNodeHeat(ctx) {
+        // Batch: agrupar arcos por color para minimizar state changes
+        const r = 35;
+        const segments = 24;
+        const arcBatch = []; // {x, y, a1, a2, cr, cg, cb}
+        const labels = [];   // {x, y, intPct, integrity, flow}
+
         for (const node of this.nodes) {
             if (!node.x || !node.y) continue;
             const state = this.nodeState.get(node.id);
             if (!state) continue;
 
             const temp = Math.min(state.temperature, 1);
-            if (temp < 0.1) continue;
-
-            // Anillo de saturación
-            const r = 35;
-            const segments = 24;
-            for (let i = 0; i < segments; i++) {
-                const fill = i / segments;
-                if (fill > temp) break;
-
-                const a1 = (i / segments) * Math.PI * 2 - Math.PI / 2;
-                const a2 = ((i + 1) / segments) * Math.PI * 2 - Math.PI / 2;
-
-                const idx = Math.min(255, Math.floor(fill * 255));
-                const cr = THERMO_PALETTE[idx * 3];
-                const cg = THERMO_PALETTE[idx * 3 + 1];
-                const cb = THERMO_PALETTE[idx * 3 + 2];
-
-                ctx.beginPath();
-                ctx.arc(node.x, node.y, r + 8, a1, a2);
-                ctx.strokeStyle = `rgba(${cr}, ${cg}, ${cb}, 0.6)`;
-                ctx.lineWidth = 3;
-                ctx.stroke();
+            if (temp >= 0.1) {
+                for (let i = 0; i < segments; i++) {
+                    const fill = i / segments;
+                    if (fill > temp) break;
+                    const idx = Math.min(255, Math.floor(fill * 255));
+                    arcBatch.push(
+                        node.x, node.y,
+                        (i / segments) * Math.PI * 2 - Math.PI / 2,
+                        ((i + 1) / segments) * Math.PI * 2 - Math.PI / 2,
+                        THERMO_PALETTE[idx * 3],
+                        THERMO_PALETTE[idx * 3 + 1],
+                        THERMO_PALETTE[idx * 3 + 2]
+                    );
+                }
             }
+            labels.push(node.x, node.y, Math.round(state.integrity * 100),
+                        state.integrity, state.currentFlow);
+        }
 
-            // Etiqueta de integridad
-            const intPct = Math.round(state.integrity * 100);
-            ctx.font = '8px "SF Mono", "Fira Code", monospace';
-            ctx.textAlign = 'center';
-            const intColor = state.integrity > 0.5 ? 'rgba(120, 180, 200, 0.6)' :
-                state.integrity > 0.2 ? 'rgba(200, 169, 110, 0.6)' :
-                'rgba(180, 60, 50, 0.8)';
-            ctx.fillStyle = intColor;
-            ctx.fillText(`R=${intPct}%`, node.x, node.y + r + 22);
+        // Dibujar todos los arcos con batch por estilo
+        ctx.lineWidth = 3;
+        let prevStyle = '';
+        for (let j = 0; j < arcBatch.length; j += 7) {
+            const style = 'rgba(' + arcBatch[j+4] + ',' + arcBatch[j+5] + ',' + arcBatch[j+6] + ',0.6)';
+            if (style !== prevStyle) { ctx.strokeStyle = style; prevStyle = style; }
+            ctx.beginPath();
+            ctx.arc(arcBatch[j], arcBatch[j+1], r + 8, arcBatch[j+2], arcBatch[j+3]);
+            ctx.stroke();
+        }
 
-            // Corriente actual
-            if (state.currentFlow > 0.1) {
-                ctx.fillText(`I=${state.currentFlow.toFixed(1)}`, node.x, node.y - r - 14);
-            }
+        // Labels (un solo cambio de font)
+        ctx.font = '8px "SF Mono","Fira Code",monospace';
+        ctx.textAlign = 'center';
+        for (let j = 0; j < labels.length; j += 5) {
+            const nx = labels[j], ny = labels[j+1], intPct = labels[j+2];
+            const integrity = labels[j+3], flow = labels[j+4];
+            ctx.fillStyle = integrity > 0.5 ? 'rgba(120,180,200,0.6)' :
+                integrity > 0.2 ? 'rgba(200,169,110,0.6)' : 'rgba(180,60,50,0.8)';
+            ctx.fillText('R=' + intPct + '%', nx, ny + r + 22);
+            if (flow > 0.1) ctx.fillText('I=' + flow.toFixed(1), nx, ny - r - 14);
         }
     }
 
@@ -745,8 +766,10 @@ class SocialField {
     }
 
     setVisible(v) {
+        const wasHidden = !this.visible;
         this.visible = v;
         this.canvas.style.display = v ? 'block' : 'none';
+        if (v && wasHidden) this._animate(); // Re-arrancar loop
     }
 
     resize(w, h) {
@@ -770,7 +793,8 @@ class SocialField {
 
     destroy() {
         if (this.animFrame) cancelAnimationFrame(this.animFrame);
-        if (this.canvas?.parentNode) this.canvas.parentNode.removeChild(this.canvas);
+        if (this._io) this._io.disconnect();
+        if (this.canvas && this.canvas.parentNode) this.canvas.parentNode.removeChild(this.canvas);
     }
 }
 
