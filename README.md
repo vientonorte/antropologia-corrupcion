@@ -29,6 +29,7 @@ index.html                ← Landing + 7 secciones narrativas + grafo SVG + cam
 │   ├── graph.js           ← Grafo SVG force-directed (Fruchterman-Reingold optimizado)
 │   ├── nodeRenderer.js    ← Panel lateral detalle (3 capas + fricción)
 │   └── socialField.js     ← Motor de entropía social (termodinámica de la corrupción)
+├── contra-archivo-v2.html  ← Versión alternativa "La Negra Colorá" (tema narrativo)
 ├── data/
 │   └── casos.json         ← Base de datos: 4 casos × 3 capas × fricción
 ├── admin.html             ← Panel CMS interno (Admin/Consultor)
