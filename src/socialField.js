@@ -197,6 +197,7 @@ class SocialField {
             if (vis && !this.visible) {
                 this.visible = true;
                 this.canvas.style.display = 'block';
+                this._animate(); // Reiniciar loop cuando vuelve a ser visible
             } else if (!vis && this.visible) {
                 this.visible = false;
             }
