@@ -27,8 +27,8 @@ class ForceSimulation {
         }));
         this.links = links.map(l => ({
             ...l,
-            source: this.nodes.find(n => n.id === (l.source ?.id ?? l.source)),
-            target: this.nodes.find(n => n.id === (l.target ?.id ?? l.target)),
+            source: this.nodes.find(n => n.id === (l.source?.id ?? l.source)),
+            target: this.nodes.find(n => n.id === (l.target?.id ?? l.target)),
         })).filter(l => l.source && l.target);
         this.width = width;
         this.height = height;
@@ -140,10 +140,11 @@ class FrictionGraph {
         this.selectedId = null;
         this.animFrame = null;
         this.field = null;
+        this._windowListeners = []; // Track window listeners for cleanup
+        this._nodeElMap = new Map();   // Cache node SVG elements
+        this._labelElMap = new Map();  // Cache label SVG elements
+        this._linkElMap = new Map();   // Cache link SVG elements
         this._dragNode = null;
-        this._nodeElMap = new Map();
-        this._labelElMap = new Map();
-        this._linkElMap = new Map();
 
         // Shared drag handlers (una sola instancia, no N)
         this._onMouseMove = (e) => {
@@ -342,19 +343,19 @@ class FrictionGraph {
 
         // Capa ética (arriba-izquierda)
         g.appendChild(this._layerCircle(-offset * 0.6, -offset * 0.7, r * 0.85,
-            node.colorEtica, 'etica', node.etica ?.titulo
+            node.colorEtica, 'etica', node.etica?.titulo
         ));
 
         // Capa institucional (arriba-derecha)
         g.appendChild(this._layerCircle(
             offset * 0.6, -offset * 0.7, r * 0.85,
-            node.colorInstitucional, 'institucional', node.institucional ?.titulo
+            node.colorInstitucional, 'institucional', node.institucional?.titulo
         ));
 
         // Capa material (abajo-centro)
         g.appendChild(this._layerCircle(
             0, offset * 0.7, r * 0.85,
-            node.colorMaterial, 'material', node.material ?.titulo
+            node.colorMaterial, 'material', node.material?.titulo
         ));
 
         // Zona de fricción central
@@ -487,10 +488,10 @@ class FrictionGraph {
             g.classList.toggle('ca-node--selected', id === node.id);
             g.classList.toggle('ca-node--dimmed',
                 id !== node.id && this.rawLinks.every(l =>
-                    (l.source ?.id ?? l.source) !== node.id &&
-                    (l.target ?.id ?? l.target) !== node.id ||
-                    (l.source ?.id ?? l.source) !== id &&
-                    (l.target ?.id ?? l.target) !== id
+                    (l.source?.id ?? l.source) !== node.id &&
+                    (l.target?.id ?? l.target) !== node.id ||
+                    (l.source?.id ?? l.source) !== id &&
+                    (l.target?.id ?? l.target) !== id
                 )
             );
         });
@@ -626,8 +627,15 @@ class FrictionGraph {
         if (this.animFrame) cancelAnimationFrame(this.animFrame);
         window.removeEventListener('mousemove', this._onMouseMove);
         window.removeEventListener('mouseup', this._onMouseUp);
+        for (const { type, handler } of this._windowListeners) {
+            window.removeEventListener(type, handler);
+        }
+        this._windowListeners = [];
+        this._nodeElMap.clear();
+        this._labelElMap.clear();
+        this._linkElMap.clear();
         if (this.field) this.field.destroy();
-        this.svg ?.remove();
+        if (this.svg) this.svg.remove();
     }
 }
 
