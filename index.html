@@ -246,6 +246,12 @@
         .meter-case:hover {
             border-color: var(--etica)
         }
+
+        .meter-case:active {
+            transform: scale(.96);
+            border-color: var(--etica);
+            background: rgba(200, 169, 110, .06)
+        }
         
         .mc-name {
             font-size: 11px;
@@ -1311,6 +1317,15 @@
         .viz-loading.loaded {
             opacity: 0
         }
+        .viz-loading.error .viz-spinner {
+            border-top-color: var(--crit);
+            animation: none;
+            border-color: rgba(200, 95, 74, .2);
+            border-top-color: var(--crit)
+        }
+        .viz-loading.error .viz-loading-text {
+            color: var(--crit)
+        }
         
         .viz-loading-inner {
             text-align: center;
@@ -1337,6 +1352,40 @@
             font-size: 11px;
             letter-spacing: .06em;
             font-family: var(--font-mono)
+        }
+
+        /* ══════════════════════════════════════ SCROLL-TOP FAB */
+        .scroll-top-fab {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 190;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(12, 12, 12, .88);
+            backdrop-filter: blur(8px);
+            border: 1px solid var(--border);
+            color: var(--muted);
+            font-size: 18px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity .25s, transform .15s
+        }
+
+        .scroll-top-fab.visible {
+            opacity: 1;
+            pointer-events: auto
+        }
+
+        .scroll-top-fab:hover {
+            border-color: var(--etica);
+            color: var(--etica);
+            transform: translateY(-2px)
         }
         /* ══════════════════════════════════════ RESPONSIVE */
         
@@ -1414,10 +1463,119 @@
             .hero-ctas a {
                 text-align: center
             }
+            .scroll-top-fab {
+                bottom: 80px;
+                right: 16px;
+                width: 36px;
+                height: 36px;
+                font-size: 15px
+            }
             footer {
                 flex-direction: column;
                 gap: 20px;
                 padding: 32px 20px
+            }
+        }
+
+        /* ══════════════════════════════════════ GRAPH THESIS PANEL */
+        .graph-thesis {
+            margin-top: 24px;
+            background: var(--s1);
+            border: 1px solid var(--border);
+            border-radius: var(--r);
+            overflow: hidden
+        }
+
+        .graph-thesis-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            padding: 16px 20px;
+            background: transparent;
+            border: none;
+            color: var(--text);
+            font-family: inherit;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            letter-spacing: .02em;
+            transition: background .15s
+        }
+
+        .graph-thesis-toggle:hover {
+            background: rgba(255, 255, 255, .02)
+        }
+
+        .graph-thesis-toggle .gt-arrow {
+            font-size: 11px;
+            color: var(--muted);
+            transition: transform .25s
+        }
+
+        .graph-thesis.open .gt-arrow {
+            transform: rotate(180deg)
+        }
+
+        .graph-thesis-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height .35s ease
+        }
+
+        .graph-thesis.open .graph-thesis-body {
+            max-height: 600px
+        }
+
+        .gt-content {
+            padding: 0 20px 20px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px
+        }
+
+        .gt-card {
+            padding: 16px;
+            border-radius: 6px;
+            border: 1px solid var(--border)
+        }
+
+        .gt-card-icon {
+            font-size: 16px;
+            margin-bottom: 8px;
+            display: block
+        }
+
+        .gt-card-title {
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: var(--text)
+        }
+
+        .gt-card-body {
+            font-size: 11px;
+            color: var(--muted);
+            line-height: 1.55
+        }
+
+        .gt-card-body strong {
+            color: var(--text)
+        }
+
+        .gt-full {
+            grid-column: 1 / -1;
+            border-color: rgba(200, 169, 110, .2);
+            background: rgba(200, 169, 110, .03)
+        }
+
+        .gt-full .gt-card-title {
+            color: var(--etica)
+        }
+
+        @media(max-width:768px) {
+            .gt-content {
+                grid-template-columns: 1fr
             }
         }
         /* ═══════════════ SOCIAL FIELD — ENTROPÍA SOCIAL ═══════════════ */
@@ -1822,12 +1980,49 @@
                         <div class="gl-dot" style="background:var(--mat)"></div>Material</div>
                 </div>
             </div>
+
+            <!-- CÓMO LEER ESTE GRAFO -->
+            <div class="graph-thesis" id="graph-thesis">
+                <button class="graph-thesis-toggle" onclick="this.parentElement.classList.toggle('open')" aria-expanded="false" aria-controls="gt-body">
+                    <span>⊞ Cómo leer este grafo — Argumento central de la tesis</span>
+                    <span class="gt-arrow">▼</span>
+                </button>
+                <div class="graph-thesis-body" id="gt-body">
+                    <div class="gt-content">
+                        <div class="gt-card">
+                            <span class="gt-card-icon">⬡</span>
+                            <div class="gt-card-title">Cada nodo es un caso etnográfico</div>
+                            <div class="gt-card-body">Los nodos representan los <strong>4 campos multi-situados</strong> de la investigación. Su tamaño es proporcional a la intensidad de fricción: más grande = más mistranslation documentada. No son puntos abstractos — cada uno es un territorio donde la traducción institucional falla.</div>
+                        </div>
+                        <div class="gt-card">
+                            <span class="gt-card-icon">─</span>
+                            <div class="gt-card-title">Cada arista es una conexión estructural</div>
+                            <div class="gt-card-body">Las líneas conectan campos que comparten <strong>actores, instituciones o mecanismos de poder</strong>. Si SURA financia territorios mapuche y CONADI aparece en ambos campos, hay arista. La red muestra que la corrupción no es un caso aislado — es un sistema.</div>
+                        </div>
+                        <div class="gt-card">
+                            <span class="gt-card-icon" style="color:var(--etica)">◎</span>
+                            <div class="gt-card-title">Los colores son regímenes de verdad</div>
+                            <div class="gt-card-body"><strong style="color:var(--etica)">Dorado</strong> = testimonio situado (voz, memoria, daño). <strong style="color:var(--inst)">Azul</strong> = registro institucional (norma, clasificación, proceso). <strong style="color:var(--mat)">Verde</strong> = evidencia material (territorio, datos, cuerpo). La fricción ocurre <em>entre</em> colores.</div>
+                        </div>
+                        <div class="gt-card">
+                            <span class="gt-card-icon" style="color:var(--crit)">⚡</span>
+                            <div class="gt-card-title">La fricción se mide, no se adivina</div>
+                            <div class="gt-card-body">Cada conexión tiene una <strong>intensidad de fricción (0.0–1.0)</strong> calculada por el motor. Mide cuán incompatibles son los vocabularios entre capas. Sobre <strong>0.70</strong> es umbral crítico. Sobre <strong>0.85</strong>, la traducción es imposible sin violencia epistemológica.</div>
+                        </div>
+                        <div class="gt-card gt-full">
+                            <span class="gt-card-icon">◬</span>
+                            <div class="gt-card-title">Argumento central: la mistranslation es sistémica</div>
+                            <div class="gt-card-body">Si la corrupción fuera casos aislados, el grafo mostraría nodos sueltos. Pero lo que se ve es una <strong>red densa donde los mismos actores, instituciones y mecanismos reaparecen</strong> en múltiples campos. La AFP que invierte en territorio mapuche, el Estado que consulta sin consentimiento, el periodista que no puede traducir la fuente sin destruirla — todos están conectados por los mismos patrones de mistranslation. <strong>La corrupción no es la excepción al sistema: es cómo funciona el sistema.</strong></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </section>
 
         <!-- ══════════════════════════════════════ CAMPO SOCIAL — ENTROPÍA -->
         <section id="campo-social">
             <div class="section-eyebrow">
-                <span class="eyebrow-num">04b</span>
+                <span class="eyebrow-num">05</span>
                 <div class="eyebrow-line"></div>
                 <span class="eyebrow-text">Entropía institucional</span>
             </div>
@@ -1863,7 +2058,7 @@
         <!-- ══════════════════════════════════════ PROTOCOLO -->
         <section id="protocolo">
             <div class="section-eyebrow">
-                <span class="eyebrow-num">05</span>
+                <span class="eyebrow-num">06</span>
                 <div class="eyebrow-line"></div>
                 <span class="eyebrow-text">Hacia la buena traducción</span>
             </div>
@@ -1928,7 +2123,7 @@
         <!-- ══════════════════════════════════════ ARCHIVO -->
         <section id="archivo">
             <div class="section-eyebrow">
-                <span class="eyebrow-num">06</span>
+                <span class="eyebrow-num">07</span>
                 <div class="eyebrow-line"></div>
                 <span class="eyebrow-text">Contra-archivo abierto</span>
             </div>
@@ -2027,6 +2222,9 @@
 
         <!-- ══════════════════════════════════════ BOTTOM NAV (MOBILE) -->
     </main>
+
+    <!-- SCROLL-TOP FAB -->
+    <button class="scroll-top-fab" id="scroll-top-fab" aria-label="Volver al inicio" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
 
     <nav class="bottom-nav" id="bottom-nav" aria-label="Navegación mobile">
         <a href="#hero"><span class="bn-icon">◉</span>Tesis</a>
@@ -2296,6 +2494,7 @@ function initTensiones() {
 
 function activateTension(id) {
   activeCasoId = id;
+  if (history.replaceState) history.replaceState(null, '', '#tension-' + id);
   document.querySelectorAll('.ts-btn').forEach(b => {
     b.classList.toggle('active', b.dataset.id === id);
   });
@@ -2492,8 +2691,53 @@ function initBottomNav() {
   update();
 }
 
+/* ══════════════ VIZ TIMEOUT FALLBACK (P0 — H9) ══════════════ */
+function vizTimeout(loadingId, ms) {
+  var t = setTimeout(function() {
+    var el = document.getElementById(loadingId);
+    if (el && !el.classList.contains('loaded')) {
+      el.classList.add('error');
+      var txt = el.querySelector('.viz-loading-text');
+      if (txt) txt.textContent = 'Error al cargar — recarga la página';
+    }
+  }, ms);
+  return t;
+}
+
+/* ══════════════ SCROLL-TOP FAB (P1 — H3) ══════════════ */
+function initScrollTopFab() {
+  var fab = document.getElementById('scroll-top-fab');
+  if (!fab) return;
+  var ticking = false;
+  window.addEventListener('scroll', function() {
+    if (!ticking) {
+      ticking = true;
+      requestAnimationFrame(function() {
+        fab.classList.toggle('visible', window.scrollY > 400);
+        ticking = false;
+      });
+    }
+  }, { passive: true });
+}
+
+/* ══════════════ DEEP-LINK TENSIONES (P2 — H7) ══════════════ */
+function initDeepLink() {
+  var hash = window.location.hash;
+  if (hash && hash.indexOf('#tension-') === 0) {
+    var id = hash.slice(9);
+    var found = CASOS.find(function(c) { return c.id === id; });
+    if (found) {
+      setTimeout(function() {
+        var el = document.getElementById('tensiones');
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+        setTimeout(function() { activateTension(id); }, 400);
+      }, 300);
+    }
+  }
+}
+
 /* ══════════════ BOOTSTRAP ══════════════ */
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', function() {
   initHeroMeter();
   initCampos();
   initTensiones();
@@ -2501,6 +2745,11 @@ document.addEventListener('DOMContentLoaded', () => {
   initGrafo();
   initSocialField();
   initBottomNav();
+  initScrollTopFab();
+  initDeepLink();
+  // P0: timeouts para visualizaciones
+  vizTimeout('graph-loading', 8000);
+  vizTimeout('sf-loading', 8000);
 });
     </script>
 </body>
