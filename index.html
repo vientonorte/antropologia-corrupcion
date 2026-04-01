@@ -1291,11 +1291,72 @@
             background: rgba(255, 255, 255, .1);
             border-radius: 3px
         }
+        /* ══════════════════════════════════════ LOADING SKELETON */
+        
+        .viz-loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            width: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 5;
+            background: var(--s1);
+            transition: opacity .4s ease;
+            pointer-events: none
+        }
+        
+        .viz-loading.loaded {
+            opacity: 0
+        }
+        
+        .viz-loading-inner {
+            text-align: center;
+            color: var(--dim)
+        }
+        
+        .viz-spinner {
+            width: 28px;
+            height: 28px;
+            border: 2px solid var(--border);
+            border-top-color: var(--etica);
+            border-radius: 50%;
+            animation: viz-spin .8s linear infinite;
+            margin: 0 auto 10px
+        }
+        
+        @keyframes viz-spin {
+            to {
+                transform: rotate(360deg)
+            }
+        }
+        
+        .viz-loading-text {
+            font-size: 11px;
+            letter-spacing: .06em;
+            font-family: var(--font-mono)
+        }
         /* ══════════════════════════════════════ RESPONSIVE */
         
         @media(max-width:768px) {
             nav .nav-links {
                 display: none
+            }
+            section {
+                padding: 48px 20px
+            }
+            #hero {
+                padding: 100px 20px 48px;
+                min-height: auto
+            }
+            .hero-h1 {
+                font-size: clamp(26px, 7vw, 36px)
+            }
+            .hero-thesis {
+                font-size: 16px;
+                padding-left: 14px
             }
             .meter-cases {
                 grid-template-columns: 1fr 1fr
@@ -1309,11 +1370,54 @@
             .tension-viewer {
                 grid-template-columns: 1fr
             }
+            .graph-controls {
+                flex-wrap: wrap
+            }
+            .gc-btn {
+                font-size: 10px;
+                padding: 4px 10px
+            }
+            .graph-overlay-legend {
+                bottom: 8px;
+                right: 8px;
+                padding: 8px 10px
+            }
+            .sf-metrics {
+                gap: 12px
+            }
+            .sf-metric {
+                min-width: 70px
+            }
+            .sf-value {
+                font-size: 15px
+            }
+            .sf-legend {
+                font-size: .65rem !important;
+                gap: 10px !important
+            }
             .protocolo-grid {
                 grid-template-columns: 1fr
             }
             .archivo-grid {
                 grid-template-columns: 1fr 1fr
+            }
+            h2 {
+                font-size: clamp(20px, 5vw, 28px)
+            }
+            .section-lead {
+                font-size: 15px
+            }
+            .hero-ctas {
+                flex-direction: column;
+                gap: 10px
+            }
+            .hero-ctas a {
+                text-align: center
+            }
+            footer {
+                flex-direction: column;
+                gap: 20px;
+                padding: 32px 20px
             }
         }
         /* ═══════════════ SOCIAL FIELD — ENTROPÍA SOCIAL ═══════════════ */
@@ -1427,6 +1531,29 @@
             background: rgba(200, 169, 110, .15);
             color: rgba(200, 169, 110, .95)
         }
+        /* ═══════════════ VIZ RESPONSIVE (post-cascade) ═══════════════ */
+        
+        @media(max-width:768px) {
+            .graph-wrap {
+                height: 320px
+            }
+            #campo-social-wrap {
+                height: 340px
+            }
+            .sf-controls {
+                flex-wrap: wrap;
+                justify-content: center
+            }
+        }
+        
+        @media(min-width:1200px) {
+            .graph-wrap {
+                height: 560px
+            }
+            #campo-social-wrap {
+                height: 580px
+            }
+        }
         /* ═══════════════ BOTTOM NAVIGATION (MOBILE) ═══════════════ */
         
         .bottom-nav {
@@ -1436,39 +1563,59 @@
             left: 0;
             right: 0;
             z-index: 200;
-            background: rgba(12, 12, 12, .92);
-            backdrop-filter: blur(12px);
-            border-top: 1px solid var(--border);
-            padding: 6px 8px calc(6px + env(safe-area-inset-bottom));
+            background: rgba(12, 12, 12, .95);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-top: 1px solid rgba(200, 169, 110, .12);
+            padding: 4px 4px calc(4px + env(safe-area-inset-bottom));
             justify-content: space-around;
             align-items: center;
-            gap: 2px
+            gap: 0
         }
         
         .bottom-nav a {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 2px;
+            justify-content: center;
+            gap: 1px;
             font-size: 9px;
             color: var(--muted);
             text-decoration: none;
-            padding: 4px 6px;
-            border-radius: 6px;
-            transition: color .15s, background .15s;
+            padding: 6px 2px 4px;
+            border-radius: 8px;
+            transition: color .15s, background .15s, transform .1s;
             letter-spacing: .02em;
-            min-width: 48px;
-            text-align: center
+            min-width: 44px;
+            min-height: 44px;
+            text-align: center;
+            -webkit-tap-highlight-color: transparent;
+            position: relative
+        }
+        
+        .bottom-nav a:active {
+            transform: scale(.92)
         }
         
         .bottom-nav a .bn-icon {
-            font-size: 16px;
+            font-size: 18px;
             line-height: 1
         }
         
         .bottom-nav a.active {
-            color: var(--etica);
-            background: rgba(200, 169, 110, .08)
+            color: var(--etica)
+        }
+        
+        .bottom-nav a.active::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: var(--etica)
         }
         
         .bottom-nav a:hover {
@@ -1480,7 +1627,7 @@
                 display: flex
             }
             body {
-                padding-bottom: 72px
+                padding-bottom: 68px
             }
         }
     </style>
@@ -1658,6 +1805,12 @@
                 <button class="gc-btn" data-layer="material">◈ Material</button>
             </div>
             <div class="graph-wrap">
+                <div class="viz-loading" id="graph-loading">
+                    <div class="viz-loading-inner">
+                        <div class="viz-spinner"></div>
+                        <div class="viz-loading-text">Cargando red…</div>
+                    </div>
+                </div>
                 <div id="ca-graph-canvas"></div>
                 <div id="ca-preview"></div>
                 <div class="graph-overlay-legend">
@@ -1686,6 +1839,12 @@
             </p>
 
             <div id="campo-social-wrap">
+                <div class="viz-loading" id="sf-loading">
+                    <div class="viz-loading-inner">
+                        <div class="viz-spinner"></div>
+                        <div class="viz-loading-text">Cargando entropía…</div>
+                    </div>
+                </div>
                 <div id="campo-social-canvas"></div>
             </div>
             <div id="sf-metrics-panel"></div>
@@ -2207,66 +2366,104 @@ function initUmbral() {
   }).join('');
 }
 
-/* ── GRAFO ── */
+/* ── GRAFO (lazy-init con IntersectionObserver) ── */
 function initGrafo() {
-  function tryInit() {
-    if (!window.frictionEngine || !window.FrictionGraph) {
-      setTimeout(tryInit, 120); return;
-    }
-    const gd = window.frictionEngine.buildGraph(CASOS);
-    const canvas = document.getElementById('ca-graph-canvas');
-    if (!canvas) return;
-    const G = new window.FrictionGraph({
-      container: canvas,
-      nodes: gd.nodes,
-      links: gd.links,
-      onNodeClick: (node) => {
-        activateTension(node.id);
-        var t = document.getElementById('tensiones');
-        if (t) t.scrollIntoView({behavior:'smooth'});
-      },
-      onNodeHover: () => {},
-    });
-
-    document.querySelectorAll('#graph-controls .gc-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('#graph-controls .gc-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        G.setActiveLayer(btn.dataset.layer);
+  let initialized = false;
+  function doInit() {
+    if (initialized) return;
+    function tryInit() {
+      if (!window.frictionEngine || !window.FrictionGraph) {
+        setTimeout(tryInit, 120); return;
+      }
+      initialized = true;
+      const gd = window.frictionEngine.buildGraph(CASOS);
+      const canvas = document.getElementById('ca-graph-canvas');
+      if (!canvas) return;
+      const G = new window.FrictionGraph({
+        container: canvas,
+        nodes: gd.nodes,
+        links: gd.links,
+        onNodeClick: (node) => {
+          activateTension(node.id);
+          var t = document.getElementById('tensiones');
+          if (t) t.scrollIntoView({behavior:'smooth'});
+        },
+        onNodeHover: () => {},
       });
-    });
+
+      // Ocultar loading skeleton
+      const loader = document.getElementById('graph-loading');
+      if (loader) loader.classList.add('loaded');
+
+      document.querySelectorAll('#graph-controls .gc-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('#graph-controls .gc-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          G.setActiveLayer(btn.dataset.layer);
+        });
+      });
+    }
+    tryInit();
   }
-  tryInit();
+  // Lazy-init: solo inicializar cuando la seccion es visible
+  const section = document.getElementById('grafo');
+  if (section && 'IntersectionObserver' in window) {
+    const obs = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) { doInit(); obs.disconnect(); }
+    }, { rootMargin: '200px' });
+    obs.observe(section);
+  } else {
+    doInit();
+  }
 }
 
-/* ══════════════ CAMPO SOCIAL — ENTROPÍA ══════════════ */
+/* ══════════════ CAMPO SOCIAL — ENTROPÍA (lazy-init) ══════════════ */
 function initSocialField() {
-  function tryInit() {
-    if (!window.frictionEngine || !window.SocialField) {
-      setTimeout(tryInit, 150); return;
-    }
-    const gd = window.frictionEngine.buildGraph(CASOS);
-    const wrap = document.getElementById('campo-social-canvas');
-    if (!wrap) return;
-    const SF = new window.SocialField({
-      container: wrap,
-      nodes: gd.nodes,
-      links: gd.links,
-      metricsEl: document.getElementById('sf-metrics-panel'),
-    });
+  let initialized = false;
+  function doInit() {
+    if (initialized) return;
+    function tryInit() {
+      if (!window.frictionEngine || !window.SocialField) {
+        setTimeout(tryInit, 150); return;
+      }
+      initialized = true;
+      const gd = window.frictionEngine.buildGraph(CASOS);
+      const wrap = document.getElementById('campo-social-canvas');
+      if (!wrap) return;
+      const SF = new window.SocialField({
+        container: wrap,
+        nodes: gd.nodes,
+        links: gd.links,
+        metricsEl: document.getElementById('sf-metrics-panel'),
+      });
 
-    // Controles
-    const resetBtn = document.getElementById('sf-reset');
-    const toggleBtn = document.getElementById('sf-toggle');
-    let paused = false;
-    if (resetBtn) resetBtn.addEventListener('click', () => SF.reset());
-    if (toggleBtn) toggleBtn.addEventListener('click', () => {
-      paused = !paused;
-      SF.setVisible(!paused);
-      toggleBtn.textContent = paused ? '▶ Reanudar' : '⏸ Pausar';
-    });
+      // Ocultar loading skeleton
+      const loader = document.getElementById('sf-loading');
+      if (loader) loader.classList.add('loaded');
+
+      // Controles
+      const resetBtn = document.getElementById('sf-reset');
+      const toggleBtn = document.getElementById('sf-toggle');
+      let paused = false;
+      if (resetBtn) resetBtn.addEventListener('click', () => SF.reset());
+      if (toggleBtn) toggleBtn.addEventListener('click', () => {
+        paused = !paused;
+        SF.setVisible(!paused);
+        toggleBtn.textContent = paused ? '▶ Reanudar' : '⏸ Pausar';
+      });
+    }
+    tryInit();
   }
-  tryInit();
+  // Lazy-init: solo inicializar cuando la seccion es visible
+  const section = document.getElementById('campo-social');
+  if (section && 'IntersectionObserver' in window) {
+    const obs = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) { doInit(); obs.disconnect(); }
+    }, { rootMargin: '200px' });
+    obs.observe(section);
+  } else {
+    doInit();
+  }
 }
 
 /* ══════════════ BOTTOM NAV — SCROLL TRACKER ══════════════ */
