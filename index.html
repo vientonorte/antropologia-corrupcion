@@ -256,7 +256,7 @@
         .meter-case:hover {
             border-color: var(--etica)
         }
-
+        
         .meter-case:active {
             transform: scale(.96);
             border-color: var(--etica);
@@ -1327,12 +1327,14 @@
         .viz-loading.loaded {
             opacity: 0
         }
+        
         .viz-loading.error .viz-spinner {
             border-top-color: var(--crit);
             animation: none;
             border-color: rgba(200, 95, 74, .2);
             border-top-color: var(--crit)
         }
+        
         .viz-loading.error .viz-loading-text {
             color: var(--crit)
         }
@@ -1363,8 +1365,8 @@
             letter-spacing: .06em;
             font-family: var(--font-mono)
         }
-
         /* ══════════════════════════════════════ SCROLL-TOP FAB */
+        
         .scroll-top-fab {
             position: fixed;
             bottom: 24px;
@@ -1386,12 +1388,12 @@
             pointer-events: none;
             transition: opacity .25s, transform .15s
         }
-
+        
         .scroll-top-fab.visible {
             opacity: 1;
             pointer-events: auto
         }
-
+        
         .scroll-top-fab:hover {
             border-color: var(--etica);
             color: var(--etica);
@@ -1486,8 +1488,8 @@
                 padding: 32px 20px
             }
         }
-
         /* ══════════════════════════════════════ GRAPH THESIS PANEL */
+        
         .graph-thesis {
             margin-top: 24px;
             background: var(--s1);
@@ -1495,7 +1497,7 @@
             border-radius: var(--r);
             overflow: hidden
         }
-
+        
         .graph-thesis-toggle {
             display: flex;
             align-items: center;
@@ -1512,77 +1514,77 @@
             letter-spacing: .02em;
             transition: background .15s
         }
-
+        
         .graph-thesis-toggle:hover {
             background: rgba(255, 255, 255, .02)
         }
-
+        
         .graph-thesis-toggle .gt-arrow {
             font-size: 11px;
             color: var(--muted);
             transition: transform .25s
         }
-
+        
         .graph-thesis.open .gt-arrow {
             transform: rotate(180deg)
         }
-
+        
         .graph-thesis-body {
             max-height: 0;
             overflow: hidden;
             transition: max-height .35s ease
         }
-
+        
         .graph-thesis.open .graph-thesis-body {
             max-height: 600px
         }
-
+        
         .gt-content {
             padding: 0 20px 20px;
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 16px
         }
-
+        
         .gt-card {
             padding: 16px;
             border-radius: 6px;
             border: 1px solid var(--border)
         }
-
+        
         .gt-card-icon {
             font-size: 16px;
             margin-bottom: 8px;
             display: block
         }
-
+        
         .gt-card-title {
             font-size: 12px;
             font-weight: 600;
             margin-bottom: 6px;
             color: var(--text)
         }
-
+        
         .gt-card-body {
             font-size: 11px;
             color: var(--muted);
             line-height: 1.55
         }
-
+        
         .gt-card-body strong {
             color: var(--text)
         }
-
+        
         .gt-full {
             grid-column: 1 / -1;
             border-color: rgba(200, 169, 110, .2);
             background: rgba(200, 169, 110, .03)
         }
-
+        
         .gt-full .gt-card-title {
             color: var(--etica)
         }
-
+        
         @media(max-width:768px) {
             .gt-content {
                 grid-template-columns: 1fr
@@ -1699,17 +1701,17 @@
             background: rgba(200, 169, 110, .15);
             color: rgba(200, 169, 110, .95)
         }
-
+        
         .sf-metrics--enhanced {
             gap: 16px;
             align-items: flex-start
         }
-
+        
         .sf-metric--entropy {
             flex: 1;
             min-width: 160px
         }
-
+        
         .sf-phase {
             display: inline-block;
             font-size: 8px;
@@ -1718,20 +1720,20 @@
             padding: 2px 6px;
             border-radius: 3px;
             margin-top: 2px;
-            background: rgba(200,169,110,.08);
-            color: rgba(200,169,110,.6);
-            border: 1px solid rgba(200,169,110,.12)
+            background: rgba(200, 169, 110, .08);
+            color: rgba(200, 169, 110, .6);
+            border: 1px solid rgba(200, 169, 110, .12)
         }
-
+        
         .sf-bar {
             width: 100%;
             height: 4px;
-            background: rgba(200,169,110,.08);
+            background: rgba(200, 169, 110, .08);
             border-radius: 2px;
             overflow: hidden;
             margin-top: 4px
         }
-
+        
         .sf-bar__fill {
             height: 100%;
             border-radius: 2px;
@@ -1836,10 +1838,334 @@
                 padding-bottom: 68px
             }
         }
-
+        /* ═══════════════ BUSCADOR DE FRICCIÓN INSTITUCIONAL ═══════════════ */
+        
+        #buscador {
+            border-top: 1px solid var(--border)
+        }
+        
+        .se-search-bar {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 24px;
+            flex-wrap: wrap
+        }
+        
+        .se-input-wrap {
+            flex: 1;
+            min-width: 240px;
+            position: relative
+        }
+        
+        .se-input-wrap::before {
+            content: '⊘';
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--dim);
+            font-size: 14px;
+            pointer-events: none
+        }
+        
+        #se-search-input {
+            width: 100%;
+            padding: 12px 16px 12px 38px;
+            background: var(--s1);
+            border: 1px solid var(--border);
+            border-radius: var(--r);
+            color: var(--text);
+            font-size: 14px;
+            font-family: var(--font-sans);
+            transition: border-color .2s
+        }
+        
+        #se-search-input:focus {
+            outline: none;
+            border-color: var(--etica)
+        }
+        
+        #se-search-input::placeholder {
+            color: var(--dim)
+        }
+        
+        .se-filters {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap
+        }
+        
+        .se-select {
+            padding: 10px 14px;
+            background: var(--s1);
+            border: 1px solid var(--border);
+            border-radius: var(--r);
+            color: var(--muted);
+            font-size: 12px;
+            font-family: var(--font-sans);
+            cursor: pointer;
+            transition: border-color .2s;
+            -webkit-appearance: none;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+            padding-right: 30px
+        }
+        
+        .se-select:focus {
+            outline: none;
+            border-color: var(--etica)
+        }
+        
+        #se-stats-panel {
+            margin-bottom: 24px
+        }
+        
+        .se-stats {
+            background: var(--s1);
+            border: 1px solid var(--border);
+            border-radius: var(--r);
+            padding: 20px
+        }
+        
+        .se-stats-summary {
+            display: flex;
+            gap: 32px;
+            margin-bottom: 16px;
+            flex-wrap: wrap
+        }
+        
+        .se-stat-big {
+            display: flex;
+            flex-direction: column;
+            gap: 2px
+        }
+        
+        .se-stat-num {
+            font-family: var(--font-mono);
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text)
+        }
+        
+        .se-stat-desc {
+            font-size: 11px;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            color: var(--muted)
+        }
+        
+        .se-stats-breakdown {
+            display: flex;
+            flex-direction: column;
+            gap: 6px
+        }
+        
+        .se-stat-row {
+            display: flex;
+            align-items: center;
+            gap: 10px
+        }
+        
+        .se-stat-label {
+            font-size: 11px;
+            min-width: 120px;
+            white-space: nowrap
+        }
+        
+        .se-stat-bar {
+            flex: 1;
+            height: 3px;
+            background: rgba(255, 255, 255, .06);
+            border-radius: 2px;
+            overflow: hidden
+        }
+        
+        .se-stat-fill {
+            height: 100%;
+            border-radius: 2px;
+            transition: width .6s ease
+        }
+        
+        .se-stat-val {
+            font-family: var(--font-mono);
+            font-size: 12px;
+            color: var(--muted);
+            min-width: 24px;
+            text-align: right
+        }
+        
+        .se-stats-empty {
+            color: var(--muted);
+            font-size: 14px;
+            text-align: center;
+            padding: 20px
+        }
+        /* Result cards */
+        
+        .se-results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 16px
+        }
+        
+        .se-card {
+            background: var(--s1);
+            border: 1px solid var(--border);
+            border-radius: var(--r);
+            padding: 20px;
+            transition: all .2s;
+            display: flex;
+            flex-direction: column;
+            gap: 10px
+        }
+        
+        .se-card:hover {
+            border-color: rgba(255, 255, 255, .15);
+            transform: translateY(-2px)
+        }
+        
+        .se-card-header {
+            display: flex;
+            align-items: center;
+            gap: 8px
+        }
+        
+        .se-card-icon {
+            font-size: 16px
+        }
+        
+        .se-card-fuente {
+            font-size: 10px;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            font-weight: 600
+        }
+        
+        .se-card-fecha {
+            margin-left: auto;
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: var(--dim)
+        }
+        
+        .se-card-title {
+            font-size: 14px;
+            font-weight: 600;
+            line-height: 1.35;
+            color: var(--text)
+        }
+        
+        .se-card-capa {
+            font-size: 12px;
+            color: var(--muted);
+            line-height: 1.55;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden
+        }
+        
+        .se-card-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 6px
+        }
+        
+        .se-card-score-wrap {
+            display: flex;
+            align-items: center;
+            gap: 8px
+        }
+        
+        .se-card-score-label {
+            font-size: 10px;
+            color: var(--dim);
+            letter-spacing: .05em;
+            text-transform: uppercase;
+            min-width: 52px
+        }
+        
+        .se-card-score-bar {
+            flex: 1;
+            height: 4px;
+            background: rgba(255, 255, 255, .06);
+            border-radius: 2px;
+            overflow: hidden
+        }
+        
+        .se-card-score-fill {
+            height: 100%;
+            border-radius: 2px;
+            transition: width .8s cubic-bezier(.4, 0, .2, 1)
+        }
+        
+        .se-card-score-val {
+            font-family: var(--font-mono);
+            font-size: 14px;
+            font-weight: 700;
+            min-width: 36px;
+            text-align: right
+        }
+        
+        .se-card-caso {
+            font-size: 11px;
+            color: var(--dim);
+            padding: 4px 0 0
+        }
+        
+        .se-card-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px
+        }
+        
+        .se-tag {
+            font-size: 10px;
+            padding: 2px 8px;
+            background: rgba(255, 255, 255, .04);
+            border: 1px solid var(--border);
+            border-radius: 3px;
+            color: var(--dim)
+        }
+        
+        .se-card-link {
+            font-size: 11px;
+            color: var(--etica);
+            text-decoration: none;
+            transition: opacity .15s;
+            margin-top: auto;
+            padding-top: 4px
+        }
+        
+        .se-card-link:hover {
+            opacity: .7
+        }
+        
+        .se-no-results {
+            grid-column: 1 / -1;
+            text-align: center;
+            color: var(--muted);
+            padding: 40px 20px;
+            font-size: 14px
+        }
+        
+        @media(max-width:768px) {
+            .se-search-bar {
+                flex-direction: column
+            }
+            .se-results-grid {
+                grid-template-columns: 1fr
+            }
+            .se-stats-summary {
+                gap: 16px
+            }
+        }
         /* ═══════════════ PRINT STYLESHEET ═══════════════ */
+        
         @media print {
-            :root {
+             :root {
                 --bg: #fff;
                 --s1: #fff;
                 --s2: #f5f5f5;
@@ -1847,22 +2173,71 @@
                 --muted: #555;
                 --border: #ddd;
             }
-            body { background: #fff; color: #111; font-size: 11pt; line-height: 1.6; }
-            .hero { min-height: auto; padding: 40px 20px; }
-            .hero h1 { font-size: 24pt; color: #111; }
-            .hero-subtitle { color: #333; }
-            nav, .bottom-nav, .scroll-top-fab, .hero-ctas,
-            .graph-wrap, #campo-social-wrap, .sf-controls,
-            .social-field-canvas, #graph-controls,
-            .gc-btn, .sf-btn, .ts-toggle, footer { display: none !important; }
-            .section { break-inside: avoid; padding: 20px 0; }
-            .section h2 { font-size: 16pt; color: #111; border-bottom: 1px solid #333; }
-            .tv-capa { border: 1px solid #ccc; break-inside: avoid; }
-            .tvc-title { color: #111; }
-            .kw { background: #eee; color: #333; border: 1px solid #ccc; }
-            a { color: #111; text-decoration: underline; }
-            a::after { content: " (" attr(href) ")"; font-size: 8pt; color: #666; }
-            a[href^="#"]::after { content: none; }
+            body {
+                background: #fff;
+                color: #111;
+                font-size: 11pt;
+                line-height: 1.6;
+            }
+            .hero {
+                min-height: auto;
+                padding: 40px 20px;
+            }
+            .hero h1 {
+                font-size: 24pt;
+                color: #111;
+            }
+            .hero-subtitle {
+                color: #333;
+            }
+            nav,
+            .bottom-nav,
+            .scroll-top-fab,
+            .hero-ctas,
+            .graph-wrap,
+            #campo-social-wrap,
+            .sf-controls,
+            .social-field-canvas,
+            #graph-controls,
+            .gc-btn,
+            .sf-btn,
+            .ts-toggle,
+            footer {
+                display: none !important;
+            }
+            .section {
+                break-inside: avoid;
+                padding: 20px 0;
+            }
+            .section h2 {
+                font-size: 16pt;
+                color: #111;
+                border-bottom: 1px solid #333;
+            }
+            .tv-capa {
+                border: 1px solid #ccc;
+                break-inside: avoid;
+            }
+            .tvc-title {
+                color: #111;
+            }
+            .kw {
+                background: #eee;
+                color: #333;
+                border: 1px solid #ccc;
+            }
+            a {
+                color: #111;
+                text-decoration: underline;
+            }
+            a::after {
+                content: " (" attr(href) ")";
+                font-size: 8pt;
+                color: #666;
+            }
+            a[href^="#"]::after {
+                content: none;
+            }
         }
     </style>
 </head>
@@ -1879,6 +2254,7 @@
             <a href="#tensiones">Tensiones</a>
             <a href="#grafo">Grafo</a>
             <a href="#campo-social">Entropía</a>
+            <a href="#buscador">Buscador</a>
             <a href="#protocolo">Protocolo</a>
             <a href="#archivo">Archivo</a>
         </div>
@@ -2068,27 +2444,31 @@
                         <div class="gt-card">
                             <span class="gt-card-icon">⬡</span>
                             <div class="gt-card-title">Cada nodo es un caso etnográfico</div>
-                            <div class="gt-card-body">Los nodos representan los <strong>4 campos multi-situados</strong> de la investigación. Su tamaño es proporcional a la intensidad de fricción: más grande = más mistranslation documentada. No son puntos abstractos — cada uno es un territorio donde la traducción institucional falla.</div>
+                            <div class="gt-card-body">Los nodos representan los <strong>4 campos multi-situados</strong> de la investigación. Su tamaño es proporcional a la intensidad de fricción: más grande = más mistranslation documentada. No son puntos abstractos — cada uno
+                                es un territorio donde la traducción institucional falla.</div>
                         </div>
                         <div class="gt-card">
                             <span class="gt-card-icon">─</span>
                             <div class="gt-card-title">Cada arista es una conexión estructural</div>
-                            <div class="gt-card-body">Las líneas conectan campos que comparten <strong>actores, instituciones o mecanismos de poder</strong>. Si SURA financia territorios mapuche y CONADI aparece en ambos campos, hay arista. La red muestra que la corrupción no es un caso aislado — es un sistema.</div>
+                            <div class="gt-card-body">Las líneas conectan campos que comparten <strong>actores, instituciones o mecanismos de poder</strong>. Si SURA financia territorios mapuche y CONADI aparece en ambos campos, hay arista. La red muestra que la corrupción no
+                                es un caso aislado — es un sistema.</div>
                         </div>
                         <div class="gt-card">
                             <span class="gt-card-icon" style="color:var(--etica)">◎</span>
                             <div class="gt-card-title">Los colores son regímenes de verdad</div>
-                            <div class="gt-card-body"><strong style="color:var(--etica)">Dorado</strong> = testimonio situado (voz, memoria, daño). <strong style="color:var(--inst)">Azul</strong> = registro institucional (norma, clasificación, proceso). <strong style="color:var(--mat)">Verde</strong> = evidencia material (territorio, datos, cuerpo). La fricción ocurre <em>entre</em> colores.</div>
+                            <div class="gt-card-body"><strong style="color:var(--etica)">Dorado</strong> = testimonio situado (voz, memoria, daño). <strong style="color:var(--inst)">Azul</strong> = registro institucional (norma, clasificación, proceso). <strong style="color:var(--mat)">Verde</strong>                                = evidencia material (territorio, datos, cuerpo). La fricción ocurre <em>entre</em> colores.</div>
                         </div>
                         <div class="gt-card">
                             <span class="gt-card-icon" style="color:var(--crit)">⚡</span>
                             <div class="gt-card-title">La fricción se mide, no se adivina</div>
-                            <div class="gt-card-body">Cada conexión tiene una <strong>intensidad de fricción (0.0–1.0)</strong> calculada por el motor. Mide cuán incompatibles son los vocabularios entre capas. Sobre <strong>0.70</strong> es umbral crítico. Sobre <strong>0.85</strong>, la traducción es imposible sin violencia epistemológica.</div>
+                            <div class="gt-card-body">Cada conexión tiene una <strong>intensidad de fricción (0.0–1.0)</strong> calculada por el motor. Mide cuán incompatibles son los vocabularios entre capas. Sobre <strong>0.70</strong> es umbral crítico. Sobre <strong>0.85</strong>,
+                                la traducción es imposible sin violencia epistemológica.</div>
                         </div>
                         <div class="gt-card gt-full">
                             <span class="gt-card-icon">◬</span>
                             <div class="gt-card-title">Argumento central: la mistranslation es sistémica</div>
-                            <div class="gt-card-body">Si la corrupción fuera casos aislados, el grafo mostraría nodos sueltos. Pero lo que se ve es una <strong>red densa donde los mismos actores, instituciones y mecanismos reaparecen</strong> en múltiples campos. La AFP que invierte en territorio mapuche, el Estado que consulta sin consentimiento, el periodista que no puede traducir la fuente sin destruirla — todos están conectados por los mismos patrones de mistranslation. <strong>La corrupción no es la excepción al sistema: es cómo funciona el sistema.</strong></div>
+                            <div class="gt-card-body">Si la corrupción fuera casos aislados, el grafo mostraría nodos sueltos. Pero lo que se ve es una <strong>red densa donde los mismos actores, instituciones y mecanismos reaparecen</strong> en múltiples campos. La AFP que invierte
+                                en territorio mapuche, el Estado que consulta sin consentimiento, el periodista que no puede traducir la fuente sin destruirla — todos están conectados por los mismos patrones de mistranslation. <strong>La corrupción no es la excepción al sistema: es cómo funciona el sistema.</strong></div>
                         </div>
                     </div>
                 </div>
@@ -2131,10 +2511,60 @@
             </div>
         </section>
 
+        <!-- ══════════════════════════════════════ BUSCADOR DE FRICCIÓN INSTITUCIONAL -->
+        <section id="buscador">
+            <div class="section-eyebrow">
+                <span class="eyebrow-num">06</span>
+                <div class="eyebrow-line"></div>
+                <span class="eyebrow-text">Fuentes oficiales</span>
+            </div>
+            <h2>Buscador de <span class="accent-e">Fricción Institucional</span></h2>
+            <p class="section-lead">
+                Cada ley, audiencia de lobby, solicitud de transparencia y evaluación ambiental produce un <strong>registro oficial</strong> que traduce conflictos territoriales, sociales y económicos en lenguaje institucional. Este buscador mide la <strong>distancia entre lo que la institución declara y lo que el contra-archivo documenta</strong>.
+            </p>
+
+            <!-- Search bar + filters -->
+            <div class="se-search-bar">
+                <div class="se-input-wrap">
+                    <input type="text" id="se-search-input" placeholder="Buscar por territorio, ley, institución, actor..." autocomplete="off">
+                </div>
+                <div class="se-filters">
+                    <select class="se-select" id="se-filter-fuente" aria-label="Filtrar por fuente">
+                        <option value="all">Todas las fuentes</option>
+                        <option value="infolobby">🏛 InfoLobby</option>
+                        <option value="transparencia">🔍 Transparencia</option>
+                        <option value="leychile">⚖ LeyChile</option>
+                        <option value="seia">🌿 SEIA</option>
+                        <option value="compraspublicas">📋 ComprasPúblicas</option>
+                        <option value="cmf">💹 CMF</option>
+                    </select>
+                    <select class="se-select" id="se-filter-caso" aria-label="Filtrar por caso">
+                        <option value="all">Todos los casos</option>
+                        <option value="sura-gobernanza-datos">SURA / AFP</option>
+                        <option value="la-negra-territorio-mapuche">La Negra / Territorio</option>
+                        <option value="periodismo-datos-chile">Periodismo de datos</option>
+                        <option value="oit169-consulta-previa">OIT 169 / Consulta</option>
+                    </select>
+                    <select class="se-select" id="se-filter-tipo" aria-label="Filtrar por tipo de fricción">
+                        <option value="all">Todo tipo</option>
+                        <option value="politica">Política</option>
+                        <option value="semantica">Semántica</option>
+                        <option value="tecnica">Técnica</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Stats panel -->
+            <div id="se-stats-panel"></div>
+
+            <!-- Results grid -->
+            <div class="se-results-grid" id="se-results"></div>
+        </section>
+
         <!-- ══════════════════════════════════════ PROTOCOLO -->
         <section id="protocolo">
             <div class="section-eyebrow">
-                <span class="eyebrow-num">06</span>
+                <span class="eyebrow-num">07</span>
                 <div class="eyebrow-line"></div>
                 <span class="eyebrow-text">Hacia la buena traducción</span>
             </div>
@@ -2199,7 +2629,7 @@
         <!-- ══════════════════════════════════════ ARCHIVO -->
         <section id="archivo">
             <div class="section-eyebrow">
-                <span class="eyebrow-num">07</span>
+                <span class="eyebrow-num">08</span>
                 <div class="eyebrow-line"></div>
                 <span class="eyebrow-text">Contra-archivo abierto</span>
             </div>
@@ -2308,6 +2738,7 @@
         <a href="#campos"><span class="bn-icon">◬</span>Campos</a>
         <a href="#grafo"><span class="bn-icon">⬡</span>Red</a>
         <a href="#campo-social"><span class="bn-icon">☷</span>Entropía</a>
+        <a href="#buscador"><span class="bn-icon">⊘</span>Buscador</a>
         <a href="#protocolo"><span class="bn-icon">⟐</span>Protocolo</a>
         <a href="#archivo"><span class="bn-icon">◈</span>Archivo</a>
     </nav>
@@ -2318,6 +2749,7 @@
     <script src="src/graph.js" defer></script>
     <script src="src/nodeRenderer.js" defer></script>
     <script src="src/socialField.js" defer></script>
+    <script src="src/searchEngine.js" defer></script>
 
     <script>
         'use strict';
@@ -2827,6 +3259,53 @@ function initDeepLink() {
   }
 }
 
+/* ══════════════ BUSCADOR DE FRICCIÓN — DATOS INLINE ══════════════ */
+var FUENTES_DATA = [
+  {"id":"lobby-sura-cmf-2024","fuente":"infolobby","titulo":"Audiencias SURA Investments con CMF sobre regulación multifondos","fecha":"2024-03-15","url":"https://www.infolobby.cl","institucion":"Comisión para el Mercado Financiero","actores_lobby":["SURA Asset Management","AFP Capital"],"materia":"Regulación de inversiones alternativas en multifondos AFP","keywords":["regulación","multifondos","inversión alternativa","ESG","riesgo"],"capa_oficial":"La audiencia registra una 'reunión técnica' sobre marcos regulatorios. No consigna qué territorios o comunidades afectan las inversiones discutidas.","friccion_con":"sura-gobernanza-datos","tipo_friccion":"politica","tags":["AFP","CMF","lobby financiero","ESG"]},
+  {"id":"lobby-forestal-conadi-2023","fuente":"infolobby","titulo":"Audiencias empresas forestales con CONADI sobre títulos de merced","fecha":"2023-08-22","url":"https://www.infolobby.cl","institucion":"CONADI","actores_lobby":["CMPC","Arauco S.A."],"materia":"Regularización de predios forestales en territorios con títulos de merced","keywords":["títulos de merced","regularización","predios forestales","DL701"],"capa_oficial":"La audiencia clasifica el encuentro como 'gestión administrativa de predios'. Los títulos de merced aparecen como un insumo técnico, no como evidencia de usurpación territorial.","friccion_con":"la-negra-territorio-mapuche","tipo_friccion":"semantica","tags":["forestales","CONADI","territorio mapuche","usurpación"]},
+  {"id":"lobby-sea-consulta-2022","fuente":"infolobby","titulo":"Audiencias empresas energéticas con SEA sobre proyectos en territorio indígena","fecha":"2022-11-10","url":"https://www.infolobby.cl","institucion":"Servicio de Evaluación Ambiental","actores_lobby":["Colbún S.A.","Enel Green Power"],"materia":"Evaluación ambiental de proyectos hidroeléctricos en territorio con consulta indígena pendiente","keywords":["evaluación ambiental","consulta indígena","SEIA","hidroeléctrica","mitigación"],"capa_oficial":"El registro documenta una 'reunión de seguimiento técnico'. La consulta indígena aparece como una 'etapa del proceso' —no como derecho de consentimiento.","friccion_con":"oit169-consulta-previa","tipo_friccion":"politica","tags":["SEIA","consulta previa","energía","OIT169"]},
+  {"id":"transp-afp-carteras-2024","fuente":"transparencia","titulo":"Solicitud: detalle de inversiones AFP en territorios indígenas","fecha":"2024-01-20","url":"https://www.consejotransparencia.cl","institucion":"Superintendencia de Pensiones","materia":"Desglose de carteras de inversión AFP con exposición a sectores extractivos en territorio indígena","keywords":["carteras AFP","reserva","datos agregados","inversión extractiva","opacidad"],"capa_oficial":"La institución traduce una pregunta sobre territorios y comunidades en una respuesta sobre 'instrumentos financieros'. La reserva legal convierte la opacidad en procedimiento regular.","friccion_con":"sura-gobernanza-datos","tipo_friccion":"tecnica","tags":["transparencia","AFP","opacidad","datos reservados"]},
+  {"id":"transp-conadi-tierras-2023","fuente":"transparencia","titulo":"Solicitud: avance del Fondo de Tierras CONADI en Región de Los Ríos","fecha":"2023-05-14","url":"https://www.consejotransparencia.cl","institucion":"CONADI","materia":"Estado de tramitación de solicitudes de compra de tierras Art. 20b Ley 19.253","keywords":["Fondo de Tierras","Art 20b","plazo","priorización","trámite"],"capa_oficial":"La respuesta convierte la urgencia territorial (familias esperando décadas) en estadísticas de gestión: '342 solicitudes', '8.3 años promedio'. La privacidad del beneficiario protege la lentitud del Estado.","friccion_con":"la-negra-territorio-mapuche","tipo_friccion":"tecnica","tags":["CONADI","Fondo de Tierras","espera","territorio"]},
+  {"id":"transp-municipio-compras-2023","fuente":"transparencia","titulo":"Solicitud: contratos directos de municipalidad con empresas de concejales","fecha":"2023-09-03","url":"https://www.consejotransparencia.cl","institucion":"Municipalidad (caso-tipo CIPER)","materia":"Detalle de contratos por trato directo último trimestre con empresas vinculadas a concejales","keywords":["trato directo","conflicto de interés","concejales","Mercado Público","evasión"],"capa_oficial":"La institución responde con un link a datos que ya son públicos pero que no responden la pregunta. La 'transparencia' como dispositivo circular: se transparenta lo que ya era visible, no lo que se preguntó.","friccion_con":"periodismo-datos-chile","tipo_friccion":"semantica","tags":["municipio","CIPER","trato directo","conflicto interés"]},
+  {"id":"ley-20730-lobby","fuente":"leychile","titulo":"Ley 20.730 — Regula el lobby y las gestiones que representen intereses particulares","fecha":"2014-03-08","url":"https://www.bcn.cl/leychile/navegar?idNorma=1060115","keywords":["lobby","gestión de intereses","registro","audiencias","sujetos pasivos"],"capa_oficial":"La ley define lobby como 'gestión remunerada'. Las gestiones corporativas internas (ej: AFP gestionando inversiones en territorios) quedan fuera de la definición. El registro captura la forma del contacto, no su contenido ni sus efectos territoriales.","friccion_con":"sura-gobernanza-datos","tipo_friccion":"semantica","tags":["lobby","ley","definición","exclusión"]},
+  {"id":"ley-20285-transparencia","fuente":"leychile","titulo":"Ley 20.285 — Sobre acceso a la información pública","fecha":"2008-08-20","url":"https://www.bcn.cl/leychile/navegar?idNorma=276363","keywords":["acceso información","transparencia activa","reserva","secreto","Consejo"],"capa_oficial":"La ley crea un derecho de acceso pero simultáneamente cataloga 5 causales de reserva que las instituciones aplican discrecionalmente. La transparencia es un umbral que el Estado fija y desplaza.","friccion_con":"periodismo-datos-chile","tipo_friccion":"politica","tags":["transparencia","reserva","acceso","periodismo"]},
+  {"id":"ley-19253-indigena","fuente":"leychile","titulo":"Ley 19.253 — Ley Indígena: protección, fomento y desarrollo de los indígenas","fecha":"1993-10-05","url":"https://www.bcn.cl/leychile/navegar?idNorma=30620","keywords":["indígena","CONADI","Fondo de Tierras","desarrollo","títulos de merced","Art 20b"],"capa_oficial":"La ley define 'indígena' con criterios que el Estado establece. El Fondo de Tierras Art. 20b es el mecanismo de 'solución': comprar tierras que fueron usurpadas. La restitución se convierte en transacción de mercado.","friccion_con":"la-negra-territorio-mapuche","tipo_friccion":"semantica","tags":["ley indígena","CONADI","tierra","usurpación como compra"]},
+  {"id":"ds66-consulta-indigena","fuente":"leychile","titulo":"DS N°66 — Reglamento de consulta indígena (Convenio OIT 169)","fecha":"2014-03-15","url":"https://www.bcn.cl/leychile/navegar?idNorma=1059961","keywords":["consulta indígena","DS66","OIT 169","CPLI","etapas","representatividad"],"capa_oficial":"El decreto traduce el derecho al CPLI en un proceso de 5 etapas con plazos y formatos institucionales. Define 'representatividad' de las comunidades según criterios estatales. El consentimiento se convierte en 'acuerdo' o 'no acuerdo' al final del proceso.","friccion_con":"oit169-consulta-previa","tipo_friccion":"politica","tags":["OIT169","consulta","decreto","consentimiento como trámite"]},
+  {"id":"dl701-fomento-forestal","fuente":"leychile","titulo":"D.L. 701 — Ley de Fomento Forestal","fecha":"1974-10-28","url":"https://www.bcn.cl/leychile/navegar?idNorma=6294","keywords":["fomento forestal","bonificación","plantación","pino","eucalipto","uso productivo"],"capa_oficial":"El D.L. 701 subsidiaba la plantación de pino y eucalipto en suelos 'de aptitud preferentemente forestal' —categoría que incluyó tierras mapuche. El lenguaje de 'fomento' y 'uso productivo' convirtió la sustitución de bosque nativo en política de desarrollo.","friccion_con":"la-negra-territorio-mapuche","tipo_friccion":"tecnica","tags":["forestal","subsidio","pino","bosque nativo","dictadura"]},
+  {"id":"seia-central-osorno-2023","fuente":"seia","titulo":"EIA: Central hidroeléctrica de pasada en Río Pilmaiquén, Región de Los Ríos","fecha":"2023-06-12","url":"https://seia.sea.gob.cl","institucion":"Servicio de Evaluación Ambiental","keywords":["hidroeléctrica","río","caudal ecológico","Pilmaiquén","impacto","mitigación"],"capa_oficial":"La evaluación del proyecto describe el río en términos de 'caudal ecológico mínimo', 'línea base biótica' y 'medidas de mitigación'. Para las comunidades, el Pilmaiquén es un ser vivo con historia. El SEIA no puede procesar esa ontología.","friccion_con":"oit169-consulta-previa","tipo_friccion":"semantica","tags":["SEIA","río","hidroeléctrica","ontología"]},
+  {"id":"seia-forestal-losrios-2022","fuente":"seia","titulo":"DIA: Proyecto de plantación forestal en predios con reclamación indígena","fecha":"2022-04-18","url":"https://seia.sea.gob.cl","institucion":"Servicio de Evaluación Ambiental","keywords":["plantación","DIA","predio forestal","reclamación","mitigación","compensación"],"capa_oficial":"La Declaración de Impacto Ambiental clasifica el territorio como 'predio de aptitud forestal'. La reclamación indígena pendiente aparece como un 'antecedente' pero no como impedimento. La evaluación separa el suelo de su historia.","friccion_con":"la-negra-territorio-mapuche","tipo_friccion":"tecnica","tags":["SEIA","forestal","reclamación","suelo sin historia"]},
+  {"id":"compras-conadi-consultoras-2023","fuente":"compraspublicas","titulo":"Licitación CONADI: estudio de pertinencia cultural para Fondo de Tierras","fecha":"2023-07-20","url":"https://www.mercadopublico.cl","institucion":"CONADI","keywords":["pertinencia cultural","consultoría","Fondo de Tierras","estudio base","licitación"],"capa_oficial":"CONADI licita un estudio de 'pertinencia cultural' a consultoras externas para evaluar solicitudes del Fondo de Tierras. La pertinencia cultural se convierte en un producto licitado, con bases técnicas, puntaje y adjudicación. El saber comunitario se externaliza.","friccion_con":"la-negra-territorio-mapuche","tipo_friccion":"semantica","tags":["ComprasPúblicas","CONADI","cultura como licitación"]},
+  {"id":"compras-municipio-trato-directo-2023","fuente":"compraspublicas","titulo":"Trato directo: servicios de asesoría comunicacional a municipalidad","fecha":"2023-10-05","url":"https://www.mercadopublico.cl","institucion":"Municipalidad (caso-tipo CIPER)","keywords":["trato directo","asesoría","comunicacional","municipalidad","adjudicación"],"capa_oficial":"El trato directo se justifica por 'urgencia calificada'. El proveedor adjudicado tiene vínculos con concejales. En Mercado Público, el registro es 'conforme a normativa'. La corrupción no viola el sistema de compras —lo habita.","friccion_con":"periodismo-datos-chile","tipo_friccion":"tecnica","tags":["ComprasPúblicas","municipio","trato directo","corrupción sistémica"]},
+  {"id":"cmf-sancion-sura-2024","fuente":"cmf","titulo":"Resolución CMF: observaciones a SURA Asset Management por deficiencias en gobierno corporativo","fecha":"2024-02-28","url":"https://www.cmfchile.cl","institucion":"Comisión para el Mercado Financiero","keywords":["gobierno corporativo","deficiencias","observaciones","gestión de riesgos","compliance"],"capa_oficial":"La CMF detecta 'deficiencias en la gestión de riesgos' y emite un oficio de observaciones. El lenguaje regulatorio traduce el conflicto territorial en un problema de 'compliance'. La sanción no menciona comunidades ni territorios.","friccion_con":"sura-gobernanza-datos","tipo_friccion":"tecnica","tags":["CMF","SURA","compliance","sanción sin territorio"]},
+  {"id":"cmf-norma-esg-2023","fuente":"cmf","titulo":"NCG N°461: Norma de reporte de sostenibilidad y gobierno corporativo","fecha":"2023-11-20","url":"https://www.cmfchile.cl/normativa/ncg_461.pdf","institucion":"Comisión para el Mercado Financiero","keywords":["ESG","sostenibilidad","reporte","materialidad","stakeholders","NCG461"],"capa_oficial":"La norma obliga a reportar riesgos ESG según criterios de 'materialidad financiera'. El impacto sobre comunidades es reportable solo si afecta el valor de la empresa. La sostenibilidad institucional no es la sostenibilidad del territorio.","friccion_con":"sura-gobernanza-datos","tipo_friccion":"semantica","tags":["CMF","ESG","materialidad","sostenibilidad invertida"]}
+];
+
+/* ══════════════ BUSCADOR — INIT (lazy) ══════════════ */
+function initBuscador() {
+  var section = document.getElementById('buscador');
+  if (!section) return;
+
+  function doInit() {
+    if (!window.initSearchUI) {
+      setTimeout(doInit, 200);
+      return;
+    }
+    window.initSearchUI({
+      registros: FUENTES_DATA,
+      casos: CASOS
+    });
+  }
+
+  if ('IntersectionObserver' in window) {
+    var obs = new IntersectionObserver(function(entries) {
+      if (entries[0].isIntersecting) { doInit(); obs.disconnect(); }
+    }, { rootMargin: '200px' });
+    obs.observe(section);
+  } else {
+    doInit();
+  }
+}
+
 /* ══════════════ BOOTSTRAP ══════════════ */
 document.addEventListener('DOMContentLoaded', function() {
   initHeroMeter();
@@ -2835,6 +3314,7 @@ document.addEventListener('DOMContentLoaded', function() {
   initUmbral();
   initGrafo();
   initSocialField();
+  initBuscador();
   initBottomNav();
   initScrollTopFab();
   initDeepLink();
