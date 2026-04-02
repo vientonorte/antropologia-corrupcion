@@ -57,7 +57,8 @@ Modela la corrupción institucional como un sistema termodinámico:
 |----------|---------|----------------|
 | **Ley de Ohm Social** | `I = V / R` | V=necesidad ciudadana, R=integridad institucional, I=corriente informal |
 | **Masa de poder** | `g(r) = G·M / r²` | Campo gravitacional que curva el espacio legal |
-| **Entropía global** | `S = f(txn_corruptas, calor)` | Cada soborno reduce fricción local pero incrementa desorden sistémico |
+| **Entropía Shannon** | `S = 0.6·H(Q) + 0.4·max(ρ,δ)` | H=Shannon sobre distribución de calor, ρ=corrupt-ratio, δ=integrity-loss |
+| **Fases del sistema** | `ORDEN → TRANSICIÓN → MUERTE TÉRMICA → COLAPSO` | Grid recto → ondulado → ruido de partículas |
 | **Colapso térmico** | `S ≥ 0.85` | Muerte térmica: toda transacción requiere soborno |
 
 Visualiza en tiempo real: 80 agentes brownianos (ciudadanos), halos de poder, flujos de corriente, anillos de saturación, sparkline de entropía, y alertas de colapso.

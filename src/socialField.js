@@ -149,8 +149,8 @@ class SocialField {
 
     _init() {
         const rect = this.container.getBoundingClientRect();
-        this.width = Math.max(rect.width || 600, 300);
-        this.height = Math.max(rect.height || 500, 300);
+        this.width = Math.max(rect.width || this.container.offsetWidth || 600, 300);
+        this.height = Math.max(rect.height || this.container.offsetHeight || 500, 300);
 
         // Asignar posiciones a nodos (layout circular centrado)
         const cx = this.width / 2;
@@ -185,7 +185,8 @@ class SocialField {
         // Inicializar estado de nodos
         this._initNodeState();
 
-        // Inicializar agentes
+        // Inicializar agentes (reduce en pantallas pequeñas para perf)
+        this._agentScale = this.width < 500 ? 0.5 : 1;
         this._initAgents();
 
         // Loop
@@ -236,7 +237,8 @@ class SocialField {
 
     _initAgents() {
         this.agents = [];
-        for (let i = 0; i < THERMO_CONFIG.AGENT_COUNT; i++) {
+        const count = Math.round(THERMO_CONFIG.AGENT_COUNT * (this._agentScale || 1));
+        for (let i = 0; i < count; i++) {
             this.agents.push(this._spawnAgent());
         }
     }
@@ -388,14 +390,42 @@ class SocialField {
     }
 
     _updateEntropy() {
-        // Entropía = ratio de transacciones corruptas × calor acumulado normalizado
+        // Shannon entropy: S = -Σ pᵢ·ln(pᵢ) sobre distribución de calor por nodo
+        // Ponderada por corrupt-ratio para acoplar flujo informal con desorden espacial
         if (this.totalTransactions === 0) { this.entropy = 0; return; }
 
-        const corruptRatio = this.corruptTransactions / this.totalTransactions;
-        const heatNorm = Math.min(this.systemHeat / (this.nodes.length * 2), 1);
+        const n = this.nodes.length;
+        if (n === 0) { this.entropy = 0; return; }
 
-        // S = k · ln(Ω) ≈ corruptRatio × (1 + heatNorm)
-        this.entropy = Math.min(1, corruptRatio * (1 + heatNorm));
+        // 1. Distribución de calor: pᵢ = Qᵢ / ΣQ
+        let totalHeat = 0;
+        for (const [, state] of this.nodeState) totalHeat += state.heat;
+
+        let shannonRaw = 0;
+        if (totalHeat > 0.001) {
+            for (const [, state] of this.nodeState) {
+                const p = state.heat / totalHeat;
+                if (p > 1e-9) shannonRaw -= p * Math.log(p);
+            }
+            // Normalizar: S_max = ln(N) cuando calor uniforme (máximo desorden)
+            shannonRaw /= Math.log(n);
+        }
+
+        // 2. Factor de corrupción: cuántas transacciones son informales
+        const corruptRatio = this.corruptTransactions / this.totalTransactions;
+
+        // 3. Factor de degradación de integridad: cuánto se ha erosionado R̄
+        let avgIntegrity = 0;
+        for (const [, state] of this.nodeState) avgIntegrity += state.integrity;
+        avgIntegrity /= n;
+        const integrityLoss = 1 - (avgIntegrity / THERMO_CONFIG.BASE_INTEGRITY);
+
+        // S compuesta: Shannon × (corruptRatio + integrityLoss) / 2
+        // - Shannon alta + corrupción alta = máxima entropía
+        // - Shannon baja (calor concentrado) aún puede dar entropía si corrupción es alta
+        // - Integridad perdida contribuye independientemente
+        const fieldFactor = Math.max(corruptRatio, integrityLoss);
+        this.entropy = Math.min(1, shannonRaw * 0.6 + fieldFactor * 0.4);
 
         // Comprobar colapso
         if (this.entropy >= THERMO_CONFIG.ENTROPY_CRITICAL && !this.collapseTriggered) {
@@ -438,7 +468,7 @@ class SocialField {
 
             // Interacción si está suficientemente cerca
             if (agent._closestDistSq < 2500 && agent.nearNode) { // 50² = 2500
-                this._processInteraction(agent, closestNode);
+                this._processInteraction(agent, agent.nearNode);
             }
 
             // Respawn si muere o sale de bounds
@@ -490,7 +520,7 @@ class SocialField {
             this._render();
 
             // Actualizar métricas cada 20 frames
-            if (this._frameCount % 20 === 0) this._updateMetrics();
+            if (this._frameCount % 30 === 0) this._updateMetrics();
 
             this.animFrame = requestAnimationFrame(frame);
         };
@@ -513,7 +543,10 @@ class SocialField {
         // 4. Indicadores de saturación en nodos
         this._renderNodeHeat(ctx);
 
-        // 5. Indicador de colapso si aplica
+        // 5. Overlay de fase: orden → desorden visual proporcional a entropía
+        if (this.entropy > 0.05) this._renderEntropyPhase(ctx);
+
+        // 6. Indicador de colapso si aplica
         if (this.collapseTriggered) this._renderCollapseWarning(ctx);
     }
 
@@ -619,58 +652,163 @@ class SocialField {
     }
 
     _renderNodeHeat(ctx) {
-        // Batch: agrupar arcos por color para minimizar state changes
-        const r = 35;
-        const segments = 24;
-        const arcBatch = []; // {x, y, a1, a2, cr, cg, cb}
-        const labels = [];   // {x, y, intPct, integrity, flow}
+        // Dual-ring system: outer=Integrity(R), inner=Heat(Q), gap=resistance barrier
+        const rOuter = 42;    // radio exterior (integridad)
+        const rInner = 33;    // radio interior (calor)
+        const ringW = 3.5;
+        const PI2 = Math.PI * 2;
+        const startAngle = -Math.PI / 2; // 12 o'clock
+
+        ctx.lineCap = 'round';
 
         for (const node of this.nodes) {
             if (!node.x || !node.y) continue;
             const state = this.nodeState.get(node.id);
             if (!state) continue;
 
+            const nx = node.x, ny = node.y;
+            const integrity = state.integrity;
             const temp = Math.min(state.temperature, 1);
-            if (temp >= 0.1) {
-                for (let i = 0; i < segments; i++) {
-                    const fill = i / segments;
-                    if (fill > temp) break;
-                    const idx = Math.min(255, Math.floor(fill * 255));
-                    arcBatch.push(
-                        node.x, node.y,
-                        (i / segments) * Math.PI * 2 - Math.PI / 2,
-                        ((i + 1) / segments) * Math.PI * 2 - Math.PI / 2,
-                        THERMO_PALETTE[idx * 3],
-                        THERMO_PALETTE[idx * 3 + 1],
-                        THERMO_PALETTE[idx * 3 + 2]
-                    );
-                }
-            }
-            labels.push(node.x, node.y, Math.round(state.integrity * 100),
-                        state.integrity, state.currentFlow);
-        }
+            const heatFill = Math.min(state.heat / 1.5, 1); // normalizado a 1.5 como saturación
+            const flow = state.currentFlow;
 
-        // Dibujar todos los arcos con batch por estilo
-        ctx.lineWidth = 3;
-        let prevStyle = '';
-        for (let j = 0; j < arcBatch.length; j += 7) {
-            const style = 'rgba(' + arcBatch[j+4] + ',' + arcBatch[j+5] + ',' + arcBatch[j+6] + ',0.6)';
-            if (style !== prevStyle) { ctx.strokeStyle = style; prevStyle = style; }
+            // ── ANILLO EXTERIOR: Integridad R ──
+            // Track de fondo (anillo completo, tenue)
             ctx.beginPath();
-            ctx.arc(arcBatch[j], arcBatch[j+1], r + 8, arcBatch[j+2], arcBatch[j+3]);
+            ctx.arc(nx, ny, rOuter, 0, PI2);
+            ctx.strokeStyle = 'rgba(60,80,100,0.15)';
+            ctx.lineWidth = ringW;
             ctx.stroke();
-        }
 
-        // Labels (un solo cambio de font)
-        ctx.font = '8px "SF Mono","Fira Code",monospace';
-        ctx.textAlign = 'center';
-        for (let j = 0; j < labels.length; j += 5) {
-            const nx = labels[j], ny = labels[j+1], intPct = labels[j+2];
-            const integrity = labels[j+3], flow = labels[j+4];
-            ctx.fillStyle = integrity > 0.5 ? 'rgba(120,180,200,0.6)' :
-                integrity > 0.2 ? 'rgba(200,169,110,0.6)' : 'rgba(180,60,50,0.8)';
-            ctx.fillText('R=' + intPct + '%', nx, ny + r + 22);
-            if (flow > 0.1) ctx.fillText('I=' + flow.toFixed(1), nx, ny - r - 14);
+            // Arco de integridad: se consume en sentido horario
+            const intAngle = integrity * PI2;
+            // Color: azul-frío (íntegro) → ámbar → rojo (degradado)
+            const intIdx = Math.min(255, Math.floor((1 - integrity) * 255));
+            const iR = THERMO_PALETTE[intIdx * 3];
+            const iG = THERMO_PALETTE[intIdx * 3 + 1];
+            const iB = THERMO_PALETTE[intIdx * 3 + 2];
+
+            if (intAngle > 0.02) {
+                ctx.beginPath();
+                ctx.arc(nx, ny, rOuter, startAngle, startAngle + intAngle);
+                ctx.strokeStyle = `rgba(${iR},${iG},${iB},0.75)`;
+                ctx.lineWidth = ringW;
+                ctx.stroke();
+
+                // Glow en extremo del arco (punto de "resistencia")
+                const tipX = nx + rOuter * Math.cos(startAngle + intAngle);
+                const tipY = ny + rOuter * Math.sin(startAngle + intAngle);
+                ctx.beginPath();
+                ctx.arc(tipX, tipY, 2.5, 0, PI2);
+                ctx.fillStyle = `rgba(${iR},${iG},${iB},0.9)`;
+                ctx.fill();
+            }
+
+            // ── ANILLO INTERIOR: Calor Q (se llena como termómetro) ──
+            if (heatFill > 0.01) {
+                // Track de fondo
+                ctx.beginPath();
+                ctx.arc(nx, ny, rInner, 0, PI2);
+                ctx.strokeStyle = 'rgba(60,40,30,0.1)';
+                ctx.lineWidth = ringW * 0.8;
+                ctx.stroke();
+
+                // Arco de calor: crece conforme se acumula corrupción
+                const heatAngle = heatFill * PI2;
+                const hIdx = Math.min(255, Math.floor(heatFill * 255));
+                const hR = THERMO_PALETTE[hIdx * 3];
+                const hG = THERMO_PALETTE[hIdx * 3 + 1];
+                const hB = THERMO_PALETTE[hIdx * 3 + 2];
+
+                ctx.beginPath();
+                ctx.arc(nx, ny, rInner, startAngle, startAngle + heatAngle);
+                ctx.strokeStyle = `rgba(${hR},${hG},${hB},0.65)`;
+                ctx.lineWidth = ringW * 0.8;
+                ctx.stroke();
+            }
+
+            // ── LABEL: R% + I (si hay corriente) ──
+            ctx.font = '9px "SF Mono","Fira Code",monospace';
+            ctx.textAlign = 'center';
+
+            const intPct = Math.round(integrity * 100);
+            // Color del label acorde a la integridad
+            ctx.fillStyle = integrity > 0.5 ? 'rgba(120,180,200,0.7)' :
+                integrity > 0.2 ? 'rgba(200,169,110,0.7)' : 'rgba(180,60,50,0.9)';
+            ctx.fillText('R=' + intPct + '%', nx, ny + rOuter + 14);
+
+            if (flow > 0.1) {
+                ctx.fillStyle = 'rgba(200,120,70,0.7)';
+                ctx.fillText('I=' + flow.toFixed(1), nx, ny - rOuter - 8);
+            }
+
+            // Indicador de calor (Q%) si relevante
+            if (heatFill > 0.15) {
+                ctx.font = '7px "SF Mono","Fira Code",monospace';
+                ctx.fillStyle = `rgba(200,140,80,${0.4 + heatFill * 0.4})`;
+                ctx.fillText('Q=' + Math.round(heatFill * 100) + '%', nx, ny + rOuter + 24);
+            }
+        }
+        ctx.lineCap = 'butt';
+    }
+
+    _renderEntropyPhase(ctx) {
+        // Overlay visual: a medida que S sube, el espacio se "desorganiza"
+        // Fase 1 (S < 0.3): grid sutil de orden institucional (líneas rectas)
+        // Fase 2 (0.3 < S < 0.6): distorsión — las líneas se curvan
+        // Fase 3 (S > 0.6): ruido — partículas caóticas reemplazan el grid
+
+        const S = this.entropy;
+        const w = this.width, h = this.height;
+        const t = this._frameCount;
+
+        if (S < 0.3) {
+            // Grid ordenado que se desvanece conforme sube S
+            const alpha = 0.04 * (1 - S / 0.3);
+            ctx.strokeStyle = `rgba(74,127,165,${alpha})`;
+            ctx.lineWidth = 0.5;
+            const spacing = 40;
+            for (let x = spacing; x < w; x += spacing) {
+                ctx.beginPath();
+                ctx.moveTo(x, 0); ctx.lineTo(x, h);
+                ctx.stroke();
+            }
+            for (let y = spacing; y < h; y += spacing) {
+                ctx.beginPath();
+                ctx.moveTo(0, y); ctx.lineTo(w, y);
+                ctx.stroke();
+            }
+        } else if (S < 0.6) {
+            // Grid distorsionado: líneas se curvan proporcionalmente a S
+            const distort = (S - 0.3) / 0.3; // 0→1 en este rango
+            const alpha = 0.03 + distort * 0.02;
+            ctx.strokeStyle = `rgba(200,169,110,${alpha})`;
+            ctx.lineWidth = 0.5;
+            const spacing = 40;
+            for (let x = spacing; x < w; x += spacing) {
+                ctx.beginPath();
+                ctx.moveTo(x, 0);
+                for (let y = 0; y < h; y += 20) {
+                    const wave = Math.sin(y * 0.02 + t * 0.01 + x * 0.01) * distort * 15;
+                    ctx.lineTo(x + wave, y);
+                }
+                ctx.stroke();
+            }
+        } else {
+            // Muerte térmica: partículas de ruido
+            const noiseCount = Math.floor((S - 0.6) / 0.4 * 60);
+            const pulse = 0.5 + Math.sin(t * 0.05) * 0.3;
+            for (let i = 0; i < noiseCount; i++) {
+                // Pseudo-random determinista basado en frame + index
+                const seed = (i * 7919 + t * 31) % 10000;
+                const px = (seed * 13) % w;
+                const py = (seed * 17 + i * 97) % h;
+                const size = 0.5 + (seed % 3) * 0.5;
+                ctx.beginPath();
+                ctx.arc(px, py, size, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(180,60,50,${0.1 * pulse})`;
+                ctx.fill();
+            }
         }
     }
 
@@ -720,44 +858,77 @@ class SocialField {
             this.entropy > 0.3 ? 'sf-status--degraded' :
             'sf-status--stable';
 
-        // Sparkline SVG
-        const sparkW = 120,
-            sparkH = 28;
+        // Fase del sistema
+        const phase = this.collapseTriggered ? 'COLAPSO' :
+            this.entropy > 0.6 ? 'MUERTE TÉRMICA' :
+            this.entropy > 0.3 ? 'TRANSICIÓN' :
+            'ORDEN';
+
+        // Fase + sparkline (SVG más grande)
+        const sparkW = 160, sparkH = 36;
         const hist = this.entropyHistory;
         let sparkPath = '';
+        let sparkArea = '';
         if (hist.length > 1) {
             const dx = sparkW / (hist.length - 1);
-            sparkPath = hist.map((v, i) =>
-                `${i === 0 ? 'M' : 'L'}${(i * dx).toFixed(1)},${(sparkH - v * sparkH).toFixed(1)}`
-            ).join(' ');
+            const pts = hist.map((v, i) =>
+                `${(i * dx).toFixed(1)},${(sparkH - v * sparkH).toFixed(1)}`
+            );
+            sparkPath = 'M' + pts.join(' L');
+            sparkArea = sparkPath + ` L${sparkW},${sparkH} L0,${sparkH} Z`;
         }
 
+        // Color dinámico de entropía
+        const eidx = Math.min(255, Math.floor(this.entropy * 255));
+        const eR = THERMO_PALETTE[eidx * 3];
+        const eG = THERMO_PALETTE[eidx * 3 + 1];
+        const eB = THERMO_PALETTE[eidx * 3 + 2];
+        const entropyColor = `rgb(${eR},${eG},${eB})`;
+
         this.metricsEl.innerHTML = `
-      <div class="sf-metrics">
-        <div class="sf-metric">
-          <span class="sf-label">Entropía S</span>
-          <span class="sf-value ${statusCls}">${entropyPct}%</span>
+      <div class="sf-metrics sf-metrics--enhanced">
+        <div class="sf-metric sf-metric--entropy">
+          <span class="sf-label">ENTROPÍA S</span>
+          <span class="sf-value ${statusCls}" style="color:${entropyColor}">${entropyPct}%</span>
           <svg class="sf-spark" width="${sparkW}" height="${sparkH}" viewBox="0 0 ${sparkW} ${sparkH}">
-            <line x1="0" y1="${sparkH * (1 - THERMO_CONFIG.ENTROPY_CRITICAL)}" x2="${sparkW}" y2="${sparkH * (1 - THERMO_CONFIG.ENTROPY_CRITICAL)}" stroke="rgba(180,50,40,0.3)" stroke-width="1" stroke-dasharray="2 2"/>
-            <path d="${sparkPath}" fill="none" stroke="rgba(200,169,110,0.7)" stroke-width="1.5"/>
+            <defs>
+              <linearGradient id="sf-spark-grad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="${entropyColor}" stop-opacity="0.3"/>
+                <stop offset="100%" stop-color="${entropyColor}" stop-opacity="0"/>
+              </linearGradient>
+            </defs>
+            ${sparkArea ? `<path d="${sparkArea}" fill="url(#sf-spark-grad)"/>` : ''}
+            <line x1="0" y1="${sparkH * (1 - THERMO_CONFIG.ENTROPY_CRITICAL)}"
+                  x2="${sparkW}" y2="${sparkH * (1 - THERMO_CONFIG.ENTROPY_CRITICAL)}"
+                  stroke="rgba(180,50,40,0.4)" stroke-width="1" stroke-dasharray="3 2"/>
+            <text x="${sparkW - 2}" y="${sparkH * (1 - THERMO_CONFIG.ENTROPY_CRITICAL) - 2}"
+                  fill="rgba(180,50,40,0.5)" font-size="6" text-anchor="end">S_crit</text>
+            ${sparkPath ? `<path d="${sparkPath}" fill="none" stroke="${entropyColor}" stroke-width="1.5"/>` : ''}
           </svg>
+          <span class="sf-phase">${phase}</span>
         </div>
         <div class="sf-metric">
-          <span class="sf-label">Integridad R̄</span>
+          <span class="sf-label">INTEGRIDAD R\u0304</span>
           <span class="sf-value">${Math.round(avgIntegrity * 100)}%</span>
+          <div class="sf-bar">
+            <div class="sf-bar__fill sf-bar__fill--integrity"
+                 style="width:${Math.round(avgIntegrity * 100)}%;
+                        background:${avgIntegrity > 0.5 ? 'rgba(74,127,165,0.6)' : avgIntegrity > 0.2 ? 'rgba(200,169,110,0.6)' : 'rgba(180,60,50,0.7)'}">
+            </div>
+          </div>
         </div>
         <div class="sf-metric">
-          <span class="sf-label">Txn corruptas</span>
+          <span class="sf-label">TXN CORRUPTAS</span>
           <span class="sf-value">${corruptPct}%</span>
           <span class="sf-sub">${this.corruptTransactions} / ${this.totalTransactions}</span>
         </div>
         <div class="sf-metric sf-metric--status">
-          <span class="sf-label">Estado</span>
+          <span class="sf-label">ESTADO</span>
           <span class="sf-value ${statusCls}">${status}</span>
         </div>
       </div>
     `;
-    }
+        }
 
     /* ─── API PÚBLICA ─── */
 
