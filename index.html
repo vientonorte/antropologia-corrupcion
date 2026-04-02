@@ -2264,9 +2264,9 @@
     <main>
         <!-- ══════════════════════════════════════ HERO -->
         <section id="hero">
-            <p class="hero-label">⊘ Tesis doctoral · Antropología de la corrupción · Chile · 2025</p>
+            <p class="hero-label">⊘ Tesis doctoral · Antropología de la corrupción · Chile · 2026</p>
             <h1 class="hero-h1">La institución traduce.<br>La traducción falla.<br>El fallo <em>es el sistema</em>.</h1>
-            <p class="hero-thesis">Esta investigación demuestra que la corrupción institucional en Chile opera como un régimen de <strong>mistranslation</strong> —traducción fallida o deliberadamente distorsionada— entre tres regímenes de verdad incompatibles: el testimonio
+            <p class="hero-thesis">Esta investigación demuestra que la corrupción institucional en Chile opera como un régimen de <strong><em>mistranslation</em></strong> (traducción fallida) —traducción fallida o deliberadamente distorsionada— entre tres regímenes de verdad incompatibles: el testimonio
                 situado, el registro normativo y la evidencia material.</p>
 
             <div class="hero-meter">
@@ -2301,7 +2301,7 @@
                             <div class="capa-desc">La experiencia vivida, la memoria corporal, el saber que el archivo oficial no puede contener. Voces, afectos, prácticas situadas y daño no reconocido por el registro formal.</div>
                         </div>
                         <div class="friction-indicator">
-                            <div class="fi-arrow"><span class="fi-label mono">← fricción →</span></div>
+                            <div class="fi-arrow"><span class="fi-label mono" title="Incompatibilidad medible entre regímenes de verdad">← fricción entre capas →</span></div>
                         </div>
                         <div class="capa-card capa-i">
                             <div class="capa-sym accent-i">▣ CAPA INSTITUCIONAL</div>
@@ -2309,7 +2309,7 @@
                             <div class="capa-desc">Lo que la institución declara, clasifica y normaliza. Resoluciones, categorías técnico-jurídicas y procedimientos que absorben el conflicto sin resolverlo ni nombrarlo.</div>
                         </div>
                         <div class="friction-indicator">
-                            <div class="fi-arrow"><span class="fi-label mono">← fricción →</span></div>
+                            <div class="fi-arrow"><span class="fi-label mono" title="Incompatibilidad medible entre regímenes de verdad">← fricción entre capas →</span></div>
                         </div>
                         <div class="capa-card capa-m">
                             <div class="capa-sym accent-m">◈ CAPA MATERIAL</div>
@@ -2346,7 +2346,7 @@
                         <span class="md-num">04</span>
                         <div class="md-content">
                             <div class="md-title">Cálculo de intensidad (0.0 → 1.0)</div>
-                            <div class="md-text">Motor de fricción: mide el overlap de vocabularios entre capas + detecta marcadores de fricción explícitos. A menor overlap + mayor marcador = mayor intensidad.</div>
+                            <div class="md-text">Motor de fricción: mide el solapamiento de vocabularios entre capas + detecta marcadores de fricción explícitos. A menor overlap + mayor marcador = mayor intensidad.</div>
                         </div>
                     </div>
                     <div class="md-step">
@@ -2408,11 +2408,11 @@
             <p class="section-lead">Los mismos actores, instituciones y mecanismos de traducción aparecen en múltiples campos. El grafo visualiza estas conexiones transversales: la mistranslation no es un fallo local sino <strong>un sistema articulado de poder</strong> que opera
                 entre capas.</p>
 
-            <div class="graph-controls" id="graph-controls">
-                <button class="gc-btn active" data-layer="all">Todas las capas</button>
-                <button class="gc-btn" data-layer="etica">◎ Ética</button>
-                <button class="gc-btn" data-layer="institucional">▣ Institucional</button>
-                <button class="gc-btn" data-layer="material">◈ Material</button>
+            <div class="graph-controls" id="graph-controls" role="toolbar" aria-label="Filtros de capa del grafo">
+                <button class="gc-btn active" data-layer="all" aria-label="Mostrar todas las capas">Todas las capas</button>
+                <button class="gc-btn" data-layer="etica" aria-label="Filtrar capa: Ética">◎ Ética</button>
+                <button class="gc-btn" data-layer="institucional" aria-label="Filtrar capa: Institucional">▣ Institucional</button>
+                <button class="gc-btn" data-layer="material" aria-label="Filtrar capa: Material">◈ Material</button>
             </div>
             <div class="graph-wrap">
                 <div class="viz-loading" id="graph-loading">
@@ -2435,8 +2435,8 @@
 
             <!-- CÓMO LEER ESTE GRAFO -->
             <div class="graph-thesis" id="graph-thesis">
-                <button class="graph-thesis-toggle" onclick="this.parentElement.classList.toggle('open')" aria-expanded="false" aria-controls="gt-body">
-                    <span>⊞ Cómo leer este grafo — Argumento central de la tesis</span>
+                <button class="graph-thesis-toggle" onclick="this.parentElement.classList.toggle('open');this.setAttribute('aria-expanded',this.parentElement.classList.contains('open'))" aria-expanded="false" aria-controls="gt-body">
+                    <span>⊞ Cómo leer este grafo</span>
                     <span class="gt-arrow">▼</span>
                 </button>
                 <div class="graph-thesis-body" id="gt-body">
@@ -2493,21 +2493,21 @@
                 <div class="viz-loading" id="sf-loading">
                     <div class="viz-loading-inner">
                         <div class="viz-spinner"></div>
-                        <div class="viz-loading-text">Cargando entropía…</div>
+                        <div class="viz-loading-text">Cargando simulación…</div>
                     </div>
                 </div>
                 <div id="campo-social-canvas"></div>
             </div>
             <div id="sf-metrics-panel"></div>
             <div class="sf-controls">
-                <button class="sf-btn" id="sf-reset">↺ Reset termodinámico</button>
-                <button class="sf-btn" id="sf-toggle">⏸ Pausar</button>
+                <button class="sf-btn" id="sf-reset">↺ Reiniciar simulación</button>
+                <button class="sf-btn" id="sf-toggle" aria-label="Pausar simulación">⏸ Pausar</button>
             </div>
             <div class="sf-legend" style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;font-size:.75rem;color:var(--dim);margin-top:8px;">
-                <span>● nodo institucional</span>
-                <span>○ agente ciudadano</span>
-                <span>color = integridad (verde → rojo)</span>
-                <span>línea = vínculo de fricción</span>
+                <span>● Nodo institucional</span>
+                <span>○ Agente ciudadano</span>
+                <span>Color: integridad del agente (verde = alta → rojo = baja)</span>
+                <span>Línea: vínculo de fricción entre nodos</span>
             </div>
         </section>
 
@@ -2526,17 +2526,18 @@
             <!-- Search bar + filters -->
             <div class="se-search-bar">
                 <div class="se-input-wrap">
-                    <input type="text" id="se-search-input" placeholder="Buscar por territorio, ley, institución, actor..." autocomplete="off">
+                    <label for="se-search-input" class="label" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)">Buscar en fuentes oficiales</label>
+                    <input type="text" id="se-search-input" placeholder="Ej: SURA, territorio mapuche, Ley 19.300, AFP…" autocomplete="off">
                 </div>
                 <div class="se-filters">
                     <select class="se-select" id="se-filter-fuente" aria-label="Filtrar por fuente">
                         <option value="all">Todas las fuentes</option>
-                        <option value="infolobby">🏛 InfoLobby</option>
-                        <option value="transparencia">🔍 Transparencia</option>
-                        <option value="leychile">⚖ LeyChile</option>
-                        <option value="seia">🌿 SEIA</option>
-                        <option value="compraspublicas">📋 ComprasPúblicas</option>
-                        <option value="cmf">💹 CMF</option>
+                        <option value="infolobby">InfoLobby</option>
+                        <option value="transparencia">Transparencia</option>
+                        <option value="leychile">LeyChile</option>
+                        <option value="seia">SEIA</option>
+                        <option value="compraspublicas">ComprasPúblicas</option>
+                        <option value="cmf">CMF</option>
                     </select>
                     <select class="se-select" id="se-filter-caso" aria-label="Filtrar por caso">
                         <option value="all">Todos los casos</option>
@@ -2581,8 +2582,8 @@
                 <div class="uv-markers" style="height:32px">
                     <span class="uv-mk" style="left:25%"><div class="uv-mk-line"></div>0.25<br><span style="font-size:9px">baja</span></span>
                     <span class="uv-mk" style="left:50%"><div class="uv-mk-line"></div>0.50<br><span style="font-size:9px">media</span></span>
-                    <span class="uv-mk" style="left:70%"><div class="uv-mk-line"></div>0.70<br><span style="font-size:9px;color:var(--etica)">umbral crítico</span></span>
-                    <span class="uv-mk" style="left:90%"><div class="uv-mk-line"></div>0.90<br><span style="font-size:9px;color:var(--crit)">irreductible</span></span>
+                    <span class="uv-mk" style="left:70%"><div class="uv-mk-line"></div>0.70<br><span style="font-size:9px;color:var(--etica)">crítico (intervención)</span></span>
+                    <span class="uv-mk" style="left:90%"><div class="uv-mk-line"></div>0.90<br><span style="font-size:9px;color:var(--crit)">irreductible (sin traducción)</span></span>
                 </div>
                 <div class="uv-cases" id="uv-cases"></div>
             </div>
@@ -2714,14 +2715,14 @@
         <footer>
             <div class="footer-left">
                 <div class="footer-title">◬ Contra-Archivo · Antropología y Corrupción</div>
-                <div class="footer-sub">Tesis Doctoral · Rodrigo Gaete Gaona · Chile · 2025</div>
+                <div class="footer-sub">Tesis Doctoral · Rodrigo Gaete Gaona · Chile · 2026</div>
                 <div class="footer-sub" style="margin-top:4px">La mistranslation institucional como dispositivo de poder</div>
             </div>
             <div class="footer-right">
                 <div>◎ Etnografía multi-situada</div>
                 <div>⚡ Motor de fricción epistemológica</div>
                 <div>⟐ Protocolo de buena traducción</div>
-                <div style="margin-top:8px"><a href="https://github.com/vientonorte/antropologia-corrupcion" style="color:var(--dim);text-decoration:none;">github.com/vientonorte/antropologia-corrupcion ↗</a></div>
+                <div style="margin-top:8px"><a href="https://github.com/vientonorte/antropologia-corrupcion" style="color:var(--dim);text-decoration:none;">Ver código fuente en GitHub ↗</a></div>
                 <div style="margin-top:8px"><a href="#hero" style="color:var(--dim);text-decoration:none;">↑ Volver al inicio</a></div>
             </div>
         </footer>
@@ -2733,14 +2734,14 @@
     <button class="scroll-top-fab" id="scroll-top-fab" aria-label="Volver al inicio" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
 
     <nav class="bottom-nav" id="bottom-nav" aria-label="Navegación mobile">
-        <a href="#hero"><span class="bn-icon">◉</span>Tesis</a>
-        <a href="#instrumento"><span class="bn-icon">⊞</span>Instrumento</a>
-        <a href="#campos"><span class="bn-icon">◬</span>Campos</a>
-        <a href="#grafo"><span class="bn-icon">⬡</span>Red</a>
-        <a href="#campo-social"><span class="bn-icon">☷</span>Entropía</a>
-        <a href="#buscador"><span class="bn-icon">⊘</span>Buscador</a>
-        <a href="#protocolo"><span class="bn-icon">⟐</span>Protocolo</a>
-        <a href="#archivo"><span class="bn-icon">◈</span>Archivo</a>
+        <a href="#hero" aria-label="Ir a sección: Tesis"><span class="bn-icon">◉</span>Tesis</a>
+        <a href="#instrumento" aria-label="Ir a sección: Instrumento"><span class="bn-icon">⊞</span>Instrumento</a>
+        <a href="#campos" aria-label="Ir a sección: Campos"><span class="bn-icon">◬</span>Campos</a>
+        <a href="#grafo" aria-label="Ir a sección: Red"><span class="bn-icon">⬡</span>Red</a>
+        <a href="#campo-social" aria-label="Ir a sección: Entropía"><span class="bn-icon">☷</span>Entropía</a>
+        <a href="#buscador" aria-label="Ir a sección: Buscador"><span class="bn-icon">⊘</span>Buscador</a>
+        <a href="#protocolo" aria-label="Ir a sección: Protocolo"><span class="bn-icon">⟐</span>Protocolo</a>
+        <a href="#archivo" aria-label="Ir a sección: Archivo"><span class="bn-icon">◈</span>Archivo</a>
     </nav>
 
     <!-- ══════════════════════════════════════ SCRIPTS: módulos del sistema -->
@@ -3172,6 +3173,7 @@ function initSocialField() {
         paused = !paused;
         SF.setVisible(!paused);
         toggleBtn.textContent = paused ? '▶ Reanudar' : '⏸ Pausar';
+        toggleBtn.setAttribute('aria-label', paused ? 'Reanudar simulación' : 'Pausar simulación');
       });
     }
     tryInit();
@@ -3221,7 +3223,7 @@ function vizTimeout(loadingId, ms) {
     if (el && !el.classList.contains('loaded')) {
       el.classList.add('error');
       var txt = el.querySelector('.viz-loading-text');
-      if (txt) txt.textContent = 'Error al cargar — recarga la página';
+      if (txt) txt.textContent = 'No se pudo cargar la visualización. Intenta recargar la página.';
     }
   }, ms);
   return t;

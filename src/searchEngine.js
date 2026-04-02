@@ -326,7 +326,7 @@ function renderSearchCard(result) {
  * Genera HTML del panel de estadísticas
  */
 function renderSearchStats(stats) {
-    if (!stats.total) return '<div class="se-stats-empty">Sin resultados. Intenta con otro término o filtro.</div>';
+    if (!stats.total) return '<div class="se-stats-empty">Sin resultados para esta búsqueda. Prueba un término más general o cambia los filtros.</div>';
 
     var fuenteBars = '';
     var fuentes = Object.keys(stats.byFuente);
@@ -402,7 +402,7 @@ function initSearchUI(opts) {
         for (var i = 0; i < results.length; i++) {
             html += renderSearchCard(results[i]);
         }
-        resultsContainer.innerHTML = html || '<div class="se-no-results">No se encontraron registros.</div>';
+        resultsContainer.innerHTML = html || '<div class="se-no-results">No se encontraron registros. Intenta: buscar un término general (ej. "territorio"), quitar filtros, o explorar los campos en la sección anterior.</div>';
     }
 
     // Debounced search on input
