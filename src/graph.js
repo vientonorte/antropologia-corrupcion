@@ -488,10 +488,10 @@ class FrictionGraph {
             g.classList.toggle('ca-node--selected', id === node.id);
             g.classList.toggle('ca-node--dimmed',
                 id !== node.id && this.rawLinks.every(l =>
-                    (l.source?.id ?? l.source) !== node.id &&
-                    (l.target?.id ?? l.target) !== node.id ||
-                    (l.source?.id ?? l.source) !== id &&
-                    (l.target?.id ?? l.target) !== id
+                    ((l.source?.id ?? l.source) !== node.id &&
+                     (l.target?.id ?? l.target) !== node.id) &&
+                    ((l.source?.id ?? l.source) !== id &&
+                     (l.target?.id ?? l.target) !== id)
                 )
             );
         });
