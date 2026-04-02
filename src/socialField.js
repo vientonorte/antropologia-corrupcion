@@ -554,8 +554,6 @@ class SocialField {
     }
 
     _renderPowerFields(ctx) {
-        // Only recalculate every 3 frames (halos pulse slowly)
-        if (this._frameCount % 3 !== 0) return;
         const PI2 = Math.PI * 2;
         for (const node of this.nodes) {
             if (!node.x || !node.y) continue;
@@ -575,12 +573,12 @@ class SocialField {
             // Two concentric circles instead of gradient (2 draws vs gradient alloc)
             ctx.beginPath();
             ctx.arc(node.x, node.y, r, 0, PI2);
-            ctx.fillStyle = `rgba(${cr}, ${cg}, ${cb}, ${0.04 + temp * 0.04})`;
+            ctx.fillStyle = `rgba(${cr}, ${cg}, ${cb}, ${0.12 + temp * 0.12})`;
             ctx.fill();
 
             ctx.beginPath();
             ctx.arc(node.x, node.y, r * 0.5, 0, PI2);
-            ctx.fillStyle = `rgba(${cr}, ${cg}, ${cb}, ${0.06 + temp * 0.06})`;
+            ctx.fillStyle = `rgba(${cr}, ${cg}, ${cb}, ${0.15 + temp * 0.12})`;
             ctx.fill();
         }
     }
@@ -664,9 +662,6 @@ class SocialField {
     }
 
     _renderNodeHeat(ctx) {
-        // Only update rings every 2 frames (visual smoothness preserved, perf 2x)
-        if (this._frameCount % 2 !== 0) return;
-
         const rOuter = 42;
         const rInner = 33;
         const ringW = 3.5;

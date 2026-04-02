@@ -636,8 +636,6 @@ class FrictionField {
 
     _renderEnergyIndicators(ctx) {
         const PI2 = Math.PI * 2;
-        // Only update energy indicators every 2 frames (visual = same, perf = 2x)
-        if (this._frameCount % 2 !== 0) return;
 
         for (const node of this.nodes) {
             if (!node.x || !node.y) continue;
