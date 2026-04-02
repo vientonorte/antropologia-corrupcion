@@ -500,8 +500,11 @@ class SocialField {
     /* ─── RENDER ─── */
 
     _animate() {
+        // Cancel any existing animation loop to prevent double-loops
+        if (this.animFrame) { cancelAnimationFrame(this.animFrame); this.animFrame = null; }
         const frame = () => {
             if (!this.visible) {
+                this.animFrame = null;
                 return; // Pausa real: no solicitar frames cuando offscreen
             }
             this._frameCount++;
@@ -551,6 +554,9 @@ class SocialField {
     }
 
     _renderPowerFields(ctx) {
+        // Only recalculate every 3 frames (halos pulse slowly)
+        if (this._frameCount % 3 !== 0) return;
+        const PI2 = Math.PI * 2;
         for (const node of this.nodes) {
             if (!node.x || !node.y) continue;
             const state = this.nodeState.get(node.id);
@@ -561,20 +567,20 @@ class SocialField {
             const pulse = 1 + Math.sin(this._frameCount * 0.02 + state.heat * 5) * 0.06;
             const r = radius * pulse;
 
-            // Gradiente termográfico
             const idx = Math.min(255, Math.floor(temp * 255));
             const cr = THERMO_PALETTE[idx * 3];
             const cg = THERMO_PALETTE[idx * 3 + 1];
             const cb = THERMO_PALETTE[idx * 3 + 2];
 
-            const grad = ctx.createRadialGradient(node.x, node.y, r * 0.1, node.x, node.y, r);
-            grad.addColorStop(0, `rgba(${cr}, ${cg}, ${cb}, ${0.15 + temp * 0.15})`);
-            grad.addColorStop(0.5, `rgba(${cr}, ${cg}, ${cb}, ${0.05 + temp * 0.08})`);
-            grad.addColorStop(1, 'rgba(0,0,0,0)');
+            // Two concentric circles instead of gradient (2 draws vs gradient alloc)
+            ctx.beginPath();
+            ctx.arc(node.x, node.y, r, 0, PI2);
+            ctx.fillStyle = `rgba(${cr}, ${cg}, ${cb}, ${0.04 + temp * 0.04})`;
+            ctx.fill();
 
             ctx.beginPath();
-            ctx.arc(node.x, node.y, r, 0, Math.PI * 2);
-            ctx.fillStyle = grad;
+            ctx.arc(node.x, node.y, r * 0.5, 0, PI2);
+            ctx.fillStyle = `rgba(${cr}, ${cg}, ${cb}, ${0.06 + temp * 0.06})`;
             ctx.fill();
         }
     }
@@ -623,130 +629,115 @@ class SocialField {
     }
 
     _renderAgents(ctx) {
+        const PI2 = Math.PI * 2;
+        // Batch clean agents in one path
+        ctx.fillStyle = 'rgba(160, 180, 200, 0.5)';
+        ctx.beginPath();
         for (const agent of this.agents) {
+            if (agent.corrupted) continue;
             const lifeRatio = agent.life / agent.maxLife;
-            const alpha = lifeRatio > 0.85 ? (1 - lifeRatio) * 6.67 :
-                lifeRatio < 0.15 ? lifeRatio * 6.67 :
-                1;
-
-            if (agent.corrupted) {
-                // Agente corrupto: brillo rojo-naranja
-                ctx.beginPath();
-                ctx.arc(agent.x, agent.y, agent.size * 1.5, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(200, 100, 60, ${alpha * 0.15})`;
-                ctx.fill();
-
-                ctx.beginPath();
-                ctx.arc(agent.x, agent.y, agent.size, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(200, 120, 70, ${alpha * 0.7})`;
-                ctx.fill();
-            } else {
-                // Agente limpio: azul-blanco
-                const needColor = Math.floor(agent.necessity * 80);
-                ctx.beginPath();
-                ctx.arc(agent.x, agent.y, agent.size, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(${120 + needColor}, ${160 + needColor * 0.5}, ${200}, ${alpha * 0.6})`;
-                ctx.fill();
-            }
+            if (lifeRatio < 0.05 || lifeRatio > 0.95) continue;
+            ctx.moveTo(agent.x + agent.size, agent.y);
+            ctx.arc(agent.x, agent.y, agent.size, 0, PI2);
         }
+        ctx.fill();
+
+        // Batch corrupt agent glows
+        ctx.fillStyle = 'rgba(200, 100, 60, 0.1)';
+        ctx.beginPath();
+        for (const agent of this.agents) {
+            if (!agent.corrupted) continue;
+            ctx.moveTo(agent.x + agent.size * 1.5, agent.y);
+            ctx.arc(agent.x, agent.y, agent.size * 1.5, 0, PI2);
+        }
+        ctx.fill();
+
+        // Batch corrupt agent cores
+        ctx.fillStyle = 'rgba(200, 120, 70, 0.55)';
+        ctx.beginPath();
+        for (const agent of this.agents) {
+            if (!agent.corrupted) continue;
+            ctx.moveTo(agent.x + agent.size, agent.y);
+            ctx.arc(agent.x, agent.y, agent.size, 0, PI2);
+        }
+        ctx.fill();
     }
 
     _renderNodeHeat(ctx) {
-        // Dual-ring system: outer=Integrity(R), inner=Heat(Q), gap=resistance barrier
-        const rOuter = 42;    // radio exterior (integridad)
-        const rInner = 33;    // radio interior (calor)
+        // Only update rings every 2 frames (visual smoothness preserved, perf 2x)
+        if (this._frameCount % 2 !== 0) return;
+
+        const rOuter = 42;
+        const rInner = 33;
         const ringW = 3.5;
         const PI2 = Math.PI * 2;
-        const startAngle = -Math.PI / 2; // 12 o'clock
+        const startAngle = -Math.PI / 2;
 
         ctx.lineCap = 'round';
 
+        // Pass 1: batch all outer track rings
+        ctx.strokeStyle = 'rgba(60,80,100,0.15)';
+        ctx.lineWidth = ringW;
+        ctx.beginPath();
+        for (const node of this.nodes) {
+            if (!node.x || !node.y) continue;
+            ctx.moveTo(node.x + rOuter, node.y);
+            ctx.arc(node.x, node.y, rOuter, 0, PI2);
+        }
+        ctx.stroke();
+
+        // Pass 2: integrity arcs + heat arcs (per-node, must differ in color)
         for (const node of this.nodes) {
             if (!node.x || !node.y) continue;
             const state = this.nodeState.get(node.id);
             if (!state) continue;
-
             const nx = node.x, ny = node.y;
             const integrity = state.integrity;
-            const temp = Math.min(state.temperature, 1);
-            const heatFill = Math.min(state.heat / 1.5, 1); // normalizado a 1.5 como saturación
-            const flow = state.currentFlow;
+            const heatFill = Math.min(state.heat / 1.5, 1);
 
-            // ── ANILLO EXTERIOR: Integridad R ──
-            // Track de fondo (anillo completo, tenue)
-            ctx.beginPath();
-            ctx.arc(nx, ny, rOuter, 0, PI2);
-            ctx.strokeStyle = 'rgba(60,80,100,0.15)';
-            ctx.lineWidth = ringW;
-            ctx.stroke();
-
-            // Arco de integridad: se consume en sentido horario
+            // Integrity arc
             const intAngle = integrity * PI2;
-            // Color: azul-frío (íntegro) → ámbar → rojo (degradado)
-            const intIdx = Math.min(255, Math.floor((1 - integrity) * 255));
-            const iR = THERMO_PALETTE[intIdx * 3];
-            const iG = THERMO_PALETTE[intIdx * 3 + 1];
-            const iB = THERMO_PALETTE[intIdx * 3 + 2];
-
             if (intAngle > 0.02) {
+                const intIdx = Math.min(255, Math.floor((1 - integrity) * 255));
+                const iR = THERMO_PALETTE[intIdx * 3];
+                const iG = THERMO_PALETTE[intIdx * 3 + 1];
+                const iB = THERMO_PALETTE[intIdx * 3 + 2];
                 ctx.beginPath();
                 ctx.arc(nx, ny, rOuter, startAngle, startAngle + intAngle);
                 ctx.strokeStyle = `rgba(${iR},${iG},${iB},0.75)`;
                 ctx.lineWidth = ringW;
                 ctx.stroke();
-
-                // Glow en extremo del arco (punto de "resistencia")
-                const tipX = nx + rOuter * Math.cos(startAngle + intAngle);
-                const tipY = ny + rOuter * Math.sin(startAngle + intAngle);
-                ctx.beginPath();
-                ctx.arc(tipX, tipY, 2.5, 0, PI2);
-                ctx.fillStyle = `rgba(${iR},${iG},${iB},0.9)`;
-                ctx.fill();
             }
 
-            // ── ANILLO INTERIOR: Calor Q (se llena como termómetro) ──
+            // Heat arc
             if (heatFill > 0.01) {
-                // Track de fondo
-                ctx.beginPath();
-                ctx.arc(nx, ny, rInner, 0, PI2);
-                ctx.strokeStyle = 'rgba(60,40,30,0.1)';
-                ctx.lineWidth = ringW * 0.8;
-                ctx.stroke();
-
-                // Arco de calor: crece conforme se acumula corrupción
                 const heatAngle = heatFill * PI2;
                 const hIdx = Math.min(255, Math.floor(heatFill * 255));
                 const hR = THERMO_PALETTE[hIdx * 3];
                 const hG = THERMO_PALETTE[hIdx * 3 + 1];
                 const hB = THERMO_PALETTE[hIdx * 3 + 2];
-
                 ctx.beginPath();
                 ctx.arc(nx, ny, rInner, startAngle, startAngle + heatAngle);
                 ctx.strokeStyle = `rgba(${hR},${hG},${hB},0.65)`;
                 ctx.lineWidth = ringW * 0.8;
                 ctx.stroke();
             }
+        }
 
-            // ── LABEL: R% + I (si hay corriente) ──
-            ctx.font = '9px "SF Mono","Fira Code",monospace';
-            ctx.textAlign = 'center';
-
-            const intPct = Math.round(integrity * 100);
-            // Color del label acorde a la integridad
+        // Pass 3: batch all text labels (set font once)
+        ctx.font = '9px "SF Mono","Fira Code",monospace';
+        ctx.textAlign = 'center';
+        for (const node of this.nodes) {
+            if (!node.x || !node.y) continue;
+            const state = this.nodeState.get(node.id);
+            if (!state) continue;
+            const integrity = state.integrity;
             ctx.fillStyle = integrity > 0.5 ? 'rgba(120,180,200,0.7)' :
                 integrity > 0.2 ? 'rgba(200,169,110,0.7)' : 'rgba(180,60,50,0.9)';
-            ctx.fillText('R=' + intPct + '%', nx, ny + rOuter + 14);
-
-            if (flow > 0.1) {
+            ctx.fillText('R=' + Math.round(integrity * 100) + '%', node.x, node.y + rOuter + 14);
+            if (state.currentFlow > 0.1) {
                 ctx.fillStyle = 'rgba(200,120,70,0.7)';
-                ctx.fillText('I=' + flow.toFixed(1), nx, ny - rOuter - 8);
-            }
-
-            // Indicador de calor (Q%) si relevante
-            if (heatFill > 0.15) {
-                ctx.font = '7px "SF Mono","Fira Code",monospace';
-                ctx.fillStyle = `rgba(200,140,80,${0.4 + heatFill * 0.4})`;
-                ctx.fillText('Q=' + Math.round(heatFill * 100) + '%', nx, ny + rOuter + 24);
+                ctx.fillText('I=' + state.currentFlow.toFixed(1), node.x, node.y - rOuter - 8);
             }
         }
         ctx.lineCap = 'butt';
@@ -885,50 +876,58 @@ class SocialField {
         const eB = THERMO_PALETTE[eidx * 3 + 2];
         const entropyColor = `rgb(${eR},${eG},${eB})`;
 
-        this.metricsEl.innerHTML = `
-      <div class="sf-metrics sf-metrics--enhanced">
-        <div class="sf-metric sf-metric--entropy">
-          <span class="sf-label">ENTROPÍA S</span>
-          <span class="sf-value ${statusCls}" style="color:${entropyColor}">${entropyPct}%</span>
-          <svg class="sf-spark" width="${sparkW}" height="${sparkH}" viewBox="0 0 ${sparkW} ${sparkH}">
-            <defs>
-              <linearGradient id="sf-spark-grad" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stop-color="${entropyColor}" stop-opacity="0.3"/>
-                <stop offset="100%" stop-color="${entropyColor}" stop-opacity="0"/>
-              </linearGradient>
-            </defs>
-            ${sparkArea ? `<path d="${sparkArea}" fill="url(#sf-spark-grad)"/>` : ''}
-            <line x1="0" y1="${sparkH * (1 - THERMO_CONFIG.ENTROPY_CRITICAL)}"
-                  x2="${sparkW}" y2="${sparkH * (1 - THERMO_CONFIG.ENTROPY_CRITICAL)}"
-                  stroke="rgba(180,50,40,0.4)" stroke-width="1" stroke-dasharray="3 2"/>
-            <text x="${sparkW - 2}" y="${sparkH * (1 - THERMO_CONFIG.ENTROPY_CRITICAL) - 2}"
-                  fill="rgba(180,50,40,0.5)" font-size="6" text-anchor="end">S_crit</text>
-            ${sparkPath ? `<path d="${sparkPath}" fill="none" stroke="${entropyColor}" stroke-width="1.5"/>` : ''}
-          </svg>
-          <span class="sf-phase">${phase}</span>
-        </div>
-        <div class="sf-metric">
-          <span class="sf-label">INTEGRIDAD R\u0304</span>
-          <span class="sf-value">${Math.round(avgIntegrity * 100)}%</span>
-          <div class="sf-bar">
-            <div class="sf-bar__fill sf-bar__fill--integrity"
-                 style="width:${Math.round(avgIntegrity * 100)}%;
-                        background:${avgIntegrity > 0.5 ? 'rgba(74,127,165,0.6)' : avgIntegrity > 0.2 ? 'rgba(200,169,110,0.6)' : 'rgba(180,60,50,0.7)'}">
-            </div>
-          </div>
-        </div>
-        <div class="sf-metric">
-          <span class="sf-label">TXN CORRUPTAS</span>
-          <span class="sf-value">${corruptPct}%</span>
-          <span class="sf-sub">${this.corruptTransactions} / ${this.totalTransactions}</span>
-        </div>
-        <div class="sf-metric sf-metric--status">
-          <span class="sf-label">ESTADO</span>
-          <span class="sf-value ${statusCls}">${status}</span>
-        </div>
-      </div>
-    `;
+        // Targeted DOM updates (avoid destroying/recreating ~50 nodes every 0.5s)
+        if (!this._metricsBuilt) {
+            this._metricsBuilt = true;
+            this.metricsEl.innerHTML = '<div class="sf-metrics sf-metrics--enhanced">' +
+              '<div class="sf-metric sf-metric--entropy">' +
+                '<span class="sf-label">ENTROPÍA S</span>' +
+                '<span class="sf-value" id="sf-m-entropy"></span>' +
+                '<svg class="sf-spark" id="sf-m-spark" width="' + sparkW + '" height="' + sparkH + '" viewBox="0 0 ' + sparkW + ' ' + sparkH + '"></svg>' +
+                '<span class="sf-phase" id="sf-m-phase"></span>' +
+              '</div>' +
+              '<div class="sf-metric">' +
+                '<span class="sf-label">INTEGRIDAD R\u0304</span>' +
+                '<span class="sf-value" id="sf-m-integrity"></span>' +
+                '<div class="sf-bar"><div class="sf-bar__fill sf-bar__fill--integrity" id="sf-m-intbar"></div></div>' +
+              '</div>' +
+              '<div class="sf-metric">' +
+                '<span class="sf-label">TXN CORRUPTAS</span>' +
+                '<span class="sf-value" id="sf-m-corrupt"></span>' +
+                '<span class="sf-sub" id="sf-m-corr-sub"></span>' +
+              '</div>' +
+              '<div class="sf-metric sf-metric--status">' +
+                '<span class="sf-label">ESTADO</span>' +
+                '<span class="sf-value" id="sf-m-status"></span>' +
+              '</div></div>';
         }
+        // Update only the text/attributes that changed
+        var eEl = document.getElementById('sf-m-entropy');
+        if (eEl) { eEl.textContent = entropyPct + '%'; eEl.className = 'sf-value ' + statusCls; eEl.style.color = entropyColor; }
+        var phEl = document.getElementById('sf-m-phase');
+        if (phEl) phEl.textContent = phase;
+        var iEl = document.getElementById('sf-m-integrity');
+        if (iEl) iEl.textContent = Math.round(avgIntegrity * 100) + '%';
+        var ibEl = document.getElementById('sf-m-intbar');
+        if (ibEl) {
+            ibEl.style.width = Math.round(avgIntegrity * 100) + '%';
+            ibEl.style.background = avgIntegrity > 0.5 ? 'rgba(74,127,165,0.6)' : avgIntegrity > 0.2 ? 'rgba(200,169,110,0.6)' : 'rgba(180,60,50,0.7)';
+        }
+        var cEl = document.getElementById('sf-m-corrupt');
+        if (cEl) cEl.textContent = corruptPct + '%';
+        var csEl = document.getElementById('sf-m-corr-sub');
+        if (csEl) csEl.textContent = this.corruptTransactions + ' / ' + this.totalTransactions;
+        var sEl = document.getElementById('sf-m-status');
+        if (sEl) { sEl.textContent = status; sEl.className = 'sf-value ' + statusCls; }
+        // Update sparkline SVG efficiently
+        var spkEl = document.getElementById('sf-m-spark');
+        if (spkEl) {
+            var critY = sparkH * (1 - THERMO_CONFIG.ENTROPY_CRITICAL);
+            spkEl.innerHTML = (sparkArea ? '<path d="' + sparkArea + '" fill="' + entropyColor + '" fill-opacity="0.15"/>' : '') +
+                '<line x1="0" y1="' + critY + '" x2="' + sparkW + '" y2="' + critY + '" stroke="rgba(180,50,40,0.4)" stroke-width="1" stroke-dasharray="3 2"/>' +
+                (sparkPath ? '<path d="' + sparkPath + '" fill="none" stroke="' + entropyColor + '" stroke-width="1.5"/>' : '');
+        }
+    }
 
     /* ─── API PÚBLICA ─── */
 
@@ -941,7 +940,7 @@ class SocialField {
         const wasHidden = !this.visible;
         this.visible = v;
         this.canvas.style.display = v ? 'block' : 'none';
-        if (v && wasHidden) this._animate(); // Re-arrancar loop
+        if (v && wasHidden) this._animate();
     }
 
     resize(w, h) {
