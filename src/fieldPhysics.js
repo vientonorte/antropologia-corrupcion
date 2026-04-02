@@ -140,8 +140,8 @@ class FrictionField {
 
     _init() {
         const rect = this.container.getBoundingClientRect();
-        this.width = Math.max(rect.width || 600, 300);
-        this.height = Math.max(rect.height || 500, 300);
+        this.width = Math.max(rect.width || this.container.offsetWidth || 600, 300);
+        this.height = Math.max(rect.height || this.container.offsetHeight || 500, 300);
 
         // Crear canvas detrás del SVG
         this.canvas = document.createElement('canvas');
@@ -469,7 +469,8 @@ class FrictionField {
 
             // Solo recomputar si las posiciones de nodos realmente cambiaron
             const posKey = this.nodes.map(n => `${(n.x||0).toFixed(0)},${(n.y||0).toFixed(0)}`).join('|');
-            if (this._needsFieldUpdate || posKey !== this._lastNodePositions) {
+            // Only recompute field if nodes moved significantly
+            if (this._needsFieldUpdate || (posKey !== this._lastNodePositions && this._frameCount % 3 === 0)) {
                 this._lastNodePositions = posKey;
                 this._computeField();
                 this._streamlinesDirty = true;
@@ -681,6 +682,7 @@ class FrictionField {
         if (this.activeLayer !== 'all') {
             const lp = LAYER_PALETTES[this.activeLayer];
             if (lp) return `rgba(${lp.r}, ${lp.g}, ${lp.b}, 1)`;
+            return 'rgba(128, 128, 128, 1)';
         }
 
         // Color basado en tipo de fricción dominante
