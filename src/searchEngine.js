@@ -357,9 +357,8 @@ function renderSearchStats(stats) {
  * Escapa HTML
  */
 function _escHtml(str) {
-    var div = document.createElement('div');
-    div.appendChild(document.createTextNode(str));
-    return div.innerHTML;
+    if (!str) return '';
+    return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
 
 /* ─── UI CONTROLLER ─── */
