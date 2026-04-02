@@ -2584,8 +2584,7 @@ function renderTension(id) {
   const viewer = document.getElementById('tension-viewer');
   viewer.style.opacity = '0';
   viewer.style.transform = 'translateY(6px)';
-  setTimeout(() => {
-    viewer.innerHTML = [
+  viewer.innerHTML = [
     { key:'etica', cls:'tv-e', sym:'◎ ÉTICA', acc:'kw-e' },
     { key:'institucional', cls:'tv-i', sym:'▣ INSTITUCIONAL', acc:'kw-i' },
     { key:'material', cls:'tv-m', sym:'◈ MATERIAL', acc:'kw-m' },
