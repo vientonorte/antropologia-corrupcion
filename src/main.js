@@ -378,13 +378,11 @@ function announceToSR(msg) {
 function showFallbackError(err) {
     const container = document.getElementById('ca-graph-canvas');
     if (!container) return;
-    container.innerHTML = `
-    <div class="ca-empty-state" role="alert">
-      <span class="ca-empty-state__icon">∅</span>
-      <p>El grafo no pudo iniciar.<br>
-         <small style="opacity:0.6">${err?.message || 'Error desconocido'}</small></p>
-    </div>
-  `;
+    var msg = (err && err.message) ? err.message.replace(/</g, '&lt;').replace(/>/g, '&gt;') : 'Error desconocido';
+    container.innerHTML = '<div class="ca-empty-state" role="alert">' +
+      '<span class="ca-empty-state__icon">∅</span>' +
+      '<p>El grafo no pudo iniciar.<br>' +
+      '<small style="opacity:0.6">' + msg + '</small></p></div>';
 }
 
 /* ─── INIT ─── */

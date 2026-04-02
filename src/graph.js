@@ -203,7 +203,7 @@ class FrictionGraph {
         this._setupResize();
 
         // Drag global (un solo par de listeners)
-        window.addEventListener('mousemove', this._onMouseMove);
+        window.addEventListener('mousemove', this._onMouseMove, { passive: true });
         window.addEventListener('mouseup', this._onMouseUp);
     }
 
@@ -479,30 +479,29 @@ class FrictionGraph {
     }
 
     _selectNode(node) {
-        const prev = this.selectedId;
         this.selectedId = node.id;
 
-        // Actualizar clases visuales
-        this.nodeLayer.querySelectorAll('.ca-node').forEach(g => {
-            const id = g.getAttribute('data-id');
-            g.classList.toggle('ca-node--selected', id === node.id);
-            g.classList.toggle('ca-node--dimmed',
-                id !== node.id && this.rawLinks.every(l =>
-                    ((l.source?.id ?? l.source) !== node.id &&
-                     (l.target?.id ?? l.target) !== node.id) &&
-                    ((l.source?.id ?? l.source) !== id &&
-                     (l.target?.id ?? l.target) !== id)
-                )
-            );
-        });
+        // Pre-compute connected node IDs (O(L) once instead of O(N*L))
+        const connectedIds = new Set([node.id]);
+        for (const l of this.rawLinks) {
+            const sId = l.source?.id ?? l.source;
+            const tId = l.target?.id ?? l.target;
+            if (sId === node.id) connectedIds.add(tId);
+            if (tId === node.id) connectedIds.add(sId);
+        }
 
-        this.linkLayer.querySelectorAll('.ca-link').forEach(line => {
-            const connected =
-                line.getAttribute('data-source') === node.id ||
-                line.getAttribute('data-target') === node.id;
+        // Use cached element maps instead of querySelectorAll
+        for (const [id, g] of this._nodeElMap) {
+            g.classList.toggle('ca-node--selected', id === node.id);
+            g.classList.toggle('ca-node--dimmed', !connectedIds.has(id));
+        }
+
+        for (const [key, line] of this._linkElMap) {
+            const [sId, tId] = key.split('|');
+            const connected = sId === node.id || tId === node.id;
             line.classList.toggle('ca-link--active', connected);
             line.classList.toggle('ca-link--dimmed', !connected);
-        });
+        }
 
         this.onNodeClick(node);
     }
@@ -550,17 +549,30 @@ class FrictionGraph {
      */
     setActiveLayer(layer) {
         this.activeLayer = layer;
-        this.nodeLayer.querySelectorAll('.ca-layer-circle').forEach(c => {
-            const found = [...c.classList].find(cl => cl.startsWith('ca-layer-') && cl !== 'ca-layer-circle');
-            const capaName = found ? found.replace('ca-layer-', '') : undefined;
+        // Cache layer circles on first call
+        if (!this._layerCircles) {
+            this._layerCircles = [];
+            this.nodeLayer.querySelectorAll('.ca-layer-circle').forEach(c => {
+                let capaName;
+                for (let i = 0; i < c.classList.length; i++) {
+                    const cl = c.classList[i];
+                    if (cl.startsWith('ca-layer-') && cl !== 'ca-layer-circle') {
+                        capaName = cl.replace('ca-layer-', '');
+                        break;
+                    }
+                }
+                this._layerCircles.push({ el: c, capa: capaName });
+            });
+        }
+        for (const { el, capa } of this._layerCircles) {
             if (layer === 'all') {
-                c.setAttribute('opacity', '0.55');
-            } else if (capaName === layer) {
-                c.setAttribute('opacity', '0.85');
+                el.setAttribute('opacity', '0.55');
+            } else if (capa === layer) {
+                el.setAttribute('opacity', '0.85');
             } else {
-                c.setAttribute('opacity', '0.1');
+                el.setAttribute('opacity', '0.1');
             }
-        });
+        }
         if (this.field) this.field.setActiveLayer(layer);
     }
 

@@ -126,7 +126,7 @@ class FrictionField {
         this._frameCount = 0;
         this._cachedStreamlines = null;
         this._streamlinesDirty = true;
-        this._lastNodePositions = '';
+        this._lastPosHash = 0;
         this._gridW = 0;
         this._gridH = 0;
         this._gridRes = FIELD_CONFIG.GRID_RESOLUTION;
@@ -169,6 +169,8 @@ class FrictionField {
                 this.visible = true;
                 this.canvas.style.display = 'block';
                 this._needsFieldUpdate = true;
+                // Cancel existing frame before starting new loop (prevent double-loop)
+                if (this.animFrame) { cancelAnimationFrame(this.animFrame); this.animFrame = null; }
                 this._animate();
             } else if (!vis && this.visible) {
                 this.visible = false;
@@ -225,11 +227,19 @@ class FrictionField {
     /**
      * Calcula el vector de fuerza F(x,y) = -∇Φ  (gradiente numérico)
      */
+    // Reusable force result object (avoids allocation per call)
+    _forceResult = { fx: 0, fy: 0 };
+
     _forceAt(x, y) {
-        const h = 2; // paso para diferencia finita
-        const dPhiDx = (this._potential(x + h, y) - this._potential(x - h, y)) / (2 * h);
-        const dPhiDy = (this._potential(x, y + h) - this._potential(x, y - h)) / (2 * h);
-        return { fx: -dPhiDx, fy: -dPhiDy };
+        const h = 2;
+        // Use grid O(1) lookup instead of O(N+L) _potential
+        const lookup = this._potentialGrid ? '_potentialFromGrid' : '_potential';
+        const dPhiDx = (this[lookup](x + h, y) - this[lookup](x - h, y)) / (2 * h);
+        const dPhiDy = (this[lookup](x, y + h) - this[lookup](x, y - h)) / (2 * h);
+        const res = this._forceResult;
+        res.fx = -dPhiDx;
+        res.fy = -dPhiDy;
+        return res;
     }
 
     /**
@@ -459,6 +469,7 @@ class FrictionField {
     /* ─── RENDER LOOP ─── */
 
     _animate() {
+        if (this.animFrame) { cancelAnimationFrame(this.animFrame); this.animFrame = null; }
         const frame = () => {
             if (!this.visible) {
                 this.animFrame = null;
@@ -468,10 +479,14 @@ class FrictionField {
             this._frameCount++;
 
             // Solo recomputar si las posiciones de nodos realmente cambiaron
-            const posKey = this.nodes.map(n => `${(n.x||0).toFixed(0)},${(n.y||0).toFixed(0)}`).join('|');
-            // Only recompute field if nodes moved significantly
-            if (this._needsFieldUpdate || (posKey !== this._lastNodePositions && this._frameCount % 3 === 0)) {
-                this._lastNodePositions = posKey;
+            // Numeric hash of positions (avoids string allocation per frame)
+            let posHash = 0;
+            for (let i = 0; i < this.nodes.length; i++) {
+                posHash = (posHash * 31 + ((this.nodes[i].x||0)|0)) | 0;
+                posHash = (posHash * 31 + ((this.nodes[i].y||0)|0)) | 0;
+            }
+            if (this._needsFieldUpdate || (posHash !== this._lastPosHash && this._frameCount % 3 === 0)) {
+                this._lastPosHash = posHash;
                 this._computeField();
                 this._streamlinesDirty = true;
             }
@@ -535,6 +550,8 @@ class FrictionField {
     }
 
     _renderForceLines(ctx) {
+        const sinVal = Math.sin(this._frameCount * 0.02);
+        // Batch: draw all curves first, then all arrows
         for (const link of this.links) {
             const s = link.source,
                 t = link.target;
@@ -544,24 +561,17 @@ class FrictionField {
             const dy = t.y - s.y;
             const dist = Math.sqrt(dx * dx + dy * dy) || 1;
             const weight = link.weight || 0.5;
+            const alpha = 0.08 * weight;
 
-            // Línea de fuerza con gradiente
-            const grad = ctx.createLinearGradient(s.x, s.y, t.x, t.y);
-            const sColor = this._nodeFieldColor(s);
-            const tColor = this._nodeFieldColor(t);
-            grad.addColorStop(0, sColor.replace('1)', `${0.08 * weight})`));
-            grad.addColorStop(0.5, `rgba(200, 169, 110, ${0.12 * weight})`);
-            grad.addColorStop(1, tColor.replace('1)', `${0.08 * weight})`));
-
-            ctx.beginPath();
-            ctx.strokeStyle = grad;
+            // Use flat color instead of gradient per-frame (major perf win)
+            ctx.strokeStyle = `rgba(200, 169, 110, ${alpha + 0.04})`;
             ctx.lineWidth = weight * 3;
 
-            // Curva con perturbación sinusoidal (campo no uniforme)
             const nx = -dy / dist;
             const ny = dx / dist;
-            const amp = weight * 15 * Math.sin(this._frameCount * 0.02);
+            const amp = weight * 15 * sinVal;
 
+            ctx.beginPath();
             ctx.moveTo(s.x, s.y);
             ctx.quadraticCurveTo(
                 (s.x + t.x) / 2 + nx * amp,
@@ -569,111 +579,112 @@ class FrictionField {
                 t.x, t.y
             );
             ctx.stroke();
-
-            // Flechas de fuerza en el punto medio
+        }
+        // Batch arrows in a single path
+        ctx.beginPath();
+        for (const link of this.links) {
+            const s = link.source,
+                t = link.target;
+            if (!s?.x || !t?.x) continue;
+            const dx = t.x - s.x;
+            const dy = t.y - s.y;
+            const dist = Math.sqrt(dx * dx + dy * dy) || 1;
+            const weight = link.weight || 0.5;
+            const nx = -dy / dist;
+            const ny = dx / dist;
+            const amp = weight * 15 * sinVal;
             const mx = (s.x + t.x) / 2 + nx * amp * 0.5;
             const my = (s.y + t.y) / 2 + ny * amp * 0.5;
             const angle = Math.atan2(dy, dx);
             const arrowSize = 4 + weight * 4;
-
-            ctx.fillStyle = `rgba(200, 169, 110, ${0.25 * weight})`;
-            ctx.beginPath();
             ctx.moveTo(mx + Math.cos(angle) * arrowSize, my + Math.sin(angle) * arrowSize);
             ctx.lineTo(mx + Math.cos(angle + 2.5) * arrowSize * 0.6, my + Math.sin(angle + 2.5) * arrowSize * 0.6);
             ctx.lineTo(mx + Math.cos(angle - 2.5) * arrowSize * 0.6, my + Math.sin(angle - 2.5) * arrowSize * 0.6);
             ctx.closePath();
-            ctx.fill();
         }
+        ctx.fillStyle = 'rgba(200, 169, 110, 0.15)';
+        ctx.fill();
     }
 
     _renderParticles(ctx) {
+        const PI2 = Math.PI * 2;
+        const invMax = this._potentialMax > 0 ? 1 / this._potentialMax : 0;
+
+        // Batch normal particles in one path
+        ctx.fillStyle = 'rgba(210, 175, 120, 0.45)';
+        ctx.beginPath();
         for (const p of this.particles) {
             const lifeRatio = p.life / p.maxLife;
-            // Fade in/out
-            const alpha = lifeRatio > 0.8 ? (1 - lifeRatio) * 5 :
-                lifeRatio < 0.2 ? lifeRatio * 5 : 1;
-            const finalAlpha = alpha * 0.6;
+            if (lifeRatio < 0.05 || lifeRatio > 0.95) continue;
+            ctx.moveTo(p.x + p.size, p.y);
+            ctx.arc(p.x, p.y, p.size, 0, PI2);
+        }
+        ctx.fill();
 
-            // Color depende de en qué zona del campo está (grid interpolado, O(1))
+        // Glow pass: only high-energy particles
+        ctx.fillStyle = 'rgba(232, 196, 122, 0.06)';
+        ctx.beginPath();
+        for (const p of this.particles) {
             const phi = this._potentialFromGrid(p.x, p.y);
-            const normPhi = this._potentialMax > 0 ? Math.min(phi / this._potentialMax, 1) : 0;
-
-            ctx.beginPath();
-            ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-            ctx.fillStyle = `rgba(${200 + normPhi * 55}, ${169 + normPhi * 50}, ${110 + normPhi * 60}, ${finalAlpha})`;
-            ctx.fill();
-
-            // Partículas de alta energía tienen glow
-            if (normPhi > 0.5) {
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, p.size * 3, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(232, 196, 122, ${finalAlpha * 0.15})`;
-                ctx.fill();
+            if (phi * invMax > 0.5) {
+                ctx.moveTo(p.x + p.size * 3, p.y);
+                ctx.arc(p.x, p.y, p.size * 3, 0, PI2);
             }
         }
+        ctx.fill();
     }
 
     _renderEnergyIndicators(ctx) {
+        const PI2 = Math.PI * 2;
+        // Only update energy indicators every 2 frames (visual = same, perf = 2x)
+        if (this._frameCount % 2 !== 0) return;
+
         for (const node of this.nodes) {
             if (!node.x || !node.y) continue;
-
             const energy = node.intensidad || 0.5;
             const radius = 35 + energy * 25;
-
-            // Anillo pulsante de energía
             const pulse = 1 + Math.sin(this._frameCount * 0.03 + node.intensidad * 10) * 0.08;
             const r = radius * pulse;
 
-            // Gradiente radial de energía
-            const grad = ctx.createRadialGradient(node.x, node.y, r * 0.3, node.x, node.y, r);
-            const color = this._nodeFieldColor(node);
-            grad.addColorStop(0, color.replace('1)', `${0.08 * energy})`));
-            grad.addColorStop(0.6, color.replace('1)', `${0.04 * energy})`));
-            grad.addColorStop(1, 'rgba(0,0,0,0)');
-
+            // Simple radial fill instead of gradient (no allocation)
             ctx.beginPath();
-            ctx.arc(node.x, node.y, r, 0, Math.PI * 2);
-            ctx.fillStyle = grad;
+            ctx.arc(node.x, node.y, r, 0, PI2);
+            ctx.fillStyle = `rgba(200, 169, 110, ${0.04 * energy})`;
             ctx.fill();
 
-            // Indicador numérico de energía (E = q²/2)
+            // Energy label
             const E = (energy * energy * FIELD_CONFIG.CHARGE_MULTIPLIER / 2).toFixed(0);
             ctx.font = '9px "SF Mono", "Fira Code", monospace';
             ctx.textAlign = 'center';
             ctx.fillStyle = `rgba(200, 169, 110, ${0.4 * energy})`;
-            ctx.fillText(`E=${E}`, node.x, node.y - radius - 8);
+            ctx.fillText('E=' + E, node.x, node.y - radius - 8);
+        }
 
-            // Vectores de fuerza radiales
-            if (energy > 0.6) {
-                const nArrows = Math.round(energy * 8);
-                for (let i = 0; i < nArrows; i++) {
-                    const a = (i / nArrows) * Math.PI * 2 + this._frameCount * 0.008;
-                    const innerR = radius * 0.9;
-                    const outerR = radius * 1.3;
-
-                    ctx.beginPath();
-                    ctx.moveTo(
-                        node.x + Math.cos(a) * innerR,
-                        node.y + Math.sin(a) * innerR
-                    );
-                    ctx.lineTo(
-                        node.x + Math.cos(a) * outerR,
-                        node.y + Math.sin(a) * outerR
-                    );
-                    ctx.strokeStyle = `rgba(200, 169, 110, ${0.15 * energy})`;
-                    ctx.lineWidth = 1;
-                    ctx.stroke();
-
-                    // Punta de flecha
-                    const tipX = node.x + Math.cos(a) * outerR;
-                    const tipY = node.y + Math.sin(a) * outerR;
-                    ctx.beginPath();
-                    ctx.arc(tipX, tipY, 1.5, 0, Math.PI * 2);
-                    ctx.fillStyle = `rgba(232, 196, 122, ${0.2 * energy})`;
-                    ctx.fill();
-                }
+        // Batch all force arrows in one path
+        ctx.beginPath();
+        ctx.strokeStyle = 'rgba(200, 169, 110, 0.12)';
+        ctx.lineWidth = 1;
+        for (const node of this.nodes) {
+            if (!node.x || !node.y) continue;
+            const energy = node.intensidad || 0.5;
+            if (energy <= 0.6) continue;
+            const radius = 35 + energy * 25;
+            const nArrows = Math.round(energy * 8);
+            const innerR = radius * 0.9;
+            const outerR = radius * 1.3;
+            for (let i = 0; i < nArrows; i++) {
+                const a = (i / nArrows) * PI2 + this._frameCount * 0.008;
+                ctx.moveTo(
+                    node.x + Math.cos(a) * innerR,
+                    node.y + Math.sin(a) * innerR
+                );
+                ctx.lineTo(
+                    node.x + Math.cos(a) * outerR,
+                    node.y + Math.sin(a) * outerR
+                );
             }
         }
+        ctx.stroke();
     }
 
     /* ─── UTILIDADES ─── */
