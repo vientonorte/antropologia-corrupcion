@@ -184,6 +184,8 @@ npx serve .
 
 | Commit | Tipo | Descripción |
 |--------|------|-------------|
+| `03a9d41` | docs | Contra-archivo standalone, documentación campos etnográficos y materiales de investigación |
+| `9f8fe98` | docs | Documentación completa — arquitectura, rendimiento, seguridad, accesibilidad, changelog |
 | `6cb1289` | fix | Eliminar frame-skip en render methods (`clearRect` borra cada frame → layers invisibles) |
 | `1b3e57f` | fix | Quitar "traducción fallida" duplicado en hero thesis |
 | `a2890a3` | ux | Optimización UX writing — 20 parches: microcopy, accesibilidad, consistencia |
