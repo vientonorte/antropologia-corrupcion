@@ -755,6 +755,30 @@ function initSearchUI(opts) {
 
     _seMountSuggestions(searchInput, opts.registros || [], opts.casos || []);
 
+    var controller = {
+        search: doSearch,
+        setFilters: function(next) {
+            next = next || {};
+            if (Object.prototype.hasOwnProperty.call(next, 'query')) searchInput.value = next.query || '';
+            if (fuenteFilter && Object.prototype.hasOwnProperty.call(next, 'fuente')) fuenteFilter.value = next.fuente || 'all';
+            if (casoFilter && Object.prototype.hasOwnProperty.call(next, 'caso')) casoFilter.value = next.caso || 'all';
+            if (tipoFilter && Object.prototype.hasOwnProperty.call(next, 'tipo')) tipoFilter.value = next.tipo || 'all';
+            selectedResultId = null;
+            doSearch();
+        },
+        getState: function() {
+            return {
+                query: searchInput.value,
+                fuente: fuenteFilter ? fuenteFilter.value : 'all',
+                caso: casoFilter ? casoFilter.value : 'all',
+                tipo: tipoFilter ? tipoFilter.value : 'all'
+            };
+        },
+        focusInput: function() {
+            searchInput.focus();
+        }
+    };
+
     function doSearch() {
         var params = {
             query: searchInput.value,
@@ -896,6 +920,12 @@ function initSearchUI(opts) {
 
     // Initial render
     doSearch();
+
+    if (typeof window !== 'undefined') {
+        window.__CA_SEARCH_UI = controller;
+    }
+
+    return controller;
 }
 
 /* ─── EXPORTS ─── */
