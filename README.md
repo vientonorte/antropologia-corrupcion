@@ -6,6 +6,13 @@
 
 **[Ver el Contra-Archivo →](https://vientonorte.github.io/antropologia-corrupcion/)**
 
+## Estado actual
+
+- Sitio publicado en GitHub Pages con 8 secciones narrativas activas
+- Buscador de Fricción Institucional desplegado y navegable en la sección `#buscador`
+- Grafo, campo social y buscador conviven sin dependencias externas ni build step
+- Riesgo abierto: historial del repo inflado por artefactos de investigación pesados ya versionados
+
 ---
 
 ## Campos de investigación
@@ -184,13 +191,12 @@ npx serve .
 
 | Commit | Tipo | Descripción |
 |--------|------|-------------|
+| `141d5bc` | fix | Ajuste responsive del grafo en mobile (min-height a 480px) |
+| `cc58b8b` | docs | Actualización de changelog y commits recientes en README |
 | `03a9d41` | docs | Contra-archivo standalone, documentación campos etnográficos y materiales de investigación |
-| `9f8fe98` | docs | Documentación completa — arquitectura, rendimiento, seguridad, accesibilidad, changelog |
-| `6cb1289` | fix | Eliminar frame-skip en render methods (`clearRect` borra cada frame → layers invisibles) |
-| `1b3e57f` | fix | Quitar "traducción fallida" duplicado en hero thesis |
-| `a2890a3` | ux | Optimización UX writing — 20 parches: microcopy, accesibilidad, consistencia |
-| `1023f64` | perf | Optimizar cargas interactivas: grid O(1), batch rendering, caché DOM + fix XSS |
-| `63fa073` | feat | Sprint 20: Buscador fricción + narrativa Gödel + evidencia AFP |
+| `9f8fe98` | docs | Documentación completa: arquitectura, rendimiento, seguridad, accesibilidad y changelog |
+| `6cb1289` | fix | Eliminar frame-skip en render methods (`clearRect` borra cada frame y hace desaparecer capas) |
+| `63fa073` | feat | Buscador de fricción, narrativa Gödel y evidencia AFP integrados en el sitio |
 
 ## Licencia
 
