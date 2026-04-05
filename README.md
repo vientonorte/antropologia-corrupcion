@@ -90,6 +90,12 @@ Panel de detalle por nodo: muestra las 3 capas de información (ética, instituc
 ### searchEngine.js — Buscador de fricción
 Motor de búsqueda híbrido que cruza texto libre con marcadores epistemológicos de fricción. Reutiliza el mismo helper auditable del motor de fricción para evitar deriva entre grafo y buscador, muestra desglose por componentes (overlap, marcador, tipo) e integra una séptima fuente BCN cargada desde `data/bcn-legislativo.json`, con campos de urgencia, comisión, autores, indicaciones y trazabilidad parlamentaria.
 
+Capacidades activas del buscador:
+- Sugerencias de consulta construidas desde casos y registros normalizados
+- Facetas dinámicas visibles según resultados emergentes (fuente, tipo de fricción y caso vinculado)
+- Selección de resultados con sincronía hacia el grafo para resaltar el caso relacionado
+- Explicación expandible por tarjeta con relevancia textual, componentes del score, keywords compartidas y marcadores activados
+
 ## Navegación
 
 - **Desktop:** Barra superior fija con links a cada sección
@@ -145,6 +151,12 @@ Motor de búsqueda híbrido friction-scored:
 3. **Marcadores de fricción** — 12 pares semánticos predefinidos (ej. "consentimiento" ↔ "proceso administrativo", peso 0.65–0.9)
 4. **Bonus por tipo** — fricción política / semántica / técnica
 
+Sprint UX/UI actual del buscador:
+- Autocomplete vía `datalist` para acelerar consultas exploratorias
+- Facetas dinámicas que permiten refinar sin reformular manualmente la búsqueda
+- Tarjetas seleccionables con puente directo buscador → grafo
+- Modo audit-ready por resultado para hacer legible por qué rankea cada registro
+
 $$\text{score} = 0.5 \times (1 - \text{overlap}) + 0.3 \times \text{markerMatch} + 0.2 \times \text{typePenalty}$$
 
 7 fuentes integradas: BCN Tramitación · InfoLobby · Transparencia · LeyChile · SEIA · ComprasPublicas · CMF
@@ -193,6 +205,10 @@ npx serve .
 
 | Commit | Tipo | Descripción |
 |--------|------|-------------|
+| `6bf5a23` | feat | Buscador automagizado Sprint 1: facetas dinámicas, detalle expandible por resultado y sincronía resultado → grafo |
+| `0db9a3a` | docs | Actualización Sprint 19: documentación + dataset legislativo BCN (`data/bcn-legislativo.json`) |
+| `872a3df` | feat | Actualización UI del grafo y mejoras en interacción de Contra-Archivo v2 |
+| `2b4a33b` | fix | Refactor del motor/render/buscador para estabilizar scoring y consistencia de fricción |
 | `141d5bc` | fix | Ajuste responsive del grafo en mobile (min-height a 480px) |
 | `cc58b8b` | docs | Actualización de changelog y commits recientes en README |
 | `03a9d41` | docs | Contra-archivo standalone, documentación campos etnográficos y materiales de investigación |
