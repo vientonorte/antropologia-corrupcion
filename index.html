@@ -54,7 +54,103 @@
             line-height: 1.65;
             overflow-x: hidden
         }
-        /* ══════════════════════════════════════ ACCESSIBILITY */
+        
+        .graph-mobile-hint {
+            display: none;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            padding: 10px 12px;
+            margin: 0 0 14px;
+            border: 1px solid rgba(74, 127, 165, .2);
+            border-radius: 8px;
+            background: rgba(74, 127, 165, .06);
+            color: var(--muted);
+            font-size: 12px;
+            line-height: 1.45
+        }
+        
+        .graph-mobile-hint strong {
+            color: var(--text)
+        }
+        
+        .graph-mobile-status {
+            display: none;
+            margin: 0 0 14px;
+            padding: 10px 12px;
+            border: 1px solid rgba(200, 169, 110, .18);
+            border-radius: 8px;
+            background: rgba(200, 169, 110, .06);
+            color: var(--muted);
+            font-size: 12px;
+            line-height: 1.45
+        }
+        
+        .triage-toolbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 18px
+        }
+        
+        .triage-toolbar-copy {
+            font-size: 12px;
+            color: var(--muted)
+        }
+        
+        .triage-toolbar-actions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap
+        }
+        
+        .se-stats-head {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 18px
+        }
+        
+        .se-stats-head-copy {
+            display: grid;
+            gap: 4px
+        }
+        
+        .se-stats-actions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap
+        }
+        
+        .se-audit-note {
+            font-size: 11px;
+            color: var(--muted);
+            line-height: 1.5
+        }
+        
+        .se-export-btn {
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            background: transparent;
+            color: var(--muted);
+            font-size: 11px;
+            padding: 7px 12px;
+            cursor: pointer
+        }
+        
+        .se-export-btn:hover {
+            border-color: var(--etica);
+            color: var(--etica)
+        }
+        
+        .se-export-btn:disabled {
+            opacity: .45;
+            cursor: not-allowed
+        }
         
         .skip-link {
             position: absolute;
@@ -62,7 +158,6 @@
             left: 16px;
             z-index: 9999;
             padding: 8px 16px;
-            background: var(--etica);
             color: var(--bg);
             font-weight: 600;
             border-radius: 0 0 var(--r) var(--r);
@@ -1702,7 +1797,17 @@
                 grid-template-columns: 1fr
             }
             .graph-controls {
-                flex-wrap: wrap
+                flex-wrap: wrap;
+                position: sticky;
+                top: 10px;
+                z-index: 12;
+                display: grid;
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                gap: 8px;
+                background: rgba(12, 12, 12, .92);
+                border: 1px solid var(--border);
+                border-radius: 10px;
+                padding: 10px
             }
             .graph-onboarding {
                 flex-direction: column;
@@ -1712,13 +1817,30 @@
                 width: 100%
             }
             .gc-btn {
-                font-size: 10px;
-                padding: 4px 10px
+                font-size: 11px;
+                padding: 8px 10px;
+                min-height: 40px
             }
             .graph-overlay-legend {
-                bottom: 8px;
+                top: 8px;
+                left: 8px;
                 right: 8px;
-                padding: 8px 10px
+                bottom: auto;
+                padding: 8px 10px;
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between
+            }
+            .graph-wrap {
+                height: min(68vh, 520px)
+            }
+            .graph-mobile-hint,
+            .graph-mobile-status {
+                display: block
+            }
+            .triage-toolbar,
+            .se-stats-head {
+                align-items: flex-start
             }
             .sf-metrics {
                 gap: 12px
@@ -3009,7 +3131,10 @@
                 <button class="gc-btn" data-layer="etica" aria-label="Filtrar capa: Ética">◎ Ética</button>
                 <button class="gc-btn" data-layer="institucional" aria-label="Filtrar capa: Institucional">▣ Institucional</button>
                 <button class="gc-btn" data-layer="material" aria-label="Filtrar capa: Material">◈ Material</button>
+                <button class="gc-btn" data-graph-reset="1" aria-label="Limpiar foco y filtros del grafo">Limpiar foco</button>
             </div>
+            <div class="graph-mobile-hint"><strong>Modo móvil:</strong> toca un nodo para abrir capas, usa los filtros arriba para reducir ruido y desplaza hacia abajo para contrastar el resultado con el buscador y el triage.</div>
+            <div class="graph-mobile-status" id="graph-mobile-status">Sin foco activo. Toca un nodo o entra desde un resultado del buscador para resaltar conexiones.</div>
             <div class="graph-wrap">
                 <div class="viz-loading" id="graph-loading">
                     <div class="viz-loading-inner">
@@ -3171,6 +3296,13 @@
             <h2>Qué casos requieren <span class="accent-c">más atención</span> ahora</h2>
             <div class="triage-intro">
                 <p class="section-lead">Este panel compara cobertura por fuente, distribución de fricción y vacíos de documentación entre los 4 casos. No reemplaza la lectura situada: sirve para priorizar dónde abrir la siguiente ronda de búsqueda, validación o contra-archivo.</p>
+            </div>
+            <div class="triage-toolbar">
+                <div class="triage-toolbar-copy">Exporta la comparación o abre el buscador con el caso más urgente para pasar de lectura macro a inspección de registros.</div>
+                <div class="triage-toolbar-actions">
+                    <button class="se-export-btn" type="button" id="triage-export-csv">Exportar CSV</button>
+                    <button class="se-export-btn" type="button" id="triage-open-priority">Abrir caso prioritario</button>
+                </div>
             </div>
 
             <div id="triage-kpis" class="triage-kpis"></div>
@@ -3725,12 +3857,14 @@ function initGrafo() {
         links: gd.links,
         onNodeClick: (node) => {
           activateTension(node.id);
+                    setGraphFocusMessage('Foco activo: ' + shortCaseTitle(node) + '. Baja para contrastar la ficha narrativa con buscador y triage.');
           var t = document.getElementById('tensiones');
           if (t) t.scrollIntoView({behavior:'smooth'});
         },
         onNodeHover: () => {},
       });
             window.__CA_GRAPH = G;
+                        setGraphFocusMessage();
 
       // Ocultar loading skeleton
       const loader = document.getElementById('graph-loading');
@@ -3738,6 +3872,15 @@ function initGrafo() {
 
       document.querySelectorAll('#graph-controls .gc-btn').forEach(btn => {
         btn.addEventListener('click', () => {
+                    if (btn.dataset.graphReset === '1') {
+                        document.querySelectorAll('#graph-controls .gc-btn').forEach(b => b.classList.remove('active'));
+                        var allBtn = document.querySelector('#graph-controls .gc-btn[data-layer="all"]');
+                        if (allBtn) allBtn.classList.add('active');
+                        clearGraphSelection(G);
+                        G.setActiveLayer('all');
+                        if (G.setFrictionTypeFilter) G.setFrictionTypeFilter('all');
+                        return;
+                    }
           document.querySelectorAll('#graph-controls .gc-btn').forEach(b => b.classList.remove('active'));
           btn.classList.add('active');
           G.setActiveLayer(btn.dataset.layer);
@@ -3909,6 +4052,13 @@ function focusGraphNodeById(graph, nodeId) {
         line.classList.toggle('ca-link--dimmed', !isConnected);
     });
 
+    var focusedCase = CASOS.find(function(caso) { return caso.id === nodeId; });
+    setGraphFocusMessage(
+        focusedCase
+            ? 'Foco activo: ' + shortCaseTitle(focusedCase) + '. Baja para leer detalle o limpia el foco para volver a la red completa.'
+            : 'Foco activo en conexiones del grafo. Baja para leer detalle o limpia el foco para volver a la red completa.'
+    );
+
     return true;
 }
 
@@ -3925,6 +4075,8 @@ function clearGraphSelection(graph) {
         line.classList.remove('ca-link--active');
         line.classList.remove('ca-link--dimmed');
     });
+
+    setGraphFocusMessage();
 }
 
 function syncSearchResultToGraph(result) {
@@ -3975,7 +4127,38 @@ function initGraphOnboarding() {
     });
 }
 
+function setGraphFocusMessage(message) {
+    var status = document.getElementById('graph-mobile-status');
+    if (!status) return;
+    status.textContent = message || 'Sin foco activo. Toca un nodo o entra desde un resultado del buscador para resaltar conexiones.';
+}
+
 var TRIAGE_SOURCE_ORDER = ['bcn', 'infolobby', 'transparencia', 'leychile', 'seia', 'compraspublicas', 'cmf'];
+
+function triageCsvEscape(value) {
+    var text = value == null ? '' : String(value);
+    if (/[",\n]/.test(text)) {
+        return '"' + text.replace(/"/g, '""') + '"';
+    }
+    return text;
+}
+
+function downloadTriageCsv(filename, headers, rows) {
+    var csv = [headers.map(triageCsvEscape).join(',')];
+    for (var i = 0; i < rows.length; i++) {
+        csv.push((rows[i] || []).map(triageCsvEscape).join(','));
+    }
+
+    var blob = new Blob([csv.join('\n')], { type: 'text/csv;charset=utf-8;' });
+    var url = URL.createObjectURL(blob);
+    var link = document.createElement('a');
+    link.href = url;
+    link.download = filename;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+}
 
 function escTriage(str) {
     return String(str || '')
@@ -3998,6 +4181,41 @@ function triageScoreColor(score) {
     if (score >= 0.85) return 'var(--crit)';
     if (score >= 0.7) return 'var(--etica)';
     return 'var(--mat)';
+}
+
+function getPriorityTriageRow(model) {
+    if (!model || !model.rows || !model.rows.length) return null;
+    return model.rows[0] || null;
+}
+
+function exportTriageModelCsv(model) {
+    if (!model || !model.rows || !model.rows.length) return false;
+
+    var rows = model.rows.map(function(row) {
+        var caso = row.caso || {};
+        return [
+            caso.id || '',
+            shortCaseTitle(caso),
+            caso.anio || '',
+            row.records.length,
+            triagePct(row.priorityScore) + '%',
+            triagePct(row.coverage) + '%',
+            triagePct(caso.friccion && caso.friccion.intensidad || 0) + '%',
+            triagePct(row.avgOfficialFriction) + '%',
+            triagePct(row.markerRate) + '%',
+            row.dominantType || '',
+            row.presentSources.join(' | '),
+            row.gaps.join(' | ') || 'sin gaps'
+        ];
+    });
+
+    downloadTriageCsv(
+        'triage-casos-' + new Date().toISOString().slice(0, 10) + '.csv',
+        ['caso_id', 'caso', 'anio', 'registros', 'prioridad', 'cobertura', 'friccion_base', 'friccion_oficial_media', 'marcadores', 'tipo_dominante', 'fuentes_presentes', 'gaps'],
+        rows
+    );
+
+    return true;
 }
 
 function buildTriageModel(registros, casos) {
@@ -4166,7 +4384,15 @@ function initTriage() {
     var kpis = document.getElementById('triage-kpis');
     var grid = document.getElementById('triage-grid');
     var table = document.getElementById('triage-table');
+    var exportBtn = document.getElementById('triage-export-csv');
+    var openPriorityBtn = document.getElementById('triage-open-priority');
     if (!section || !kpis || !grid || !table) return;
+
+    function syncToolbar(model) {
+        var hasRows = !!(model && model.rows && model.rows.length);
+        if (exportBtn) exportBtn.disabled = !hasRows;
+        if (openPriorityBtn) openPriorityBtn.disabled = !hasRows;
+    }
 
     function render() {
         loadBcnDataset().then(function(dataset) {
@@ -4176,9 +4402,11 @@ function initTriage() {
             }
 
             var model = buildTriageModel(registros, CASOS);
+            window.__CA_TRIAGE_MODEL = model;
             kpis.innerHTML = renderTriageKPIs(model);
             grid.innerHTML = renderTriageGrid(model);
             table.innerHTML = renderTriageTable(model);
+            syncToolbar(model);
         });
     }
 
@@ -4189,6 +4417,22 @@ function initTriage() {
         if (!btn) return;
         openTriageCaseSearch(btn.getAttribute('data-triage-case'));
     });
+
+    if (exportBtn) {
+        exportBtn.addEventListener('click', function() {
+            exportTriageModelCsv(window.__CA_TRIAGE_MODEL);
+        });
+    }
+
+    if (openPriorityBtn) {
+        openPriorityBtn.addEventListener('click', function() {
+            var topRow = getPriorityTriageRow(window.__CA_TRIAGE_MODEL);
+            if (!topRow || !topRow.caso || !topRow.caso.id) return;
+            openTriageCaseSearch(topRow.caso.id);
+        });
+    }
+
+    syncToolbar(window.__CA_TRIAGE_MODEL);
 
     if ('IntersectionObserver' in window) {
         var obs = new IntersectionObserver(function(entries) {
