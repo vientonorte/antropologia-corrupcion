@@ -1,0 +1,362 @@
+{
+    "_meta": {
+        "schema": "contra-archivo/bcn-legislativo",
+        "description": "Metadatos legislativos BCN normalizados para medir fricción entre tramitación formal, historia legislativa y conflicto material.",
+        "source": "Biblioteca del Congreso Nacional de Chile",
+        "version": 2,
+        "notes": [
+            "Combina boletines de tramitación y trazas históricas derivadas de normas vigentes BCN.",
+            "Los registros marcados como derivado-ley-vigente requieren completar indicaciones y urgencias desde Historia de la Ley."
+        ]
+    },
+    "boletines": [{
+            "id": "bcn-boletin-12017-12",
+            "boletin": "12017-12",
+            "tipo_registro": "boletin",
+            "titulo": "Modifica el sistema de pensiones y fortalece gobierno previsional",
+            "fecha_ingreso": "2018-08-14",
+            "fecha_actualizacion": "2024-01-08",
+            "url": "https://www.bcn.cl/historiadelaley/nc/historia-de-la-ley/12017/",
+            "fuente_historia_ley": "https://www.bcn.cl/historiadelaley/nc/historia-de-la-ley/12017/",
+            "etapa_actual": "Segundo trámite constitucional",
+            "camara_origen": "Senado",
+            "camara_revisora": "Cámara de Diputadas y Diputados",
+            "comision_actual": "Comisión de Hacienda",
+            "comisiones": [
+                "Comisión de Trabajo y Previsión Social",
+                "Comisión de Hacienda"
+            ],
+            "materias": [
+                "AFP",
+                "gobierno corporativo",
+                "transparencia previsional",
+                "fondos de pensiones"
+            ],
+            "autores": [
+                "Mensaje presidencial",
+                "Ministerio de Hacienda"
+            ],
+            "actores_clave": [
+                "Ministerio de Hacienda",
+                "Superintendencia de Pensiones",
+                "AFP"
+            ],
+            "urgencias": [{
+                    "tipo": "suma",
+                    "fecha": "2023-12-18",
+                    "camara": "Senado"
+                },
+                {
+                    "tipo": "discusión inmediata",
+                    "fecha": "2024-01-03",
+                    "camara": "Senado"
+                }
+            ],
+            "indicaciones_total": 214,
+            "indicaciones_clave": [
+                "Gobierno corporativo de administradoras",
+                "Régimen de inversiones con trazabilidad ESG",
+                "Transparencia de comisiones y afiliados"
+            ],
+            "etapas_irregulares": [
+                "urgencia reiterada",
+                "indicaciones fragmentadas",
+                "sesiones extraordinarias"
+            ],
+            "alertas_friccion": [
+                "opacidad",
+                "consentimiento",
+                "materialidad financiera"
+            ],
+            "enip_dimensiones": [
+                "transparencia",
+                "integridad pública",
+                "rendición de cuentas"
+            ],
+            "friccion_con": "sura-gobernanza-datos",
+            "tipo_friccion": "tecnica",
+            "resumen": "La tramitación registra ajustes al gobierno previsional pero no incorpora la cadena territorial de inversión ni el consentimiento material de afiliados o comunidades afectadas.",
+            "capa_oficial": "El boletín ordena la discusión como reforma previsional y transparencia de mercado. La territorialidad financiada por los fondos queda fuera del expediente.",
+            "ultimo_hito": "Discusión en particular en Comisión de Hacienda con reposición de urgencia.",
+            "trazabilidad": [
+                "Ingreso por mensaje presidencial",
+                "Primer informe de Comisión de Trabajo",
+                "Segundo trámite con urgencias reiteradas"
+            ],
+            "estado_verificacion": "curado-manual",
+            "tags": [
+                "reforma previsional",
+                "BCN",
+                "urgencia"
+            ]
+        },
+        {
+            "id": "bcn-boletin-10526-06",
+            "boletin": "10526-06",
+            "tipo_registro": "boletin",
+            "titulo": "Perfecciona el Sistema de Evaluación de Impacto Ambiental",
+            "fecha_ingreso": "2016-03-15",
+            "fecha_actualizacion": "2023-10-11",
+            "url": "https://www.bcn.cl/historiadelaley/nc/historia-de-la-ley/10526/",
+            "fuente_historia_ley": "https://www.bcn.cl/historiadelaley/nc/historia-de-la-ley/10526/",
+            "etapa_actual": "Primer trámite constitucional",
+            "camara_origen": "Cámara de Diputadas y Diputados",
+            "camara_revisora": "Senado",
+            "comision_actual": "Comisión de Medio Ambiente",
+            "comisiones": [
+                "Comisión de Medio Ambiente",
+                "Comisión de Recursos Hídricos"
+            ],
+            "materias": [
+                "SEIA",
+                "participación ciudadana",
+                "consulta indígena",
+                "admisibilidad"
+            ],
+            "autores": [
+                "Mensaje presidencial",
+                "Ministerio del Medio Ambiente"
+            ],
+            "actores_clave": [
+                "SEA",
+                "Ministerio del Medio Ambiente",
+                "comunidades indígenas"
+            ],
+            "urgencias": [{
+                "tipo": "simple",
+                "fecha": "2023-08-24",
+                "camara": "Cámara de Diputadas y Diputados"
+            }],
+            "indicaciones_total": 87,
+            "indicaciones_clave": [
+                "Participación temprana en territorios indígenas",
+                "Admisibilidad de observaciones comunitarias",
+                "Consulta como fase no vinculante"
+            ],
+            "etapas_irregulares": [
+                "plazos abreviados",
+                "discusión técnica cerrada"
+            ],
+            "alertas_friccion": [
+                "consulta",
+                "proceso administrativo",
+                "admisibilidad"
+            ],
+            "enip_dimensiones": [
+                "participación",
+                "probidad",
+                "prevención de conflictos"
+            ],
+            "friccion_con": "oit169-consulta-previa",
+            "tipo_friccion": "politica",
+            "resumen": "La mejora del SEIA fortalece herramientas procedimentales, pero mantiene la consulta como fase administrativa y no como umbral vinculante.",
+            "capa_oficial": "La tramitación mide eficiencia regulatoria y certeza jurídica. El consentimiento previo sigue traducido como tramitación técnica.",
+            "ultimo_hito": "Ingreso de indicaciones sobre participación temprana sin alterar la lógica procedimental de consulta.",
+            "trazabilidad": [
+                "Ingreso a Comisión de Medio Ambiente",
+                "Audiencias técnicas con SEA y Ministerio",
+                "Indicaciones sobre participación ciudadana"
+            ],
+            "estado_verificacion": "curado-manual",
+            "tags": [
+                "SEIA",
+                "consulta previa",
+                "certeza jurídica"
+            ]
+        },
+        {
+            "id": "bcn-boletin-13588-07",
+            "boletin": "13588-07",
+            "tipo_registro": "boletin",
+            "titulo": "Fortalece la protección de denunciantes en casos de corrupción pública",
+            "fecha_ingreso": "2020-06-18",
+            "fecha_actualizacion": "2025-03-22",
+            "url": "https://www.bcn.cl/historiadelaley/nc/historia-de-la-ley/13588/",
+            "fuente_historia_ley": "https://www.bcn.cl/historiadelaley/nc/historia-de-la-ley/13588/",
+            "etapa_actual": "Comisión Mixta",
+            "camara_origen": "Cámara de Diputadas y Diputados",
+            "camara_revisora": "Senado",
+            "comision_actual": "Comisión Mixta Probidad y Transparencia",
+            "comisiones": [
+                "Comisión de Gobierno Interior",
+                "Comisión de Probidad y Transparencia",
+                "Comisión Mixta"
+            ],
+            "materias": [
+                "denunciantes",
+                "whistleblower",
+                "protección laboral",
+                "corrupción municipal"
+            ],
+            "autores": [
+                "Moción parlamentaria",
+                "Bancada de probidad y transparencia"
+            ],
+            "actores_clave": [
+                "Ministerio Público",
+                "Consejo para la Transparencia",
+                "funcionarios públicos"
+            ],
+            "urgencias": [{
+                "tipo": "suma",
+                "fecha": "2024-11-07",
+                "camara": "Senado"
+            }],
+            "indicaciones_total": 62,
+            "indicaciones_clave": [
+                "Protección de identidad de la fuente",
+                "Canales internos y externos de denuncia",
+                "Resguardo laboral del denunciante"
+            ],
+            "etapas_irregulares": [
+                "archivos de indicaciones",
+                "reapertura de discusión",
+                "demora intercomisiones"
+            ],
+            "alertas_friccion": [
+                "whistleblower",
+                "proceso regular",
+                "fuente",
+                "registro"
+            ],
+            "enip_dimensiones": [
+                "denuncia segura",
+                "integridad",
+                "control interno"
+            ],
+            "friccion_con": "periodismo-datos-chile",
+            "tipo_friccion": "semantica",
+            "resumen": "El boletín reconoce la figura del denunciante, pero la discusión sigue subordinando la protección material de la fuente a resguardos de procedimiento y cadena formal de custodia.",
+            "capa_oficial": "La tramitación protege la denuncia como acto regulado. La exposición ética de la fuente queda absorbida por estándares probatorios y gestión del riesgo institucional.",
+            "ultimo_hito": "Paso a Comisión Mixta por divergencias sobre anonimato, represalias y canal externo de denuncia.",
+            "trazabilidad": [
+                "Moción parlamentaria sobre protección al denunciante",
+                "Informes en comisiones de probidad",
+                "Paso a Comisión Mixta por diferencias entre cámaras"
+            ],
+            "estado_verificacion": "curado-manual",
+            "tags": [
+                "denuncia",
+                "fuente",
+                "corrupción"
+            ]
+        },
+        {
+            "id": "bcn-historia-ley-20730",
+            "boletin": "historia-ley-20730",
+            "tipo_registro": "historia-ley",
+            "titulo": "Historia legislativa de la Ley 20.730 sobre lobby y gestiones de interés",
+            "fecha_actualizacion": "2014-03-08",
+            "url": "https://www.bcn.cl/leychile/navegar?idNorma=1060115",
+            "fuente_historia_ley": "https://www.bcn.cl/leychile/navegar?idNorma=1060115",
+            "etapa_actual": "Ley vigente",
+            "camara_origen": "Congreso Nacional",
+            "camara_revisora": "Congreso Nacional",
+            "comision_actual": "Sin comisión activa",
+            "comisiones": [
+                "Historia legislativa consolidada BCN"
+            ],
+            "materias": [
+                "lobby",
+                "gestión de intereses",
+                "registro de audiencias",
+                "sujetos pasivos"
+            ],
+            "autores": [
+                "Derivado desde LeyChile vigente"
+            ],
+            "actores_clave": [
+                "Congreso Nacional",
+                "Autoridades sujetas a lobby"
+            ],
+            "urgencias": [],
+            "indicaciones_total": null,
+            "indicaciones_clave": [
+                "Pendiente de anexar desde Historia de la Ley"
+            ],
+            "alertas_friccion": [
+                "registro",
+                "gestión de intereses",
+                "exclusión territorial"
+            ],
+            "enip_dimensiones": [
+                "transparencia",
+                "probidad"
+            ],
+            "friccion_con": "sura-gobernanza-datos",
+            "tipo_friccion": "semantica",
+            "resumen": "Traza histórica derivada de la legislación vigente sobre lobby, útil para conectar la definición formal de gestión de intereses con su sesgo procedimental.",
+            "capa_oficial": "La ley vigila la forma de la audiencia y no sus consecuencias territoriales. La historia legislativa permite rastrear cómo esa reducción quedó estabilizada en norma vigente.",
+            "ultimo_hito": "Norma consolidada en LeyChile; falta completar urgencias e indicaciones desde la historia legislativa detallada.",
+            "trazabilidad": [
+                "Norma vigente en LeyChile",
+                "Registro histórico derivado para ampliar trazabilidad BCN"
+            ],
+            "estado_verificacion": "derivado-ley-vigente",
+            "tags": [
+                "lobby",
+                "historia legislativa",
+                "LeyChile"
+            ]
+        },
+        {
+            "id": "bcn-historia-ley-19253",
+            "boletin": "historia-ley-19253",
+            "tipo_registro": "historia-ley",
+            "titulo": "Historia legislativa de la Ley 19.253 sobre protección y desarrollo indígena",
+            "fecha_actualizacion": "1993-10-05",
+            "url": "https://www.bcn.cl/leychile/navegar?idNorma=30620",
+            "fuente_historia_ley": "https://www.bcn.cl/leychile/navegar?idNorma=30620",
+            "etapa_actual": "Ley vigente",
+            "camara_origen": "Congreso Nacional",
+            "camara_revisora": "Congreso Nacional",
+            "comision_actual": "Sin comisión activa",
+            "comisiones": [
+                "Historia legislativa consolidada BCN"
+            ],
+            "materias": [
+                "pueblos indígenas",
+                "CONADI",
+                "Fondo de Tierras",
+                "desarrollo"
+            ],
+            "autores": [
+                "Derivado desde LeyChile vigente"
+            ],
+            "actores_clave": [
+                "CONADI",
+                "Comunidades indígenas",
+                "Estado de Chile"
+            ],
+            "urgencias": [],
+            "indicaciones_total": null,
+            "indicaciones_clave": [
+                "Pendiente de anexar desde Historia de la Ley"
+            ],
+            "alertas_friccion": [
+                "restitución",
+                "compra de tierras",
+                "desarrollo"
+            ],
+            "enip_dimensiones": [
+                "participación",
+                "reparación"
+            ],
+            "friccion_con": "la-negra-territorio-mapuche",
+            "tipo_friccion": "semantica",
+            "resumen": "Traza histórica derivada de la Ley Indígena para conectar el expediente legislativo con el tránsito de restitución territorial a lógica de compra y administración estatal.",
+            "capa_oficial": "La ley organiza la cuestión indígena como política de desarrollo y administración de fondos. La trazabilidad histórica permite seguir ese desplazamiento desde el debate legislativo hasta la norma vigente.",
+            "ultimo_hito": "Norma consolidada en LeyChile; falta anexar autores, urgencias e indicaciones desde la historia legislativa completa.",
+            "trazabilidad": [
+                "Norma vigente en LeyChile",
+                "Registro histórico derivado para ampliar cobertura territorial del buscador"
+            ],
+            "estado_verificacion": "derivado-ley-vigente",
+            "tags": [
+                "ley indígena",
+                "territorio",
+                "historia legislativa"
+            ]
+        }
+    ]
+}
