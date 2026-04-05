@@ -1115,6 +1115,233 @@
             background: rgba(200, 95, 74, .08)
         }
         
+        #triage {
+            border-top: 1px solid var(--border)
+        }
+        
+        .triage-intro {
+            display: grid;
+            gap: 10px;
+            margin-bottom: 28px
+        }
+        
+        .triage-kpis {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 12px;
+            margin-bottom: 24px
+        }
+        
+        .triage-kpi {
+            background: var(--s1);
+            border: 1px solid var(--border);
+            border-radius: var(--r);
+            padding: 18px
+        }
+        
+        .triage-kpi-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+            color: var(--dim);
+            margin-bottom: 6px
+        }
+        
+        .triage-kpi-value {
+            font-family: var(--font-mono);
+            font-size: 26px;
+            color: var(--text)
+        }
+        
+        .triage-kpi-sub {
+            font-size: 11px;
+            color: var(--muted);
+            margin-top: 6px
+        }
+        
+        .triage-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 16px;
+            margin-bottom: 24px
+        }
+        
+        .triage-card {
+            background: var(--s1);
+            border: 1px solid var(--border);
+            border-radius: var(--r);
+            padding: 20px;
+            display: grid;
+            gap: 14px
+        }
+        
+        .triage-card-head {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 12px
+        }
+        
+        .triage-card-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text)
+        }
+        
+        .triage-card-meta {
+            font-size: 11px;
+            color: var(--muted);
+            margin-top: 6px
+        }
+        
+        .triage-card-chip {
+            font-size: 10px;
+            padding: 4px 8px;
+            border-radius: 999px;
+            border: 1px solid rgba(200, 169, 110, .24);
+            background: rgba(200, 169, 110, .08);
+            color: var(--etica);
+            white-space: nowrap
+        }
+        
+        .triage-metrics {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 10px
+        }
+        
+        .triage-metric {
+            border: 1px solid rgba(255, 255, 255, .05);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, .02);
+            padding: 10px
+        }
+        
+        .triage-metric-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+            color: var(--dim);
+            margin-bottom: 5px
+        }
+        
+        .triage-metric-value {
+            font-family: var(--font-mono);
+            font-size: 16px;
+            color: var(--text)
+        }
+        
+        .triage-source-bars {
+            display: grid;
+            grid-template-columns: repeat(7, minmax(0, 1fr));
+            gap: 8px;
+            align-items: end
+        }
+        
+        .triage-source-bar {
+            display: grid;
+            justify-items: center;
+            gap: 6px
+        }
+        
+        .triage-source-track {
+            width: 100%;
+            min-height: 58px;
+            background: rgba(255, 255, 255, .04);
+            border-radius: 999px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, .04)
+        }
+        
+        .triage-source-fill {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 999px;
+            min-height: 10%;
+            opacity: .95
+        }
+        
+        .triage-source-icon {
+            font-size: 13px
+        }
+        
+        .triage-source-count {
+            font-size: 10px;
+            color: var(--dim);
+            font-family: var(--font-mono)
+        }
+        
+        .triage-gaps,
+        .triage-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px
+        }
+        
+        .triage-gap-pill {
+            font-size: 10px;
+            padding: 4px 8px;
+            border-radius: 999px;
+            color: var(--crit);
+            border: 1px solid rgba(200, 95, 74, .24);
+            background: rgba(200, 95, 74, .08)
+        }
+        
+        .triage-open-btn {
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            background: transparent;
+            color: var(--muted);
+            font-size: 11px;
+            padding: 7px 12px;
+            cursor: pointer
+        }
+        
+        .triage-open-btn:hover {
+            border-color: var(--etica);
+            color: var(--etica)
+        }
+        
+        .triage-table-wrap {
+            border: 1px solid var(--border);
+            border-radius: var(--r);
+            overflow: auto;
+            background: var(--s1)
+        }
+        
+        .triage-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 760px
+        }
+        
+        .triage-table th,
+        .triage-table td {
+            padding: 12px 14px;
+            border-bottom: 1px solid rgba(255, 255, 255, .05);
+            text-align: left;
+            font-size: 12px
+        }
+        
+        .triage-table th {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+            color: var(--dim);
+            background: rgba(255, 255, 255, .02)
+        }
+        
+        .triage-table td {
+            color: var(--muted)
+        }
+        
+        .triage-table strong {
+            color: var(--text)
+        }
+        
         .protocolo-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -1505,6 +1732,14 @@
             .sf-legend {
                 font-size: .65rem !important;
                 gap: 10px !important
+            }
+            .triage-kpis,
+            .triage-grid,
+            .triage-metrics {
+                grid-template-columns: 1fr
+            }
+            .triage-source-bars {
+                gap: 6px
             }
             .protocolo-grid {
                 grid-template-columns: 1fr
@@ -2607,6 +2842,7 @@
             <a href="#grafo">Grafo</a>
             <a href="#campo-social">Entropía</a>
             <a href="#buscador">Buscador</a>
+            <a href="#triage">Triage</a>
             <a href="#protocolo">Protocolo</a>
             <a href="#archivo">Archivo</a>
         </div>
@@ -2925,10 +3161,29 @@
             <div class="se-results-grid" id="se-results"></div>
         </section>
 
+        <!-- ══════════════════════════════════════ TRIAGE COMPARATIVO -->
+        <section id="triage">
+            <div class="section-eyebrow">
+                <span class="eyebrow-num">07</span>
+                <div class="eyebrow-line"></div>
+                <span class="eyebrow-text">Triaje comparativo</span>
+            </div>
+            <h2>Qué casos requieren <span class="accent-c">más atención</span> ahora</h2>
+            <div class="triage-intro">
+                <p class="section-lead">Este panel compara cobertura por fuente, distribución de fricción y vacíos de documentación entre los 4 casos. No reemplaza la lectura situada: sirve para priorizar dónde abrir la siguiente ronda de búsqueda, validación o contra-archivo.</p>
+            </div>
+
+            <div id="triage-kpis" class="triage-kpis"></div>
+            <div id="triage-grid" class="triage-grid"></div>
+            <div class="triage-table-wrap">
+                <table class="triage-table" id="triage-table"></table>
+            </div>
+        </section>
+
         <!-- ══════════════════════════════════════ PROTOCOLO -->
         <section id="protocolo">
             <div class="section-eyebrow">
-                <span class="eyebrow-num">07</span>
+                <span class="eyebrow-num">08</span>
                 <div class="eyebrow-line"></div>
                 <span class="eyebrow-text">Hacia la buena traducción</span>
             </div>
@@ -2993,7 +3248,7 @@
         <!-- ══════════════════════════════════════ ARCHIVO -->
         <section id="archivo">
             <div class="section-eyebrow">
-                <span class="eyebrow-num">08</span>
+                <span class="eyebrow-num">09</span>
                 <div class="eyebrow-line"></div>
                 <span class="eyebrow-text">Contra-archivo abierto</span>
             </div>
@@ -3103,6 +3358,7 @@
         <a href="#grafo" aria-label="Ir a sección: Red"><span class="bn-icon">⬡</span>Red</a>
         <a href="#campo-social" aria-label="Ir a sección: Entropía"><span class="bn-icon">☷</span>Entropía</a>
         <a href="#buscador" aria-label="Ir a sección: Buscador"><span class="bn-icon">⊘</span>Buscador</a>
+        <a href="#triage" aria-label="Ir a sección: Triage"><span class="bn-icon">◫</span>Triage</a>
         <a href="#protocolo" aria-label="Ir a sección: Protocolo"><span class="bn-icon">⟐</span>Protocolo</a>
         <a href="#archivo" aria-label="Ir a sección: Archivo"><span class="bn-icon">◈</span>Archivo</a>
     </nav>
@@ -3719,6 +3975,234 @@ function initGraphOnboarding() {
     });
 }
 
+var TRIAGE_SOURCE_ORDER = ['bcn', 'infolobby', 'transparencia', 'leychile', 'seia', 'compraspublicas', 'cmf'];
+
+function escTriage(str) {
+    return String(str || '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+}
+
+function shortCaseTitle(caso) {
+    if (!caso || !caso.titulo) return 'Caso';
+    return caso.titulo.split('—')[0].split(':')[0].trim();
+}
+
+function triagePct(value) {
+    return Math.round((value || 0) * 100);
+}
+
+function triageScoreColor(score) {
+    if (score >= 0.85) return 'var(--crit)';
+    if (score >= 0.7) return 'var(--etica)';
+    return 'var(--mat)';
+}
+
+function buildTriageModel(registros, casos) {
+    var rows = [];
+    registros = registros || [];
+    casos = casos || [];
+
+    for (var i = 0; i < casos.length; i++) {
+        var caso = casos[i];
+        var caseRecords = [];
+        for (var j = 0; j < registros.length; j++) {
+            if ((registros[j] || {}).friccion_con === caso.id) caseRecords.push(registros[j]);
+        }
+
+        var byFuente = Object.create(null);
+        var byTipo = Object.create(null);
+        var scoreSum = 0;
+        var markerHits = 0;
+
+        for (var k = 0; k < caseRecords.length; k++) {
+            var reg = caseRecords[k] || {};
+            byFuente[reg.fuente] = (byFuente[reg.fuente] || 0) + 1;
+            byTipo[reg.tipo_friccion] = (byTipo[reg.tipo_friccion] || 0) + 1;
+
+            if (window.frictionEngine && typeof window.frictionEngine.explainRecordFriction === 'function') {
+                var audit = window.frictionEngine.explainRecordFriction(reg, caso);
+                scoreSum += audit.score || 0;
+                if ((audit.markers || []).length) markerHits++;
+            } else {
+                scoreSum += caso.friccion && caso.friccion.intensidad ? caso.friccion.intensidad : 0;
+            }
+        }
+
+        var presentSources = TRIAGE_SOURCE_ORDER.filter(function(source) { return !!byFuente[source]; });
+        var gaps = TRIAGE_SOURCE_ORDER.filter(function(source) { return !byFuente[source]; });
+        var dominantType = 'sin datos';
+        var dominantTypeCount = -1;
+        Object.keys(byTipo).forEach(function(tipo) {
+            if (byTipo[tipo] > dominantTypeCount) {
+                dominantType = tipo;
+                dominantTypeCount = byTipo[tipo];
+            }
+        });
+
+        var avgOfficialFriction = caseRecords.length ? parseFloat((scoreSum / caseRecords.length).toFixed(3)) : 0;
+        var markerRate = caseRecords.length ? parseFloat((markerHits / caseRecords.length).toFixed(3)) : 0;
+        var coverage = presentSources.length / TRIAGE_SOURCE_ORDER.length;
+        var priorityScore = avgOfficialFriction * 0.65 + (gaps.length / TRIAGE_SOURCE_ORDER.length) * 0.35;
+
+        rows.push({
+            caso: caso,
+            records: caseRecords,
+            byFuente: byFuente,
+            byTipo: byTipo,
+            presentSources: presentSources,
+            gaps: gaps,
+            dominantType: dominantType,
+            avgOfficialFriction: avgOfficialFriction,
+            markerRate: markerRate,
+            coverage: parseFloat(coverage.toFixed(3)),
+            priorityScore: parseFloat(priorityScore.toFixed(3))
+        });
+    }
+
+    rows.sort(function(a, b) {
+        return b.priorityScore - a.priorityScore || b.avgOfficialFriction - a.avgOfficialFriction;
+    });
+
+    var totals = {
+        totalRecords: registros.length,
+        avgCoverage: rows.length ? rows.reduce(function(sum, row) { return sum + row.coverage; }, 0) / rows.length : 0,
+        avgOfficialFriction: rows.length ? rows.reduce(function(sum, row) { return sum + row.avgOfficialFriction; }, 0) / rows.length : 0,
+        gapHeavyCases: rows.filter(function(row) { return row.gaps.length >= 3; }).length
+    };
+
+    return { rows: rows, totals: totals };
+}
+
+function renderTriageKPIs(model) {
+    var totals = model.totals;
+    return '' +
+        '<div class="triage-kpi"><div class="triage-kpi-label">Registros enlazados</div><div class="triage-kpi-value">' + totals.totalRecords + '</div><div class="triage-kpi-sub">Fuentes oficiales conectadas a los 4 casos</div></div>' +
+        '<div class="triage-kpi"><div class="triage-kpi-label">Cobertura media</div><div class="triage-kpi-value">' + triagePct(totals.avgCoverage) + '%</div><div class="triage-kpi-sub">Porcentaje de fuentes presentes por caso</div></div>' +
+        '<div class="triage-kpi"><div class="triage-kpi-label">Fricción oficial media</div><div class="triage-kpi-value" style="color:' + triageScoreColor(totals.avgOfficialFriction) + '">' + triagePct(totals.avgOfficialFriction) + '%</div><div class="triage-kpi-sub">Promedio calculado sobre registros oficiales</div></div>' +
+        '<div class="triage-kpi"><div class="triage-kpi-label">Casos con gaps severos</div><div class="triage-kpi-value">' + totals.gapHeavyCases + '</div><div class="triage-kpi-sub">Casos con 3 o más fuentes ausentes</div></div>';
+}
+
+function renderTriageGrid(model) {
+    return model.rows.map(function(row) {
+        var caso = row.caso;
+        var sourceMax = Math.max.apply(null, TRIAGE_SOURCE_ORDER.map(function(source) { return row.byFuente[source] || 0; }).concat([1]));
+        var sourceBars = TRIAGE_SOURCE_ORDER.map(function(source) {
+            var count = row.byFuente[source] || 0;
+            var height = count ? Math.max(16, Math.round((count / sourceMax) * 58)) : 8;
+            var color = (typeof FUENTE_COLORS !== 'undefined' && FUENTE_COLORS[source]) ? FUENTE_COLORS[source] : '#888';
+            var icon = (typeof FUENTE_ICONS !== 'undefined' && FUENTE_ICONS[source]) ? FUENTE_ICONS[source] : '•';
+            var label = (typeof FUENTE_LABELS !== 'undefined' && FUENTE_LABELS[source]) ? FUENTE_LABELS[source] : source;
+            return '<div class="triage-source-bar" title="' + escTriage(label + ': ' + count) + '">' +
+                '<div class="triage-source-track"><div class="triage-source-fill" style="height:' + height + 'px;background:' + color + '"></div></div>' +
+                '<div class="triage-source-icon">' + escTriage(icon) + '</div>' +
+                '<div class="triage-source-count">' + count + '</div>' +
+                '</div>';
+        }).join('');
+
+        var gapsHtml = row.gaps.length ? row.gaps.map(function(source) {
+            var label = (typeof FUENTE_LABELS !== 'undefined' && FUENTE_LABELS[source]) ? FUENTE_LABELS[source] : source;
+            return '<span class="triage-gap-pill">Falta ' + escTriage(label) + '</span>';
+        }).join('') : '<span class="triage-gap-pill" style="color:var(--mat);border-color:rgba(122,158,110,.24);background:rgba(122,158,110,.08)">Cobertura completa</span>';
+
+        return '<article class="triage-card">' +
+            '<div class="triage-card-head">' +
+            '<div><div class="triage-card-title">' + escTriage(shortCaseTitle(caso)) + '</div><div class="triage-card-meta">' + escTriage(String(caso.anio || '')) + ' · ' + row.records.length + ' registros enlazados</div></div>' +
+            '<div class="triage-card-chip">Prioridad ' + triagePct(row.priorityScore) + '%</div>' +
+            '</div>' +
+            '<div class="triage-metrics">' +
+            '<div class="triage-metric"><div class="triage-metric-label">Cobertura</div><div class="triage-metric-value">' + triagePct(row.coverage) + '%</div></div>' +
+            '<div class="triage-metric"><div class="triage-metric-label">Fricción media</div><div class="triage-metric-value" style="color:' + triageScoreColor(row.avgOfficialFriction) + '">' + triagePct(row.avgOfficialFriction) + '%</div></div>' +
+            '<div class="triage-metric"><div class="triage-metric-label">Marcadores activos</div><div class="triage-metric-value">' + triagePct(row.markerRate) + '%</div></div>' +
+            '</div>' +
+            '<div class="triage-source-bars">' + sourceBars + '</div>' +
+            '<div class="triage-card-meta">Tipo dominante: <strong style="color:var(--text)">' + escTriage(row.dominantType) + '</strong> · Fricción base del caso: <strong style="color:' + triageScoreColor(caso.friccion && caso.friccion.intensidad || 0) + '">' + triagePct(caso.friccion && caso.friccion.intensidad || 0) + '%</strong></div>' +
+            '<div class="triage-gaps">' + gapsHtml + '</div>' +
+            '<div class="triage-actions"><button class="triage-open-btn" type="button" data-triage-case="' + escTriage(caso.id) + '">Abrir en buscador</button></div>' +
+            '</article>';
+    }).join('');
+}
+
+function renderTriageTable(model) {
+    var head = '<thead><tr><th>Caso</th><th>Registros</th><th>Cobertura</th><th>Fricción base</th><th>Fricción oficial media</th><th>Marcadores</th><th>Dominante</th><th>Gaps</th></tr></thead>';
+    var body = model.rows.map(function(row) {
+        var caso = row.caso;
+        return '<tr>' +
+            '<td><strong>' + escTriage(shortCaseTitle(caso)) + '</strong></td>' +
+            '<td>' + row.records.length + '</td>' +
+            '<td>' + triagePct(row.coverage) + '%</td>' +
+            '<td style="color:' + triageScoreColor(caso.friccion && caso.friccion.intensidad || 0) + '">' + triagePct(caso.friccion && caso.friccion.intensidad || 0) + '%</td>' +
+            '<td style="color:' + triageScoreColor(row.avgOfficialFriction) + '">' + triagePct(row.avgOfficialFriction) + '%</td>' +
+            '<td>' + triagePct(row.markerRate) + '%</td>' +
+            '<td>' + escTriage(row.dominantType) + '</td>' +
+            '<td>' + escTriage(row.gaps.length ? row.gaps.join(', ') : 'sin gaps') + '</td>' +
+            '</tr>';
+    }).join('');
+    return head + '<tbody>' + body + '</tbody>';
+}
+
+function openTriageCaseSearch(caseId) {
+    var section = document.getElementById('buscador');
+    if (section) section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    var tries = 0;
+    (function applyWhenReady() {
+        var ctrl = window.__CA_SEARCH_UI;
+        if (ctrl && typeof ctrl.setFilters === 'function') {
+            ctrl.setFilters({ caso: caseId, fuente: 'all', tipo: 'all' });
+            if (typeof ctrl.focusInput === 'function') ctrl.focusInput();
+            return;
+        }
+        if (tries >= 24) return;
+        tries++;
+        setTimeout(applyWhenReady, 120);
+    })();
+}
+
+function initTriage() {
+    var section = document.getElementById('triage');
+    var kpis = document.getElementById('triage-kpis');
+    var grid = document.getElementById('triage-grid');
+    var table = document.getElementById('triage-table');
+    if (!section || !kpis || !grid || !table) return;
+
+    function render() {
+        loadBcnDataset().then(function(dataset) {
+            var registros = FUENTES_DATA.slice();
+            if (window.normalizeBcnDataset) {
+                registros = registros.concat(window.normalizeBcnDataset(dataset));
+            }
+
+            var model = buildTriageModel(registros, CASOS);
+            kpis.innerHTML = renderTriageKPIs(model);
+            grid.innerHTML = renderTriageGrid(model);
+            table.innerHTML = renderTriageTable(model);
+        });
+    }
+
+    grid.addEventListener('click', function(evt) {
+        var target = evt.target;
+        if (!target) return;
+        var btn = target.closest ? target.closest('[data-triage-case]') : null;
+        if (!btn) return;
+        openTriageCaseSearch(btn.getAttribute('data-triage-case'));
+    });
+
+    if ('IntersectionObserver' in window) {
+        var obs = new IntersectionObserver(function(entries) {
+            if (entries[0].isIntersecting) {
+                render();
+                obs.disconnect();
+            }
+        }, { rootMargin: '200px' });
+        obs.observe(section);
+    } else {
+        render();
+    }
+}
+
 /* ══════════════ BUSCADOR DE FRICCIÓN — DATOS INLINE ══════════════ */
 var FUENTES_DATA = [
   {"id":"lobby-sura-cmf-2024","fuente":"infolobby","titulo":"Audiencias SURA Investments con CMF sobre regulación multifondos","fecha":"2024-03-15","url":"https://www.infolobby.cl","institucion":"Comisión para el Mercado Financiero","actores_lobby":["SURA Asset Management","AFP Capital"],"materia":"Regulación de inversiones alternativas en multifondos AFP","keywords":["regulación","multifondos","inversión alternativa","ESG","riesgo"],"capa_oficial":"La audiencia registra una 'reunión técnica' sobre marcos regulatorios. No consigna qué territorios o comunidades afectan las inversiones discutidas.","friccion_con":"sura-gobernanza-datos","tipo_friccion":"politica","tags":["AFP","CMF","lobby financiero","ESG"]},
@@ -3836,6 +4320,7 @@ document.addEventListener('DOMContentLoaded', function() {
   initGrafo();
   initSocialField();
   initBuscador();
+    initTriage();
   initBottomNav();
   initScrollTopFab();
   initDeepLink();
