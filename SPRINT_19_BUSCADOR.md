@@ -32,6 +32,7 @@
 - [x] Filtros por fuente, caso vinculado y tipo de fricción
 - [x] Score de fricción calculado: `0.5*(1-overlap) + 0.3*marker + 0.2*tipo`
 - [x] Estadísticas agregadas (total resultados, fricción promedio, desglose por fuente)
+- [x] Desglose del score por componente y tasa de activación de marcadores
 - [x] Zero dependencies (vanilla JS, compatible ES5+)
 - [x] Syntax check OK
 
@@ -46,12 +47,12 @@
 - [x] Sección "Buscador de Fricción Institucional" (#buscador) entre Entropía y Protocolo
 - [x] Barra de búsqueda con input y 3 filtros (fuente, caso, tipo)
 - [x] Tarjetas de resultado con: fuente, fecha, título, capa oficial, score bar, tags, link
-- [x] Panel de estadísticas con conteos y barras por fuente
+- [x] Panel de estadísticas con conteos, barras por fuente y breakdown por componente
 - [x] Navegación actualizada (top nav + bottom nav mobile)
 - [x] Secciones renumeradas (protocolo: 07, archivo: 08)
 - [x] Responsive (mobile-first grid)
 - [x] Lazy-init via IntersectionObserver
-- [x] Datos inline (sin CORS) + fallback
+- [x] Fuentes base inline + capa BCN cargada desde JSON externo
 - [x] Print CSS compatibility
 
 **Archivos:** `index.html` (CSS + HTML + inline JS)
@@ -61,8 +62,20 @@
 ## Definición de Done
 - [ ] Deploy a GitHub Pages
 - [ ] Smoke test en Chrome + Safari mobile
-- [ ] README actualizado
+- [x] README actualizado
 - [ ] Sin regresiones en grafo/entropía
+
+### US-19.4 — Ingesta mínima BCN Tramitación ✅
+**Como** investigador, **quiero** una capa legislativa mínima normalizada desde BCN, **para** medir fricción con trazas verificables del expediente parlamentario y no solo con corpus narrativo.
+
+**Criterios de aceptación:**
+- [x] Esquema `contra-archivo/bcn-legislativo` definido
+- [x] Dataset BCN ampliado con 5 registros: 3 boletines + 2 trazas históricas derivadas
+- [x] Normalización a registros del buscador vía `normalizeBcnDataset()`
+- [x] Filtro `BCN Tramitación` visible en UI
+- [x] Datos BCN integrados vía `data/bcn-legislativo.json`
+
+**Archivos:** `data/bcn-legislativo.json`, `src/searchEngine.js`, `index.html`
 
 ## Fuentes Oficiales Integradas
 
@@ -74,7 +87,8 @@
 | SEIA (SEA) | 2 | OIT169, La Negra |
 | ComprasPúblicas | 2 | La Negra, Periodismo |
 | CMF | 2 | SURA |
-| **Total** | **17** | **4 casos** |
+| BCN Tramitación | 5 | SURA, OIT169, Periodismo, La Negra |
+| **Total** | **22** | **4 casos** |
 
 ## Modelo de Fricción
 
@@ -103,18 +117,21 @@ src/searchEngine.js
   │   ├─ .search({ query, fuente, caso, tipo })
   │   └─ .getStats(results)
   ├─ computeFrictionScore(registro, caso)
+  ├─ normalizeBcnDataset(dataset)
   ├─ renderSearchCard(result)
   ├─ renderSearchStats(stats)
   └─ initSearchUI(opts) → wires DOM
 
 data/fuentes-oficiales.json
   └─ 17 registros × 6 fuentes oficiales chilenas
+data/bcn-legislativo.json
+  └─ 5 registros BCN × esquema ampliado con urgencias, comisión, autores, indicaciones y trazabilidad
 ```
 
 ## Riesgos y Mitigaciones
 
 | Riesgo | Probabilidad | Mitigación |
 |--------|-------------|------------|
-| VS Code formatter corrompe `?.` → `? .` | Alta | No se usa optional chaining; código ES5+ |
-| CORS en GitHub Pages al cargar JSON | Media | Datos inline en `<script>` |
+| VS Code formatter corrompe `?.` → `? .` | Alta | Escanear `? .` y `? ?` + validar con `node --check` |
+| Apertura por `file://` no carga BCN JSON | Media | Usar servidor local o GitHub Pages |
 | Score de fricción no discrimina bien | Baja | Markers explícitos + amplificación de overlap bajo |
