@@ -1962,6 +1962,47 @@
             gap: 6px
         }
         
+        .se-stats-components {
+            display: grid;
+            gap: 10px;
+            padding: 14px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, .02)
+        }
+        
+        .se-stats-components-title {
+            font-size: 11px;
+            color: var(--etica);
+            letter-spacing: .08em;
+            text-transform: uppercase
+        }
+        
+        .se-component-row {
+            display: grid;
+            grid-template-columns: 150px 1fr 40px;
+            gap: 10px;
+            align-items: center
+        }
+        
+        .se-component-label,
+        .se-component-val {
+            font-size: 11px;
+            color: var(--muted)
+        }
+        
+        .se-component-bar {
+            height: 6px;
+            background: rgba(255, 255, 255, .06);
+            border-radius: 999px;
+            overflow: hidden
+        }
+        
+        .se-component-fill {
+            height: 100%;
+            border-radius: inherit
+        }
+        
         .se-stat-row {
             display: flex;
             align-items: center;
@@ -2115,6 +2156,58 @@
             padding: 4px 0 0
         }
         
+        .se-card-audit {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            padding: 10px 12px;
+            border: 1px solid var(--border);
+            background: rgba(255, 255, 255, .025);
+            border-radius: 6px
+        }
+        
+        .se-card-audit-head {
+            display: flex;
+            flex-direction: column;
+            gap: 4px
+        }
+        
+        .se-card-audit-kicker {
+            font-size: 10px;
+            color: var(--etica);
+            letter-spacing: .08em;
+            text-transform: uppercase
+        }
+        
+        .se-card-audit-summary {
+            font-size: 11px;
+            color: var(--muted);
+            line-height: 1.5
+        }
+        
+        .se-card-audit-metrics {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px
+        }
+        
+        .se-card-audit-metric,
+        .se-audit-pill {
+            font-family: var(--font-mono);
+            font-size: 10px;
+            color: var(--text);
+            border: 1px solid var(--border);
+            border-radius: 3px;
+            padding: 3px 7px;
+            background: rgba(255, 255, 255, .03)
+        }
+        
+        .se-card-audit-markers {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px
+        }
+        
         .se-card-tags {
             display: flex;
             flex-wrap: wrap;
@@ -2160,6 +2253,13 @@
             }
             .se-stats-summary {
                 gap: 16px
+            }
+            .se-component-row {
+                grid-template-columns: 110px 1fr 34px;
+                gap: 8px
+            }
+            .se-stats-components {
+                padding: 12px
             }
         }
         /* ═══════════════ PRINT STYLESHEET ═══════════════ */
@@ -2532,6 +2632,7 @@
                 <div class="se-filters">
                     <select class="se-select" id="se-filter-fuente" aria-label="Filtrar por fuente">
                         <option value="all">Todas las fuentes</option>
+                        <option value="bcn">BCN Tramitación</option>
                         <option value="infolobby">InfoLobby</option>
                         <option value="transparencia">Transparencia</option>
                         <option value="leychile">LeyChile</option>
@@ -3282,6 +3383,32 @@ var FUENTES_DATA = [
   {"id":"cmf-norma-esg-2023","fuente":"cmf","titulo":"NCG N°461: Norma de reporte de sostenibilidad y gobierno corporativo","fecha":"2023-11-20","url":"https://www.cmfchile.cl/normativa/ncg_461.pdf","institucion":"Comisión para el Mercado Financiero","keywords":["ESG","sostenibilidad","reporte","materialidad","stakeholders","NCG461"],"capa_oficial":"La norma obliga a reportar riesgos ESG según criterios de 'materialidad financiera'. El impacto sobre comunidades es reportable solo si afecta el valor de la empresa. La sostenibilidad institucional no es la sostenibilidad del territorio.","friccion_con":"sura-gobernanza-datos","tipo_friccion":"semantica","tags":["CMF","ESG","materialidad","sostenibilidad invertida"]}
 ];
 
+var BCN_LEGISLATIVO_URL = 'data/bcn-legislativo.json';
+
+function loadBcnDataset() {
+    if (window.__BCN_DATASET_PROMISE) return window.__BCN_DATASET_PROMISE;
+
+    if (window.location.protocol === 'file:') {
+        console.warn('BCN legislativo requiere servidor local o GitHub Pages; se inicializa sin la capa BCN en file://');
+        window.__BCN_DATASET_PROMISE = Promise.resolve({ boletines: [] });
+        return window.__BCN_DATASET_PROMISE;
+    }
+
+    window.__BCN_DATASET_PROMISE = fetch(BCN_LEGISLATIVO_URL, { cache: 'no-store' })
+        .then(function(response) {
+            if (!response.ok) {
+                throw new Error('No se pudo cargar ' + BCN_LEGISLATIVO_URL + ' (' + response.status + ')');
+            }
+            return response.json();
+        })
+        .catch(function(error) {
+            console.warn('BCN legislativo no disponible:', error);
+            return { boletines: [] };
+        });
+
+    return window.__BCN_DATASET_PROMISE;
+}
+
 /* ══════════════ BUSCADOR — INIT (lazy) ══════════════ */
 function initBuscador() {
   var section = document.getElementById('buscador');
@@ -3292,10 +3419,16 @@ function initBuscador() {
       setTimeout(doInit, 200);
       return;
     }
-    window.initSearchUI({
-      registros: FUENTES_DATA,
-      casos: CASOS
-    });
+        loadBcnDataset().then(function(dataset) {
+            var registros = FUENTES_DATA.slice();
+            if (window.normalizeBcnDataset) {
+                registros = registros.concat(window.normalizeBcnDataset(dataset));
+            }
+            window.initSearchUI({
+                registros: registros,
+                casos: CASOS
+            });
+        });
   }
 
   if ('IntersectionObserver' in window) {
