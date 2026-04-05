@@ -46,6 +46,12 @@ var FUENTE_COLORS = {
     cmf: '#a07acc'
 };
 
+var SEARCH_SCORE_WEIGHTS = {
+    overlap: 0.5,
+    marker: 0.3,
+    tipo: 0.2
+};
+
 /* ─── UTILIDADES ─── */
 
 /**
@@ -99,6 +105,28 @@ function _seTextMatch(registro, query) {
     return hits / tokens.length;
 }
 
+function _seCsvEscape(value) {
+    var normalized = value == null ? '' : String(value);
+    return '"' + normalized.replace(/"/g, '""') + '"';
+}
+
+function _seDownloadCsv(filename, headers, rows) {
+    var csv = [headers.map(_seCsvEscape).join(',')];
+    for (var i = 0; i < rows.length; i++) {
+        csv.push(rows[i].map(_seCsvEscape).join(','));
+    }
+
+    var blob = new Blob([csv.join('\n')], { type: 'text/csv;charset=utf-8;' });
+    var url = URL.createObjectURL(blob);
+    var anchor = document.createElement('a');
+    anchor.href = url;
+    anchor.download = filename;
+    document.body.appendChild(anchor);
+    anchor.click();
+    anchor.remove();
+    URL.revokeObjectURL(url);
+}
+
 /* ─── CORE: SCORE DE FRICCIÓN ─── */
 
 /**
@@ -139,7 +167,10 @@ function computeFrictionScore(registro, caso) {
 
 function explainSearchFriction(registro, caso) {
     if (window.frictionEngine && typeof window.frictionEngine.explainRecordFriction === 'function') {
-        return window.frictionEngine.explainRecordFriction(registro, caso);
+        var engineAudit = window.frictionEngine.explainRecordFriction(registro, caso) || {};
+        engineAudit.source = 'frictionEngine.explainRecordFriction';
+        engineAudit.weights = SEARCH_SCORE_WEIGHTS;
+        return engineAudit;
     }
 
     var fallbackScore = computeFrictionScore(registro, caso);
@@ -149,7 +180,9 @@ function explainSearchFriction(registro, caso) {
         overlapScore: fallbackScore,
         markerScore: 0,
         tipoPenalty: 0,
-        markers: []
+        markers: [],
+        source: 'searchEngine.fallback',
+        weights: SEARCH_SCORE_WEIGHTS
     };
 }
 
@@ -441,6 +474,10 @@ function renderSearchCard(result, context) {
         markerExplainHtml += '<span class="se-card-marker-pill">' + _escHtml((marker.label || 'Marcador') + markerWeight) + '</span>';
     }
 
+    var weights = audit.weights || SEARCH_SCORE_WEIGHTS;
+    var sourceLabel = audit.source || 'score no especificado';
+    var weightsHtml = '<div class="se-card-detail-note">Pesos visibles del score: distancia ' + Math.round((weights.overlap || 0) * 100) + '% · marcador ' + Math.round((weights.marker || 0) * 100) + '% · tipo ' + Math.round((weights.tipo || 0) * 100) + '%.</div>';
+
     var queryText = context.query && context.query.trim() ? context.query.trim() : '';
     var explainLead = queryText ?
         'Consulta activa: "' + _escHtml(queryText) + '". Relevancia textual ' + Math.round((result.relevance || 0) * 100) + '%.' :
@@ -455,7 +492,10 @@ function renderSearchCard(result, context) {
         '<div class="se-card-detail-box"><span class="se-card-detail-kicker">Marcadores explícitos</span><div class="se-card-detail-value">' + markerPct.toFixed(0) + '%</div></div>' +
         '<div class="se-card-detail-box"><span class="se-card-detail-kicker">Coincidencia tipológica</span><div class="se-card-detail-value">' + tipoPct.toFixed(0) + '%</div></div>' +
         '<div class="se-card-detail-box"><span class="se-card-detail-kicker">Caso priorizado</span><div class="se-card-detail-value">' + _escHtml(casoLabel || 'Sin caso vinculado') + '</div></div>' +
+        '<div class="se-card-detail-box"><span class="se-card-detail-kicker">Motor de cálculo</span><div class="se-card-detail-value">' + _escHtml(sourceLabel) + '</div></div>' +
+        '<div class="se-card-detail-box"><span class="se-card-detail-kicker">Score final</span><div class="se-card-detail-value">' + (score * 100).toFixed(0) + '%</div></div>' +
         '</div>' +
+        weightsHtml +
         (sharedHtml ? '<div><span class="se-card-detail-kicker">Keywords compartidas</span><div class="se-card-shared-list">' + sharedHtml + '</div></div>' : '') +
         (markerExplainHtml ? '<div><span class="se-card-detail-kicker">Marcadores activados</span><div class="se-card-marker-list">' + markerExplainHtml + '</div></div>' : '') +
         '<div class="se-card-detail-note">Este registro se ordena combinando distancia entre vocabularios, presencia de marcadores de conflicto y coincidencia con el tipo de fricción del caso.</div>' +
@@ -541,7 +581,13 @@ function renderSearchStats(stats) {
         '<span class="se-component-val">' + tipoPct.toFixed(0) + '%</span>' +
         '</div>';
 
+    var auditNote = 'Pesos visibles del score: distancia ' + Math.round(SEARCH_SCORE_WEIGHTS.overlap * 100) + '% · marcador ' + Math.round(SEARCH_SCORE_WEIGHTS.marker * 100) + '% · tipo ' + Math.round(SEARCH_SCORE_WEIGHTS.tipo * 100) + '%.';
+
     return '<div class="se-stats">' +
+        '<div class="se-stats-head">' +
+        '<div class="se-stats-head-copy"><div class="se-stats-components-title">Lectura auditada del score</div><div class="se-audit-note">' + auditNote + '</div></div>' +
+        '<div class="se-stats-actions"><button class="se-export-btn" type="button" data-se-export="results">Exportar CSV</button></div>' +
+        '</div>' +
         '<div class="se-stats-summary">' +
         '<div class="se-stat-big"><span class="se-stat-num">' + stats.total + '</span><span class="se-stat-desc">registros</span></div>' +
         '<div class="se-stat-big"><span class="se-stat-num" style="color:' + avgColor + '">' + (stats.avgFriction * 100).toFixed(0) + '%</span><span class="se-stat-desc">fricción promedio</span></div>' +
@@ -750,6 +796,7 @@ function initSearchUI(opts) {
     var statsContainer = document.getElementById('se-stats-panel');
     var lastResultsById = Object.create(null);
     var selectedResultId = null;
+    var lastResults = [];
 
     if (!searchInput || !resultsContainer) return;
 
@@ -776,6 +823,36 @@ function initSearchUI(opts) {
         },
         focusInput: function() {
             searchInput.focus();
+        },
+        getLastResults: function() {
+            return lastResults.slice();
+        },
+        exportCurrentResultsCSV: function() {
+            if (!lastResults.length) return;
+
+            var headers = ['id', 'fuente', 'fecha', 'titulo', 'institucion', 'caso_vinculado', 'tipo_friccion', 'relevance_pct', 'friction_score_pct', 'overlap_pct', 'marker_pct', 'tipo_pct', 'source', 'url', 'markers'];
+            var rows = lastResults.map(function(result) {
+                var audit = result.frictionAudit || {};
+                return [
+                    result.registro && result.registro.id || '',
+                    result.registro && result.registro.fuente || '',
+                    result.registro && result.registro.fecha || '',
+                    result.registro && result.registro.titulo || '',
+                    result.registro && result.registro.institucion || '',
+                    result.casoVinculado && result.casoVinculado.id || result.registro && result.registro.friccion_con || '',
+                    result.registro && result.registro.tipo_friccion || '',
+                    Math.round((result.relevance || 0) * 100),
+                    Math.round((result.frictionScore || 0) * 100),
+                    Math.round((audit.overlapScore || 0) * 100),
+                    Math.round((audit.markerScore || 0) * 100),
+                    Math.round((audit.tipoPenalty || 0) * 100),
+                    audit.source || '',
+                    result.registro && result.registro.url || '',
+                    (audit.markers || []).map(function(marker) { return marker.label || ''; }).join(' | ')
+                ];
+            });
+
+            _seDownloadCsv('contra-archivo-buscador.csv', headers, rows);
         }
     };
 
@@ -788,6 +865,7 @@ function initSearchUI(opts) {
         };
 
         var results = engine.search(params);
+        lastResults = results.slice();
         var stats = engine.getStats(results);
         lastResultsById = Object.create(null);
         for (var x = 0; x < results.length; x++) {
@@ -850,6 +928,16 @@ function initSearchUI(opts) {
     if (fuenteFilter) fuenteFilter.addEventListener('change', doSearch);
     if (casoFilter) casoFilter.addEventListener('change', doSearch);
     if (tipoFilter) tipoFilter.addEventListener('change', doSearch);
+
+    if (statsContainer) {
+        statsContainer.addEventListener('click', function(evt) {
+            var target = evt.target;
+            if (!target) return;
+            var exportBtn = target.closest ? target.closest('[data-se-export="results"]') : null;
+            if (!exportBtn) return;
+            controller.exportCurrentResultsCSV();
+        });
+    }
 
     if (facetsContainer) {
         facetsContainer.addEventListener('click', function(evt) {
