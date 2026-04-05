@@ -13,6 +13,8 @@
 - Grafo, campo social y buscador conviven sin dependencias externas ni build step
 - Buscador ampliado con desglose auditable del score y una capa BCN cargada desde JSON externo
 - Nuevo panel `#triage` para comparar cobertura por fuente, gaps y fricción media entre casos
+- Mobile UX del grafo reforzada con estado de foco visible y acción rápida de limpieza de contexto
+- Exportación CSV activa en buscador y triage para auditoría y análisis fuera del sitio
 - Riesgo abierto: historial del repo inflado por artefactos de investigación pesados ya versionados
 
 ---
@@ -96,6 +98,8 @@ Capacidades activas del buscador:
 - Facetas dinámicas visibles según resultados emergentes (fuente, tipo de fricción y caso vinculado)
 - Selección de resultados con sincronía hacia el grafo para resaltar el caso relacionado
 - Explicación expandible por tarjeta con relevancia textual, componentes del score, keywords compartidas y marcadores activados
+- Fuente de cálculo y pesos del score visibles por resultado para trazabilidad metodológica
+- Exportación CSV de resultados filtrados desde el panel de estadísticas
 
 ### triage comparativo — Prioridad investigativa
 Panel comparativo que cruza los mismos registros oficiales del buscador con los 4 casos del contra-archivo para visualizar: cobertura por fuente, vacíos documentales, fricción oficial media, tasa de marcadores activos y tipo dominante por caso. Incluye acceso directo desde cada tarjeta hacia el buscador filtrado por caso para pasar de comparación macro a inspección de registros concretos.
@@ -166,6 +170,7 @@ Herramienta comparativa activa:
 - Cobertura comparada sobre 7 fuentes integradas
 - Detección de gaps por caso y priorización por fricción media + faltantes
 - Botón `Abrir en buscador` para inspección inmediata del caso priorizado
+- Toolbar con `Exportar CSV` y `Abrir caso prioritario` para pasar de triage a inspección sin pasos intermedios
 
 $$\text{score} = 0.5 \times (1 - \text{overlap}) + 0.3 \times \text{markerMatch} + 0.2 \times \text{typePenalty}$$
 
@@ -215,6 +220,7 @@ npx serve .
 
 | Commit | Tipo | Descripción |
 |--------|------|-------------|
+| `6c565d8` | feat | UX móvil del grafo con estado de foco + limpieza rápida, score auditable con fuente/pesos visibles y exportación CSV en buscador/triage |
 | `2c2eeac` | feat | Panel de triaje comparativo: cobertura por fuente, gaps, fricción media y acceso directo al buscador por caso |
 | `6bf5a23` | feat | Buscador automagizado Sprint 1: facetas dinámicas, detalle expandible por resultado y sincronía resultado → grafo |
 | `0db9a3a` | docs | Actualización Sprint 19: documentación + dataset legislativo BCN (`data/bcn-legislativo.json`) |
