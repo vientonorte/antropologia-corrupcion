@@ -18,156 +18,156 @@
 /* ─── CONSTANTES VISUALES ─── */
 
 const LAYER_CONFIG = {
-  etica: {
-    label:    'Capa Ética',
-    sublabel: 'Testimonio situado · Cuidado · Contexto vivido',
-    icon:     '◎',
-    cssVar:   '--ca-color-etica',
-    default:  '#c8a96e',
-    ariaRole: 'region',
-  },
-  institucional: {
-    label:    'Capa Institucional',
-    sublabel: 'Registro oficial · Clasificación · Distorsión normativa',
-    icon:     '▣',
-    cssVar:   '--ca-color-institucional',
-    default:  '#4a7fa5',
-    ariaRole: 'region',
-  },
-  material: {
-    label:    'Capa Material',
-    sublabel: 'Territorio · Evidencia · Densidad histórica',
-    icon:     '◈',
-    cssVar:   '--ca-color-material',
-    default:  '#7a9e6e',
-    ariaRole: 'region',
-  },
+    etica: {
+        label: 'Capa Ética',
+        sublabel: 'Testimonio situado · Cuidado · Contexto vivido',
+        icon: '◎',
+        cssVar: '--ca-color-etica',
+        default: '#c8a96e',
+        ariaRole: 'region',
+    },
+    institucional: {
+        label: 'Capa Institucional',
+        sublabel: 'Registro oficial · Clasificación · Distorsión normativa',
+        icon: '▣',
+        cssVar: '--ca-color-institucional',
+        default: '#4a7fa5',
+        ariaRole: 'region',
+    },
+    material: {
+        label: 'Capa Material',
+        sublabel: 'Territorio · Evidencia · Densidad histórica',
+        icon: '◈',
+        cssVar: '--ca-color-material',
+        default: '#7a9e6e',
+        ariaRole: 'region',
+    },
 };
 
 const FRICTION_TYPE_LABELS = {
-  politica:  'Fricción política — ¿Quién tiene autoridad para definir?',
-  semantica: 'Fricción semántica — El mismo término, mundos distintos',
-  tecnica:   'Fricción técnica — ¿Qué cuentan los datos y para quién?',
+    politica: 'Fricción política — ¿Quién tiene autoridad para definir?',
+    semantica: 'Fricción semántica — El mismo término, mundos distintos',
+    tecnica: 'Fricción técnica — ¿Qué cuentan los datos y para quién?',
 };
 
 /* ─── CLASE PRINCIPAL ─── */
 
 class NodeRenderer {
-  /**
-   * @param {Object} options
-   * @param {HTMLElement} options.panel       - elemento contenedor del panel de detalle
-   * @param {HTMLElement} options.previewEl   - elemento para preview en hover
-   * @param {Function}    options.onClose     - callback al cerrar panel
-   */
-  constructor({ panel, previewEl, onClose }) {
-    this.panel      = panel;
-    this.previewEl  = previewEl;
-    this.onClose    = onClose || (() => {});
-    this.currentNode = null;
-    this._setupPanel();
-  }
-
-  /* ─── SETUP ─── */
-
-  _setupPanel() {
-    if (!this.panel) return;
-    this.panel.setAttribute('role', 'complementary');
-    this.panel.setAttribute('aria-label', 'Detalle del caso — capas de fricción');
-
-    // Botón de cierre
-    const closeBtn = this.panel.querySelector('#ca-panel-close') || (() => {
-      const btn = document.createElement('button');
-      btn.id = 'ca-panel-close';
-      btn.setAttribute('aria-label', 'Cerrar panel de detalle');
-      btn.textContent = '×';
-      this.panel.prepend(btn);
-      return btn;
-    })();
-
-    closeBtn.addEventListener('click', () => this.close());
-
-    // ESC para cerrar
-    this._handleEsc = (e) => {
-      if (e.key === 'Escape') this.close();
-    };
-    document.addEventListener('keydown', this._handleEsc);
-  }
-
-  /* ─── API PÚBLICA ─── */
-
-  /**
-   * Muestra preview rápido en hover (tooltip enriquecido)
-   * @param {Object|null} node
-   */
-  showPreview(node) {
-    if (!this.previewEl) return;
-    if (!node) {
-      this.previewEl.classList.remove('ca-preview--visible');
-      this.previewEl.innerHTML = '';
-      return;
+    /**
+     * @param {Object} options
+     * @param {HTMLElement} options.panel       - elemento contenedor del panel de detalle
+     * @param {HTMLElement} options.previewEl   - elemento para preview en hover
+     * @param {Function}    options.onClose     - callback al cerrar panel
+     */
+    constructor({ panel, previewEl, onClose }) {
+        this.panel = panel;
+        this.previewEl = previewEl;
+        this.onClose = onClose || (() => {});
+        this.currentNode = null;
+        this._setupPanel();
     }
-    this.previewEl.innerHTML = this._buildPreview(node);
-    this.previewEl.classList.add('ca-preview--visible');
-    this.previewEl.setAttribute('aria-live', 'polite');
-  }
 
-  /**
-   * Muestra preview de conexión (link) en hover
-   * @param {Object|null} link
-   */
-  showLinkPreview(link) {
-    if (!this.previewEl) return;
-    if (!link) {
-      this.previewEl.classList.remove('ca-preview--visible');
-      this.previewEl.innerHTML = '';
-      return;
+    /* ─── SETUP ─── */
+
+    _setupPanel() {
+        if (!this.panel) return;
+        this.panel.setAttribute('role', 'complementary');
+        this.panel.setAttribute('aria-label', 'Detalle del caso — capas de fricción');
+
+        // Botón de cierre
+        const closeBtn = this.panel.querySelector('#ca-panel-close') || (() => {
+            const btn = document.createElement('button');
+            btn.id = 'ca-panel-close';
+            btn.setAttribute('aria-label', 'Cerrar panel de detalle');
+            btn.textContent = '×';
+            this.panel.prepend(btn);
+            return btn;
+        })();
+
+        closeBtn.addEventListener('click', () => this.close());
+
+        // ESC para cerrar
+        this._handleEsc = (e) => {
+            if (e.key === 'Escape') this.close();
+        };
+        document.addEventListener('keydown', this._handleEsc);
     }
-    this.previewEl.innerHTML = this._buildLinkPreview(link);
-    this.previewEl.classList.add('ca-preview--visible');
-    this.previewEl.setAttribute('aria-live', 'polite');
-  }
 
-  /**
-   * Abre el panel completo con las 3 capas del caso
-   * @param {Object} node
-   */
-  expand(node) {
-    if (!this.panel) return;
-    this.currentNode = node;
-    this.panel.innerHTML = this._buildPanel(node);
-    this.panel.classList.add('ca-panel--open');
-    this.panel.setAttribute('aria-hidden', 'false');
+    /* ─── API PÚBLICA ─── */
 
-    // Focus management
-    const firstFocusable = this.panel.querySelector('button, [tabindex="0"]');
-    if (firstFocusable) firstFocusable.focus();
+    /**
+     * Muestra preview rápido en hover (tooltip enriquecido)
+     * @param {Object|null} node
+     */
+    showPreview(node) {
+        if (!this.previewEl) return;
+        if (!node) {
+            this.previewEl.classList.remove('ca-preview--visible');
+            this.previewEl.innerHTML = '';
+            return;
+        }
+        this.previewEl.innerHTML = this._buildPreview(node);
+        this.previewEl.classList.add('ca-preview--visible');
+        this.previewEl.setAttribute('aria-live', 'polite');
+    }
 
-    // Re-adjuntar botón de cierre
-    const closeBtn = this.panel.querySelector('#ca-panel-close');
-    if (closeBtn) closeBtn.addEventListener('click', () => this.close());
+    /**
+     * Muestra preview de conexión (link) en hover
+     * @param {Object|null} link
+     */
+    showLinkPreview(link) {
+        if (!this.previewEl) return;
+        if (!link) {
+            this.previewEl.classList.remove('ca-preview--visible');
+            this.previewEl.innerHTML = '';
+            return;
+        }
+        this.previewEl.innerHTML = this._buildLinkPreview(link);
+        this.previewEl.classList.add('ca-preview--visible');
+        this.previewEl.setAttribute('aria-live', 'polite');
+    }
 
-    // Tabs de capa
-    this._setupLayerTabs();
-  }
+    /**
+     * Abre el panel completo con las 3 capas del caso
+     * @param {Object} node
+     */
+    expand(node) {
+        if (!this.panel) return;
+        this.currentNode = node;
+        this.panel.innerHTML = this._buildPanel(node);
+        this.panel.classList.add('ca-panel--open');
+        this.panel.setAttribute('aria-hidden', 'false');
 
-  /**
-   * Cierra el panel
-   */
-  close() {
-    if (!this.panel) return;
-    this.panel.classList.remove('ca-panel--open');
-    this.panel.setAttribute('aria-hidden', 'true');
-    this.currentNode = null;
-    this.onClose();
-  }
+        // Focus management
+        const firstFocusable = this.panel.querySelector('button, [tabindex="0"]');
+        if (firstFocusable) firstFocusable.focus();
 
-  /* ─── BUILDERS HTML ─── */
+        // Re-adjuntar botón de cierre
+        const closeBtn = this.panel.querySelector('#ca-panel-close');
+        if (closeBtn) closeBtn.addEventListener('click', () => this.close());
 
-  _buildPreview(node) {
-    const pct = Math.round(node.intensidad * 100);
-    const tipoLabel = FRICTION_TYPE_LABELS[node.tipo] || node.tipo;
+        // Tabs de capa
+        this._setupLayerTabs();
+    }
 
-    return `
+    /**
+     * Cierra el panel
+     */
+    close() {
+        if (!this.panel) return;
+        this.panel.classList.remove('ca-panel--open');
+        this.panel.setAttribute('aria-hidden', 'true');
+        this.currentNode = null;
+        this.onClose();
+    }
+
+    /* ─── BUILDERS HTML ─── */
+
+    _buildPreview(node) {
+        const pct = Math.round(node.intensidad * 100);
+        const tipoLabel = FRICTION_TYPE_LABELS[node.tipo] || node.tipo;
+
+        return `
       <div class="ca-preview__header">
         <span class="ca-preview__titulo">${this._esc(node.titulo)}</span>
         <span class="ca-preview__anio">${node.anio || ''}</span>
@@ -187,31 +187,31 @@ class NodeRenderer {
       </div>
       <p class="ca-preview__hint">↵ Click para expandir el conflicto</p>
     `;
-  }
+    }
 
-  _previewLayerChip(capa, color, titulo) {
-    const cfg = LAYER_CONFIG[capa];
-    const displayTitle = titulo ? this._esc(titulo) : cfg.label;
-    return `
+    _previewLayerChip(capa, color, titulo) {
+        const cfg = LAYER_CONFIG[capa];
+        const displayTitle = titulo ? this._esc(titulo) : cfg.label;
+        return `
       <div class="ca-preview__layer-chip" style="border-color:${color || cfg.default}" title="${displayTitle}">
         <span class="ca-preview__layer-icon" style="color:${color || cfg.default}">${cfg.icon}</span>
         <span class="ca-preview__layer-name">${displayTitle}</span>
       </div>
     `;
-  }
+    }
 
-  _buildLinkPreview(link) {
-    const sourceName = this._esc(link.source?.titulo || link.source?.id || '');
-    const targetName = this._esc(link.target?.titulo || link.target?.id || '');
-    const weightPct = Math.round((link.weight || 0) * 100);
+    _buildLinkPreview(link) {
+            const sourceName = this._esc(link.source ?.titulo || link.source ?.id || '');
+            const targetName = this._esc(link.target ?.titulo || link.target ?.id || '');
+            const weightPct = Math.round((link.weight || 0) * 100);
 
-    const items = [
-      ...((link.actores || []).map(a => `<span class="ca-preview__link-tag">Actor: ${this._esc(a)}</span>`)),
-      ...((link.instituciones || []).map(i => `<span class="ca-preview__link-tag">Institución: ${this._esc(i)}</span>`)),
-      ...((link.tags || []).map(t => `<span class="ca-preview__link-tag">Tema: ${this._esc(t)}</span>`)),
-    ];
+            const items = [
+                ...((link.actores || []).map(a => `<span class="ca-preview__link-tag">Actor: ${this._esc(a)}</span>`)),
+                ...((link.instituciones || []).map(i => `<span class="ca-preview__link-tag">Institución: ${this._esc(i)}</span>`)),
+                ...((link.tags || []).map(t => `<span class="ca-preview__link-tag">Tema: ${this._esc(t)}</span>`)),
+            ];
 
-    return `
+            return `
       <div class="ca-preview__header">
         <span class="ca-preview__titulo">Conexión</span>
         <span class="ca-preview__anio">${weightPct}% vínculo</span>
@@ -305,6 +305,7 @@ class NodeRenderer {
         <p class="ca-panel__friction-desc">
           ${node.tension ? this._esc(node.tension) : ''}
         </p>
+        ${this._renderAudit(node.audit)}
         ${node.marcadores?.length ? `
           <ul class="ca-panel__marcadores" aria-label="Marcadores de fricción detectados">
             ${node.marcadores.slice(0, 4).map(m =>
@@ -394,6 +395,92 @@ class NodeRenderer {
           </span>
         `).join('')}
       </div>
+    `;
+  }
+
+  _renderAudit(audit) {
+    if (!audit) return '';
+
+    const effectivePct = Math.round((audit.effectiveIntensity || 0) * 100);
+    const calculatedPct = Math.round((audit.calculatedIntensity || 0) * 100);
+    const overlapPct = Math.round((audit.avgOverlap || 0) * 100);
+    const markerPct = Math.round((audit.markerScore || 0) * 100);
+    const sourceLabel = audit.source === 'json'
+      ? 'Valor publicado en el caso'
+      : 'Valor calculado por el motor';
+    const delta = Math.abs(audit.deltaFromCalculated || 0);
+
+    return `
+      <section class="ca-panel__audit" aria-label="Desglose auditable de fricción">
+        <div class="ca-panel__audit-head">
+          <div>
+            <span class="ca-panel__audit-kicker">Auditoría del puntaje</span>
+            <p class="ca-panel__audit-source">${sourceLabel}</p>
+          </div>
+          <div class="ca-panel__audit-score">${effectivePct}%</div>
+        </div>
+
+        <div class="ca-panel__audit-metrics">
+          <div class="ca-panel__audit-metric">
+            <span class="ca-panel__audit-label">Overlap promedio</span>
+            <strong>${overlapPct}%</strong>
+          </div>
+          <div class="ca-panel__audit-metric">
+            <span class="ca-panel__audit-label">Marcador dominante</span>
+            <strong>${markerPct}%</strong>
+          </div>
+          <div class="ca-panel__audit-metric">
+            <span class="ca-panel__audit-label">Motor base</span>
+            <strong>${calculatedPct}%</strong>
+          </div>
+        </div>
+
+        ${audit.dominantPair ? `
+          <p class="ca-panel__audit-summary">
+            Par dominante: <strong>${this._esc(audit.dominantPair.label)}</strong>
+            · presión ${Math.round((audit.dominantPair.pairIntensity || 0) * 100)}%
+          </p>
+        ` : ''}
+
+        ${audit.source === 'json' && delta >= 0.02 ? `
+          <p class="ca-panel__audit-note">
+            El valor publicado difiere ${Math.round(delta * 100)} puntos del cálculo automático del motor.
+          </p>
+        ` : ''}
+
+        <div class="ca-panel__audit-pairs">
+          ${(audit.pairs || []).map(pair => this._renderAuditPair(pair)).join('')}
+        </div>
+      </section>
+    `;
+  }
+
+  _renderAuditPair(pair) {
+    const overlapPct = Math.round((pair.overlap || 0) * 100);
+    const markerPct = Math.round((pair.markerScore || 0) * 100);
+    const intensityPct = Math.round((pair.pairIntensity || 0) * 100);
+    const markers = pair.markers || [];
+
+    return `
+      <article class="ca-panel__audit-pair">
+        <div class="ca-panel__audit-pair-head">
+          <span class="ca-panel__audit-pair-label">${this._esc(pair.label)}</span>
+          <span class="ca-panel__audit-pair-score">${intensityPct}%</span>
+        </div>
+        <div class="ca-panel__audit-pair-bars">
+          <span>solapamiento ${overlapPct}%</span>
+          <span>marcador ${markerPct}%</span>
+        </div>
+        ${markers.length ? `
+          <div class="ca-panel__audit-pair-markers">
+            ${markers.slice(0, 2).map(marker => `
+              <span class="ca-panel__audit-pill">${this._esc(marker.label)}</span>
+            `).join('')}
+          </div>
+        ` : `
+          <div class="ca-panel__audit-pair-empty">Sin marcador explícito; domina la distancia semántica.</div>
+        `}
+      </article>
     `;
   }
 
