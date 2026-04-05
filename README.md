@@ -11,6 +11,7 @@
 - Sitio publicado en GitHub Pages con 8 secciones narrativas activas
 - Buscador de Fricción Institucional desplegado y navegable en la sección `#buscador`
 - Grafo, campo social y buscador conviven sin dependencias externas ni build step
+- Buscador ampliado con desglose auditable del score y una capa BCN cargada desde JSON externo
 - Riesgo abierto: historial del repo inflado por artefactos de investigación pesados ya versionados
 
 ---
@@ -36,11 +37,12 @@ index.html                ← Landing + 7 secciones narrativas + grafo SVG + cam
 │   ├── fieldPhysics.js    ← Campo Coulomb: grid O(1), streamlines, 120 partículas batched
 │   ├── graph.js           ← Grafo SVG force-directed (Fruchterman-Reingold, listeners pasivos)
 │   ├── nodeRenderer.js    ← Panel lateral detalle (3 capas + fricción)
-│   ├── searchEngine.js    ← Buscador híbrido: Jaccard + 12 marcadores de fricción
+│   ├── searchEngine.js    ← Buscador híbrido: score auditable + stats componentizadas + BCN
 │   └── socialField.js     ← Termodinámica social: 80 agentes, entropía Shannon, fases
 ├── data/
 │   ├── casos.json         ← Base de datos: 4 campos × 3 capas × fricción
-│   └── fuentes-oficiales.json ← 6 fuentes (InfoLobby, Transparencia, LeyChile, SEIA, CMF, ComprasPublicas)
+│   ├── fuentes-oficiales.json ← 6 fuentes (InfoLobby, Transparencia, LeyChile, SEIA, CMF, ComprasPublicas)
+│   └── bcn-legislativo.json ← Dataset BCN con boletines y trazas históricas legislativas
 ├── admin.html             ← Panel CMS interno (Admin/Consultor)
 └── .vscode/settings.json  ← Protección contra formatter (formatOnSave: false)
 ```
@@ -86,7 +88,7 @@ Visualiza en tiempo real: 80 agentes brownianos (ciudadanos), halos de poder, fl
 Panel de detalle por nodo: muestra las 3 capas de información (ética, institucional, material) con indicadores de fricción. Confronta sin resolver — 3 verdades permanecen abiertas simultáneamente.
 
 ### searchEngine.js — Buscador de fricción
-Motor de búsqueda híbrido que cruza texto libre con marcadores epistemológicos de fricción. 12 pares semánticos predefinidos (ej. "consentimiento" ↔ "proceso administrativo") con pesos 0.65–0.9. Integra 6 fuentes oficiales: InfoLobby, Transparencia, LeyChile, SEIA, ComprasPublicas, CMF.
+Motor de búsqueda híbrido que cruza texto libre con marcadores epistemológicos de fricción. Reutiliza el mismo helper auditable del motor de fricción para evitar deriva entre grafo y buscador, muestra desglose por componentes (overlap, marcador, tipo) e integra una séptima fuente BCN cargada desde `data/bcn-legislativo.json`, con campos de urgencia, comisión, autores, indicaciones y trazabilidad parlamentaria.
 
 ## Navegación
 
@@ -145,7 +147,7 @@ Motor de búsqueda híbrido friction-scored:
 
 $$\text{score} = 0.5 \times (1 - \text{overlap}) + 0.3 \times \text{markerMatch} + 0.2 \times \text{typePenalty}$$
 
-6 fuentes oficiales integradas: InfoLobby · Transparencia · LeyChile · SEIA · ComprasPublicas · CMF
+7 fuentes integradas: BCN Tramitación · InfoLobby · Transparencia · LeyChile · SEIA · ComprasPublicas · CMF
 
 ## Seguridad
 
@@ -178,14 +180,14 @@ La **fricción** entre capas se mide como intensidad (0.0→1.0) y se clasifica 
 
 ## Desarrollo local
 
-Abrir `index.html` en cualquier navegador. No requiere build, bundler ni servidor.
+Servir el proyecto por HTTP local. No requiere build ni bundler, pero la capa BCN ahora se carga desde JSON externo y no se hidrata en `file://`.
 
 ```sh
-# opcionalmente, con live server
+# servidor estático mínimo
 npx serve .
 ```
 
-> **⚠️ Nota:** El formatter de VS Code rompe `?.` → `? .` en el script inline. El proyecto incluye `.vscode/settings.json` con `formatOnSave: false` para prevenir esto. Si usas otra extensión (Prettier, Beautify), desactívala para este workspace.
+> **⚠️ Nota:** El formatter de VS Code rompe `?.` → `? .` y `??` → `? ?` en JS. El proyecto incluye `.vscode/settings.json` con `formatOnSave: false` para prevenir esto. Si usas otra extensión (Prettier, Beautify), desactívala para este workspace y valida los módulos con `node --check`.
 
 ## Changelog reciente
 
