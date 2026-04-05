@@ -977,6 +977,49 @@
             color: var(--etica);
             background: rgba(200, 169, 110, .08)
         }
+        
+        .graph-onboarding {
+            margin: 0 0 14px;
+            border: 1px solid rgba(200, 169, 110, .28);
+            background: linear-gradient(90deg, rgba(200, 169, 110, .08) 0%, rgba(74, 127, 165, .08) 100%);
+            border-radius: 8px;
+            padding: 12px 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px
+        }
+        
+        .graph-onboarding strong {
+            color: var(--text)
+        }
+        
+        .graph-onboarding-text {
+            color: var(--muted);
+            font-size: 12px;
+            line-height: 1.45
+        }
+        
+        .graph-onboarding-actions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: nowrap
+        }
+        
+        .graph-onboarding-btn {
+            border: 1px solid var(--border);
+            background: rgba(12, 12, 12, .55);
+            color: var(--muted);
+            border-radius: 6px;
+            padding: 6px 10px;
+            font-size: 11px;
+            cursor: pointer
+        }
+        
+        .graph-onboarding-btn:hover {
+            color: var(--text);
+            border-color: var(--etica)
+        }
         /* ══════════════════════════════════════ PROTOCOLO */
         
         #protocolo {
@@ -1433,6 +1476,13 @@
             }
             .graph-controls {
                 flex-wrap: wrap
+            }
+            .graph-onboarding {
+                flex-direction: column;
+                align-items: flex-start
+            }
+            .graph-onboarding-actions {
+                width: 100%
             }
             .gc-btn {
                 font-size: 10px;
@@ -1918,6 +1968,111 @@
             border-color: var(--etica)
         }
         
+        .se-card {
+            transition: border-color .18s, box-shadow .18s, transform .12s
+        }
+        
+        .se-card--selected {
+            border-color: var(--etica) !important;
+            box-shadow: 0 0 0 1px rgba(200, 169, 110, .24), 0 8px 24px rgba(0, 0, 0, .24);
+            transform: translateY(-1px)
+        }
+        
+        #se-facets-panel {
+            margin-bottom: 18px
+        }
+        
+        .se-facets {
+            display: grid;
+            gap: 12px;
+            padding: 16px;
+            border: 1px solid var(--border);
+            border-radius: var(--r);
+            background: rgba(255, 255, 255, .02)
+        }
+        
+        .se-facets-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap
+        }
+        
+        .se-facets-title {
+            font-size: 11px;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            color: var(--etica)
+        }
+        
+        .se-facets-subtitle {
+            font-size: 12px;
+            color: var(--muted)
+        }
+        
+        .se-facets-reset {
+            border: 1px solid var(--border);
+            background: transparent;
+            color: var(--muted);
+            border-radius: 999px;
+            padding: 6px 10px;
+            font-size: 11px;
+            cursor: pointer
+        }
+        
+        .se-facets-reset:hover {
+            color: var(--text);
+            border-color: var(--etica)
+        }
+        
+        .se-facet-group {
+            display: grid;
+            gap: 8px
+        }
+        
+        .se-facet-label {
+            font-size: 10px;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            color: var(--dim)
+        }
+        
+        .se-facet-items {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px
+        }
+        
+        .se-facet-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            border: 1px solid var(--border);
+            background: rgba(12, 12, 12, .4);
+            color: var(--muted);
+            border-radius: 999px;
+            padding: 6px 10px;
+            font-size: 11px;
+            cursor: pointer
+        }
+        
+        .se-facet-btn:hover {
+            color: var(--text);
+            border-color: rgba(200, 169, 110, .35)
+        }
+        
+        .se-facet-btn.active {
+            border-color: var(--etica);
+            color: var(--etica);
+            background: rgba(200, 169, 110, .08)
+        }
+        
+        .se-facet-count {
+            font-family: var(--font-mono);
+            color: var(--dim)
+        }
+        
         #se-stats-panel {
             margin-bottom: 24px
         }
@@ -2214,6 +2369,97 @@
             gap: 4px
         }
         
+        .se-card-details {
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, .02)
+        }
+        
+        .se-card-details summary {
+            list-style: none;
+            cursor: pointer;
+            padding: 10px 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            color: var(--muted);
+            font-size: 12px
+        }
+        
+        .se-card-details summary::-webkit-details-marker {
+            display: none
+        }
+        
+        .se-card-details[open] summary {
+            color: var(--text)
+        }
+        
+        .se-card-details-body {
+            padding: 0 12px 12px;
+            display: grid;
+            gap: 10px
+        }
+        
+        .se-card-details-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 8px
+        }
+        
+        .se-card-detail-box {
+            border: 1px solid rgba(255, 255, 255, .06);
+            border-radius: 6px;
+            padding: 8px 9px;
+            background: rgba(255, 255, 255, .018)
+        }
+        
+        .se-card-detail-kicker {
+            display: block;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+            color: var(--dim);
+            margin-bottom: 4px
+        }
+        
+        .se-card-detail-value {
+            font-size: 12px;
+            color: var(--text)
+        }
+        
+        .se-card-detail-note {
+            font-size: 11px;
+            line-height: 1.5;
+            color: var(--muted)
+        }
+        
+        .se-card-marker-list,
+        .se-card-shared-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px
+        }
+        
+        .se-card-marker-pill,
+        .se-card-shared-pill {
+            border-radius: 999px;
+            padding: 5px 8px;
+            font-size: 11px
+        }
+        
+        .se-card-marker-pill {
+            background: rgba(200, 95, 74, .12);
+            color: #efb2a4;
+            border: 1px solid rgba(200, 95, 74, .24)
+        }
+        
+        .se-card-shared-pill {
+            background: rgba(74, 127, 165, .1);
+            color: #9fc3dd;
+            border: 1px solid rgba(74, 127, 165, .22)
+        }
+        
         .se-tag {
             font-size: 10px;
             padding: 2px 8px;
@@ -2248,6 +2494,9 @@
             .se-search-bar {
                 flex-direction: column
             }
+            .se-facets-head {
+                align-items: flex-start
+            }
             .se-results-grid {
                 grid-template-columns: 1fr
             }
@@ -2257,6 +2506,9 @@
             .se-component-row {
                 grid-template-columns: 110px 1fr 34px;
                 gap: 8px
+            }
+            .se-card-details-grid {
+                grid-template-columns: 1fr
             }
             .se-stats-components {
                 padding: 12px
@@ -2508,6 +2760,14 @@
             <p class="section-lead">Los mismos actores, instituciones y mecanismos de traducción aparecen en múltiples campos. El grafo visualiza estas conexiones transversales: la mistranslation no es un fallo local sino <strong>un sistema articulado de poder</strong> que opera
                 entre capas.</p>
 
+            <div class="graph-onboarding" id="graph-onboarding" role="status" aria-live="polite" hidden>
+                <div class="graph-onboarding-text"><strong>Nuevo:</strong> el buscador ahora se sincroniza con esta red. Selecciona un resultado y se resaltará automáticamente el caso relacionado en el grafo.</div>
+                <div class="graph-onboarding-actions">
+                    <button class="graph-onboarding-btn" id="graph-onboarding-go" type="button">Ver red ahora</button>
+                    <button class="graph-onboarding-btn" id="graph-onboarding-dismiss" type="button">Ocultar</button>
+                </div>
+            </div>
+
             <div class="graph-controls" id="graph-controls" role="toolbar" aria-label="Filtros de capa del grafo">
                 <button class="gc-btn active" data-layer="all" aria-label="Mostrar todas las capas">Todas las capas</button>
                 <button class="gc-btn" data-layer="etica" aria-label="Filtrar capa: Ética">◎ Ética</button>
@@ -2655,6 +2915,8 @@
                     </select>
                 </div>
             </div>
+
+            <div id="se-facets-panel"></div>
 
             <!-- Stats panel -->
             <div id="se-stats-panel"></div>
@@ -3212,6 +3474,7 @@ function initGrafo() {
         },
         onNodeHover: () => {},
       });
+            window.__CA_GRAPH = G;
 
       // Ocultar loading skeleton
       const loader = document.getElementById('graph-loading');
@@ -3362,6 +3625,100 @@ function initDeepLink() {
   }
 }
 
+function focusGraphNodeById(graph, nodeId) {
+    if (!graph || !nodeId || !graph._nodeElMap || !graph._linkElMap || !graph.rawLinks) return false;
+
+    var connectedIds = new Set([nodeId]);
+    for (var i = 0; i < graph.rawLinks.length; i++) {
+        var l = graph.rawLinks[i] || {};
+        var sId = l.source && l.source.id ? l.source.id : l.source;
+        var tId = l.target && l.target.id ? l.target.id : l.target;
+        if (sId === nodeId && tId) connectedIds.add(tId);
+        if (tId === nodeId && sId) connectedIds.add(sId);
+    }
+
+    graph.selectedId = nodeId;
+
+    graph._nodeElMap.forEach(function(g, id) {
+        g.classList.toggle('ca-node--selected', id === nodeId);
+        g.classList.toggle('ca-node--dimmed', !connectedIds.has(id));
+    });
+
+    graph._linkElMap.forEach(function(line, key) {
+        var parts = key.split('|');
+        var s = parts[0];
+        var t = parts[1];
+        var isConnected = s === nodeId || t === nodeId;
+        line.classList.toggle('ca-link--active', isConnected);
+        line.classList.toggle('ca-link--dimmed', !isConnected);
+    });
+
+    return true;
+}
+
+function clearGraphSelection(graph) {
+    if (!graph || !graph._nodeElMap || !graph._linkElMap) return;
+    graph.selectedId = null;
+
+    graph._nodeElMap.forEach(function(g) {
+        g.classList.remove('ca-node--selected');
+        g.classList.remove('ca-node--dimmed');
+    });
+
+    graph._linkElMap.forEach(function(line) {
+        line.classList.remove('ca-link--active');
+        line.classList.remove('ca-link--dimmed');
+    });
+}
+
+function syncSearchResultToGraph(result) {
+    var graph = window.__CA_GRAPH;
+    if (!graph || !result) return false;
+
+    if (graph.setActiveLayer) graph.setActiveLayer('all');
+    if (graph.setFrictionTypeFilter) {
+        graph.setFrictionTypeFilter(result.registro && result.registro.tipo_friccion ? result.registro.tipo_friccion : 'all');
+    }
+
+    var buttons = document.querySelectorAll('#graph-controls .gc-btn');
+    for (var i = 0; i < buttons.length; i++) buttons[i].classList.remove('active');
+    var allBtn = document.querySelector('#graph-controls .gc-btn[data-layer="all"]');
+    if (allBtn) allBtn.classList.add('active');
+
+    var nodeId = null;
+    if (result.casoVinculado && result.casoVinculado.id) {
+        nodeId = result.casoVinculado.id;
+    } else if (result.registro && result.registro.friccion_con) {
+        nodeId = result.registro.friccion_con;
+    }
+
+    if (!nodeId) return false;
+    return focusGraphNodeById(graph, nodeId);
+}
+
+function initGraphOnboarding() {
+    var key = 'ca_graph_onboarding_seen';
+    var root = document.getElementById('graph-onboarding');
+    var goBtn = document.getElementById('graph-onboarding-go');
+    var dismissBtn = document.getElementById('graph-onboarding-dismiss');
+    if (!root || !goBtn || !dismissBtn) return;
+
+    if (localStorage.getItem(key) === '1') return;
+    root.hidden = false;
+
+    goBtn.addEventListener('click', function() {
+        var grafo = document.getElementById('grafo');
+        if (grafo) grafo.scrollIntoView({ behavior: 'smooth' });
+        localStorage.setItem(key, '1');
+        root.hidden = true;
+    });
+
+    dismissBtn.addEventListener('click', function() {
+        localStorage.setItem(key, '1');
+        root.hidden = true;
+    });
+}
+
 /* ══════════════ BUSCADOR DE FRICCIÓN — DATOS INLINE ══════════════ */
 var FUENTES_DATA = [
   {"id":"lobby-sura-cmf-2024","fuente":"infolobby","titulo":"Audiencias SURA Investments con CMF sobre regulación multifondos","fecha":"2024-03-15","url":"https://www.infolobby.cl","institucion":"Comisión para el Mercado Financiero","actores_lobby":["SURA Asset Management","AFP Capital"],"materia":"Regulación de inversiones alternativas en multifondos AFP","keywords":["regulación","multifondos","inversión alternativa","ESG","riesgo"],"capa_oficial":"La audiencia registra una 'reunión técnica' sobre marcos regulatorios. No consigna qué territorios o comunidades afectan las inversiones discutidas.","friccion_con":"sura-gobernanza-datos","tipo_friccion":"politica","tags":["AFP","CMF","lobby financiero","ESG"]},
@@ -3426,7 +3783,36 @@ function initBuscador() {
             }
             window.initSearchUI({
                 registros: registros,
-                casos: CASOS
+                casos: CASOS,
+                onResults: function(payload) {
+                    var graph = window.__CA_GRAPH;
+                    if (!graph) return;
+
+                    var params = payload && payload.params ? payload.params : {};
+                    var noActiveFilters = (!params.query || !params.query.trim()) &&
+                        (params.fuente === 'all') &&
+                        (params.caso === 'all') &&
+                        (params.tipo === 'all');
+
+                    if (noActiveFilters) {
+                        clearGraphSelection(graph);
+                        if (graph.setFrictionTypeFilter) graph.setFrictionTypeFilter('all');
+                    }
+                },
+                onResultClick: function(result) {
+                    var grafoSection = document.getElementById('grafo');
+                    if (grafoSection) {
+                        grafoSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+
+                    var tries = 0;
+                    (function syncWhenReady() {
+                        if (syncSearchResultToGraph(result)) return;
+                        if (tries >= 24) return;
+                        tries++;
+                        setTimeout(syncWhenReady, 120);
+                    })();
+                }
             });
         });
   }
@@ -3453,6 +3839,7 @@ document.addEventListener('DOMContentLoaded', function() {
   initBottomNav();
   initScrollTopFab();
   initDeepLink();
+    initGraphOnboarding();
   // P0: timeouts para visualizaciones
   vizTimeout('graph-loading', 8000);
   vizTimeout('sf-loading', 8000);
