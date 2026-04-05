@@ -390,10 +390,11 @@ FrictionSearchEngine.prototype.getStats = function(results) {
 /**
  * Genera el HTML de una tarjeta de resultado
  */
-function renderSearchCard(result) {
+function renderSearchCard(result, context) {
     var reg = result.registro;
     var score = result.frictionScore;
     var audit = result.frictionAudit || { overlapScore: score, markerScore: 0, tipoPenalty: 0, markers: [] };
+    context = context || {};
     var fuente = reg.fuente;
     var color = FUENTE_COLORS[fuente] || '#888';
     var icon = FUENTE_ICONS[fuente] || '📄';
@@ -427,7 +428,41 @@ function renderSearchCard(result) {
         markersHtml += '<span class="se-audit-pill">' + _escHtml(markers[m].label) + '</span>';
     }
 
-    var html = '<article class="se-card" data-fuente="' + fuente + '" data-score="' + score + '">' +
+    var sharedKeywords = _seSharedKeywords(reg, result.casoVinculado);
+    var sharedHtml = '';
+    for (var s = 0; s < sharedKeywords.length; s++) {
+        sharedHtml += '<span class="se-card-shared-pill">' + _escHtml(sharedKeywords[s]) + '</span>';
+    }
+
+    var markerExplainHtml = '';
+    for (var mx = 0; mx < Math.min(markers.length, 3); mx++) {
+        var marker = markers[mx] || {};
+        var markerWeight = marker.peso != null ? ' · peso ' + Math.round(marker.peso * 100) + '%' : '';
+        markerExplainHtml += '<span class="se-card-marker-pill">' + _escHtml((marker.label || 'Marcador') + markerWeight) + '</span>';
+    }
+
+    var queryText = context.query && context.query.trim() ? context.query.trim() : '';
+    var explainLead = queryText ?
+        'Consulta activa: "' + _escHtml(queryText) + '". Relevancia textual ' + Math.round((result.relevance || 0) * 100) + '%.' :
+        'Sin término libre: el orden actual depende de filtros activos y score de fricción.';
+
+    var detailsHtml = '<details class="se-card-details">' +
+        '<summary><span>Por qué aparece</span><span>' + Math.round((result.relevance || 0) * 100) + '% relevancia</span></summary>' +
+        '<div class="se-card-details-body">' +
+        '<div class="se-card-detail-note">' + explainLead + '</div>' +
+        '<div class="se-card-details-grid">' +
+        '<div class="se-card-detail-box"><span class="se-card-detail-kicker">Distancia semántica</span><div class="se-card-detail-value">' + overlapPct.toFixed(0) + '%</div></div>' +
+        '<div class="se-card-detail-box"><span class="se-card-detail-kicker">Marcadores explícitos</span><div class="se-card-detail-value">' + markerPct.toFixed(0) + '%</div></div>' +
+        '<div class="se-card-detail-box"><span class="se-card-detail-kicker">Coincidencia tipológica</span><div class="se-card-detail-value">' + tipoPct.toFixed(0) + '%</div></div>' +
+        '<div class="se-card-detail-box"><span class="se-card-detail-kicker">Caso priorizado</span><div class="se-card-detail-value">' + _escHtml(casoLabel || 'Sin caso vinculado') + '</div></div>' +
+        '</div>' +
+        (sharedHtml ? '<div><span class="se-card-detail-kicker">Keywords compartidas</span><div class="se-card-shared-list">' + sharedHtml + '</div></div>' : '') +
+        (markerExplainHtml ? '<div><span class="se-card-detail-kicker">Marcadores activados</span><div class="se-card-marker-list">' + markerExplainHtml + '</div></div>' : '') +
+        '<div class="se-card-detail-note">Este registro se ordena combinando distancia entre vocabularios, presencia de marcadores de conflicto y coincidencia con el tipo de fricción del caso.</div>' +
+        '</div>' +
+        '</details>';
+
+    var html = '<article class="se-card" data-result-id="' + _escHtml(reg.id || '') + '" data-fuente="' + fuente + '" data-score="' + score + '">' +
         '<div class="se-card-header">' +
         '<span class="se-card-icon" style="color:' + color + '">' + icon + '</span>' +
         '<span class="se-card-fuente" style="color:' + color + '">' + _escHtml(label) + '</span>' +
@@ -455,6 +490,7 @@ function renderSearchCard(result) {
         '</div>' +
         (markersHtml ? '<div class="se-card-audit-markers">' + markersHtml + '</div>' : '') +
         '</div>' +
+        detailsHtml +
         '<div class="se-card-tags">' + tagsHtml + '</div>' +
         (reg.url ? '<a class="se-card-link" href="' + _escHtml(reg.url) + '" target="_blank" rel="noopener noreferrer">Ver fuente oficial ↗</a>' : '') +
         '</article>';
@@ -527,6 +563,171 @@ function _escHtml(str) {
     return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
 
+function _seBuildSuggestions(registros, casos) {
+    var bag = Object.create(null);
+
+    function pushTerm(term) {
+        if (!term) return;
+        var normalized = _seNormalize(String(term));
+        if (!normalized || normalized.length < 4) return;
+        bag[normalized] = (bag[normalized] || 0) + 1;
+    }
+
+    for (var i = 0; i < (registros || []).length; i++) {
+        var reg = registros[i] || {};
+        pushTerm(reg.titulo);
+        pushTerm(reg.materia);
+        pushTerm(reg.institucion);
+
+        var regKeywords = reg.keywords || [];
+        for (var rk = 0; rk < regKeywords.length; rk++) pushTerm(regKeywords[rk]);
+
+        var regTags = reg.tags || [];
+        for (var rt = 0; rt < regTags.length; rt++) pushTerm(regTags[rt]);
+    }
+
+    for (var j = 0; j < (casos || []).length; j++) {
+        var caso = casos[j] || {};
+        pushTerm(caso.titulo);
+        var casoTags = caso.tags || [];
+        for (var ct = 0; ct < casoTags.length; ct++) pushTerm(casoTags[ct]);
+    }
+
+    return Object.keys(bag)
+        .sort(function(a, b) {
+            return bag[b] - bag[a] || a.localeCompare(b);
+        })
+        .slice(0, 120);
+}
+
+function _seMountSuggestions(searchInput, registros, casos) {
+    if (!searchInput || !searchInput.parentNode) return;
+
+    var datalistId = 'se-suggestions';
+    var datalist = document.getElementById(datalistId);
+    if (!datalist) {
+        datalist = document.createElement('datalist');
+        datalist.id = datalistId;
+        searchInput.parentNode.appendChild(datalist);
+    }
+
+    var suggestions = _seBuildSuggestions(registros, casos);
+    var options = '';
+    for (var i = 0; i < suggestions.length; i++) {
+        options += '<option value="' + _escHtml(suggestions[i]) + '"></option>';
+    }
+    datalist.innerHTML = options;
+    searchInput.setAttribute('list', datalistId);
+}
+
+function _seShortCasoLabel(caso) {
+    if (!caso || !caso.titulo) return 'Caso vinculado';
+    return caso.titulo.split('—')[0].split(':')[0].trim();
+}
+
+function _seSharedKeywords(registro, caso) {
+    if (!registro || !caso) return [];
+
+    var regKeywords = (registro.keywords || []).map(_seNormalize).filter(Boolean);
+    var casoKeywords = []
+        .concat(caso.etica ? caso.etica.keywords || [] : [])
+        .concat(caso.institucional ? caso.institucional.keywords || [] : [])
+        .concat(caso.material ? caso.material.keywords || [] : [])
+        .map(_seNormalize)
+        .filter(Boolean);
+
+    var casoSet = new Set(casoKeywords);
+    var seen = Object.create(null);
+    var shared = [];
+
+    for (var i = 0; i < regKeywords.length; i++) {
+        var keyword = regKeywords[i];
+        if (casoSet.has(keyword) && !seen[keyword]) {
+            seen[keyword] = true;
+            shared.push(keyword);
+        }
+    }
+
+    return shared.slice(0, 6);
+}
+
+function _seCountBy(results, getter) {
+    var counts = Object.create(null);
+
+    for (var i = 0; i < results.length; i++) {
+        var item = getter(results[i]);
+        if (!item || !item.value) continue;
+        if (!counts[item.value]) counts[item.value] = { value: item.value, label: item.label || item.value, count: 0 };
+        counts[item.value].count++;
+    }
+
+    return Object.keys(counts).map(function(key) {
+        return counts[key];
+    }).sort(function(a, b) {
+        return b.count - a.count || a.label.localeCompare(b.label);
+    });
+}
+
+function renderSearchFacets(results, params) {
+    if (!results || !results.length) return '';
+
+    var fuenteItems = _seCountBy(results, function(result) {
+        var fuente = result.registro && result.registro.fuente;
+        if (!fuente) return null;
+        return {
+            value: fuente,
+            label: (FUENTE_ICONS[fuente] || '•') + ' ' + (FUENTE_LABELS[fuente] || fuente)
+        };
+    }).slice(0, 5);
+
+    var tipoItems = _seCountBy(results, function(result) {
+        var tipo = result.registro && result.registro.tipo_friccion;
+        if (!tipo) return null;
+        return {
+            value: tipo,
+            label: tipo.charAt(0).toUpperCase() + tipo.slice(1)
+        };
+    }).slice(0, 4);
+
+    var casoItems = _seCountBy(results, function(result) {
+        var caso = result.casoVinculado;
+        if (!caso || !caso.id) return null;
+        return {
+            value: caso.id,
+            label: _seShortCasoLabel(caso)
+        };
+    }).slice(0, 4);
+
+    function renderFacetButtons(items, group, activeValue) {
+        if (!items.length) return '';
+        var html = '';
+        for (var i = 0; i < items.length; i++) {
+            var item = items[i];
+            var active = activeValue === item.value ? ' active' : '';
+            html += '<button class="se-facet-btn' + active + '" type="button" data-facet-group="' + group + '" data-facet-value="' + _escHtml(item.value) + '">' +
+                '<span class="se-facet-text">' + _escHtml(item.label) + '</span>' +
+                '<span class="se-facet-count">' + item.count + '</span>' +
+                '</button>';
+        }
+        return html;
+    }
+
+    var hasFilters = !!((params.query && params.query.trim()) || params.fuente !== 'all' || params.caso !== 'all' || params.tipo !== 'all');
+
+    return '<div class="se-facets">' +
+        '<div class="se-facets-head">' +
+        '<div>' +
+        '<div class="se-facets-title">Facetas dinámicas</div>' +
+        '<div class="se-facets-subtitle">Ajusta la búsqueda según lo que ya está emergiendo en los resultados.</div>' +
+        '</div>' +
+        (hasFilters ? '<button class="se-facets-reset" type="button" data-facet-reset="1">Limpiar búsqueda</button>' : '') +
+        '</div>' +
+        (fuenteItems.length ? '<div class="se-facet-group"><div class="se-facet-label">Fuentes dominantes</div><div class="se-facet-items">' + renderFacetButtons(fuenteItems, 'fuente', params.fuente) + '</div></div>' : '') +
+        (tipoItems.length ? '<div class="se-facet-group"><div class="se-facet-label">Tipos de fricción</div><div class="se-facet-items">' + renderFacetButtons(tipoItems, 'tipo', params.tipo) + '</div></div>' : '') +
+        (casoItems.length ? '<div class="se-facet-group"><div class="se-facet-label">Casos vinculados</div><div class="se-facet-items">' + renderFacetButtons(casoItems, 'caso', params.caso) + '</div></div>' : '') +
+        '</div>';
+}
+
 /* ─── UI CONTROLLER ─── */
 
 /**
@@ -537,15 +738,22 @@ function _escHtml(str) {
  */
 function initSearchUI(opts) {
     var engine = new FrictionSearchEngine(opts);
+    var onResults = opts && typeof opts.onResults === 'function' ? opts.onResults : null;
+    var onResultClick = opts && typeof opts.onResultClick === 'function' ? opts.onResultClick : null;
 
     var searchInput = document.getElementById('se-search-input');
     var fuenteFilter = document.getElementById('se-filter-fuente');
     var casoFilter = document.getElementById('se-filter-caso');
     var tipoFilter = document.getElementById('se-filter-tipo');
+    var facetsContainer = document.getElementById('se-facets-panel');
     var resultsContainer = document.getElementById('se-results');
     var statsContainer = document.getElementById('se-stats-panel');
+    var lastResultsById = Object.create(null);
+    var selectedResultId = null;
 
     if (!searchInput || !resultsContainer) return;
+
+    _seMountSuggestions(searchInput, opts.registros || [], opts.casos || []);
 
     function doSearch() {
         var params = {
@@ -557,18 +765,54 @@ function initSearchUI(opts) {
 
         var results = engine.search(params);
         var stats = engine.getStats(results);
+        lastResultsById = Object.create(null);
+        for (var x = 0; x < results.length; x++) {
+            var rid = (results[x].registro && results[x].registro.id) || ('__idx_' + x);
+            lastResultsById[rid] = results[x];
+        }
 
         // Render stats
         if (statsContainer) {
             statsContainer.innerHTML = renderSearchStats(stats);
         }
 
+        if (facetsContainer) {
+            facetsContainer.innerHTML = renderSearchFacets(results, params);
+        }
+
         // Render results
         var html = '';
         for (var i = 0; i < results.length; i++) {
-            html += renderSearchCard(results[i]);
+            html += renderSearchCard(results[i], params);
         }
         resultsContainer.innerHTML = html || '<div class="se-no-results">No se encontraron registros. Intenta: buscar un término general (ej. "territorio"), quitar filtros, o explorar los campos en la sección anterior.</div>';
+
+        if (selectedResultId) {
+            var selectedCard = resultsContainer.querySelector('.se-card[data-result-id="' + selectedResultId + '"]');
+            if (selectedCard) selectedCard.classList.add('se-card--selected');
+        }
+
+        if (onResults) {
+            try {
+                onResults({
+                    params: params,
+                    results: results,
+                    stats: stats
+                });
+            } catch (err) {
+                console.warn('onResults callback failed:', err);
+            }
+        }
+
+        if (typeof window !== 'undefined' && typeof window.dispatchEvent === 'function' && typeof CustomEvent === 'function') {
+            window.dispatchEvent(new CustomEvent('ca:search-results', {
+                detail: {
+                    params: params,
+                    stats: stats,
+                    total: results.length
+                }
+            }));
+        }
     }
 
     // Debounced search on input
@@ -582,6 +826,73 @@ function initSearchUI(opts) {
     if (fuenteFilter) fuenteFilter.addEventListener('change', doSearch);
     if (casoFilter) casoFilter.addEventListener('change', doSearch);
     if (tipoFilter) tipoFilter.addEventListener('change', doSearch);
+
+    if (facetsContainer) {
+        facetsContainer.addEventListener('click', function(evt) {
+            var target = evt.target;
+            if (!target) return;
+
+            var resetBtn = target.closest ? target.closest('[data-facet-reset="1"]') : null;
+            if (resetBtn) {
+                searchInput.value = '';
+                if (fuenteFilter) fuenteFilter.value = 'all';
+                if (casoFilter) casoFilter.value = 'all';
+                if (tipoFilter) tipoFilter.value = 'all';
+                selectedResultId = null;
+                doSearch();
+                return;
+            }
+
+            var facetBtn = target.closest ? target.closest('.se-facet-btn') : null;
+            if (!facetBtn) return;
+
+            var group = facetBtn.getAttribute('data-facet-group') || '';
+            var value = facetBtn.getAttribute('data-facet-value') || 'all';
+            selectedResultId = null;
+
+            if (group === 'fuente' && fuenteFilter) {
+                fuenteFilter.value = fuenteFilter.value === value ? 'all' : value;
+            } else if (group === 'caso' && casoFilter) {
+                casoFilter.value = casoFilter.value === value ? 'all' : value;
+            } else if (group === 'tipo' && tipoFilter) {
+                tipoFilter.value = tipoFilter.value === value ? 'all' : value;
+            }
+
+            doSearch();
+        });
+    }
+
+    resultsContainer.addEventListener('click', function(evt) {
+        var target = evt.target;
+        if (!target) return;
+
+        if (target.closest && target.closest('.se-card-link')) {
+            return;
+        }
+
+        var card = target.closest ? target.closest('.se-card') : null;
+        if (!card) return;
+
+        var resultId = card.getAttribute('data-result-id') || '';
+        var selected = lastResultsById[resultId];
+        if (!selected) return;
+
+        selectedResultId = resultId;
+        var cards = resultsContainer.querySelectorAll('.se-card');
+        for (var c = 0; c < cards.length; c++) cards[c].classList.remove('se-card--selected');
+        card.classList.add('se-card--selected');
+
+        if (onResultClick) {
+            try {
+                onResultClick(selected, {
+                    resultId: resultId,
+                    event: evt
+                });
+            } catch (err) {
+                console.warn('onResultClick callback failed:', err);
+            }
+        }
+    });
 
     // Initial render
     doSearch();
