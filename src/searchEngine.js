@@ -17,6 +17,7 @@
 /* ─── CONSTANTES ─── */
 
 var FUENTE_ICONS = {
+    bcn: '🏛',
     infolobby: '🏛',
     transparencia: '🔍',
     leychile: '⚖',
@@ -26,6 +27,7 @@ var FUENTE_ICONS = {
 };
 
 var FUENTE_LABELS = {
+    bcn: 'BCN Tramitación',
     infolobby: 'InfoLobby',
     transparencia: 'Transparencia',
     leychile: 'LeyChile',
@@ -35,6 +37,7 @@ var FUENTE_LABELS = {
 };
 
 var FUENTE_COLORS = {
+    bcn: '#6f8fcb',
     infolobby: '#e8b84b',
     transparencia: '#5ba3d9',
     leychile: '#c8a96e',
@@ -108,62 +111,138 @@ function _seTextMatch(registro, query) {
  * - tipo_penalty: bonus si el tipo de fricción del registro coincide con el tipo del caso
  */
 function computeFrictionScore(registro, caso) {
+    if (window.frictionEngine && typeof window.frictionEngine.explainRecordFriction === 'function') {
+        return window.frictionEngine.explainRecordFriction(registro, caso).score;
+    }
+
     if (!caso) return 0.5;
 
-    // Keywords del registro
     var regKw = (registro.keywords || []);
-
-    // Keywords combinados de las 3 capas del caso
     var casoKw = []
         .concat(caso.etica ? caso.etica.keywords || [] : [])
         .concat(caso.institucional ? caso.institucional.keywords || [] : [])
         .concat(caso.material ? caso.material.keywords || [] : []);
 
-    // 1. Keyword overlap (bajo overlap = alta fricción)
     var overlap = _seJaccard(regKw, casoKw);
-    var overlapScore = 1 - Math.min(overlap * 6, 1); // amplificar overlaps pequeños
-
-    // 2. Marker match: buscar si keywords del registro activan FRICTION_MARKERS
-    var markerScore = 0;
-    if (window.frictionEngine && window.frictionEngine.FRICTION_TYPES) {
-        var normRegKw = regKw.map(_seNormalize);
-        var normCasoKw = casoKw.map(_seNormalize);
-        var MARKERS = [
-            { a: 'consentimiento', b: 'proceso administrativo', peso: 0.9 },
-            { a: 'consulta', b: 'tramite', peso: 0.85 },
-            { a: 'territorio', b: 'catastro', peso: 0.88 },
-            { a: 'memoria', b: 'clasificacion', peso: 0.75 },
-            { a: 'autonomia', b: 'regulacion', peso: 0.72 },
-            { a: 'testimonio', b: 'resolucion', peso: 0.8 },
-            { a: 'soberania', b: 'CONADI', peso: 0.9 },
-            { a: 'resistencia', b: 'admisibilidad', peso: 0.85 },
-            { a: 'evidencia', b: 'dato', peso: 0.65 },
-            { a: 'deforestacion', b: 'uso productivo', peso: 0.88 },
-            { a: 'opacidad', b: 'transparencia', peso: 0.82 },
-            { a: 'whistleblower', b: 'proceso regular', peso: 0.78 }
-        ];
-        for (var m = 0; m < MARKERS.length; m++) {
-            var mk = MARKERS[m];
-            var hasA = normRegKw.some(function(k) { return k.indexOf(mk.a) !== -1; });
-            var hasB = normCasoKw.some(function(k) { return k.indexOf(mk.b) !== -1; });
-            var hasCross = normRegKw.some(function(k) { return k.indexOf(mk.b) !== -1; }) &&
-                normCasoKw.some(function(k) { return k.indexOf(mk.a) !== -1; });
-            if ((hasA && hasB) || hasCross) {
-                markerScore = Math.max(markerScore, mk.peso);
-            }
-        }
-    }
-
-    // 3. Tipo penalty: bonus si el tipo de fricción del registro coincide con el del caso
+    var overlapScore = 1 - Math.min(overlap * 6, 1);
     var tipoPenalty = 0;
+
     if (registro.tipo_friccion && caso.friccion && registro.tipo_friccion === caso.friccion.tipo) {
         tipoPenalty = 0.3;
     } else if (registro.tipo_friccion && caso.friccion && registro.tipo_friccion === caso.friccion.subtipo) {
         tipoPenalty = 0.15;
     }
 
-    var score = 0.5 * overlapScore + 0.3 * markerScore + 0.2 * tipoPenalty;
+    var score = 0.5 * overlapScore + 0.2 * tipoPenalty;
     return Math.min(Math.max(parseFloat(score.toFixed(3)), 0.05), 1.0);
+}
+
+function explainSearchFriction(registro, caso) {
+    if (window.frictionEngine && typeof window.frictionEngine.explainRecordFriction === 'function') {
+        return window.frictionEngine.explainRecordFriction(registro, caso);
+    }
+
+    var fallbackScore = computeFrictionScore(registro, caso);
+    return {
+        score: fallbackScore,
+        overlap: 0,
+        overlapScore: fallbackScore,
+        markerScore: 0,
+        tipoPenalty: 0,
+        markers: []
+    };
+}
+
+function _seFlatLegislativeList(list) {
+    var output = [];
+    list = list || [];
+
+    for (var index = 0; index < list.length; index++) {
+        var item = list[index];
+        if (!item) continue;
+        if (typeof item === 'string') {
+            output.push(item);
+            continue;
+        }
+        output.push(item.tipo || item.nombre || item.descripcion || item.label || '');
+    }
+
+    return output.filter(Boolean);
+}
+
+function normalizeBcnDataset(dataset) {
+    dataset = dataset || {};
+    var boletines = dataset.boletines || dataset.registros || [];
+    var normalized = [];
+
+    for (var i = 0; i < boletines.length; i++) {
+        var boletin = boletines[i] || {};
+        var urgencias = _seFlatLegislativeList(boletin.urgencias);
+        var comisiones = []
+            .concat(boletin.comisiones || [])
+            .concat(boletin.comision_actual ? [boletin.comision_actual] : []);
+        var autores = boletin.autores || [];
+        var indicaciones = _seFlatLegislativeList(boletin.indicaciones_clave);
+        var keywords = []
+            .concat(boletin.materias || [])
+            .concat(boletin.etapas_irregulares || [])
+            .concat(boletin.actores_clave || [])
+            .concat(boletin.alertas_friccion || [])
+            .concat(urgencias)
+            .concat(comisiones)
+            .concat(autores)
+            .concat(indicaciones)
+            .concat(boletin.enip_dimensiones || []);
+        var tags = []
+            .concat(['BCN', 'tramitación legislativa'])
+            .concat(boletin.tipo_registro ? [boletin.tipo_registro] : [])
+            .concat(boletin.estado_verificacion ? [boletin.estado_verificacion] : [])
+            .concat(boletin.tags || []);
+
+        normalized.push({
+            id: boletin.id || ('bcn-' + i),
+            fuente: 'bcn',
+            titulo: boletin.titulo || boletin.boletin || 'Boletín BCN',
+            fecha: boletin.fecha_ingreso || boletin.fecha_actualizacion || '',
+            url: boletin.url || '',
+            institucion: 'Biblioteca del Congreso Nacional',
+            materia: boletin.resumen || boletin.materia || '',
+            keywords: keywords,
+            capa_oficial: boletin.capa_oficial || boletin.resumen || '',
+            friccion_con: boletin.friccion_con || 'periodismo-datos-chile',
+            tipo_friccion: boletin.tipo_friccion || 'tecnica',
+            tags: tags,
+            boletin: boletin.boletin || '',
+            tipo_registro: boletin.tipo_registro || 'boletin',
+            etapa: boletin.etapa_actual || '',
+            comision: boletin.comision_actual || '',
+            urgencias: urgencias,
+            autores: autores,
+            indicaciones_total: boletin.indicaciones_total != null ? boletin.indicaciones_total : null,
+            indicaciones_clave: indicaciones,
+            camara_origen: boletin.camara_origen || '',
+            camara_revisora: boletin.camara_revisora || '',
+            estado_verificacion: boletin.estado_verificacion || 'sin-clasificar',
+            trazabilidad: boletin.trazabilidad || [],
+            enip_dimensiones: boletin.enip_dimensiones || [],
+            metadatos_legislativos: {
+                comision_actual: boletin.comision_actual || '',
+                comisiones: boletin.comisiones || [],
+                urgencias: boletin.urgencias || [],
+                autores: boletin.autores || [],
+                indicaciones_total: boletin.indicaciones_total != null ? boletin.indicaciones_total : null,
+                indicaciones_clave: boletin.indicaciones_clave || [],
+                camara_origen: boletin.camara_origen || '',
+                camara_revisora: boletin.camara_revisora || '',
+                ultimo_hito: boletin.ultimo_hito || '',
+                trazabilidad: boletin.trazabilidad || [],
+                estado_verificacion: boletin.estado_verificacion || 'sin-clasificar',
+                fuente_historia_ley: boletin.fuente_historia_ley || boletin.url || ''
+            }
+        });
+    }
+
+    return normalized;
 }
 
 /* ─── MOTOR DE BÚSQUEDA ─── */
@@ -173,6 +252,7 @@ function computeFrictionScore(registro, caso) {
  * @property {Object} registro - El registro de fuente oficial
  * @property {number} relevance - Relevancia del texto (0-1)
  * @property {number} frictionScore - Score de fricción con el caso vinculado
+ * @property {Object} frictionAudit - Desglose del score de fricción
  * @property {Object|null} casoVinculado - El caso del contra-archivo
  */
 
@@ -224,12 +304,14 @@ FrictionSearchEngine.prototype.search = function(params) {
 
         // Friction score
         var caso = self._casoMap[reg.friccion_con] || null;
-        var frictionScore = computeFrictionScore(reg, caso);
+        var frictionAudit = explainSearchFriction(reg, caso);
+        var frictionScore = frictionAudit.score;
 
         results.push({
             registro: reg,
             relevance: relevance,
             frictionScore: frictionScore,
+            frictionAudit: frictionAudit,
             casoVinculado: caso
         });
     }
@@ -247,11 +329,30 @@ FrictionSearchEngine.prototype.search = function(params) {
  * Obtiene los stats agregados de un conjunto de resultados
  */
 FrictionSearchEngine.prototype.getStats = function(results) {
-    if (!results.length) return { total: 0, avgFriction: 0, byFuente: {}, byTipo: {} };
+    if (!results.length) {
+        return {
+            total: 0,
+            avgFriction: 0,
+            byFuente: {},
+            byTipo: {},
+            components: {
+                overlap: 0,
+                marker: 0,
+                tipo: 0
+            },
+            markerActivationRate: 0
+        };
+    }
 
     var sum = 0;
     var byFuente = {};
     var byTipo = {};
+    var componentTotals = {
+        overlap: 0,
+        marker: 0,
+        tipo: 0
+    };
+    var markerHits = 0;
 
     for (var i = 0; i < results.length; i++) {
         var r = results[i];
@@ -262,13 +363,25 @@ FrictionSearchEngine.prototype.getStats = function(results) {
 
         var t = r.registro.tipo_friccion;
         byTipo[t] = (byTipo[t] || 0) + 1;
+
+        var audit = r.frictionAudit || {};
+        componentTotals.overlap += audit.overlapScore || 0;
+        componentTotals.marker += audit.markerScore || 0;
+        componentTotals.tipo += audit.tipoPenalty || 0;
+        if ((audit.markers || []).length) markerHits++;
     }
 
     return {
         total: results.length,
         avgFriction: parseFloat((sum / results.length).toFixed(3)),
         byFuente: byFuente,
-        byTipo: byTipo
+        byTipo: byTipo,
+        components: {
+            overlap: parseFloat((componentTotals.overlap / results.length).toFixed(3)),
+            marker: parseFloat((componentTotals.marker / results.length).toFixed(3)),
+            tipo: parseFloat((componentTotals.tipo / results.length).toFixed(3))
+        },
+        markerActivationRate: parseFloat((markerHits / results.length).toFixed(3))
     };
 };
 
@@ -280,6 +393,7 @@ FrictionSearchEngine.prototype.getStats = function(results) {
 function renderSearchCard(result) {
     var reg = result.registro;
     var score = result.frictionScore;
+    var audit = result.frictionAudit || { overlapScore: score, markerScore: 0, tipoPenalty: 0, markers: [] };
     var fuente = reg.fuente;
     var color = FUENTE_COLORS[fuente] || '#888';
     var icon = FUENTE_ICONS[fuente] || '📄';
@@ -299,6 +413,20 @@ function renderSearchCard(result) {
         tagsHtml += '<span class="se-tag">' + _escHtml(tags[t]) + '</span>';
     }
 
+    var overlapPct = (audit.overlapScore || 0) * 100;
+    var markerPct = (audit.markerScore || 0) * 100;
+    var tipoPct = (audit.tipoPenalty || 0) * 100;
+    var summaryText = markerPct >= overlapPct && markerPct >= tipoPct ?
+        'Predomina un marcador explícito de conflicto.' :
+        overlapPct >= tipoPct ?
+        'Predomina la distancia semántica entre registro y caso.' :
+        'Predomina la coincidencia tipológica con el caso vinculado.';
+    var markersHtml = '';
+    var markers = audit.markers || [];
+    for (var m = 0; m < Math.min(markers.length, 2); m++) {
+        markersHtml += '<span class="se-audit-pill">' + _escHtml(markers[m].label) + '</span>';
+    }
+
     var html = '<article class="se-card" data-fuente="' + fuente + '" data-score="' + score + '">' +
         '<div class="se-card-header">' +
         '<span class="se-card-icon" style="color:' + color + '">' + icon + '</span>' +
@@ -314,6 +442,18 @@ function renderSearchCard(result) {
         '<span class="se-card-score-val" style="color:' + scoreColor + '">' + (score * 100).toFixed(0) + '%</span>' +
         '</div>' +
         (casoLabel ? '<div class="se-card-caso">↔ ' + _escHtml(casoLabel) + '</div>' : '') +
+        '</div>' +
+        '<div class="se-card-audit">' +
+        '<div class="se-card-audit-head">' +
+        '<span class="se-card-audit-kicker">Desglose</span>' +
+        '<span class="se-card-audit-summary">' + _escHtml(summaryText) + '</span>' +
+        '</div>' +
+        '<div class="se-card-audit-metrics">' +
+        '<span class="se-card-audit-metric">distancia ' + overlapPct.toFixed(0) + '%</span>' +
+        '<span class="se-card-audit-metric">marcador ' + markerPct.toFixed(0) + '%</span>' +
+        '<span class="se-card-audit-metric">tipo ' + tipoPct.toFixed(0) + '%</span>' +
+        '</div>' +
+        (markersHtml ? '<div class="se-card-audit-markers">' + markersHtml + '</div>' : '') +
         '</div>' +
         '<div class="se-card-tags">' + tagsHtml + '</div>' +
         (reg.url ? '<a class="se-card-link" href="' + _escHtml(reg.url) + '" target="_blank" rel="noopener noreferrer">Ver fuente oficial ↗</a>' : '') +
@@ -343,11 +483,37 @@ function renderSearchStats(stats) {
     }
 
     var avgColor = stats.avgFriction > 0.7 ? '#c85f4a' : stats.avgFriction > 0.4 ? '#e8b84b' : '#7a9e6e';
+    var overlapPct = (stats.components.overlap || 0) * 100;
+    var markerPct = (stats.components.marker || 0) * 100;
+    var tipoPct = (stats.components.tipo || 0) * 100;
+    var activationPct = (stats.markerActivationRate || 0) * 100;
+
+    var componentRows = '' +
+        '<div class="se-component-row">' +
+        '<span class="se-component-label">Distancia semántica</span>' +
+        '<div class="se-component-bar"><div class="se-component-fill" style="width:' + overlapPct.toFixed(0) + '%;background:#c8a96e"></div></div>' +
+        '<span class="se-component-val">' + overlapPct.toFixed(0) + '%</span>' +
+        '</div>' +
+        '<div class="se-component-row">' +
+        '<span class="se-component-label">Marcadores explícitos</span>' +
+        '<div class="se-component-bar"><div class="se-component-fill" style="width:' + markerPct.toFixed(0) + '%;background:#c85f4a"></div></div>' +
+        '<span class="se-component-val">' + markerPct.toFixed(0) + '%</span>' +
+        '</div>' +
+        '<div class="se-component-row">' +
+        '<span class="se-component-label">Coincidencia tipológica</span>' +
+        '<div class="se-component-bar"><div class="se-component-fill" style="width:' + tipoPct.toFixed(0) + '%;background:#4a7fa5"></div></div>' +
+        '<span class="se-component-val">' + tipoPct.toFixed(0) + '%</span>' +
+        '</div>';
 
     return '<div class="se-stats">' +
         '<div class="se-stats-summary">' +
         '<div class="se-stat-big"><span class="se-stat-num">' + stats.total + '</span><span class="se-stat-desc">registros</span></div>' +
         '<div class="se-stat-big"><span class="se-stat-num" style="color:' + avgColor + '">' + (stats.avgFriction * 100).toFixed(0) + '%</span><span class="se-stat-desc">fricción promedio</span></div>' +
+        '<div class="se-stat-big"><span class="se-stat-num">' + activationPct.toFixed(0) + '%</span><span class="se-stat-desc">con marcador activo</span></div>' +
+        '</div>' +
+        '<div class="se-stats-components">' +
+        '<div class="se-stats-components-title">Componentes del score</div>' +
+        componentRows +
         '</div>' +
         '<div class="se-stats-breakdown">' + fuenteBars + '</div>' +
         '</div>';
@@ -425,4 +591,5 @@ function initSearchUI(opts) {
 if (typeof window !== 'undefined') {
     window.FrictionSearchEngine = FrictionSearchEngine;
     window.initSearchUI = initSearchUI;
+    window.normalizeBcnDataset = normalizeBcnDataset;
 }
