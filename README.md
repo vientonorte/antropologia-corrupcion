@@ -17,6 +17,8 @@
 - Exportación CSV activa en buscador y triage para auditoría y análisis fuera del sitio
 - Riesgo abierto: historial del repo inflado por artefactos de investigación pesados ya versionados
 
+Handoff operativo actualizado: ver `HANDOFF.md`.
+
 ---
 
 ## Campos de investigación
