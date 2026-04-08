@@ -26,7 +26,7 @@
             --border: rgba(255, 255, 255, .07);
             --text: #e2e2e2;
             --muted: #888;
-            --dim: #444;
+            --dim: #767676;
             --etica: #c8a96e;
             --inst: #4a7fa5;
             --mat: #7a9e6e;
@@ -2948,6 +2948,17 @@
                 content: none;
             }
         }
+        
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
     </style>
 </head>
 
@@ -3245,13 +3256,14 @@
             </p>
 
             <!-- Search bar + filters -->
-            <div class="se-search-bar">
-                <div class="se-input-wrap">
-                    <label for="se-search-input" class="label" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)">Buscar en fuentes oficiales</label>
-                    <input type="text" id="se-search-input" placeholder="Ej: SURA, territorio mapuche, Ley 19.300, AFP…" autocomplete="off">
-                </div>
-                <div class="se-filters">
-                    <select class="se-select" id="se-filter-fuente" aria-label="Filtrar por fuente">
+            <form role="search" aria-label="Buscador de fricción institucional" onsubmit="return false">
+                <div class="se-search-bar">
+                    <div class="se-input-wrap">
+                        <label for="se-search-input" class="label" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)">Buscar en fuentes oficiales</label>
+                        <input type="text" id="se-search-input" placeholder="Ej: SURA, territorio mapuche, Ley 19.300, AFP…" autocomplete="off">
+                    </div>
+                    <div class="se-filters">
+                        <select class="se-select" id="se-filter-fuente" aria-label="Filtrar por fuente">
                         <option value="all">Todas las fuentes</option>
                         <option value="bcn">BCN Tramitación</option>
                         <option value="infolobby">InfoLobby</option>
@@ -3261,23 +3273,22 @@
                         <option value="compraspublicas">ComprasPúblicas</option>
                         <option value="cmf">CMF</option>
                     </select>
-                    <select class="se-select" id="se-filter-caso" aria-label="Filtrar por caso">
+                        <select class="se-select" id="se-filter-caso" aria-label="Filtrar por caso">
                         <option value="all">Todos los casos</option>
                         <option value="sura-gobernanza-datos">SURA / AFP</option>
                         <option value="la-negra-territorio-mapuche">La Negra / Territorio</option>
                         <option value="periodismo-datos-chile">Periodismo de datos</option>
                         <option value="oit169-consulta-previa">OIT 169 / Consulta</option>
                     </select>
-                    <select class="se-select" id="se-filter-tipo" aria-label="Filtrar por tipo de fricción">
+                        <select class="se-select" id="se-filter-tipo" aria-label="Filtrar por tipo de fricción">
                         <option value="all">Todo tipo</option>
                         <option value="politica">Política</option>
                         <option value="semantica">Semántica</option>
                         <option value="tecnica">Técnica</option>
                     </select>
+                    </div>
                 </div>
-            </div>
-
-            <div id="se-facets-panel"></div>
+            </form>
 
             <!-- Stats panel -->
             <div id="se-stats-panel"></div>

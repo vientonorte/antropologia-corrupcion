@@ -21,6 +21,12 @@
 *.jpeg
 *.fig
 
+# === EXCEPCIÓN: imágenes extraídas para deploy ===
+!img/
+!img/*.jpg
+!img/*.jpeg
+!img/*.png
+
 # === ARCHIVO ACADÉMICO + DATOS PERSONALES (solo local, nunca en GitHub) ===
 # Incluye: bibliografía, ensayos, fotografías, proyectos, datos sensibles
 Estado del Arte/
