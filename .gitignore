@@ -15,6 +15,11 @@
 *.mp3
 *.zip
 *.HEIC
+*.pdf
+*.png
+*.jpg
+*.jpeg
+*.fig
 
 # === ARCHIVO ACADÉMICO + DATOS PERSONALES (solo local, nunca en GitHub) ===
 # Incluye: bibliografía, ensayos, fotografías, proyectos, datos sensibles
@@ -30,3 +35,4 @@ QUICK_WINS_PRODUCCION.md
 _papelera_duplicados/
 QA_RAMAS_QUICK_WINS.md
 SPRINT_19_BUSCADOR.md
+_extract_branch_content.py
