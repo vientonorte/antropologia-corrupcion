@@ -3853,7 +3853,12 @@ function initGrafo() {
     let _retries = 0;
     function tryInit() {
       if (!window.frictionEngine || !window.FrictionGraph) {
-        if (++_retries > 50) { console.error('[Grafo] Modules failed to load after 6s'); return; }
+        if (++_retries > 50) {
+          console.error('[Grafo] Modules failed to load after 6s');
+          var gl = document.getElementById('graph-loading');
+          if (gl) { gl.classList.add('loaded'); gl.innerHTML = '<p style="color:var(--dim);text-align:center;padding:2rem">No se pudo cargar el grafo. Recarga la página.</p>'; }
+          return;
+        }
         setTimeout(tryInit, 120); return;
       }
       initialized = true;
@@ -3920,7 +3925,12 @@ function initSocialField() {
     let _retries = 0;
     function tryInit() {
       if (!window.frictionEngine || !window.SocialField) {
-        if (++_retries > 40) { console.error('[SocialField] Modules failed to load after 6s'); return; }
+        if (++_retries > 40) {
+          console.error('[SocialField] Modules failed to load after 6s');
+          var sl = document.getElementById('sf-loading');
+          if (sl) { sl.classList.add('loaded'); sl.innerHTML = '<p style="color:var(--dim);text-align:center;padding:2rem">No se pudo cargar el campo social. Recarga la página.</p>'; }
+          return;
+        }
         setTimeout(tryInit, 150); return;
       }
       initialized = true;
@@ -4122,18 +4132,18 @@ function initGraphOnboarding() {
     var dismissBtn = document.getElementById('graph-onboarding-dismiss');
     if (!root || !goBtn || !dismissBtn) return;
 
-    if (localStorage.getItem(key) === '1') return;
+    try { if (localStorage.getItem(key) === '1') return; } catch(e) {}
     root.hidden = false;
 
     goBtn.addEventListener('click', function() {
         var grafo = document.getElementById('grafo');
         if (grafo) grafo.scrollIntoView({ behavior: 'smooth' });
-        localStorage.setItem(key, '1');
+        try { localStorage.setItem(key, '1'); } catch(e) {}
         root.hidden = true;
     });
 
     dismissBtn.addEventListener('click', function() {
-        localStorage.setItem(key, '1');
+        try { localStorage.setItem(key, '1'); } catch(e) {}
         root.hidden = true;
     });
 }
@@ -4160,7 +4170,7 @@ function downloadTriageCsv(filename, headers, rows) {
         csv.push((rows[i] || []).map(triageCsvEscape).join(','));
     }
 
-    var blob = new Blob([csv.join('\n')], { type: 'text/csv;charset=utf-8;' });
+    var blob = new Blob(['\uFEFF' + csv.join('\n')], { type: 'text/csv;charset=utf-8;' });
     var url = URL.createObjectURL(blob);
     var link = document.createElement('a');
     link.href = url;
@@ -4384,7 +4394,15 @@ function openTriageCaseSearch(caseId) {
             if (typeof ctrl.focusInput === 'function') ctrl.focusInput();
             return;
         }
-        if (tries >= 24) return;
+        if (tries >= 24) {
+            var notice = document.createElement('div');
+            notice.setAttribute('role', 'alert');
+            notice.style.cssText = 'color:var(--accent);padding:.5rem 1rem;font-size:.85rem;text-align:center';
+            notice.textContent = 'El buscador aún está cargando. Intenta de nuevo en unos segundos.';
+            if (section) section.prepend(notice);
+            setTimeout(function() { notice.remove(); }, 5000);
+            return;
+        }
         tries++;
         setTimeout(applyWhenReady, 120);
     })();
@@ -4510,8 +4528,10 @@ function initBuscador() {
   var section = document.getElementById('buscador');
   if (!section) return;
 
+  var _buscadorRetries = 0;
   function doInit() {
     if (!window.initSearchUI) {
+      if (++_buscadorRetries > 30) { console.error('[Buscador] initSearchUI no cargó tras 6s'); return; }
       setTimeout(doInit, 200);
       return;
     }
@@ -4568,19 +4588,24 @@ function initBuscador() {
 
 /* ══════════════ BOOTSTRAP ══════════════ */
 document.addEventListener('DOMContentLoaded', function() {
-  initHeroMeter();
-  initCampos();
-  initTensiones();
-  initUmbral();
-  initGrafo();
-  initSocialField();
-  initBuscador();
-    initTriage();
-  initBottomNav();
-  initScrollTopFab();
-  initDeepLink();
-    initGraphOnboarding();
-  // P0: timeouts para visualizaciones
+  var inits = [
+    ['HeroMeter', initHeroMeter],
+    ['Campos', initCampos],
+    ['Tensiones', initTensiones],
+    ['Umbral', initUmbral],
+    ['Grafo', initGrafo],
+    ['SocialField', initSocialField],
+    ['Buscador', initBuscador],
+    ['Triage', initTriage],
+    ['BottomNav', initBottomNav],
+    ['ScrollTopFab', initScrollTopFab],
+    ['DeepLink', initDeepLink],
+    ['GraphOnboarding', initGraphOnboarding]
+  ];
+  for (var i = 0; i < inits.length; i++) {
+    try { inits[i][1](); }
+    catch (e) { console.error('[' + inits[i][0] + '] init failed:', e); }
+  }
   vizTimeout('graph-loading', 8000);
   vizTimeout('sf-loading', 8000);
 });
