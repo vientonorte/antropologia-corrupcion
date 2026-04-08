@@ -10,6 +10,8 @@
     <meta property="og:description" content="Etnografía del contra-archivo: represión, tecno-feudalismo, territorio mapuche y resistencia epistémica.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://vientonorte.github.io/antropologia-corrupcion/contra-archivo-v2.html">
+    <meta name="theme-color" content="#060608">
+    <link rel="manifest" href="manifest.json">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🖤</text></svg>">
     <link rel="preconnect" href="https://api.fontshare.com">
     <style>
@@ -2721,8 +2723,8 @@
                 });
             });
 
-            document.getElementById('reset-zoom') ?.addEventListener('click', resetZoom);
-            document.getElementById('center-network') ?.addEventListener('click', centerNetwork);
+            document.getElementById('reset-zoom')?.addEventListener('click', resetZoom);
+            document.getElementById('center-network')?.addEventListener('click', centerNetwork);
         }
 
         function applyGraphMode() {
@@ -3295,14 +3297,20 @@
         // --- Reading progress bar ---
         const progressBar = document.getElementById('reading-progress');
         if (progressBar) {
-            const updateProgress = () => {
-                const scrollTop = window.scrollY;
-                const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-                const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
-                progressBar.style.width = progress + '%';
-                progressBar.setAttribute('aria-valuenow', Math.round(progress));
-            };
-            window.addEventListener('scroll', updateProgress, { passive: true });
+            let progTicking = false;
+            window.addEventListener('scroll', () => {
+                if (!progTicking) {
+                    progTicking = true;
+                    requestAnimationFrame(() => {
+                        const scrollTop = window.scrollY;
+                        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+                        const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+                        progressBar.style.width = progress + '%';
+                        progressBar.setAttribute('aria-valuenow', Math.round(progress));
+                        progTicking = false;
+                    });
+                }
+            }, { passive: true });
         }
 
         // --- Narrative section scrollspy ---
