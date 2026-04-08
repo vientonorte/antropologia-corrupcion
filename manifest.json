@@ -1,0 +1,15 @@
+{
+    "name": "Contra-Archivo — Antropología y Corrupción",
+    "short_name": "Contra-Archivo",
+    "description": "Instrumento cualitativo de análisis multi-situado para cuantificar tensiones de mistranslation institucional.",
+    "start_url": "/antropologia-corrupcion/",
+    "scope": "/antropologia-corrupcion/",
+    "display": "standalone",
+    "background_color": "#0c0c0c",
+    "theme_color": "#0c0c0c",
+    "icons": [{
+        "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⊘</text></svg>",
+        "sizes": "any",
+        "type": "image/svg+xml"
+    }]
+}
