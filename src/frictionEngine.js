@@ -49,6 +49,12 @@ const FRICTION_MARKERS = [
     { a: 'deforestación', b: 'uso productivo', tipo: FRICTION_TYPES.TECNICA, peso: 0.88 },
     { a: 'opacidad', b: 'transparencia', tipo: FRICTION_TYPES.TECNICA, peso: 0.82 },
     { a: 'whistleblower', b: 'proceso regular', tipo: FRICTION_TYPES.TECNICA, peso: 0.78 },
+    // Financiero-institucionales: FECU / SURA / capital transnacional
+    { a: 'consentimiento', b: 'liquidez como semáforo', tipo: FRICTION_TYPES.TECNICA, peso: 0.87 },
+    { a: 'rescates fondos mutuos', b: 'cumplimiento normativo', tipo: FRICTION_TYPES.TECNICA, peso: 0.84 },
+    { a: 'custodia transnacional', b: 'regulación', tipo: FRICTION_TYPES.POLITICA, peso: 0.86 },
+    { a: 'opacidad', b: 'patrimonio depurado', tipo: FRICTION_TYPES.TECNICA, peso: 0.80 },
+    { a: 'trabajador', b: 'cartera de custodia', tipo: FRICTION_TYPES.SEMANTICA, peso: 0.91 },
 ];
 
 /* ─── UTILIDADES ─── */

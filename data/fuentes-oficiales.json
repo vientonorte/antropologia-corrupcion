@@ -266,6 +266,50 @@
             "tags": ["CMF", "ESG", "materialidad", "sostenibilidad invertida"]
         },
         {
+            "id": "fecu-liquidez-sura-corredora-2026",
+            "fuente": "cmf",
+            "titulo": "FECU Corredora de Bolsa SURA S.A. — Índices de Liquidez y Solvencia Patrimonial al 07-04-2026",
+            "fecha": "2026-04-07",
+            "url": "https://www.cmfchile.cl/institucional/estadisticas/corredoras.php",
+            "institucion": "Comisión para el Mercado Financiero — Corredora de Bolsa SURA S.A.",
+            "tipo_resolucion": "FECU — Ficha Estadística Codificada Uniforme (publicación normativa diaria)",
+            "periodo_cobertura": "2026-03-19 / 2026-04-07 (13 días hábiles)",
+            "keywords": ["liquidez", "solvencia", "patrimonio depurado", "intermediación", "rescates fondos mutuos", "cartera de custodia", "JP Morgan", "endeudamiento", "cobertura patrimonial", "CLP"],
+            "indicadores_al_07042026": {
+                "liquidez_general": { "observado": 1.42, "limite_interno": 1.07, "limite_normativo": 1.00, "estado": "cumple" },
+                "intermediacion": { "observado": 72.96, "limite_interno": 1.14, "limite_normativo": 1.00, "estado": "cumple" },
+                "razon_endeudamiento": { "observado": 1.72, "limite_interno": 10.00, "limite_normativo": 20.00, "estado": "cumple" },
+                "cobertura_patrimonial": { "observado_pct": 12.80, "limite_interno_pct": 74.00, "limite_normativo_pct": 80.00, "estado": "cumple" },
+                "patrimonio_depurado_uf": { "observado": 126689.41, "limite_interno": 32000.00, "limite_normativo": 14000.00, "estado": "cumple" },
+                "patrimonio_depurado_miles_pesos": 5047524
+            },
+            "formulas_al_07042026": {
+                "liquidez_general": "Activos disponibles y realizables hasta 7 días (35.279.833 M$) / Pasivos exigibles hasta 7 días (24.897.523 M$) = 1,42",
+                "intermediacion": "Activo disponible + deudores por intermediación (28.287.333 M$) / Acreedores por intermediación (387.726 M$) = 72,96",
+                "endeudamiento": "Total pasivos exigibles (27.028.742 M$) / Patrimonio líquido (15.746.422 M$) = 1,72",
+                "cobertura_patrimonial": "Monto cobertura patrimonial (2.015.314 M$) / Patrimonio líquido (15.746.422 M$) = 12,80%"
+            },
+            "explicacion_oficial": {
+                "punto_1": "La disminución en el índice de liquidez y el aumento en la razón de endeudamiento se deben a un incremento en las cuentas de inversiones de clientes en CLP, asociado a rescates por reinversión en fondos mutuos.",
+                "punto_2": "El aumento en la cobertura patrimonial se debe a un mayor saldo en cuentas por cobrar, producto de un incremento en rescates de fondos mutuos en CLP.",
+                "punto_3": "El aumento en el patrimonio depurado se explica a una disminución en la cartera de custodia de SURA y JP Morgan."
+            },
+            "volatilidad_observable": {
+                "intermediacion_max_var_pct": 279.30,
+                "intermediacion_fecha_max_var": "2026-03-31",
+                "intermediacion_rango_periodo": "20,43 (mínimo, 30-03) — 128,27 (máximo, 24-03)",
+                "limite_variacion_aceptado_pct": 486.77,
+                "nota": "La variación del 279% en un solo día es técnicamente aceptada por el control de variación normativo. El indicador absorbe turbulencia operacional sin activar alertas."
+            },
+            "capa_oficial": "La FECU traduce la realidad operacional de la corredora en 5 índices con semáforos de colores. El documento certifica 'cumplimiento regulatorio' sin que ningún indicador exponga a quién pertenecen los fondos que se rescatan, qué territorios financia la 'cartera de custodia', ni por qué JP Morgan aparece nombrado como custodio de activos de clientes chilenos.",
+            "capa_etica": "Los trabajadores cuyos fondos son administrados por la corredora no tienen acceso interpretativo a este documento. La FECU es una publicación CMF técnica —diseñada para supervisores institucionales, no para los ahorrantes. La turbulencia operacional (rescates masivos, recomposición de cartera con JP Morgan) les resulta invisible: lo que ellos ven es el saldo de su inversión, no el circuito institucional detrás.",
+            "tension_critica": "El punto 3 de la explicación oficial nombra explícitamente a JP Morgan como co-custodio de la cartera. Esta es la evidencia documental de la cadena: fondo chileno de cliente → Corredora SURA → custodia JP Morgan → inversiones globales. La FECU muestra el nodo, pero no el destino ni las comunidades que ese capital toca.",
+            "friccion_con": "sura-gobernanza-datos",
+            "tipo_friccion": "tecnica",
+            "subtipo_friccion": "semantica",
+            "tags": ["CMF", "FECU", "Corredora SURA", "JP Morgan", "custodia", "rescates", "liquidez", "mistranslation financiera", "cumplimiento como opacidad"]
+        },
+        {
             "id": "evidencia-afp-segmentacion-2026",
             "fuente": "etnografia-directa",
             "titulo": "Reunión corredora: lectura de bases de datos AFP para segmentación de clientes",

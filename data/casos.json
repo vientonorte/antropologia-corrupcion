@@ -37,20 +37,21 @@
       },
       "institucional": {
         "titulo": "Clasificación institucional: 'inversión responsable'",
-        "descripcion": "SURA Investments opera bajo clasificaciones ESG que permiten mantener inversiones en territorios en disputa. Los informes de sostenibilidad usan lenguaje técnico que absorbe el conflicto sin resolverlo: 'riesgo reputacional', 'gestión de stakeholders', 'diálogo comunitario'. La CMF regula los flujos pero no los territorios que financian.",
-        "documentos": ["Informes ESG anuales", "Resoluciones CMF", "Estatutos AFP"],
-        "clasificaciones": ["inversión sostenible", "cartera multifondo A-E", "riesgo moderado"],
-        "keywords": ["ESG", "CMF", "regulación", "mistranslation", "clasificación"],
+        "descripcion": "SURA Investments opera bajo clasificaciones ESG que permiten mantener inversiones en territorios en disputa. Los informes de sostenibilidad usan lenguaje técnico que absorbe el conflicto sin resolverlo: 'riesgo reputacional', 'gestión de stakeholders', 'diálogo comunitario'. La CMF regula los flujos pero no los territorios que financian. La FECU diaria de la Corredora de Bolsa SURA (publicación normativa CMF) certifica 'cumplimiento regulatorio' mientras nombra en su explicación oficial la cadena real: rescates de fondos mutuos → recomposición con JP Morgan como custodio. El semáforo dice verde; la explicación menciona al banco estadounidense que custodia activos de clientes chilenos. Ningún indicador señala adónde van esos activos.",
+        "documentos": ["Informes ESG anuales", "Resoluciones CMF", "Estatutos AFP", "FECU Corredora SURA — Índices Liquidez y Solvencia 07-04-2026"],
+        "clasificaciones": ["inversión sostenible", "cartera multifondo A-E", "riesgo moderado", "cumplimiento normativo FECU", "cartera de custodia"],
+        "keywords": ["ESG", "CMF", "regulación", "mistranslation", "clasificación", "FECU", "JP Morgan", "custodia", "rescates fondos mutuos", "patrimonio depurado", "liquidez como semáforo"],
         "color": "#4a7fa5"
       },
       "material": {
         "titulo": "Territorio: lo que financia el fondo",
-        "descripcion": "Los fondos de pensión chilenos son accionistas en empresas con proyectos en territorios mapuche, zonas de sacrificio ambiental y concesiones mineras. El dinero de los trabajadores viaja a territorios que muchos de ellos nunca visitarán y cuya historia desconocen. La densidad histórica del territorio no aparece en ningún prospecto de inversión.",
+        "descripcion": "Los fondos de pensión chilenos son accionistas en empresas con proyectos en territorios mapuche, zonas de sacrificio ambiental y concesiones mineras. El dinero de los trabajadores viaja a territorios que muchos de ellos nunca visitarán y cuya historia desconocen. La densidad histórica del territorio no aparece en ningún prospecto de inversión. La FECU de la Corredora (07-04-2026) documenta en M$ 5.047.524 el patrimonio depurado de la entidad, y nombra a JP Morgan como co-custodio de la cartera: evidencia documental del circuito transnacional por el que fluyen los fondos de clientes chilenos.",
         "evidencias": [
           "Carteras de inversión AFP con exposición a sectores extractivos",
-          "Territorios en la Región de Los Ríos con concesiones forestales financiadas por fondos previsionales"
+          "Territorios en la Región de Los Ríos con concesiones forestales financiadas por fondos previsionales",
+          "FECU Corredora SURA 07-04-2026: patrimonio depurado M$ 5.047.524 — cartera de custodia compartida con JP Morgan"
         ],
-        "keywords": ["territorio", "extractivismo", "zona de sacrificio", "capital financiero", "tierras"],
+        "keywords": ["territorio", "extractivismo", "zona de sacrificio", "capital financiero", "tierras", "JP Morgan", "custodia transnacional", "FECU"],
         "color": "#7a9e6e"
       },
       "friccion": {
