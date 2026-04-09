@@ -1,71 +1,136 @@
 # Handoff Operativo — Contra-Archivo
 
-Fecha: 2026-04-06
+Fecha: 2026-04-08
 Rama: `main`
-Estado git al cierre: limpio (`main...origin/main`)
+Commit: `dd2c79d`
+Estado git al cierre: limpio (`main` = `origin/main`)
+
+---
 
 ## 1) Alcance entregado
 
-Se cerraron tres líneas de implementación en la experiencia publicada:
+Sesión de QA integral: auditoría de repo, evaluación heurística, pruebas de usabilidad y 4 sprints de implementación.
 
-- Mobile UX del grafo:
-  - Estado de foco visible en móvil.
-  - Acción rápida `Limpiar foco` en la toolbar del grafo.
-  - Ajustes responsive para controles (sticky, targets táctiles más grandes, leyenda adaptada, altura del grafo).
-- Auditabilidad del score en buscador:
-  - Fuente de cálculo visible por resultado (`frictionEngine.explainRecordFriction`).
-  - Pesos del score visibles (distancia 50%, marcador 30%, tipo 20%).
-- Exportación CSV:
-  - Buscador: exporta resultados filtrados desde panel de stats.
-  - Triage: exporta modelo comparativo y permite abrir el caso prioritario en buscador.
+### Repo cleanup (pre-sprint)
+- `.git` reducido de 5.5 GB a 272 MB (−95%) con `git-filter-repo --strip-blobs-bigger-than 50M`
+- 6 binarios trackeados eliminados, `.gitignore` actualizado
+- 3 ramas muertas eliminadas
+- Corrupción `? .` → `?.` corregida en múltiples archivos
 
-## 2) Archivos clave tocados
+### Sprint 1 — Accesibilidad y Performance (`113a75d`)
+- 19 imágenes base64 extraídas a `img/` (contra-archivo-v2: 1479 → 182 KB, −88%)
+- `<h1>` sr-only en contra-archivo-v2
+- `prefers-reduced-motion` en ambos HTML
+- Contraste: `--dim` #444→#767676, `--text-muted` #707070→#8a8a8a
+- Meta description + Open Graph en contra-archivo-v2
+- Form landmarks para inputs de búsqueda
+- Nav link ← Contra-Archivo
 
-- `index.html`
-  - UI del grafo móvil (hint, estado, botón de reset).
-  - Helpers de triage CSV (`triageCsvEscape`, `downloadTriageCsv`, `exportTriageModelCsv`).
-  - Wiring de botones de triage (`#triage-export-csv`, `#triage-open-priority`).
-  - Sincronización del estado de foco del grafo (`setGraphFocusMessage`).
-- `src/searchEngine.js`
-  - Constante `SEARCH_SCORE_WEIGHTS`.
-  - Enriquecimiento de auditoría (`source`, `weights`).
-  - Exportación CSV de resultados (`exportCurrentResultsCSV`).
-  - Botón de export en stats (`data-se-export="results"`).
-- `README.md`
-  - Estado actualizado y registro de changelog reciente.
+### Sprint 2 — Fixes de Usabilidad (`cc7aba0`)
+- `initBuscador`: max 30 retries (antes: infinito)
+- `initGrafo`/`initSocialField`: DOM feedback al agotar retries
+- `openTriageCaseSearch`: alerta visual si buscador no carga
+- `DOMContentLoaded`: cada `init*` envuelto en try/catch individual
+- CSV export: BOM UTF-8 para Excel Windows
+- `initGraphOnboarding`: localStorage envuelto en try/catch
+- `filterByDocType`: implementado (antes: stub vacío)
+- `showDocConnections`: navega a grafo y resalta nodos (antes: solo console.log)
+- 19 imgs con `onerror` fallback CSS
+- `#panel-content` con `aria-live="polite"`
+
+### Sprint 3 — PWA y Meta (`e0e07b1`)
+- `<meta name="theme-color">` en ambos HTML (#0c0c0c / #060608)
+- `manifest.json` creado (name, scope, display standalone, icons)
+- `<link rel="manifest">` en ambos HTML
+- `404.html` personalizada con estilo dark
+- Reading progress bar envuelta en `requestAnimationFrame`
+
+### Sprint 4 — Externalización de Datos (`dd2c79d`)
+- `CASOS_DATA` (~15 KB) extraído de inline a `data/casos.json`
+- `FUENTES_DATA` (~12 KB) extraído de inline a `data/fuentes-oficiales.json`
+- Bootstrap async: `_loadSiteData()` + `_tryBootstrap()` (espera DOM + data)
+- Error handler visual si JSON no carga
+- index.html: 184 KB → 153 KB (−17%)
+- Graph list: paginación con "Mostrar N más" después de 20 items
+
+---
+
+## 2) Archivos clave
+
+| Archivo | Tamaño | Cambios esta sesión |
+|---------|--------|---------------------|
+| `index.html` | 153 KB | Bootstrap async, try/catch, retry limits, CSV BOM, localStorage safe, theme-color, manifest link |
+| `contra-archivo-v2.html` | 198 KB | Base64→img, h1, reduced-motion, contraste, OG, form, nav, filterByDocType, showDocConnections, onerror, aria-live, rAF progress, paginación lista |
+| `data/casos.json` | 15 KB | **Nuevo** — fuente de verdad (extraído de inline) |
+| `data/fuentes-oficiales.json` | 15 KB | Actualizado desde inline |
+| `src/frictionEngine.js` | — | Fix corrupción `?.` |
+| `manifest.json` | 0.6 KB | **Nuevo** — PWA manifest |
+| `404.html` | 1.6 KB | **Nuevo** — página 404 personalizada |
+| `img/` | 1 MB (19 JPEGs) | Extraídos de base64 inline |
+
+---
 
 ## 3) Commits relevantes
 
-- `6c565d8` — feat: mejorar UX móvil del grafo y exportes auditables
-- `7bd83d4` — docs: actualizar logs de mejoras mobile y auditabilidad
+```
+dd2c79d Sprint 4: externalizar CASOS_DATA y FUENTES_DATA a JSON, paginación lista grafo
+e0e07b1 Sprint 3: theme-color, manifest PWA, 404, reading progress rAF
+cc7aba0 Sprint 2: 10 fixes usabilidad
+113a75d Sprint 1: a11y, perf, base64 extraction
+286dc02 Limpieza repo: rm binarios, fix ?.operator, .gitignore
+```
+
+---
 
 ## 4) Verificación ejecutada
 
-- Chequeo de sintaxis JS en `src/searchEngine.js` con `node --check`.
-- Extracción + chequeo de sintaxis del bloque `<script>` inline de `index.html`.
-- Búsqueda de corrupción de operadores (`? .` y `? ?`) en archivos editados.
-- Diagnóstico de editor: sin errores en `index.html` y `src/searchEngine.js`.
+- `node --check` en inline JS de `index.html` y `contra-archivo-v2.html` — OK
+- `node --check` en `src/frictionEngine.js` — OK
+- JSON válido: `data/casos.json`, `data/fuentes-oficiales.json`
+- Grep `? .` / `? ?` en todos los archivos editados — 0 ocurrencias
+- GitHub Pages deploy verificado con `curl -I`
+- 12 GitHub issues creados (#31–#42), 12 cerrados con comentarios de commit
+
+---
 
 ## 5) Riesgos conocidos
 
-- El formatter puede corromper `?.` y `??` en este repo si se fuerza formato sobre JS/HTML inline.
-- `index.html` concentra CSS y JS inline extensos; cambios grandes deben hacerse por bloques pequeños y validar sintaxis cada vez.
+| Riesgo | Mitigación |
+|--------|------------|
+| **VS Code formatter corrompe `?.` → `? .`** | Usar `perl -i -pe` o `sed` en terminal para editar JS. Siempre `grep '? \.'` post-edit. Pre-commit hook en `.githooks/` |
+| **Carga async puede fallar en `file://`** | `_loadSiteData()` muestra error handler visual. Para desarrollo local usar `npx serve .` |
+| **Los JSON son la fuente de verdad** | No editar datos en HTML; editar `data/casos.json` y `data/fuentes-oficiales.json` directamente |
+| **19 imgs en `img/` excluidas de gitignore por excepción** | `.gitignore` tiene `!img/` y `!img/*.jpg` — no borrar estas líneas |
+
+---
 
 ## 6) Runbook de continuidad
 
-1. Levantar sitio local por HTTP:
-   - `npx serve .`
-2. Verificar smoke manual:
-   - Grafo: tocar nodo, validar foco visible, usar `Limpiar foco`.
-   - Buscador: ejecutar búsqueda, abrir detalle de score, exportar CSV.
-   - Triage: exportar CSV y abrir caso prioritario en buscador.
-3. Antes de commit:
-   - Buscar corrupción: `grep -nE "\? \\.|\? \?" index.html src/*.js`
-   - `node --check` a módulos editados.
-   - Si se tocó script inline: extraer bloque y validar con `node --check`.
+```bash
+# 1. Levantar sitio local
+npx serve .
+
+# 2. Verificar smoke
+# - index.html: Hero → Tensiones → Grafo (esperar carga) → Buscador → Triage → CSV
+# - contra-archivo-v2.html: Narrativa → Grafo → Biblioteca → "Tipo" → "Ver conexiones"
+
+# 3. Antes de commit
+grep -rn '? \.\|? ?' index.html contra-archivo-v2.html src/*.js
+sed -n '/<script>/,/<\/script>/p' index.html | sed '1d;$d' > /tmp/check.js
+node --check /tmp/check.js
+node --check src/frictionEngine.js
+
+# 4. Validar JSON
+node -e "JSON.parse(require('fs').readFileSync('data/casos.json'))"
+node -e "JSON.parse(require('fs').readFileSync('data/fuentes-oficiales.json'))"
+```
+
+---
 
 ## 7) Próximos pasos sugeridos
 
-- Añadir tests de regresión mínima para export CSV (columnas y orden esperados).
-- Separar progresivamente CSS/JS inline de `index.html` a módulos dedicados para reducir riesgo operativo.
-- Incorporar descarga CSV con nombre contextual (filtros activos + fecha) en buscador.
+- **Separar CSS inline** de ambos HTML a archivos `.css` dedicados (mayor reducción de peso)
+- **Tests de regresión** mínima para export CSV (columnas y orden esperados)
+- **Service Worker** para capacidades PWA offline (aprovechando manifest.json)
+- **Lazy load de secciones** pesadas (grafo, campo social) con skeleton loading mejorado
+- **Monitoreo de performance** con Lighthouse CI en GitHub Actions
