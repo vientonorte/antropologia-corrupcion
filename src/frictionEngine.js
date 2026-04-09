@@ -215,9 +215,9 @@ function explainRecordFriction(registro, caso) {
 
     const regKw = (registro.keywords || []).flatMap(s => normalizeStr(s).split(/\s+/)).filter(Boolean);
     const casoKw = [
-        ...(caso.etica ?.keywords || []),
-        ...(caso.institucional ?.keywords || []),
-        ...(caso.material ?.keywords || []),
+        ...(caso.etica?.keywords || []),
+        ...(caso.institucional?.keywords || []),
+        ...(caso.material?.keywords || []),
     ].flatMap(s => normalizeStr(s).split(/\s+/)).filter(Boolean);
 
     const overlap = keywordOverlap(regKw, casoKw);
@@ -306,11 +306,11 @@ function detectFrictionType(caso) {
     }
 
     // Si hay datos explícitos en el JSON, respetarlos; sino, calcular
-    const tipoExplicito = caso.friccion ?.tipo;
-    const subtipoExplicito = caso.friccion ?.subtipo || null;
+    const tipoExplicito = caso.friccion?.tipo;
+    const subtipoExplicito = caso.friccion?.subtipo || null;
 
     const tipoCalculado = Object.entries(scores)
-        .sort(([, a], [, b]) => b - a)[0] ?.[0] || FRICTION_TYPES.SEMANTICA;
+        .sort(([, a], [, b]) => b - a)[0]?.[0] || FRICTION_TYPES.SEMANTICA;
 
     return {
         tipo: tipoExplicito || tipoCalculado,
@@ -373,7 +373,7 @@ function connectionWeight(casoA, casoB) {
 function buildGraph(casos) {
     const nodes = casos.map(caso => {
         const audit = auditCaseFriction(caso.etica, caso.institucional, caso.material);
-        const explicitIntensity = caso.friccion ?.intensidad;
+        const explicitIntensity = caso.friccion?.intensidad;
         const intensity = explicitIntensity ?? audit.calculatedIntensity;
         const { tipo, subtipo, marcadores } = detectFrictionType(caso);
 
@@ -385,9 +385,9 @@ function buildGraph(casos) {
             tipo: tipo,
             subtipo: subtipo,
             marcadores: marcadores,
-            estado: caso.friccion ?.estado || 'abierta',
-            tension: caso.friccion ?.tension_central || '',
-            sinResolver: caso.friccion ?.sin_resolver ?? true,
+            estado: caso.friccion?.estado || 'abierta',
+            tension: caso.friccion?.tension_central || '',
+            sinResolver: caso.friccion?.sin_resolver ?? true,
             audit: {
                 ...audit,
                 source: explicitIntensity != null ? 'json' : 'engine',
@@ -397,9 +397,9 @@ function buildGraph(casos) {
                     parseFloat((explicitIntensity - audit.calculatedIntensity).toFixed(3)) : 0,
             },
             // Colores de capas para renderizado
-            colorEtica: caso.etica ?.color || '#c8a96e',
-            colorInstitucional: caso.institucional ?.color || '#4a7fa5',
-            colorMaterial: caso.material ?.color || '#7a9e6e',
+            colorEtica: caso.etica?.color || '#c8a96e',
+            colorInstitucional: caso.institucional?.color || '#4a7fa5',
+            colorMaterial: caso.material?.color || '#7a9e6e',
             // Datos completos para el panel de detalle
             etica: caso.etica,
             institucional: caso.institucional,

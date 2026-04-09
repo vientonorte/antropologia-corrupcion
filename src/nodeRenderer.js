@@ -201,8 +201,8 @@ class NodeRenderer {
     }
 
     _buildLinkPreview(link) {
-            const sourceName = this._esc(link.source ?.titulo || link.source ?.id || '');
-            const targetName = this._esc(link.target ?.titulo || link.target ?.id || '');
+            const sourceName = this._esc(link.source?.titulo || link.source?.id || '');
+            const targetName = this._esc(link.target?.titulo || link.target?.id || '');
             const weightPct = Math.round((link.weight || 0) * 100);
 
             const items = [
