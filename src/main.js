@@ -23,9 +23,21 @@ const STATE = {
 
 /* ─── CARGA DE DATOS ─── */
 
+
+// Devuelve la ruta correcta para data según contexto (GitHub Pages o local)
+function resolveDataPath(filename) {
+    // Si el sitio está en un subdirectorio (GitHub Pages), usar pathname base
+    const base = window.location.pathname.includes('/antropologia-corrupcion/') ? '/antropologia-corrupcion/' : '/';
+    return base + 'data/' + filename;
+}
+
 async function loadCasos() {
-    const resp = await fetch('./data/casos.json');
-    if (!resp.ok) throw new Error(`No se pudo cargar casos.json: ${resp.status}`);
+    const url = resolveDataPath('casos.json');
+    const resp = await fetch(url);
+    if (!resp.ok) {
+        showFallbackError(`No se pudo cargar casos.json: ${resp.status}`);
+        throw new Error(`No se pudo cargar casos.json: ${resp.status}`);
+    }
     return resp.json();
 }
 
@@ -68,7 +80,7 @@ async function init() {
             previewEl: document.getElementById('ca-preview'),
             onClose: () => {
                 // Restaurar grafo sin selección activa
-                STATE.graph?.setActiveLayer(STATE.activeLayer);
+                STATE.graph ?.setActiveLayer(STATE.activeLayer);
             },
         });
 
@@ -82,7 +94,7 @@ async function init() {
             skip.addEventListener('click', (e) => {
                 e.preventDefault();
                 activateGraphMode();
-                document.getElementById('ca-graph-canvas')?.focus();
+                document.getElementById('ca-graph-canvas') ?.focus();
             });
         }
 
@@ -230,7 +242,7 @@ function setupControls() {
                 b.setAttribute('aria-pressed', b === btn ? 'true' : 'false');
             });
 
-            STATE.graph?.setActiveLayer(layer);
+            STATE.graph ?.setActiveLayer(layer);
         });
     });
 
@@ -245,7 +257,7 @@ function setupControls() {
                 b.setAttribute('aria-pressed', b === btn ? 'true' : 'false');
             });
 
-            STATE.graph?.setFrictionTypeFilter(tipo);
+            STATE.graph ?.setFrictionTypeFilter(tipo);
         });
     });
 
@@ -253,7 +265,7 @@ function setupControls() {
     document.querySelectorAll('.ca-field-btn').forEach(btn => {
         btn.addEventListener('click', () => {
             const graph = STATE.graph;
-            if (!graph?.field) return;
+            if (!graph ?.field) return;
 
             const action = btn.dataset.field;
             const wasActive = btn.classList.contains('active');
@@ -380,9 +392,9 @@ function showFallbackError(err) {
     if (!container) return;
     var msg = (err && err.message) ? err.message.replace(/</g, '&lt;').replace(/>/g, '&gt;') : 'Error desconocido';
     container.innerHTML = '<div class="ca-empty-state" role="alert">' +
-      '<span class="ca-empty-state__icon">∅</span>' +
-      '<p>El grafo no pudo iniciar.<br>' +
-      '<small style="opacity:0.6">' + msg + '</small></p></div>';
+        '<span class="ca-empty-state__icon">∅</span>' +
+        '<p>El grafo no pudo iniciar.<br>' +
+        '<small style="opacity:0.6">' + msg + '</small></p></div>';
 }
 
 /* ─── INIT ─── */
