@@ -3349,11 +3349,13 @@
             filtered.sort((a, b) => b.connections - a.connections);
 
             graphListView.innerHTML = '';
-            filtered.forEach(node => {
+            var INITIAL_SHOW = 20;
+            filtered.forEach((node, idx) => {
                 const item = document.createElement('div');
                 item.className = 'graph-list-item';
                 item.setAttribute('role', 'listitem');
                 item.setAttribute('tabindex', '0');
+                if (idx >= INITIAL_SHOW) item.hidden = true;
                 item.innerHTML = `
                     <span class="gli-eje" data-eje="${node.eje}">${ejeNames[node.eje] || 'Eje ' + node.eje}</span>
                     <div class="gli-body">
@@ -3366,6 +3368,17 @@
                 item.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); if (typeof openPanel === 'function') openPanel(node); } });
                 graphListView.appendChild(item);
             });
+            if (filtered.length > INITIAL_SHOW) {
+                const more = document.createElement('button');
+                more.className = 'doc-card-cta';
+                more.style.cssText = 'display:block;margin:1rem auto;padding:.6rem 1.5rem';
+                more.textContent = 'Mostrar ' + (filtered.length - INITIAL_SHOW) + ' más';
+                more.addEventListener('click', () => {
+                    graphListView.querySelectorAll('.graph-list-item[hidden]').forEach(el => el.hidden = false);
+                    more.remove();
+                });
+                graphListView.appendChild(more);
+            }
 
             const empty = filtered.length === 0;
             if (empty) graphListView.innerHTML = '<div style="padding:2rem;text-align:center;color:var(--text-secondary)">Sin resultados para los filtros aplicados.</div>';

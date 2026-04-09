@@ -3519,180 +3519,37 @@
     <script>
         'use strict';
 
-        /* ══════════════ DATOS (inline para GitHub Pages sin CORS) ══════════════ */
-        const CASOS_DATA = {
-            "_meta": {
-                "capas": {
-                    "etica": "Testimonio situado, cuidado, contexto vivido",
-                    "institucional": "Registro oficial, clasificación, distorsión normativa",
-                    "material": "Territorio, evidencia, densidad histórica"
-                }
-            },
-            "casos": [{
-                "id": "sura-gobernanza-datos",
-                "titulo": "SURA Investments: Gobernanza de Datos y Separación AFP",
-                "anio": 2024,
-                "actores": ["SURA Investments", "AFP", "CMF", "trabajadores afiliados", "comunidades mapuche"],
-                "instituciones": ["SURA Investments", "AFP UNO", "Comisión para el Mercado Financiero"],
-                "etica": {
-                    "titulo": "El trabajador como dato",
-                    "descripcion": "Los afiliados experimentan su relación con el sistema previsional como una caja negra opaca: no comprenden qué hacen sus fondos, dónde se invierten, qué territorios financian. Su vida laboral traducida en columnas de riesgo-retorno sin consentimiento informado real.",
-                    "voces": ["Afiliados que desconocen la cartera de inversión de su fondo", "Trabajadores que descubren que su AFP financia proyectos en territorios en conflicto"],
-                    "documentos_ref": ["SURA_Compilado_Estrategia_Gaona_Complete.pdf"],
-                    "keywords": ["consentimiento", "transparencia", "autonomía", "opacidad"],
-                    "color": "#c8a96e"
-                },
-                "institucional": {
-                    "titulo": "Clasificación: 'inversión responsable'",
-                    "descripcion": "SURA opera bajo clasificaciones ESG que permiten mantener inversiones en territorios en disputa. Los informes de sostenibilidad usan lenguaje técnico que absorbe el conflicto sin resolverlo: 'riesgo reputacional', 'gestión de stakeholders'. La CMF regula los flujos pero no los territorios que financian.",
-                    "documentos": ["Informes ESG anuales", "Resoluciones CMF", "Estatutos AFP"],
-                    "clasificaciones": ["inversión sostenible", "cartera multifondo A-E", "riesgo moderado"],
-                    "keywords": ["ESG", "CMF", "regulación", "mistranslation", "clasificación"],
-                    "color": "#4a7fa5"
-                },
-                "material": {
-                    "titulo": "Lo que financia el fondo",
-                    "descripcion": "Los fondos de pensión chilenos son accionistas en empresas con proyectos en territorios mapuche, zonas de sacrificio ambiental y concesiones mineras. El dinero de los trabajadores viaja a territorios que muchos nunca visitarán y cuya historia desconocen.",
-                    "evidencias": ["Carteras con exposición a sectores extractivos", "Territorios en Los Ríos con concesiones forestales financiadas por fondos previsionales"],
-                    "keywords": ["territorio", "extractivismo", "zona de sacrificio", "capital financiero"],
-                    "color": "#7a9e6e"
-                },
-                "friccion": {
-                    "tipo": "politica",
-                    "subtipo": "semantica",
-                    "intensidad": 0.82,
-                    "estado": "abierta",
-                    "descripcion": "El sistema previsional traduce la vida de los trabajadores en instrumentos financieros que financian territorios en disputa, sin que ninguna capa del sistema reconozca esta cadena como problema político.",
-                    "tension_central": "¿La 'inversión responsable' puede existir si no hay consentimiento del territorio que financia?",
-                    "sin_resolver": true
-                },
-                "conexiones": ["la-negra-territorio-mapuche", "periodismo-datos-chile"],
-                "tags": ["previsión", "AFP", "ESG", "territorio", "datos", "corrupción sistémica"]
-            }, {
-                "id": "la-negra-territorio-mapuche",
-                "titulo": "La Negra — Memoria, Territorio y Resistencia Mapuche-Huilliche",
-                "anio": 2023,
-                "actores": ["comunidades mapuche-huilliche", "CONADI", "empresas forestales", "Ministerio de Bienes Nacionales"],
-                "instituciones": ["CONADI", "Poder Judicial", "Ministerio de Bienes Nacionales", "SII"],
-                "etica": {
-                    "titulo": "Memorias que el archivo no puede contener",
-                    "descripcion": "Las comunidades de La Negra mantienen memorias territoriales que preceden al Estado-nación. Sus formas de nombrar el territorio, sus límites vivos, sus prácticas de cuidado del agua y el bosque no tienen equivalente en el sistema registral. El testimonio situado es la única evidencia de una soberanía que el derecho positivo no puede reconocer sin negar sus propios fundamentos.",
-                    "voces": ["Lonkos y machis sobre límites territoriales precoloniales", "Memorias de usurpación durante la 'pacificación' (1860-1900)", "Mujeres sobre el rol del agua en la práctica espiritual y productiva"],
-                    "documentos_ref": ["La Negra/inv./INFOGRAFÍAS/Catrillanca Infografía Movil.png"],
-                    "keywords": ["memoria", "soberanía", "territorio vivo", "testimonio", "lonko"],
-                    "color": "#c8a96e"
-                },
-                "institucional": {
-                    "titulo": "El catastro como borramiento",
-                    "descripcion": "El Conservador de Bienes Raíces registra terrenos entregados a colonos tras la 'pacificación'. Los títulos de merced no coinciden con los límites que las comunidades reconocen. La Ley Forestal (D.L. 701) convirtió suelos mapuche en plantaciones reconocidas institucionalmente como 'usos productivos'.",
-                    "documentos": ["Títulos de merced históricos", "Catastro CONADI", "Registros forestales D.L. 701"],
-                    "clasificaciones": ["predio agrícola", "zona de amortiguación forestal", "terreno baldío fiscal"],
-                    "keywords": ["títulos de merced", "CONADI", "DL701", "catastro", "borramiento"],
-                    "color": "#4a7fa5"
-                },
-                "material": {
-                    "titulo": "El territorio como organismo histórico",
-                    "descripcion": "La Negra no es un predio: es una red de relaciones entre cuerpos, agua, bosque nativo, animales y muertos. Las plantaciones de pino reemplazaron ecosistemas que tardaron milenios en formarse. Las napas freáticas han descendido. Esta densidad material es la prueba más contundente de la corrupción institucional —y la menos admisible como evidencia judicial.",
-                    "evidencias": ["Mapas de cambio de uso de suelo (1973-2023)", "Fotografías aéreas de deforestación", "Registros de caudal antes/después de plantaciones"],
-                    "keywords": ["bosque nativo", "pino", "napa freática", "deforestación", "cuerpo-territorio"],
-                    "color": "#7a9e6e"
-                },
-                "friccion": {
-                    "tipo": "politica",
-                    "subtipo": "semantica",
-                    "intensidad": 0.94,
-                    "estado": "abierta",
-                    "descripcion": "'Territorio' tiene tres significados incompatibles: organismo vivo con historia propia (comunidad), superficie parcelable (catastro), factor de producción (empresa forestal). Ninguna puede aceptar a las otras sin destruirse.",
-                    "tension_central": "¿Puede el derecho de propiedad chileno reconocer el territorio mapuche sin negarse a sí mismo?",
-                    "sin_resolver": true
-                },
-                "conexiones": ["sura-gobernanza-datos", "periodismo-datos-chile"],
-                "tags": ["mapuche-huilliche", "territorio", "memoria", "CONADI", "forestales", "soberanía"]
-            }, {
-                "id": "periodismo-datos-chile",
-                "titulo": "Periodismo de Datos — La Corrupción como Mistranslation Institucional",
-                "anio": 2023,
-                "actores": ["periodistas de investigación", "CIPER Chile", "instituciones públicas", "fuentes anónimas"],
-                "instituciones": ["CIPER Chile", "Ministerio Público", "Consejo para la Transparencia"],
-                "etica": {
-                    "titulo": "La fuente como sujeto en riesgo",
-                    "descripcion": "El periodismo de datos opera en un campo minado: las fuentes que revelan corrupción enfrentan represalias laborales, judiciales y sociales. La 'objetividad' periodística exige despersonalizar la fuente —pero al despersonalizarla, el relato pierde su densidad ética.",
-                    "voces": ["Funcionarios que filtraron irregularidades y fueron desvinculados", "Periodistas amenazados tras publicaciones sobre municipios"],
-                    "documentos_ref": ["CIPER- Clase teórico prática - Investigación Crimen Organizado.pdf"],
-                    "keywords": ["fuente", "protección", "testimonio", "riesgo", "whistleblower"],
-                    "color": "#c8a96e"
-                },
-                "institucional": {
-                    "titulo": "El dato como ficción institucional",
-                    "descripcion": "Las instituciones producen datos según sus propios marcos. Una licitación fraudulenta aparece en ComprasPúblicas como 'proceso regular'. Un desvío de fondos figura como 'gasto operacional'. La corrupción no viola el registro: lo habita.",
-                    "documentos": ["Bases de datos ComprasPúblicas", "Cuentas públicas municipales", "Ley de Transparencia respuestas"],
-                    "clasificaciones": ["licitación pública", "gasto corriente", "convenio marco"],
-                    "keywords": ["ComprasPúblicas", "contabilidad pública", "clasificación", "invisibilidad", "registro"],
-                    "color": "#4a7fa5"
-                },
-                "material": {
-                    "titulo": "El documento como cuerpo del delito",
-                    "descripcion": "El mismo contrato es 'irregular' para el periodista, 'conforme a derecho' para el abogado institucional y 'normal' para el funcionario que lo firmó. La materialidad del documento no resuelve el conflicto —lo multiplica.",
-                    "evidencias": ["PDFs de licitaciones con irregularidades documentadas", "Bases de datos filtradas de asignaciones municipales", "Correos obtenidos por transparencia activa"],
-                    "keywords": ["documento", "contrato", "filtración", "red de actores", "evidencia material"],
-                    "color": "#7a9e6e"
-                },
-                "friccion": {
-                    "tipo": "semantica",
-                    "subtipo": "tecnica",
-                    "intensidad": 0.71,
-                    "estado": "abierta",
-                    "descripcion": "El dato es el campo de batalla. Cada institución produce sus propios datos según sus categorías. El periodismo intenta hacer hablar a esos datos de formas que las instituciones no autorizaron.",
-                    "tension_central": "¿Puede el dato institucional ser evidencia de la corrupción que lo produjo?",
-                    "sin_resolver": true
-                },
-                "conexiones": ["sura-gobernanza-datos", "la-negra-territorio-mapuche"],
-                "tags": ["periodismo", "CIPER", "datos", "transparencia", "corrupción"]
-            }, {
-                "id": "oit169-consulta-previa",
-                "titulo": "OIT 169 — La Consulta Previa como Dispositivo de Neutralización",
-                "anio": 2022,
-                "actores": ["comunidades indígenas", "Estado chileno", "empresas extractivas", "CONADI", "Ministerio de Desarrollo Social"],
-                "instituciones": ["Ministerio de Desarrollo Social", "CONADI", "SEA", "juzgados ambientales"],
-                "etica": {
-                    "titulo": "El consentimiento que nunca llega",
-                    "descripcion": "El Convenio OIT 169 establece el derecho al consentimiento previo, libre e informado. En la práctica chilena, la 'consulta' se convierte en un proceso burocrático que las comunidades deben atravesar —con tiempos, formatos y vocabulario institucional— para poder decir no a algo que ya está decidido.",
-                    "voces": ["Comunidades que participaron en 'consultas' cuyo resultado fue ignorado", "Líderes que describen el proceso como 'teatro institucional'", "Mujeres excluidas por criterios de representación externos"],
-                    "documentos_ref": ["UX RG - Desglose de derechos consagrados por el OIT 169.jpg", "UX RG - ¿Comparativa Eº Plurinacional del marco legal vigente en Chile_.jpg"],
-                    "keywords": ["consentimiento", "CPLI", "autonomía", "representación", "exclusión"],
-                    "color": "#c8a96e"
-                },
-                "institucional": {
-                    "titulo": "La consulta como trámite administrativo",
-                    "descripcion": "El DS N°66 traduce el derecho al consentimiento en un procedimiento con etapas, plazos y representantes reconocidos. Esta traducción convierte un derecho político en un trámite burocrático. El SEIA incorpora la 'participación indígena' como fase del proceso, no como condición para él.",
-                    "documentos": ["DS N°66", "Ley N°19.253", "Reglamento SEIA"],
-                    "clasificaciones": ["proceso de consulta regular", "participación ciudadana indígena", "medidas de mitigación"],
-                    "keywords": ["DS66", "SEIA", "proceso administrativo", "representación", "admisibilidad"],
-                    "color": "#4a7fa5"
-                },
-                "material": {
-                    "titulo": "Lo que el territorio perdió durante el proceso",
-                    "descripcion": "Mientras duran los procesos de consulta, los proyectos avanzan. Se construyen caminos, se instalan faenas, se modifica el paisaje. La comunidad llega al 'acuerdo' habiendo ya perdido algo que el proceso no contempla devolver.",
-                    "evidencias": ["Registros fotográficos de obras en territorios en consulta", "Informes de avance de proyectos durante SEIA", "Denuncias de daño ambiental previo a la resolución"],
-                    "keywords": ["daño previo", "hechos consumados", "faena", "construcción", "irreversibilidad"],
-                    "color": "#7a9e6e"
-                },
-                "friccion": {
-                    "tipo": "politica",
-                    "subtipo": "semantica",
-                    "intensidad": 0.89,
-                    "estado": "abierta",
-                    "descripcion": "'Consulta': veto (OIT 169) · diálogo sin decisión (Estado) · riesgo a gestionar (empresas). Tres definiciones que nunca se confrontan directamente pero producen efectos devastadores sobre los territorios.",
-                    "tension_central": "¿Puede existir 'consulta' sin posibilidad real de decir no?",
-                    "sin_resolver": true
-                },
-                "conexiones": ["la-negra-territorio-mapuche", "sura-gobernanza-datos"],
-                "tags": ["OIT169", "CPLI", "consulta previa", "SEIA", "territorio indígena", "derechos"]
-            }]
-        };
+        /* ══════════════ DATOS (cargados desde JSON) ══════════════ */
+        var CASOS_DATA = null;
+        var CASOS = [];
+        var FUENTES_DATA = [];
+        var _dataReady = false;
+        var _domReady = false;
+
+        function _loadSiteData() {
+            return Promise.all([
+                fetch('data/casos.json').then(function(r) { return r.json(); }),
+                fetch('data/fuentes-oficiales.json').then(function(r) { return r.json(); })
+            ]).then(function(results) {
+                CASOS_DATA = results[0];
+                CASOS = results[0].casos;
+                FUENTES_DATA = results[1];
+                _dataReady = true;
+                _tryBootstrap();
+            }).catch(function(err) {
+                console.error('[Data] Error cargando datos:', err);
+                var body = document.body || document.documentElement;
+                var msg = document.createElement('div');
+                msg.setAttribute('role', 'alert');
+                msg.style.cssText = 'position:fixed;top:0;left:0;right:0;padding:1rem;background:#300;color:#faa;text-align:center;z-index:9999';
+                msg.textContent = 'Error cargando datos. Recarga la pagina.';
+                body.appendChild(msg);
+            });
+        }
+
+        _loadSiteData();
 
         /* ══════════════ INIT ══════════════ */
-        const CASOS = CASOS_DATA.casos;
 
         function frictionColor(v) {
             if (v >= 0.85) return 'var(--crit)';
@@ -4478,26 +4335,6 @@ function initTriage() {
     }
 }
 
-/* ══════════════ BUSCADOR DE FRICCIÓN — DATOS INLINE ══════════════ */
-var FUENTES_DATA = [
-  {"id":"lobby-sura-cmf-2024","fuente":"infolobby","titulo":"Audiencias SURA Investments con CMF sobre regulación multifondos","fecha":"2024-03-15","url":"https://www.infolobby.cl","institucion":"Comisión para el Mercado Financiero","actores_lobby":["SURA Asset Management","AFP Capital"],"materia":"Regulación de inversiones alternativas en multifondos AFP","keywords":["regulación","multifondos","inversión alternativa","ESG","riesgo"],"capa_oficial":"La audiencia registra una 'reunión técnica' sobre marcos regulatorios. No consigna qué territorios o comunidades afectan las inversiones discutidas.","friccion_con":"sura-gobernanza-datos","tipo_friccion":"politica","tags":["AFP","CMF","lobby financiero","ESG"]},
-  {"id":"lobby-forestal-conadi-2023","fuente":"infolobby","titulo":"Audiencias empresas forestales con CONADI sobre títulos de merced","fecha":"2023-08-22","url":"https://www.infolobby.cl","institucion":"CONADI","actores_lobby":["CMPC","Arauco S.A."],"materia":"Regularización de predios forestales en territorios con títulos de merced","keywords":["títulos de merced","regularización","predios forestales","DL701"],"capa_oficial":"La audiencia clasifica el encuentro como 'gestión administrativa de predios'. Los títulos de merced aparecen como un insumo técnico, no como evidencia de usurpación territorial.","friccion_con":"la-negra-territorio-mapuche","tipo_friccion":"semantica","tags":["forestales","CONADI","territorio mapuche","usurpación"]},
-  {"id":"lobby-sea-consulta-2022","fuente":"infolobby","titulo":"Audiencias empresas energéticas con SEA sobre proyectos en territorio indígena","fecha":"2022-11-10","url":"https://www.infolobby.cl","institucion":"Servicio de Evaluación Ambiental","actores_lobby":["Colbún S.A.","Enel Green Power"],"materia":"Evaluación ambiental de proyectos hidroeléctricos en territorio con consulta indígena pendiente","keywords":["evaluación ambiental","consulta indígena","SEIA","hidroeléctrica","mitigación"],"capa_oficial":"El registro documenta una 'reunión de seguimiento técnico'. La consulta indígena aparece como una 'etapa del proceso' —no como derecho de consentimiento.","friccion_con":"oit169-consulta-previa","tipo_friccion":"politica","tags":["SEIA","consulta previa","energía","OIT169"]},
-  {"id":"transp-afp-carteras-2024","fuente":"transparencia","titulo":"Solicitud: detalle de inversiones AFP en territorios indígenas","fecha":"2024-01-20","url":"https://www.consejotransparencia.cl","institucion":"Superintendencia de Pensiones","materia":"Desglose de carteras de inversión AFP con exposición a sectores extractivos en territorio indígena","keywords":["carteras AFP","reserva","datos agregados","inversión extractiva","opacidad"],"capa_oficial":"La institución traduce una pregunta sobre territorios y comunidades en una respuesta sobre 'instrumentos financieros'. La reserva legal convierte la opacidad en procedimiento regular.","friccion_con":"sura-gobernanza-datos","tipo_friccion":"tecnica","tags":["transparencia","AFP","opacidad","datos reservados"]},
-  {"id":"transp-conadi-tierras-2023","fuente":"transparencia","titulo":"Solicitud: avance del Fondo de Tierras CONADI en Región de Los Ríos","fecha":"2023-05-14","url":"https://www.consejotransparencia.cl","institucion":"CONADI","materia":"Estado de tramitación de solicitudes de compra de tierras Art. 20b Ley 19.253","keywords":["Fondo de Tierras","Art 20b","plazo","priorización","trámite"],"capa_oficial":"La respuesta convierte la urgencia territorial (familias esperando décadas) en estadísticas de gestión: '342 solicitudes', '8.3 años promedio'. La privacidad del beneficiario protege la lentitud del Estado.","friccion_con":"la-negra-territorio-mapuche","tipo_friccion":"tecnica","tags":["CONADI","Fondo de Tierras","espera","territorio"]},
-  {"id":"transp-municipio-compras-2023","fuente":"transparencia","titulo":"Solicitud: contratos directos de municipalidad con empresas de concejales","fecha":"2023-09-03","url":"https://www.consejotransparencia.cl","institucion":"Municipalidad (caso-tipo CIPER)","materia":"Detalle de contratos por trato directo último trimestre con empresas vinculadas a concejales","keywords":["trato directo","conflicto de interés","concejales","Mercado Público","evasión"],"capa_oficial":"La institución responde con un link a datos que ya son públicos pero que no responden la pregunta. La 'transparencia' como dispositivo circular: se transparenta lo que ya era visible, no lo que se preguntó.","friccion_con":"periodismo-datos-chile","tipo_friccion":"semantica","tags":["municipio","CIPER","trato directo","conflicto interés"]},
-  {"id":"ley-20730-lobby","fuente":"leychile","titulo":"Ley 20.730 — Regula el lobby y las gestiones que representen intereses particulares","fecha":"2014-03-08","url":"https://www.bcn.cl/leychile/navegar?idNorma=1060115","keywords":["lobby","gestión de intereses","registro","audiencias","sujetos pasivos"],"capa_oficial":"La ley define lobby como 'gestión remunerada'. Las gestiones corporativas internas (ej: AFP gestionando inversiones en territorios) quedan fuera de la definición. El registro captura la forma del contacto, no su contenido ni sus efectos territoriales.","friccion_con":"sura-gobernanza-datos","tipo_friccion":"semantica","tags":["lobby","ley","definición","exclusión"]},
-  {"id":"ley-20285-transparencia","fuente":"leychile","titulo":"Ley 20.285 — Sobre acceso a la información pública","fecha":"2008-08-20","url":"https://www.bcn.cl/leychile/navegar?idNorma=276363","keywords":["acceso información","transparencia activa","reserva","secreto","Consejo"],"capa_oficial":"La ley crea un derecho de acceso pero simultáneamente cataloga 5 causales de reserva que las instituciones aplican discrecionalmente. La transparencia es un umbral que el Estado fija y desplaza.","friccion_con":"periodismo-datos-chile","tipo_friccion":"politica","tags":["transparencia","reserva","acceso","periodismo"]},
-  {"id":"ley-19253-indigena","fuente":"leychile","titulo":"Ley 19.253 — Ley Indígena: protección, fomento y desarrollo de los indígenas","fecha":"1993-10-05","url":"https://www.bcn.cl/leychile/navegar?idNorma=30620","keywords":["indígena","CONADI","Fondo de Tierras","desarrollo","títulos de merced","Art 20b"],"capa_oficial":"La ley define 'indígena' con criterios que el Estado establece. El Fondo de Tierras Art. 20b es el mecanismo de 'solución': comprar tierras que fueron usurpadas. La restitución se convierte en transacción de mercado.","friccion_con":"la-negra-territorio-mapuche","tipo_friccion":"semantica","tags":["ley indígena","CONADI","tierra","usurpación como compra"]},
-  {"id":"ds66-consulta-indigena","fuente":"leychile","titulo":"DS N°66 — Reglamento de consulta indígena (Convenio OIT 169)","fecha":"2014-03-15","url":"https://www.bcn.cl/leychile/navegar?idNorma=1059961","keywords":["consulta indígena","DS66","OIT 169","CPLI","etapas","representatividad"],"capa_oficial":"El decreto traduce el derecho al CPLI en un proceso de 5 etapas con plazos y formatos institucionales. Define 'representatividad' de las comunidades según criterios estatales. El consentimiento se convierte en 'acuerdo' o 'no acuerdo' al final del proceso.","friccion_con":"oit169-consulta-previa","tipo_friccion":"politica","tags":["OIT169","consulta","decreto","consentimiento como trámite"]},
-  {"id":"dl701-fomento-forestal","fuente":"leychile","titulo":"D.L. 701 — Ley de Fomento Forestal","fecha":"1974-10-28","url":"https://www.bcn.cl/leychile/navegar?idNorma=6294","keywords":["fomento forestal","bonificación","plantación","pino","eucalipto","uso productivo"],"capa_oficial":"El D.L. 701 subsidiaba la plantación de pino y eucalipto en suelos 'de aptitud preferentemente forestal' —categoría que incluyó tierras mapuche. El lenguaje de 'fomento' y 'uso productivo' convirtió la sustitución de bosque nativo en política de desarrollo.","friccion_con":"la-negra-territorio-mapuche","tipo_friccion":"tecnica","tags":["forestal","subsidio","pino","bosque nativo","dictadura"]},
-  {"id":"seia-central-osorno-2023","fuente":"seia","titulo":"EIA: Central hidroeléctrica de pasada en Río Pilmaiquén, Región de Los Ríos","fecha":"2023-06-12","url":"https://seia.sea.gob.cl","institucion":"Servicio de Evaluación Ambiental","keywords":["hidroeléctrica","río","caudal ecológico","Pilmaiquén","impacto","mitigación"],"capa_oficial":"La evaluación del proyecto describe el río en términos de 'caudal ecológico mínimo', 'línea base biótica' y 'medidas de mitigación'. Para las comunidades, el Pilmaiquén es un ser vivo con historia. El SEIA no puede procesar esa ontología.","friccion_con":"oit169-consulta-previa","tipo_friccion":"semantica","tags":["SEIA","río","hidroeléctrica","ontología"]},
-  {"id":"seia-forestal-losrios-2022","fuente":"seia","titulo":"DIA: Proyecto de plantación forestal en predios con reclamación indígena","fecha":"2022-04-18","url":"https://seia.sea.gob.cl","institucion":"Servicio de Evaluación Ambiental","keywords":["plantación","DIA","predio forestal","reclamación","mitigación","compensación"],"capa_oficial":"La Declaración de Impacto Ambiental clasifica el territorio como 'predio de aptitud forestal'. La reclamación indígena pendiente aparece como un 'antecedente' pero no como impedimento. La evaluación separa el suelo de su historia.","friccion_con":"la-negra-territorio-mapuche","tipo_friccion":"tecnica","tags":["SEIA","forestal","reclamación","suelo sin historia"]},
-  {"id":"compras-conadi-consultoras-2023","fuente":"compraspublicas","titulo":"Licitación CONADI: estudio de pertinencia cultural para Fondo de Tierras","fecha":"2023-07-20","url":"https://www.mercadopublico.cl","institucion":"CONADI","keywords":["pertinencia cultural","consultoría","Fondo de Tierras","estudio base","licitación"],"capa_oficial":"CONADI licita un estudio de 'pertinencia cultural' a consultoras externas para evaluar solicitudes del Fondo de Tierras. La pertinencia cultural se convierte en un producto licitado, con bases técnicas, puntaje y adjudicación. El saber comunitario se externaliza.","friccion_con":"la-negra-territorio-mapuche","tipo_friccion":"semantica","tags":["ComprasPúblicas","CONADI","cultura como licitación"]},
-  {"id":"compras-municipio-trato-directo-2023","fuente":"compraspublicas","titulo":"Trato directo: servicios de asesoría comunicacional a municipalidad","fecha":"2023-10-05","url":"https://www.mercadopublico.cl","institucion":"Municipalidad (caso-tipo CIPER)","keywords":["trato directo","asesoría","comunicacional","municipalidad","adjudicación"],"capa_oficial":"El trato directo se justifica por 'urgencia calificada'. El proveedor adjudicado tiene vínculos con concejales. En Mercado Público, el registro es 'conforme a normativa'. La corrupción no viola el sistema de compras —lo habita.","friccion_con":"periodismo-datos-chile","tipo_friccion":"tecnica","tags":["ComprasPúblicas","municipio","trato directo","corrupción sistémica"]},
-  {"id":"cmf-sancion-sura-2024","fuente":"cmf","titulo":"Resolución CMF: observaciones a SURA Asset Management por deficiencias en gobierno corporativo","fecha":"2024-02-28","url":"https://www.cmfchile.cl","institucion":"Comisión para el Mercado Financiero","keywords":["gobierno corporativo","deficiencias","observaciones","gestión de riesgos","compliance"],"capa_oficial":"La CMF detecta 'deficiencias en la gestión de riesgos' y emite un oficio de observaciones. El lenguaje regulatorio traduce el conflicto territorial en un problema de 'compliance'. La sanción no menciona comunidades ni territorios.","friccion_con":"sura-gobernanza-datos","tipo_friccion":"tecnica","tags":["CMF","SURA","compliance","sanción sin territorio"]},
-  {"id":"cmf-norma-esg-2023","fuente":"cmf","titulo":"NCG N°461: Norma de reporte de sostenibilidad y gobierno corporativo","fecha":"2023-11-20","url":"https://www.cmfchile.cl/normativa/ncg_461.pdf","institucion":"Comisión para el Mercado Financiero","keywords":["ESG","sostenibilidad","reporte","materialidad","stakeholders","NCG461"],"capa_oficial":"La norma obliga a reportar riesgos ESG según criterios de 'materialidad financiera'. El impacto sobre comunidades es reportable solo si afecta el valor de la empresa. La sostenibilidad institucional no es la sostenibilidad del territorio.","friccion_con":"sura-gobernanza-datos","tipo_friccion":"semantica","tags":["CMF","ESG","materialidad","sostenibilidad invertida"]}
-];
 
 var BCN_LEGISLATIVO_URL = 'data/bcn-legislativo.json';
 
@@ -4589,7 +4426,7 @@ function initBuscador() {
 }
 
 /* ══════════════ BOOTSTRAP ══════════════ */
-document.addEventListener('DOMContentLoaded', function() {
+function _runInits() {
   var inits = [
     ['HeroMeter', initHeroMeter],
     ['Campos', initCampos],
@@ -4610,6 +4447,16 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   vizTimeout('graph-loading', 8000);
   vizTimeout('sf-loading', 8000);
+}
+
+function _tryBootstrap() {
+  if (!_dataReady || !_domReady) return;
+  _runInits();
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  _domReady = true;
+  _tryBootstrap();
 });
     </script>
 </body>
