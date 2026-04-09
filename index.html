@@ -3526,10 +3526,20 @@
         var _dataReady = false;
         var _domReady = false;
 
+        function resolveDataPath(filename) {
+            // Si el sitio está en un subdirectorio (GitHub Pages), usar pathname base
+            var base = window.location.pathname.includes('/antropologia-corrupcion/') ? '/antropologia-corrupcion/' : '/';
+            return base + 'data/' + filename;
+        }
+
         function _loadSiteData() {
             return Promise.all([
-                fetch('data/casos.json').then(function(r) { return r.json(); }),
-                fetch('data/fuentes-oficiales.json').then(function(r) { return r.json(); })
+                fetch(resolveDataPath('casos.json')).then(function(r) {
+                    return r.json();
+                }),
+                fetch(resolveDataPath('fuentes-oficiales.json')).then(function(r) {
+                    return r.json();
+                })
             ]).then(function(results) {
                 CASOS_DATA = results[0];
                 CASOS = results[0].casos;
@@ -3542,7 +3552,7 @@
                 var msg = document.createElement('div');
                 msg.setAttribute('role', 'alert');
                 msg.style.cssText = 'position:fixed;top:0;left:0;right:0;padding:1rem;background:#300;color:#faa;text-align:center;z-index:9999';
-                msg.textContent = 'Error cargando datos. Recarga la pagina.';
+                msg.textContent = 'Error cargando datos. Verifica conexión o ruta de /data/casos.json.';
                 body.appendChild(msg);
             });
         }
