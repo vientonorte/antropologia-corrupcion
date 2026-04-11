@@ -15,7 +15,7 @@
     <meta name="twitter:title" content="Contra-Archivo — Antropología y Corrupción">
     <meta name="twitter:description" content="La institución traduce. La traducción falla. El fallo es el sistema.">
     <meta name="theme-color" content="#0c0c0c">
-    <link rel="manifest" href="manifest.json">
+    <link rel="manifest" href="/antropologia-corrupcion/manifest.json">
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⊘</text></svg>">
     <style>
@@ -3509,12 +3509,12 @@
     </nav>
 
     <!-- ══════════════════════════════════════ SCRIPTS: módulos del sistema -->
-    <script src="src/frictionEngine.js" defer></script>
-    <script src="src/fieldPhysics.js" defer></script>
-    <script src="src/graph.js" defer></script>
-    <script src="src/nodeRenderer.js" defer></script>
-    <script src="src/socialField.js" defer></script>
-    <script src="src/searchEngine.js" defer></script>
+    <script src="/antropologia-corrupcion/src/frictionEngine.js" defer></script>
+    <script src="/antropologia-corrupcion/src/fieldPhysics.js" defer></script>
+    <script src="/antropologia-corrupcion/src/graph.js" defer></script>
+    <script src="/antropologia-corrupcion/src/nodeRenderer.js" defer></script>
+    <script src="/antropologia-corrupcion/src/socialField.js" defer></script>
+    <script src="/antropologia-corrupcion/src/searchEngine.js" defer></script>
 
     <script>
         'use strict';
@@ -3717,46 +3717,56 @@ function initUmbral() {
 /* ── GRAFO (lazy-init con IntersectionObserver) ── */
 function initGrafo() {
   let initialized = false;
-  function doInit() {
-    if (initialized) return;
-    let _retries = 0;
-    function tryInit() {
-      if (!window.frictionEngine || !window.FrictionGraph) {
-        if (++_retries > 50) {
-          console.error('[Grafo] Modules failed to load after 6s');
-          var gl = document.getElementById('graph-loading');
-          if (gl) { gl.classList.add('loaded'); gl.innerHTML = '<p style="color:var(--dim);text-align:center;padding:2rem">No se pudo cargar el grafo. Recarga la página.</p>'; }
-          return;
-        }
-        setTimeout(tryInit, 120); return;
-      }
-      initialized = true;
-      let gd;
-      try { gd = window.frictionEngine.buildGraph(CASOS); }
-      catch(e) { console.error('[Grafo] buildGraph failed:', e); return; }
-      const canvas = document.getElementById('ca-graph-canvas');
-      if (!canvas || !gd) return;
-      const G = new window.FrictionGraph({
-        container: canvas,
-        nodes: gd.nodes,
-        links: gd.links,
-        onNodeClick: (node) => {
-          activateTension(node.id);
+    function doInit() {
+        if (initialized) return;
+        let _retries = 0;
+        function tryInit() {
+            if (!window.frictionEngine || !window.FrictionGraph) {
+                if (++_retries > 50) {
+                    console.error('[Grafo] Modules failed to load after 6s');
+                    var gl = document.getElementById('graph-loading');
+                    if (gl) { gl.classList.add('loaded'); gl.innerHTML = '<p style="color:var(--dim);text-align:center;padding:2rem">No se pudo cargar el grafo. Recarga la página.</p>'; }
+                    return;
+                }
+                setTimeout(tryInit, 120); return;
+            }
+            // FIX QA: Si los datos no están listos, abortar y mostrar error claro
+            if (!Array.isArray(CASOS) || CASOS.length === 0) {
+                console.error('[Grafo] CASOS vacío o no cargado. Esperando datos para inicializar el grafo.');
+                var gl = document.getElementById('graph-loading');
+                if (gl) {
+                    gl.classList.add('loaded');
+                    gl.innerHTML = '<p style="color:#b00;text-align:center;padding:2rem">No se pudo cargar el grafo: los datos no están listos.<br>Recarga la página o revisa la conexión.</p>';
+                }
+                return;
+            }
+            initialized = true;
+            let gd;
+            try { gd = window.frictionEngine.buildGraph(CASOS); }
+            catch(e) { console.error('[Grafo] buildGraph failed:', e); return; }
+            const canvas = document.getElementById('ca-graph-canvas');
+            if (!canvas || !gd) return;
+            const G = new window.FrictionGraph({
+                container: canvas,
+                nodes: gd.nodes,
+                links: gd.links,
+                onNodeClick: (node) => {
+                    activateTension(node.id);
                     setGraphFocusMessage('Foco activo: ' + shortCaseTitle(node) + '. Baja para contrastar la ficha narrativa con buscador y triage.');
-          var t = document.getElementById('tensiones');
-          if (t) t.scrollIntoView({behavior:'smooth'});
-        },
-        onNodeHover: () => {},
-      });
+                    var t = document.getElementById('tensiones');
+                    if (t) t.scrollIntoView({behavior:'smooth'});
+                },
+                onNodeHover: () => {},
+            });
             window.__CA_GRAPH = G;
-                        setGraphFocusMessage();
+            setGraphFocusMessage();
 
-      // Ocultar loading skeleton
-      const loader = document.getElementById('graph-loading');
-      if (loader) loader.classList.add('loaded');
+            // Ocultar loading skeleton
+            const loader = document.getElementById('graph-loading');
+            if (loader) loader.classList.add('loaded');
 
-      document.querySelectorAll('#graph-controls .gc-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
+            document.querySelectorAll('#graph-controls .gc-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
                     if (btn.dataset.graphReset === '1') {
                         document.querySelectorAll('#graph-controls .gc-btn').forEach(b => b.classList.remove('active'));
                         var allBtn = document.querySelector('#graph-controls .gc-btn[data-layer="all"]');
@@ -3766,14 +3776,14 @@ function initGrafo() {
                         if (G.setFrictionTypeFilter) G.setFrictionTypeFilter('all');
                         return;
                     }
-          document.querySelectorAll('#graph-controls .gc-btn').forEach(b => b.classList.remove('active'));
-          btn.classList.add('active');
-          G.setActiveLayer(btn.dataset.layer);
-        });
-      });
+                    document.querySelectorAll('#graph-controls .gc-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    G.setActiveLayer(btn.dataset.layer);
+                });
+            });
+        }
+        tryInit();
     }
-    tryInit();
-  }
   // Lazy-init: solo inicializar cuando la seccion es visible
   const section = document.getElementById('grafo');
   if (section && 'IntersectionObserver' in window) {

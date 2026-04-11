@@ -58,6 +58,26 @@ Sesión de QA integral: auditoría de repo, evaluación heurística, pruebas de 
 ## 2) Archivos clave
 
 | Archivo | Tamaño | Cambios esta sesión |
+
+---
+
+## 3) Validación y cierre de Sprint 5 (abril 2026)
+
+**Fix QA defensivo:**
+- Se agregó verificación en la inicialización del grafo para mostrar error visible si los datos no están listos (`CASOS` vacío), evitando bug silencioso por condición de carrera.
+- Overlay de loading ahora se oculta y da feedback inmediato al usuario.
+- Validado en producción: deploy exitoso (ver captura adjunta de GitHub Actions, todos los workflows verdes).
+
+**Criterios de aceptación:**
+- [x] El usuario ve mensaje claro si el grafo no carga
+- [x] Overlay de loading no queda colgado
+- [x] Error registrado en consola para debug
+
+**Retro:**
+- QA mucho más reproducible y transparente para usuarios y desarrolladores.
+- Siguiente paso: monitorear feedback real y documentar cualquier edge case futuro.
+
+---
 |---------|--------|---------------------|
 | `index.html` | 153 KB | Bootstrap async, try/catch, retry limits, CSV BOM, localStorage safe, theme-color, manifest link |
 | `contra-archivo-v2.html` | 198 KB | Base64→img, h1, reduced-motion, contraste, OG, form, nav, filterByDocType, showDocConnections, onerror, aria-live, rAF progress, paginación lista |
@@ -67,6 +87,51 @@ Sesión de QA integral: auditoría de repo, evaluación heurística, pruebas de 
 | `manifest.json` | 0.6 KB | **Nuevo** — PWA manifest |
 | `404.html` | 1.6 KB | **Nuevo** — página 404 personalizada |
 | `img/` | 1 MB (19 JPEGs) | Extraídos de base64 inline |
+
+---
+
+## 2) Fix QA — Rutas absolutas en scripts y manifest (2026-04-09)
+
+### Alcance entregado
+- Fix crítico aplicado a `index.html` para que todos los scripts JS y el manifest se carguen correctamente en producción (GitHub Pages).
+- Rutas de scripts y manifest cambiadas a absolutas (`/antropologia-corrupcion/...`).
+- Validación de sintaxis post-fix: sin errores.
+- QA checklist de validación post-fix incluido.
+
+### Archivos clave
+- [index.html](antropologia-corrupcion/index.html)
+
+### Commits
+- Fix QA: rutas absolutas para scripts y manifest (fecha: 2026-04-09)
+
+### Verificación
+- Grafo y módulos JS cargan correctamente en https://vientonorte.github.io/antropologia-corrupcion/
+- No hay errores 404 en consola para scripts ni manifest.
+- Buscador y simulación funcionales.
+
+### Riesgos
+- Si se agregan nuevos scripts o recursos, deben usar rutas absolutas.
+- Si se cambia el subdirectorio del proyecto en Pages, ajustar rutas nuevamente.
+
+### Siguiente paso
+- Validar en producción tras deploy.
+- Cerrar issue QA si todo funciona.
+
+### Retrospectiva
+
+- **Funcionó bien:**
+  - Detección rápida del bug raíz (rutas relativas vs. subdirectorio en GitHub Pages).
+  - Auditoría exhaustiva: scripts, manifest, fetch, imágenes y CSS.
+  - Documentación QA clara: issue, checklist, handoff y changelog.
+  - Fix atómico, sin side effects ni errores de sintaxis.
+- **Mejorar:**
+  - Automatizar validación de rutas en futuros assets (pre-commit hook o script de CI).
+  - Incluir test visual post-deploy para detectar recursos rotos antes de mergear a main.
+  - Explorar fallback dinámico en JS para rutas, útil si el subdirectorio cambia.
+- **Acción siguiente:**
+  - Validar en producción tras deploy.
+  - Cerrar issue QA si todo funciona.
+  - Replicar patrón de rutas absolutas en nuevos módulos o páginas.
 
 ---
 
