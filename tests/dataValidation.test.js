@@ -262,7 +262,7 @@ module.exports = function (describe, it, assert, assertEqual, assertDeepEqual, a
     /* ─── Cross-data referential integrity ─── */
 
     describe('Cross-data referential integrity', function () {
-        it('all 7 fuente types are covered across registros', function () {
+        it('all 6 institutional fuente types are covered across registros', function () {
             var fuentes = {};
             for (var i = 0; i < fuentesData.length; i++) {
                 fuentes[fuentesData[i].fuente] = true;
