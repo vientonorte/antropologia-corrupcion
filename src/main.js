@@ -97,11 +97,6 @@ async function init() {
             });
         }
 
-        console.log('[Contra-Archivo] Sistema de grafo iniciado:', {
-            casos: json.casos.length,
-            links: graphData.links.length,
-        });
-
     } catch (err) {
         console.error('[Contra-Archivo] Error al iniciar grafo:', err);
         showFallbackError(err);
@@ -405,7 +400,7 @@ function waitForModules(cb, retries = 20) {
     } else if (retries > 0) {
         setTimeout(() => waitForModules(cb, retries - 1), 100);
     } else {
-        console.error('[Contra-Archivo] Módulos no disponibles');
+        console.error('[Contra-Archivo] Módulos no disponibles tras reintentos');
     }
 }
 

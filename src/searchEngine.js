@@ -52,6 +52,14 @@ var SEARCH_SCORE_WEIGHTS = {
     tipo: 0.2
 };
 
+function _seFrictionTip(score) {
+    var v = score;
+    if (v >= 0.85) return 'Fricci\u00f3n ' + v.toFixed(2) + ' \u2014 Cr\u00edtica: traducci\u00f3n imposible sin violencia epistemol\u00f3gica';
+    if (v >= 0.70) return 'Fricci\u00f3n ' + v.toFixed(2) + ' \u2014 Alta: tensi\u00f3n severa entre testimonio y registro oficial';
+    if (v >= 0.45) return 'Fricci\u00f3n ' + v.toFixed(2) + ' \u2014 Media: distorsi\u00f3n significativa entre capas de verdad';
+    return 'Fricci\u00f3n ' + v.toFixed(2) + ' \u2014 Baja: las capas logran traducirse con p\u00e9rdida menor';
+}
+
 /* ─── UTILIDADES ─── */
 
 /**
@@ -514,7 +522,7 @@ function renderSearchCard(result, context) {
         '<div class="se-card-score-wrap">' +
         '<span class="se-card-score-label">Fricción</span>' +
         '<div class="se-card-score-bar"><div class="se-card-score-fill" style="width:' + (score * 100) + '%;background:' + scoreColor + '"></div></div>' +
-        '<span class="se-card-score-val" style="color:' + scoreColor + '">' + (score * 100).toFixed(0) + '%</span>' +
+        '<span class="se-card-score-val friction-tip" tabindex="0" data-tip="' + _escHtml(_seFrictionTip(score)) + '" style="color:' + scoreColor + '">' + (score * 100).toFixed(0) + '%</span>' +
         '</div>' +
         (casoLabel ? '<div class="se-card-caso">↔ ' + _escHtml(casoLabel) + '</div>' : '') +
         '</div>' +
@@ -902,7 +910,7 @@ function initSearchUI(opts) {
                     stats: stats
                 });
             } catch (err) {
-                console.warn('onResults callback failed:', err);
+                /* onResults callback failed — silent */
             }
         }
 
@@ -1001,7 +1009,7 @@ function initSearchUI(opts) {
                     event: evt
                 });
             } catch (err) {
-                console.warn('onResultClick callback failed:', err);
+                /* onResultClick callback failed — silent */
             }
         }
     });
