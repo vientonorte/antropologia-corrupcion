@@ -31,7 +31,7 @@ global.document = {
 };
 global.CustomEvent = function (name, opts) { this.type = name; this.detail = (opts || {}).detail; };
 global.setTimeout = setTimeout;
-global.requestAnimationFrame = function (cb) { setTimeout(cb, 16); };
+global.requestAnimationFrame = function (cb) { setTimeout(function () { cb(Date.now()); }, 16); };
 global.URL = { createObjectURL: function () { return ''; }, revokeObjectURL: function () {} };
 global.Blob = function () {};
 

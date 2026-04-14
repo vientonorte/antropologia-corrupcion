@@ -164,11 +164,13 @@ module.exports = function (describe, it, assert, assertEqual, assertDeepEqual, a
 
         it('sorts by relevance then friction score', function () {
             var results = engine.search({ query: 'regulación AFP' });
+            // The search engine sorts by relevance first (with a 0.1 bucket tolerance)
+            // then by friction score within the same bucket
+            var RELEVANCE_BUCKET_TOLERANCE = 0.11;
             for (var i = 1; i < results.length; i++) {
                 var prev = results[i - 1];
                 var curr = results[i];
-                // Either relevance is higher or (if same) friction is higher
-                var ok = prev.relevance >= curr.relevance - 0.11;
+                var ok = prev.relevance >= curr.relevance - RELEVANCE_BUCKET_TOLERANCE;
                 assert(ok, 'results should be sorted by relevance then friction');
             }
         });
