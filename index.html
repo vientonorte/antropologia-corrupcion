@@ -396,6 +396,51 @@
             text-transform: uppercase;
             margin-top: 2px
         }
+
+        /* ── FRICTION SCORE TOOLTIP ── */
+        .friction-tip {
+            position: relative;
+            cursor: help
+        }
+        .friction-tip::after {
+            content: attr(data-tip);
+            position: absolute;
+            bottom: calc(100% + 8px);
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 8px 12px;
+            background: rgba(12,12,12,.96);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text);
+            font-family: var(--font-sans);
+            font-size: 11px;
+            font-weight: 400;
+            line-height: 1.5;
+            white-space: normal;
+            width: max-content;
+            max-width: 260px;
+            text-align: center;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity .2s ease;
+            z-index: 50
+        }
+        .friction-tip:hover::after,
+        .friction-tip:focus::after,
+        .friction-tip:focus-within::after {
+            opacity: 1
+        }
+        @media (max-width: 600px) {
+            .friction-tip::after {
+                left: 0;
+                transform: none;
+                max-width: 200px
+            }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .friction-tip::after { transition: none }
+        }
         
         .hero-ctas {
             display: flex;
@@ -1798,6 +1843,61 @@
             color: var(--etica);
             transform: translateY(-2px)
         }
+
+        /* ══════════════════════════════════════ QUICK-ACCESS BAR */
+        .quick-access {
+            position: fixed;
+            right: 24px;
+            bottom: 76px;
+            z-index: 189;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity .3s ease, transform .3s ease;
+            transform: translateY(8px)
+        }
+        .quick-access.visible {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(0)
+        }
+        .qa-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 14px;
+            background: rgba(12,12,12,.92);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            color: var(--muted);
+            text-decoration: none;
+            font-size: 12px;
+            font-family: var(--font-mono);
+            letter-spacing: .04em;
+            white-space: nowrap;
+            transition: border-color .2s, color .2s, transform .15s
+        }
+        .qa-btn:hover, .qa-btn:focus-visible {
+            border-color: var(--etica);
+            color: var(--etica);
+            transform: translateX(-4px)
+        }
+        .qa-btn:focus-visible {
+            outline: 2px solid var(--etica);
+            outline-offset: 2px
+        }
+        .qa-icon {
+            font-size: 14px;
+            line-height: 1
+        }
+
+        @media(max-width:768px) {
+            .quick-access { display: none !important }
+        }
+
         /* ══════════════════════════════════════ RESPONSIVE */
         
         @media(max-width:768px) {
@@ -3549,6 +3649,13 @@
     <!-- SCROLL-TOP FAB -->
     <button class="scroll-top-fab" id="scroll-top-fab" aria-label="Volver al inicio" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
 
+    <!-- QUICK-ACCESS BAR -->
+    <nav class="quick-access" id="quick-access" aria-label="Acceso rápido a secciones clave" hidden>
+        <a href="#grafo" class="qa-btn" aria-label="Ir al grafo de red"><span class="qa-icon">⬡</span><span class="qa-label">Red</span></a>
+        <a href="#buscador" class="qa-btn" aria-label="Ir al buscador de fricción"><span class="qa-icon">⊘</span><span class="qa-label">Buscar</span></a>
+        <a href="#campos" class="qa-btn" aria-label="Ir a los 4 campos etnográficos"><span class="qa-icon">◬</span><span class="qa-label">Casos</span></a>
+    </nav>
+
     <nav class="bottom-nav" id="bottom-nav" aria-label="Navegación mobile">
         <a href="#hero" aria-label="Ir a sección: Tesis"><span class="bn-icon">◉</span>Tesis</a>
         <a href="#instrumento" aria-label="Ir a sección: Instrumento"><span class="bn-icon">⊞</span>Instrumento</a>
@@ -3567,7 +3674,7 @@
     <script src="src/graph.js" defer></script>
     <script src="src/nodeRenderer.js" defer></script>
     <script src="src/socialField.js" defer></script>
-    <script src="src/searchEngine.js" defer></script>
+    <script src="src/searchEngine.js?v=20260414" defer></script>
 
     <script>
         'use strict';
@@ -3620,6 +3727,13 @@
             return 'var(--mat)';
         }
 
+        function frictionTip(v) {
+            if (v >= 0.85) return 'Fricción ' + v.toFixed(2) + ' — Crítica: la traducción institucional es imposible sin violencia epistemológica';
+            if (v >= 0.70) return 'Fricción ' + v.toFixed(2) + ' — Alta: tensión severa entre testimonio situado y registro oficial';
+            if (v >= 0.45) return 'Fricción ' + v.toFixed(2) + ' — Media: distorsión significativa entre capas de verdad';
+            return 'Fricción ' + v.toFixed(2) + ' — Baja: las capas de verdad logran traducirse con pérdida menor';
+        }
+
         /* ── HERO METER ── */
         function initHeroMeter() {
             const el = document.getElementById('hero-meter');
@@ -3630,7 +3744,7 @@
         <div class="mc-bar" data-val="${c.friccion.intensidad}"
           style="width:0%;background:${frictionColor(c.friccion.intensidad)}"></div>
       </div>
-      <div class="mc-val" style="color:${frictionColor(c.friccion.intensidad)}">${c.friccion.intensidad.toFixed(2)}</div>
+      <div class="mc-val friction-tip" tabindex="0" data-tip="${frictionTip(c.friccion.intensidad)}" style="color:${frictionColor(c.friccion.intensidad)}">${c.friccion.intensidad.toFixed(2)}</div>
       <div class="mc-tipo">${c.friccion.tipo}${c.friccion.subtipo ? ' · ' + c.friccion.subtipo : ''}</div>
     </div>
   `).join('');
@@ -3663,7 +3777,7 @@
       <div class="cc-friction">
         <span class="ccf-label">Fricción</span>
         <div class="ccf-bar"><div class="ccf-fill" style="width:${c.friccion.intensidad*100}%;background:${frictionColor(c.friccion.intensidad)}"></div></div>
-        <span class="ccf-val" style="color:${frictionColor(c.friccion.intensidad)}">${c.friccion.intensidad.toFixed(2)}</span>
+        <span class="ccf-val friction-tip" tabindex="0" data-tip="${frictionTip(c.friccion.intensidad)}" style="color:${frictionColor(c.friccion.intensidad)}">${c.friccion.intensidad.toFixed(2)}</span>
       </div>
     </div>
   `).join('');
@@ -3724,7 +3838,7 @@ function renderTension(id) {
   meta.innerHTML = `
     <div class="tm-item">
       <div class="tm-label">Intensidad de fricción</div>
-      <div class="tm-val" style="color:${col}">${c.friccion.intensidad.toFixed(2)} / 1.00</div>
+      <div class="tm-val friction-tip" tabindex="0" data-tip="${frictionTip(c.friccion.intensidad)}" style="color:${col}">${c.friccion.intensidad.toFixed(2)} / 1.00</div>
       <div class="intensity-bar"><div class="ib-fill" style="width:${c.friccion.intensidad*100}%"></div></div>
     </div>
     <div class="tm-item">
@@ -3948,13 +4062,20 @@ function vizTimeout(loadingId, ms) {
 /* ══════════════ SCROLL-TOP FAB (P1 — H3) ══════════════ */
 function initScrollTopFab() {
   var fab = document.getElementById('scroll-top-fab');
+  var qa = document.getElementById('quick-access');
   if (!fab) return;
   var ticking = false;
   window.addEventListener('scroll', function() {
     if (!ticking) {
       ticking = true;
       requestAnimationFrame(function() {
-        fab.classList.toggle('visible', window.scrollY > 400);
+        var y = window.scrollY;
+        fab.classList.toggle('visible', y > 400);
+        if (qa) {
+          var show = y > 400;
+          if (show && qa.hidden) qa.hidden = false;
+          qa.classList.toggle('visible', show);
+        }
         ticking = false;
       });
     }
