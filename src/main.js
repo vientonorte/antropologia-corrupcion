@@ -98,6 +98,7 @@ async function init() {
         }
 
     } catch (err) {
+        console.error('[Contra-Archivo] Error al iniciar grafo:', err);
         showFallbackError(err);
     }
 }
@@ -399,7 +400,7 @@ function waitForModules(cb, retries = 20) {
     } else if (retries > 0) {
         setTimeout(() => waitForModules(cb, retries - 1), 100);
     } else {
-        /* modules unavailable — silent fail */
+        console.error('[Contra-Archivo] Módulos no disponibles tras reintentos');
     }
 }
 
