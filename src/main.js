@@ -26,9 +26,7 @@ const STATE = {
 
 // Devuelve la ruta correcta para data según contexto (GitHub Pages o local)
 function resolveDataPath(filename) {
-    // Si el sitio está en un subdirectorio (GitHub Pages), usar pathname base
-    const base = window.location.pathname.includes('/antropologia-corrupcion/') ? '/antropologia-corrupcion/' : '/';
-    return base + 'data/' + filename;
+    return 'data/' + filename;
 }
 
 async function loadCasos() {
