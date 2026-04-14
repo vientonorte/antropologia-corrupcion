@@ -1701,6 +1701,8 @@
             border-color: rgba(200, 95, 74, .2);
             border-top-color: var(--crit)
         }
+
+        .viz-loading.error .skeleton-graph { display: none }
         
         .viz-loading.error .viz-loading-text {
             color: var(--crit)
@@ -1732,6 +1734,36 @@
             letter-spacing: .06em;
             font-family: var(--font-mono)
         }
+
+        /* ── SKELETON GRAPH LOADER ── */
+        .skeleton-graph {
+            width: 180px;
+            height: 120px;
+            margin: 0 auto 12px;
+            display: block
+        }
+        .skeleton-link {
+            stroke: var(--border);
+            stroke-width: 1.5;
+            stroke-dasharray: 6 4;
+            animation: skeleton-pulse 1.6s ease-in-out infinite
+        }
+        .skeleton-node {
+            fill: rgba(255,255,255,.06);
+            stroke-width: 2;
+            animation: skeleton-pulse 1.6s ease-in-out infinite
+        }
+        .skeleton-node--etica { stroke: var(--etica) }
+        .skeleton-node--inst  { stroke: var(--inst) }
+        .skeleton-node--mat   { stroke: var(--mat) }
+        @keyframes skeleton-pulse {
+            0%, 100% { opacity: .3 }
+            50%      { opacity: .8 }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .skeleton-link, .skeleton-node { animation: none; opacity: .5 }
+        }
+
         /* ══════════════════════════════════════ SCROLL-TOP FAB */
         
         .scroll-top-fab {
@@ -3151,7 +3183,18 @@
             <div class="graph-wrap">
                 <div class="viz-loading" id="graph-loading">
                     <div class="viz-loading-inner">
-                        <div class="viz-spinner"></div>
+                        <svg class="skeleton-graph" viewBox="0 0 300 200" aria-hidden="true">
+                            <line x1="80" y1="60" x2="220" y2="80" class="skeleton-link"/>
+                            <line x1="80" y1="60" x2="150" y2="150" class="skeleton-link"/>
+                            <line x1="220" y1="80" x2="150" y2="150" class="skeleton-link"/>
+                            <line x1="150" y1="150" x2="60" y2="160" class="skeleton-link"/>
+                            <line x1="220" y1="80" x2="260" y2="140" class="skeleton-link"/>
+                            <circle cx="80" cy="60" r="14" class="skeleton-node skeleton-node--etica"/>
+                            <circle cx="220" cy="80" r="18" class="skeleton-node skeleton-node--inst"/>
+                            <circle cx="150" cy="150" r="12" class="skeleton-node skeleton-node--mat"/>
+                            <circle cx="60" cy="160" r="9" class="skeleton-node skeleton-node--etica"/>
+                            <circle cx="260" cy="140" r="10" class="skeleton-node skeleton-node--inst"/>
+                        </svg>
                         <div class="viz-loading-text">Cargando red…</div>
                     </div>
                 </div>
@@ -3226,7 +3269,17 @@
             <div id="campo-social-wrap">
                 <div class="viz-loading" id="sf-loading">
                     <div class="viz-loading-inner">
-                        <div class="viz-spinner"></div>
+                        <svg class="skeleton-graph" viewBox="0 0 300 200" aria-hidden="true">
+                            <circle cx="150" cy="100" r="30" class="skeleton-node skeleton-node--inst"/>
+                            <circle cx="80" cy="60" r="6" class="skeleton-node skeleton-node--mat"/>
+                            <circle cx="220" cy="50" r="6" class="skeleton-node skeleton-node--etica"/>
+                            <circle cx="250" cy="130" r="6" class="skeleton-node skeleton-node--mat"/>
+                            <circle cx="60" cy="150" r="6" class="skeleton-node skeleton-node--etica"/>
+                            <line x1="150" y1="100" x2="80" y2="60" class="skeleton-link"/>
+                            <line x1="150" y1="100" x2="220" y2="50" class="skeleton-link"/>
+                            <line x1="150" y1="100" x2="250" y2="130" class="skeleton-link"/>
+                            <line x1="150" y1="100" x2="60" y2="150" class="skeleton-link"/>
+                        </svg>
                         <div class="viz-loading-text">Cargando simulación…</div>
                     </div>
                 </div>
@@ -4362,7 +4415,7 @@ function loadBcnDataset() {
     if (window.__BCN_DATASET_PROMISE) return window.__BCN_DATASET_PROMISE;
 
     if (window.location.protocol === 'file:') {
-        console.warn('BCN legislativo requiere servidor local o GitHub Pages; se inicializa sin la capa BCN en file://');
+        /* BCN legislativo requires server — skip silently on file:// */
         window.__BCN_DATASET_PROMISE = Promise.resolve({ boletines: [] });
         return window.__BCN_DATASET_PROMISE;
     }
@@ -4375,7 +4428,7 @@ function loadBcnDataset() {
             return response.json();
         })
         .catch(function(error) {
-            console.warn('BCN legislativo no disponible:', error);
+            /* BCN legislativo unavailable — degrade gracefully */
             return { boletines: [] };
         });
 
