@@ -902,7 +902,7 @@ function initSearchUI(opts) {
                     stats: stats
                 });
             } catch (err) {
-                console.warn('onResults callback failed:', err);
+                /* onResults callback failed — silent */
             }
         }
 
@@ -1001,7 +1001,7 @@ function initSearchUI(opts) {
                     event: evt
                 });
             } catch (err) {
-                console.warn('onResultClick callback failed:', err);
+                /* onResultClick callback failed — silent */
             }
         }
     });
