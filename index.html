@@ -3617,9 +3617,10 @@
 }
 
 /* ── TENSIONES ── */
-let activeCasoId = CASOS[0].id;
+var activeCasoId = null;
 
 function initTensiones() {
+  if (!activeCasoId && CASOS.length) activeCasoId = CASOS[0].id;
   const sel = document.getElementById('tension-selector');
   sel.innerHTML = CASOS.map(c => `
     <button class="ts-btn${c.id === activeCasoId ? ' active' : ''}"
