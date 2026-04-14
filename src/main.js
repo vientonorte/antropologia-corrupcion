@@ -26,7 +26,8 @@ const STATE = {
 
 // Devuelve la ruta correcta para data según contexto (GitHub Pages o local)
 function resolveDataPath(filename) {
-    return 'data/' + filename;
+    var base = window.location.pathname.replace(/\/[^\/]*$/, '/');
+    return base + 'data/' + filename;
 }
 
 async function loadCasos() {
