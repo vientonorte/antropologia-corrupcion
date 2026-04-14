@@ -3527,7 +3527,8 @@
         var _domReady = false;
 
         function resolveDataPath(filename) {
-            return 'data/' + filename;
+            var base = window.location.pathname.replace(/\/[^\/]*$/, '/');
+            return base + 'data/' + filename;
         }
 
         function _loadSiteData() {
