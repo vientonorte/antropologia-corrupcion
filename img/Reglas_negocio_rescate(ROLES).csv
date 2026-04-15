@@ -1,0 +1,32 @@
+TIPO PERSONA;ROLES;N° PERSONAS;PERMISOS
+Persona Jurídica;Aprobador;S/N;Aprobar o rechazar todas las operaciones independiente de la transacción
+;;;Visualizar historial de solicitudes aprobadas o rechazadas solo de él, no de los otros aprobadores
+;;;Recibir notificaciones de aprobación o rechazo de solicitudes asignadas a él.
+;;;Puede ingresar a la transacción para revisar, pero no puede hacer modificaciones, ni ingresar transacciones.
+;;;No puede ver módulo de roles
+;;;Puede ver los saldos, los productos, los datos, los extractos, toda la información de la empresa, pero no puede ver los roles que otras personas tengan asignados
+;;;
+Persona Jurídica;Operador/ digitador;S/N;Puede ingresar transacciones
+;;;Capacidad para modificar y cancelar transacciones, antes de enviar a aprobación
+;;;Ver el detalle de las transacciones realizadas
+;;;Notificaciones de transacciones que fueron aprobadas o rechazadas que han sido ingresadas por esta persona.
+;;;No puede aprobar transacciones
+;;;Puede ver los saldos, los productos, los datos, los extractos, toda la información de la empresa, pero no puede ver los roles que otras personas tengan asignados
+;;;No puede ver módulo de roles
+;;;Visualizar historial de solicitudes aprobadas o rechazadas solo de él, no de los otros aprobadores
+;;;
+;;;Puede generar operaciones
+;;;Recibe todas las notificaciones generadas de la transacción
+;;;Puede aprobar y rechazar transacciones
+;;;No tiene limitación en ver la información del cliente, puede entrar a todos los módulos y generar todas las acciones permitidas por el sitio.
+;;;Puede ver el historial de las transacciones por aprobar
+;;;Puede ver los roles asignados a su empresa
+;;;
+Persona Jurídica;Consultor;S/N;Puede ver información del cliente, entrar a las transacciones pero no puede ingresar y aprobar transacciones
+;;;No puede operar ni autorizar.
+;;;No recibe notificaciones
+;;;No puede ser el historial de autorizaciones, ni los roles que tiene cada persona
+;;;
+;;;
+;;;
+**Cada persona puede tener más de un rol;;;
