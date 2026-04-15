@@ -424,5 +424,32 @@
       "materialidad",
       "sostenibilidad invertida"
     ]
+  },
+  {
+    "id": "sbif-circular-roles-banca-digital-2021",
+    "fuente": "leychile",
+    "titulo": "Circular SBIF / CMF N°3.653 — Gestión de accesos y perfiles en banca digital",
+    "fecha": "2021-07-14",
+    "url": "https://www.cmfchile.cl",
+    "institucion": "Comisión para el Mercado Financiero",
+    "actores_lobby": [],
+    "materia": "Definición de roles de acceso, segregación de funciones y trazabilidad en plataformas transaccionales para personas jurídicas",
+    "keywords": [
+      "roles",
+      "permisos",
+      "segregación de funciones",
+      "trazabilidad",
+      "banca digital"
+    ],
+    "capa_oficial": "La norma exige segregación de funciones y registro de accesos, pero no obliga a que los usuarios puedan ver el mapa de roles ajenos. La trazabilidad es para el auditor, no para el operador. La opacidad sobre quién puede qué queda fuera del alcance regulatorio.",
+    "friccion_con": "banca-roles-opacidad-digital",
+    "tipo_friccion": "tecnica",
+    "tags": [
+      "CMF",
+      "roles",
+      "acceso",
+      "banca digital",
+      "opacidad institucional"
+    ]
   }
 ]
