@@ -45,7 +45,7 @@ index.html                ← Landing + 7 secciones narrativas + grafo SVG + cam
 │   ├── searchEngine.js    ← Buscador híbrido: score auditable + stats componentizadas + BCN
 │   └── socialField.js     ← Termodinámica social: 80 agentes, entropía Shannon, fases
 ├── data/
-│   ├── casos.json         ← Base de datos: 4 campos × 3 capas × fricción
+│   ├── casos.json         ← Base de datos: 5 campos × 3 capas × fricción
 │   ├── fuentes-oficiales.json ← 6 fuentes (InfoLobby, Transparencia, LeyChile, SEIA, CMF, ComprasPublicas)
 │   └── bcn-legislativo.json ← Dataset BCN con boletines y trazas históricas legislativas
 ├── admin.html             ← Panel CMS interno (Admin/Consultor)
@@ -104,7 +104,7 @@ Capacidades activas del buscador:
 - Exportación CSV de resultados filtrados desde el panel de estadísticas
 
 ### triage comparativo — Prioridad investigativa
-Panel comparativo que cruza los mismos registros oficiales del buscador con los 4 casos del contra-archivo para visualizar: cobertura por fuente, vacíos documentales, fricción oficial media, tasa de marcadores activos y tipo dominante por caso. Incluye acceso directo desde cada tarjeta hacia el buscador filtrado por caso para pasar de comparación macro a inspección de registros concretos.
+Panel comparativo que cruza los mismos registros oficiales del buscador con los 5 casos del contra-archivo para visualizar: cobertura por fuente, vacíos documentales, fricción oficial media, tasa de marcadores activos y tipo dominante por caso. Incluye acceso directo desde cada tarjeta hacia el buscador filtrado por caso para pasar de comparación macro a inspección de registros concretos.
 
 ## Navegación
 
