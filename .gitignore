@@ -36,6 +36,10 @@ Ensayo Traducción de Saberes/
 # === MIRROR REDUNDANTE ===
 docs/
 
+# === BUILD & DEPENDENCIAS (nunca en GitHub) ===
+dist/
+node_modules/
+
 # === HERRAMIENTAS DE TRABAJO (no deploy) ===
 INVENTARIO_CARD_SORTING_MVP.md
 QUICK_WINS_PRODUCCION.md
