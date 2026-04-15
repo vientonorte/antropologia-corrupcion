@@ -389,6 +389,105 @@
         "territorio indígena",
         "derechos"
       ]
+    },
+    {
+      "id": "banca-roles-opacidad-digital",
+      "titulo": "Banca Digital — Roles, Permisos y Opacidad Institucional",
+      "anio": 2024,
+      "actores": [
+        "Aprobadores",
+        "Operadores/Digitadores",
+        "Consultores",
+        "Rol sin nombre (acceso irrestricto)",
+        "Persona Jurídica"
+      ],
+      "instituciones": [
+        "Plataforma bancaria digital",
+        "Unidad de operaciones",
+        "Módulo de roles"
+      ],
+      "etica": {
+        "titulo": "Ver sin poder actuar, actuar sin poder ver",
+        "descripcion": "El sistema de roles produce sujetos institucionales asimétricos: el Consultor que ve todo pero no puede hacer nada, no recibe notificaciones, no sabe quién tiene qué permisos. El Aprobador que veta operaciones sin saber qué decidieron sus pares. El Operador que ingresa transacciones pero no puede autorizarlas. Cada rol recibe visibilidad suficiente para su función —y no más. La opacidad sobre los roles ajenos no es falla del sistema: es su diseño.",
+        "voces": [
+          "Aprobador que aprueba sin saber si otro par ya rechazó lo mismo",
+          "Consultor que accede a toda la información material pero no puede actuar ni saber quién puede",
+          "Operador cuyo trabajo es procesado por una capa de aprobación que nunca verá"
+        ],
+        "documentos_ref": [
+          "img/Reglas_negocio_rescate(ROLES).csv"
+        ],
+        "keywords": [
+          "visibilidad segmentada",
+          "agencia",
+          "opacidad",
+          "sujeto institucional",
+          "consentimiento"
+        ],
+        "color": "#c8a96e"
+      },
+      "institucional": {
+        "titulo": "La taxonomía del permiso como régimen de verdad",
+        "descripcion": "El documento recuperado codifica una teoría institucional del acceso: Aprobador, Operador/Digitador, Consultor, y un cuarto rol sin nombre con acceso irrestricto a todo. El número de personas por rol aparece como 'S/N' (sin especificar): la institución no se compromete con cuántos tienen cada nivel de poder. 'No puede ver módulo de roles' aparece en tres de cuatro roles — la arquitectura de permisos se oculta a quienes la habitan. La nota final, 'cada persona puede tener más de un rol', introduce una multiplicidad que el registro no fija: alguien puede ser Aprobador y Operador simultáneamente, y esa combinación no tiene nombre propio en las reglas.",
+        "documentos": [
+          "Reglas de negocio plataforma bancaria digital (rescatadas de ramas)",
+          "Matriz de permisos por tipo de Persona Jurídica",
+          "Módulo de roles (visible solo para el rol sin nombre)"
+        ],
+        "clasificaciones": [
+          "Aprobador",
+          "Operador/Digitador",
+          "Consultor",
+          "Rol sin nombre (acceso irrestricto)"
+        ],
+        "keywords": [
+          "permisos",
+          "roles",
+          "acceso",
+          "taxonomía",
+          "S/N",
+          "módulo invisible"
+        ],
+        "color": "#4a7fa5"
+      },
+      "material": {
+        "titulo": "Saldos, extractos y el mapa de quién puede qué",
+        "descripcion": "Todos los roles pueden ver saldos, productos, datos y extractos de la empresa — pero solo el rol sin nombre puede ver a quién pertenece cada nivel de acceso. El 'módulo de roles' es el único artefacto que mapea el poder institucional digitalmente, y tres de cuatro roles no pueden abrirlo. El Consultor accede a toda la información material pero no puede generar ni aprobar transacciones, no recibe notificaciones, no puede ver el historial de autorizaciones. La información se desacopla completamente de la capacidad de acción.",
+        "evidencias": [
+          "CSV de reglas de negocio rescatado: 4 roles con permisos asimétricos sobre el mismo conjunto de datos",
+          "Módulo de roles visible solo para el rol sin nombre — único que puede ver el mapa completo de poder",
+          "Campo N° Personas marcado como S/N en todos los roles: la distribución real del poder no está en el registro"
+        ],
+        "keywords": [
+          "saldos",
+          "extractos",
+          "módulo de roles",
+          "notificaciones",
+          "trazabilidad"
+        ],
+        "color": "#7a9e6e"
+      },
+      "friccion": {
+        "tipo": "semantica",
+        "subtipo": "tecnica",
+        "intensidad": 0.73,
+        "estado": "abierta",
+        "descripcion": "El sistema produce fricción estructural entre visibilidad y agencia: quien puede ver más no puede hacer más, y quien puede hacer más no puede ver el mapa completo de poder. El rol sin nombre — ubicado entre Operador y Consultor en el documento, sin etiqueta asignada — es la zona de opacidad máxima: tiene todo el acceso pero no aparece nombrado en las reglas formales.",
+        "tension_central": "¿Puede existir accountability institucional cuando el mapa de quién puede qué es visible solo para quien ya tiene todo el poder?",
+        "sin_resolver": true
+      },
+      "conexiones": [
+        "sura-gobernanza-datos",
+        "periodismo-datos-chile"
+      ],
+      "tags": [
+        "banca digital",
+        "roles",
+        "permisos",
+        "opacidad institucional",
+        "accountability",
+        "artefacto rescatado"
+      ]
     }
   ]
 }
