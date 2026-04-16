@@ -442,9 +442,11 @@
     } catch (e) { /* silencioso */ }
   }
 
+  var MAX_PASSKEY_RETRIES = 40;
+
   function waitForPasskey(tries) {
     tries = tries || 0;
-    if (tries > 40) return;
+    if (tries > MAX_PASSKEY_RETRIES) return;
     if (typeof window.PasskeyAuth !== 'undefined') {
       checkAuth();
       return;
