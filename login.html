@@ -5,36 +5,24 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Acceso — Contra-Archivo</title>
 <meta name="description" content="Acceso al espacio de investigación Contra-Archivo">
+<link rel="stylesheet" href="styles/shared.css?v=20260416">
 <style>
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+/* login.html usa --accent como alias de --etica */
 :root{
-  --bg:#0c0c0c;
   --surface:#131313;
-  --text:#e2e2e2;
-  --muted:#888;
-  --border:rgba(255,255,255,.07);
   --accent:#c8a96e;
   --accent-hover:#b8966a;
   --success:#7a9e6e;
   --error:#c85f4a;
-  --r:12px;
-  --font-sans:-apple-system,'Helvetica Neue',sans-serif;
-  --font-mono:'SF Mono','Fira Code',monospace;
 }
 html,body{
   height:100%;
-  background:var(--bg);
-  color:var(--text);
-  font-family:var(--font-sans);
   -webkit-font-smoothing:antialiased;
 }
 body{
-  display:flex;
-  flex-direction:column;
   align-items:center;
   justify-content:center;
   padding:24px;
-  min-height:100vh;
 }
 
 /* ── Card ──────────────────────────────────── */
@@ -224,8 +212,7 @@ body{
 }
 .login-footer a:hover{color:var(--text)}
 
-/* ── Utilities ─────────────────────────────── */
-.hidden{display:none!important}
+/* ── Utilities shared via styles/shared.css ── */
 </style>
 </head>
 <body>

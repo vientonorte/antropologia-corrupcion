@@ -11,94 +11,8 @@
     <meta property="og:type" content="website">
     <meta name="theme-color" content="#0c0c0c">
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⊘</text></svg>">
+    <link rel="stylesheet" href="styles/shared.css?v=20260416">
     <style>
-        /* ══════════════════════════════════════ TOKENS */
-
-        :root {
-            --bg: #0c0c0c;
-            --s1: #131313;
-            --s2: #1a1a1a;
-            --border: rgba(255, 255, 255, .07);
-            --text: #e2e2e2;
-            --muted: #888;
-            --dim: #767676;
-            --etica: #c8a96e;
-            --inst: #4a7fa5;
-            --mat: #7a9e6e;
-            --crit: #c85f4a;
-            --r: 8px;
-            --font-sans: -apple-system, 'Helvetica Neue', sans-serif;
-            --font-mono: 'SF Mono', 'Fira Code', monospace;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            background: var(--bg);
-            color: var(--text);
-            font-family: var(--font-sans);
-            font-size: 15px;
-            line-height: 1.65;
-            overflow-x: hidden;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-
-        a {
-            color: var(--etica);
-            text-decoration: none;
-            transition: opacity .2s;
-        }
-
-        a:hover {
-            opacity: .8;
-        }
-
-        /* ══════════════════════════════════════ HEADER */
-
-        .site-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 16px 24px;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .site-logo {
-            font-family: var(--font-mono);
-            font-size: 14px;
-            letter-spacing: .04em;
-            color: var(--text);
-        }
-
-        .site-logo span {
-            color: var(--etica);
-        }
-
-        .site-nav {
-            display: flex;
-            gap: 20px;
-            font-size: 13px;
-        }
-
-        .site-nav a {
-            color: var(--muted);
-            transition: color .2s;
-        }
-
-        .site-nav a:hover {
-            color: var(--text);
-            opacity: 1;
-        }
 
         /* ══════════════════════════════════════ HERO */
 
@@ -147,28 +61,6 @@
             max-width: 600px;
         }
 
-        .search-input {
-            width: 100%;
-            font-size: 18px;
-            font-family: var(--font-sans);
-            padding: 16px 20px;
-            background: var(--s1);
-            color: var(--text);
-            border: 1px solid var(--border);
-            border-radius: var(--r);
-            outline: none;
-            transition: border-color .2s, box-shadow .2s;
-        }
-
-        .search-input::placeholder {
-            color: var(--dim);
-        }
-
-        .search-input:focus {
-            border-color: var(--etica);
-            box-shadow: 0 0 0 3px rgba(200, 169, 110, .15);
-        }
-
         .search-sources {
             margin-top: 14px;
             font-size: 12px;
@@ -177,49 +69,7 @@
             letter-spacing: .02em;
         }
 
-        /* ══════════════════════════════════════ AUTOSUGGEST */
-
-        .suggest-dropdown {
-            display: none;
-            position: absolute;
-            top: calc(100% + 4px);
-            left: 0;
-            right: 0;
-            background: var(--s1);
-            border: 1px solid var(--border);
-            border-radius: var(--r);
-            overflow: hidden;
-            z-index: 100;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, .5);
-        }
-
-        .suggest-dropdown.active {
-            display: block;
-        }
-
-        .suggest-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 10px 16px;
-            font-size: 14px;
-            cursor: pointer;
-            transition: background .15s;
-        }
-
-        .suggest-item:hover,
-        .suggest-item.selected {
-            background: var(--s2);
-        }
-
-        .suggest-item-name {
-            color: var(--text);
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            flex: 1;
-            margin-right: 10px;
-        }
+        /* ── Suggest badge (landing-specific color label) ── */
 
         .suggest-badge {
             font-size: 10px;
@@ -319,44 +169,6 @@
             margin-bottom: 14px;
         }
 
-        /* ── Friction Bar ── */
-
-        .friction-row {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 14px;
-        }
-
-        .friction-label {
-            font-size: 11px;
-            font-family: var(--font-mono);
-            color: var(--dim);
-            white-space: nowrap;
-        }
-
-        .friction-track {
-            flex: 1;
-            height: 4px;
-            background: rgba(255, 255, 255, .06);
-            border-radius: 2px;
-            overflow: hidden;
-        }
-
-        .friction-fill {
-            height: 100%;
-            border-radius: 2px;
-            transition: width .4s ease;
-        }
-
-        .friction-value {
-            font-size: 11px;
-            font-family: var(--font-mono);
-            color: var(--muted);
-            min-width: 32px;
-            text-align: right;
-        }
-
         .result-cta {
             display: inline-block;
             font-size: 13px;
@@ -397,33 +209,9 @@
             font-size: 13px;
         }
 
-        /* ══════════════════════════════════════ FOOTER */
-
-        .site-footer {
-            text-align: center;
-            padding: 32px 24px;
-            border-top: 1px solid var(--border);
-            font-size: 12px;
-            color: var(--dim);
-            margin-top: auto;
-        }
-
-        .site-footer a {
-            color: var(--muted);
-        }
-
         /* ══════════════════════════════════════ RESPONSIVE */
 
         @media (max-width: 600px) {
-            .site-header {
-                padding: 12px 16px;
-            }
-
-            .site-nav {
-                gap: 14px;
-                font-size: 12px;
-            }
-
             .hero {
                 padding: 48px 16px 32px;
                 min-height: 50vh;
@@ -431,11 +219,6 @@
 
             .hero-subtitle {
                 font-size: 15px;
-            }
-
-            .search-input {
-                font-size: 16px;
-                padding: 14px 16px;
             }
 
             .results-section {
@@ -453,10 +236,11 @@
 
     <!-- ═══════════════════════ HEADER ═══════════════════════ -->
     <header class="site-header">
-        <div class="site-logo"><span>⊘</span> Contra-Archivo</div>
-        <nav class="site-nav">
+        <a href="landing.html" class="site-logo"><span>⊘</span> Contra-Archivo</a>
+        <nav class="site-nav" aria-label="Navegación principal">
+            <a href="buscador.html">Buscador</a>
             <a href="index.html">Instrumento</a>
-            <a href="contra-archivo.html">Contra-Archivo</a>
+            <a href="login.html" class="nav-cta">Acceder →</a>
         </nav>
     </header>
 
