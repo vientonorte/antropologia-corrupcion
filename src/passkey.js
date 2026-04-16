@@ -106,7 +106,7 @@
       publicKey: {
         rp: {
           name: RP_NAME,
-          id: window.location.hostname
+          id: window.location.hostname === '127.0.0.1' ? 'localhost' : window.location.hostname
         },
         user: {
           id: USER_ID,
@@ -157,7 +157,7 @@
     var getOptions = {
       publicKey: {
         challenge: MVP_CHALLENGE,
-        rpId: window.location.hostname,
+        rpId: window.location.hostname === '127.0.0.1' ? 'localhost' : window.location.hostname,
         allowCredentials: [{
           type: 'public-key',
           id: storedId,
