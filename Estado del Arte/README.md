@@ -154,6 +154,10 @@ El repositorio `vientonorte/antropologia-corrupcion` opera bajo este mismo princ
 - **Comparativa Estado Plurinacional / Marco Legal Chile** (`img/comparativa-estado-plurinacional-marco-legal-chile.jpg`)
   Análisis comparativo: tensión entre el modelo plurinacional y el marco constitucional vigente — una instancia de mistranslation institucionalizada a escala constitucional.
 
+### Etnografía digital y finanzas transnacionales
+- **Citas Attac** (`Citas Attac/`)
+  Capturas de pantalla y fichas de citas de ATTAC (Association pour la Taxation des Transactions financières et pour l'Action Citoyenne). Evidencia documental sobre circuitos financieros transnacionales, Tasa Tobin y concentración de capital — vinculada al caso SURA Investments y la cadena de custodia AFP → Corredora SURA → JP Morgan.
+
 ### Cartografía e historia territorial
 - **Distribución de Títulos de Merced — Región de Los Ríos** (`Distribución de titulos de merced en Región de los ríos.png`)
   Mapa histórico de títulos de merced (1884–1929): evidencia material de la traducción forzada del territorio comunal al régimen de propiedad privada. Anclaje empírico del caso La Negra.
