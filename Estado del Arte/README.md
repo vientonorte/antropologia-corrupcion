@@ -148,10 +148,10 @@ El repositorio `vientonorte/antropologia-corrupcion` opera bajo este mismo princ
   Fundamentos de periodismo de investigación como práctica metodológica complementaria.
 
 ### Marco normativo y derechos indígenas
-- **Convenio OIT 169** — Desglose de derechos consagrados (`UX RG - Desglose de derechos consagrados por el OIT 169.jpg`)
+- **Convenio OIT 169** — Desglose de derechos consagrados (`img/desglose-de-derechos-consagrados-por-el-oit-169.jpg`)
   Esquema visual de derechos de pueblos indígenas. Base normativa del caso OIT 169.
 
-- **Comparativa Estado Plurinacional / Marco Legal Chile** (`UX RG - ¿Comparativa Eº Plurinacional del marco legal vigente en Chile_.jpg`)
+- **Comparativa Estado Plurinacional / Marco Legal Chile** (`img/comparativa-estado-plurinacional-marco-legal-chile.jpg`)
   Análisis comparativo: tensión entre el modelo plurinacional y el marco constitucional vigente — una instancia de mistranslation institucionalizada a escala constitucional.
 
 ### Cartografía e historia territorial
