@@ -7,17 +7,17 @@ Esta carpeta contiene los materiales de Etnografía Audiovisual de la tesis doct
 La investigación adopta un **diseño etnográfico multi-situado** (Marcus, 1995) con dos campos simultáneos: (a) la corporación financiera como espacio de producción de opacidad digital, y (b) el territorio mapuche-huilliche como espacio de inscripción del despojo histórico. Se entienden las interfaces digitales, la cámara y el registro sonoro no como herramientas neutras sino como **dispositivos de inscripción** (Latour, 1987) que participan activamente en la producción de conocimiento.
 
 ### Fases de la investigación
-1. **Fase 1 — Etnografía digital corporativa:** observación participante como UX Lead, análisis documental de actas internas, cartografía de flujos de datos, entrevistas con actores clave.
+1. **Fase 1 — Etnografía digital corporativa:** observación participante como actor-investigador, análisis documental de actas internas, cartografía de flujos de datos, entrevistas con actores clave.
 2. **Fase 2 — Trabajo de campo territorial:** recorridos etnográficos en comunidades huilliche, recopilación de testimonios orales, análisis de archivos históricos de títulos de merced.
 3. **Fase 3 — Contra-archivo:** producción del dispositivo archivístico crítico como resultado material de la investigación.
 
-## Caso principal: Etnografía Digital — Estrategia Gaona (SURA Investments)
+## Caso principal: Etnografía Digital — Estrategia VN (SURA Investments)
 
 El documento central de este eje es el compilado **SURA Investments — Estrategia Digital & Gobernanza de Datos**, un trabajo de 150 páginas que constituye una etnografía digital del proceso de separación de bases de datos entre una AFP y SURA Investments en Chile. El caso funciona como *estudio de caso extendido* (Burawoy, 1998) que permite teorizar sobre las condiciones estructurales de la opacidad en instituciones financieras latinoamericanas.
 
-📄 Documento: `SURA_Compilado_Estrategia_Gaona_Complete.pdf` (raíz del repositorio)
+📄 Documento: `SURA_Compilado_VN_Complete.pdf` (raíz del repositorio)
 
-**Autor principal:** Rodrigo Gaete Gaona (UX Lead)  
+**Autor principal:** Colectivo Viento Norte (actor-investigador)  
 **Fecha de compilación:** 2025-10-09
 
 ### Instrumentos y técnicas de recolección
@@ -26,7 +26,7 @@ El documento central de este eje es el compilado **SURA Investments — Estrateg
 - Etnografía digital de flujos de datos: cartografía de conexiones entre bases de datos, APIs y sistemas heredados
 - Entrevistas semiestructuradas con actores clave (equipos de TI, Legal, UX, Negocio) — triangulación de perspectivas
 - Principios de *Privacy by Design* y *Design Sprint* como marcos de intervención etnográfica
-- Observación participante prolongada en contexto corporativo (posición de UX Lead como acceso etnográfico privilegiado)
+- Observación participante prolongada en contexto corporativo (posición de actor-investigador como acceso etnográfico privilegiado)
 
 ### Hallazgos principales
 1. Persistencia de conexiones heredadas a la base de datos `TN_PERFIL` que vulneraban la finalidad previsional original.
