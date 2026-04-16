@@ -423,6 +423,7 @@
         var suggestionIndex = [];
         var debounceTimer = null;
         var selectedSuggest = -1;
+        var searchEngine = null;
 
         var FUENTE_COLORS_LOCAL = {
             bcn: '#6f8fcb',
@@ -471,24 +472,36 @@
                 casos = casosData && casosData.casos ? casosData.casos : [];
 
                 var bcnData = results[2];
-                var boletines = bcnData && bcnData.boletines ? bcnData.boletines : [];
-                bcnRegistros = boletines.map(function (b) {
-                    return {
-                        id: b.id,
-                        fuente: 'bcn',
-                        titulo: b.titulo,
-                        fecha: b.fecha_ingreso,
-                        url: b.url,
-                        institucion: (b.autores || []).join(', '),
-                        materia: (b.materias || []).join(', '),
-                        keywords: (b.materias || []).concat(b.actores_clave || []),
-                        capa_oficial: b.capa_oficial || b.resumen || '',
-                        friccion_con: b.friccion_con || '',
-                        tipo_friccion: b.tipo_friccion || '',
-                        tags: b.tags || [],
-                        actores_lobby: b.actores_clave || []
-                    };
-                });
+                if (typeof window.normalizeBcnDataset === 'function') {
+                    bcnRegistros = window.normalizeBcnDataset(bcnData);
+                } else {
+                    var boletines = bcnData && bcnData.boletines ? bcnData.boletines : [];
+                    bcnRegistros = boletines.map(function (b) {
+                        return {
+                            id: b.id,
+                            fuente: 'bcn',
+                            titulo: b.titulo,
+                            fecha: b.fecha_ingreso,
+                            url: b.url,
+                            institucion: (b.autores || []).join(', '),
+                            materia: (b.materias || []).join(', '),
+                            keywords: (b.materias || []).concat(b.actores_clave || []),
+                            capa_oficial: b.capa_oficial || b.resumen || '',
+                            friccion_con: b.friccion_con || '',
+                            tipo_friccion: b.tipo_friccion || '',
+                            tags: b.tags || [],
+                            actores_lobby: b.actores_clave || []
+                        };
+                    });
+                }
+
+                /* Initialize FrictionSearchEngine if available */
+                if (typeof window.FrictionSearchEngine === 'function') {
+                    searchEngine = new window.FrictionSearchEngine({
+                        registros: registros.concat(bcnRegistros),
+                        casos: casos
+                    });
+                }
 
                 buildSuggestionIndex();
             }).catch(function (err) {
@@ -583,24 +596,41 @@
                 return;
             }
 
-            var allRegistros = registros.concat(bcnRegistros);
-            var casosMap = {};
-            casos.forEach(function (c) { casosMap[c.id] = c; });
+            var scored;
 
-            var scored = allRegistros.map(function (reg) {
-                var textScore = textMatch(reg, query);
-                var caso = casosMap[reg.friccion_con] || null;
-                var frictionScore = computeFriction(reg, caso);
-                return {
-                    registro: reg,
-                    caso: caso,
-                    textScore: textScore,
-                    frictionScore: frictionScore,
-                    combinedScore: textScore * 0.6 + frictionScore * 0.4
-                };
-            }).filter(function (r) {
-                return r.textScore > 0;
-            });
+            /* Use FrictionSearchEngine if initialized */
+            if (searchEngine) {
+                var engineResults = searchEngine.search({ query: query, fuente: 'all', caso: 'all', tipo: 'all' });
+                scored = engineResults.map(function (r) {
+                    return {
+                        registro: r.registro,
+                        caso: r.caso || null,
+                        textScore: r.relevance || 0,
+                        frictionScore: r.frictionScore || 0,
+                        combinedScore: r.score || 0
+                    };
+                });
+            } else {
+                /* Fallback: manual scoring */
+                var allRegistros = registros.concat(bcnRegistros);
+                var casosMap = {};
+                casos.forEach(function (c) { casosMap[c.id] = c; });
+
+                scored = allRegistros.map(function (reg) {
+                    var textScore = textMatch(reg, query);
+                    var caso = casosMap[reg.friccion_con] || null;
+                    var frictionScore = computeFriction(reg, caso);
+                    return {
+                        registro: reg,
+                        caso: caso,
+                        textScore: textScore,
+                        frictionScore: frictionScore,
+                        combinedScore: textScore * 0.6 + frictionScore * 0.4
+                    };
+                }).filter(function (r) {
+                    return r.textScore > 0;
+                });
+            }
 
             scored.sort(function (a, b) { return b.frictionScore - a.frictionScore; });
 
