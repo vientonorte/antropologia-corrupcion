@@ -11,92 +11,26 @@
     <meta property="og:type" content="website">
     <meta name="theme-color" content="#0c0c0c">
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⊘</text></svg>">
+    <link rel="stylesheet" href="styles/shared.css?v=20260416">
     <style>
-        /* ══════════════════════════════════════ TOKENS */
-
-        :root {
-            --bg: #0c0c0c;
-            --s1: #131313;
-            --s2: #1a1a1a;
-            --border: rgba(255, 255, 255, .07);
-            --text: #e2e2e2;
-            --muted: #888;
-            --dim: #767676;
-            --etica: #c8a96e;
-            --inst: #4a7fa5;
-            --mat: #7a9e6e;
-            --crit: #c85f4a;
-            --r: 8px;
-            --font-sans: -apple-system, 'Helvetica Neue', sans-serif;
-            --font-mono: 'SF Mono', 'Fira Code', monospace;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
+        /* ══════════════════════════════════════ PAGE-SPECIFIC */
 
         body {
-            background: var(--bg);
-            color: var(--text);
-            font-family: var(--font-sans);
-            font-size: 15px;
             line-height: 1.65;
-            overflow-x: hidden;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-        }
-
-        a {
-            color: var(--etica);
-            text-decoration: none;
-            transition: opacity .2s;
         }
 
         a:hover {
             opacity: .8;
         }
 
-        /* ══════════════════════════════════════ HEADER */
-
-        .site-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 16px 24px;
-            border-bottom: 1px solid var(--border);
-        }
-
         .site-logo {
-            font-family: var(--font-mono);
-            font-size: 14px;
             letter-spacing: .04em;
-            color: var(--text);
-        }
-
-        .site-logo span {
-            color: var(--etica);
-        }
-
-        .site-nav {
-            display: flex;
-            gap: 20px;
-            font-size: 13px;
-        }
-
-        .site-nav a {
-            color: var(--muted);
-            transition: color .2s;
         }
 
         .site-nav a:hover {
-            color: var(--text);
             opacity: 1;
         }
 
@@ -148,25 +82,8 @@
         }
 
         .search-input {
-            width: 100%;
             font-size: 18px;
-            font-family: var(--font-sans);
             padding: 16px 20px;
-            background: var(--s1);
-            color: var(--text);
-            border: 1px solid var(--border);
-            border-radius: var(--r);
-            outline: none;
-            transition: border-color .2s, box-shadow .2s;
-        }
-
-        .search-input::placeholder {
-            color: var(--dim);
-        }
-
-        .search-input:focus {
-            border-color: var(--etica);
-            box-shadow: 0 0 0 3px rgba(200, 169, 110, .15);
         }
 
         .search-sources {
@@ -400,16 +317,8 @@
         /* ══════════════════════════════════════ FOOTER */
 
         .site-footer {
-            text-align: center;
             padding: 32px 24px;
-            border-top: 1px solid var(--border);
             font-size: 12px;
-            color: var(--dim);
-            margin-top: auto;
-        }
-
-        .site-footer a {
-            color: var(--muted);
         }
 
         /* ══════════════════════════════════════ RESPONSIVE */
@@ -456,7 +365,7 @@
         <div class="site-logo"><span>⊘</span> Contra-Archivo</div>
         <nav class="site-nav">
             <a href="index.html">Instrumento</a>
-            <a href="contra-archivo.html">Contra-Archivo</a>
+            <a href="contra-archivo-v2.html">Contra-Archivo</a>
         </nav>
     </header>
 
