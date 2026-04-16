@@ -32,7 +32,15 @@
   }
 
   function _generarId() {
-    return String(Date.now()) + '-' + String(Math.random()).slice(2, 8);
+    var rand;
+    if (typeof crypto !== 'undefined' && crypto.getRandomValues) {
+      var arr = new Uint32Array(2);
+      crypto.getRandomValues(arr);
+      rand = arr[0].toString(36) + arr[1].toString(36);
+    } else {
+      rand = String(Math.random()).slice(2, 10) + String(Math.random()).slice(2, 10);
+    }
+    return String(Date.now()) + '-' + rand;
   }
 
   function seguir(item) {
@@ -167,21 +175,21 @@
     var items = _leer();
     var agregados = 0;
 
+    var existentes = {};
+    for (var k = 0; k < items.length; k++) {
+      existentes[items[k].tipo + ':' + items[k].nombre] = true;
+    }
+
     for (var i = 0; i < nuevos.length; i++) {
       var n = nuevos[i];
       if (!n || !n.nombre || !n.tipo) continue;
       if (TIPOS_VALIDOS.indexOf(n.tipo) === -1) continue;
 
-      var duplicado = false;
-      for (var j = 0; j < items.length; j++) {
-        if (items[j].nombre === n.nombre && items[j].tipo === n.tipo) {
-          duplicado = true;
-          break;
-        }
-      }
-      if (duplicado) continue;
+      var clave = n.tipo + ':' + n.nombre;
+      if (existentes[clave]) continue;
 
       var ahora = Date.now();
+      existentes[clave] = true;
       items.push({
         id: n.id || _generarId(),
         tipo: n.tipo,
