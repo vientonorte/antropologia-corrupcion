@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Espacio Privado — Contra-Archivo</title>
+<meta name="description" content="Área privada para investigadores — Contra-Archivo: Antropología y Corrupción">
+<meta name="theme-color" content="#0c0c0c">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⊘</text></svg>">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0c0c0c;--s1:#131313;--s2:#1a1a1a;
+  --text:#e2e2e2;--muted:#888;--dim:#767676;
+  --border:rgba(255,255,255,.07);
+  --etica:#c8a96e;--inst:#4a7fa5;--mat:#7a9e6e;--crit:#c85f4a;
+  --r:8px;
+  --font-sans:-apple-system,'Helvetica Neue',sans-serif;
+  --font-mono:'SF Mono','Fira Code',monospace;
+  --sidebar-w:280px;--nav-h:56px;
+}
+html{font-size:15px;-webkit-text-size-adjust:100%}
+body{font-family:var(--font-sans);background:var(--bg);color:var(--text);line-height:1.55;overflow-x:hidden}
+a{color:var(--etica);text-decoration:none}
+a:hover{text-decoration:underline}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit;font-size:inherit}
+input,select,textarea{font-family:inherit;font-size:inherit;color:var(--text);background:var(--s2);border:1px solid var(--border);border-radius:var(--r);padding:8px 12px;outline:none;width:100%}
+input:focus,select:focus,textarea:focus{border-color:var(--etica)}
+select{-webkit-appearance:none;appearance:none}
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:var(--s1)}
+::-webkit-scrollbar-thumb{background:var(--dim);border-radius:3px}
+
+/* NAV */
+.pv-nav{position:sticky;top:0;z-index:100;display:flex;align-items:center;gap:12px;height:var(--nav-h);padding:0 20px;background:var(--bg);border-bottom:1px solid var(--border)}
+.pv-nav-logo{display:flex;align-items:center;gap:8px;font-weight:700;font-size:1.05rem;white-space:nowrap}
+.pv-nav-logo span{font-size:1.3rem}
+.pv-nav-badge{font-size:.7rem;padding:2px 7px;border-radius:4px;background:var(--etica);color:#000;font-weight:600;letter-spacing:.3px;text-transform:uppercase}
+.pv-nav-links{display:flex;gap:6px;margin-left:auto;align-items:center}
+.pv-nav-links a,.pv-nav-links button{font-size:.85rem;color:var(--muted);padding:6px 10px;border-radius:var(--r);transition:color .2s,background .2s}
+.pv-nav-links a:hover,.pv-nav-links button:hover{color:var(--text);background:var(--s2);text-decoration:none}
+.pv-nav-links .btn-salir{color:var(--crit)}
+.pv-hamburger{display:none;background:none;border:none;color:var(--text);font-size:1.4rem;padding:4px 8px;cursor:pointer}
+
+/* LAYOUT */
+.pv-layout{display:grid;grid-template-columns:var(--sidebar-w) 1fr;min-height:calc(100vh - var(--nav-h))}
+.pv-sidebar{background:var(--s1);border-right:1px solid var(--border);overflow-y:auto;height:calc(100vh - var(--nav-h));position:sticky;top:var(--nav-h);padding:16px;display:flex;flex-direction:column;gap:20px}
+.pv-main{overflow-y:auto;display:flex;flex-direction:column}
+
+/* SIDEBAR SECTIONS */
+.sb-section{display:flex;flex-direction:column;gap:8px}
+.sb-title{font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--dim);margin-bottom:4px}
+.sb-search-wrap{position:relative}
+.sb-search-wrap input{padding-left:32px}
+.sb-search-wrap::before{content:'⌕';position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--dim);font-size:1.1rem}
+.sb-count{font-size:.7rem;color:var(--dim);font-family:var(--font-mono)}
+
+.sb-history-item{display:flex;justify-content:space-between;align-items:center;padding:6px 8px;border-radius:var(--r);cursor:pointer;transition:background .15s;font-size:.82rem}
+.sb-history-item:hover{background:var(--s2)}
+.sb-history-item .q{color:var(--text);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sb-history-item .meta{color:var(--dim);font-size:.7rem;font-family:var(--font-mono);margin-left:8px;white-space:nowrap}
+
+.sb-pattern{padding:8px 10px;background:var(--s2);border-radius:var(--r);font-size:.8rem;color:var(--muted);border-left:2px solid var(--etica);margin-bottom:4px}
+
+.sb-seg-item{display:flex;align-items:center;gap:8px;padding:8px;border-radius:var(--r);transition:background .15s;cursor:pointer;font-size:.85rem}
+.sb-seg-item:hover{background:var(--s2)}
+.sb-seg-item .seg-icon{font-size:1.1rem;flex-shrink:0}
+.sb-seg-item .seg-info{flex:1;min-width:0}
+.sb-seg-item .seg-nombre{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sb-seg-item .seg-tags{display:flex;gap:4px;flex-wrap:wrap;margin-top:2px}
+.seg-tag{font-size:.65rem;padding:1px 6px;border-radius:3px;background:var(--s1);color:var(--dim);border:1px solid var(--border)}
+.seg-remove{color:var(--crit);font-size:.85rem;padding:2px 6px;border-radius:4px;flex-shrink:0;opacity:.5;transition:opacity .15s}
+.seg-remove:hover{opacity:1;background:rgba(200,95,74,.12)}
+.seg-counts{display:flex;gap:6px;flex-wrap:wrap}
+.seg-count-badge{font-size:.7rem;padding:2px 8px;border-radius:10px;background:var(--s2);color:var(--muted);font-family:var(--font-mono)}
+
+.sb-btn{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:var(--r);font-size:.78rem;border:1px solid var(--border);color:var(--muted);transition:color .2s,border-color .2s,background .2s;justify-content:center}
+.sb-btn:hover{color:var(--text);border-color:var(--dim);background:var(--s2)}
+.sb-btn-row{display:flex;gap:6px;flex-wrap:wrap}
+.sb-add-form{display:flex;flex-direction:column;gap:6px;padding:8px;background:var(--s2);border-radius:var(--r)}
+.sb-add-form input,.sb-add-form select{font-size:.82rem;padding:6px 10px}
+.sb-add-form .sb-btn{width:100%}
+
+/* TABS */
+.pv-tabs{display:flex;border-bottom:1px solid var(--border);padding:0 24px;gap:0;background:var(--bg);position:sticky;top:0;z-index:10;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.pv-tabs::-webkit-scrollbar{height:0}
+.pv-tab{padding:14px 18px;font-size:.85rem;color:var(--muted);white-space:nowrap;border-bottom:2px solid transparent;transition:color .2s,border-color .2s}
+.pv-tab:hover{color:var(--text)}
+.pv-tab.active{color:var(--etica);border-bottom-color:var(--etica)}
+.pv-panel{display:none;padding:24px;flex:1}
+.pv-panel.active{display:block}
+
+/* SIMULACIÓN */
+.sim-controls{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:16px}
+.sim-slider-group{display:flex;flex-direction:column;gap:2px}
+.sim-slider-group label{font-size:.72rem;color:var(--dim);text-transform:uppercase;letter-spacing:.4px}
+.sim-slider-group input[type=range]{width:140px;accent-color:var(--etica)}
+.sim-btn{padding:7px 16px;border-radius:var(--r);font-size:.82rem;border:1px solid var(--border);color:var(--muted);transition:all .2s}
+.sim-btn:hover{color:var(--text);border-color:var(--dim);background:var(--s2)}
+.sim-canvas-wrap{width:100%;min-height:500px;border:1px solid var(--border);border-radius:var(--r);background:var(--s1);position:relative;overflow:hidden}
+.sim-canvas-wrap canvas,.sim-canvas-wrap svg{width:100%!important;height:100%!important;display:block}
+.sim-legend{display:flex;gap:16px;margin-top:12px;flex-wrap:wrap}
+.sim-legend span{display:flex;align-items:center;gap:6px;font-size:.78rem;color:var(--muted)}
+.sim-legend span::before{content:'';display:block;width:10px;height:10px;border-radius:50%}
+.sim-legend .l-etica::before{background:var(--etica)}
+.sim-legend .l-inst::before{background:var(--inst)}
+.sim-legend .l-mat::before{background:var(--mat)}
+
+/* CHAT */
+.chat-wrap{display:flex;flex-direction:column;height:calc(100vh - var(--nav-h) - 100px);min-height:400px}
+.chat-messages{flex:1;overflow-y:auto;padding:16px 0;display:flex;flex-direction:column;gap:10px}
+.chat-msg{max-width:80%;padding:10px 14px;border-radius:var(--r);font-size:.88rem;line-height:1.5;word-break:break-word}
+.chat-msg.bot{align-self:flex-start;background:var(--s1);border-left:3px solid var(--etica)}
+.chat-msg.user{align-self:flex-end;background:var(--s2);text-align:right}
+.chat-msg .cite{font-size:.72rem;color:var(--dim);margin-top:6px;font-family:var(--font-mono)}
+.chat-input-row{display:flex;gap:8px;padding-top:12px;border-top:1px solid var(--border)}
+.chat-input-row input{flex:1}
+.chat-send{padding:8px 20px;border-radius:var(--r);background:var(--etica);color:#000;font-weight:600;font-size:.85rem;transition:opacity .2s}
+.chat-send:hover{opacity:.85}
+
+/* NOTICIAS */
+.news-controls{display:flex;gap:12px;align-items:center;margin-bottom:16px;flex-wrap:wrap}
+.news-card{padding:16px;border:1px solid var(--border);border-radius:var(--r);margin-bottom:12px;transition:border-color .2s}
+.news-card:hover{border-color:var(--dim)}
+.news-card h3{font-size:.95rem;margin-bottom:6px}
+.news-card .news-meta{font-size:.75rem;color:var(--dim);margin-bottom:8px;font-family:var(--font-mono)}
+.news-card p{font-size:.85rem;color:var(--muted);line-height:1.5}
+.news-badge{display:inline-block;font-size:.65rem;padding:2px 8px;border-radius:10px;margin-left:6px;font-family:var(--font-mono)}
+.news-badge.cruce{background:rgba(200,169,110,.15);color:var(--etica);border:1px solid rgba(200,169,110,.3)}
+.news-badge.actor{background:rgba(74,127,165,.15);color:var(--inst);border:1px solid rgba(74,127,165,.3)}
+
+/* TESIS */
+.tesis-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
+.tesis-card{padding:20px;border:1px solid var(--border);border-radius:var(--r);transition:border-color .2s,transform .15s;display:flex;flex-direction:column;gap:8px}
+.tesis-card:hover{border-color:var(--dim);transform:translateY(-2px)}
+.tesis-card h3{font-size:.95rem}
+.tesis-card .tesis-type{font-size:.65rem;padding:2px 8px;border-radius:10px;display:inline-block;width:fit-content;font-weight:600;text-transform:uppercase;letter-spacing:.3px}
+.tesis-card .type-tesis{background:rgba(200,169,110,.15);color:var(--etica)}
+.tesis-card .type-poemario{background:rgba(122,158,110,.15);color:var(--mat)}
+.tesis-card .type-investigacion{background:rgba(74,127,165,.15);color:var(--inst)}
+.tesis-card .type-ensayo{background:rgba(200,95,74,.15);color:var(--crit)}
+.tesis-card .tesis-desc{font-size:.82rem;color:var(--muted);line-height:1.5;flex:1}
+.tesis-card .tesis-year{font-size:.72rem;color:var(--dim);font-family:var(--font-mono)}
+.tesis-nivel{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:var(--r);background:var(--s2);border:1px solid var(--border);font-size:.78rem;color:var(--muted);margin-bottom:16px}
+.tesis-nivel .nivel-dot{width:8px;height:8px;border-radius:50%;background:var(--etica)}
+
+/* HUELLA DIGITAL */
+.huella-empty{text-align:center;padding:60px 20px;color:var(--dim)}
+.huella-empty .icon{font-size:2.5rem;margin-bottom:12px;opacity:.5}
+.huella-header{margin-bottom:20px}
+.huella-header h2{font-size:1.15rem;margin-bottom:4px}
+.huella-score{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:var(--r);background:var(--s2);border:1px solid var(--border);font-size:.82rem;margin-top:8px}
+.huella-score .score-bar{width:80px;height:6px;border-radius:3px;background:var(--s1);overflow:hidden}
+.huella-score .score-fill{height:100%;border-radius:3px}
+.huella-timeline{position:relative;padding-left:32px}
+.huella-timeline::before{content:'';position:absolute;left:10px;top:0;bottom:0;width:2px;background:var(--border)}
+.huella-event{position:relative;padding:12px 16px;margin-bottom:16px;border:1px solid var(--border);border-radius:var(--r);transition:border-color .15s}
+.huella-event:hover{border-color:var(--dim)}
+.huella-event::before{content:'';position:absolute;left:-26px;top:16px;width:10px;height:10px;border-radius:50%;border:2px solid var(--border);background:var(--s1)}
+.huella-event .ev-date{font-size:.72rem;color:var(--dim);font-family:var(--font-mono)}
+.huella-event .ev-source{display:inline-block;font-size:.65rem;padding:2px 8px;border-radius:10px;margin-left:8px;font-family:var(--font-mono)}
+.source-infolobby{background:rgba(74,127,165,.15);color:var(--inst)}
+.source-transparencia{background:rgba(122,158,110,.15);color:var(--mat)}
+.source-leychile,.source-bcn{background:rgba(200,169,110,.15);color:var(--etica)}
+.source-seia{background:rgba(200,95,74,.15);color:var(--crit)}
+.source-compraspublicas{background:rgba(74,127,165,.2);color:#6bb5e0}
+.source-cmf{background:rgba(200,169,110,.2);color:#dfc07a}
+.source-etnografia-directa{background:rgba(122,158,110,.2);color:#9bc28b}
+.huella-event h4{font-size:.88rem;margin:6px 0 4px}
+.huella-event p{font-size:.82rem;color:var(--muted);line-height:1.45}
+
+/* MOBILE */
+@media(max-width:768px){
+  .pv-hamburger{display:block}
+  .pv-nav-links a:not(.btn-salir){display:none}
+  .pv-layout{grid-template-columns:1fr}
+  .pv-sidebar{position:fixed;top:var(--nav-h);left:0;width:100%;height:calc(100vh - var(--nav-h));z-index:90;transform:translateY(-110%);transition:transform .3s ease;border-right:none;border-bottom:1px solid var(--border)}
+  .pv-sidebar.open{transform:translateY(0)}
+  .pv-tabs{padding:0 12px}
+  .pv-tab{padding:12px 14px;font-size:.8rem}
+  .pv-panel{padding:16px}
+  .sim-canvas-wrap{min-height:320px}
+  .chat-wrap{height:calc(100vh - var(--nav-h) - 140px)}
+  .tesis-grid{grid-template-columns:1fr}
+  .huella-timeline{padding-left:24px}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="pv-nav">
+  <button class="pv-hamburger" id="hamburger-btn" aria-label="Menú">☰</button>
+  <div class="pv-nav-logo"><span>⊘</span> Contra-Archivo <span class="pv-nav-badge">privado</span></div>
+  <div class="pv-nav-links">
+    <a href="index.html">Instrumento</a>
+    <a href="#" id="nav-seg-btn">Mis seguimientos</a>
+    <button class="btn-salir" id="logout-btn">Salir</button>
+  </div>
+</nav>
+
+<!-- LAYOUT -->
+<div class="pv-layout">
+
+  <!-- SIDEBAR -->
+  <aside class="pv-sidebar" id="sidebar">
+
+    <!-- A. Buscador con Memoria -->
+    <div class="sb-section">
+      <div class="sb-title">Buscador</div>
+      <div class="sb-search-wrap">
+        <input type="search" id="sb-search-input" placeholder="Buscar en el contra-archivo…" autocomplete="off">
+      </div>
+      <div class="sb-count" id="sb-search-count"></div>
+    </div>
+
+    <div class="sb-section" id="sb-history-section">
+      <div class="sb-title">Tus búsquedas</div>
+      <div id="sb-history-list"></div>
+      <div class="sb-btn-row">
+        <button class="sb-btn" id="btn-clear-history">Limpiar historial</button>
+        <button class="sb-btn" id="btn-export-history">Exportar CSV</button>
+      </div>
+    </div>
+
+    <div class="sb-section" id="sb-patterns-section">
+      <div class="sb-title">Patrones detectados</div>
+      <div id="sb-patterns-list"></div>
+    </div>
+
+    <!-- B. Seguimientos -->
+    <div class="sb-section">
+      <div class="sb-title">Mis seguimientos</div>
+      <div class="seg-counts" id="seg-counts"></div>
+      <div id="seg-list"></div>
+      <details id="seg-add-details">
+        <summary class="sb-btn" style="list-style:none;width:100%;text-align:center">+ Nuevo seguimiento</summary>
+        <div class="sb-add-form" style="margin-top:8px">
+          <input type="text" id="seg-add-nombre" placeholder="Nombre">
+          <select id="seg-add-tipo">
+            <option value="actor">👤 Actor</option>
+            <option value="institucion">🏛 Institución</option>
+            <option value="ley">⚖ Ley</option>
+            <option value="caso">📁 Caso</option>
+          </select>
+          <input type="text" id="seg-add-tags" placeholder="Tags (separados por coma)">
+          <button class="sb-btn" id="seg-add-btn" style="background:var(--etica);color:#000;border-color:var(--etica)">Agregar</button>
+        </div>
+      </details>
+      <button class="sb-btn" id="btn-export-seg" style="margin-top:4px;width:100%">Exportar seguimientos CSV</button>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="pv-main">
+    <div class="pv-tabs" role="tablist">
+      <button class="pv-tab active" data-tab="simulacion" role="tab" aria-selected="true">Simulación</button>
+      <button class="pv-tab" data-tab="chat" role="tab">Chat</button>
+      <button class="pv-tab" data-tab="noticias" role="tab">Noticias</button>
+      <button class="pv-tab" data-tab="tesis" role="tab">Tesis</button>
+      <button class="pv-tab" data-tab="huella" role="tab">Huella Digital</button>
+    </div>
+
+    <!-- TAB 1: Simulación -->
+    <div class="pv-panel active" id="panel-simulacion" role="tabpanel">
+      <div class="sim-controls">
+        <div class="sim-slider-group">
+          <label>Temperatura fricción</label>
+          <input type="range" id="sim-temp" min="0" max="100" value="50">
+        </div>
+        <div class="sim-slider-group">
+          <label>Fuerza repulsión</label>
+          <input type="range" id="sim-repulsion" min="0" max="100" value="50">
+        </div>
+        <div class="sim-slider-group">
+          <label>Gravedad</label>
+          <input type="range" id="sim-gravity" min="0" max="100" value="50">
+        </div>
+        <button class="sim-btn" id="sim-restart">↻ Reiniciar</button>
+        <button class="sim-btn" id="sim-pause">⏸ Pausar</button>
+      </div>
+      <div class="sim-canvas-wrap" id="sim-graph-container"></div>
+      <div class="sim-legend">
+        <span class="l-etica">Ética</span>
+        <span class="l-inst">Institucional</span>
+        <span class="l-mat">Material</span>
+      </div>
+      <div class="sim-canvas-wrap" id="sim-field-container" style="margin-top:16px;min-height:320px"></div>
+    </div>
+
+    <!-- TAB 2: Chat -->
+    <div class="pv-panel" id="panel-chat" role="tabpanel">
+      <div class="chat-wrap">
+        <div class="chat-messages" id="chat-messages"></div>
+        <div class="chat-input-row">
+          <input type="text" id="chat-input" placeholder="Pregunta sobre casos, actores o fricción…" autocomplete="off">
+          <button class="chat-send" id="chat-send">Enviar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 3: Noticias -->
+    <div class="pv-panel" id="panel-noticias" role="tabpanel">
+      <div class="news-controls">
+        <button class="sim-btn" id="news-refresh">↻ Actualizar feed</button>
+        <label style="font-size:.82rem;color:var(--muted);display:flex;align-items:center;gap:6px">
+          <input type="checkbox" id="news-filter-seg" checked> Solo seguimientos
+        </label>
+      </div>
+      <div id="news-container"></div>
+    </div>
+
+    <!-- TAB 4: Tesis -->
+    <div class="pv-panel" id="panel-tesis" role="tabpanel">
+      <div class="tesis-nivel"><span class="nivel-dot"></span> Nivel actual: Miembro</div>
+      <div class="tesis-grid" id="tesis-grid"></div>
+    </div>
+
+    <!-- TAB 5: Huella Digital -->
+    <div class="pv-panel" id="panel-huella" role="tabpanel">
+      <div id="huella-content">
+        <div class="huella-empty">
+          <div class="icon">🔍</div>
+          <p>Selecciona un actor desde tus seguimientos o búsqueda<br>para ver su huella digital cruzada.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script defer src="src/passkey.js"></script>
+<script defer src="src/frictionEngine.js"></script>
+<script defer src="src/searchEngine.js"></script>
+<script defer src="src/memoria.js"></script>
+<script defer src="src/seguimientos.js"></script>
+<script defer src="src/ciperFeed.js"></script>
+<script defer src="src/graph.js"></script>
+<script defer src="src/fieldPhysics.js"></script>
+<script defer src="src/socialField.js"></script>
+<script>
+(function(){
+'use strict';
+
+/* ── State ── */
+var CASOS = [];
+var FUENTES = [];
+var BCN = [];
+var searchEngine = null;
+var graphInstance = null;
+var fieldInstance = null;
+var simInited = false;
+var chatInited = false;
+var newsLoaded = false;
+var searchCount = 0;
+
+/* ── Helpers ── */
+function $(id){ return document.getElementById(id); }
+function esc(s){ var d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+function fmtDate(d){
+  if(!d) return '';
+  var p = d.split('-');
+  if(p.length===3) return p[2]+'/'+p[1]+'/'+p[0];
+  return d;
+}
+function shortDate(ts){
+  var d = new Date(ts);
+  return d.toLocaleDateString('es-CL',{day:'2-digit',month:'short'});
+}
+
+function download(content, name, mime){
+  var blob = new Blob([content],{type:mime||'text/csv;charset=utf-8'});
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = name;
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+
+/* ── Auth Gate ── */
+function waitFor(check, cb, tries){
+  tries = tries || 0;
+  if(tries > 60){ return; }
+  if(check()) return cb();
+  setTimeout(function(){ waitFor(check, cb, tries+1); }, 80);
+}
+
+function boot(){
+  waitFor(
+    function(){ return typeof window.PasskeyAuth !== 'undefined'; },
+    function(){
+      if(!window.PasskeyAuth.isAuthenticated()){
+        window.location.href = 'login.html';
+        return;
+      }
+      loadData();
+    }
+  );
+}
+
+/* ── Data Loading ── */
+function loadData(){
+  Promise.all([
+    fetch('data/casos.json').then(function(r){ return r.json(); }),
+    fetch('data/fuentes-oficiales.json').then(function(r){ return r.json(); }),
+    fetch('data/bcn-legislativo.json').then(function(r){ return r.json(); })
+  ]).then(function(res){
+    CASOS = (res[0] && res[0].casos) ? res[0].casos : (Array.isArray(res[0]) ? res[0] : []);
+    FUENTES = Array.isArray(res[1]) ? res[1] : (res[1] && res[1].registros ? res[1].registros : []);
+    BCN = Array.isArray(res[2]) ? res[2] : (res[2] && res[2].registros ? res[2].registros : []);
+    initApp();
+  }).catch(function(err){
+    console.error('[Privado] Error cargando datos:', err);
+    initApp();
+  });
+}
+
+/* ── App Init ── */
+function initApp(){
+  initTabs();
+  initSidebar();
+  initTesis();
+  initLogout();
+  initHamburger();
+
+  waitFor(
+    function(){ return typeof window.FrictionSearchEngine !== 'undefined'; },
+    function(){
+      searchEngine = new window.FrictionSearchEngine({ registros: FUENTES, casos: CASOS });
+    }
+  );
+}
+
+/* ── Logout ── */
+function initLogout(){
+  $('logout-btn').addEventListener('click', function(e){
+    e.preventDefault();
+    if(window.PasskeyAuth) window.PasskeyAuth.logout();
+    window.location.href = 'landing.html';
+  });
+}
+
+/* ── Hamburger ── */
+function initHamburger(){
+  var btn = $('hamburger-btn');
+  var sidebar = $('sidebar');
+  btn.addEventListener('click', function(){
+    sidebar.classList.toggle('open');
+  });
+  $('nav-seg-btn').addEventListener('click', function(e){
+    e.preventDefault();
+    sidebar.classList.toggle('open');
+  });
+}
+
+/* ── Tabs ── */
+function initTabs(){
+  var tabs = document.querySelectorAll('.pv-tab');
+  tabs.forEach(function(tab){
+    tab.addEventListener('click', function(){
+      var target = tab.getAttribute('data-tab');
+      tabs.forEach(function(t){
+        t.classList.remove('active');
+        t.setAttribute('aria-selected','false');
+      });
+      tab.classList.add('active');
+      tab.setAttribute('aria-selected','true');
+      document.querySelectorAll('.pv-panel').forEach(function(p){ p.classList.remove('active'); });
+      var panel = $('panel-'+target);
+      if(panel) panel.classList.add('active');
+
+      if(target==='simulacion' && !simInited) initSimulacion();
+      if(target==='chat' && !chatInited) initChat();
+      if(target==='noticias' && !newsLoaded) loadNoticias();
+    });
+  });
+}
+
+/* ── Sidebar: Search + Memory ── */
+function initSidebar(){
+  var input = $('sb-search-input');
+  var debounce = null;
+
+  input.addEventListener('input', function(){
+    clearTimeout(debounce);
+    debounce = setTimeout(function(){ runSearch(input.value.trim()); }, 300);
+  });
+  input.addEventListener('keydown', function(e){
+    if(e.key==='Enter'){ clearTimeout(debounce); runSearch(input.value.trim()); }
+  });
+
+  $('btn-clear-history').addEventListener('click', function(){
+    if(window.MemoriaSearch) window.MemoriaSearch.limpiar().then(function(){ refreshHistory(); });
+  });
+  $('btn-export-history').addEventListener('click', function(){
+    if(!window.MemoriaSearch) return;
+    window.MemoriaSearch.exportarCSV().then(function(csv){ download(csv,'busquedas-contra-archivo.csv'); });
+  });
+  $('btn-export-seg').addEventListener('click', function(){
+    if(!window.Seguimientos) return;
+    download(window.Seguimientos.exportarCSV(),'seguimientos-contra-archivo.csv');
+  });
+
+  $('seg-add-btn').addEventListener('click', addSeguimiento);
+
+  refreshHistory();
+  refreshPatterns();
+  refreshSeguimientos();
+}
+
+function runSearch(q){
+  if(!q) return;
+  if(!searchEngine) return;
+  var results = searchEngine.search({query:q});
+
+  if(window.MemoriaSearch){
+    window.MemoriaSearch.guardar({query:q, category:'busqueda', resultCount:results.length, results:results.slice(0,5)});
+    searchCount++;
+    if(searchCount % 5 === 0) refreshPatterns();
+    refreshHistory();
+  }
+
+  displaySearchResults(q, results);
+}
+
+function displaySearchResults(q, results){
+  var tabs = document.querySelectorAll('.pv-tab');
+  tabs.forEach(function(t){ t.classList.remove('active'); t.setAttribute('aria-selected','false'); });
+  document.querySelectorAll('.pv-panel').forEach(function(p){ p.classList.remove('active'); });
+
+  var panel = $('panel-simulacion');
+  var simTab = document.querySelector('[data-tab="simulacion"]');
+  simTab.classList.add('active');
+  simTab.setAttribute('aria-selected','true');
+  panel.classList.add('active');
+
+  var wrap = $('sim-graph-container');
+  var html = '<div style="padding:16px">';
+  html += '<h3 style="font-size:1rem;margin-bottom:12px">Resultados para «'+esc(q)+'» — '+results.length+' encontrados</h3>';
+  if(results.length===0){
+    html += '<p style="color:var(--dim)">Sin resultados. Intenta con otros términos.</p>';
+  } else {
+    results.slice(0,20).forEach(function(r){
+      var reg = r.registro || r;
+      html += '<div style="padding:12px;border:1px solid var(--border);border-radius:var(--r);margin-bottom:8px">';
+      html += '<div style="font-weight:600;font-size:.9rem">'+esc(reg.titulo||reg.id||'')+'</div>';
+      if(reg.fuente) html += '<span class="ev-source source-'+esc(reg.fuente)+'">'+esc(reg.fuente)+'</span>';
+      if(reg.fecha) html += ' <span style="font-size:.72rem;color:var(--dim);font-family:var(--font-mono)">'+fmtDate(reg.fecha)+'</span>';
+      if(reg.capa_oficial) html += '<p style="font-size:.82rem;color:var(--muted);margin-top:6px">'+esc(reg.capa_oficial.substring(0,200))+'</p>';
+      if(typeof r.score==='number') html += '<div style="font-size:.7rem;color:var(--dim);font-family:var(--font-mono);margin-top:4px">Fricción: '+r.score.toFixed(2)+'</div>';
+      html += '</div>';
+    });
+  }
+  html += '</div>';
+  wrap.innerHTML = html;
+  simInited = false;
+}
+
+function refreshHistory(){
+  if(!window.MemoriaSearch || !window.MemoriaSearch.isSupported()) return;
+  Promise.all([
+    window.MemoriaSearch.listar(10),
+    window.MemoriaSearch.contarBusquedas()
+  ]).then(function(res){
+    var list = res[0];
+    var count = res[1];
+    $('sb-search-count').textContent = count + ' búsquedas totales';
+    var container = $('sb-history-list');
+    if(!list.length){
+      container.innerHTML = '<div style="font-size:.78rem;color:var(--dim);padding:4px 8px">Sin búsquedas aún</div>';
+      return;
+    }
+    container.innerHTML = list.map(function(item){
+      return '<div class="sb-history-item" data-query="'+esc(item.query||'')+'">'
+        +'<span class="q">'+esc(item.query||'')+'</span>'
+        +'<span class="meta">'+shortDate(item.timestamp)+' · '+(item.resultCount||0)+'</span>'
+        +'</div>';
+    }).join('');
+    container.querySelectorAll('.sb-history-item').forEach(function(el){
+      el.addEventListener('click', function(){
+        var q = el.getAttribute('data-query');
+        $('sb-search-input').value = q;
+        runSearch(q);
+      });
+    });
+  });
+}
+
+function refreshPatterns(){
+  if(!window.MemoriaSearch || !window.MemoriaSearch.isSupported()) return;
+  window.MemoriaSearch.detectarPatrones().then(function(patterns){
+    var container = $('sb-patterns-list');
+    if(!patterns || !patterns.length){
+      container.innerHTML = '<div style="font-size:.78rem;color:var(--dim);padding:4px">Sin patrones detectados aún</div>';
+      return;
+    }
+    container.innerHTML = patterns.slice(0,5).map(function(p){
+      var text = 'Has buscado «'+esc(p.query||p.term||'')+'» '+(p.count||p.frequency||0)+' veces';
+      if(p.related && p.related.length) text += ', relacionado con '+p.related.map(function(r){ return '«'+esc(r)+'»'; }).join(', ');
+      return '<div class="sb-pattern">'+text+'</div>';
+    }).join('');
+  });
+}
+
+/* ── Sidebar: Seguimientos ── */
+function refreshSeguimientos(){
+  if(!window.Seguimientos) return;
+  var items = window.Seguimientos.listar();
+  var counts = window.Seguimientos.contarPorTipo();
+  var iconMap = {actor:'👤',institucion:'🏛',ley:'⚖',caso:'📁'};
+
+  $('seg-counts').innerHTML = Object.keys(counts).map(function(k){
+    return '<span class="seg-count-badge">'+iconMap[k]+' '+counts[k]+'</span>';
+  }).join('');
+
+  var list = $('seg-list');
+  if(!items.length){
+    list.innerHTML = '<div style="font-size:.78rem;color:var(--dim);padding:4px 8px">Sin seguimientos</div>';
+    return;
+  }
+  list.innerHTML = items.map(function(item){
+    var tags = (item.tags||[]).map(function(t){ return '<span class="seg-tag">'+esc(t)+'</span>'; }).join('');
+    return '<div class="sb-seg-item" data-id="'+esc(item.id)+'" data-nombre="'+esc(item.nombre)+'">'
+      +'<span class="seg-icon">'+iconMap[item.tipo]+'</span>'
+      +'<div class="seg-info"><div class="seg-nombre">'+esc(item.nombre)+'</div><div class="seg-tags">'+tags+'</div></div>'
+      +'<button class="seg-remove" data-id="'+esc(item.id)+'" title="Dejar de seguir">×</button>'
+      +'</div>';
+  }).join('');
+
+  list.querySelectorAll('.seg-remove').forEach(function(btn){
+    btn.addEventListener('click', function(e){
+      e.stopPropagation();
+      window.Seguimientos.dejarDeSeguir(btn.getAttribute('data-id'));
+      refreshSeguimientos();
+    });
+  });
+
+  list.querySelectorAll('.sb-seg-item').forEach(function(el){
+    el.addEventListener('click', function(){
+      var nombre = el.getAttribute('data-nombre');
+      showHuella(nombre);
+    });
+  });
+}
+
+function addSeguimiento(){
+  var nombre = $('seg-add-nombre').value.trim();
+  var tipo = $('seg-add-tipo').value;
+  var tagsRaw = $('seg-add-tags').value.trim();
+  if(!nombre) return;
+  var tags = tagsRaw ? tagsRaw.split(',').map(function(t){ return t.trim(); }).filter(Boolean) : [];
+  window.Seguimientos.seguir({nombre:nombre, tipo:tipo, tags:tags});
+  $('seg-add-nombre').value = '';
+  $('seg-add-tags').value = '';
+  $('seg-add-details').removeAttribute('open');
+  refreshSeguimientos();
+}
+
+/* ── Tab 1: Simulación ── */
+function initSimulacion(){
+  if(simInited) return;
+  waitFor(
+    function(){ return typeof window.frictionEngine !== 'undefined' && typeof window.FrictionGraph !== 'undefined'; },
+    function(){
+      if(!CASOS.length) return;
+      var gd = window.frictionEngine.buildGraph(CASOS);
+      if(!gd) return;
+
+      var container = $('sim-graph-container');
+      container.innerHTML = '';
+      graphInstance = new window.FrictionGraph({
+        container: container,
+        nodes: gd.nodes,
+        links: gd.links,
+        onNodeClick: function(node){
+          showHuella(node.titulo || node.id);
+        },
+        onNodeHover: function(){}
+      });
+
+      var fieldContainer = $('sim-field-container');
+      if(window.FrictionField){
+        fieldContainer.innerHTML = '';
+        fieldInstance = new window.FrictionField({
+          container: fieldContainer,
+          nodes: gd.nodes,
+          links: gd.links
+        });
+      }
+
+      $('sim-restart').addEventListener('click', function(){
+        if(graphInstance) graphInstance.destroy();
+        if(fieldInstance) fieldInstance.destroy();
+        simInited = false;
+        $('sim-graph-container').innerHTML = '';
+        $('sim-field-container').innerHTML = '';
+        initSimulacion();
+      });
+
+      var paused = false;
+      $('sim-pause').addEventListener('click', function(){
+        paused = !paused;
+        this.textContent = paused ? '▶ Reanudar' : '⏸ Pausar';
+        if(fieldInstance && fieldInstance.setVisible) fieldInstance.setVisible(!paused);
+      });
+
+      simInited = true;
+    }
+  );
+}
+
+/* ── Tab 2: Chat ── */
+function initChat(){
+  if(chatInited) return;
+  var messages = [];
+  var stored = sessionStorage.getItem('ca_chat_history');
+  if(stored){
+    try { messages = JSON.parse(stored); } catch(e){ messages = []; }
+  }
+
+  if(!messages.length){
+    messages.push({
+      role:'bot',
+      text:'Soy el asistente del Contra-Archivo. Pregúntame sobre casos de corrupción institucional, actores públicos o fricción entre capas de verdad.',
+      cite:''
+    });
+  }
+
+  renderChat(messages);
+
+  $('chat-send').addEventListener('click', function(){ sendChat(messages); });
+  $('chat-input').addEventListener('keydown', function(e){
+    if(e.key==='Enter') sendChat(messages);
+  });
+
+  chatInited = true;
+}
+
+function sendChat(messages){
+  var input = $('chat-input');
+  var q = input.value.trim();
+  if(!q) return;
+  input.value = '';
+  messages.push({role:'user',text:q,cite:''});
+  renderChat(messages);
+
+  var response = generateResponse(q);
+  messages.push(response);
+  sessionStorage.setItem('ca_chat_history', JSON.stringify(messages));
+  renderChat(messages);
+}
+
+function generateResponse(query){
+  var ql = query.toLowerCase();
+  var results = [];
+
+  if(searchEngine){
+    results = searchEngine.search({query:query});
+  }
+
+  if(results.length > 0){
+    var top = results.slice(0,3);
+    var parts = top.map(function(r){
+      var reg = r.registro || r;
+      var line = '';
+      if(reg.titulo) line += 'Según '+reg.fuente+': «'+reg.titulo+'»';
+      if(reg.capa_oficial) line += ' — '+reg.capa_oficial.substring(0,150)+'…';
+      if(typeof r.score==='number') line += ' Fricción: '+r.score.toFixed(2)+'.';
+      return line;
+    });
+    return {
+      role:'bot',
+      text: parts.join('\n\n'),
+      cite: 'Fuentes: '+top.map(function(r){ var reg=r.registro||r; return reg.fuente||'caso'; }).join(', ')
+    };
+  }
+
+  var casoMatch = CASOS.find(function(c){
+    return c.titulo && c.titulo.toLowerCase().indexOf(ql)!==-1
+      || (c.actores||[]).some(function(a){ return a.toLowerCase().indexOf(ql)!==-1; })
+      || c.id.toLowerCase().indexOf(ql)!==-1;
+  });
+  if(casoMatch){
+    var desc = casoMatch.etica ? casoMatch.etica.descripcion : casoMatch.titulo;
+    var friction = casoMatch.friccion ? casoMatch.friccion.intensidad : '?';
+    return {
+      role:'bot',
+      text:'Caso: '+casoMatch.titulo+'\n\nCapa ética: '+desc.substring(0,200)+'…\n\nIntensidad de fricción: '+friction,
+      cite:'Fuente: data/casos.json → '+casoMatch.id
+    };
+  }
+
+  var prebuilt = [
+    {keys:['sura','afp','inversiones'],text:'SURA Investments opera como intermediario financiero entre cotizantes AFP y mercados internacionales. La cartera es custodiada por JP Morgan. La FECU de marzo 2026 muestra una volatilidad del +279% en intermediación sin activar alertas CMF.',cite:'data/fuentes-oficiales.json'},
+    {keys:['territorio','mapuche','negra'],text:'El caso La Negra documenta la tensión entre memoria territorial mapuche-huilliche y los dispositivos institucionales de zonificación (SEIA, Ley Indígena). El territorio es reducido a "área de influencia" en la evaluación ambiental.',cite:'data/casos.json → la-negra-territorio-mapuche'},
+    {keys:['ciper','periodismo','datos'],text:'CIPER ha documentado numerosos casos de corrupción donde los datos institucionales contradicen la experiencia vivida. El caso "Periodismo de Datos" analiza cómo la información pública es opacada por dispositivos técnicos.',cite:'data/casos.json → periodismo-datos-chile'},
+    {keys:['oit','consulta','previa','169'],text:'La Consulta Previa (OIT 169) funciona como un dispositivo de neutralización: simula participación indígena mientras valida decisiones ya tomadas. La brecha entre el texto legal y su implementación es el mecanismo central de mistranslation.',cite:'data/casos.json → oit169-consulta-previa'},
+    {keys:['friccion','capas','mistranslation'],text:'La fricción entre capas mide la distancia semántica entre lo que la institución registra (capa institucional), lo que la comunidad vive (capa ética) y lo que el territorio evidencia (capa material). Un score alto indica mayor fallo de traducción.'},
+    {keys:['cmf','fecu','regulacion'],text:'La CMF (Comisión para el Mercado Financiero) opera como regulador que valida la "normalidad" de flujos financieros complejos. La FECU es su instrumento: un formato contable que traduce operaciones en cifras, eliminando el contexto de extracción.'}
+  ];
+
+  for(var i=0;i<prebuilt.length;i++){
+    if(prebuilt[i].keys.some(function(k){ return ql.indexOf(k)!==-1; })){
+      return {role:'bot',text:prebuilt[i].text,cite:prebuilt[i].cite||''};
+    }
+  }
+
+  return {
+    role:'bot',
+    text:'No encontré información específica sobre «'+query+'» en la base de datos. Intenta con términos como: SURA, AFP, CMF, territorio mapuche, consulta previa, CIPER, fricción, o el nombre de un caso específico.',
+    cite:''
+  };
+}
+
+function renderChat(messages){
+  var container = $('chat-messages');
+  container.innerHTML = messages.map(function(m){
+    var cls = m.role==='bot'?'bot':'user';
+    var html = '<div class="chat-msg '+cls+'">'+esc(m.text).replace(/\n/g,'<br>');
+    if(m.cite) html += '<div class="cite">'+esc(m.cite)+'</div>';
+    html += '</div>';
+    return html;
+  }).join('');
+  container.scrollTop = container.scrollHeight;
+}
+
+/* ── Tab 3: Noticias ── */
+function loadNoticias(){
+  var container = $('news-container');
+  container.innerHTML = '<div style="color:var(--dim);padding:20px">Cargando noticias…</div>';
+
+  if(!window.CiperFeed){
+    container.innerHTML = '<div style="color:var(--dim);padding:20px">Módulo CiperFeed no disponible.</div>';
+    return;
+  }
+
+  window.CiperFeed.cargar().then(function(articulos){
+    if(!articulos || !articulos.length){
+      container.innerHTML = '<div style="color:var(--dim);padding:20px">No se encontraron noticias. El feed de CIPER puede estar temporalmente inaccesible.</div>';
+      newsLoaded = true;
+      return;
+    }
+
+    var filterSeg = $('news-filter-seg').checked;
+    var displayed = articulos;
+
+    if(filterSeg && window.Seguimientos){
+      var tracked = window.Seguimientos.listar();
+      if(tracked.length){
+        var names = tracked.map(function(t){ return t.nombre; });
+        var filtered = window.CiperFeed.filtrarPorActores(articulos, names);
+        if(filtered.length) displayed = filtered;
+      }
+    }
+
+    var crossed = CASOS.length ? window.CiperFeed.cruzarConCasos(displayed, CASOS) : displayed.map(function(a){ return {articulo:a,casosRelacionados:[]}; });
+
+    renderNoticias(crossed);
+    newsLoaded = true;
+  }).catch(function(){
+    container.innerHTML = '<div style="color:var(--dim);padding:20px">Error al cargar noticias.</div>';
+    newsLoaded = true;
+  });
+
+  $('news-refresh').addEventListener('click', function(){
+    newsLoaded = false;
+    loadNoticias();
+  });
+
+  $('news-filter-seg').addEventListener('change', function(){
+    newsLoaded = false;
+    loadNoticias();
+  });
+}
+
+function renderNoticias(items){
+  var container = $('news-container');
+  if(!items.length){
+    container.innerHTML = '<div style="color:var(--dim);padding:20px">Sin noticias que coincidan con tus seguimientos.</div>';
+    return;
+  }
+  container.innerHTML = items.slice(0,30).map(function(item){
+    var a = item.articulo || item;
+    var cruces = item.casosRelacionados || [];
+    var html = '<div class="news-card">';
+    html += '<h3><a href="'+(a.enlace||'#')+'" target="_blank" rel="noopener">'+esc(a.titulo||'Sin título')+'</a>';
+    cruces.forEach(function(c){
+      html += '<span class="news-badge cruce">↔ '+esc(c.titulo||c.id||'caso')+'</span>';
+    });
+    html += '</h3>';
+    html += '<div class="news-meta">'+(a.fecha?fmtDate(a.fecha):'')+(a.categorias?' · '+esc(Array.isArray(a.categorias)?a.categorias.join(', '):a.categorias):'')+'</div>';
+    if(a.descripcion) html += '<p>'+esc(a.descripcion.substring(0,250))+'</p>';
+    html += '</div>';
+    return html;
+  }).join('');
+}
+
+/* ── Tab 4: Tesis ── */
+function initTesis(){
+  var pubs = [
+    {titulo:'Contra-Archivo: Antropología y Corrupción',tipo:'tesis',cls:'type-tesis',anio:2026,desc:'Tesis doctoral interactiva. Instrumento crítico para medir la mistranslation institucional entre tres regímenes de verdad.',href:'index.html'},
+    {titulo:'Poemarios del Colectivo',tipo:'poemario',cls:'type-poemario',anio:2025,desc:'Colección de voces poéticas que emergen del proceso de investigación etnográfica.',href:'Poemarios/'},
+    {titulo:'La Negra — Memoria, Territorio y Resistencia',tipo:'investigación',cls:'type-investigacion',anio:2025,desc:'Memoria territorial mapuche-huilliche. Documentación etnográfica del conflicto entre comunidad y dispositivos institucionales.',href:'La Negra/'},
+    {titulo:'Etnografía Audiovisual',tipo:'investigación',cls:'type-investigacion',anio:2025,desc:'Registro audiovisual del trabajo de campo. Imagen como evidencia de densidad territorial.',href:'Etnograf%C3%ADa%20Audiovisual/'},
+    {titulo:'Estado del Arte',tipo:'investigación',cls:'type-investigacion',anio:2024,desc:'Revisión bibliográfica y mapeo del campo teórico: antropología de la corrupción, mistranslation, decolonialidad.',href:'Estado%20del%20Arte/'},
+    {titulo:'Ensayo Traducción de Saberes',tipo:'ensayo',cls:'type-ensayo',anio:2024,desc:'Reflexión sobre la traducción entre saberes académicos, institucionales y comunitarios. El fallo como sistema.',href:'Ensayo%20Traducci%C3%B3n%20de%20Saberes/'}
+  ];
+
+  $('tesis-grid').innerHTML = pubs.map(function(p){
+    return '<a href="'+p.href+'" class="tesis-card" style="text-decoration:none;color:inherit">'
+      +'<span class="tesis-type '+p.cls+'">'+esc(p.tipo)+'</span>'
+      +'<h3>'+esc(p.titulo)+'</h3>'
+      +'<p class="tesis-desc">'+esc(p.desc)+'</p>'
+      +'<span class="tesis-year">'+p.anio+'</span>'
+      +'</a>';
+  }).join('');
+}
+
+/* ── Tab 5: Huella Digital ── */
+function showHuella(actorName){
+  var tabs = document.querySelectorAll('.pv-tab');
+  tabs.forEach(function(t){ t.classList.remove('active'); t.setAttribute('aria-selected','false'); });
+  document.querySelectorAll('.pv-panel').forEach(function(p){ p.classList.remove('active'); });
+  var huellaTab = document.querySelector('[data-tab="huella"]');
+  huellaTab.classList.add('active');
+  huellaTab.setAttribute('aria-selected','true');
+  $('panel-huella').classList.add('active');
+
+  var al = actorName.toLowerCase();
+  var events = [];
+
+  FUENTES.forEach(function(f){
+    var match = false;
+    if(f.titulo && f.titulo.toLowerCase().indexOf(al)!==-1) match = true;
+    if(f.capa_oficial && f.capa_oficial.toLowerCase().indexOf(al)!==-1) match = true;
+    if(f.actores_lobby && f.actores_lobby.some(function(a){ return a.toLowerCase().indexOf(al)!==-1; })) match = true;
+    if(f.keywords && f.keywords.some(function(k){ return k.toLowerCase().indexOf(al)!==-1; })) match = true;
+    if(f.institucion && f.institucion.toLowerCase().indexOf(al)!==-1) match = true;
+    if(f.tags && f.tags.some(function(t){ return t.toLowerCase().indexOf(al)!==-1; })) match = true;
+    if(match) events.push({date:f.fecha||'',source:f.fuente||'desconocida',title:f.titulo||f.id,desc:f.capa_oficial||'',friction:f.tipo_friccion||'',id:f.id});
+  });
+
+  BCN.forEach(function(b){
+    var match = false;
+    if(b.titulo && b.titulo.toLowerCase().indexOf(al)!==-1) match = true;
+    if(b.descripcion && b.descripcion.toLowerCase().indexOf(al)!==-1) match = true;
+    if(b.keywords && b.keywords.some(function(k){ return k.toLowerCase().indexOf(al)!==-1; })) match = true;
+    if(b.tags && b.tags.some(function(t){ return t.toLowerCase().indexOf(al)!==-1; })) match = true;
+    if(match) events.push({date:b.fecha||'',source:'bcn',title:b.titulo||b.id,desc:b.descripcion||b.capa_oficial||'',friction:b.tipo_friccion||'',id:b.id});
+  });
+
+  events.sort(function(a,b){ return (b.date||'').localeCompare(a.date||''); });
+
+  var avgFriction = 0;
+  if(events.length){
+    var frictionCount = 0;
+    events.forEach(function(e){
+      var matchFuente = FUENTES.find(function(f){ return f.id === e.id; });
+      if(matchFuente && typeof matchFuente.friction_score === 'number'){
+        avgFriction += matchFuente.friction_score;
+        frictionCount++;
+      }
+    });
+    if(frictionCount) avgFriction = avgFriction / frictionCount;
+  }
+
+  var content = $('huella-content');
+  if(!events.length){
+    content.innerHTML = '<div class="huella-empty"><div class="icon">📭</div>'
+      +'<p>No se encontraron registros para «'+esc(actorName)+'» en las fuentes oficiales.</p></div>';
+    return;
+  }
+
+  var scoreColor = avgFriction > 0.7 ? 'var(--crit)' : avgFriction > 0.4 ? 'var(--etica)' : 'var(--mat)';
+  var html = '<div class="huella-header">';
+  html += '<h2>Huella Digital: '+esc(actorName)+'</h2>';
+  html += '<div style="font-size:.82rem;color:var(--muted)">'+events.length+' registros en '+countSources(events)+' fuentes</div>';
+  if(avgFriction > 0){
+    html += '<div class="huella-score"><span>Fricción agregada:</span>'
+      +'<div class="score-bar"><div class="score-fill" style="width:'+(avgFriction*100)+'%;background:'+scoreColor+'"></div></div>'
+      +'<span style="font-family:var(--font-mono);font-size:.78rem">'+avgFriction.toFixed(2)+'</span></div>';
+  }
+  html += '</div>';
+
+  html += '<div class="huella-timeline">';
+  events.forEach(function(ev){
+    html += '<div class="huella-event">';
+    html += '<span class="ev-date">'+fmtDate(ev.date)+'</span>';
+    html += '<span class="ev-source source-'+esc(ev.source)+'">'+esc(ev.source)+'</span>';
+    html += '<h4>'+esc(ev.title)+'</h4>';
+    if(ev.desc) html += '<p>'+esc(ev.desc.substring(0,300))+'</p>';
+    if(ev.friction) html += '<span style="font-size:.7rem;color:var(--dim);font-family:var(--font-mono)">tipo: '+esc(ev.friction)+'</span>';
+    html += '</div>';
+  });
+  html += '</div>';
+
+  content.innerHTML = html;
+}
+
+function countSources(events){
+  var s = {};
+  events.forEach(function(e){ s[e.source] = true; });
+  return Object.keys(s).length;
+}
+
+/* ── Boot ── */
+if(document.readyState==='loading'){
+  document.addEventListener('DOMContentLoaded', boot);
+} else {
+  boot();
+}
+
+})();
+</script>
+</body>
+</html>
