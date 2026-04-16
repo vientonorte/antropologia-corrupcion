@@ -17,8 +17,8 @@ El proceso de radicación indígena mapuche (1884–1929) asignó títulos de me
 ## Materiales relacionados
 
 - 📍 `Distribución de titulos de merced en Región de los ríos.png` — Cartografía histórica de la distribución de títulos de merced.
-- 📄 `UX RG - Desglose de derechos consagrados por el OIT 169.jpg` — Derechos indígenas según el Convenio 169 de la OIT.
-- 📄 `UX RG - ¿Comparativa Eº Plurinacional del marco legal vigente en Chile_.jpg` — Análisis del marco legal chileno frente al modelo plurinacional.
+- 📄 `img/desglose-de-derechos-consagrados-por-el-oit-169.jpg` — Derechos indígenas según el Convenio 169 de la OIT.
+- 📄 `img/comparativa-estado-plurinacional-marco-legal-chile.jpg` — Análisis del marco legal chileno frente al modelo plurinacional.
 
 ## Líneas de investigación doctoral
 

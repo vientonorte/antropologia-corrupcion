@@ -241,4 +241,4 @@ Tesis doctoral en Antropología — Chile, 2026.
 
 ---
 
-Rodrigo Gaete · [@vientonorte](https://github.com/vientonorte)
+Colectivo Viento Norte · [@vientonorte](https://github.com/vientonorte)
