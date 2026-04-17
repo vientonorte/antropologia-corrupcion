@@ -35,6 +35,70 @@ global.requestAnimationFrame = function (cb) { setTimeout(function () { cb(Date.
 global.URL = { createObjectURL: function () { return ''; }, revokeObjectURL: function () {} };
 global.Blob = function () {};
 
+/* ─── LOCALSTORAGE / SESSIONSTORAGE MOCK ─── */
+
+function createStorageMock() {
+    var store = {};
+    return {
+        getItem: function (key) { return store.hasOwnProperty(key) ? store[key] : null; },
+        setItem: function (key, value) { store[key] = String(value); },
+        removeItem: function (key) { delete store[key]; },
+        clear: function () { store = {}; },
+        get length() { return Object.keys(store).length; },
+        key: function (i) { return Object.keys(store)[i] || null; },
+    };
+}
+
+global.localStorage = createStorageMock();
+global.sessionStorage = createStorageMock();
+
+/* ─── CRYPTO MOCK ─── */
+
+// Node.js already has crypto global; only define if missing
+if (typeof global.crypto === 'undefined') {
+    Object.defineProperty(global, 'crypto', {
+        value: {
+            getRandomValues: function (arr) {
+                for (var i = 0; i < arr.length; i++) {
+                    arr[i] = Math.floor(Math.random() * 4294967296);
+                }
+                return arr;
+            },
+        },
+        configurable: true,
+    });
+}
+
+/* ─── BTOA / ATOB MOCK ─── */
+
+global.btoa = function (str) { return Buffer.from(str, 'binary').toString('base64'); };
+global.atob = function (b64) { return Buffer.from(b64, 'base64').toString('binary'); };
+
+/* ─── FETCH / NAVIGATOR MOCK ─── */
+
+global.fetch = function () { return Promise.reject(new Error('fetch not available in test')); };
+if (typeof global.navigator === 'undefined') {
+    Object.defineProperty(global, 'navigator', {
+        value: { credentials: {} },
+        configurable: true,
+    });
+}
+global.cancelAnimationFrame = function () {};
+global.IntersectionObserver = function () {
+    this.observe = function () {};
+    this.disconnect = function () {};
+};
+
+/* ─── DOMPARSER MOCK (for ciperFeed.js) ─── */
+
+global.DOMParser = function () {};
+global.DOMParser.prototype.parseFromString = function () {
+    return {
+        querySelector: function () { return null; },
+        querySelectorAll: function () { return []; },
+    };
+};
+
 /* ─── TEST FRAMEWORK ─── */
 
 var passed = 0;
@@ -139,6 +203,18 @@ require('../src/frictionEngine.js');
 // searchEngine.js exposes via window.FrictionSearchEngine, window.normalizeBcnDataset
 require('../src/searchEngine.js');
 
+// graph.js exposes via window.FrictionGraph, window.ForceSimulation
+require('../src/graph.js');
+
+// ciperFeed.js exposes via window.CiperFeed
+require('../src/ciperFeed.js');
+
+// seguimientos.js exposes via window.Seguimientos
+require('../src/seguimientos.js');
+
+// passkey.js exposes via window.PasskeyAuth
+require('../src/passkey.js');
+
 /* ─── LOAD DATA ─── */
 
 var fs = require('fs');
@@ -153,6 +229,10 @@ var bcnData = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data', 'bcn
 require('./frictionEngine.test.js')(describe, it, assert, assertEqual, assertDeepEqual, assertApprox, assertGreaterThan, assertLessThan, assertArrayIncludes, casosData);
 require('./searchEngine.test.js')(describe, it, assert, assertEqual, assertDeepEqual, assertApprox, assertGreaterThan, assertLessThan, assertArrayIncludes, casosData, fuentesData, bcnData);
 require('./dataValidation.test.js')(describe, it, assert, assertEqual, assertDeepEqual, assertApprox, assertGreaterThan, assertArrayIncludes, casosData, fuentesData, bcnData);
+require('./graph.test.js')(describe, it, assert, assertEqual, assertDeepEqual, assertApprox, assertGreaterThan, assertLessThan, assertArrayIncludes);
+require('./ciperFeed.test.js')(describe, it, assert, assertEqual, assertDeepEqual, assertApprox, assertGreaterThan, assertLessThan, assertArrayIncludes, casosData);
+require('./seguimientos.test.js')(describe, it, assert, assertEqual, assertDeepEqual, assertApprox, assertGreaterThan, assertLessThan, assertArrayIncludes);
+require('./passkey.test.js')(describe, it, assert, assertEqual, assertDeepEqual, assertApprox, assertGreaterThan, assertLessThan, assertArrayIncludes);
 
 /* ─── SUMMARY ─── */
 
