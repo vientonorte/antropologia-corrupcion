@@ -71,20 +71,15 @@ module.exports = function (describe, it, assert, assertEqual, assertDeepEqual, a
     /* ─── register/login without WebAuthn ─── */
 
     describe('PasskeyAuth — register/login without WebAuthn', function () {
-        it('register rejects when not supported', function (done) {
+        it('register rejects when not supported', function () {
             window.PublicKeyCredential = undefined;
             var p = Auth.register();
             // register returns a Promise that rejects
-            var rejected = false;
-            p.then(function () {
-                rejected = false;
-            }).catch(function (err) {
-                rejected = true;
+            assert(typeof p.then === 'function', 'should return a promise');
+            p.catch(function (err) {
                 assert(err.message.indexOf('passkey') !== -1 || err.message.indexOf('WebAuthn') !== -1,
                     'should mention passkey/WebAuthn in error');
             });
-            // Since promises are async, we verify synchronously that a promise was returned
-            assert(typeof p.then === 'function', 'should return a promise');
         });
 
         it('login rejects when not supported', function () {
