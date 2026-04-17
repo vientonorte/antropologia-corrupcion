@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Biblioteca de Tesis — Contra-Archivo</title>
+<meta name="description" content="Biblioteca de publicaciones del Colectivo Viento Norte: tesis doctoral, poemarios e investigaciones etnográficas.">
+<meta property="og:title" content="Biblioteca de Tesis — Contra-Archivo">
+<meta property="og:description" content="Tesis doctoral interactiva, poemarios e investigaciones del Colectivo Viento Norte.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#0c0c0c">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⊘</text></svg>">
+<link rel="manifest" href="manifest.json">
+<link rel="stylesheet" href="styles/shared.css?v=20260416">
+<style>
+
+/* ══ HERO ══════════════════════════════════════════════════════ */
+
+.tesis-hero {
+  padding: 64px 24px 48px;
+  max-width: 860px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.tesis-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 16px;
+}
+
+.tesis-hero h1 {
+  font-size: clamp(28px, 5vw, 48px);
+  font-weight: 700;
+  letter-spacing: -.02em;
+  line-height: 1.15;
+  margin-bottom: 12px;
+}
+
+.tesis-hero-desc {
+  max-width: 560px;
+  font-size: 15px;
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+/* ══ FILTERS ═══════════════════════════════════════════════════ */
+
+.tesis-filters {
+  max-width: 860px;
+  margin: 0 auto 32px;
+  padding: 0 24px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.tesis-filter-btn {
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-family: var(--font-mono);
+  background: var(--s1);
+  border: 1px solid var(--border);
+  color: var(--muted);
+  cursor: pointer;
+  transition: background .2s, color .2s, border-color .2s;
+}
+
+.tesis-filter-btn:hover {
+  color: var(--text);
+  border-color: var(--dim);
+}
+
+.tesis-filter-btn.active {
+  background: var(--etica);
+  color: #000;
+  border-color: var(--etica);
+}
+
+/* ══ GRID ═══════════════════════════════════════════════════════ */
+
+.tesis-main {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 0 24px 80px;
+  width: 100%;
+  flex: 1;
+}
+
+.pub-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+/* ══ PUBLICATION CARD ═══════════════════════════════════════════ */
+
+.pub-card {
+  background: var(--s1);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 28px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  text-decoration: none;
+  color: var(--text);
+  transition: border-color .2s, transform .2s;
+}
+
+.pub-card:hover {
+  border-color: rgba(255,255,255,.18);
+  transform: translateY(-2px);
+  opacity: 1;
+}
+
+.pub-type-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 10px;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  padding: 3px 9px;
+  border-radius: 4px;
+  width: fit-content;
+}
+
+.type-tesis        { background: rgba(200,169,110,.15); color: var(--etica); }
+.type-poemario     { background: rgba(122,158,110,.15); color: var(--mat); }
+.type-investigacion{ background: rgba(74,127,165,.15);  color: var(--inst); }
+.type-ensayo       { background: rgba(200,95,74,.15);   color: var(--crit); }
+
+.pub-title {
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: -.01em;
+}
+
+.pub-desc {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.6;
+  flex: 1;
+}
+
+.pub-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 4px;
+}
+
+.pub-year {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--dim);
+}
+
+.pub-action {
+  font-size: 12px;
+  font-family: var(--font-mono);
+  color: var(--etica);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* ══ ACCESS LEVEL ════════════════════════════════════════════════ */
+
+.access-banner {
+  max-width: 860px;
+  margin: 0 auto 36px;
+  padding: 0 24px;
+}
+
+.access-card {
+  background: rgba(200,169,110,.06);
+  border: 1px solid rgba(200,169,110,.2);
+  border-radius: var(--r);
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.access-info {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.access-info strong {
+  color: var(--etica);
+}
+
+.access-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  background: var(--etica);
+  color: #000;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: var(--r);
+  text-decoration: none;
+  transition: background .2s;
+  white-space: nowrap;
+}
+
+.access-cta:hover {
+  background: #b8966a;
+  opacity: 1;
+}
+
+/* ══ RESPONSIVE ═════════════════════════════════════════════════ */
+
+@media (max-width: 600px) {
+  .tesis-hero {
+    padding: 40px 16px 32px;
+  }
+  .tesis-filters,
+  .tesis-main,
+  .access-banner {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+  .pub-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+</style>
+</head>
+<body>
+
+<!-- ════════════════════ HEADER ════════════════════ -->
+<header class="site-header">
+  <a href="landing.html" class="site-logo"><span>⊘</span> Contra-Archivo</a>
+  <nav class="site-nav" aria-label="Navegación principal">
+    <a href="landing.html">Inicio</a>
+    <a href="buscador.html">Buscador</a>
+    <a href="index.html">Instrumento</a>
+    <a href="privado.html" class="nav-cta">Área privada →</a>
+  </nav>
+</header>
+
+<!-- ════════════════════ HERO ════════════════════ -->
+<section class="tesis-hero">
+  <p class="tesis-eyebrow">Colectivo Viento Norte · 2024–2026</p>
+  <h1>Biblioteca de Publicaciones</h1>
+  <p class="tesis-hero-desc">Tesis doctoral, poemarios e investigaciones etnográficas del Colectivo. El acceso completo (descarga PDF) requiere nivel investigador.</p>
+</section>
+
+<!-- ════════════════════ ACCESS BANNER ════════════════════ -->
+<div class="access-banner" id="access-banner">
+  <div class="access-card">
+    <p class="access-info">Navegas como <strong>visitante</strong>. Inicia sesión para desbloquear el acceso completo a las publicaciones.</p>
+    <a href="login.html" class="access-cta">Acceder con Passkey →</a>
+  </div>
+</div>
+
+<!-- ════════════════════ FILTERS ════════════════════ -->
+<div class="tesis-filters" role="group" aria-label="Filtrar por tipo">
+  <button class="tesis-filter-btn active" data-type="all">Todas</button>
+  <button class="tesis-filter-btn" data-type="tesis">Tesis</button>
+  <button class="tesis-filter-btn" data-type="poemario">Poemarios</button>
+  <button class="tesis-filter-btn" data-type="investigacion">Investigación</button>
+  <button class="tesis-filter-btn" data-type="ensayo">Ensayo</button>
+</div>
+
+<!-- ════════════════════ GRID ════════════════════ -->
+<main class="tesis-main" id="tesis-main">
+  <div class="pub-grid" id="pub-grid">
+    <!-- Rendered by JS -->
+  </div>
+</main>
+
+<!-- ════════════════════ FOOTER ════════════════════ -->
+<footer class="site-footer">
+  © 2026 Colectivo Viento Norte · Tesis Doctoral en Antropología&nbsp;&nbsp;·&nbsp;&nbsp;<a href="index.html">Volver al instrumento</a>
+</footer>
+
+<!-- ════════════════════ SCRIPT ════════════════════ -->
+<script defer src="src/passkey.js?v=20260416"></script>
+<script>
+(function () {
+  'use strict';
+
+  /* ── Catálogo de publicaciones ── */
+  var PUBS = [
+    {
+      id: 'tesis-doctoral',
+      titulo: 'Contra-Archivo: Antropología y Corrupción',
+      tipo: 'tesis',
+      anio: 2026,
+      desc: 'Tesis doctoral interactiva. Instrumento crítico para medir la mistranslation institucional entre tres regímenes de verdad: ética, institucional y material.',
+      href: 'index.html',
+      icono: '⊘',
+      nivel: 'publico'
+    },
+    {
+      id: 'poemarios',
+      titulo: 'Poemarios del Colectivo Viento Norte',
+      tipo: 'poemario',
+      anio: 2025,
+      desc: 'Colección de voces poéticas que emergen del proceso de investigación etnográfica. La poesía como otro régimen de verdad.',
+      href: 'Poemarios/',
+      icono: '◦',
+      nivel: 'miembro'
+    },
+    {
+      id: 'la-negra',
+      titulo: 'La Negra — Memoria, Territorio y Resistencia',
+      tipo: 'investigacion',
+      anio: 2025,
+      desc: 'Memoria territorial mapuche-huilliche. Documentación etnográfica del conflicto entre comunidad indígena y dispositivos institucionales de zonificación (SEIA, Ley Indígena).',
+      href: 'La Negra/',
+      icono: '⬡',
+      nivel: 'miembro'
+    },
+    {
+      id: 'etnografia-audiovisual',
+      titulo: 'Etnografía Audiovisual',
+      tipo: 'investigacion',
+      anio: 2025,
+      desc: 'Registro audiovisual del trabajo de campo. La imagen como evidencia de densidad territorial y memoria material. Chile, 2023–2025.',
+      href: 'Etnograf%C3%ADa%20Audiovisual/',
+      icono: '◈',
+      nivel: 'miembro'
+    },
+    {
+      id: 'estado-del-arte',
+      titulo: 'Estado del Arte — Marco Teórico',
+      tipo: 'investigacion',
+      anio: 2024,
+      desc: 'Revisión bibliográfica y mapeo del campo teórico: antropología de la corrupción, mistranslation institucional, decolonialidad y capital financiero.',
+      href: 'Estado del Arte/',
+      icono: '◻',
+      nivel: 'publico'
+    },
+    {
+      id: 'ensayo-traduccion',
+      titulo: 'Ensayo: Traducción de Saberes',
+      tipo: 'ensayo',
+      anio: 2024,
+      desc: 'Reflexión sobre la traducción entre saberes académicos, institucionales y comunitarios. El fallo de traducción como sistema, no como excepción.',
+      href: 'Ensayo%20Traducci%C3%B3n%20de%20Saberes/',
+      icono: '◎',
+      nivel: 'publico'
+    }
+  ];
+
+  var activeFilter = 'all';
+  var isAuthenticated = false;
+
+  /* ── Helpers ── */
+  function esc(s) {
+    var d = document.createElement('div');
+    d.textContent = s;
+    return d.innerHTML;
+  }
+
+  function nivelLabel(nivel) {
+    if (nivel === 'investigador') return '🔒 Investigador';
+    if (nivel === 'miembro') return '🔑 Miembro';
+    return '🌐 Público';
+  }
+
+  function typeLabel(tipo) {
+    switch (tipo) {
+      case 'tesis':         return 'Tesis';
+      case 'poemario':      return 'Poemario';
+      case 'investigacion': return 'Investigación';
+      case 'ensayo':        return 'Ensayo';
+      default:              return tipo;
+    }
+  }
+
+  /* ── Render ── */
+  function render() {
+    var grid = document.getElementById('pub-grid');
+    var filtered = activeFilter === 'all'
+      ? PUBS
+      : PUBS.filter(function (p) { return p.tipo === activeFilter; });
+
+    if (!filtered.length) {
+      grid.innerHTML = '<p style="color:var(--dim);font-size:14px;padding:8px 0">Sin publicaciones en esta categoría.</p>';
+      return;
+    }
+
+    grid.innerHTML = filtered.map(function (p) {
+      var locked = !isAuthenticated && p.nivel !== 'publico';
+      var href = locked ? 'login.html' : p.href;
+      var actionText = locked ? 'Requiere acceso →' : 'Abrir →';
+
+      return '<a href="' + href + '" class="pub-card" data-type="' + esc(p.tipo) + '"' +
+        (locked ? ' aria-label="' + esc(p.titulo) + ' — requiere autenticación"' : '') + '>' +
+        '<span class="pub-type-badge type-' + esc(p.tipo) + '">' +
+          p.icono + ' ' + typeLabel(p.tipo) +
+        '</span>' +
+        '<h2 class="pub-title">' + esc(p.titulo) + '</h2>' +
+        '<p class="pub-desc">' + esc(p.desc) + '</p>' +
+        '<div class="pub-meta">' +
+          '<span class="pub-year">' + p.anio + '</span>' +
+          '<span class="pub-action">' + esc(actionText) + '</span>' +
+        '</div>' +
+        '</a>';
+    }).join('');
+  }
+
+  /* ── Filters ── */
+  document.querySelectorAll('.tesis-filter-btn').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      document.querySelectorAll('.tesis-filter-btn').forEach(function (b) {
+        b.classList.remove('active');
+      });
+      btn.classList.add('active');
+      activeFilter = btn.getAttribute('data-type');
+      render();
+    });
+  });
+
+  /* ── Auth check ── */
+  function checkAuth() {
+    var banner = document.getElementById('access-banner');
+    try {
+      if (typeof window.PasskeyAuth !== 'undefined' && window.PasskeyAuth.isAuthenticated()) {
+        isAuthenticated = true;
+        if (banner) banner.style.display = 'none';
+        render();
+      }
+    } catch (e) { /* silencioso */ }
+  }
+
+  var MAX_PASSKEY_RETRIES = 40;
+
+  function waitForPasskey(tries) {
+    tries = tries || 0;
+    if (tries > MAX_PASSKEY_RETRIES) return;
+    if (typeof window.PasskeyAuth !== 'undefined') {
+      checkAuth();
+      return;
+    }
+    setTimeout(function () { waitForPasskey(tries + 1); }, 100);
+  }
+
+  /* ── Init ── */
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function () {
+      render();
+      waitForPasskey();
+    });
+  } else {
+    render();
+    waitForPasskey();
+  }
+
+})();
+</script>
+</body>
+</html>
