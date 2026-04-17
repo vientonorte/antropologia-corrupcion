@@ -654,4 +654,5 @@ class FrictionGraph {
 /* ─── EXPORT GLOBAL ─── */
 if (typeof window !== 'undefined') {
     window.FrictionGraph = FrictionGraph;
+    window.ForceSimulation = ForceSimulation;
 }
