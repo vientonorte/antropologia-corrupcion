@@ -7,7 +7,7 @@
 <meta name="description" content="Acceso al espacio de investigación Contra-Archivo">
 <link rel="stylesheet" href="styles/shared.css?v=20260416">
 <style>
-/* login.html usa --accent como alias de --etica */
+/* Login-specific overrides */
 :root{
   --surface:#131313;
   --accent:#c8a96e;
@@ -17,12 +17,14 @@
 }
 html,body{
   height:100%;
-  -webkit-font-smoothing:antialiased;
 }
 body{
+  display:flex;
+  flex-direction:column;
   align-items:center;
   justify-content:center;
   padding:24px;
+  min-height:100vh;
 }
 
 /* ── Card ──────────────────────────────────── */
@@ -212,7 +214,8 @@ body{
 }
 .login-footer a:hover{color:var(--text)}
 
-/* ── Utilities shared via styles/shared.css ── */
+/* ── Utilities ─────────────────────────────── */
+.hidden{display:none!important}
 </style>
 </head>
 <body>

@@ -6,6 +6,23 @@
   <title>Buscador Inteligente — Contra-Archivo</title>
   <link rel="stylesheet" href="styles/shared.css?v=20260416">
   <style>
+    /* ── Page-specific overrides ── */
+    body {
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── Nav ── */
+    .site-header {
+      background: var(--s1);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .site-logo { letter-spacing: .5px; }
+
     /* ── Layout ── */
     .page-wrap {
       display: flex;
@@ -37,21 +54,9 @@
       margin-top: 20px;
     }
     .search-input {
-      width: 100%;
       padding: 14px 16px 14px 44px;
       font-family: var(--font-mono);
       font-size: 14px;
-      background: var(--s1);
-      border: 1px solid var(--border);
-      border-radius: var(--r);
-      color: var(--text);
-      outline: none;
-      transition: border-color .2s, box-shadow .2s;
-    }
-    .search-input::placeholder { color: var(--dim); }
-    .search-input:focus {
-      border-color: var(--etica);
-      box-shadow: 0 0 0 3px rgba(200,169,110,.12);
     }
     .search-icon {
       position: absolute;
@@ -468,6 +473,12 @@
       z-index: 90;
       box-shadow: 0 4px 16px rgba(0,0,0,.4);
     }
+
+    /* ── Footer ── */
+    .site-footer {
+      font-size: 12px;
+    }
+    .site-footer a { color: inherit; text-decoration: underline; }
 
     /* ── Responsive ── */
     @media (max-width: 768px) {
