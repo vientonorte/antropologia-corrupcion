@@ -1,0 +1,692 @@
+/* ══════════════════════════════════════════════════════════════
+   ui-kit.css — Kit UI Público · Atomic Design System
+   Contra-Archivo · Colectivo Viento Norte
+   ──────────────────────────────────────────────────────────────
+   Jerarquía Atomic Design:
+     1. TOKENS     — Variables de diseño (colores, tipografía, espaciado, sombras)
+     2. ÁTOMOS     — Elementos mínimos (botón, badge, input, chip, pill, ícono)
+     3. MOLÉCULAS  — Composiciones de átomos (barra de fricción, search, tab-bar)
+     4. ORGANISMOS — Componentes complejos (nav, sidebar drawer, card, timeline)
+     5. UTILIDADES — Clases helper (sr-only, hidden, truncate, flex-gap)
+   ──────────────────────────────────────────────────────────────
+   Metodología: Mobile-first (min-width breakpoints)
+   Navegadores: últimos 2 años, sin polyfills
+   ══════════════════════════════════════════════════════════════ */
+
+/* ═══════════════════════════════════════
+   1. TOKENS — Design Variables
+   ═══════════════════════════════════════ */
+:root {
+  /* ── Color: Surfaces ── */
+  --tk-bg:       #0c0c0c;
+  --tk-s1:       #131313;
+  --tk-s2:       #1a1a1a;
+  --tk-s3:       #222222;
+
+  /* ── Color: Text ── */
+  --tk-text:     #e2e2e2;
+  --tk-muted:    #888;
+  --tk-dim:      #767676;
+
+  /* ── Color: Semantic — Tres Capas de Verdad ── */
+  --tk-etica:    #c8a96e;   /* Ética — testimonio situado */
+  --tk-inst:     #4a7fa5;   /* Institucional — registro oficial */
+  --tk-mat:      #7a9e6e;   /* Material — territorio / evidencia */
+
+  /* ── Color: Status ── */
+  --tk-crit:     #c85f4a;
+  --tk-warn:     #e8b84b;
+  --tk-ok:       #7a9e6e;
+
+  /* ── Color: Alpha overlays ── */
+  --tk-overlay:       rgba(0,0,0,.6);
+  --tk-etica-15:      rgba(200,169,110,.15);
+  --tk-inst-15:       rgba(74,127,165,.15);
+  --tk-mat-15:        rgba(122,158,110,.15);
+  --tk-crit-15:       rgba(200,95,74,.15);
+
+  /* ── Color: Border ── */
+  --tk-border:   rgba(255,255,255,.07);
+  --tk-border-active: rgba(255,255,255,.15);
+
+  /* ── Typography ── */
+  --tk-font-sans: -apple-system, 'Helvetica Neue', sans-serif;
+  --tk-font-mono: 'SF Mono', 'Fira Code', monospace;
+  --tk-fs-xs:    .65rem;    /* 10.4px */
+  --tk-fs-sm:    .78rem;    /* 12.5px */
+  --tk-fs-base:  .85rem;    /* 13.6px */
+  --tk-fs-md:    .95rem;    /* 15.2px */
+  --tk-fs-lg:    1.05rem;   /* 16.8px */
+  --tk-fs-xl:    1.15rem;   /* 18.4px */
+  --tk-lh:       1.55;
+
+  /* ── Spacing Scale (4px base) ── */
+  --tk-sp-1:  4px;
+  --tk-sp-2:  8px;
+  --tk-sp-3:  12px;
+  --tk-sp-4:  16px;
+  --tk-sp-5:  20px;
+  --tk-sp-6:  24px;
+  --tk-sp-8:  32px;
+  --tk-sp-10: 40px;
+  --tk-sp-12: 48px;
+  --tk-sp-16: 64px;
+
+  /* ── Radius ── */
+  --tk-r-sm:  4px;
+  --tk-r:     8px;
+  --tk-r-lg:  12px;
+  --tk-r-xl:  16px;
+  --tk-r-pill: 100px;
+  --tk-r-full: 50%;
+
+  /* ── Shadows ── */
+  --tk-shadow-sm:  0 1px 2px rgba(0,0,0,.3);
+  --tk-shadow-md:  0 4px 12px rgba(0,0,0,.4);
+  --tk-shadow-lg:  0 8px 24px rgba(0,0,0,.5);
+  --tk-shadow-xl:  0 12px 40px rgba(0,0,0,.6);
+
+  /* ── Z-Index Scale ── */
+  --tk-z-base:     1;
+  --tk-z-dropdown: 10;
+  --tk-z-sticky:   20;
+  --tk-z-overlay:  80;
+  --tk-z-drawer:   90;
+  --tk-z-nav:      100;
+  --tk-z-modal:    110;
+
+  /* ── Transitions ── */
+  --tk-ease:     cubic-bezier(.4, 0, .2, 1);
+  --tk-dur-fast: .15s;
+  --tk-dur:      .2s;
+  --tk-dur-slow: .3s;
+
+  /* ── Layout ── */
+  --tk-nav-h:    56px;
+  --tk-sidebar-w: 280px;
+  --tk-touch-min: 44px;  /* WCAG 2.2 mínimo touch target */
+}
+
+/*
+   ── Breakpoints (documentación) ──
+   Los breakpoints se usan con @media (min-width: ...) mobile-first:
+     --bp-sm:  480px   Teléfonos grandes / landscape
+     --bp-md:  768px   Tablets
+     --bp-lg:  1024px  Desktop
+     --bp-xl:  1280px  Desktop ancho
+*/
+
+
+/* ═══════════════════════════════════════
+   2. ÁTOMOS — Elementos mínimos
+   ═══════════════════════════════════════ */
+
+/* ── Botón Primario ── */
+.uk-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--tk-sp-2);
+  padding: var(--tk-sp-3) var(--tk-sp-6);
+  background: var(--tk-etica);
+  color: #000;
+  font-weight: 600;
+  font-size: var(--tk-fs-base);
+  font-family: var(--tk-font-sans);
+  border-radius: var(--tk-r);
+  border: none;
+  cursor: pointer;
+  transition: background var(--tk-dur) var(--tk-ease);
+  text-decoration: none;
+  white-space: nowrap;
+  min-height: var(--tk-touch-min);
+}
+.uk-btn-primary:hover { background: #b8966a; text-decoration: none; }
+.uk-btn-primary:disabled { opacity: .4; cursor: not-allowed; }
+
+/* ── Botón Secundario ── */
+.uk-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--tk-sp-2);
+  padding: var(--tk-sp-2) var(--tk-sp-4);
+  background: var(--tk-s2);
+  color: var(--tk-text);
+  font-size: var(--tk-fs-sm);
+  font-family: var(--tk-font-sans);
+  border-radius: var(--tk-r);
+  border: 1px solid var(--tk-border);
+  cursor: pointer;
+  transition: background var(--tk-dur) var(--tk-ease), border-color var(--tk-dur) var(--tk-ease);
+  text-decoration: none;
+  min-height: var(--tk-touch-min);
+}
+.uk-btn-secondary:hover { background: var(--tk-s3); border-color: var(--tk-dim); text-decoration: none; }
+
+/* ── Botón Ghost ── */
+.uk-btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--tk-sp-2);
+  padding: var(--tk-sp-2) var(--tk-sp-3);
+  background: none;
+  color: var(--tk-muted);
+  font-size: var(--tk-fs-sm);
+  font-family: var(--tk-font-sans);
+  border-radius: var(--tk-r);
+  border: none;
+  cursor: pointer;
+  transition: color var(--tk-dur), background var(--tk-dur);
+  min-height: var(--tk-touch-min);
+}
+.uk-btn-ghost:hover { color: var(--tk-text); background: var(--tk-s2); }
+
+/* ── Badge (átomo de etiqueta semántica) ── */
+.uk-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--tk-sp-1);
+  font-size: var(--tk-fs-xs);
+  font-family: var(--tk-font-mono);
+  font-weight: 600;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  padding: 2px var(--tk-sp-2);
+  border-radius: var(--tk-r-sm);
+}
+.uk-badge--etica    { background: var(--tk-etica-15); color: var(--tk-etica); }
+.uk-badge--inst     { background: var(--tk-inst-15);  color: var(--tk-inst); }
+.uk-badge--mat      { background: var(--tk-mat-15);   color: var(--tk-mat); }
+.uk-badge--crit     { background: var(--tk-crit-15);  color: var(--tk-crit); }
+
+/* ── Pill (badge redondeado para contadores) ── */
+.uk-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--tk-sp-1);
+  font-size: var(--tk-fs-xs);
+  font-family: var(--tk-font-mono);
+  padding: 2px var(--tk-sp-2);
+  border-radius: var(--tk-r-pill);
+  background: var(--tk-s2);
+  color: var(--tk-muted);
+}
+
+/* ── Input ── */
+.uk-input {
+  width: 100%;
+  padding: var(--tk-sp-2) var(--tk-sp-3);
+  background: var(--tk-s2);
+  border: 1px solid var(--tk-border);
+  border-radius: var(--tk-r);
+  color: var(--tk-text);
+  font-size: var(--tk-fs-base);
+  font-family: var(--tk-font-sans);
+  outline: none;
+  transition: border-color var(--tk-dur), box-shadow var(--tk-dur);
+  min-height: var(--tk-touch-min);
+}
+.uk-input:focus {
+  border-color: var(--tk-etica);
+  box-shadow: 0 0 0 3px rgba(200,169,110,.15);
+}
+.uk-input::placeholder { color: var(--tk-dim); }
+
+/* ── Tag (micro etiqueta) ── */
+.uk-tag {
+  font-size: var(--tk-fs-xs);
+  padding: 1px 6px;
+  border-radius: 3px;
+  background: var(--tk-s1);
+  color: var(--tk-dim);
+  border: 1px solid var(--tk-border);
+}
+
+/* ── Mono text ── */
+.uk-mono {
+  font-family: var(--tk-font-mono);
+  font-size: var(--tk-fs-sm);
+  color: var(--tk-dim);
+}
+
+
+/* ═══════════════════════════════════════
+   3. MOLÉCULAS — Composiciones de átomos
+   ═══════════════════════════════════════ */
+
+/* ── Friction Bar ── */
+.uk-friction-row {
+  display: flex;
+  align-items: center;
+  gap: var(--tk-sp-2);
+}
+.uk-friction-label {
+  font-size: 11px;
+  font-family: var(--tk-font-mono);
+  color: var(--tk-dim);
+  min-width: 42px;
+}
+.uk-friction-track {
+  flex: 1;
+  height: 4px;
+  background: var(--tk-s2);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.uk-friction-fill {
+  height: 100%;
+  border-radius: 2px;
+  transition: width var(--tk-dur-slow) var(--tk-ease);
+}
+.uk-friction-value {
+  font-size: 11px;
+  font-family: var(--tk-font-mono);
+  color: var(--tk-dim);
+  min-width: 28px;
+  text-align: right;
+}
+
+/* ── Search (input con ícono) ── */
+.uk-search-wrap {
+  position: relative;
+}
+.uk-search-wrap .uk-input {
+  padding-left: var(--tk-sp-8);
+}
+.uk-search-wrap::before {
+  content: '⌕';
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--tk-dim);
+  font-size: 1.1rem;
+  pointer-events: none;
+}
+
+/* ── Tab Bar ── */
+.uk-tabs {
+  display: flex;
+  border-bottom: 1px solid var(--tk-border);
+  gap: 0;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.uk-tabs::-webkit-scrollbar { height: 0; }
+.uk-tab {
+  padding: var(--tk-sp-3) var(--tk-sp-4);
+  font-size: var(--tk-fs-base);
+  color: var(--tk-muted);
+  white-space: nowrap;
+  border-bottom: 2px solid transparent;
+  transition: color var(--tk-dur), border-color var(--tk-dur);
+  cursor: pointer;
+  min-height: var(--tk-touch-min);
+  display: flex;
+  align-items: center;
+}
+.uk-tab:hover { color: var(--tk-text); }
+.uk-tab.active { color: var(--tk-etica); border-bottom-color: var(--tk-etica); }
+
+/* ── Slider Group ── */
+.uk-slider-group {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.uk-slider-group label {
+  font-size: var(--tk-fs-xs);
+  color: var(--tk-dim);
+  text-transform: uppercase;
+  letter-spacing: .4px;
+}
+.uk-slider-group input[type=range] {
+  width: 100%;
+  accent-color: var(--tk-etica);
+}
+@media (min-width: 768px) {
+  .uk-slider-group input[type=range] { width: 140px; }
+}
+
+/* ── Source Badge (fuente de datos) ── */
+.uk-source {
+  display: inline-block;
+  font-size: var(--tk-fs-xs);
+  padding: 2px var(--tk-sp-2);
+  border-radius: var(--tk-r-pill);
+  font-family: var(--tk-font-mono);
+}
+.uk-source--infolobby       { background: rgba(74,127,165,.15);  color: var(--tk-inst); }
+.uk-source--transparencia   { background: rgba(122,158,110,.15); color: var(--tk-mat); }
+.uk-source--leychile,
+.uk-source--bcn             { background: rgba(200,169,110,.15); color: var(--tk-etica); }
+.uk-source--seia            { background: rgba(200,95,74,.15);   color: var(--tk-crit); }
+.uk-source--compraspublicas { background: rgba(74,127,165,.2);   color: #6bb5e0; }
+.uk-source--cmf             { background: rgba(200,169,110,.2);  color: #dfc07a; }
+.uk-source--etnografia      { background: rgba(122,158,110,.2);  color: #9bc28b; }
+
+
+/* ═══════════════════════════════════════
+   4. ORGANISMOS — Componentes complejos
+   ═══════════════════════════════════════ */
+
+/* ── Card ── */
+.uk-card {
+  padding: var(--tk-sp-4);
+  border: 1px solid var(--tk-border);
+  border-radius: var(--tk-r);
+  transition: border-color var(--tk-dur), transform var(--tk-dur-fast);
+  display: flex;
+  flex-direction: column;
+  gap: var(--tk-sp-2);
+}
+.uk-card:hover {
+  border-color: var(--tk-dim);
+}
+.uk-card--lift:hover {
+  transform: translateY(-2px);
+}
+.uk-card__title {
+  font-size: var(--tk-fs-md);
+  font-weight: 600;
+}
+.uk-card__desc {
+  font-size: var(--tk-fs-base);
+  color: var(--tk-muted);
+  line-height: var(--tk-lh);
+}
+.uk-card__meta {
+  font-size: var(--tk-fs-sm);
+  color: var(--tk-dim);
+  font-family: var(--tk-font-mono);
+}
+
+/* ── Card Grid ── */
+.uk-card-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--tk-sp-4);
+}
+@media (min-width: 480px) {
+  .uk-card-grid { grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
+}
+
+/* ── Drawer (sidebar móvil) ── */
+.uk-drawer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  max-width: var(--tk-sidebar-w);
+  height: 100vh;
+  background: var(--tk-s1);
+  z-index: var(--tk-z-drawer);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  transform: translateX(-100%);
+  transition: transform var(--tk-dur-slow) var(--tk-ease);
+  padding: var(--tk-sp-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--tk-sp-5);
+}
+.uk-drawer.open {
+  transform: translateX(0);
+}
+@media (min-width: 768px) {
+  .uk-drawer {
+    position: sticky;
+    top: var(--tk-nav-h);
+    height: calc(100vh - var(--tk-nav-h));
+    transform: none;
+    border-right: 1px solid var(--tk-border);
+  }
+}
+
+/* ── Overlay (backdrop para drawer/modal) ── */
+.uk-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: var(--tk-overlay);
+  z-index: calc(var(--tk-z-drawer) - 1);
+  -webkit-tap-highlight-color: transparent;
+}
+.uk-overlay.open { display: block; }
+
+/* ── Nav Header ── */
+.uk-nav {
+  position: sticky;
+  top: 0;
+  z-index: var(--tk-z-nav);
+  display: flex;
+  align-items: center;
+  gap: var(--tk-sp-3);
+  height: var(--tk-nav-h);
+  padding: 0 var(--tk-sp-4);
+  background: var(--tk-bg);
+  border-bottom: 1px solid var(--tk-border);
+}
+.uk-nav__logo {
+  display: flex;
+  align-items: center;
+  gap: var(--tk-sp-2);
+  font-weight: 700;
+  font-size: var(--tk-fs-lg);
+  white-space: nowrap;
+  color: var(--tk-text);
+  text-decoration: none;
+}
+.uk-nav__logo span { font-size: 1.3rem; }
+.uk-nav__links {
+  display: none;
+  gap: var(--tk-sp-2);
+  margin-left: auto;
+  align-items: center;
+}
+.uk-nav__links a,
+.uk-nav__links button {
+  font-size: var(--tk-fs-base);
+  color: var(--tk-muted);
+  padding: var(--tk-sp-2) var(--tk-sp-3);
+  border-radius: var(--tk-r);
+  transition: color var(--tk-dur), background var(--tk-dur);
+  min-height: var(--tk-touch-min);
+  display: flex;
+  align-items: center;
+}
+.uk-nav__links a:hover,
+.uk-nav__links button:hover { color: var(--tk-text); background: var(--tk-s2); text-decoration: none; }
+@media (min-width: 768px) {
+  .uk-nav__links { display: flex; }
+}
+
+/* ── Hamburger ── */
+.uk-hamburger {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  color: var(--tk-text);
+  font-size: 1.4rem;
+  padding: var(--tk-sp-1) var(--tk-sp-2);
+  cursor: pointer;
+  min-width: var(--tk-touch-min);
+  min-height: var(--tk-touch-min);
+}
+@media (min-width: 768px) {
+  .uk-hamburger { display: none; }
+}
+
+/* ── Timeline ── */
+.uk-timeline {
+  position: relative;
+  padding-left: var(--tk-sp-6);
+}
+.uk-timeline::before {
+  content: '';
+  position: absolute;
+  left: 10px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--tk-border);
+}
+.uk-timeline__event {
+  position: relative;
+  padding: var(--tk-sp-3) var(--tk-sp-4);
+  margin-bottom: var(--tk-sp-4);
+  border: 1px solid var(--tk-border);
+  border-radius: var(--tk-r);
+  transition: border-color var(--tk-dur-fast);
+}
+.uk-timeline__event:hover { border-color: var(--tk-dim); }
+.uk-timeline__event::before {
+  content: '';
+  position: absolute;
+  left: -22px;
+  top: 16px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 2px solid var(--tk-border);
+  background: var(--tk-s1);
+}
+@media (min-width: 768px) {
+  .uk-timeline { padding-left: var(--tk-sp-8); }
+  .uk-timeline__event::before { left: -26px; }
+}
+
+/* ── Chat ── */
+.uk-chat {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - var(--tk-nav-h) - 120px);
+  height: calc(100dvh - var(--tk-nav-h) - 120px);
+  min-height: 300px;
+}
+.uk-chat__messages {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: var(--tk-sp-4) 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--tk-sp-3);
+}
+.uk-chat__msg {
+  max-width: 85%;
+  padding: var(--tk-sp-3) var(--tk-sp-4);
+  border-radius: var(--tk-r);
+  font-size: var(--tk-fs-base);
+  line-height: var(--tk-lh);
+  word-break: break-word;
+}
+.uk-chat__msg--bot {
+  align-self: flex-start;
+  background: var(--tk-s1);
+  border-left: 3px solid var(--tk-etica);
+}
+.uk-chat__msg--user {
+  align-self: flex-end;
+  background: var(--tk-s2);
+  text-align: right;
+}
+.uk-chat__cite {
+  font-size: var(--tk-fs-sm);
+  color: var(--tk-dim);
+  margin-top: var(--tk-sp-2);
+  font-family: var(--tk-font-mono);
+}
+.uk-chat__input-row {
+  display: flex;
+  gap: var(--tk-sp-2);
+  padding-top: var(--tk-sp-3);
+  border-top: 1px solid var(--tk-border);
+}
+.uk-chat__input-row .uk-input { flex: 1; }
+@media (min-width: 768px) {
+  .uk-chat {
+    height: calc(100vh - var(--tk-nav-h) - 100px);
+    min-height: 400px;
+  }
+  .uk-chat__msg { max-width: 80%; }
+}
+
+/* ── Empty State ── */
+.uk-empty {
+  text-align: center;
+  padding: var(--tk-sp-16) var(--tk-sp-5);
+  color: var(--tk-dim);
+}
+.uk-empty__icon {
+  font-size: 2.5rem;
+  margin-bottom: var(--tk-sp-3);
+  opacity: .5;
+}
+
+/* ── News Card ── */
+.uk-news-card {
+  padding: var(--tk-sp-4);
+  border: 1px solid var(--tk-border);
+  border-radius: var(--tk-r);
+  margin-bottom: var(--tk-sp-3);
+  transition: border-color var(--tk-dur);
+}
+.uk-news-card:hover { border-color: var(--tk-dim); }
+.uk-news-card h3 { font-size: var(--tk-fs-md); margin-bottom: var(--tk-sp-2); }
+.uk-news-card .news-meta {
+  font-size: var(--tk-fs-sm);
+  color: var(--tk-dim);
+  margin-bottom: var(--tk-sp-2);
+  font-family: var(--tk-font-mono);
+}
+.uk-news-card p { font-size: var(--tk-fs-base); color: var(--tk-muted); line-height: var(--tk-lh); }
+
+
+/* ═══════════════════════════════════════
+   5. UTILIDADES
+   ═══════════════════════════════════════ */
+
+/* ── Screen reader only ── */
+.uk-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ── Hidden ── */
+.uk-hidden { display: none !important; }
+
+/* ── Truncate single line ── */
+.uk-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ── Flex utilities ── */
+.uk-flex    { display: flex; }
+.uk-flex-wrap { flex-wrap: wrap; }
+.uk-gap-1   { gap: var(--tk-sp-1); }
+.uk-gap-2   { gap: var(--tk-sp-2); }
+.uk-gap-3   { gap: var(--tk-sp-3); }
+.uk-gap-4   { gap: var(--tk-sp-4); }
+
+/* ── Reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
