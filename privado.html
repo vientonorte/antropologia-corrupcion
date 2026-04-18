@@ -67,9 +67,10 @@ select{-webkit-appearance:none;appearance:none}
   overflow-y:auto;-webkit-overflow-scrolling:touch;
   padding:var(--sp-4,16px);display:flex;flex-direction:column;gap:var(--sp-5,20px);
   transform:translateX(-100%);transition:transform var(--dur-slow,.3s) var(--ease,ease);
-  box-shadow:none
+  box-shadow:var(--shadow-lg,0 8px 24px rgba(0,0,0,.5));opacity:0;
+  will-change:transform
 }
-.pv-sidebar.open{transform:translateX(0);box-shadow:var(--shadow-lg,0 8px 24px rgba(0,0,0,.5))}
+.pv-sidebar.open{transform:translateX(0);opacity:1}
 
 /* Overlay for mobile drawer */
 .pv-overlay{
@@ -233,9 +234,9 @@ select{-webkit-appearance:none;appearance:none}
     position:sticky;top:var(--nav-h);left:auto;
     width:auto;max-width:none;
     height:calc(100vh - var(--nav-h));
-    transform:none;box-shadow:none;
+    transform:none;box-shadow:none;opacity:1;
     border-right:1px solid var(--border);
-    z-index:auto
+    z-index:auto;will-change:auto
   }
   /* Overlay not needed on desktop */
   .pv-overlay{display:none!important}
@@ -526,20 +527,38 @@ function initHamburger(){
   var btn = $('hamburger-btn');
   var sidebar = $('sidebar');
   var overlay = $('sidebar-overlay');
+  var main = document.querySelector('.pv-main');
+  var isMobile = function(){ return window.matchMedia('(max-width:767px)').matches; };
 
   function toggleSidebar(){
     var isOpen = sidebar.classList.toggle('open');
     overlay.classList.toggle('open', isOpen);
     document.body.style.overflow = isOpen ? 'hidden' : '';
+    if(isMobile()){
+      sidebar.setAttribute('aria-hidden', String(!isOpen));
+      if(main) main.setAttribute('aria-hidden', String(isOpen));
+    }
+    if(isOpen){
+      var first = sidebar.querySelector('input,button,a');
+      if(first) first.focus();
+    }
   }
   function closeSidebar(){
     sidebar.classList.remove('open');
     overlay.classList.remove('open');
     document.body.style.overflow = '';
+    if(isMobile()){
+      sidebar.setAttribute('aria-hidden', 'true');
+      if(main) main.removeAttribute('aria-hidden');
+    }
+    btn.focus();
   }
 
   btn.addEventListener('click', toggleSidebar);
   overlay.addEventListener('click', closeSidebar);
+  sidebar.addEventListener('keydown', function(e){
+    if(e.key === 'Escape') closeSidebar();
+  });
   $('nav-seg-btn').addEventListener('click', function(e){
     e.preventDefault();
     toggleSidebar();

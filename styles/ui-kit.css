@@ -104,16 +104,17 @@
   /* ── Layout ── */
   --tk-nav-h:    56px;
   --tk-sidebar-w: 280px;
-  --tk-touch-min: 44px;  /* WCAG 2.2 mínimo touch target */
+  --tk-touch-min: 44px;  /* iOS HIG mínimo touch target (WCAG 2.5.8 = 24px) */
 }
 
 /*
-   ── Breakpoints (documentación) ──
-   Los breakpoints se usan con @media (min-width: ...) mobile-first:
-     --bp-sm:  480px   Teléfonos grandes / landscape
-     --bp-md:  768px   Tablets
-     --bp-lg:  1024px  Desktop
-     --bp-xl:  1280px  Desktop ancho
+   ── Breakpoints (referencia para @media queries) ──
+   CSS no permite usar custom properties en @media, estos valores
+   se usan manualmente en las media queries del proyecto:
+     480px   (sm)  — Teléfonos grandes / landscape
+     768px   (md)  — Tablets
+     1024px  (lg)  — Desktop
+     1280px  (xl)  — Desktop ancho
 */
 
 
