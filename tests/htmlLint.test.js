@@ -66,14 +66,15 @@ module.exports = function (describe, it, assert, assertEqual) {
                 var line = lines[i].trim();
                 /* Skip comments */
                 if (line.indexOf('/*') === 0) continue;
-                /* Skip lines inside @media print (allowed for hiding) */
 
                 /*
                  * Match bare element selector: starts with the element name
                  * followed by whitespace+'{', or ',' or end-of-rule.
                  * Must NOT be preceded by '.', '#', or another word char.
+                 * Element names are escaped for regex safety.
                  */
-                var re = new RegExp('^' + element + '\\s*[{,]');
+                var escaped = element.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+                var re = new RegExp('^' + escaped + '\\s*[{,]');
                 if (re.test(line)) {
                     found.push({ line: i + 1, text: line.substring(0, 80) });
                 }
@@ -108,7 +109,7 @@ module.exports = function (describe, it, assert, assertEqual) {
 
                 it(file + ' has no bare "' + el + ' {}" selector in <style>', function () {
                     var violations = findBareElementSelectors(css, el);
-                    /* Allow inside @media print blocks — those are OK */
+                    /* Skip lines mentioning "print" (likely inside @media print) */
                     var realViolations = violations.filter(function (v) {
                         return v.text.indexOf('print') === -1;
                     });
