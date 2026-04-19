@@ -220,7 +220,7 @@
         }
         /* ══════════════════════════════════════ NAV */
         
-        nav {
+        .top-nav {
             position: fixed;
             top: 0;
             left: 0;
@@ -1903,7 +1903,7 @@
         /* ══════════════════════════════════════ RESPONSIVE */
         
         @media(max-width:768px) {
-            nav .nav-links {
+            .top-nav .nav-links {
                 display: none
             }
             section {
@@ -2310,17 +2310,14 @@
         .bottom-nav {
             display: none;
             position: fixed;
-            top: auto;
             bottom: 0;
             left: 0;
             right: 0;
-            height: auto;
             z-index: 200;
             background: rgba(12, 12, 12, .95);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             border-top: 1px solid rgba(200, 169, 110, .12);
-            border-bottom: none;
             padding: 4px 4px calc(4px + env(safe-area-inset-bottom));
             justify-content: space-around;
             align-items: center;
@@ -3042,7 +3039,7 @@
             .hero-subtitle {
                 color: #333;
             }
-            nav,
+            .top-nav,
             .bottom-nav,
             .scroll-top-fab,
             .hero-ctas,
@@ -3224,7 +3221,7 @@
     <a class="skip-link" href="#instrumento">Saltar al contenido</a>
 
     <!-- NAV -->
-    <nav aria-label="Navegación principal">
+    <nav class="top-nav" aria-label="Navegación principal">
         <span class="nav-brand">CONTRA-ARCHIVO</span>
         <div class="nav-links">
             <a href="#instrumento">Instrumento</a>
