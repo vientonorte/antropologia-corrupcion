@@ -1,5 +1,17 @@
 # CHANGELOG
 
+## [2026-04-19] Mejoras de sesiones — navegación unificada y UX
+
+| 2026-04-19 | Mejoras de sesiones: navegación, responsive, PWA, skeleton loading |
+|------------|-------------------------------------------------------------------|
+|            | Navegación unificada en las 5 páginas producto (landing, buscador, login, privado, tesis): enlaces consistentes a Buscador, Instrumento, Biblioteca, Acceder. |
+|            | login.html: añadido site-header, favicon, manifest.json, diseño responsive para móvil (media query 480px). |
+|            | landing.html y buscador.html: añadido enlace a Biblioteca en navegación + manifest.json. |
+|            | privado.html: añadido manifest.json. |
+|            | tesis.html: skeleton loading para grid de publicaciones. |
+|            | DESIGN_SPRINT.md: actualizado mapa de features A→Ñ al estado real (13 de 14 features implementadas). |
+|            | DEPRECATIONS.md: actualizado de 16 a 18 ramas deprecadas (todas mergeadas en main). |
+
 ## [2026-04-19] Consolidación de ramas — unificación en `main`
 
 | 2026-04-19 | Consolidación de 16 ramas paralelas en `main` |

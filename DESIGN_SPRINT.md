@@ -259,21 +259,21 @@ Cruzadas con casos del archivo
 
 | # | Feature | Producto | Estado |
 |---|---------|----------|--------|
-| A | Archivo principal (hero + narrativa) | P1 | ✅ existe en `index.html` |
-| B | Buscador de texto libre | P1 | ✅ `searchEngine.js` |
-| C | Categorías × 5 en buscador | P2 | 🔨 construir |
-| D | Dossier de actor expandible | P2 | 🔨 construir |
-| E | Categoría: Entidades públicas | P2 | 🔨 construir |
-| F | Categoría: Funcionarios / actores | P2 | 🔨 construir |
-| G | Categoría: Gestión de recursos | P2 | 🔨 construir |
-| H | Categoría: Historial normativo BCN | P2 | ✅ `bcn-legislativo.json` |
-| I | Categoría: Investigaciones CIPER | P2 | 🔨 construir |
+| A | Archivo principal (hero + narrativa) | P1 | ✅ `index.html` + `contra-archivo-v2.html` |
+| B | Buscador de texto libre | P1 | ✅ `searchEngine.js` + `landing.html` |
+| C | Categorías × 5 en buscador | P2 | ✅ `buscador.html` (tabs E–I) |
+| D | Dossier de actor expandible | P2 | 🔨 pendiente (panel lateral stub) |
+| E | Categoría: Entidades públicas | P2 | ✅ `buscador.html` tab E |
+| F | Categoría: Funcionarios / actores | P2 | ✅ `buscador.html` tab F |
+| G | Categoría: Gestión de recursos | P2 | ✅ `buscador.html` tab G |
+| H | Categoría: Historial normativo BCN | P2 | ✅ `buscador.html` tab H + `bcn-legislativo.json` |
+| I | Categoría: Investigaciones CIPER | P2 | ✅ `buscador.html` tab I |
 | J | Journey / conexiones entre casos | P2 + P4 | ✅ `graph.js` |
 | K | — | — | — |
-| L | Login con Passkey (WebAuthn) | P3 | 🔨 construir |
-| M | Mis seguimientos | P4 | 🔨 construir |
-| N | Noticias CIPER integradas | P4 | 🔨 construir |
-| Ñ | Buscador con memoria individual | P4 | 🔨 construir |
+| L | Login con Passkey (WebAuthn) | P3 | ✅ `login.html` + `passkey.js` |
+| M | Mis seguimientos | P4 | ✅ `privado.html` + `seguimientos.js` |
+| N | Noticias CIPER integradas | P4 | ✅ `privado.html` + `ciperFeed.js` |
+| Ñ | Buscador con memoria individual | P4 | ✅ `privado.html` + `memoria.js` (IndexedDB) |
 
 ---
 

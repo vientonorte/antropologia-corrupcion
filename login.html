@@ -10,6 +10,8 @@
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://vientonorte.github.io/antropologia-corrupcion/img/an-lisis-ux-ui-mapeo-de-vulnerabilidades-de-expe.jpg">
 <meta name="theme-color" content="#0c0c0c">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⊘</text></svg>">
+<link rel="manifest" href="manifest.json">
 <link rel="stylesheet" href="styles/shared.css?v=20260419">
 <style>
 /* Login-specific overrides */
@@ -27,8 +29,7 @@ body{
   display:flex;
   flex-direction:column;
   align-items:center;
-  justify-content:center;
-  padding:24px;
+  padding:0 24px;
   min-height:100vh;
 }
 
@@ -42,6 +43,7 @@ body{
   padding:48px 32px;
   text-align:center;
   position:relative;
+  margin:auto;
 }
 
 /* ── Header ────────────────────────────────── */
@@ -221,9 +223,30 @@ body{
 
 /* ── Utilities ─────────────────────────────── */
 .hidden{display:none!important}
+
+/* ── Responsive ───────────────────────────── */
+@media (max-width: 480px) {
+  body { padding: 0 16px; }
+  .login-card { padding: 32px 20px; }
+  .card-title { font-size: 22px; }
+  .btn-primary { padding: 14px 24px; font-size: 14px; }
+  .btn-secondary { padding: 10px 20px; }
+  .login-footer { flex-direction: column; gap: 12px; text-align: center; }
+}
 </style>
 </head>
 <body>
+
+<!-- Nav -->
+<header class="site-header">
+  <a href="landing.html" class="site-logo"><span>⊘</span> Contra-Archivo</a>
+  <nav class="site-nav" aria-label="Navegación principal">
+    <a href="buscador.html">Buscador</a>
+    <a href="index.html">Instrumento</a>
+    <a href="tesis.html">Biblioteca</a>
+    <a href="login.html" class="nav-cta" aria-current="page">Acceder →</a>
+  </nav>
+</header>
 
 <div class="login-card" role="main">
 
