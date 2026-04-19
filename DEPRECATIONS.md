@@ -4,7 +4,7 @@
 
 **Decisión:** Todas las ramas de feature/fix generadas por procesos automatizados (Copilot y Claude) fueron auditadas y confirmadas como **completamente integradas en `main`** antes de su eliminación. Ninguna rama contenía trabajo pendiente o código no mergeado.
 
-**Verificación:** `git branch -r --merged origin/main` confirmó que las 16 ramas listadas a continuación estaban 100% absorbidas en `main` al momento de la deprecación.
+**Verificación:** `git branch -r --merged origin/main` confirmó que las 18 ramas listadas a continuación estaban 100% absorbidas en `main` al momento de la deprecación.
 
 ---
 
@@ -28,12 +28,15 @@
 | `copilot/qa-design-structure-update` | merge(main): resolver conflictos — tomar versiones de main + preservar shared.css extendido y tesis.html | 2026-04-17 | ✅ Mergeada en main |
 | `copilot/revisar-rams-nuevo-front` | Merge pull request #56 from vientonorte/copilot/fix-production-issues | 2026-04-17 | ✅ Mergeada en main |
 | `copilot/update-repo-add-screenshot-folder` | refactor(estructura): mover carpetas académicas a Estado del Arte/ y crear subcarpetas faltantes | 2026-04-16 | ✅ Mergeada en main |
+| `copilot/fix-copilot-job-errors` | feat(ci): agregar copilot-setup-steps.yml para corregir errores de auth y referencia git | 2026-04-19 | ✅ Mergeada en main |
+| `copilot/unify-branches-to-main` | docs: crear DEPRECATIONS.md y actualizar CHANGELOG.md | 2026-04-19 | ✅ Mergeada en main |
+| `copilot/cleanup-remove-other-branches` | fix(ux): mejoras de sesiones — nav unificada, responsive, manifest, skeleton loading | 2026-04-19 | ✅ Mergeada en main |
 
 ---
 
 ### Rationale
 
-El repositorio acumuló 16 ramas paralelas a lo largo del desarrollo iterativo de la tesis doctoral **Contra-Archivo: Antropología y Corrupción** (Chile, 2026). Estas ramas fueron generadas por agentes automatizados (GitHub Copilot y Claude) para trabajar en features, fixes y experimentos incrementales.
+El repositorio acumuló 18 ramas paralelas a lo largo del desarrollo iterativo de la tesis doctoral **Contra-Archivo: Antropología y Corrupción** (Chile, 2026). Estas ramas fueron generadas por agentes automatizados (GitHub Copilot y Claude) para trabajar en features, fixes y experimentos incrementales.
 
 Al auditar el estado del repositorio:
 - **Ninguna rama contenía código original** que no estuviera ya integrado en `main`
