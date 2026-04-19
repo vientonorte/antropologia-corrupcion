@@ -2310,14 +2310,17 @@
         .bottom-nav {
             display: none;
             position: fixed;
+            top: auto;
             bottom: 0;
             left: 0;
             right: 0;
+            height: auto;
             z-index: 200;
             background: rgba(12, 12, 12, .95);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             border-top: 1px solid rgba(200, 169, 110, .12);
+            border-bottom: none;
             padding: 4px 4px calc(4px + env(safe-area-inset-bottom));
             justify-content: space-around;
             align-items: center;
@@ -2337,11 +2340,15 @@
             border-radius: 8px;
             transition: color .15s, background .15s, transform .1s;
             letter-spacing: .02em;
-            min-width: 44px;
+            min-width: 0;
+            flex: 1 1 0;
             min-height: 44px;
             text-align: center;
             -webkit-tap-highlight-color: transparent;
-            position: relative
+            position: relative;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis
         }
         
         .bottom-nav a:active {
