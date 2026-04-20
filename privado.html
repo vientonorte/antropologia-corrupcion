@@ -22,7 +22,7 @@
    ══════════════════════════════════════════ */
         /* ── Local tokens ── */
         
-        :root {
+         :root {
             --sidebar-w: 280px;
             --nav-h: 56px;
         }
@@ -993,6 +993,8 @@
 
 <body>
 
+    <h1 class="sr-only">Espacio Privado — Contra-Archivo</h1>
+
     <!-- NAV -->
     <nav class="pv-nav">
         <button class="pv-hamburger" id="hamburger-btn" aria-label="Menú">☰</button>
@@ -1013,7 +1015,7 @@
         <div class="pv-overlay" id="sidebar-overlay"></div>
 
         <!-- SIDEBAR -->
-        <aside class="pv-sidebar" id="sidebar">
+        <aside class="pv-sidebar" id="sidebar" aria-label="Panel de búsqueda y seguimientos">
 
             <!-- A. Buscador con Memoria -->
             <div class="sb-section">
@@ -1063,27 +1065,27 @@
 
         <!-- MAIN -->
         <div class="pv-main">
-            <div class="pv-tabs" role="tablist">
-                <button class="pv-tab active" data-tab="simulacion" role="tab" aria-selected="true" aria-controls="panel-simulacion">Simulación</button>
-                <button class="pv-tab" data-tab="chat" role="tab" aria-selected="false" aria-controls="panel-chat">Chat</button>
-                <button class="pv-tab" data-tab="noticias" role="tab" aria-selected="false" aria-controls="panel-noticias">Noticias</button>
-                <button class="pv-tab" data-tab="tesis" role="tab" aria-selected="false" aria-controls="panel-tesis">Tesis</button>
-                <button class="pv-tab" data-tab="huella" role="tab" aria-selected="false" aria-controls="panel-huella">Huella Digital</button>
+            <div class="pv-tabs" role="tablist" aria-label="Secciones del espacio privado">
+                <button class="pv-tab active" id="tab-simulacion" data-tab="simulacion" role="tab" aria-selected="true" aria-controls="panel-simulacion" tabindex="0">Simulación</button>
+                <button class="pv-tab" id="tab-chat" data-tab="chat" role="tab" aria-selected="false" aria-controls="panel-chat" tabindex="-1">Chat</button>
+                <button class="pv-tab" id="tab-noticias" data-tab="noticias" role="tab" aria-selected="false" aria-controls="panel-noticias" tabindex="-1">Noticias</button>
+                <button class="pv-tab" id="tab-tesis" data-tab="tesis" role="tab" aria-selected="false" aria-controls="panel-tesis" tabindex="-1">Tesis</button>
+                <button class="pv-tab" id="tab-huella" data-tab="huella" role="tab" aria-selected="false" aria-controls="panel-huella" tabindex="-1">Huella Digital</button>
             </div>
 
             <!-- TAB 1: Simulación -->
-            <div class="pv-panel active" id="panel-simulacion" role="tabpanel">
+            <div class="pv-panel active" id="panel-simulacion" role="tabpanel" aria-labelledby="tab-simulacion">
                 <div class="sim-controls">
                     <div class="sim-slider-group">
-                        <label>Temperatura fricción</label>
+                        <label for="sim-temp">Temperatura fricción</label>
                         <input type="range" id="sim-temp" min="0" max="100" value="50">
                     </div>
                     <div class="sim-slider-group">
-                        <label>Fuerza repulsión</label>
+                        <label for="sim-repulsion">Fuerza repulsión</label>
                         <input type="range" id="sim-repulsion" min="0" max="100" value="50">
                     </div>
                     <div class="sim-slider-group">
-                        <label>Gravedad</label>
+                        <label for="sim-gravity">Gravedad</label>
                         <input type="range" id="sim-gravity" min="0" max="100" value="50">
                     </div>
                     <button class="sim-btn" id="sim-restart">↻ Reiniciar</button>
@@ -1099,7 +1101,7 @@
             </div>
 
             <!-- TAB 2: Chat -->
-            <div class="pv-panel" id="panel-chat" role="tabpanel">
+            <div class="pv-panel" id="panel-chat" role="tabpanel" aria-labelledby="tab-chat">
                 <div class="chat-wrap">
                     <div class="chat-messages" id="chat-messages"></div>
                     <div class="chat-input-row">
@@ -1110,10 +1112,10 @@
             </div>
 
             <!-- TAB 3: Noticias -->
-            <div class="pv-panel" id="panel-noticias" role="tabpanel">
+            <div class="pv-panel" id="panel-noticias" role="tabpanel" aria-labelledby="tab-noticias">
                 <div class="news-controls">
                     <button class="sim-btn" id="news-refresh">↻ Actualizar feed</button>
-                    <label style="font-size:.82rem;color:var(--muted);display:flex;align-items:center;gap:6px">
+                    <label for="news-filter-seg" style="font-size:.82rem;color:var(--muted);display:flex;align-items:center;gap:6px">
           <input type="checkbox" id="news-filter-seg" checked> Solo seguimientos
         </label>
                 </div>
@@ -1121,13 +1123,13 @@
             </div>
 
             <!-- TAB 4: Tesis -->
-            <div class="pv-panel" id="panel-tesis" role="tabpanel">
+            <div class="pv-panel" id="panel-tesis" role="tabpanel" aria-labelledby="tab-tesis">
                 <div class="tesis-nivel"><span class="nivel-dot"></span> Nivel actual: Miembro</div>
                 <div class="tesis-grid" id="tesis-grid"></div>
             </div>
 
             <!-- TAB 5: Huella Digital -->
-            <div class="pv-panel" id="panel-huella" role="tabpanel">
+            <div class="pv-panel" id="panel-huella" role="tabpanel" aria-labelledby="tab-huella">
                 <div id="huella-content">
                     <div class="huella-empty">
                         <div class="icon">🔍</div>
@@ -1146,7 +1148,6 @@
     <script defer src="src/ciperFeed.js?v=20260419"></script>
     <script defer src="src/graph.js?v=20260419"></script>
     <script defer src="src/fieldPhysics.js?v=20260419"></script>
-    <script defer src="src/socialField.js?v=20260419"></script>
     <script>
         (function() {
             'use strict';
@@ -1353,24 +1354,50 @@
             /* ── Tabs ── */
             function initTabs() {
                 var tabs = document.querySelectorAll('.pv-tab');
+                var tabArr = Array.prototype.slice.call(tabs);
+
+                function activateTab(tab) {
+                    var target = tab.getAttribute('data-tab');
+                    tabs.forEach(function(t) {
+                        t.classList.remove('active');
+                        t.setAttribute('aria-selected', 'false');
+                        t.setAttribute('tabindex', '-1');
+                    });
+                    tab.classList.add('active');
+                    tab.setAttribute('aria-selected', 'true');
+                    tab.setAttribute('tabindex', '0');
+                    tab.focus();
+                    document.querySelectorAll('.pv-panel').forEach(function(p) {
+                        p.classList.remove('active');
+                    });
+                    var panel = $('panel-' + target);
+                    if (panel) panel.classList.add('active');
+
+                    if (target === 'simulacion' && !simInited) initSimulacion();
+                    if (target === 'chat' && !chatInited) initChat();
+                    if (target === 'noticias' && !newsLoaded) loadNoticias();
+                }
+
                 tabs.forEach(function(tab) {
                     tab.addEventListener('click', function() {
-                        var target = tab.getAttribute('data-tab');
-                        tabs.forEach(function(t) {
-                            t.classList.remove('active');
-                            t.setAttribute('aria-selected', 'false');
-                        });
-                        tab.classList.add('active');
-                        tab.setAttribute('aria-selected', 'true');
-                        document.querySelectorAll('.pv-panel').forEach(function(p) {
-                            p.classList.remove('active');
-                        });
-                        var panel = $('panel-' + target);
-                        if (panel) panel.classList.add('active');
-
-                        if (target === 'simulacion' && !simInited) initSimulacion();
-                        if (target === 'chat' && !chatInited) initChat();
-                        if (target === 'noticias' && !newsLoaded) loadNoticias();
+                        activateTab(tab);
+                    });
+                    tab.addEventListener('keydown', function(e) {
+                        var idx = tabArr.indexOf(tab);
+                        var next = -1;
+                        if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+                            next = (idx + 1) % tabArr.length;
+                        } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+                            next = (idx - 1 + tabArr.length) % tabArr.length;
+                        } else if (e.key === 'Home') {
+                            next = 0;
+                        } else if (e.key === 'End') {
+                            next = tabArr.length - 1;
+                        }
+                        if (next !== -1) {
+                            e.preventDefault();
+                            activateTab(tabArr[next]);
+                        }
                     });
                 });
             }
@@ -1443,6 +1470,7 @@
                 tabs.forEach(function(t) {
                     t.classList.remove('active');
                     t.setAttribute('aria-selected', 'false');
+                    t.setAttribute('tabindex', '-1');
                 });
                 document.querySelectorAll('.pv-panel').forEach(function(p) {
                     p.classList.remove('active');
@@ -1452,6 +1480,7 @@
                 var simTab = document.querySelector('[data-tab="simulacion"]');
                 simTab.classList.add('active');
                 simTab.setAttribute('aria-selected', 'true');
+                simTab.setAttribute('tabindex', '0');
                 panel.classList.add('active');
 
                 var wrap = $('sim-graph-container');
@@ -1639,6 +1668,27 @@
                             paused = !paused;
                             this.textContent = paused ? '▶ Reanudar' : '⏸ Pausar';
                             if (fieldInstance && fieldInstance.setVisible) fieldInstance.setVisible(!paused);
+                        });
+
+                        /* Conectar sliders a la simulación */
+                        var sim = graphInstance && graphInstance.sim ? graphInstance.sim : null;
+                        $('sim-temp').addEventListener('input', function() {
+                            var v = parseInt(this.value, 10) / 100;
+                            if (sim) {
+                                sim.alphaDecay = 0.005 + v * 0.05;
+                                sim.alpha = Math.max(sim.alpha, 0.3);
+                            }
+                        });
+                        $('sim-repulsion').addEventListener('input', function() {
+                            var v = parseInt(this.value, 10) / 100;
+                            if (sim) sim.velocityDecay = 0.2 + (1 - v) * 0.6;
+                        });
+                        $('sim-gravity').addEventListener('input', function() {
+                            var v = parseInt(this.value, 10) / 100;
+                            if (sim) {
+                                sim.gravityStrength = 0.01 + v * 0.12;
+                                sim.alpha = Math.max(sim.alpha, 0.3);
+                            }
                         });
 
                         simInited = true;
@@ -1865,7 +1915,7 @@
                     var a = item.articulo || item;
                     var cruces = item.casosRelacionados || [];
                     var html = '<div class="news-card">';
-                    var safeHref = (a.enlace && /^https?:\/\//.test(a.enlace)) ? a.enlace : '#';
+                    var safeHref = (a.enlace && /^https?:\/\//.test(a.enlace)) ? encodeURI(a.enlace) : '#';
                     html += '<h3><a href="' + safeHref + '" target="_blank" rel="noopener">' + esc(a.titulo || 'Sin título') + '</a>';
                     cruces.forEach(function(c) {
                         html += '<span class="news-badge cruce">↔ ' + esc(c.titulo || c.id || 'caso') + '</span>';
@@ -1940,6 +1990,7 @@
                 tabs.forEach(function(t) {
                     t.classList.remove('active');
                     t.setAttribute('aria-selected', 'false');
+                    t.setAttribute('tabindex', '-1');
                 });
                 document.querySelectorAll('.pv-panel').forEach(function(p) {
                     p.classList.remove('active');
@@ -1947,6 +1998,7 @@
                 var huellaTab = document.querySelector('[data-tab="huella"]');
                 huellaTab.classList.add('active');
                 huellaTab.setAttribute('aria-selected', 'true');
+                huellaTab.setAttribute('tabindex', '0');
                 $('panel-huella').classList.add('active');
 
                 var al = actorName.toLowerCase();

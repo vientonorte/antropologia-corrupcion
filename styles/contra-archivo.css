@@ -3,7 +3,9 @@
    Requiere: shared.css (tokens, reset, base)
    ══════════════════════════════════════ */
 
+
 /* Override: shared.css usa line-height 1.55, este instrumento usa 1.65 */
+
 body {
     line-height: 1.65;
 }
@@ -134,6 +136,8 @@ a:focus-visible,
     outline-offset: 2px;
     border-radius: 3px
 }
+
+
 /* ══════════════════════════════════════ UTILITY */
 
 .mono {
@@ -167,6 +171,8 @@ a:focus-visible,
 .accent-c {
     color: var(--crit)
 }
+
+
 /* ══════════════════════════════════════ NAV */
 
 .top-nav {
@@ -225,6 +231,8 @@ a:focus-visible,
     border-color: var(--etica);
     color: var(--etica)
 }
+
+
 /* ══════════════════════════════════════ HERO */
 
 #hero {
@@ -272,6 +280,8 @@ a:focus-visible,
 .hero-thesis strong {
     color: var(--text)
 }
+
+
 /* Tensión-metro hero */
 
 .hero-meter {
@@ -348,11 +358,14 @@ a:focus-visible,
     margin-top: 2px
 }
 
+
 /* ── FRICTION SCORE TOOLTIP ── */
+
 .friction-tip {
     position: relative;
     cursor: help
 }
+
 .friction-tip::after {
     content: attr(data-tip);
     position: absolute;
@@ -360,7 +373,7 @@ a:focus-visible,
     left: 50%;
     transform: translateX(-50%);
     padding: 8px 12px;
-    background: rgba(12,12,12,.96);
+    background: rgba(12, 12, 12, .96);
     border: 1px solid var(--border);
     border-radius: 6px;
     color: var(--text);
@@ -377,11 +390,13 @@ a:focus-visible,
     transition: opacity .2s ease;
     z-index: 50
 }
+
 .friction-tip:hover::after,
 .friction-tip:focus::after,
 .friction-tip:focus-within::after {
     opacity: 1
 }
+
 @media (max-width: 600px) {
     .friction-tip::after {
         left: 0;
@@ -389,8 +404,11 @@ a:focus-visible,
         max-width: 200px
     }
 }
+
 @media (prefers-reduced-motion: reduce) {
-    .friction-tip::after { transition: none }
+    .friction-tip::after {
+        transition: none
+    }
 }
 
 .hero-ctas {
@@ -430,6 +448,8 @@ a:focus-visible,
     border-color: var(--etica);
     color: var(--etica)
 }
+
+
 /* ══════════════════════════════════════ SECTIONS */
 
 section {
@@ -483,6 +503,8 @@ h2 {
 .section-lead strong {
     color: var(--text)
 }
+
+
 /* ══════════════════════════════════════ INSTRUMENTO */
 
 #instrumento {
@@ -495,6 +517,8 @@ h2 {
     gap: 48px;
     align-items: start
 }
+
+
 /* Las 3 capas */
 
 .capas-stack {
@@ -581,6 +605,8 @@ h2 {
     color: var(--muted);
     line-height: 1.5
 }
+
+
 /* Fricción entre capas */
 
 .friction-indicator {
@@ -608,6 +634,8 @@ h2 {
     letter-spacing: .08em;
     white-space: nowrap
 }
+
+
 /* Diagrama metodológico */
 
 .method-diagram {
@@ -654,6 +682,8 @@ h2 {
     color: var(--muted);
     line-height: 1.5
 }
+
+
 /* ══════════════════════════════════════ CAMPOS */
 
 #campos {
@@ -776,6 +806,8 @@ h2 {
     font-size: 12px;
     font-weight: 700
 }
+
+
 /* ══════════════════════════════════════ TENSIONES */
 
 #tensiones {
@@ -917,6 +949,8 @@ h2 {
     line-height: 1.4;
     font-style: italic
 }
+
+
 /* Intensidad visual */
 
 .intensity-bar {
@@ -932,6 +966,8 @@ h2 {
     border-radius: 3px;
     background: linear-gradient(90deg, var(--mat), var(--etica), var(--crit))
 }
+
+
 /* ══════════════════════════════════════ GRAFO EMBED */
 
 #grafo {
@@ -1113,6 +1149,8 @@ h2 {
     color: var(--text);
     border-color: var(--etica)
 }
+
+
 /* ══════════════════════════════════════ PROTOCOLO */
 
 #protocolo {
@@ -1543,6 +1581,8 @@ h2 {
 .po-body strong {
     color: var(--text)
 }
+
+
 /* ══════════════════════════════════════ ARCHIVO */
 
 #archivo {
@@ -1616,6 +1656,8 @@ h2 {
     color: var(--etica);
     border-color: var(--etica)
 }
+
+
 /* ══════════════════════════════════════ FOOTER */
 
 footer {
@@ -1649,6 +1691,8 @@ footer {
     text-align: right;
     line-height: 1.8
 }
+
+
 /* ══════════════════════════════════════ DIVIDER */
 
 .full-divider {
@@ -1656,6 +1700,8 @@ footer {
     height: 1px;
     background: var(--border)
 }
+
+
 /* ══════════════════════════════════════ SCROLLBAR */
 
  ::-webkit-scrollbar {
@@ -1670,6 +1716,8 @@ footer {
     background: rgba(255, 255, 255, .1);
     border-radius: 3px
 }
+
+
 /* ══════════════════════════════════════ LOADING SKELETON */
 
 .viz-loading {
@@ -1698,7 +1746,9 @@ footer {
     border-top-color: var(--crit)
 }
 
-.viz-loading.error .skeleton-graph { display: none }
+.viz-loading.error .skeleton-graph {
+    display: none
+}
 
 .viz-loading.error .viz-loading-text {
     color: var(--crit)
@@ -1731,34 +1781,59 @@ footer {
     font-family: var(--font-mono)
 }
 
+
 /* ── SKELETON GRAPH LOADER ── */
+
 .skeleton-graph {
     width: 180px;
     height: 120px;
     margin: 0 auto 12px;
     display: block
 }
+
 .skeleton-link {
     stroke: var(--border);
     stroke-width: 1.5;
     stroke-dasharray: 6 4;
     animation: skeleton-pulse 1.6s ease-in-out infinite
 }
+
 .skeleton-node {
-    fill: rgba(255,255,255,.06);
+    fill: rgba(255, 255, 255, .06);
     stroke-width: 2;
     animation: skeleton-pulse 1.6s ease-in-out infinite
 }
-.skeleton-node--etica { stroke: var(--etica) }
-.skeleton-node--inst  { stroke: var(--inst) }
-.skeleton-node--mat   { stroke: var(--mat) }
+
+.skeleton-node--etica {
+    stroke: var(--etica)
+}
+
+.skeleton-node--inst {
+    stroke: var(--inst)
+}
+
+.skeleton-node--mat {
+    stroke: var(--mat)
+}
+
 @keyframes skeleton-pulse {
-    0%, 100% { opacity: .3 }
-    50%      { opacity: .8 }
+    0%,
+    100% {
+        opacity: .3
+    }
+    50% {
+        opacity: .8
+    }
 }
+
 @media (prefers-reduced-motion: reduce) {
-    .skeleton-link, .skeleton-node { animation: none; opacity: .5 }
+    .skeleton-link,
+    .skeleton-node {
+        animation: none;
+        opacity: .5
+    }
 }
+
 
 /* ══════════════════════════════════════ SCROLL-TOP FAB */
 
@@ -1795,7 +1870,9 @@ footer {
     transform: translateY(-2px)
 }
 
+
 /* ══════════════════════════════════════ QUICK-ACCESS BAR */
+
 .quick-access {
     position: fixed;
     right: 24px;
@@ -1809,17 +1886,19 @@ footer {
     transition: opacity .3s ease, transform .3s ease;
     transform: translateY(8px)
 }
+
 .quick-access.visible {
     opacity: 1;
     pointer-events: auto;
     transform: translateY(0)
 }
+
 .qa-btn {
     display: flex;
     align-items: center;
     gap: 8px;
     padding: 8px 14px;
-    background: rgba(12,12,12,.92);
+    background: rgba(12, 12, 12, .92);
     backdrop-filter: blur(10px);
     border: 1px solid var(--border);
     border-radius: 20px;
@@ -1831,23 +1910,30 @@ footer {
     white-space: nowrap;
     transition: border-color .2s, color .2s, transform .15s
 }
-.qa-btn:hover, .qa-btn:focus-visible {
+
+.qa-btn:hover,
+.qa-btn:focus-visible {
     border-color: var(--etica);
     color: var(--etica);
     transform: translateX(-4px)
 }
+
 .qa-btn:focus-visible {
     outline: 2px solid var(--etica);
     outline-offset: 2px
 }
+
 .qa-icon {
     font-size: 14px;
     line-height: 1
 }
 
 @media(max-width:768px) {
-    .quick-access { display: none !important }
+    .quick-access {
+        display: none !important
+    }
 }
+
 
 /* ══════════════════════════════════════ RESPONSIVE */
 
@@ -1980,6 +2066,8 @@ footer {
         padding: 32px 20px
     }
 }
+
+
 /* ══════════════════════════════════════ GRAPH THESIS PANEL */
 
 .graph-thesis {
@@ -2082,6 +2170,8 @@ footer {
         grid-template-columns: 1fr
     }
 }
+
+
 /* ═══════════════ SOCIAL FIELD — ENTROPÍA SOCIAL ═══════════════ */
 
 .social-field-canvas {
@@ -2231,6 +2321,8 @@ footer {
     border-radius: 2px;
     transition: width .6s ease, background .6s ease
 }
+
+
 /* ═══════════════ VIZ RESPONSIVE (post-cascade) ═══════════════ */
 
 @media(max-width:768px) {
@@ -2254,6 +2346,8 @@ footer {
         height: 580px
     }
 }
+
+
 /* ═══════════════ BOTTOM NAVIGATION (MOBILE) ═══════════════ */
 
 .bottom-nav {
@@ -2334,6 +2428,8 @@ footer {
         padding-bottom: 68px
     }
 }
+
+
 /* ═══════════════ BUSCADOR DE FRICCIÓN INSTITUCIONAL ═══════════════ */
 
 #buscador {
@@ -2644,6 +2740,8 @@ footer {
     text-align: center;
     padding: 20px
 }
+
+
 /* Result cards */
 
 .se-results-grid {
@@ -2960,6 +3058,8 @@ footer {
         padding: 12px
     }
 }
+
+
 /* ═══════════════ PRINT STYLESHEET ═══════════════ */
 
 @media print {

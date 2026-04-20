@@ -27,8 +27,8 @@ class ForceSimulation {
         }));
         this.links = links.map(l => ({
             ...l,
-            source: this.nodes.find(n => n.id === (l.source?.id ?? l.source)),
-            target: this.nodes.find(n => n.id === (l.target?.id ?? l.target)),
+            source: this.nodes.find(n => n.id === (l.source ?.id ?? l.source)),
+            target: this.nodes.find(n => n.id === (l.target ?.id ?? l.target)),
         })).filter(l => l.source && l.target);
         this.width = width;
         this.height = height;
@@ -36,6 +36,7 @@ class ForceSimulation {
         this.alphaDecay = 0.0228;
         this.alphaMin = 0.001;
         this.velocityDecay = 0.4;
+        this.gravityStrength = 0.06;
     }
 
     tick() {
@@ -81,8 +82,8 @@ class ForceSimulation {
         const cx = this.width / 2,
             cy = this.height / 2;
         for (const n of this.nodes) {
-            n.vx += (cx - n.x) * 0.06 * this.alpha;
-            n.vy += (cy - n.y) * 0.06 * this.alpha;
+            n.vx += (cx - n.x) * this.gravityStrength * this.alpha;
+            n.vy += (cy - n.y) * this.gravityStrength * this.alpha;
         }
 
         // Aplicar velocidades + decay + bounds
@@ -141,9 +142,9 @@ class FrictionGraph {
         this.animFrame = null;
         this.field = null;
         this._windowListeners = []; // Track window listeners for cleanup
-        this._nodeElMap = new Map();   // Cache node SVG elements
-        this._labelElMap = new Map();  // Cache label SVG elements
-        this._linkElMap = new Map();   // Cache link SVG elements
+        this._nodeElMap = new Map(); // Cache node SVG elements
+        this._labelElMap = new Map(); // Cache label SVG elements
+        this._linkElMap = new Map(); // Cache link SVG elements
         this._dragNode = null;
 
         // Shared drag handlers (una sola instancia, no N)
@@ -343,19 +344,19 @@ class FrictionGraph {
 
         // Capa ética (arriba-izquierda)
         g.appendChild(this._layerCircle(-offset * 0.6, -offset * 0.7, r * 0.85,
-            node.colorEtica, 'etica', node.etica?.titulo
+            node.colorEtica, 'etica', node.etica ?.titulo
         ));
 
         // Capa institucional (arriba-derecha)
         g.appendChild(this._layerCircle(
             offset * 0.6, -offset * 0.7, r * 0.85,
-            node.colorInstitucional, 'institucional', node.institucional?.titulo
+            node.colorInstitucional, 'institucional', node.institucional ?.titulo
         ));
 
         // Capa material (abajo-centro)
         g.appendChild(this._layerCircle(
             0, offset * 0.7, r * 0.85,
-            node.colorMaterial, 'material', node.material?.titulo
+            node.colorMaterial, 'material', node.material ?.titulo
         ));
 
         // Zona de fricción central
@@ -484,8 +485,8 @@ class FrictionGraph {
         // Pre-compute connected node IDs (O(L) once instead of O(N*L))
         const connectedIds = new Set([node.id]);
         for (const l of this.rawLinks) {
-            const sId = l.source?.id ?? l.source;
-            const tId = l.target?.id ?? l.target;
+            const sId = l.source ?.id ?? l.source;
+            const tId = l.target ?.id ?? l.target;
             if (sId === node.id) connectedIds.add(tId);
             if (tId === node.id) connectedIds.add(sId);
         }
@@ -564,7 +565,8 @@ class FrictionGraph {
                 this._layerCircles.push({ el: c, capa: capaName });
             });
         }
-        for (const { el, capa } of this._layerCircles) {
+        for (const { el, capa }
+            of this._layerCircles) {
             if (layer === 'all') {
                 el.setAttribute('opacity', '0.55');
             } else if (capa === layer) {
@@ -639,7 +641,8 @@ class FrictionGraph {
         if (this.animFrame) cancelAnimationFrame(this.animFrame);
         window.removeEventListener('mousemove', this._onMouseMove);
         window.removeEventListener('mouseup', this._onMouseUp);
-        for (const { type, handler } of this._windowListeners) {
+        for (const { type, handler }
+            of this._windowListeners) {
             window.removeEventListener(type, handler);
         }
         this._windowListeners = [];
