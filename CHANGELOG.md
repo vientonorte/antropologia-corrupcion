@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## [2026-04-19] Sprint UX/QA — páginas públicas + CI + sincronización local↔nube
+
+| Área | Cambio |
+|---|---|
+| **CI** | Lighthouse CI con `wait-on` + Chrome flags headless (fix NO_FCP en GitHub Actions) |
+| **tesis.html** | Cards sin HTML → "Próximamente" (evita 404); `aria-pressed` en filtros |
+| **buscador.html** | `role="tablist"`, `aria-expanded`, keyboard nav autosuggest, loading/error states, ✕ mobile |
+| **landing.html** | Blurb fricción institucional, error boundary, estado vacío, `aria-live` |
+| **gitignore** | `Estado del Arte/` ignorado → iCloud; patrón `* 2.*` para duplicados |
+| **docs/** | `DESIGN_SPRINT_PROMPT.md` y `NARRATIVA_GODEL_FRICCION.md` agregados al repo |
+
 ## [2026-04-19] Mejoras de sesiones — navegación unificada y UX
 
 | 2026-04-19 | Mejoras de sesiones: navegación, responsive, PWA, skeleton loading |
