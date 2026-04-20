@@ -49,3 +49,54 @@ Al auditar el estado del repositorio:
 
 *Fecha de consolidación: 2026-04-19*
 *Rama de trabajo actual: `main` (única rama activa)*
+
+---
+
+## 2026-04-20 — Consolidación final de ramas + Pipeline CI/CD
+
+**Decisión:** Auditoría completa de las 20 ramas remotas restantes. Todas confirmadas como **completamente integradas en `main`** (0 líneas de diff). Se implementa pipeline CI/CD de 3 agentes y auto-limpieza de ramas.
+
+### Ramas a eliminar (20 total)
+
+| Rama | Estado |
+|------|--------|
+| `ci/lighthouse-audit` | ✅ Contenido ya en main (lighthouse.yml + .lighthouserc.json) |
+| `claude/product-design-file-h1PzG` | ✅ 0 diff con main |
+| `claude/review-framework-books-WGC9m` | ✅ 0 diff con main |
+| `copilot/add-contrario-archivo-wireframes` | ✅ 0 diff con main |
+| `copilot/add-github-actions-deploy` | ✅ 0 diff con main |
+| `copilot/add-missing-changes-to-deploy` | ✅ 0 diff con main |
+| `copilot/analyze-test-coverage` | ✅ 0 diff con main |
+| `copilot/atomic-design-ui-kit` | ✅ 0 diff con main |
+| `copilot/audit-and-cleanup-repository` | ✅ Rama actual (se elimina post-merge) |
+| `copilot/cleanup-remove-other-branches` | ✅ 0 diff con main |
+| `copilot/explain-repository-structure` | ✅ 0 diff con main |
+| `copilot/fix-am-bios-display-issue` | ✅ 0 diff con main |
+| `copilot/fix-copilot-job-errors` | ✅ 0 diff con main |
+| `copilot/fix-production-discrepancies-mobile-desktop` | ✅ 0 diff con main |
+| `copilot/fix-production-issues` | ✅ 0 diff con main |
+| `copilot/merge-sutil-changes-to-main` | ✅ 0 diff con main |
+| `copilot/qa-design-structure-update` | ✅ 0 diff con main |
+| `copilot/revisar-rams-nuevo-front` | ✅ 0 diff con main |
+| `copilot/unify-branches-to-main` | ✅ 0 diff con main |
+| `copilot/update-repo-add-screenshot-folder` | ✅ 0 diff con main |
+
+### Cambios en workflows
+
+| Acción | Archivo | Motivo |
+|--------|---------|--------|
+| ➕ Creado | `qa.yml` | Pipeline QA unificado (4 gates) para PRs |
+| ➕ Creado | `branch-cleanup.yml` | Auto-eliminación de ramas post-merge |
+| 🗑️ Eliminado | `ci.yml` | Redundante — tests cubiertos por `qa.yml` (PRs) y `deploy.yml` (push) |
+| ✅ Mantenido | `deploy.yml` | Deploy a GitHub Pages en push a main |
+| ✅ Mantenido | `lighthouse.yml` | Lighthouse CI en PRs (también en `qa.yml`) |
+| ✅ Mantenido | `copilot-setup-steps.yml` | Setup del agente Copilot |
+
+### Nuevo pipeline
+
+```
+VS Code (dev local) → PR → qa.yml (4 gates) → Copilot Agent (aprueba) → merge → deploy.yml → GitHub Pages
+                                                                           └→ branch-cleanup.yml (elimina rama)
+```
+
+*Fecha: 2026-04-20*

@@ -1,0 +1,117 @@
+name: QA Pipeline — Claude Code + Lighthouse
+
+on:
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: qa-${{ github.head_ref }}
+  cancel-in-progress: true
+
+jobs:
+  # ─────────────────────────────────────────────
+  # Gate 1: Tests unitarios (282+ tests, 0 dependencias)
+  # ─────────────────────────────────────────────
+  tests:
+    name: "🧪 Tests unitarios"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Ejecutar suite de tests
+        run: node tests/runner.js
+
+  # ─────────────────────────────────────────────
+  # Gate 2: Lighthouse CI (performance, a11y, SEO)
+  # ─────────────────────────────────────────────
+  lighthouse:
+    name: "🔦 Lighthouse CI"
+    runs-on: ubuntu-latest
+    needs: [tests]
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Lighthouse audit
+        run: |
+          npm install -g @lhci/cli serve
+          serve . -p 3000 &
+          sleep 3
+          lhci autorun
+        env:
+          LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
+
+  # ─────────────────────────────────────────────
+  # Gate 3: Validación de datos JSON
+  # ─────────────────────────────────────────────
+  data-integrity:
+    name: "📊 Integridad de datos"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Validar esquemas JSON y referencias cruzadas
+        run: |
+          node -e "
+            const fs = require('fs');
+            const casos = JSON.parse(fs.readFileSync('data/casos.json','utf8'));
+            const fuentes = JSON.parse(fs.readFileSync('data/fuentes-oficiales.json','utf8'));
+            const bcn = JSON.parse(fs.readFileSync('data/bcn-legislativo.json','utf8'));
+
+            let errors = 0;
+
+            // Validar casos.json
+            if (!casos.casos || !Array.isArray(casos.casos)) { console.error('❌ casos.json: falta array casos'); errors++; }
+            const casoIds = new Set(casos.casos.map(c => c.id));
+
+            // Validar fuentes-oficiales.json
+            if (!Array.isArray(fuentes)) { console.error('❌ fuentes-oficiales.json: no es array'); errors++; }
+            const fuenteIds = new Set(fuentes.map(r => r.id));
+            if (fuenteIds.size !== fuentes.length) { console.error('❌ fuentes-oficiales.json: IDs duplicados'); errors++; }
+            fuentes.forEach(r => {
+              if (!r.id || !r.fuente || !r.titulo || !r.fecha) {
+                console.error('❌ Registro incompleto:', r.id); errors++;
+              }
+              if (r.friccion_con && !casoIds.has(r.friccion_con)) {
+                console.error('❌ friccion_con inválido:', r.id, '→', r.friccion_con); errors++;
+              }
+            });
+
+            // Validar bcn-legislativo.json
+            if (!bcn.boletines || !Array.isArray(bcn.boletines)) { console.error('❌ bcn-legislativo.json: falta array boletines'); errors++; }
+
+            if (errors > 0) { console.error('\\n❌ ' + errors + ' errores de integridad'); process.exit(1); }
+            console.log('✅ Integridad de datos OK (' + casos.casos.length + ' casos, ' + fuentes.length + ' fuentes, ' + bcn.boletines.length + ' boletines)');
+          "
+
+  # ─────────────────────────────────────────────
+  # Resultado consolidado para branch protection
+  # ─────────────────────────────────────────────
+  qa-gate:
+    name: "✅ QA Gate"
+    runs-on: ubuntu-latest
+    needs: [tests, lighthouse, data-integrity]
+    if: always()
+    steps:
+      - name: Verificar que todos los gates pasaron
+        run: |
+          if [ "${{ needs.tests.result }}" != "success" ] || \
+             [ "${{ needs.data-integrity.result }}" != "success" ]; then
+            echo "❌ QA Gate FAILED — tests o data-integrity fallaron"
+            exit 1
+          fi
+          if [ "${{ needs.lighthouse.result }}" = "failure" ]; then
+            echo "⚠️ Lighthouse falló — revisar performance/a11y"
+          fi
+          echo "✅ QA Gate PASSED — todos los checks obligatorios en verde"
