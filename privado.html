@@ -13,8 +13,8 @@
     <meta name="theme-color" content="#0c0c0c">
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⊘</text></svg>">
     <link rel="manifest" href="manifest.json">
-    <link rel="stylesheet" href="styles/shared.css?v=20260419">
-    <link rel="stylesheet" href="styles/ui-kit.css?v=20260419">
+    <link rel="stylesheet" href="styles/shared.css?v=20260419b">
+    <link rel="stylesheet" href="styles/ui-kit.css?v=20260419b">
     <style>
         /* ══════════════════════════════════════════
    privado.html — Mobile-First Styles
@@ -1140,14 +1140,14 @@
         </div>
     </div>
 
-    <script defer src="src/passkey.js?v=20260419"></script>
-    <script defer src="src/frictionEngine.js?v=20260419"></script>
-    <script defer src="src/searchEngine.js?v=20260419"></script>
-    <script defer src="src/memoria.js?v=20260419"></script>
-    <script defer src="src/seguimientos.js?v=20260419"></script>
-    <script defer src="src/ciperFeed.js?v=20260419"></script>
-    <script defer src="src/graph.js?v=20260419"></script>
-    <script defer src="src/fieldPhysics.js?v=20260419"></script>
+    <script defer src="src/passkey.js?v=20260419b"></script>
+    <script defer src="src/frictionEngine.js?v=20260419b"></script>
+    <script defer src="src/searchEngine.js?v=20260419b"></script>
+    <script defer src="src/memoria.js?v=20260419b"></script>
+    <script defer src="src/seguimientos.js?v=20260419b"></script>
+    <script defer src="src/ciperFeed.js?v=20260419b"></script>
+    <script defer src="src/graph.js?v=20260419b"></script>
+    <script defer src="src/fieldPhysics.js?v=20260419b"></script>
     <script>
         (function() {
             'use strict';
@@ -1209,11 +1209,12 @@
             function waitFor(check, cb, tries) {
                 tries = tries || 0;
                 if (tries > 60) {
+                    if (onTimeout) onTimeout();
                     return;
                 }
                 if (check()) return cb();
                 setTimeout(function() {
-                    waitFor(check, cb, tries + 1);
+                    waitFor(check, cb, tries + 1, onTimeout);
                 }, 80);
             }
 
@@ -1623,26 +1624,39 @@
             /* ── Tab 1: Simulación ── */
             function initSimulacion() {
                 if (simInited) return;
+                var container = $('sim-graph-container');
+                container.innerHTML = '<div style="color:var(--dim);padding:20px;text-align:center">Cargando simulación…</div>';
                 waitFor(
                     function() {
                         return typeof window.frictionEngine !== 'undefined' && typeof window.FrictionGraph !== 'undefined';
                     },
                     function() {
-                        if (!CASOS.length) return;
+                        if (!CASOS.length) {
+                            container.innerHTML = '<div style="color:var(--dim);padding:20px;text-align:center">Sin datos para la simulación.</div>';
+                            return;
+                        }
                         var gd = window.frictionEngine.buildGraph(CASOS);
-                        if (!gd) return;
+                        if (!gd) {
+                            container.innerHTML = '<div style="color:var(--dim);padding:20px;text-align:center">Error construyendo el grafo.</div>';
+                            return;
+                        }
 
-                        var container = $('sim-graph-container');
                         container.innerHTML = '';
-                        graphInstance = new window.FrictionGraph({
-                            container: container,
-                            nodes: gd.nodes,
-                            links: gd.links,
-                            onNodeClick: function(node) {
-                                showHuella(node.titulo || node.id);
-                            },
-                            onNodeHover: function() {}
-                        });
+                        try {
+                            graphInstance = new window.FrictionGraph({
+                                container: container,
+                                nodes: gd.nodes,
+                                links: gd.links,
+                                onNodeClick: function(node) {
+                                    showHuella(node.titulo || node.id);
+                                },
+                                onNodeHover: function() {}
+                            });
+                        } catch (e) {
+                            console.error('[Privado] Error iniciando grafo:', e);
+                            container.innerHTML = '<div style="color:var(--crit);padding:20px;text-align:center">Error al iniciar la simulación. Recarga la página.</div>';
+                            return;
+                        }
 
                         var fieldContainer = $('sim-field-container');
                         if (window.FrictionField) {
@@ -1692,6 +1706,10 @@
                         });
 
                         simInited = true;
+                    },
+                    null,
+                    function() {
+                        container.innerHTML = '<div style="color:var(--crit);padding:20px;text-align:center">Los módulos de simulación no cargaron. Recarga la página (Ctrl+Shift+R).</div>';
                     }
                 );
             }
