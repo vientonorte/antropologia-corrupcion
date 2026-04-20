@@ -139,6 +139,15 @@ module.exports = function (describe, it, assert, assertEqual, assertDeepEqual, a
             }
         });
 
+        it('filters by fuente sii', function () {
+            var results = engine.search({ fuente: 'sii' });
+            assertGreaterThan(results.length, 0, 'should return SII registros');
+            for (var i = 0; i < results.length; i++) {
+                assertEqual(results[i].registro.fuente, 'sii',
+                    'all results should be from sii');
+            }
+        });
+
         it('filters by caso', function () {
             var results = engine.search({ caso: 'sura-gobernanza-datos' });
             for (var i = 0; i < results.length; i++) {

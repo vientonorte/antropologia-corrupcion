@@ -161,6 +161,206 @@
     ]
   },
   {
+    "id": "transp-sp-beneficiarios-afp-2024",
+    "fuente": "transparencia",
+    "titulo": "Solicitud: beneficiarios finales y vehiculos de inversion vinculados a AFP",
+    "fecha": "2024-03-08",
+    "url": "https://www.consejotransparencia.cl",
+    "institucion": "Superintendencia de Pensiones",
+    "materia": "Detalle de sociedades vehiculo, administradoras y beneficiarios finales vinculados a carteras AFP con exposicion territorial",
+    "keywords": [
+      "beneficiarios finales",
+      "vehiculos de inversion",
+      "AFP",
+      "sociedades relacionadas",
+      "trazabilidad"
+    ],
+    "capa_oficial": "La respuesta separa administradora, custodio y emisor como si fueran capas tecnicas sin autor. La pregunta por quien controla la decision de inversion se diluye en una cadena societaria tratada como dato formal.",
+    "friccion_con": "sura-gobernanza-datos",
+    "tipo_friccion": "semantica",
+    "tags": [
+      "transparencia",
+      "AFP",
+      "beneficiario final",
+      "cadena societaria"
+    ]
+  },
+  {
+    "id": "transp-bienesnacionales-catastro-2024",
+    "fuente": "transparencia",
+    "titulo": "Solicitud: cartografia y catastro de predios fiscales superpuestos a titulos de merced",
+    "fecha": "2024-02-11",
+    "url": "https://www.consejotransparencia.cl",
+    "institucion": "Ministerio de Bienes Nacionales",
+    "materia": "Acceso a planos, roles y capas SIG de predios fiscales en zona con reclamacion mapuche-huilliche",
+    "keywords": [
+      "catastro",
+      "predios fiscales",
+      "titulos de merced",
+      "SIG",
+      "roles"
+    ],
+    "capa_oficial": "La institucion entrega capas cartograficas parciales y remite la lectura integral a otras reparticiones. El territorio aparece repartido en archivos interoperables para el Estado, pero incompletos para la comunidad afectada.",
+    "friccion_con": "la-negra-territorio-mapuche",
+    "tipo_friccion": "politica",
+    "tags": [
+      "transparencia",
+      "Bienes Nacionales",
+      "catastro",
+      "territorio fragmentado"
+    ]
+  },
+  {
+    "id": "transp-municipio-honorarios-2024",
+    "fuente": "transparencia",
+    "titulo": "Solicitud: honorarios, sociedades y parentesco de proveedores municipales recurrentes",
+    "fecha": "2024-01-29",
+    "url": "https://www.consejotransparencia.cl",
+    "institucion": "Municipalidad (caso-tipo CIPER)",
+    "materia": "Cruce entre contrataciones a honorarios, proveedores y participacion en sociedades de familiares de autoridades",
+    "keywords": [
+      "honorarios",
+      "sociedades",
+      "proveedores",
+      "parentesco",
+      "municipalidad"
+    ],
+    "capa_oficial": "La respuesta distingue entre persona natural contratada y razon social adjudicada, como si esa separacion agotara el problema. El parentesco y la coordinacion informal quedan fuera del registro disponible.",
+    "friccion_con": "periodismo-datos-chile",
+    "tipo_friccion": "tecnica",
+    "tags": [
+      "transparencia",
+      "municipio",
+      "honorarios",
+      "red de proveedores"
+    ]
+  },
+  {
+    "id": "transp-consulta-cartografias-2024",
+    "fuente": "transparencia",
+    "titulo": "Solicitud: expedientes de consulta indigena, planos y minutas de trazado territorial",
+    "fecha": "2024-02-26",
+    "url": "https://www.consejotransparencia.cl",
+    "institucion": "Servicio de Evaluacion Ambiental",
+    "materia": "Entrega de minutas, planos y cartografias usadas para delimitar comunidades afectadas en procesos de consulta indigena",
+    "keywords": [
+      "consulta indigena",
+      "cartografia",
+      "planos",
+      "minutas",
+      "comunidades afectadas"
+    ],
+    "capa_oficial": "El expediente publica mapas y minutas como anexos tecnicos, pero no transparenta el criterio con que una comunidad fue incluida o excluida del area de afectacion. La decision politica aparece como geometria.",
+    "friccion_con": "oit169-consulta-previa",
+    "tipo_friccion": "tecnica",
+    "tags": [
+      "transparencia",
+      "consulta",
+      "cartografia",
+      "afectacion territorial"
+    ]
+  },
+  {
+    "id": "sii-sura-sociedades-relacionadas-2024",
+    "fuente": "sii",
+    "titulo": "Consulta SII: giros y sociedades relacionadas en estructura SURA / AFP",
+    "fecha": "2024-03-21",
+    "url": "https://www.sii.cl",
+    "institucion": "Servicio de Impuestos Internos",
+    "materia": "Revision de giros economicos, sucursales y sociedades relacionadas usadas para vehiculos de inversion y administracion previsional",
+    "keywords": [
+      "SII",
+      "giros",
+      "sociedades relacionadas",
+      "AFP",
+      "vehiculo de inversion"
+    ],
+    "capa_oficial": "El SII muestra razones sociales, actividades y domicilios tributarios, pero no la arquitectura de decision que conecta esas sociedades con territorios financiados. La huella existe como rastro mercantil, no como responsabilidad politica.",
+    "friccion_con": "sura-gobernanza-datos",
+    "tipo_friccion": "tecnica",
+    "tags": [
+      "SII",
+      "SURA",
+      "sociedades",
+      "huella mercantil"
+    ]
+  },
+  {
+    "id": "sii-avaluos-predios-los-rios-2024",
+    "fuente": "sii",
+    "titulo": "Consulta SII: avaluos fiscales y roles de predios en Los Rios con reclamacion mapuche",
+    "fecha": "2024-01-17",
+    "url": "https://www.sii.cl",
+    "institucion": "Servicio de Impuestos Internos",
+    "materia": "Cruce de roles de avaluo, destino de suelo y valuacion fiscal en predios superpuestos a memoria territorial mapuche-huilliche",
+    "keywords": [
+      "avaluo fiscal",
+      "roles",
+      "predios",
+      "Los Rios",
+      "suelo"
+    ],
+    "capa_oficial": "El territorio se reduce a rol, avalúo y destino tributario. La memoria territorial queda borrada en favor de una taxonomia de suelo que solo pregunta cuanto vale y para que produce.",
+    "friccion_con": "la-negra-territorio-mapuche",
+    "tipo_friccion": "semantica",
+    "tags": [
+      "SII",
+      "avaluos",
+      "territorio mapuche",
+      "rol de avaluo"
+    ]
+  },
+  {
+    "id": "sii-proveedores-municipales-2023",
+    "fuente": "sii",
+    "titulo": "Consulta SII: giros, socios y vigencia de proveedores municipales reiterados",
+    "fecha": "2023-11-09",
+    "url": "https://www.sii.cl",
+    "institucion": "Servicio de Impuestos Internos",
+    "materia": "Revision de giro comercial, inicio de actividades y representantes de proveedores adjudicados por trato directo",
+    "keywords": [
+      "giro comercial",
+      "proveedores",
+      "inicio de actividades",
+      "socios",
+      "trato directo"
+    ],
+    "capa_oficial": "La ficha tributaria valida existencia y giro, pero no explica por que un proveedor sin trayectoria concentra adjudicaciones. El rastro fiscal certifica legalidad minima sin tocar la red de favores.",
+    "friccion_con": "periodismo-datos-chile",
+    "tipo_friccion": "tecnica",
+    "tags": [
+      "SII",
+      "proveedores",
+      "municipio",
+      "giro y red societaria"
+    ]
+  },
+  {
+    "id": "sii-avaluos-predios-consulta-2022",
+    "fuente": "sii",
+    "titulo": "Consulta SII: roles de avaluo de predios incluidos en procesos de consulta indigena",
+    "fecha": "2022-12-02",
+    "url": "https://www.sii.cl",
+    "institucion": "Servicio de Impuestos Internos",
+    "materia": "Identificacion de roles, clasificacion de suelo y avalúos de predios considerados en procesos de consulta previa",
+    "keywords": [
+      "consulta previa",
+      "roles de avaluo",
+      "predios",
+      "clasificacion de suelo",
+      "consulta indigena"
+    ],
+    "capa_oficial": "El territorio consultado aparece como una lista de roles y avalúos. El derecho a consentimiento previo se apoya en una cartografia fiscal que nunca fue diseñada para reconocer comunidad, uso ceremonial o afectacion historica.",
+    "friccion_con": "oit169-consulta-previa",
+    "tipo_friccion": "semantica",
+    "tags": [
+      "SII",
+      "consulta previa",
+      "predios",
+      "cartografia fiscal"
+    ]
+  },
+  {
     "id": "ley-20730-lobby",
     "fuente": "leychile",
     "titulo": "Ley 20.730 — Regula el lobby y las gestiones que representen intereses particulares",

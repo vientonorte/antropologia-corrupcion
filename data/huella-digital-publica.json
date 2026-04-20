@@ -1,0 +1,192 @@
+{
+  "_meta": {
+    "schema": "contra-archivo/huella-digital-publica",
+    "version": 1,
+    "descripcion": "Indice orientado a LLM para cruzar huellas publicas entre registros tributarios, transparencia, mercado y archivo critico.",
+    "fuentes_base": [
+      "data/casos.json",
+      "data/fuentes-oficiales.json",
+      "data/bcn-legislativo.json"
+    ],
+    "campos_clave": [
+      "entidades",
+      "trazas",
+      "consultas_semilla"
+    ]
+  },
+  "entidades": [
+    {
+      "id": "ent-sura-investments",
+      "nombre": "SURA Investments",
+      "tipo": "empresa_financiera",
+      "aliases": [
+        "SURA Asset Management",
+        "AFP UNO"
+      ],
+      "casos_relacionados": [
+        "sura-gobernanza-datos"
+      ],
+      "fuentes_habilitadas": [
+        "sii",
+        "transparencia",
+        "cmf",
+        "bcn"
+      ],
+      "atributos_huella": [
+        "giro tributario",
+        "sociedades relacionadas",
+        "carteras de inversion",
+        "reportes ESG"
+      ],
+      "registros_relacionados": [
+        "sii-sura-sociedades-relacionadas-2024",
+        "transp-afp-carteras-2024",
+        "transp-sp-beneficiarios-afp-2024",
+        "cmf-sancion-sura-2024",
+        "cmf-norma-esg-2023",
+        "bcn-boletin-12017-12"
+      ],
+      "nivel_friccion": "alto"
+    },
+    {
+      "id": "ent-la-negra-territorio",
+      "nombre": "La Negra / Territorio Mapuche-Huilliche",
+      "tipo": "territorio_en_conflicto",
+      "aliases": [
+        "La Negra",
+        "Territorio mapuche-huilliche"
+      ],
+      "casos_relacionados": [
+        "la-negra-territorio-mapuche"
+      ],
+      "fuentes_habilitadas": [
+        "sii",
+        "transparencia",
+        "seia",
+        "leychile"
+      ],
+      "atributos_huella": [
+        "avaluos fiscales",
+        "roles de avaluo",
+        "catastros de tierras",
+        "respuestas de fondo de tierras"
+      ],
+      "registros_relacionados": [
+        "sii-avaluos-predios-los-rios-2024",
+        "transp-conadi-tierras-2023",
+        "transp-bienesnacionales-catastro-2024",
+        "seia-forestal-losrios-2022",
+        "ley-19253-indigena",
+        "dl701-fomento-forestal"
+      ],
+      "nivel_friccion": "critico"
+    },
+    {
+      "id": "ent-municipios-proveedores",
+      "nombre": "Municipios y proveedores relacionados",
+      "tipo": "red_contratacion_publica",
+      "aliases": [
+        "Municipalidad caso-tipo CIPER",
+        "Red de proveedores municipales"
+      ],
+      "casos_relacionados": [
+        "periodismo-datos-chile"
+      ],
+      "fuentes_habilitadas": [
+        "sii",
+        "transparencia",
+        "compraspublicas"
+      ],
+      "atributos_huella": [
+        "giros economicos",
+        "socios y representantes",
+        "contratos directos",
+        "trazas de conflicto de interes"
+      ],
+      "registros_relacionados": [
+        "sii-proveedores-municipales-2023",
+        "transp-municipio-compras-2023",
+        "transp-municipio-honorarios-2024",
+        "compras-municipio-trato-directo-2023"
+      ],
+      "nivel_friccion": "alto"
+    },
+    {
+      "id": "ent-consulta-territorial",
+      "nombre": "Consulta territorial y proyectos en zona indigena",
+      "tipo": "procedimiento_publico",
+      "aliases": [
+        "Consulta previa OIT 169",
+        "Evaluacion ambiental en territorio indigena"
+      ],
+      "casos_relacionados": [
+        "oit169-consulta-previa"
+      ],
+      "fuentes_habilitadas": [
+        "sii",
+        "transparencia",
+        "seia",
+        "leychile",
+        "bcn"
+      ],
+      "atributos_huella": [
+        "roles de avaluo",
+        "planos y cartografias",
+        "expedientes de consulta",
+        "tramitacion reglamentaria"
+      ],
+      "registros_relacionados": [
+        "sii-avaluos-predios-consulta-2022",
+        "transp-consulta-cartografias-2024",
+        "seia-central-osorno-2023",
+        "ds66-consulta-indigena",
+        "bcn-boletin-10526-06"
+      ],
+      "nivel_friccion": "alto"
+    }
+  ],
+  "trazas": [
+    {
+      "id": "traza-sura-mercado-territorio",
+      "descripcion": "Cruzar sociedades relacionadas, carteras AFP y reportes regulatorios para reconstruir la cadena entre dinero previsional y territorio financiado.",
+      "entidades": [
+        "ent-sura-investments",
+        "ent-la-negra-territorio"
+      ],
+      "pasos_llm": [
+        "Identificar RUT o razon social desde SII",
+        "Cruzar con respuestas de Transparencia y resoluciones CMF",
+        "Contrastar con friccion_con en casos del contra-archivo"
+      ]
+    },
+    {
+      "id": "traza-proveedor-conflicto-interes",
+      "descripcion": "Cruzar giros tributarios, representantes legales y contratos directos para detectar proveedores reiterados en municipios.",
+      "entidades": [
+        "ent-municipios-proveedores"
+      ],
+      "pasos_llm": [
+        "Agrupar proveedores por razon social y giro SII",
+        "Comparar con contratos por trato directo",
+        "Marcar vacios entre dato publicado y pregunta respondida"
+      ]
+    }
+  ],
+  "consultas_semilla": [
+    {
+      "id": "q-huella-sura",
+      "pregunta": "Que huella publica deja SURA Investments entre SII, Transparencia, CMF y BCN cuando se busca relacionar inversion previsional y territorio?",
+      "entidades_objetivo": [
+        "ent-sura-investments"
+      ]
+    },
+    {
+      "id": "q-huella-territorio",
+      "pregunta": "Que rastros aparecen en SII, Transparencia y SEIA cuando un territorio mapuche-huilliche es traducido a roles, avaluos y tramites?",
+      "entidades_objetivo": [
+        "ent-la-negra-territorio",
+        "ent-consulta-territorial"
+      ]
+    }
+  ]
+}
