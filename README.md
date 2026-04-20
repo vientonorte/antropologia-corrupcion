@@ -46,8 +46,9 @@ index.html                ← Landing + 7 secciones narrativas + grafo SVG + cam
 │   └── socialField.js     ← Termodinámica social: 80 agentes, entropía Shannon, fases
 ├── data/
 │   ├── casos.json         ← Base de datos: 5 campos × 3 capas × fricción
-│   ├── fuentes-oficiales.json ← 6 fuentes (InfoLobby, Transparencia, LeyChile, SEIA, CMF, ComprasPublicas)
-│   └── bcn-legislativo.json ← Dataset BCN con boletines y trazas históricas legislativas
+│   ├── fuentes-oficiales.json ← 7 fuentes (InfoLobby, SII, Transparencia, LeyChile, SEIA, CMF, ComprasPublicas)
+│   ├── bcn-legislativo.json ← Dataset BCN con boletines y trazas históricas legislativas
+│   └── huella-digital-publica.json ← Índice entity-centric para consultas LLM sobre bases públicas
 ├── admin.html             ← Panel CMS interno (Admin/Consultor)
 └── .vscode/settings.json  ← Protección contra formatter (formatOnSave: false)
 ```
@@ -93,7 +94,7 @@ Visualiza en tiempo real: 80 agentes brownianos (ciudadanos), halos de poder, fl
 Panel de detalle por nodo: muestra las 3 capas de información (ética, institucional, material) con indicadores de fricción. Confronta sin resolver — 3 verdades permanecen abiertas simultáneamente.
 
 ### searchEngine.js — Buscador de fricción
-Motor de búsqueda híbrido que cruza texto libre con marcadores epistemológicos de fricción. Reutiliza el mismo helper auditable del motor de fricción para evitar deriva entre grafo y buscador, muestra desglose por componentes (overlap, marcador, tipo) e integra una séptima fuente BCN cargada desde `data/bcn-legislativo.json`, con campos de urgencia, comisión, autores, indicaciones y trazabilidad parlamentaria.
+Motor de búsqueda híbrido que cruza texto libre con marcadores epistemológicos de fricción. Reutiliza el mismo helper auditable del motor de fricción para evitar deriva entre grafo y buscador, muestra desglose por componentes (overlap, marcador, tipo) e integra una octava fuente total vía `data/bcn-legislativo.json`, sobre una base oficial que ahora incluye `SII` y nuevas trazas de `Transparencia`, con campos de urgencia, comisión, autores, indicaciones y trazabilidad parlamentaria.
 
 Capacidades activas del buscador:
 - Sugerencias de consulta construidas desde casos y registros normalizados
@@ -169,14 +170,17 @@ Sprint UX/UI actual del buscador:
 
 Herramienta comparativa activa:
 - Dashboard `#triage` con KPIs globales, tarjetas por caso y tabla resumen
-- Cobertura comparada sobre 7 fuentes integradas
+- Cobertura comparada sobre 8 fuentes integradas
 - Detección de gaps por caso y priorización por fricción media + faltantes
 - Botón `Abrir en buscador` para inspección inmediata del caso priorizado
 - Toolbar con `Exportar CSV` y `Abrir caso prioritario` para pasar de triage a inspección sin pasos intermedios
 
 $$\text{score} = 0.5 \times (1 - \text{overlap}) + 0.3 \times \text{markerMatch} + 0.2 \times \text{typePenalty}$$
 
-7 fuentes integradas: BCN Tramitación · InfoLobby · Transparencia · LeyChile · SEIA · ComprasPublicas · CMF
+8 fuentes integradas: BCN Tramitación · InfoLobby · SII · Transparencia · LeyChile · SEIA · ComprasPublicas · CMF
+
+### huella-digital-publica.json — Base para LLM
+Índice complementario que reorganiza las fuentes públicas en torno a entidades, trazas y consultas semilla para sistemas LLM o RAG. No reemplaza `fuentes-oficiales.json`: la vuelve consultable por huella pública, relaciones y rutas de cruce entre SII, Transparencia, CMF, BCN y SEIA.
 
 ## Seguridad
 

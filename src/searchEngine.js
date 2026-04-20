@@ -3,8 +3,8 @@
  * ─────────────────────────────────────────────────────────────────────────────
  * Buscador de Fricción Institucional — Contra-Archivo
  *
- * Conecta fuentes oficiales chilenas (InfoLobby, Transparencia, LeyChile,
- * SEIA, ComprasPúblicas, CMF) con el modelo de fricción epistemológica
+ * Conecta fuentes oficiales chilenas (InfoLobby, SII, Transparencia,
+ * LeyChile, SEIA, ComprasPúblicas, CMF) con el modelo de fricción epistemológica
  * del contra-archivo. Cada resultado muestra el score de fricción entre
  * la capa oficial y las capas del caso vinculado.
  *
@@ -19,6 +19,7 @@
 var FUENTE_ICONS = {
     bcn: '🏛',
     infolobby: '🏛',
+    sii: '🧾',
     transparencia: '🔍',
     leychile: '⚖',
     seia: '🌿',
@@ -29,6 +30,7 @@ var FUENTE_ICONS = {
 var FUENTE_LABELS = {
     bcn: 'BCN Tramitación',
     infolobby: 'InfoLobby',
+    sii: 'SII',
     transparencia: 'Transparencia',
     leychile: 'LeyChile',
     seia: 'SEIA',
@@ -39,6 +41,7 @@ var FUENTE_LABELS = {
 var FUENTE_COLORS = {
     bcn: '#6f8fcb',
     infolobby: '#e8b84b',
+    sii: '#4c9b8a',
     transparencia: '#5ba3d9',
     leychile: '#c8a96e',
     seia: '#7a9e6e',
@@ -316,7 +319,7 @@ function FrictionSearchEngine(opts) {
  * Busca registros que coincidan con el query y/o filtros
  * @param {Object} params
  * @param {string} [params.query] - Texto libre
- * @param {string} [params.fuente] - Filtrar por fuente (infolobby|transparencia|leychile|seia|compraspublicas|cmf)
+ * @param {string} [params.fuente] - Filtrar por fuente (infolobby|sii|transparencia|leychile|seia|compraspublicas|cmf)
  * @param {string} [params.caso] - Filtrar por caso vinculado (id)
  * @param {string} [params.tipo] - Filtrar por tipo de fricción (politica|semantica|tecnica)
  * @returns {SearchResult[]}

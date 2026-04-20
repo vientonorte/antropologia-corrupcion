@@ -151,7 +151,7 @@ cc7aba0 Sprint 2: 10 fixes usabilidad
 
 - `node --check` en inline JS de `index.html` y `contra-archivo-v2.html` — OK
 - `node --check` en `src/frictionEngine.js` — OK
-- JSON válido: `data/casos.json`, `data/fuentes-oficiales.json`
+- JSON válido: `data/casos.json`, `data/fuentes-oficiales.json`, `data/huella-digital-publica.json`
 - Grep `? .` / `? ?` en todos los archivos editados — 0 ocurrencias
 - GitHub Pages deploy verificado con `curl -I`
 - 12 GitHub issues creados (#31–#42), 12 cerrados con comentarios de commit
@@ -164,7 +164,7 @@ cc7aba0 Sprint 2: 10 fixes usabilidad
 |--------|------------|
 | **VS Code formatter corrompe `?.` → `? .`** | Usar `perl -i -pe` o `sed` en terminal para editar JS. Siempre `grep '? \.'` post-edit. Pre-commit hook en `.githooks/` |
 | **Carga async puede fallar en `file://`** | `_loadSiteData()` muestra error handler visual. Para desarrollo local usar `npx serve .` |
-| **Los JSON son la fuente de verdad** | No editar datos en HTML; editar `data/casos.json` y `data/fuentes-oficiales.json` directamente |
+| **Los JSON son la fuente de verdad** | No editar datos en HTML; editar `data/casos.json`, `data/fuentes-oficiales.json` y `data/huella-digital-publica.json` directamente |
 | **19 imgs en `img/` excluidas de gitignore por excepción** | `.gitignore` tiene `!img/` y `!img/*.jpg` — no borrar estas líneas |
 
 ---
@@ -188,6 +188,7 @@ node --check src/frictionEngine.js
 # 4. Validar JSON
 node -e "JSON.parse(require('fs').readFileSync('data/casos.json'))"
 node -e "JSON.parse(require('fs').readFileSync('data/fuentes-oficiales.json'))"
+node -e "JSON.parse(require('fs').readFileSync('data/huella-digital-publica.json'))"
 ```
 
 ---

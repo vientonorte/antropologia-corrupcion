@@ -12,40 +12,41 @@
 
 global.window = global;
 global.document = {
-    createElement: function () {
+    createElement: function() {
         return {
-            setAttribute: function () {},
+            setAttribute: function() {},
             style: {},
-            classList: { add: function () {}, remove: function () {}, toggle: function () {} },
-            appendChild: function () {},
+            classList: { add: function() {}, remove: function() {}, toggle: function() {} },
+            appendChild: function() {},
             innerHTML: '',
             textContent: '',
         };
     },
-    getElementById: function () { return null; },
-    querySelector: function () { return null; },
-    querySelectorAll: function () { return []; },
+    getElementById: function() { return null; },
+    querySelector: function() { return null; },
+    querySelectorAll: function() { return []; },
     body: {
-        appendChild: function () {},
+        appendChild: function() {},
     },
 };
-global.CustomEvent = function (name, opts) { this.type = name; this.detail = (opts || {}).detail; };
+global.CustomEvent = function(name, opts) { this.type = name;
+    this.detail = (opts || {}).detail; };
 global.setTimeout = setTimeout;
-global.requestAnimationFrame = function (cb) { setTimeout(function () { cb(Date.now()); }, 16); };
-global.URL = { createObjectURL: function () { return ''; }, revokeObjectURL: function () {} };
-global.Blob = function () {};
+global.requestAnimationFrame = function(cb) { setTimeout(function() { cb(Date.now()); }, 16); };
+global.URL = { createObjectURL: function() { return ''; }, revokeObjectURL: function() {} };
+global.Blob = function() {};
 
 /* ─── LOCALSTORAGE / SESSIONSTORAGE MOCK ─── */
 
 function createStorageMock() {
     var store = {};
     return {
-        getItem: function (key) { return store.hasOwnProperty(key) ? store[key] : null; },
-        setItem: function (key, value) { store[key] = String(value); },
-        removeItem: function (key) { delete store[key]; },
-        clear: function () { store = {}; },
+        getItem: function(key) { return store.hasOwnProperty(key) ? store[key] : null; },
+        setItem: function(key, value) { store[key] = String(value); },
+        removeItem: function(key) { delete store[key]; },
+        clear: function() { store = {}; },
         get length() { return Object.keys(store).length; },
-        key: function (i) { return Object.keys(store)[i] || null; },
+        key: function(i) { return Object.keys(store)[i] || null; },
     };
 }
 
@@ -58,7 +59,7 @@ global.sessionStorage = createStorageMock();
 if (typeof global.crypto === 'undefined') {
     Object.defineProperty(global, 'crypto', {
         value: {
-            getRandomValues: function (arr) {
+            getRandomValues: function(arr) {
                 for (var i = 0; i < arr.length; i++) {
                     arr[i] = Math.floor(Math.random() * 4294967296);
                 }
@@ -71,31 +72,31 @@ if (typeof global.crypto === 'undefined') {
 
 /* ─── BTOA / ATOB MOCK ─── */
 
-global.btoa = function (str) { return Buffer.from(str, 'binary').toString('base64'); };
-global.atob = function (b64) { return Buffer.from(b64, 'base64').toString('binary'); };
+global.btoa = function(str) { return Buffer.from(str, 'binary').toString('base64'); };
+global.atob = function(b64) { return Buffer.from(b64, 'base64').toString('binary'); };
 
 /* ─── FETCH / NAVIGATOR MOCK ─── */
 
-global.fetch = function () { return Promise.reject(new Error('fetch not available in test')); };
+global.fetch = function() { return Promise.reject(new Error('fetch not available in test')); };
 if (typeof global.navigator === 'undefined') {
     Object.defineProperty(global, 'navigator', {
         value: { credentials: {} },
         configurable: true,
     });
 }
-global.cancelAnimationFrame = function () {};
-global.IntersectionObserver = function () {
-    this.observe = function () {};
-    this.disconnect = function () {};
+global.cancelAnimationFrame = function() {};
+global.IntersectionObserver = function() {
+    this.observe = function() {};
+    this.disconnect = function() {};
 };
 
 /* ─── DOMPARSER MOCK (for ciperFeed.js) ─── */
 
-global.DOMParser = function () {};
-global.DOMParser.prototype.parseFromString = function () {
+global.DOMParser = function() {};
+global.DOMParser.prototype.parseFromString = function() {
     return {
-        querySelector: function () { return null; },
-        querySelectorAll: function () { return []; },
+        querySelector: function() { return null; },
+        querySelectorAll: function() { return []; },
     };
 };
 
@@ -223,12 +224,14 @@ var path = require('path');
 var casosData = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data', 'casos.json'), 'utf8'));
 var fuentesData = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data', 'fuentes-oficiales.json'), 'utf8'));
 var bcnData = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data', 'bcn-legislativo.json'), 'utf8'));
+var huellaData = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data', 'huella-digital-publica.json'), 'utf8'));
 
 /* ─── RUN TEST SUITES ─── */
 
 require('./frictionEngine.test.js')(describe, it, assert, assertEqual, assertDeepEqual, assertApprox, assertGreaterThan, assertLessThan, assertArrayIncludes, casosData);
 require('./searchEngine.test.js')(describe, it, assert, assertEqual, assertDeepEqual, assertApprox, assertGreaterThan, assertLessThan, assertArrayIncludes, casosData, fuentesData, bcnData);
 require('./dataValidation.test.js')(describe, it, assert, assertEqual, assertDeepEqual, assertApprox, assertGreaterThan, assertArrayIncludes, casosData, fuentesData, bcnData);
+require('./huellaDigital.test.js')(describe, it, assert, assertEqual, assertDeepEqual, assertApprox, assertGreaterThan, assertArrayIncludes, casosData, fuentesData, bcnData, huellaData);
 require('./graph.test.js')(describe, it, assert, assertEqual, assertDeepEqual, assertApprox, assertGreaterThan, assertLessThan, assertArrayIncludes);
 require('./ciperFeed.test.js')(describe, it, assert, assertEqual, assertDeepEqual, assertApprox, assertGreaterThan, assertLessThan, assertArrayIncludes, casosData);
 require('./seguimientos.test.js')(describe, it, assert, assertEqual, assertDeepEqual, assertApprox, assertGreaterThan, assertLessThan, assertArrayIncludes);

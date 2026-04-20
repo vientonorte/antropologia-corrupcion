@@ -3529,7 +3529,7 @@
             </div>
             <h2>Buscador de <span class="accent-e">Fricción Institucional</span></h2>
             <p class="section-lead">
-                Cada ley, audiencia de lobby, solicitud de transparencia y evaluación ambiental produce un <strong>registro oficial</strong> que traduce conflictos territoriales, sociales y económicos en lenguaje institucional. Este buscador mide la <strong>distancia entre lo que la institución declara y lo que el contra-archivo documenta</strong>.
+                Cada ley, audiencia de lobby, registro tributario del SII, solicitud de transparencia y evaluación ambiental produce un <strong>registro oficial</strong> que traduce conflictos territoriales, sociales y económicos en lenguaje institucional. Este buscador mide la <strong>distancia entre lo que la institución declara y lo que el contra-archivo documenta</strong>.
             </p>
 
             <!-- Search bar + filters -->
@@ -3544,6 +3544,7 @@
                         <option value="all">Todas las fuentes</option>
                         <option value="bcn">BCN Tramitación</option>
                         <option value="infolobby">InfoLobby</option>
+                        <option value="sii">SII</option>
                         <option value="transparencia">Transparencia</option>
                         <option value="leychile">LeyChile</option>
                         <option value="seia">SEIA</option>
@@ -4329,7 +4330,7 @@ function setGraphFocusMessage(message) {
     status.textContent = message || 'Sin foco activo. Toca un nodo o entra desde un resultado del buscador para resaltar conexiones.';
 }
 
-var TRIAGE_SOURCE_ORDER = ['bcn', 'infolobby', 'transparencia', 'leychile', 'seia', 'compraspublicas', 'cmf'];
+var TRIAGE_SOURCE_ORDER = ['bcn', 'infolobby', 'sii', 'transparencia', 'leychile', 'seia', 'compraspublicas', 'cmf'];
 
 function triageCsvEscape(value) {
     var text = value == null ? '' : String(value);

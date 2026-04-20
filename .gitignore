@@ -30,31 +30,33 @@
 # === ARCHIVO ACADÉMICO + DATOS PERSONALES (solo local, nunca en GitHub) ===
 # Incluye: bibliografía, ensayos, fotografías, proyectos, datos sensibles
 
-# Estado del Arte — permitir subcarpetas y READMEs, ignorar binarios pesados
-# (los binarios ya se ignoran por las reglas globales *.pdf, *.png, etc.)
+# Estado del Arte — solo READMEs y placeholders, nunca binarios ni datos personales
 !Estado del Arte/
 !Estado del Arte/README.md
+Estado del Arte/_config.yml
+Estado del Arte/nlm-claude-skills-2026.sh
 !Estado del Arte/Citas Attac/
-!Estado del Arte/Citas Attac/**
+!Estado del Arte/Citas Attac/README.md
 Estado del Arte/Citas Attac/capturas/*
 !Estado del Arte/Citas Attac/capturas/.gitkeep
-!Estado del Arte/Citas Attac/capturas/*.png
-!Estado del Arte/Citas Attac/capturas/*.jpg
-!Estado del Arte/Citas Attac/capturas/*.jpeg
 !Estado del Arte/Etnografía Audiovisual/
-!Estado del Arte/Etnografía Audiovisual/**
+!Estado del Arte/Etnografía Audiovisual/README.md
 !Estado del Arte/La Negra/
-!Estado del Arte/La Negra/**
+!Estado del Arte/La Negra/README.md
 !Estado del Arte/Poemarios/
-!Estado del Arte/Poemarios/**
+!Estado del Arte/Poemarios/README.md
 !Estado del Arte/Ensayo Traducción de Saberes/
-!Estado del Arte/Ensayo Traducción de Saberes/**
+!Estado del Arte/Ensayo Traducción de Saberes/README.md
+Estado del Arte/Ensayo Traducción de Saberes/**
+!Estado del Arte/Ensayo Traducción de Saberes/README.md
 !Estado del Arte/pendiente/
-!Estado del Arte/pendiente/**
+!Estado del Arte/pendiente/.gitkeep
 !Estado del Arte/Proyectos/
-!Estado del Arte/Proyectos/**
+!Estado del Arte/Proyectos/.gitkeep
+Estado del Arte/Proyectos/**
 !Estado del Arte/Referencias/
-!Estado del Arte/Referencias/**
+!Estado del Arte/Referencias/.gitkeep
+Estado del Arte/Referencias/**
 
 # === MIRROR REDUNDANTE ===
 docs/
