@@ -1,0 +1,70 @@
+name: "🧹 Limpieza automática de ramas"
+
+on:
+  pull_request:
+    types: [closed]
+  # Permite ejecutar manualmente para limpieza masiva
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  # ─────────────────────────────────────────────
+  # Auto-delete: eliminar rama después de merge
+  # ─────────────────────────────────────────────
+  delete-merged-branch:
+    name: "🗑️ Eliminar rama merged"
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.merged == true
+    steps:
+      - name: Eliminar rama de feature
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const branch = context.payload.pull_request.head.ref;
+            // Nunca eliminar main
+            if (branch === 'main') {
+              console.log('⚠️ Ignorando main');
+              return;
+            }
+            try {
+              await github.rest.git.deleteRef({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                ref: `heads/${branch}`,
+              });
+              console.log(`✅ Rama eliminada: ${branch}`);
+            } catch (err) {
+              console.log(`⚠️ No se pudo eliminar ${branch}: ${err.message}`);
+            }
+
+  # ─────────────────────────────────────────────
+  # Auditoría: listar ramas obsoletas (workflow_dispatch)
+  # ─────────────────────────────────────────────
+  audit-stale-branches:
+    name: "📋 Auditar ramas obsoletas"
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Listar ramas merged que deben eliminarse
+        run: |
+          echo "🔍 Ramas remotas merged en main:"
+          echo "================================="
+          git branch -r --merged origin/main | grep -v 'origin/main' | grep -v 'origin/HEAD' | while read branch; do
+            clean_branch=${branch#origin/}
+            last_commit=$(git log -1 --format='%ci' "$branch" 2>/dev/null || echo "desconocido")
+            echo "  🗑️  $clean_branch (último commit: $last_commit)"
+          done
+          echo ""
+          echo "🔍 Ramas remotas NO merged en main:"
+          echo "====================================="
+          git branch -r --no-merged origin/main | grep -v 'origin/main' | grep -v 'origin/HEAD' | while read branch; do
+            clean_branch=${branch#origin/}
+            diff_stat=$(git diff origin/main...$branch --stat 2>/dev/null | tail -1)
+            echo "  ⚠️  $clean_branch → $diff_stat"
+          done || echo "  ✅ Ninguna"
