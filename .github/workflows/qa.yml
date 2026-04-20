@@ -4,13 +4,16 @@ on:
   pull_request:
     branches: [main]
 
+permissions:
+  contents: read
+
 concurrency:
   group: qa-${{ github.head_ref }}
   cancel-in-progress: true
 
 jobs:
   # ─────────────────────────────────────────────
-  # Gate 1: Tests unitarios (282+ tests, 0 dependencias)
+  # Gate 1: Tests unitarios (283+ tests, 0 dependencias)
   # ─────────────────────────────────────────────
   tests:
     name: "🧪 Tests unitarios"
@@ -113,5 +116,7 @@ jobs:
           fi
           if [ "${{ needs.lighthouse.result }}" = "failure" ]; then
             echo "⚠️ Lighthouse falló — revisar performance/a11y"
+            echo "✅ QA Gate PASSED (Lighthouse: warning)"
+          else
+            echo "✅ QA Gate PASSED — todos los checks en verde"
           fi
-          echo "✅ QA Gate PASSED — todos los checks obligatorios en verde"

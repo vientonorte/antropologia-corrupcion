@@ -56,7 +56,7 @@ git push origin feat/nombre-descriptivo
 | Actualizar local | `git pull origin main` |
 | Ver estado | `git status` |
 | Ver ramas remotas | `git branch -r` |
-| Limpiar ramas locales merged | `git branch --merged main \| grep -v main \| xargs git branch -d` |
+| Limpiar ramas locales merged | `git branch --merged main` &#124; `grep -v main` &#124; `xargs git branch -d` |
 | Verificar antes de push | `node tests/runner.js` |
 
 ### Convenciones de documentación
