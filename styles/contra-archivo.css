@@ -3147,4 +3147,8 @@ footer {
         transition-duration: 0.01ms !important;
         scroll-behavior: auto !important;
     }
+
+/* ── Gate form interactive states ── */
+#ca-gate-input:focus { border-color: #7a6340 !important; }
+#ca-gate-form button[type="submit"]:hover { background: #b8966a !important; }
 }
