@@ -6,7 +6,12 @@
 *.swo
 *~
 
-# === BINARIOS PESADOS ===
+# === ARCHIVO ACADÉMICO (iCloud, nunca en GitHub) ===
+# Documentos, imágenes y proyectos de investigación viven en iCloud Drive
+Estado del Arte/
+Ensayo Traducción de Saberes/
+
+# === BINARIOS (excepción: /img/ que sí se deploya) ===
 *.CR2
 *.pages
 *.ai
@@ -20,55 +25,27 @@
 *.jpg
 *.jpeg
 *.fig
-
-# === EXCEPCIÓN: imágenes extraídas para deploy ===
+*.docx
+*.doc
+*.ppt
+*.pptx
 !img/
 !img/*.jpg
 !img/*.jpeg
 !img/*.png
 
-# === ARCHIVO ACADÉMICO + DATOS PERSONALES (solo local, nunca en GitHub) ===
-# Incluye: bibliografía, ensayos, fotografías, proyectos, datos sensibles
-
-# Estado del Arte — solo READMEs y placeholders, nunca binarios ni datos personales
-!Estado del Arte/
-!Estado del Arte/README.md
-Estado del Arte/_config.yml
-Estado del Arte/nlm-claude-skills-2026.sh
-!Estado del Arte/Citas Attac/
-!Estado del Arte/Citas Attac/README.md
-Estado del Arte/Citas Attac/capturas/*
-!Estado del Arte/Citas Attac/capturas/.gitkeep
-!Estado del Arte/Etnografía Audiovisual/
-!Estado del Arte/Etnografía Audiovisual/README.md
-!Estado del Arte/La Negra/
-!Estado del Arte/La Negra/README.md
-!Estado del Arte/Poemarios/
-!Estado del Arte/Poemarios/README.md
-!Estado del Arte/Ensayo Traducción de Saberes/
-!Estado del Arte/Ensayo Traducción de Saberes/README.md
-Estado del Arte/Ensayo Traducción de Saberes/**
-!Estado del Arte/Ensayo Traducción de Saberes/README.md
-!Estado del Arte/pendiente/
-!Estado del Arte/pendiente/.gitkeep
-!Estado del Arte/Proyectos/
-!Estado del Arte/Proyectos/.gitkeep
-Estado del Arte/Proyectos/**
-!Estado del Arte/Referencias/
-!Estado del Arte/Referencias/.gitkeep
-Estado del Arte/Referencias/**
-
-# === MIRROR REDUNDANTE ===
-docs/
-
-# === BUILD & DEPENDENCIAS (nunca en GitHub) ===
+# === BUILD & DEPENDENCIAS ===
 dist/
 node_modules/
 
+# === DUPLICADOS iCLOUD (archivos con " 2" sufijo) ===
+*\ 2.*
+*\ 2/
+
 # === HERRAMIENTAS DE TRABAJO (no deploy) ===
-INVENTARIO_CARD_SORTING_MVP.md
-QUICK_WINS_PRODUCCION.md
 _papelera_duplicados/
-QA_RAMAS_QUICK_WINS.md
-SPRINT_19_BUSCADOR.md
 _extract_branch_content.py
+INVENTARIO_CARD_SORTING_MVP.md
+QA_RAMAS_QUICK_WINS.md
+QUICK_WINS_PRODUCCION.md
+SPRINT_19_BUSCADOR.md

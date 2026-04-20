@@ -549,30 +549,30 @@
       </section>
 
       <!-- Category Tabs -->
-      <div class="cat-tabs" id="catTabs">
-        <button class="cat-tab active" data-cat="E">
-          <span class="cat-icon">🏛</span>
-          <span class="cat-letter">E</span>
+      <div class="cat-tabs" id="catTabs" role="tablist" aria-label="Categorías de fuentes">
+        <button class="cat-tab active" data-cat="E" role="tab" aria-selected="true">
+          <span class="cat-icon" aria-hidden="true">🏛</span>
+          <span class="cat-letter" aria-hidden="true">E</span>
           Entidades públicas
         </button>
-        <button class="cat-tab" data-cat="F">
-          <span class="cat-icon">👤</span>
-          <span class="cat-letter">F</span>
+        <button class="cat-tab" data-cat="F" role="tab" aria-selected="false">
+          <span class="cat-icon" aria-hidden="true">👤</span>
+          <span class="cat-letter" aria-hidden="true">F</span>
           Funcionarios y actores
         </button>
-        <button class="cat-tab" data-cat="G">
-          <span class="cat-icon">📋</span>
-          <span class="cat-letter">G</span>
+        <button class="cat-tab" data-cat="G" role="tab" aria-selected="false">
+          <span class="cat-icon" aria-hidden="true">📋</span>
+          <span class="cat-letter" aria-hidden="true">G</span>
           Gestión de recursos
         </button>
-        <button class="cat-tab" data-cat="H">
-          <span class="cat-icon">⚖</span>
-          <span class="cat-letter">H</span>
+        <button class="cat-tab" data-cat="H" role="tab" aria-selected="false">
+          <span class="cat-icon" aria-hidden="true">⚖</span>
+          <span class="cat-letter" aria-hidden="true">H</span>
           Historial normativo
         </button>
-        <button class="cat-tab" data-cat="I">
-          <span class="cat-icon">🔍</span>
-          <span class="cat-letter">I</span>
+        <button class="cat-tab" data-cat="I" role="tab" aria-selected="false">
+          <span class="cat-icon" aria-hidden="true">🔍</span>
+          <span class="cat-letter" aria-hidden="true">I</span>
           Investigaciones
         </button>
       </div>
@@ -582,17 +582,19 @@
 
       <!-- Results -->
       <div class="results-status" id="resultsStatus"></div>
+      <div id="loadingState" style="display:none;padding:48px 0;text-align:center;color:var(--dim);font-size:13px;font-family:var(--font-mono)">Cargando fuentes…</div>
       <div id="resultsList"></div>
       <button class="btn-more hidden" id="btnMore">Mostrar más</button>
       <div class="no-results hidden" id="noResults">
         <div class="nr-icon">⊘</div>
-        Sin resultados para esta búsqueda.
+        <div id="noResultsMsg">Sin resultados para esta búsqueda.</div>
       </div>
 
     </main>
 
     <!-- Filter sidebar -->
-    <aside class="filter-sidebar" id="filterSidebar">
+    <aside class="filter-sidebar" id="filterSidebar" aria-label="Filtros">
+      <button id="filterClose" aria-label="Cerrar filtros" style="display:none;position:absolute;top:20px;right:16px;background:none;border:none;color:var(--muted);font-size:20px;cursor:pointer;line-height:1">✕</button>
       <div class="filter-section">
         <div class="filter-label">Año</div>
         <select class="filter-select" id="filterYear">
@@ -696,9 +698,14 @@
       var $filterToggle = document.getElementById('filterToggle');
       var $filterSidebar = document.getElementById('filterSidebar');
       var $filterOverlay = document.getElementById('filterOverlay');
+      var $filterClose = document.getElementById('filterClose');
+      var $loadingState = document.getElementById('loadingState');
+      var $noResultsMsg = document.getElementById('noResultsMsg');
+      var suggestActiveIdx = -1;
 
       /* ── Data loading ── */
       function init() {
+        $loadingState.style.display = 'block';
         Promise.all([
           fetch('data/fuentes-oficiales.json').then(function (r) { return r.json(); }),
           fetch('data/casos.json').then(function (r) { return r.json(); }),
@@ -771,9 +778,12 @@
           computeScores();
           buildYearFilter();
           buildSourceFilter();
+          $loadingState.style.display = 'none';
           render();
         }).catch(function (err) {
           console.error('Error cargando datos:', err);
+          $loadingState.style.display = 'none';
+          $noResultsMsg.textContent = 'Error al cargar las fuentes. Intenta recargar la página.';
           $noResults.classList.remove('hidden');
         });
       }
@@ -869,8 +879,9 @@
           var fecha = r.fecha || '—';
           var inst = r.institucion || FUENTE_LABELS[r.fuente] || r.fuente || '';
 
+          var dossierId = 'dossier-' + esc(r.id);
           item.innerHTML =
-            '<div class="result-row">' +
+            '<div class="result-row" role="button" tabindex="0" aria-expanded="false" aria-controls="' + dossierId + '">' +
               '<span class="result-idx">' + (i + 1) + '</span>' +
               '<span class="result-title">' + esc(r.titulo || r.id) + '</span>' +
               '<div class="result-meta">' +
@@ -879,10 +890,19 @@
                 '<span class="result-date">' + esc(fecha) + '</span>' +
               '</div>' +
             '</div>' +
-            '<div class="dossier" id="dossier-' + esc(r.id) + '">' + buildDossier(r) + '</div>';
+            '<div class="dossier" id="' + dossierId + '" role="region" aria-label="Dossier ' + esc(r.titulo || r.id) + '">' + buildDossier(r) + '</div>';
 
           var row = item.querySelector('.result-row');
-          row.addEventListener('click', function () { toggleDossier(r.id); });
+          function makeToggle(rid, rowEl) {
+            return function () {
+              var expanded = rowEl.getAttribute('aria-expanded') === 'true';
+              rowEl.setAttribute('aria-expanded', expanded ? 'false' : 'true');
+              toggleDossier(rid);
+            };
+          }
+          var handler = makeToggle(r.id, row);
+          row.addEventListener('click', handler);
+          row.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handler(); } });
 
           $resultsList.appendChild(item);
         });
@@ -1062,8 +1082,12 @@
         $catTabs.addEventListener('click', function (e) {
           var tab = e.target.closest('.cat-tab');
           if (!tab) return;
-          $catTabs.querySelectorAll('.cat-tab').forEach(function (t) { t.classList.remove('active'); });
+          $catTabs.querySelectorAll('.cat-tab').forEach(function (t) {
+            t.classList.remove('active');
+            t.setAttribute('aria-selected', 'false');
+          });
           tab.classList.add('active');
+          tab.setAttribute('aria-selected', 'true');
           activeCat = tab.getAttribute('data-cat');
           $catDesc.textContent = CAT_META[activeCat].desc;
           openDossierId = null;
@@ -1086,14 +1110,53 @@
         });
         $sourceChecks.addEventListener('change', function () { openDossierId = null; render(); });
 
-        // Mobile filter toggle
-        $filterToggle.addEventListener('click', function () {
-          $filterSidebar.classList.toggle('open');
-          $filterOverlay.classList.toggle('open');
-        });
-        $filterOverlay.addEventListener('click', function () {
+        // Mobile filter toggle + close
+        function openFilters() {
+          $filterSidebar.classList.add('open');
+          $filterOverlay.classList.add('open');
+          if ($filterClose) $filterClose.style.display = 'block';
+          $filterToggle.setAttribute('aria-expanded', 'true');
+        }
+        function closeFilters() {
           $filterSidebar.classList.remove('open');
           $filterOverlay.classList.remove('open');
+          if ($filterClose) $filterClose.style.display = 'none';
+          $filterToggle.setAttribute('aria-expanded', 'false');
+        }
+        $filterToggle.setAttribute('aria-expanded', 'false');
+        $filterToggle.addEventListener('click', function () {
+          $filterSidebar.classList.contains('open') ? closeFilters() : openFilters();
+        });
+        $filterOverlay.addEventListener('click', closeFilters);
+        if ($filterClose) $filterClose.addEventListener('click', closeFilters);
+
+        // Keyboard nav en autosuggest
+        $input.addEventListener('keydown', function (e) {
+          var items = $suggestList.querySelectorAll('.suggest-item');
+          if (!$suggestList.classList.contains('open') || !items.length) return;
+          if (e.key === 'ArrowDown') {
+            e.preventDefault();
+            suggestActiveIdx = Math.min(suggestActiveIdx + 1, items.length - 1);
+            items.forEach(function (it, i) { it.classList.toggle('active', i === suggestActiveIdx); });
+          } else if (e.key === 'ArrowUp') {
+            e.preventDefault();
+            suggestActiveIdx = Math.max(suggestActiveIdx - 1, -1);
+            items.forEach(function (it, i) { it.classList.toggle('active', i === suggestActiveIdx); });
+          } else if (e.key === 'Enter' && suggestActiveIdx >= 0) {
+            e.preventDefault();
+            var chosen = items[suggestActiveIdx];
+            if (chosen) {
+              $input.value = chosen.getAttribute('data-titulo');
+              query = $input.value;
+              $suggestList.classList.remove('open');
+              suggestActiveIdx = -1;
+              openDossierId = null;
+              render();
+            }
+          } else if (e.key === 'Escape') {
+            $suggestList.classList.remove('open');
+            suggestActiveIdx = -1;
+          }
         });
       }
 

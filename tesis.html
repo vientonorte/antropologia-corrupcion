@@ -310,7 +310,8 @@
       desc: 'Tesis doctoral interactiva. Instrumento crítico para medir la mistranslation institucional entre tres regímenes de verdad: ética, institucional y material.',
       href: 'index.html',
       icono: '⊘',
-      nivel: 'publico'
+      nivel: 'publico',
+      disponible: true
     },
     {
       id: 'poemarios',
@@ -320,7 +321,8 @@
       desc: 'Colección de voces poéticas que emergen del proceso de investigación etnográfica. La poesía como otro régimen de verdad.',
       href: 'Poemarios/',
       icono: '◦',
-      nivel: 'miembro'
+      nivel: 'miembro',
+      disponible: false
     },
     {
       id: 'la-negra',
@@ -330,7 +332,8 @@
       desc: 'Memoria territorial mapuche-huilliche. Documentación etnográfica del conflicto entre comunidad indígena y dispositivos institucionales de zonificación (SEIA, Ley Indígena).',
       href: 'La Negra/',
       icono: '⬡',
-      nivel: 'miembro'
+      nivel: 'miembro',
+      disponible: false
     },
     {
       id: 'etnografia-audiovisual',
@@ -340,7 +343,8 @@
       desc: 'Registro audiovisual del trabajo de campo. La imagen como evidencia de densidad territorial y memoria material. Chile, 2023–2025.',
       href: 'Etnograf%C3%ADa%20Audiovisual/',
       icono: '◈',
-      nivel: 'miembro'
+      nivel: 'miembro',
+      disponible: false
     },
     {
       id: 'estado-del-arte',
@@ -348,9 +352,10 @@
       tipo: 'investigacion',
       anio: 2024,
       desc: 'Revisión bibliográfica y mapeo del campo teórico: antropología de la corrupción, mistranslation institucional, decolonialidad y capital financiero.',
-      href: 'Estado del Arte/',
+      href: '#',
       icono: '◻',
-      nivel: 'publico'
+      nivel: 'publico',
+      disponible: false
     },
     {
       id: 'ensayo-traduccion',
@@ -358,9 +363,10 @@
       tipo: 'ensayo',
       anio: 2024,
       desc: 'Reflexión sobre la traducción entre saberes académicos, institucionales y comunitarios. El fallo de traducción como sistema, no como excepción.',
-      href: 'Ensayo%20Traducci%C3%B3n%20de%20Saberes/',
+      href: '#',
       icono: '◎',
-      nivel: 'publico'
+      nivel: 'publico',
+      disponible: false
     }
   ];
 
@@ -404,11 +410,15 @@
 
     grid.innerHTML = filtered.map(function (p) {
       var locked = !isAuthenticated && p.nivel !== 'publico';
-      var href = locked ? 'login.html' : p.href;
-      var actionText = locked ? 'Requiere acceso →' : 'Abrir →';
+      var unavail = p.disponible === false;
+      var href = locked ? 'login.html' : (unavail ? '#' : p.href);
+      var actionText = locked ? 'Requiere acceso →' : (unavail ? 'Próximamente' : 'Abrir →');
+      var ariaLabel = locked ? ' aria-label="' + esc(p.titulo) + ' — requiere autenticación"'
+        : unavail ? ' aria-label="' + esc(p.titulo) + ' — próximamente disponible"' : '';
+      var cardStyle = unavail && !locked ? ' style="opacity:.6;cursor:default"' : '';
 
       return '<a href="' + href + '" class="pub-card" data-type="' + esc(p.tipo) + '"' +
-        (locked ? ' aria-label="' + esc(p.titulo) + ' — requiere autenticación"' : '') + '>' +
+        ariaLabel + cardStyle + (unavail && !locked ? ' onclick="return false"' : '') + '>' +
         '<span class="pub-type-badge type-' + esc(p.tipo) + '">' +
           p.icono + ' ' + typeLabel(p.tipo) +
         '</span>' +
@@ -424,11 +434,14 @@
 
   /* ── Filters ── */
   document.querySelectorAll('.tesis-filter-btn').forEach(function (btn) {
+    btn.setAttribute('aria-pressed', btn.classList.contains('active') ? 'true' : 'false');
     btn.addEventListener('click', function () {
       document.querySelectorAll('.tesis-filter-btn').forEach(function (b) {
         b.classList.remove('active');
+        b.setAttribute('aria-pressed', 'false');
       });
       btn.classList.add('active');
+      btn.setAttribute('aria-pressed', 'true');
       activeFilter = btn.getAttribute('data-type');
       render();
     });
@@ -443,14 +456,24 @@
         if (banner) banner.style.display = 'none';
         render();
       }
-    } catch (e) { /* silencioso */ }
+    } catch (e) {
+      console.error('[tesis] PasskeyAuth error:', e);
+    }
   }
 
   var MAX_PASSKEY_RETRIES = 40;
 
   function waitForPasskey(tries) {
     tries = tries || 0;
-    if (tries > MAX_PASSKEY_RETRIES) return;
+    if (tries > MAX_PASSKEY_RETRIES) {
+      /* Passkey no cargó — continuar como visitante sin bloquear la UI */
+      var banner = document.getElementById('access-banner');
+      if (banner) {
+        var info = banner.querySelector('.access-info');
+        if (info) info.innerHTML = 'Navegas como <strong>visitante</strong>. <span style="color:var(--dim);font-size:12px">No se pudo verificar la sesión.</span>';
+      }
+      return;
+    }
     if (typeof window.PasskeyAuth !== 'undefined') {
       checkAuth();
       return;
