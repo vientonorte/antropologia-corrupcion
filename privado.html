@@ -1064,11 +1064,11 @@
         <!-- MAIN -->
         <div class="pv-main">
             <div class="pv-tabs" role="tablist">
-                <button class="pv-tab active" data-tab="simulacion" role="tab" aria-selected="true">Simulación</button>
-                <button class="pv-tab" data-tab="chat" role="tab">Chat</button>
-                <button class="pv-tab" data-tab="noticias" role="tab">Noticias</button>
-                <button class="pv-tab" data-tab="tesis" role="tab">Tesis</button>
-                <button class="pv-tab" data-tab="huella" role="tab">Huella Digital</button>
+                <button class="pv-tab active" data-tab="simulacion" role="tab" aria-selected="true" aria-controls="panel-simulacion">Simulación</button>
+                <button class="pv-tab" data-tab="chat" role="tab" aria-selected="false" aria-controls="panel-chat">Chat</button>
+                <button class="pv-tab" data-tab="noticias" role="tab" aria-selected="false" aria-controls="panel-noticias">Noticias</button>
+                <button class="pv-tab" data-tab="tesis" role="tab" aria-selected="false" aria-controls="panel-tesis">Tesis</button>
+                <button class="pv-tab" data-tab="huella" role="tab" aria-selected="false" aria-controls="panel-huella">Huella Digital</button>
             </div>
 
             <!-- TAB 1: Simulación -->
@@ -1280,6 +1280,7 @@
                 initTesis();
                 initLogout();
                 initHamburger();
+                initSimulacion();
 
                 waitFor(
                     function() {
@@ -1864,7 +1865,8 @@
                     var a = item.articulo || item;
                     var cruces = item.casosRelacionados || [];
                     var html = '<div class="news-card">';
-                    html += '<h3><a href="' + (a.enlace || '#') + '" target="_blank" rel="noopener">' + esc(a.titulo || 'Sin título') + '</a>';
+                    var safeHref = (a.enlace && /^https?:\/\//.test(a.enlace)) ? a.enlace : '#';
+                    html += '<h3><a href="' + safeHref + '" target="_blank" rel="noopener">' + esc(a.titulo || 'Sin título') + '</a>';
                     cruces.forEach(function(c) {
                         html += '<span class="news-badge cruce">↔ ' + esc(c.titulo || c.id || 'caso') + '</span>';
                     });
