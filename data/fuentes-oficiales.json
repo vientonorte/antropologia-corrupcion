@@ -677,7 +677,7 @@
         "materia": "Cobertura sobre lobby energético y regulación ambiental en zonas de sacrificio",
         "keywords": ["lobby", "energía", "regulación", "zonas de sacrificio", "medioambiente"],
         "capa_oficial": "La nota enmarca las reuniones como 'diálogo técnico público-privado'. No visibiliza que las comunidades afectadas no participan en dichos espacios.",
-        "friccion_con": "lobby-energetico-zonas-sacrificio",
+        "friccion_con": "oit169-consulta-previa",
         "tipo_friccion": "politica",
         "tags": ["Diario Financiero", "lobby", "energía", "regulación ambiental"]
     },
@@ -692,7 +692,7 @@
         "materia": "Cobertura financiera de inversión forestal en territorio mapuche con enfoque de certificación",
         "keywords": ["forestal", "FSC", "La Araucanía", "territorio mapuche", "inversión", "certificación"],
         "capa_oficial": "Se presenta la certificación FSC como garantía de sostenibilidad sin mencionar conflictos territoriales vigentes ni procesos de consulta previa incumplidos.",
-        "friccion_con": "territorio-mapuche-consulta",
+        "friccion_con": "la-negra-territorio-mapuche",
         "tipo_friccion": "semantica",
         "tags": ["Diario Financiero", "forestal", "territorio mapuche", "certificación", "inversión"]
     },
@@ -737,7 +737,7 @@
         "materia": "Tesis doctoral que documenta procesos de despojo territorial y formas de resistencia en comunidades mapuche-huilliche",
         "keywords": ["territorio mapuche", "despojo", "resistencia", "huilliche", "Osorno", "tesis"],
         "capa_oficial": "Investigación etnográfica que contrasta el relato estatal de 'desarrollo regional' con la memoria territorial de comunidades afectadas por la reforma agraria y la contrarreforma.",
-        "friccion_con": "territorio-mapuche-consulta",
+        "friccion_con": "la-negra-territorio-mapuche",
         "tipo_friccion": "politica",
         "tags": ["UChile", "tesis", "territorio mapuche", "despojo", "resistencia", "etnografía"]
     },
@@ -752,7 +752,7 @@
         "materia": "Tesis de magíster que mapea redes de proveedores municipales y detecta patrones de conflicto de interés",
         "keywords": ["contratación pública", "conflicto de intereses", "municipios", "proveedores", "tesis"],
         "capa_oficial": "Estudio que cruza datos de ChileCompra con registros de SII para identificar vínculos societarios entre proveedores y funcionarios municipales.",
-        "friccion_con": "municipios-proveedores-conflicto",
+        "friccion_con": "periodismo-datos-chile",
         "tipo_friccion": "politica",
         "tags": ["UChile", "tesis", "municipios", "contratación", "conflicto de intereses"]
     },
@@ -767,7 +767,7 @@
         "materia": "Tesis que evalúa el cumplimiento efectivo de la consulta indígena en proyectos ingresados al SEIA",
         "keywords": ["consulta indígena", "OIT 169", "SEIA", "proyectos energéticos", "pueblos originarios", "tesis"],
         "capa_oficial": "Análisis jurídico que documenta cómo el procedimiento formal de consulta puede cumplir requisitos legales sin satisfacer el estándar de consentimiento libre, previo e informado.",
-        "friccion_con": "territorio-mapuche-consulta",
+        "friccion_con": "oit169-consulta-previa",
         "tipo_friccion": "politica",
         "tags": ["UChile", "tesis", "consulta indígena", "OIT 169", "SEIA", "derecho"]
     }

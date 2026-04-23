@@ -159,7 +159,18 @@ module.exports = function (describe, it, assert, assertEqual, assertDeepEqual, a
         });
 
         it('fuente values are from known set', function () {
-            var validFuentes = ['infolobby', 'sii', 'transparencia', 'leychile', 'seia', 'compraspublicas', 'cmf', 'etnografia-directa'];
+            var validFuentes = [
+                'infolobby',
+                'sii',
+                'transparencia',
+                'leychile',
+                'seia',
+                'compraspublicas',
+                'cmf',
+                'diario-financiero',
+                'repositorio-uai',
+                'repositorio-uchile'
+            ];
             for (var i = 0; i < fuentesData.length; i++) {
                 assertArrayIncludes(validFuentes, fuentesData[i].fuente,
                     'registro[' + i + '] fuente "' + fuentesData[i].fuente + '" should be valid');
@@ -262,12 +273,23 @@ module.exports = function (describe, it, assert, assertEqual, assertDeepEqual, a
     /* ─── Cross-data referential integrity ─── */
 
     describe('Cross-data referential integrity', function () {
-        it('all 7 institutional fuente types are covered across registros', function () {
+        it('all expected fuente types are covered across registros', function () {
             var fuentes = {};
             for (var i = 0; i < fuentesData.length; i++) {
                 fuentes[fuentesData[i].fuente] = true;
             }
-            var expectedFuentes = ['infolobby', 'sii', 'transparencia', 'leychile', 'seia', 'compraspublicas', 'cmf'];
+            var expectedFuentes = [
+                'infolobby',
+                'sii',
+                'transparencia',
+                'leychile',
+                'seia',
+                'compraspublicas',
+                'cmf',
+                'diario-financiero',
+                'repositorio-uai',
+                'repositorio-uchile'
+            ];
             for (var j = 0; j < expectedFuentes.length; j++) {
                 assert(fuentes[expectedFuentes[j]],
                     'fuentes-oficiales.json should cover fuente: ' + expectedFuentes[j]);
