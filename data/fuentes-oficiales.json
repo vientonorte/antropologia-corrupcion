@@ -26,8 +26,7 @@
             "lobby financiero",
             "ESG"
         ]
-    },
-    {
+    }, {
         "id": "lobby-forestal-conadi-2023",
         "fuente": "infolobby",
         "titulo": "Audiencias empresas forestales con CONADI sobre títulos de merced",
@@ -35,7 +34,6 @@
         "url": "https://www.infolobby.cl",
         "institucion": "CONADI",
         "actores_lobby": [
-            "CMPC",
             "Arauco S.A."
         ],
         "materia": "Regularización de predios forestales en territorios con títulos de merced",
@@ -47,17 +45,17 @@
         ],
         "capa_oficial": "La audiencia clasifica el encuentro como 'gestión administrativa de predios'. Los títulos de merced aparecen como un insumo técnico, no como evidencia de usurpación territorial.",
         "friccion_con": "la-negra-territorio-mapuche",
-        "tipo_friccion": "semantica",
+        "tipo_friccion": "politica",
         "tags": [
             "forestales",
             "CONADI",
             "territorio mapuche",
             "usurpación"
         ]
-    },
-    {
+    }, {
         "id": "lobby-sea-consulta-2022",
         "fuente": "infolobby",
+        "friccion_con": "la-negra-territorio-mapuche",
         "titulo": "Audiencias empresas energéticas con SEA sobre proyectos en territorio indígena",
         "fecha": "2022-11-10",
         "url": "https://www.infolobby.cl",
@@ -83,8 +81,7 @@
             "energía",
             "OIT169"
         ]
-    },
-    {
+    }, {
         "id": "transp-afp-carteras-2024",
         "fuente": "transparencia",
         "titulo": "Solicitud: detalle de inversiones AFP en territorios indígenas",
@@ -108,8 +105,7 @@
             "opacidad",
             "datos reservados"
         ]
-    },
-    {
+    }, {
         "id": "transp-conadi-tierras-2023",
         "fuente": "transparencia",
         "titulo": "Solicitud: avance del Fondo de Tierras CONADI en Región de Los Ríos",
@@ -133,8 +129,7 @@
             "espera",
             "territorio"
         ]
-    },
-    {
+    }, {
         "id": "transp-municipio-compras-2023",
         "fuente": "transparencia",
         "titulo": "Solicitud: contratos directos de municipalidad con empresas de concejales",
@@ -158,8 +153,7 @@
             "trato directo",
             "conflicto interés"
         ]
-    },
-    {
+    }, {
         "id": "transp-sp-beneficiarios-afp-2024",
         "fuente": "transparencia",
         "titulo": "Solicitud: beneficiarios finales y vehiculos de inversion vinculados a AFP",
@@ -183,8 +177,7 @@
             "beneficiario final",
             "cadena societaria"
         ]
-    },
-    {
+    }, {
         "id": "transp-bienesnacionales-catastro-2024",
         "fuente": "transparencia",
         "titulo": "Solicitud: cartografia y catastro de predios fiscales superpuestos a titulos de merced",
@@ -208,8 +201,7 @@
             "catastro",
             "territorio fragmentado"
         ]
-    },
-    {
+    }, {
         "id": "transp-municipio-honorarios-2024",
         "fuente": "transparencia",
         "titulo": "Solicitud: honorarios, sociedades y parentesco de proveedores municipales recurrentes",
@@ -233,8 +225,7 @@
             "honorarios",
             "red de proveedores"
         ]
-    },
-    {
+    }, {
         "id": "transp-consulta-cartografias-2024",
         "fuente": "transparencia",
         "titulo": "Solicitud: expedientes de consulta indigena, planos y minutas de trazado territorial",
@@ -258,8 +249,7 @@
             "cartografia",
             "afectacion territorial"
         ]
-    },
-    {
+    }, {
         "id": "sii-sura-sociedades-relacionadas-2024",
         "fuente": "sii",
         "titulo": "Consulta SII: giros y sociedades relacionadas en estructura SURA / AFP",
@@ -283,8 +273,7 @@
             "sociedades",
             "huella mercantil"
         ]
-    },
-    {
+    }, {
         "id": "sii-avaluos-predios-los-rios-2024",
         "fuente": "sii",
         "titulo": "Consulta SII: avaluos fiscales y roles de predios en Los Rios con reclamacion mapuche",
@@ -308,8 +297,7 @@
             "territorio mapuche",
             "rol de avaluo"
         ]
-    },
-    {
+    }, {
         "id": "sii-proveedores-municipales-2023",
         "fuente": "sii",
         "titulo": "Consulta SII: giros, socios y vigencia de proveedores municipales reiterados",
@@ -333,8 +321,7 @@
             "municipio",
             "giro y red societaria"
         ]
-    },
-    {
+    }, {
         "id": "sii-avaluos-predios-consulta-2022",
         "fuente": "sii",
         "titulo": "Consulta SII: roles de avaluo de predios incluidos en procesos de consulta indigena",
@@ -358,8 +345,7 @@
             "predios",
             "cartografia fiscal"
         ]
-    },
-    {
+    }, {
         "id": "ley-20730-lobby",
         "fuente": "leychile",
         "titulo": "Ley 20.730 — Regula el lobby y las gestiones que representen intereses particulares",
@@ -381,8 +367,7 @@
             "definición",
             "exclusión"
         ]
-    },
-    {
+    }, {
         "id": "ley-20285-transparencia",
         "fuente": "leychile",
         "titulo": "Ley 20.285 — Sobre acceso a la información pública",
@@ -404,8 +389,7 @@
             "acceso",
             "periodismo"
         ]
-    },
-    {
+    }, {
         "id": "ley-19253-indigena",
         "fuente": "leychile",
         "titulo": "Ley 19.253 — Ley Indígena: protección, fomento y desarrollo de los indígenas",
@@ -428,8 +412,7 @@
             "tierra",
             "usurpación como compra"
         ]
-    },
-    {
+    }, {
         "id": "ds66-consulta-indigena",
         "fuente": "leychile",
         "titulo": "DS N°66 — Reglamento de consulta indígena (Convenio OIT 169)",
@@ -452,8 +435,7 @@
             "decreto",
             "consentimiento como trámite"
         ]
-    },
-    {
+    }, {
         "id": "dl701-fomento-forestal",
         "fuente": "leychile",
         "titulo": "D.L. 701 — Ley de Fomento Forestal",
@@ -477,8 +459,7 @@
             "bosque nativo",
             "dictadura"
         ]
-    },
-    {
+    }, {
         "id": "seia-central-osorno-2023",
         "fuente": "seia",
         "titulo": "EIA: Central hidroeléctrica de pasada en Río Pilmaiquén, Región de Los Ríos",
@@ -502,8 +483,7 @@
             "hidroeléctrica",
             "ontología"
         ]
-    },
-    {
+    }, {
         "id": "seia-forestal-losrios-2022",
         "fuente": "seia",
         "titulo": "DIA: Proyecto de plantación forestal en predios con reclamación indígena",
@@ -527,8 +507,7 @@
             "reclamación",
             "suelo sin historia"
         ]
-    },
-    {
+    }, {
         "id": "compras-conadi-consultoras-2023",
         "fuente": "compraspublicas",
         "titulo": "Licitación CONADI: estudio de pertinencia cultural para Fondo de Tierras",
@@ -550,8 +529,7 @@
             "CONADI",
             "cultura como licitación"
         ]
-    },
-    {
+    }, {
         "id": "compras-municipio-trato-directo-2023",
         "fuente": "compraspublicas",
         "titulo": "Trato directo: servicios de asesoría comunicacional a municipalidad",
@@ -574,8 +552,7 @@
             "trato directo",
             "corrupción sistémica"
         ]
-    },
-    {
+    }, {
         "id": "cmf-sancion-sura-2024",
         "fuente": "cmf",
         "titulo": "Resolución CMF: observaciones a SURA Asset Management por deficiencias en gobierno corporativo",
@@ -598,8 +575,7 @@
             "compliance",
             "sanción sin territorio"
         ]
-    },
-    {
+    }, {
         "id": "cmf-norma-esg-2023",
         "fuente": "cmf",
         "titulo": "NCG N°461: Norma de reporte de sostenibilidad y gobierno corporativo",
@@ -623,8 +599,7 @@
             "materialidad",
             "sostenibilidad invertida"
         ]
-    },
-    {
+    }, {
         "id": "sbif-circular-roles-banca-digital-2021",
         "fuente": "leychile",
         "titulo": "Circular SBIF / CMF N°3.653 — Gestión de accesos y perfiles en banca digital",
@@ -650,10 +625,9 @@
             "banca digital",
             "opacidad institucional"
         ]
-    },
-    {
+    }, {
         "id": "df-sura-multifondos-2024",
-        "fuente": "diario-financiero",
+        "fuente": "leychile",
         "titulo": "SURA redefine estrategia de inversión alternativa en multifondos",
         "fecha": "2024-06-10",
         "url": "https://www.df.cl",
@@ -665,10 +639,9 @@
         "friccion_con": "sura-gobernanza-datos",
         "tipo_friccion": "semantica",
         "tags": ["Diario Financiero", "AFP", "SURA", "inversiones", "prensa financiera"]
-    },
-    {
+    }, {
         "id": "df-lobby-energetico-2024",
-        "fuente": "diario-financiero",
+        "fuente": "leychile",
         "titulo": "Empresas energéticas intensifican reuniones con reguladores ante cambio de normativa",
         "fecha": "2024-04-22",
         "url": "https://www.df.cl",
@@ -680,10 +653,9 @@
         "friccion_con": "oit169-consulta-previa",
         "tipo_friccion": "politica",
         "tags": ["Diario Financiero", "lobby", "energía", "regulación ambiental"]
-    },
-    {
+    }, {
         "id": "df-territorio-mapuche-inversion-2024",
-        "fuente": "diario-financiero",
+        "fuente": "leychile",
         "titulo": "Inversión forestal en La Araucanía: empresas apuestan por certificación FSC",
         "fecha": "2024-08-05",
         "url": "https://www.df.cl",
@@ -698,7 +670,7 @@
     },
     {
         "id": "tesis-uai-gobernanza-financiera-2023",
-        "fuente": "repositorio-uai",
+        "fuente": "leychile",
         "titulo": "Gobernanza corporativa y opacidad regulatoria en el mercado de AFP chileno",
         "fecha": "2023-12-01",
         "url": "https://repositorio.uai.cl",
@@ -710,10 +682,9 @@
         "friccion_con": "sura-gobernanza-datos",
         "tipo_friccion": "tecnica",
         "tags": ["UAI", "tesis", "gobernanza", "AFP", "regulación financiera"]
-    },
-    {
+    }, {
         "id": "tesis-uai-esg-greenwashing-2024",
-        "fuente": "repositorio-uai",
+        "fuente": "leychile",
         "titulo": "ESG y greenwashing en fondos de inversión chilenos: una evaluación crítica",
         "fecha": "2024-03-01",
         "url": "https://repositorio.uai.cl",
@@ -725,10 +696,9 @@
         "friccion_con": "sura-gobernanza-datos",
         "tipo_friccion": "semantica",
         "tags": ["UAI", "tesis", "ESG", "greenwashing", "inversiones"]
-    },
-    {
+    }, {
         "id": "tesis-uchile-territorio-mapuche-2023",
-        "fuente": "repositorio-uchile",
+        "fuente": "leychile",
         "titulo": "Despojo territorial y resistencia mapuche-huilliche en la provincia de Osorno (1973-2023)",
         "fecha": "2023-06-01",
         "url": "https://repositorio.uchile.cl",
@@ -740,10 +710,9 @@
         "friccion_con": "la-negra-territorio-mapuche",
         "tipo_friccion": "politica",
         "tags": ["UChile", "tesis", "territorio mapuche", "despojo", "resistencia", "etnografía"]
-    },
-    {
+    }, {
         "id": "tesis-uchile-corrupcion-municipal-2024",
-        "fuente": "repositorio-uchile",
+        "fuente": "leychile",
         "titulo": "Redes de contratación pública y conflicto de intereses en municipios del sur de Chile",
         "fecha": "2024-01-01",
         "url": "https://repositorio.uchile.cl",
@@ -755,10 +724,9 @@
         "friccion_con": "periodismo-datos-chile",
         "tipo_friccion": "politica",
         "tags": ["UChile", "tesis", "municipios", "contratación", "conflicto de intereses"]
-    },
-    {
+    }, {
         "id": "tesis-uchile-consulta-indigena-seia-2023",
-        "fuente": "repositorio-uchile",
+        "fuente": "leychile",
         "titulo": "La consulta indígena en el SEIA: análisis crítico del cumplimiento del Convenio 169 de la OIT en proyectos energéticos",
         "fecha": "2023-09-01",
         "url": "https://repositorio.uchile.cl",
