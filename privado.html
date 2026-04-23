@@ -1866,7 +1866,7 @@
                 if (!messages.length) {
                     messages.push({
                         role: 'bot',
-                        text: 'Soy el asistente del Contra-Archivo. Puedo responder sobre casos, fuentes oficiales, tramitación BCN y contenido académico rescatado desde ramas del proyecto.',
+                        text: 'Soy el asistente del Contra-Archivo. Ahora respondo primero usando IA (OpenCLAW) para consultas complejas o abiertas. También puedo buscar en casos, fuentes oficiales, BCN y contenido académico rescatado. Pregúntame sobre corrupción, legislación, actores, territorios, o pide explicaciones.',
                         cite: ''
                     });
                 }
@@ -1916,10 +1916,73 @@
                 });
                 renderChat(messages);
 
-                var response = generateResponse(q);
-                messages.push(response);
-                sessionStorage.setItem('ca_chat_history', JSON.stringify(messages));
-                renderChat(messages);
+                // Primero intenta con IA
+                generateIAResponse(q).then(function(iaResponse) {
+                    if (iaResponse && iaResponse.text && iaResponse.text.length > 0 && !iaResponse.text.match(/^no encontr/gi)) {
+                        messages.push({
+                            role: 'bot',
+                            text: iaResponse.text,
+                            cite: iaResponse.cite || 'IA: OpenCLAW'
+                        });
+                        sessionStorage.setItem('ca_chat_history', JSON.stringify(messages));
+                        renderChat(messages);
+                    } else {
+                        // Si la IA no responde útil, busca localmente
+                        var response = generateResponse(q);
+                        messages.push(response);
+                        sessionStorage.setItem('ca_chat_history', JSON.stringify(messages));
+                        renderChat(messages);
+                    }
+                }).catch(function() {
+                    // Si la IA falla, busca localmente
+                    var response = generateResponse(q);
+                    messages.push(response);
+                    sessionStorage.setItem('ca_chat_history', JSON.stringify(messages));
+                    renderChat(messages);
+                });
+                // Consulta IA gratuita (OpenCLAW u otra API pública)
+                function generateIAResponse(query) {
+                    // Ejemplo: OpenCLAW API pública (ajustar endpoint real si cambia)
+                    var endpoint = 'https://api.openclaw.ai/v1/ask';
+                    return fetch(endpoint, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                question: query,
+                                lang: 'es'
+                            })
+                        })
+                        .then(function(res) {
+                            return res.json();
+                        })
+                        .then(function(data) {
+                            // Ajustar según respuesta real de la API
+                            if (data && data.answer) {
+                                return {
+                                    text: data.answer,
+                                    cite: 'IA: OpenCLAW'
+                                };
+                            } else if (data && data.result) {
+                                return {
+                                    text: data.result,
+                                    cite: 'IA: OpenCLAW'
+                                };
+                            } else {
+                                return {
+                                    text: '',
+                                    cite: ''
+                                };
+                            }
+                        })
+                        .catch(function() {
+                            return {
+                                text: '',
+                                cite: ''
+                            };
+                        });
+                }
             }
 
             // Mostrar error accesible en el chat
@@ -1949,8 +2012,12 @@
                     });
                 }
 
-                if (results.length > 0) {
-                    var top = results.slice(0, 3);
+                // Solo responde si hay coincidencias fuertes (relevancia >= 0.7)
+                var relevantes = results.filter(function(r) {
+                    return r.relevance >= 0.7;
+                });
+                if (relevantes.length > 0) {
+                    var top = relevantes.slice(0, 3);
                     var parts = top.map(formatSearchResultSummary).filter(Boolean);
                     return {
                         role: 'bot',
@@ -2028,7 +2095,7 @@
 
                 return {
                     role: 'bot',
-                    text: 'No encontré información específica sobre «' + query + '» en la base de datos activa. Intenta con términos como: SURA, AFP, CMF, BCN, territorio mapuche, consulta previa, CIPER, fricción, conclusiones, investigador o el nombre de un caso específico.',
+                    text: 'No encontré información específica sobre «' + query + '» en la base de datos activa. Puedes intentar reformular tu pregunta o consultar temas como: SURA, AFP, CMF, BCN, territorio mapuche, consulta previa, CIPER, fricción, conclusiones, investigador o el nombre de un caso específico.',
                     cite: ''
                 };
             }
