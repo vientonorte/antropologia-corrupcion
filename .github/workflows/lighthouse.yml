@@ -3,6 +3,11 @@ name: Lighthouse CI
 on:
   pull_request:
     branches: [main]
+    paths:
+      - "*.html"
+      - "src/**"
+      - "styles/**"
+      - ".lighthouserc.json"
 
 jobs:
   lighthouse:
@@ -13,6 +18,9 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
+
+      - name: Setup Chrome
+        uses: browser-actions/setup-chrome@v1
 
       - name: Run Lighthouse CI
         run: |
