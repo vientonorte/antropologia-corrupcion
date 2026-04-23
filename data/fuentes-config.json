@@ -1,0 +1,16 @@
+{
+  "sources": [
+    {"id":"bcn","label":"BCN Tramitación","icon":"🏛","color":"#6f8fcb","tipo":"oficial","url_base":"https://www.bcn.cl","activa":true},
+    {"id":"infolobby","label":"InfoLobby","icon":"🏛","color":"#e8b84b","tipo":"oficial","url_base":"https://www.infolobby.cl","activa":true},
+    {"id":"sii","label":"SII","icon":"🧾","color":"#4c9b8a","tipo":"oficial","url_base":"https://www.sii.cl","activa":true},
+    {"id":"transparencia","label":"Transparencia","icon":"🔍","color":"#5ba3d9","tipo":"oficial","url_base":"https://www.portaltransparencia.cl","activa":true},
+    {"id":"leychile","label":"LeyChile","icon":"⚖","color":"#c8a96e","tipo":"oficial","url_base":"https://www.leychile.cl","activa":true},
+    {"id":"seia","label":"SEIA","icon":"🌿","color":"#7a9e6e","tipo":"oficial","url_base":"https://seia.sea.gob.cl","activa":true},
+    {"id":"compraspublicas","label":"ComprasPúblicas","icon":"📋","color":"#d97b5b","tipo":"oficial","url_base":"https://www.mercadopublico.cl","activa":true},
+    {"id":"cmf","label":"CMF","icon":"💹","color":"#a07acc","tipo":"oficial","url_base":"https://www.cmfchile.cl","activa":true},
+    {"id":"diariooficial","label":"Diario Oficial","icon":"📰","color":"#7b8cde","tipo":"oficial","url_base":"https://www.diariooficial.interior.gob.cl","activa":true},
+    {"id":"scielo","label":"SciELO","icon":"📚","color":"#d06f9c","tipo":"academica","url_base":"https://www.scielo.cl","activa":true},
+    {"id":"repositorio-uai","label":"Repositorio UAI","icon":"🎓","color":"#7a9ec2","tipo":"academica","url_base":"https://repositorio.uai.cl","activa":true},
+    {"id":"repositorio-uchile","label":"Repositorio UChile","icon":"🎓","color":"#8e86c9","tipo":"academica","url_base":"https://repositorio.uchile.cl","activa":true}
+  ]
+}

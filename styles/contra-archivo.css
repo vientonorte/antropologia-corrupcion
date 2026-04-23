@@ -2633,6 +2633,13 @@ footer {
     flex-wrap: wrap
 }
 
+.se-stats-evidence {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 12px
+}
+
 .se-stat-big {
     display: flex;
     flex-direction: column;
@@ -2805,6 +2812,64 @@ footer {
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden
+}
+
+.se-card-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px
+}
+
+.se-pill {
+    border-radius: 999px;
+    padding: 3px 8px;
+    font-size: 10px;
+    font-family: var(--font-mono);
+    border: 1px solid transparent
+}
+
+.se-pill--oficial {
+    background: rgba(74, 127, 165, .16);
+    border-color: rgba(74, 127, 165, .28);
+    color: #9fc3dd
+}
+
+.se-pill--academica {
+    background: rgba(208, 111, 156, .14);
+    border-color: rgba(208, 111, 156, .28);
+    color: #f0bdd4
+}
+
+.se-pill--ok {
+    background: rgba(122, 158, 110, .15);
+    border-color: rgba(122, 158, 110, .34);
+    color: #b9d7ac
+}
+
+.se-pill--warn {
+    background: rgba(216, 167, 90, .12);
+    border-color: rgba(216, 167, 90, .28);
+    color: #f3cd95
+}
+
+.se-pill--score {
+    background: rgba(200, 169, 110, .12);
+    border-color: rgba(200, 169, 110, .3);
+    color: #e6cb95
+}
+
+.se-card-freshness {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap
+}
+
+.se-pill-muted {
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    padding: 2px 8px;
+    font-size: 10px;
+    color: var(--dim)
 }
 
 .se-card-meta {

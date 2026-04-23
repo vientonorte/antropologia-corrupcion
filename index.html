@@ -442,6 +442,7 @@
             <h2>Buscador de <span class="accent-e">Fricción Institucional</span></h2>
             <p class="section-lead">
                 Cada ley, audiencia de lobby, registro tributario del SII, solicitud de transparencia y evaluación ambiental produce un <strong>registro oficial</strong> que traduce conflictos territoriales, sociales y económicos en lenguaje institucional.
+                También puedes cruzar <strong>evidencia académica</strong> (SciELO y repositorios) para contrastar cómo cambia la narrativa según el tipo de fuente.
                 Este buscador mide la <strong>distancia entre lo que la institución declara y lo que el contra-archivo documenta</strong>.
             </p>
 
@@ -463,6 +464,11 @@
                         <option value="seia">SEIA</option>
                         <option value="compraspublicas">ComprasPúblicas</option>
                         <option value="cmf">CMF</option>
+                    </select>
+                        <select class="se-select" id="se-filter-evidencia" aria-label="Filtrar por tipo de evidencia">
+                        <option value="all">Toda evidencia</option>
+                        <option value="oficial">Oficial</option>
+                        <option value="academica">Académica</option>
                     </select>
                         <select class="se-select" id="se-filter-caso" aria-label="Filtrar por caso">
                         <option value="all">Todos los casos</option>
@@ -710,6 +716,7 @@
     <script src="src/graph.js?v=20260419" defer></script>
     <script src="src/nodeRenderer.js?v=20260419" defer></script>
     <script src="src/socialField.js?v=20260419" defer></script>
+    <script src="src/sourceNormalizers.js?v=20260423" defer></script>
     <script src="src/searchEngine.js?v=20260419" defer></script>
 
     <script>
@@ -719,6 +726,7 @@
         var CASOS_DATA = null;
         var CASOS = [];
         var FUENTES_DATA = [];
+        var FUENTES_CONFIG = null;
         var _dataReady = false;
         var _domReady = false;
 
@@ -734,11 +742,15 @@
                 }),
                 fetch(resolveDataPath('fuentes-oficiales.json')).then(function(r) {
                     return r.json();
+                }),
+                fetch(resolveDataPath('fuentes-config.json')).then(function(r) {
+                    return r.ok ? r.json() : { sources: [] };
                 })
             ]).then(function(results) {
                 CASOS_DATA = results[0];
                 CASOS = results[0].casos;
                 FUENTES_DATA = results[1];
+                FUENTES_CONFIG = results[2];
                 _dataReady = true;
                 _tryBootstrap();
             }).catch(function(err) {
@@ -747,7 +759,7 @@
                 var msg = document.createElement('div');
                 msg.setAttribute('role', 'alert');
                 msg.style.cssText = 'position:fixed;top:0;left:0;right:0;padding:1rem;background:#300;color:#faa;text-align:center;z-index:9999';
-                msg.textContent = 'Error cargando datos. Verifica conexión o ruta de /data/casos.json.';
+                msg.textContent = 'Error cargando datos. Verifica conexión o ruta de /data/*.json.';
                 body.appendChild(msg);
             });
         }
@@ -1516,6 +1528,11 @@ function initTriage() {
     function render() {
         loadBcnDataset().then(function(dataset) {
             var registros = FUENTES_DATA.slice();
+            if (window.normalizeAnySourceRecord) {
+                registros = registros.map(function(record) {
+                    return window.normalizeAnySourceRecord(record);
+                });
+            }
             if (window.normalizeBcnDataset) {
                 registros = registros.concat(window.normalizeBcnDataset(dataset));
             }
@@ -1607,12 +1624,18 @@ function initBuscador() {
     }
         loadBcnDataset().then(function(dataset) {
             var registros = FUENTES_DATA.slice();
+            if (window.normalizeAnySourceRecord) {
+                registros = registros.map(function(record) {
+                    return window.normalizeAnySourceRecord(record);
+                });
+            }
             if (window.normalizeBcnDataset) {
                 registros = registros.concat(window.normalizeBcnDataset(dataset));
             }
             window.initSearchUI({
                 registros: registros,
                 casos: CASOS,
+                sourceConfig: FUENTES_CONFIG || { sources: [] },
                 onResults: function(payload) {
                     var graph = window.__CA_GRAPH;
                     if (!graph) return;
@@ -1620,6 +1643,7 @@ function initBuscador() {
                     var params = payload && payload.params ? payload.params : {};
                     var noActiveFilters = (!params.query || !params.query.trim()) &&
                         (params.fuente === 'all') &&
+                        (params.evidencia === 'all') &&
                         (params.caso === 'all') &&
                         (params.tipo === 'all');
 
