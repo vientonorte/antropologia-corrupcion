@@ -52,6 +52,11 @@ async function init() {
         const { buildGraph } = window.frictionEngine;
         const graphData = buildGraph(json.casos);
 
+        // 2b. Enriquecer nodos con valoración epistémica (Black-Scholes) si disponible
+        if (window.BlackScholes) {
+            window.BlackScholes.enrichNodes(graphData.nodes, json.casos);
+        }
+
         // 3. Inyectar estructura del modo grafo en el DOM
         setupGraphDOM();
 
