@@ -36,7 +36,6 @@
     "url": "https://www.infolobby.cl",
     "institucion": "CONADI",
     "actores_lobby": [
-      "CMPC",
       "Arauco S.A."
     ],
     "materia": "Regularización de predios forestales en territorios con títulos de merced",
@@ -48,7 +47,7 @@
     ],
     "capa_oficial": "La audiencia clasifica el encuentro como 'gestión administrativa de predios'. Los títulos de merced aparecen como un insumo técnico, no como evidencia de usurpación territorial.",
     "friccion_con": "la-negra-territorio-mapuche",
-    "tipo_friccion": "semantica",
+    "tipo_friccion": "politica",
     "tags": [
       "forestales",
       "CONADI",
@@ -59,6 +58,7 @@
   {
     "id": "lobby-sea-consulta-2022",
     "fuente": "infolobby",
+    "friccion_con": "oit169-consulta-previa",
     "titulo": "Audiencias empresas energéticas con SEA sobre proyectos en territorio indígena",
     "fecha": "2022-11-10",
     "url": "https://www.infolobby.cl",
@@ -76,7 +76,6 @@
       "mitigación"
     ],
     "capa_oficial": "El registro documenta una 'reunión de seguimiento técnico'. La consulta indígena aparece como una 'etapa del proceso' —no como derecho de consentimiento.",
-    "friccion_con": "oit169-consulta-previa",
     "tipo_friccion": "politica",
     "tags": [
       "SEIA",

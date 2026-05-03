@@ -29,8 +29,10 @@ global.document = {
         appendChild: function() {},
     },
 };
-global.CustomEvent = function(name, opts) { this.type = name;
-    this.detail = (opts || {}).detail; };
+global.CustomEvent = function(name, opts) {
+    this.type = name;
+    this.detail = (opts || {}).detail;
+};
 global.setTimeout = setTimeout;
 global.requestAnimationFrame = function(cb) { setTimeout(function() { cb(Date.now()); }, 16); };
 global.URL = { createObjectURL: function() { return ''; }, revokeObjectURL: function() {} };
@@ -237,6 +239,7 @@ require('./ciperFeed.test.js')(describe, it, assert, assertEqual, assertDeepEqua
 require('./seguimientos.test.js')(describe, it, assert, assertEqual, assertDeepEqual, assertApprox, assertGreaterThan, assertLessThan, assertArrayIncludes);
 require('./passkey.test.js')(describe, it, assert, assertEqual, assertDeepEqual, assertApprox, assertGreaterThan, assertLessThan, assertArrayIncludes);
 require('./htmlLint.test.js')(describe, it, assert, assertEqual);
+require('./privadoChat.test.js')(describe, it, assert, assertEqual);
 
 /* ─── SUMMARY ─── */
 

@@ -319,6 +319,141 @@ class NodeRenderer {
           Las capas coexisten sin resolución.
         </div>
       </div>
+
+      ${node.bs ? this._renderBS(node.bs) : ''}
+    `;
+  }
+
+  _renderBS(bs) {
+    const { params, callValue, putValue, riskNeutralProb, moneyness, intrinsicValue, timeValue, greeks } = bs;
+
+    const probPct = Math.round(riskNeutralProb * 100);
+    const callPct = Math.min(100, Math.round((callValue / (params.K || 1)) * 100));
+    const moneynessClass = moneyness >= 1 ? 'itm' : 'otm';
+    const moneynessLabel = moneyness >= 1.1
+        ? 'en el umbral ↑'
+        : moneyness >= 1
+        ? 'en el umbral'
+        : 'bajo el umbral ↓';
+
+    const thetaDaily = (greeks.theta / 365).toFixed(5);
+    const sigmaLabel = (params.sigma * 100).toFixed(1) + '%';
+    const tLabel     = params.T.toFixed(1) + ' años';
+
+    return `
+      <section class="ca-panel__bs" aria-label="Valoración epistémica Black-Scholes">
+        <div class="ca-panel__bs-head">
+          <div class="ca-panel__bs-title-row">
+            <span class="ca-panel__bs-icon" aria-hidden="true">∂V</span>
+            <div>
+              <span class="ca-panel__bs-kicker">Ecuación de Black-Scholes</span>
+              <h3 class="ca-panel__bs-heading">Valoración epistémica</h3>
+            </div>
+          </div>
+          <p class="ca-panel__bs-desc">
+            Modela la probabilidad de resolución del caso como una opción financiera:
+            la presión social es el activo, la fricción es la volatilidad, y el tiempo
+            erosiona el valor si no hay nuevas fuerzas que actúen sobre el conflicto.
+          </p>
+        </div>
+
+        <div class="ca-panel__bs-main">
+          <div class="ca-panel__bs-prob-block">
+            <div class="ca-panel__bs-prob-bar-wrap" aria-label="Probabilidad de resolución: ${probPct}%">
+              <div class="ca-panel__bs-prob-bar" style="width:${probPct}%"></div>
+            </div>
+            <div class="ca-panel__bs-prob-label">
+              <span class="ca-panel__bs-prob-pct">${probPct}%</span>
+              <span class="ca-panel__bs-prob-text">probabilidad de resolución <em>N(d₂)</em></span>
+            </div>
+          </div>
+
+          <div class="ca-panel__bs-moneyness ca-panel__bs-moneyness--${moneynessClass}"
+            title="Moneyness S/K = ${moneyness}">
+            <span class="ca-panel__bs-money-val">${moneyness.toFixed(2)}</span>
+            <span class="ca-panel__bs-money-label">${moneynessLabel}</span>
+          </div>
+        </div>
+
+        <div class="ca-panel__bs-params" aria-label="Parámetros del modelo">
+          <div class="ca-panel__bs-param">
+            <span class="ca-panel__bs-param-sym">S</span>
+            <span class="ca-panel__bs-param-name">Presión pública</span>
+            <strong>${params.S.toFixed(3)}</strong>
+          </div>
+          <div class="ca-panel__bs-param">
+            <span class="ca-panel__bs-param-sym">K</span>
+            <span class="ca-panel__bs-param-name">Umbral resolución</span>
+            <strong>${params.K.toFixed(2)}</strong>
+          </div>
+          <div class="ca-panel__bs-param">
+            <span class="ca-panel__bs-param-sym">σ</span>
+            <span class="ca-panel__bs-param-name">Volatilidad fricción</span>
+            <strong>${sigmaLabel}</strong>
+          </div>
+          <div class="ca-panel__bs-param">
+            <span class="ca-panel__bs-param-sym">T</span>
+            <span class="ca-panel__bs-param-name">Tiempo transcurrido</span>
+            <strong>${tLabel}</strong>
+          </div>
+          <div class="ca-panel__bs-param">
+            <span class="ca-panel__bs-param-sym">V</span>
+            <span class="ca-panel__bs-param-name">Valor resolución (call)</span>
+            <strong>${callValue.toFixed(4)}</strong>
+          </div>
+          <div class="ca-panel__bs-param">
+            <span class="ca-panel__bs-param-sym">P</span>
+            <span class="ca-panel__bs-param-name">Valor supresión (put)</span>
+            <strong>${putValue.toFixed(4)}</strong>
+          </div>
+        </div>
+
+        <div class="ca-panel__bs-greeks" aria-label="Letras griegas — sensibilidades del modelo">
+          <h4 class="ca-panel__bs-greeks-title">Letras griegas</h4>
+          <div class="ca-panel__bs-greek-grid">
+            <div class="ca-panel__bs-greek">
+              <span class="ca-panel__bs-greek-sym">Δ</span>
+              <span class="ca-panel__bs-greek-val">${greeks.delta.toFixed(3)}</span>
+              <span class="ca-panel__bs-greek-desc">sensibilidad a presión social</span>
+            </div>
+            <div class="ca-panel__bs-greek">
+              <span class="ca-panel__bs-greek-sym">Γ</span>
+              <span class="ca-panel__bs-greek-val">${greeks.gamma.toFixed(3)}</span>
+              <span class="ca-panel__bs-greek-desc">curvatura — cercanía al umbral</span>
+            </div>
+            <div class="ca-panel__bs-greek">
+              <span class="ca-panel__bs-greek-sym">Θ</span>
+              <span class="ca-panel__bs-greek-val">${thetaDaily}/día</span>
+              <span class="ca-panel__bs-greek-desc">costo diario del silencio</span>
+            </div>
+            <div class="ca-panel__bs-greek">
+              <span class="ca-panel__bs-greek-sym">ν</span>
+              <span class="ca-panel__bs-greek-val">${greeks.vega.toFixed(3)}</span>
+              <span class="ca-panel__bs-greek-desc">sensibilidad a la fricción</span>
+            </div>
+            <div class="ca-panel__bs-greek">
+              <span class="ca-panel__bs-greek-sym">ρ</span>
+              <span class="ca-panel__bs-greek-val">${greeks.rho.toFixed(3)}</span>
+              <span class="ca-panel__bs-greek-desc">sensibilidad a erosión institucional</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="ca-panel__bs-decomp" aria-label="Descomposición del valor">
+          <div class="ca-panel__bs-decomp-item">
+            <span>Valor intrínseco</span>
+            <span>${intrinsicValue.toFixed(4)}</span>
+          </div>
+          <div class="ca-panel__bs-decomp-item">
+            <span>Valor temporal</span>
+            <span>${timeValue.toFixed(4)}</span>
+          </div>
+        </div>
+
+        <p class="ca-panel__bs-note">
+          ∂V/∂t + rS·∂V/∂S + ½σ²S²·∂²V/∂S² − rV = 0
+        </p>
+      </section>
     `;
   }
 
