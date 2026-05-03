@@ -39,6 +39,25 @@ body {
   outline-color: var(--accent-600);
 }
 
+/* Skip-to-main link — visible only on focus */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 0;
+  padding: 0.5rem 1rem;
+  background-color: var(--accent-600);
+  color: #fff;
+  font-weight: 600;
+  z-index: 9999;
+  border-radius: 0 0 0.375rem 0;
+  text-decoration: none;
+}
+.skip-link:focus {
+  top: 0;
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
 @media (prefers-reduced-motion: reduce) {
   * {
     @apply transition-none !important;
