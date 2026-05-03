@@ -169,7 +169,9 @@ module.exports = function (describe, it, assert, assertEqual, assertDeepEqual, a
                 'cmf',
                 'diario-financiero',
                 'repositorio-uai',
-                'repositorio-uchile'
+                'repositorio-uchile',
+                'diariooficial',
+                'scielo'
             ];
             for (var i = 0; i < fuentesData.length; i++) {
                 assertArrayIncludes(validFuentes, fuentesData[i].fuente,
