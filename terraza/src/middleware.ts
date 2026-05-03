@@ -1,30 +1,43 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
+const SESSION_COOKIE_NAME = 'auth-session';
+const PUBLIC_ROUTES = ['/login', '/api/auth'];
+const PROTECTED_ROUTES = ['/corpus', '/codificacion', '/upload', '/grafo'];
+
 export function middleware(request: NextRequest): NextResponse | undefined {
   const { pathname } = request.nextUrl;
 
-  // Permite acceso a /login y /api/auth sin validación
-  if (pathname.startsWith('/login') || pathname.startsWith('/api/auth')) {
+  // Allow public routes without session validation
+  const isPublicRoute = PUBLIC_ROUTES.some((route) => pathname.startsWith(route));
+  if (isPublicRoute) {
     return undefined;
   }
 
-  // Permite acceso a rutas públicas
-  if (pathname.startsWith('/_next') || pathname.startsWith('/public')) {
+  // Check if route is protected
+  const isProtectedRoute = PROTECTED_ROUTES.some((route) =>
+    pathname.startsWith(route),
+  );
+
+  if (!isProtectedRoute) {
     return undefined;
   }
 
-  // Protege rutas /admin/*
-  if (pathname.startsWith('/admin')) {
-    const session = request.cookies.get('next-auth.session-token');
-    if (!session) {
-      return NextResponse.redirect(new URL('/login', request.url));
-    }
+  // Verify session for protected routes
+  const sessionCookie = request.cookies.get(SESSION_COOKIE_NAME);
+
+  if (!sessionCookie?.value) {
+    return NextResponse.redirect(new URL('/login', request.url));
   }
 
-  return undefined;
+  try {
+    JSON.parse(sessionCookie.value);
+    return undefined;
+  } catch {
+    return NextResponse.redirect(new URL('/login', request.url));
+  }
 }
 
 export const config = {
-  matcher: ['/admin/:path*', '/api/:path*'],
+  matcher: ['/((?!_next/static|_next/image|favicon.ico).*)'],
 };
