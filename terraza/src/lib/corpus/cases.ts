@@ -25,5 +25,5 @@ export const CASOS = {
   },
 } as const;
 
-export type CasoId = typeof CASOS[keyof typeof CASOS]['id'];
+export type CasoId = (typeof CASOS)[keyof typeof CASOS]['id'];
 export type CasoKey = keyof typeof CASOS;
