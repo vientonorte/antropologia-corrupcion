@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { CaptureCard } from '@/components/organisms/CaptureCard';
 import { AnalysisPanel } from '@/components/organisms/AnalysisPanel';
+import { CommitQueue } from '@/components/organisms/CommitQueue';
 import { Spinner } from '@/components/atoms/Spinner';
 import type { UploadRecord } from '@/lib/db/uploads';
 
@@ -11,6 +12,7 @@ export default function CorpusPage(): React.ReactElement {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [showQueue, setShowQueue] = useState(false);
 
   const fetchUploads = useCallback(async () => {
     try {
@@ -36,6 +38,11 @@ export default function CorpusPage(): React.ReactElement {
     void fetchUploads();
   };
 
+  const handleCommitted = () => {
+    void fetchUploads();
+    setShowQueue(true);
+  };
+
   if (isLoading) {
     return (
       <div className="flex items-center justify-center h-64" aria-busy="true">
@@ -47,7 +54,7 @@ export default function CorpusPage(): React.ReactElement {
 
   if (error) {
     return (
-      <div className="p-4 bg-red-50 border border-red-200 rounded-lg text-red-800">
+      <div role="alert" className="p-4 bg-red-50 border border-red-200 rounded-lg text-red-800">
         {error}
       </div>
     );
@@ -55,32 +62,57 @@ export default function CorpusPage(): React.ReactElement {
 
   return (
     <div className="flex gap-6 h-[calc(100vh-8rem)]">
-      {/* Left: capture list */}
-      <aside className="w-80 shrink-0 overflow-y-auto" aria-label="Lista de capturas">
+      {/* Left: capture list + commit queue */}
+      <aside className="w-80 shrink-0 flex flex-col overflow-hidden" aria-label="Lista de capturas">
         <div className="flex items-center justify-between mb-4">
           <h1 className="text-2xl font-bold text-gray-900">Corpus</h1>
           <span className="text-sm text-gray-500">{uploads.length} capturas</span>
         </div>
 
-        {uploads.length === 0 ? (
-          <p className="text-sm text-gray-500 text-center py-8">
-            Aún no hay capturas. Sube la primera desde{' '}
-            <a href="/upload" className="text-blue-600 hover:underline">Subir captura</a>.
-          </p>
-        ) : (
-          <ul className="space-y-3" aria-label="Capturas del corpus">
-            {uploads.map((upload) => (
-              <li key={upload.id}>
-                <CaptureCard
-                  upload={upload}
-                  isSelected={selectedId === upload.id}
-                  onSelect={setSelectedId}
-                  onAnalyzed={handleAnalyzed}
-                />
-              </li>
-            ))}
-          </ul>
-        )}
+        {/* Capture list — scrollable */}
+        <div className="flex-1 overflow-y-auto min-h-0">
+          {uploads.length === 0 ? (
+            <p className="text-sm text-gray-500 text-center py-8">
+              Aún no hay capturas. Sube la primera desde{' '}
+              <a href="/upload" className="text-accent-700 hover:underline">Subir captura</a>.
+            </p>
+          ) : (
+            <ul className="space-y-3 pb-4" aria-label="Capturas del corpus">
+              {uploads.map((upload) => (
+                <li key={upload.id}>
+                  <CaptureCard
+                    upload={upload}
+                    isSelected={selectedId === upload.id}
+                    onSelect={setSelectedId}
+                    onAnalyzed={handleAnalyzed}
+                    onCommitted={handleCommitted}
+                  />
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+
+        {/* Commit queue — collapsible section */}
+        <div className="border-t border-gray-200 pt-3 mt-3 shrink-0">
+          <button
+            type="button"
+            onClick={() => setShowQueue((v) => !v)}
+            aria-expanded={showQueue}
+            aria-controls="commit-queue-panel"
+            className="flex items-center justify-between w-full text-sm font-medium text-gray-700 hover:text-gray-900 focus-visible:outline-2 focus-visible:outline-offset-2"
+          >
+            <span>Cola de commits</span>
+            <span aria-hidden="true" className="text-gray-400">
+              {showQueue ? '▲' : '▼'}
+            </span>
+          </button>
+          {showQueue && (
+            <div id="commit-queue-panel" className="mt-3">
+              <CommitQueue />
+            </div>
+          )}
+        </div>
       </aside>
 
       {/* Right: analysis panel */}
