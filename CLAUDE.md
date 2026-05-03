@@ -20,31 +20,24 @@ App admin **privada** para alimentar el contra-archivo doctoral de Rö (antropol
 | C4 | SQLite: schema + credentials + challenges + sessions | ✅ |
 | C5 | Upload: FileDropzone + UploadForm + API `/corpus/upload` | ✅ |
 | C6 | Claude Vision: 3 prompts (semántico, GT, mistranslation) + API `/corpus/analyze` | ✅ |
-| C7 | Corpus browser: CaptureCard + AnalysisPanel + APIs list/update | ✅ en branch, PR #82 |
+| C7 | Corpus browser: CaptureCard + AnalysisPanel + APIs list/update | ✅ |
+| C8 | Audit HTML/a11y: skip link, nav semántico, login wired, WCAG 2.2 tabs/dropzone | ✅ |
+| C9 | Sync simple-git: corpus-writer, commit-queue, APIs commit/sync-status, CommitQueue UI | ✅ |
 
 ### En rama activa: `claude/admin-screenshot-dashboard-zKGaF`
 
-C7 subido, PR #82 abierto. Pendiente merge.
+C10 en progreso: wiring CommitQueue en corpus page (cola colapsable), stubs mejorados.
 
-Fixes de accesibilidad y HTML en C8 (este commit):
-- Skip-to-main link en root layout
-- Admin layout: `<nav>` con `aria-current="page"` + roving tabindex
-- Login page: passkey authentication wired (antes era botón estático)
-- FileDropzone: `role="button"` + `tabIndex` + `onKeyDown` (Enter/Space)
-- AnalysisPanel tabs: arrow key navigation (WCAG 2.2 pattern)
-- DB schema: índice en `estado_codificacion`
-- DB init: auto-cleanup de challenges expirados en cold start
+### Próximo (F4 — no comenzado)
 
-### Próximo (F3)
+- C11: Kanban GT (`/codificacion`) — columnas open/axial/selective con drag entre estados
+- C12: Preview force graph d3 (`/grafo`)
+- C13: Export consolidado del corpus
 
-- C9: `lib/git/` — simple-git: copiar archivos al corpus-repo, git add + commit local
-- C10: Cola de commits en SQLite + UI de aprobación
-- C11: Polling `git log origin/main` → marcar drafts como `synced`
+### Stubs activos
 
-### Stubs activos (F4 — no comenzado)
-
-- `/codificacion` — Kanban GT
-- `/grafo` — Preview force graph d3
+- `/codificacion` — placeholder semántico (sin Kanban todavía)
+- `/grafo` — placeholder semántico (sin d3 todavía)
 
 ---
 
