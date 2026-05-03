@@ -10,7 +10,8 @@ export async function GET(request: NextRequest) {
     }
 
     const { searchParams } = new URL(request.url);
-    const limit = Math.min(parseInt(searchParams.get('limit') ?? '50', 10), 100);
+    const rawLimit = parseInt(searchParams.get('limit') ?? '50', 10);
+    const limit = Number.isFinite(rawLimit) && rawLimit > 0 ? Math.min(rawLimit, 100) : 50;
 
     const uploads = getUploadsByUserId(session.userId, limit);
 

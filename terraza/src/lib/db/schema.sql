@@ -53,3 +53,4 @@ CREATE INDEX IF NOT EXISTS idx_challenges_created_at ON challenges(created_at);
 CREATE INDEX IF NOT EXISTS idx_uploads_user_id ON uploads(user_id);
 CREATE INDEX IF NOT EXISTS idx_uploads_caso_id ON uploads(caso_id);
 CREATE INDEX IF NOT EXISTS idx_uploads_created_at ON uploads(created_at);
+CREATE INDEX IF NOT EXISTS idx_uploads_estado ON uploads(estado_codificacion);

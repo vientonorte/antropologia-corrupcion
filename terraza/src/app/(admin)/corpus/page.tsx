@@ -87,7 +87,9 @@ export default function CorpusPage(): React.ReactElement {
       <main className="flex-1 min-w-0 overflow-hidden" aria-label="Panel de análisis">
         {selectedUpload ? (
           <div className="h-full bg-white rounded-lg border border-gray-200 p-6 flex flex-col">
+            {/* key resets all editor state when a different capture is selected */}
             <AnalysisPanel
+              key={selectedUpload.id}
               upload={selectedUpload}
               onSaved={() => void fetchUploads()}
             />

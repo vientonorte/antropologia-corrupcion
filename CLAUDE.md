@@ -6,6 +6,48 @@ App admin **privada** para alimentar el contra-archivo doctoral de Rö (antropol
 
 **Usuaria única**: Rö (admin). No hay multi-tenant, no hay roles. Pero la calidad del código debe ser doctoral-grade: auditable, testeable, accesible.
 
+---
+
+## Estado actual del proyecto (2026-05-03)
+
+### Implementado y merged en `main`
+
+| Commit | Feature | Estado |
+|--------|---------|--------|
+| C1 | Bootstrap Next.js 15 + TypeScript + Tailwind | ✅ |
+| C2 | Toolchain: Vitest + Playwright + ESLint + Prettier | ✅ |
+| C3 | Auth scaffold: passkey (WebAuthn) + session + middleware | ✅ |
+| C4 | SQLite: schema + credentials + challenges + sessions | ✅ |
+| C5 | Upload: FileDropzone + UploadForm + API `/corpus/upload` | ✅ |
+| C6 | Claude Vision: 3 prompts (semántico, GT, mistranslation) + API `/corpus/analyze` | ✅ |
+| C7 | Corpus browser: CaptureCard + AnalysisPanel + APIs list/update | ✅ en branch, PR #82 |
+
+### En rama activa: `claude/admin-screenshot-dashboard-zKGaF`
+
+C7 subido, PR #82 abierto. Pendiente merge.
+
+Fixes de accesibilidad y HTML en C8 (este commit):
+- Skip-to-main link en root layout
+- Admin layout: `<nav>` con `aria-current="page"` + roving tabindex
+- Login page: passkey authentication wired (antes era botón estático)
+- FileDropzone: `role="button"` + `tabIndex` + `onKeyDown` (Enter/Space)
+- AnalysisPanel tabs: arrow key navigation (WCAG 2.2 pattern)
+- DB schema: índice en `estado_codificacion`
+- DB init: auto-cleanup de challenges expirados en cold start
+
+### Próximo (F3)
+
+- C9: `lib/git/` — simple-git: copiar archivos al corpus-repo, git add + commit local
+- C10: Cola de commits en SQLite + UI de aprobación
+- C11: Polling `git log origin/main` → marcar drafts como `synced`
+
+### Stubs activos (F4 — no comenzado)
+
+- `/codificacion` — Kanban GT
+- `/grafo` — Preview force graph d3
+
+---
+
 ## Marco teórico que el código debe respetar
 
 - Cuatro casos etnográficos (definir en `lib/corpus/cases.ts` como enum).
@@ -13,19 +55,117 @@ App admin **privada** para alimentar el contra-archivo doctoral de Rö (antropol
 - Codificación Grounded Theory: open → axial → selective.
 - Cada captura es un nodo potencial del force graph d3-force ya construido en el sitio público.
 
+---
+
 ## Stack obligatorio
 
 - **Next.js 15** (App Router, RSC, Server Actions).
 - **TypeScript estricto** (`"strict": true`, sin `any` salvo justificación en comentario).
 - **Tailwind v4** + tokens propios en `src/tokens/`. NO instalar shadcn — construimos atomic-design puro.
 - **Radix Primitives** como base de accesibilidad.
-- **next-auth v5** + `@simplewebauthn/server` para passkey.
+- **@simplewebauthn/server + browser** para passkey.
 - **better-sqlite3** para drafts locales y queue de commits.
 - **simple-git** para escribir al working tree del repo privado clonado.
 - **@anthropic-ai/sdk** server-side. Modelo: `claude-sonnet-4-7` (vision habilitado).
 - **Zustand** (UI state) + **TanStack Query** (data fetching).
 - **Vitest** + **Playwright** para tests.
 - **Bunny Fonts** (Newsreader + Inter + JetBrains Mono) — privacy-friendly.
+
+---
+
+## Buenas prácticas para IAs colaboradoras
+
+Esta sección es obligatoria para cualquier agente (Claude Code, Copilot, Cursor u otro) que trabaje en este repositorio.
+
+### Antes de escribir código
+
+1. **Lee este archivo completo** antes de proponer cualquier cambio.
+2. **Verifica el estado actual** con `git log --oneline -10` y `git status`.
+3. **Revisa la sección "Estado actual"** arriba — no reimplementes lo que ya existe.
+4. Si la tarea es ambigua, **propón un plan primero** y espera aprobación.
+
+### Invariantes de calidad
+
+```bash
+# Siempre debe pasar antes de hacer commit:
+npx tsc --noEmit          # TypeScript estricto sin errores
+npx eslint src            # Sin warnings
+```
+
+- **Nunca** usar `any` sin un comentario `// eslint-disable-next-line @typescript-eslint/no-explicit-any` explicando por qué.
+- **Nunca** hacer `as unknown as X` sin justificación en comentario.
+- **Nunca** eliminar tipos estrictos para hacer pasar la build.
+
+### Atomic Design — regla de oro
+
+```
+atoms → molecules → organisms → templates → pages
+```
+
+- Un **átomo** no importa moléculas ni organismos.
+- Una **molécula** no importa organismos.
+- La **lógica de negocio** va en `lib/`, nunca en componentes.
+- Los **componentes** solo reciben props y llaman funciones de `lib/`.
+
+### Accesibilidad — no negociable (WCAG 2.2 AA)
+
+Cada componente interactivo debe tener:
+- `<label>` asociado a todo input/textarea/select (no placeholder como label).
+- `aria-label` o `aria-labelledby` en controles sin texto visible.
+- `role` correcto en elementos no-semánticos interactivos (`role="button"`, `role="tablist"`, etc.).
+- `tabIndex` gestionado: roving tabindex en grupos, `-1` en elementos no alcanzables.
+- Keyboard handler para Enter/Space en `role="button"` divs.
+- `aria-live="polite"` en mensajes de estado async (guardado, error, carga).
+- `role="alert"` en mensajes de error.
+- `aria-current="page"` en links de navegación activos.
+
+**Skip link obligatorio**: el root layout ya tiene `<a href="#main-content">`. El `<main>` admin ya tiene `id="main-content"`.
+
+### HTML semántico
+
+- Usar `<nav>` para navegación, no `<div>`.
+- Usar `<article>` para tarjetas de contenido autónomo.
+- Usar `<aside>` para sidebars.
+- Jerarquía de headings: H1 por página, H2 para secciones, H3 para subsecciones.
+- No usar tablas para layout.
+- SVGs decorativos llevan `aria-hidden="true"`.
+
+### API routes
+
+Toda API route debe:
+1. Verificar sesión con `getSession()` primero (salvo rutas `/api/auth/*`).
+2. Validar input con Zod antes de acceder a la base de datos.
+3. Verificar que el `userId` del recurso coincide con el `session.userId` (ownership check).
+4. Devolver errores en formato `{ error: string }` con status HTTP correcto.
+
+### Base de datos
+
+- Las queries usan `Record<string, unknown>` con assertions explícitas (patrón establecido).
+- **Nunca** construir SQL concatenando strings — usar `db.prepare()` con placeholders.
+- Los campos JSON (tags, codes, mistranslations) se almacenan como strings y se parsean al leer.
+
+### Commits
+
+- Commits atómicos: un commit = una feature o un fix.
+- Formato: `tipo(scope): descripción en español`
+  - `feat(corpus): ...`
+  - `fix(a11y): ...`
+  - `chore(db): ...`
+- Incluir siempre al final: `https://claude.ai/code/session_<ID>`
+
+### Lo que NO hay que hacer
+
+- No instalar shadcn ni component libraries pesadas.
+- No meter secretos en el repo (usar `.env.local`).
+- No hacer push automático al repo del corpus.
+- No mezclar lógica de negocio en componentes UI.
+- No usar `any` ni `as` sin justificar.
+- No subir el directorio `corpus-repo/` (gitignored).
+- No crear archivos `.md` de documentación salvo que se pidan explícitamente.
+- No refactorizar código que funciona si no es parte de la tarea.
+- No añadir manejo de errores para casos imposibles.
+
+---
 
 ## Atomic Design — estructura no negociable
 
@@ -35,49 +175,30 @@ terraza/
 │   ├── app/
 │   │   ├── (auth)/login/
 │   │   ├── (admin)/
-│   │   │   ├── corpus/
-│   │   │   ├── upload/
-│   │   │   ├── codificacion/
-│   │   │   └── grafo/
-│   │   ├── _dev/components/
-│   │   ├── api/auth/[...nextauth]/
+│   │   │   ├── corpus/          ✅ implementado
+│   │   │   ├── upload/          ✅ implementado
+│   │   │   ├── codificacion/    🔲 stub F4
+│   │   │   └── grafo/           🔲 stub F4
 │   │   └── layout.tsx
 │   ├── components/
-│   │   ├── tokens/        # solo design tokens (TS exports)
-│   │   ├── atoms/         # Button, Input, Tag, Icon, Badge, Spinner, Label
-│   │   ├── molecules/     # FileDropzone, CaseSelector, CodeChip, TagPicker
-│   │   ├── organisms/     # CaptureCard, AnalysisPanel, GTKanban, CommitQueue
-│   │   ├── templates/     # AdminShell, CorpusLayout
-│   │   └── pages/         # composiciones finales
+│   │   ├── atoms/         Button, Spinner  ✅
+│   │   ├── molecules/     FileDropzone, UploadForm  ✅
+│   │   ├── organisms/     CaptureCard, AnalysisPanel  ✅
+│   │   └── templates/     (pendiente)
 │   ├── lib/
-│   │   ├── claude/        # client + 3 prompts (semantico, gt, mistranslation)
-│   │   ├── db/            # SQLite schema + migrations + queries
-│   │   ├── git/           # escritura al repo clonado + commits locales sin push
-│   │   ├── auth/          # passkey logic
-│   │   └── corpus/        # schemas Zod, slugify, builders de metadata
-│   └── middleware.ts
-├── public/
-├── scripts/
-│   └── check-contrast.ts  # verificación WCAG AA
+│   │   ├── claude/        client + analyze + 3 prompts  ✅
+│   │   ├── db/            schema + migrations + queries  ✅
+│   │   ├── git/           (pendiente F3)
+│   │   ├── auth/          passkey + session  ✅
+│   │   └── corpus/        schemas Zod + cases  ✅
+│   └── middleware.ts       ✅
 ├── tests/
-│   ├── atoms/
-│   ├── molecules/
-│   ├── lib/
-│   ├── e2e/
-│   └── setup.ts
-├── package.json
-├── tsconfig.json
-├── next.config.ts
-├── tailwind.config.ts
-├── vitest.config.ts
-├── playwright.config.ts
-├── .eslintrc.json
-├── .prettierrc
-├── .env.example
-└── .gitignore
+│   └── (pendiente — ningún test escrito aún)
+└── scripts/
+    └── check-contrast.ts  (pendiente)
 ```
 
-**Regla de oro atomic**: un átomo no importa moléculas. Una molécula no importa organismos. Si un componente necesita lógica de negocio, va en `lib/`, no dentro del componente.
+---
 
 ## Contrato de datos del corpus
 
@@ -97,7 +218,7 @@ corpus/<caso-slug>/<YYYY-MM-DD>-<slug>/
 
 ```ts
 {
-  id: string;              // uuid v7
+  id: string;              // uuid v4
   caso: 1 | 2 | 3 | 4;
   fecha_captura: string;   // ISO 8601
   fecha_evento: string | null;
@@ -109,20 +230,24 @@ corpus/<caso-slug>/<YYYY-MM-DD>-<slug>/
 }
 ```
 
+---
+
 ## Flujo de sync con GitHub Desktop
 
 1. Usuaria sube captura en la UI.
-1. App copia el archivo a `corpus-repo/corpus/<caso>/<fecha>-<slug>/source.ext` (working tree del repo privado).
-1. App ejecuta análisis con Claude API según tag elegido.
-1. Resultado se escribe a `transcription.md`, `analysis.md`, `codes.json`, etc., en la misma carpeta.
-1. Usuaria revisa y aprueba en la UI.
-1. App ejecuta `git add` + `git commit` **localmente** con mensaje semántico (no push).
-1. Usuaria abre GitHub Desktop, ve el commit pendiente, hace push con su passkey.
-1. App detecta el push via polling de `git log origin/main` y marca el draft como `synced` en SQLite.
+2. App copia el archivo a `corpus-repo/corpus/<caso>/<fecha>-<slug>/source.ext`.
+3. App ejecuta análisis con Claude API según tag elegido.
+4. Resultado se escribe a `transcription.md`, `analysis.md`, `codes.json`, etc.
+5. Usuaria revisa y aprueba en la UI.
+6. App ejecuta `git add` + `git commit` **localmente** (no push).
+7. Usuaria abre GitHub Desktop, ve el commit pendiente, hace push.
+8. App detecta el push via polling `git log origin/main` y marca draft como `synced`.
 
 **No usar tokens de GitHub en el server.** El push siempre es manual vía Desktop.
 
-## Mensajes de commit — convención
+---
+
+## Mensajes de commit del corpus
 
 ```
 corpus(caso-N): añade captura YYYY-MM-DD-slug
@@ -132,56 +257,26 @@ corpus(caso-N): añade captura YYYY-MM-DD-slug
 - Códigos open: N | axial: N | selective: N
 ```
 
-## Accesibilidad — WCAG 2.2 AA
-
-- Contraste verificado en todos los pares de tokens (script en `scripts/check-contrast.ts`).
-- Todo input tiene `<label>` asociado (no placeholders como labels).
-- Foco visible custom (`outline` de 2px, color accent, offset 2px).
-- Navegación por teclado completa, skip-link al `main`.
-- Respeto a `prefers-reduced-motion`.
-- Anuncios ARIA en operaciones async (upload, análisis, commit).
-
-## Calidad — DoD por feature
-
-- TypeScript sin errores ni warnings.
-- Tests unitarios de la lógica en `lib/`.
-- Test e2e Playwright del happy path.
-- Verificación manual con teclado + lector de pantalla.
-- README de la feature en `docs/features/<nombre>.md` (ADR ligero).
-
-## Lo que NO hay que hacer
-
-- No instalar shadcn ni component libraries pesadas.
-- No meter secretos en el repo (usar `.env.local`).
-- No hacer push automático al repo del corpus.
-- No mezclar lógica de negocio en componentes UI.
-- No usar `any` ni `as` sin justificar.
-- No subir el directorio `corpus-repo/` (gitignored).
+---
 
 ## Variables de entorno (`.env.local`)
 
 ```
 ANTHROPIC_API_KEY=
-AUTH_SECRET=
+DATABASE_PATH=./data/terraza.db
 CORPUS_REPO_PATH=/Users/ro/Documents/contra-archivo-corpus
 GIT_USER_NAME=Rö
 GIT_USER_EMAIL=<definir>
 PASSKEY_RP_ID=localhost
 PASSKEY_RP_NAME=Contra-archivo Terraza
 NEXTAUTH_URL=http://localhost:3000
-NEXTAUTH_SECRET=<generado en setup>
 ```
+
+---
 
 ## Roadmap
 
-- **F1**: Scaffold + auth passkey + UI shell + SQLite + design tokens.
-- **F2**: Upload + integración Claude Vision + tres prompts especializados + edición inline.
-- **F3**: Sync con repo privado vía simple-git + cola de commits + detección de push.
-- **F4**: Kanban GT + export consolidado + preview del force graph.
-
-## Convenciones de trabajo con Claude Code
-
-- Antes de escribir código: proponer plan, esperar aprobación.
-- Cambios grandes: hacerlos en commits atómicos con mensajes claros.
-- Tests primero cuando sea posible (TDD ligero en `lib/`).
-- Después de cada feature: actualizar este `CLAUDE.md` si cambian las reglas.
+- **F1** ✅: Scaffold + auth passkey + UI shell + SQLite + design tokens.
+- **F2** ✅: Upload + integración Claude Vision + tres prompts especializados + edición inline.
+- **F3** 🔲: Sync con repo privado vía simple-git + cola de commits + detección de push.
+- **F4** 🔲: Kanban GT + export consolidado + preview del force graph.

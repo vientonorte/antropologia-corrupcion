@@ -47,27 +47,38 @@ export function FileDropzone({
     }
   };
 
-  const handleClick = () => {
-    if (!disabled) {
+  const openPicker = () => {
+    if (!disabled) inputRef.current?.click();
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (!disabled && (e.key === 'Enter' || e.key === ' ')) {
+      e.preventDefault();
       inputRef.current?.click();
     }
   };
 
   return (
     <div
+      role="button"
+      tabIndex={disabled ? -1 : 0}
+      aria-label="Zona de carga — arrastra un archivo o presiona Enter para seleccionar"
+      aria-disabled={disabled}
       onDragOver={handleDragOver}
       onDragLeave={handleDragLeave}
       onDrop={handleDrop}
-      onClick={handleClick}
+      onClick={openPicker}
+      onKeyDown={handleKeyDown}
       className={`
-        relative border-2 border-dashed rounded-lg p-8 text-center cursor-pointer
+        relative border-2 border-dashed rounded-lg p-8 text-center
         transition-colors duration-200
+        focus-visible:outline-2 focus-visible:outline-offset-2
         ${
           disabled
             ? 'bg-gray-50 border-gray-200 cursor-not-allowed text-gray-400'
             : isDragging
-              ? 'bg-blue-50 border-blue-400'
-              : 'bg-white border-gray-300 hover:border-blue-400'
+              ? 'bg-blue-50 border-blue-400 cursor-copy'
+              : 'bg-white border-gray-300 hover:border-blue-400 cursor-pointer'
         }
       `}
     >
@@ -79,10 +90,11 @@ export function FileDropzone({
         onChange={handleInputChange}
         disabled={disabled}
         className="hidden"
-        aria-label="Cargar archivo"
+        tabIndex={-1}
+        aria-hidden="true"
       />
 
-      <div className="flex flex-col items-center gap-2">
+      <div className="flex flex-col items-center gap-2 pointer-events-none">
         <svg
           className="w-12 h-12 text-gray-400"
           fill="none"

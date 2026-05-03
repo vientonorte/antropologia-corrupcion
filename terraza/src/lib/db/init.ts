@@ -1,6 +1,7 @@
 import Database from 'better-sqlite3';
 import path from 'path';
 import fs from 'fs';
+import { cleanupExpiredChallenges } from './challenges';
 
 const dbPath = process.env.DATABASE_PATH || path.join(process.cwd(), 'data', 'terraza.db');
 
@@ -20,6 +21,9 @@ export function getDatabase(): Database.Database {
 
     // Initialize schema
     initializeSchema();
+
+    // Clean up expired challenges on each cold start
+    cleanupExpiredChallenges();
   }
 
   return db;
