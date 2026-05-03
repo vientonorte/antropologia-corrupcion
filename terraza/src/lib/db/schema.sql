@@ -45,6 +45,19 @@ CREATE TABLE IF NOT EXISTS uploads (
   FOREIGN KEY (user_id) REFERENCES credentials(user_id)
 );
 
+-- Commit queue: tracks local git commits pending push
+CREATE TABLE IF NOT EXISTS commit_queue (
+  id TEXT PRIMARY KEY,
+  upload_id TEXT NOT NULL,
+  commit_hash TEXT,
+  status TEXT NOT NULL DEFAULT 'pending'
+    CHECK(status IN ('pending', 'committed', 'synced', 'error')),
+  error_message TEXT,
+  created_at INTEGER NOT NULL,
+  updated_at INTEGER NOT NULL,
+  FOREIGN KEY (upload_id) REFERENCES uploads(id)
+);
+
 -- Create indexes for faster lookups
 CREATE INDEX IF NOT EXISTS idx_credentials_user_id ON credentials(user_id);
 CREATE INDEX IF NOT EXISTS idx_credentials_user_name ON credentials(user_name);

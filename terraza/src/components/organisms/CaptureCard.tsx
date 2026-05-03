@@ -21,6 +21,7 @@ interface CaptureCardProps {
     createdAt: number;
   };
   onAnalyzed?: (uploadId: string) => void;
+  onCommitted?: (uploadId: string) => void;
   onSelect?: (uploadId: string) => void;
   isSelected?: boolean;
 }
@@ -53,8 +54,9 @@ function casoLabel(casoId: 1 | 2 | 3 | 4): string {
   return caso?.label ?? `Caso ${casoId}`;
 }
 
-export function CaptureCard({ upload, onAnalyzed, onSelect, isSelected = false }: CaptureCardProps) {
+export function CaptureCard({ upload, onAnalyzed, onCommitted, onSelect, isSelected = false }: CaptureCardProps) {
   const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [isCommitting, setIsCommitting] = useState(false);
   const [analysisTag, setAnalysisTag] = useState<string>('semantico');
   const [error, setError] = useState<string | null>(null);
 
@@ -76,6 +78,28 @@ export function CaptureCard({ upload, onAnalyzed, onSelect, isSelected = false }
       setError(err instanceof Error ? err.message : 'Analysis failed');
     } finally {
       setIsAnalyzing(false);
+    }
+  };
+
+  const handleCommit = async (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setIsCommitting(true);
+    setError(null);
+    try {
+      const response = await fetch('/api/corpus/commit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ uploadId: upload.id }),
+      });
+      if (!response.ok) {
+        const data = await response.json() as { error?: string };
+        throw new Error(data.error ?? 'Commit failed');
+      }
+      if (onCommitted) onCommitted(upload.id);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Commit failed');
+    } finally {
+      setIsCommitting(false);
     }
   };
 
@@ -160,8 +184,31 @@ export function CaptureCard({ upload, onAnalyzed, onSelect, isSelected = false }
         </div>
       )}
 
+      {/* Commit button for analyzed captures */}
+      {estado !== 'pendiente' && (
+        <div className="mt-2" onClick={(e) => e.stopPropagation()}>
+          <Button
+            type="button"
+            variant="outline"
+            disabled={isCommitting}
+            onClick={handleCommit}
+            className="w-full text-xs py-1.5"
+            aria-label={`Commitear captura ${upload.fileName} al repo privado`}
+          >
+            {isCommitting ? (
+              <span className="flex items-center justify-center gap-1.5">
+                <Spinner size="sm" />
+                Commiteando…
+              </span>
+            ) : (
+              'Commitear al repo'
+            )}
+          </Button>
+        </div>
+      )}
+
       {error && (
-        <p className="mt-2 text-xs text-red-700 bg-red-50 px-2 py-1 rounded">{error}</p>
+        <p role="alert" className="mt-2 text-xs text-red-700 bg-red-50 px-2 py-1 rounded">{error}</p>
       )}
 
       <p className="text-xs text-gray-400 mt-2">
