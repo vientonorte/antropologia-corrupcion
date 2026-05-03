@@ -1,879 +1,937 @@
 [
-    {
-        "id": "lobby-sura-cmf-2024",
-        "fuente": "infolobby",
-        "titulo": "Audiencias SURA Investments con CMF sobre regulación multifondos",
-        "fecha": "2024-03-15",
-        "url": "https://www.infolobby.cl",
-        "institucion": "Comisión para el Mercado Financiero",
-        "actores_lobby": [
-            "SURA Asset Management",
-            "AFP Capital"
-        ],
-        "materia": "Regulación de inversiones alternativas en multifondos AFP",
-        "keywords": [
-            "regulación",
-            "multifondos",
-            "inversión alternativa",
-            "ESG",
-            "riesgo"
-        ],
-        "capa_oficial": "La audiencia registra una 'reunión técnica' sobre marcos regulatorios. No consigna qué territorios o comunidades afectan las inversiones discutidas.",
-        "friccion_con": "sura-gobernanza-datos",
-        "tipo_friccion": "politica",
-        "tags": [
-            "AFP",
-            "CMF",
-            "lobby financiero",
-            "ESG"
-        ]
-    },
-    {
-        "id": "lobby-forestal-conadi-2023",
-        "fuente": "infolobby",
-        "titulo": "Audiencias empresas forestales con CONADI sobre títulos de merced",
-        "fecha": "2023-08-22",
-        "url": "https://www.infolobby.cl",
-        "institucion": "CONADI",
-        "actores_lobby": [
-            "Arauco S.A."
-        ],
-        "materia": "Regularización de predios forestales en territorios con títulos de merced",
-        "keywords": [
-            "títulos de merced",
-            "regularización",
-            "predios forestales",
-            "DL701"
-        ],
-        "capa_oficial": "La audiencia clasifica el encuentro como 'gestión administrativa de predios'. Los títulos de merced aparecen como un insumo técnico, no como evidencia de usurpación territorial.",
-        "friccion_con": "la-negra-territorio-mapuche",
-        "tipo_friccion": "politica",
-        "tags": [
-            "forestales",
-            "CONADI",
-            "territorio mapuche",
-            "usurpación"
-        ]
-    },
-    {
-        "id": "lobby-sea-consulta-2022",
-        "fuente": "infolobby",
-        "friccion_con": "oit169-consulta-previa",
-        "titulo": "Audiencias empresas energéticas con SEA sobre proyectos en territorio indígena",
-        "fecha": "2022-11-10",
-        "url": "https://www.infolobby.cl",
-        "institucion": "Servicio de Evaluación Ambiental",
-        "actores_lobby": [
-            "Colbún S.A.",
-            "Enel Green Power"
-        ],
-        "materia": "Evaluación ambiental de proyectos hidroeléctricos en territorio con consulta indígena pendiente",
-        "keywords": [
-            "evaluación ambiental",
-            "consulta indígena",
-            "SEIA",
-            "hidroeléctrica",
-            "mitigación"
-        ],
-        "capa_oficial": "El registro documenta una 'reunión de seguimiento técnico'. La consulta indígena aparece como una 'etapa del proceso' —no como derecho de consentimiento.",
-        "tipo_friccion": "politica",
-        "tags": [
-            "SEIA",
-            "consulta previa",
-            "energía",
-            "OIT169"
-        ]
-    },
-    {
-        "id": "transp-afp-carteras-2024",
-        "fuente": "transparencia",
-        "titulo": "Solicitud: detalle de inversiones AFP en territorios indígenas",
-        "fecha": "2024-01-20",
-        "url": "https://www.consejotransparencia.cl",
-        "institucion": "Superintendencia de Pensiones",
-        "materia": "Desglose de carteras de inversión AFP con exposición a sectores extractivos en territorio indígena",
-        "keywords": [
-            "carteras AFP",
-            "reserva",
-            "datos agregados",
-            "inversión extractiva",
-            "opacidad"
-        ],
-        "capa_oficial": "La institución traduce una pregunta sobre territorios y comunidades en una respuesta sobre 'instrumentos financieros'. La reserva legal convierte la opacidad en procedimiento regular.",
-        "friccion_con": "sura-gobernanza-datos",
-        "tipo_friccion": "tecnica",
-        "tags": [
-            "transparencia",
-            "AFP",
-            "opacidad",
-            "datos reservados"
-        ]
-    },
-    {
-        "id": "transp-conadi-tierras-2023",
-        "fuente": "transparencia",
-        "titulo": "Solicitud: avance del Fondo de Tierras CONADI en Región de Los Ríos",
-        "fecha": "2023-05-14",
-        "url": "https://www.consejotransparencia.cl",
-        "institucion": "CONADI",
-        "materia": "Estado de tramitación de solicitudes de compra de tierras Art. 20b Ley 19.253",
-        "keywords": [
-            "Fondo de Tierras",
-            "Art 20b",
-            "plazo",
-            "priorización",
-            "trámite"
-        ],
-        "capa_oficial": "La respuesta convierte la urgencia territorial (familias esperando décadas) en estadísticas de gestión: '342 solicitudes', '8.3 años promedio'. La privacidad del beneficiario protege la lentitud del Estado.",
-        "friccion_con": "la-negra-territorio-mapuche",
-        "tipo_friccion": "tecnica",
-        "tags": [
-            "CONADI",
-            "Fondo de Tierras",
-            "espera",
-            "territorio"
-        ]
-    },
-    {
-        "id": "transp-municipio-compras-2023",
-        "fuente": "transparencia",
-        "titulo": "Solicitud: contratos directos de municipalidad con empresas de concejales",
-        "fecha": "2023-09-03",
-        "url": "https://www.consejotransparencia.cl",
-        "institucion": "Municipalidad (caso-tipo CIPER)",
-        "materia": "Detalle de contratos por trato directo último trimestre con empresas vinculadas a concejales",
-        "keywords": [
-            "trato directo",
-            "conflicto de interés",
-            "concejales",
-            "Mercado Público",
-            "evasión"
-        ],
-        "capa_oficial": "La institución responde con un link a datos que ya son públicos pero que no responden la pregunta. La 'transparencia' como dispositivo circular: se transparenta lo que ya era visible, no lo que se preguntó.",
-        "friccion_con": "periodismo-datos-chile",
-        "tipo_friccion": "semantica",
-        "tags": [
-            "municipio",
-            "CIPER",
-            "trato directo",
-            "conflicto interés"
-        ]
-    },
-    {
-        "id": "transp-sp-beneficiarios-afp-2024",
-        "fuente": "transparencia",
-        "titulo": "Solicitud: beneficiarios finales y vehiculos de inversion vinculados a AFP",
-        "fecha": "2024-03-08",
-        "url": "https://www.consejotransparencia.cl",
-        "institucion": "Superintendencia de Pensiones",
-        "materia": "Detalle de sociedades vehiculo, administradoras y beneficiarios finales vinculados a carteras AFP con exposicion territorial",
-        "keywords": [
-            "beneficiarios finales",
-            "vehiculos de inversion",
-            "AFP",
-            "sociedades relacionadas",
-            "trazabilidad"
-        ],
-        "capa_oficial": "La respuesta separa administradora, custodio y emisor como si fueran capas tecnicas sin autor. La pregunta por quien controla la decision de inversion se diluye en una cadena societaria tratada como dato formal.",
-        "friccion_con": "sura-gobernanza-datos",
-        "tipo_friccion": "semantica",
-        "tags": [
-            "transparencia",
-            "AFP",
-            "beneficiario final",
-            "cadena societaria"
-        ]
-    },
-    {
-        "id": "transp-bienesnacionales-catastro-2024",
-        "fuente": "transparencia",
-        "titulo": "Solicitud: cartografia y catastro de predios fiscales superpuestos a titulos de merced",
-        "fecha": "2024-02-11",
-        "url": "https://www.consejotransparencia.cl",
-        "institucion": "Ministerio de Bienes Nacionales",
-        "materia": "Acceso a planos, roles y capas SIG de predios fiscales en zona con reclamacion mapuche-huilliche",
-        "keywords": [
-            "catastro",
-            "predios fiscales",
-            "titulos de merced",
-            "SIG",
-            "roles"
-        ],
-        "capa_oficial": "La institucion entrega capas cartograficas parciales y remite la lectura integral a otras reparticiones. El territorio aparece repartido en archivos interoperables para el Estado, pero incompletos para la comunidad afectada.",
-        "friccion_con": "la-negra-territorio-mapuche",
-        "tipo_friccion": "politica",
-        "tags": [
-            "transparencia",
-            "Bienes Nacionales",
-            "catastro",
-            "territorio fragmentado"
-        ]
-    },
-    {
-        "id": "transp-municipio-honorarios-2024",
-        "fuente": "transparencia",
-        "titulo": "Solicitud: honorarios, sociedades y parentesco de proveedores municipales recurrentes",
-        "fecha": "2024-01-29",
-        "url": "https://www.consejotransparencia.cl",
-        "institucion": "Municipalidad (caso-tipo CIPER)",
-        "materia": "Cruce entre contrataciones a honorarios, proveedores y participacion en sociedades de familiares de autoridades",
-        "keywords": [
-            "honorarios",
-            "sociedades",
-            "proveedores",
-            "parentesco",
-            "municipalidad"
-        ],
-        "capa_oficial": "La respuesta distingue entre persona natural contratada y razon social adjudicada, como si esa separacion agotara el problema. El parentesco y la coordinacion informal quedan fuera del registro disponible.",
-        "friccion_con": "periodismo-datos-chile",
-        "tipo_friccion": "tecnica",
-        "tags": [
-            "transparencia",
-            "municipio",
-            "honorarios",
-            "red de proveedores"
-        ]
-    },
-    {
-        "id": "transp-consulta-cartografias-2024",
-        "fuente": "transparencia",
-        "titulo": "Solicitud: expedientes de consulta indigena, planos y minutas de trazado territorial",
-        "fecha": "2024-02-26",
-        "url": "https://www.consejotransparencia.cl",
-        "institucion": "Servicio de Evaluacion Ambiental",
-        "materia": "Entrega de minutas, planos y cartografias usadas para delimitar comunidades afectadas en procesos de consulta indigena",
-        "keywords": [
-            "consulta indigena",
-            "cartografia",
-            "planos",
-            "minutas",
-            "comunidades afectadas"
-        ],
-        "capa_oficial": "El expediente publica mapas y minutas como anexos tecnicos, pero no transparenta el criterio con que una comunidad fue incluida o excluida del area de afectacion. La decision politica aparece como geometria.",
-        "friccion_con": "oit169-consulta-previa",
-        "tipo_friccion": "tecnica",
-        "tags": [
-            "transparencia",
-            "consulta",
-            "cartografia",
-            "afectacion territorial"
-        ]
-    },
-    {
-        "id": "sii-sura-sociedades-relacionadas-2024",
-        "fuente": "sii",
-        "titulo": "Consulta SII: giros y sociedades relacionadas en estructura SURA / AFP",
-        "fecha": "2024-03-21",
-        "url": "https://www.sii.cl",
-        "institucion": "Servicio de Impuestos Internos",
-        "materia": "Revision de giros economicos, sucursales y sociedades relacionadas usadas para vehiculos de inversion y administracion previsional",
-        "keywords": [
-            "SII",
-            "giros",
-            "sociedades relacionadas",
-            "AFP",
-            "vehiculo de inversion"
-        ],
-        "capa_oficial": "El SII muestra razones sociales, actividades y domicilios tributarios, pero no la arquitectura de decision que conecta esas sociedades con territorios financiados. La huella existe como rastro mercantil, no como responsabilidad politica.",
-        "friccion_con": "sura-gobernanza-datos",
-        "tipo_friccion": "tecnica",
-        "tags": [
-            "SII",
-            "SURA",
-            "sociedades",
-            "huella mercantil"
-        ]
-    },
-    {
-        "id": "sii-avaluos-predios-los-rios-2024",
-        "fuente": "sii",
-        "titulo": "Consulta SII: avaluos fiscales y roles de predios en Los Rios con reclamacion mapuche",
-        "fecha": "2024-01-17",
-        "url": "https://www.sii.cl",
-        "institucion": "Servicio de Impuestos Internos",
-        "materia": "Cruce de roles de avaluo, destino de suelo y valuacion fiscal en predios superpuestos a memoria territorial mapuche-huilliche",
-        "keywords": [
-            "avaluo fiscal",
-            "roles",
-            "predios",
-            "Los Rios",
-            "suelo"
-        ],
-        "capa_oficial": "El territorio se reduce a rol, avalúo y destino tributario. La memoria territorial queda borrada en favor de una taxonomia de suelo que solo pregunta cuanto vale y para que produce.",
-        "friccion_con": "la-negra-territorio-mapuche",
-        "tipo_friccion": "semantica",
-        "tags": [
-            "SII",
-            "avaluos",
-            "territorio mapuche",
-            "rol de avaluo"
-        ]
-    },
-    {
-        "id": "sii-proveedores-municipales-2023",
-        "fuente": "sii",
-        "titulo": "Consulta SII: giros, socios y vigencia de proveedores municipales reiterados",
-        "fecha": "2023-11-09",
-        "url": "https://www.sii.cl",
-        "institucion": "Servicio de Impuestos Internos",
-        "materia": "Revision de giro comercial, inicio de actividades y representantes de proveedores adjudicados por trato directo",
-        "keywords": [
-            "giro comercial",
-            "proveedores",
-            "inicio de actividades",
-            "socios",
-            "trato directo"
-        ],
-        "capa_oficial": "La ficha tributaria valida existencia y giro, pero no explica por que un proveedor sin trayectoria concentra adjudicaciones. El rastro fiscal certifica legalidad minima sin tocar la red de favores.",
-        "friccion_con": "periodismo-datos-chile",
-        "tipo_friccion": "tecnica",
-        "tags": [
-            "SII",
-            "proveedores",
-            "municipio",
-            "giro y red societaria"
-        ]
-    },
-    {
-        "id": "sii-avaluos-predios-consulta-2022",
-        "fuente": "sii",
-        "titulo": "Consulta SII: roles de avaluo de predios incluidos en procesos de consulta indigena",
-        "fecha": "2022-12-02",
-        "url": "https://www.sii.cl",
-        "institucion": "Servicio de Impuestos Internos",
-        "materia": "Identificacion de roles, clasificacion de suelo y avalúos de predios considerados en procesos de consulta previa",
-        "keywords": [
-            "consulta previa",
-            "roles de avaluo",
-            "predios",
-            "clasificacion de suelo",
-            "consulta indigena"
-        ],
-        "capa_oficial": "El territorio consultado aparece como una lista de roles y avalúos. El derecho a consentimiento previo se apoya en una cartografia fiscal que nunca fue diseñada para reconocer comunidad, uso ceremonial o afectacion historica.",
-        "friccion_con": "oit169-consulta-previa",
-        "tipo_friccion": "semantica",
-        "tags": [
-            "SII",
-            "consulta previa",
-            "predios",
-            "cartografia fiscal"
-        ]
-    },
-    {
-        "id": "ley-20730-lobby",
-        "fuente": "leychile",
-        "titulo": "Ley 20.730 — Regula el lobby y las gestiones que representen intereses particulares",
-        "fecha": "2014-03-08",
-        "url": "https://www.bcn.cl/leychile/navegar?idNorma=1060115",
-        "keywords": [
-            "lobby",
-            "gestión de intereses",
-            "registro",
-            "audiencias",
-            "sujetos pasivos"
-        ],
-        "capa_oficial": "La ley define lobby como 'gestión remunerada'. Las gestiones corporativas internas (ej: AFP gestionando inversiones en territorios) quedan fuera de la definición. El registro captura la forma del contacto, no su contenido ni sus efectos territoriales.",
-        "friccion_con": "sura-gobernanza-datos",
-        "tipo_friccion": "semantica",
-        "tags": [
-            "lobby",
-            "ley",
-            "definición",
-            "exclusión"
-        ]
-    },
-    {
-        "id": "ley-20285-transparencia",
-        "fuente": "leychile",
-        "titulo": "Ley 20.285 — Sobre acceso a la información pública",
-        "fecha": "2008-08-20",
-        "url": "https://www.bcn.cl/leychile/navegar?idNorma=276363",
-        "keywords": [
-            "acceso información",
-            "transparencia activa",
-            "reserva",
-            "secreto",
-            "Consejo"
-        ],
-        "capa_oficial": "La ley crea un derecho de acceso pero simultáneamente cataloga 5 causales de reserva que las instituciones aplican discrecionalmente. La transparencia es un umbral que el Estado fija y desplaza.",
-        "friccion_con": "periodismo-datos-chile",
-        "tipo_friccion": "politica",
-        "tags": [
-            "transparencia",
-            "reserva",
-            "acceso",
-            "periodismo"
-        ]
-    },
-    {
-        "id": "ley-19253-indigena",
-        "fuente": "leychile",
-        "titulo": "Ley 19.253 — Ley Indígena: protección, fomento y desarrollo de los indígenas",
-        "fecha": "1993-10-05",
-        "url": "https://www.bcn.cl/leychile/navegar?idNorma=30620",
-        "keywords": [
-            "indígena",
-            "CONADI",
-            "Fondo de Tierras",
-            "desarrollo",
-            "títulos de merced",
-            "Art 20b"
-        ],
-        "capa_oficial": "La ley define 'indígena' con criterios que el Estado establece. El Fondo de Tierras Art. 20b es el mecanismo de 'solución': comprar tierras que fueron usurpadas. La restitución se convierte en transacción de mercado.",
-        "friccion_con": "la-negra-territorio-mapuche",
-        "tipo_friccion": "semantica",
-        "tags": [
-            "ley indígena",
-            "CONADI",
-            "tierra",
-            "usurpación como compra"
-        ]
-    },
-    {
-        "id": "ds66-consulta-indigena",
-        "fuente": "leychile",
-        "titulo": "DS N°66 — Reglamento de consulta indígena (Convenio OIT 169)",
-        "fecha": "2014-03-15",
-        "url": "https://www.bcn.cl/leychile/navegar?idNorma=1059961",
-        "keywords": [
-            "consulta indígena",
-            "DS66",
-            "OIT 169",
-            "CPLI",
-            "etapas",
-            "representatividad"
-        ],
-        "capa_oficial": "El decreto traduce el derecho al CPLI en un proceso de 5 etapas con plazos y formatos institucionales. Define 'representatividad' de las comunidades según criterios estatales. El consentimiento se convierte en 'acuerdo' o 'no acuerdo' al final del proceso.",
-        "friccion_con": "oit169-consulta-previa",
-        "tipo_friccion": "politica",
-        "tags": [
-            "OIT169",
-            "consulta",
-            "decreto",
-            "consentimiento como trámite"
-        ]
-    },
-    {
-        "id": "dl701-fomento-forestal",
-        "fuente": "leychile",
-        "titulo": "D.L. 701 — Ley de Fomento Forestal",
-        "fecha": "1974-10-28",
-        "url": "https://www.bcn.cl/leychile/navegar?idNorma=6294",
-        "keywords": [
-            "fomento forestal",
-            "bonificación",
-            "plantación",
-            "pino",
-            "eucalipto",
-            "uso productivo"
-        ],
-        "capa_oficial": "El D.L. 701 subsidiaba la plantación de pino y eucalipto en suelos 'de aptitud preferentemente forestal' —categoría que incluyó tierras mapuche. El lenguaje de 'fomento' y 'uso productivo' convirtió la sustitución de bosque nativo en política de desarrollo.",
-        "friccion_con": "la-negra-territorio-mapuche",
-        "tipo_friccion": "tecnica",
-        "tags": [
-            "forestal",
-            "subsidio",
-            "pino",
-            "bosque nativo",
-            "dictadura"
-        ]
-    },
-    {
-        "id": "seia-central-osorno-2023",
-        "fuente": "seia",
-        "titulo": "EIA: Central hidroeléctrica de pasada en Río Pilmaiquén, Región de Los Ríos",
-        "fecha": "2023-06-12",
-        "url": "https://seia.sea.gob.cl",
-        "institucion": "Servicio de Evaluación Ambiental",
-        "keywords": [
-            "hidroeléctrica",
-            "río",
-            "caudal ecológico",
-            "Pilmaiquén",
-            "impacto",
-            "mitigación"
-        ],
-        "capa_oficial": "La evaluación del proyecto describe el río en términos de 'caudal ecológico mínimo', 'línea base biótica' y 'medidas de mitigación'. Para las comunidades, el Pilmaiquén es un ser vivo con historia. El SEIA no puede procesar esa ontología.",
-        "friccion_con": "oit169-consulta-previa",
-        "tipo_friccion": "semantica",
-        "tags": [
-            "SEIA",
-            "río",
-            "hidroeléctrica",
-            "ontología"
-        ]
-    },
-    {
-        "id": "seia-forestal-losrios-2022",
-        "fuente": "seia",
-        "titulo": "DIA: Proyecto de plantación forestal en predios con reclamación indígena",
-        "fecha": "2022-04-18",
-        "url": "https://seia.sea.gob.cl",
-        "institucion": "Servicio de Evaluación Ambiental",
-        "keywords": [
-            "plantación",
-            "DIA",
-            "predio forestal",
-            "reclamación",
-            "mitigación",
-            "compensación"
-        ],
-        "capa_oficial": "La Declaración de Impacto Ambiental clasifica el territorio como 'predio de aptitud forestal'. La reclamación indígena pendiente aparece como un 'antecedente' pero no como impedimento. La evaluación separa el suelo de su historia.",
-        "friccion_con": "la-negra-territorio-mapuche",
-        "tipo_friccion": "tecnica",
-        "tags": [
-            "SEIA",
-            "forestal",
-            "reclamación",
-            "suelo sin historia"
-        ]
-    },
-    {
-        "id": "compras-conadi-consultoras-2023",
-        "fuente": "compraspublicas",
-        "titulo": "Licitación CONADI: estudio de pertinencia cultural para Fondo de Tierras",
-        "fecha": "2023-07-20",
-        "url": "https://www.mercadopublico.cl",
-        "institucion": "CONADI",
-        "keywords": [
-            "pertinencia cultural",
-            "consultoría",
-            "Fondo de Tierras",
-            "estudio base",
-            "licitación"
-        ],
-        "capa_oficial": "CONADI licita un estudio de 'pertinencia cultural' a consultoras externas para evaluar solicitudes del Fondo de Tierras. La pertinencia cultural se convierte en un producto licitado, con bases técnicas, puntaje y adjudicación. El saber comunitario se externaliza.",
-        "friccion_con": "la-negra-territorio-mapuche",
-        "tipo_friccion": "semantica",
-        "tags": [
-            "ComprasPúblicas",
-            "CONADI",
-            "cultura como licitación"
-        ]
-    },
-    {
-        "id": "compras-municipio-trato-directo-2023",
-        "fuente": "compraspublicas",
-        "titulo": "Trato directo: servicios de asesoría comunicacional a municipalidad",
-        "fecha": "2023-10-05",
-        "url": "https://www.mercadopublico.cl",
-        "institucion": "Municipalidad (caso-tipo CIPER)",
-        "keywords": [
-            "trato directo",
-            "asesoría",
-            "comunicacional",
-            "municipalidad",
-            "adjudicación"
-        ],
-        "capa_oficial": "El trato directo se justifica por 'urgencia calificada'. El proveedor adjudicado tiene vínculos con concejales. En Mercado Público, el registro es 'conforme a normativa'. La corrupción no viola el sistema de compras —lo habita.",
-        "friccion_con": "periodismo-datos-chile",
-        "tipo_friccion": "tecnica",
-        "tags": [
-            "ComprasPúblicas",
-            "municipio",
-            "trato directo",
-            "corrupción sistémica"
-        ]
-    },
-    {
-        "id": "cmf-sancion-sura-2024",
-        "fuente": "cmf",
-        "titulo": "Resolución CMF: observaciones a SURA Asset Management por deficiencias en gobierno corporativo",
-        "fecha": "2024-02-28",
-        "url": "https://www.cmfchile.cl",
-        "institucion": "Comisión para el Mercado Financiero",
-        "keywords": [
-            "gobierno corporativo",
-            "deficiencias",
-            "observaciones",
-            "gestión de riesgos",
-            "compliance"
-        ],
-        "capa_oficial": "La CMF detecta 'deficiencias en la gestión de riesgos' y emite un oficio de observaciones. El lenguaje regulatorio traduce el conflicto territorial en un problema de 'compliance'. La sanción no menciona comunidades ni territorios.",
-        "friccion_con": "sura-gobernanza-datos",
-        "tipo_friccion": "tecnica",
-        "tags": [
-            "CMF",
-            "SURA",
-            "compliance",
-            "sanción sin territorio"
-        ]
-    },
-    {
-        "id": "cmf-norma-esg-2023",
-        "fuente": "cmf",
-        "titulo": "NCG N°461: Norma de reporte de sostenibilidad y gobierno corporativo",
-        "fecha": "2023-11-20",
-        "url": "https://www.cmfchile.cl/normativa/ncg_461.pdf",
-        "institucion": "Comisión para el Mercado Financiero",
-        "keywords": [
-            "ESG",
-            "sostenibilidad",
-            "reporte",
-            "materialidad",
-            "stakeholders",
-            "NCG461"
-        ],
-        "capa_oficial": "La norma obliga a reportar riesgos ESG según criterios de 'materialidad financiera'. El impacto sobre comunidades es reportable solo si afecta el valor de la empresa. La sostenibilidad institucional no es la sostenibilidad del territorio.",
-        "friccion_con": "sura-gobernanza-datos",
-        "tipo_friccion": "semantica",
-        "tags": [
-            "CMF",
-            "ESG",
-            "materialidad",
-            "sostenibilidad invertida"
-        ]
-    },
-    {
-        "id": "sbif-circular-roles-banca-digital-2021",
-        "fuente": "leychile",
-        "titulo": "Circular SBIF / CMF N°3.653 — Gestión de accesos y perfiles en banca digital",
-        "fecha": "2021-07-14",
-        "url": "https://www.cmfchile.cl",
-        "institucion": "Comisión para el Mercado Financiero",
-        "actores_lobby": [],
-        "materia": "Definición de roles de acceso, segregación de funciones y trazabilidad en plataformas transaccionales para personas jurídicas",
-        "keywords": [
-            "roles",
-            "permisos",
-            "segregación de funciones",
-            "trazabilidad",
-            "banca digital"
-        ],
-        "capa_oficial": "La norma exige segregación de funciones y registro de accesos, pero no obliga a que los usuarios puedan ver el mapa de roles ajenos. La trazabilidad es para el auditor, no para el operador. La opacidad sobre quién puede qué queda fuera del alcance regulatorio.",
-        "friccion_con": "banca-roles-opacidad-digital",
-        "tipo_friccion": "tecnica",
-        "tags": [
-            "CMF",
-            "roles",
-            "acceso",
-            "banca digital",
-            "opacidad institucional"
-        ]
-    },
-    {
-        "id": "df-sura-multifondos-2024",
-        "fuente": "diario-financiero",
-        "titulo": "SURA redefine estrategia de inversión alternativa en multifondos",
-        "fecha": "2024-06-10",
-        "url": "https://www.df.cl",
-        "institucion": "Diario Financiero",
-        "actores_lobby": [
-            "SURA Asset Management",
-            "AFP Capital"
-        ],
-        "materia": "Cobertura de prensa financiera sobre movimientos de SURA en mercado de AFP y fondos alternativos",
-        "keywords": [
-            "SURA",
-            "multifondos",
-            "AFP",
-            "inversión alternativa",
-            "ESG",
-            "regulación financiera"
-        ],
-        "capa_oficial": "La nota presenta como decisión técnica-financiera lo que implica redistribución de riesgo territorial. No se menciona el impacto en comunidades donde operan las inversiones subyacentes.",
-        "friccion_con": "sura-gobernanza-datos",
-        "tipo_friccion": "semantica",
-        "tags": [
-            "Diario Financiero",
-            "AFP",
-            "SURA",
-            "inversiones",
-            "prensa financiera"
-        ]
-    },
-    {
-        "id": "df-lobby-energetico-2024",
-        "fuente": "diario-financiero",
-        "titulo": "Empresas energéticas intensifican reuniones con reguladores ante cambio de normativa",
-        "fecha": "2024-04-22",
-        "url": "https://www.df.cl",
-        "institucion": "Diario Financiero",
-        "actores_lobby": [],
-        "materia": "Cobertura sobre lobby energético y regulación ambiental en zonas de sacrificio",
-        "keywords": [
-            "lobby",
-            "energía",
-            "regulación",
-            "zonas de sacrificio",
-            "medioambiente"
-        ],
-        "capa_oficial": "La nota enmarca las reuniones como 'diálogo técnico público-privado'. No visibiliza que las comunidades afectadas no participan en dichos espacios.",
-        "friccion_con": "oit169-consulta-previa",
-        "tipo_friccion": "politica",
-        "tags": [
-            "Diario Financiero",
-            "lobby",
-            "energía",
-            "regulación ambiental"
-        ]
-    },
-    {
-        "id": "df-territorio-mapuche-inversion-2024",
-        "fuente": "diario-financiero",
-        "titulo": "Inversión forestal en La Araucanía: empresas apuestan por certificación FSC",
-        "fecha": "2024-08-05",
-        "url": "https://www.df.cl",
-        "institucion": "Diario Financiero",
-        "actores_lobby": [],
-        "materia": "Cobertura financiera de inversión forestal en territorio mapuche con enfoque de certificación",
-        "keywords": [
-            "forestal",
-            "FSC",
-            "La Araucanía",
-            "territorio mapuche",
-            "inversión",
-            "certificación"
-        ],
-        "capa_oficial": "Se presenta la certificación FSC como garantía de sostenibilidad sin mencionar conflictos territoriales vigentes ni procesos de consulta previa incumplidos.",
-        "friccion_con": "la-negra-territorio-mapuche",
-        "tipo_friccion": "semantica",
-        "tags": [
-            "Diario Financiero",
-            "forestal",
-            "territorio mapuche",
-            "certificación",
-            "inversión"
-        ]
-    },
-    {
-        "id": "tesis-uai-gobernanza-financiera-2023",
-        "fuente": "repositorio-uai",
-        "titulo": "Gobernanza corporativa y opacidad regulatoria en el mercado de AFP chileno",
-        "fecha": "2023-12-01",
-        "url": "https://repositorio.uai.cl",
-        "institucion": "Universidad Adolfo Ibáñez — Escuela de Negocios",
-        "actores_lobby": [],
-        "materia": "Tesis de magíster que analiza mecanismos de gobernanza en AFP y su relación con marcos regulatorios CMF",
-        "keywords": [
-            "gobernanza corporativa",
-            "AFP",
-            "opacidad",
-            "CMF",
-            "regulación",
-            "tesis"
-        ],
-        "capa_oficial": "Análisis académico que documenta brechas entre los marcos normativos de gobernanza y las prácticas efectivas de divulgación de información.",
-        "friccion_con": "sura-gobernanza-datos",
-        "tipo_friccion": "tecnica",
-        "tags": [
-            "UAI",
-            "tesis",
-            "gobernanza",
-            "AFP",
-            "regulación financiera"
-        ]
-    },
-    {
-        "id": "tesis-uai-esg-greenwashing-2024",
-        "fuente": "repositorio-uai",
-        "titulo": "ESG y greenwashing en fondos de inversión chilenos: una evaluación crítica",
-        "fecha": "2024-03-01",
-        "url": "https://repositorio.uai.cl",
-        "institucion": "Universidad Adolfo Ibáñez — Escuela de Gobierno",
-        "actores_lobby": [],
-        "materia": "Tesis que evalúa métricas ESG en fondos chilenos y detecta prácticas de greenwashing en reportes corporativos",
-        "keywords": [
-            "ESG",
-            "greenwashing",
-            "fondos de inversión",
-            "reportes corporativos",
-            "tesis"
-        ],
-        "capa_oficial": "Investigación que revela desconexión entre compromisos ESG declarados y resultados medibles en territorios de operación.",
-        "friccion_con": "sura-gobernanza-datos",
-        "tipo_friccion": "semantica",
-        "tags": [
-            "UAI",
-            "tesis",
-            "ESG",
-            "greenwashing",
-            "inversiones"
-        ]
-    },
-    {
-        "id": "tesis-uchile-territorio-mapuche-2023",
-        "fuente": "repositorio-uchile",
-        "titulo": "Despojo territorial y resistencia mapuche-huilliche en la provincia de Osorno (1973-2023)",
-        "fecha": "2023-06-01",
-        "url": "https://repositorio.uchile.cl",
-        "institucion": "Universidad de Chile — Facultad de Ciencias Sociales",
-        "actores_lobby": [],
-        "materia": "Tesis doctoral que documenta procesos de despojo territorial y formas de resistencia en comunidades mapuche-huilliche",
-        "keywords": [
-            "territorio mapuche",
-            "despojo",
-            "resistencia",
-            "huilliche",
-            "Osorno",
-            "tesis"
-        ],
-        "capa_oficial": "Investigación etnográfica que contrasta el relato estatal de 'desarrollo regional' con la memoria territorial de comunidades afectadas por la reforma agraria y la contrarreforma.",
-        "friccion_con": "la-negra-territorio-mapuche",
-        "tipo_friccion": "politica",
-        "tags": [
-            "UChile",
-            "tesis",
-            "territorio mapuche",
-            "despojo",
-            "resistencia",
-            "etnografía"
-        ]
-    },
-    {
-        "id": "tesis-uchile-corrupcion-municipal-2024",
-        "fuente": "repositorio-uchile",
-        "titulo": "Redes de contratación pública y conflicto de intereses en municipios del sur de Chile",
-        "fecha": "2024-01-01",
-        "url": "https://repositorio.uchile.cl",
-        "institucion": "Universidad de Chile — Instituto de Asuntos Públicos",
-        "actores_lobby": [],
-        "materia": "Tesis de magíster que mapea redes de proveedores municipales y detecta patrones de conflicto de interés",
-        "keywords": [
-            "contratación pública",
-            "conflicto de intereses",
-            "municipios",
-            "proveedores",
-            "tesis"
-        ],
-        "capa_oficial": "Estudio que cruza datos de ChileCompra con registros de SII para identificar vínculos societarios entre proveedores y funcionarios municipales.",
-        "friccion_con": "periodismo-datos-chile",
-        "tipo_friccion": "politica",
-        "tags": [
-            "UChile",
-            "tesis",
-            "municipios",
-            "contratación",
-            "conflicto de intereses"
-        ]
-    },
-    {
-        "id": "tesis-uchile-consulta-indigena-seia-2023",
-        "fuente": "repositorio-uchile",
-        "titulo": "La consulta indígena en el SEIA: análisis crítico del cumplimiento del Convenio 169 de la OIT en proyectos energéticos",
-        "fecha": "2023-09-01",
-        "url": "https://repositorio.uchile.cl",
-        "institucion": "Universidad de Chile — Facultad de Derecho",
-        "actores_lobby": [],
-        "materia": "Tesis que evalúa el cumplimiento efectivo de la consulta indígena en proyectos ingresados al SEIA",
-        "keywords": [
-            "consulta indígena",
-            "OIT 169",
-            "SEIA",
-            "proyectos energéticos",
-            "pueblos originarios",
-            "tesis"
-        ],
-        "capa_oficial": "Análisis jurídico que documenta cómo el procedimiento formal de consulta puede cumplir requisitos legales sin satisfacer el estándar de consentimiento libre, previo e informado.",
-        "friccion_con": "oit169-consulta-previa",
-        "tipo_friccion": "politica",
-        "tags": [
-            "UChile",
-            "tesis",
-            "consulta indígena",
-            "OIT 169",
-            "SEIA",
-            "derecho"
-        ]
-    }
+  {
+    "id": "lobby-sura-cmf-2024",
+    "fuente": "infolobby",
+    "titulo": "Audiencias SURA Investments con CMF sobre regulación multifondos",
+    "fecha": "2024-03-15",
+    "url": "https://www.infolobby.cl",
+    "institucion": "Comisión para el Mercado Financiero",
+    "actores_lobby": [
+      "SURA Asset Management",
+      "AFP Capital"
+    ],
+    "materia": "Regulación de inversiones alternativas en multifondos AFP",
+    "keywords": [
+      "regulación",
+      "multifondos",
+      "inversión alternativa",
+      "ESG",
+      "riesgo"
+    ],
+    "capa_oficial": "La audiencia registra una 'reunión técnica' sobre marcos regulatorios. No consigna qué territorios o comunidades afectan las inversiones discutidas.",
+    "friccion_con": "sura-gobernanza-datos",
+    "tipo_friccion": "politica",
+    "tags": [
+      "AFP",
+      "CMF",
+      "lobby financiero",
+      "ESG"
+    ]
+  },
+  {
+    "id": "lobby-forestal-conadi-2023",
+    "fuente": "infolobby",
+    "titulo": "Audiencias empresas forestales con CONADI sobre títulos de merced",
+    "fecha": "2023-08-22",
+    "url": "https://www.infolobby.cl",
+    "institucion": "CONADI",
+    "actores_lobby": [
+      "Arauco S.A."
+    ],
+    "materia": "Regularización de predios forestales en territorios con títulos de merced",
+    "keywords": [
+      "títulos de merced",
+      "regularización",
+      "predios forestales",
+      "DL701"
+    ],
+    "capa_oficial": "La audiencia clasifica el encuentro como 'gestión administrativa de predios'. Los títulos de merced aparecen como un insumo técnico, no como evidencia de usurpación territorial.",
+    "friccion_con": "la-negra-territorio-mapuche",
+    "tipo_friccion": "politica",
+    "tags": [
+      "forestales",
+      "CONADI",
+      "territorio mapuche",
+      "usurpación"
+    ]
+  },
+  {
+    "id": "lobby-sea-consulta-2022",
+    "fuente": "infolobby",
+    "friccion_con": "oit169-consulta-previa",
+    "titulo": "Audiencias empresas energéticas con SEA sobre proyectos en territorio indígena",
+    "fecha": "2022-11-10",
+    "url": "https://www.infolobby.cl",
+    "institucion": "Servicio de Evaluación Ambiental",
+    "actores_lobby": [
+      "Colbún S.A.",
+      "Enel Green Power"
+    ],
+    "materia": "Evaluación ambiental de proyectos hidroeléctricos en territorio con consulta indígena pendiente",
+    "keywords": [
+      "evaluación ambiental",
+      "consulta indígena",
+      "SEIA",
+      "hidroeléctrica",
+      "mitigación"
+    ],
+    "capa_oficial": "El registro documenta una 'reunión de seguimiento técnico'. La consulta indígena aparece como una 'etapa del proceso' —no como derecho de consentimiento.",
+    "tipo_friccion": "politica",
+    "tags": [
+      "SEIA",
+      "consulta previa",
+      "energía",
+      "OIT169"
+    ]
+  },
+  {
+    "id": "transp-afp-carteras-2024",
+    "fuente": "transparencia",
+    "titulo": "Solicitud: detalle de inversiones AFP en territorios indígenas",
+    "fecha": "2024-01-20",
+    "url": "https://www.consejotransparencia.cl",
+    "institucion": "Superintendencia de Pensiones",
+    "materia": "Desglose de carteras de inversión AFP con exposición a sectores extractivos en territorio indígena",
+    "keywords": [
+      "carteras AFP",
+      "reserva",
+      "datos agregados",
+      "inversión extractiva",
+      "opacidad"
+    ],
+    "capa_oficial": "La institución traduce una pregunta sobre territorios y comunidades en una respuesta sobre 'instrumentos financieros'. La reserva legal convierte la opacidad en procedimiento regular.",
+    "friccion_con": "sura-gobernanza-datos",
+    "tipo_friccion": "tecnica",
+    "tags": [
+      "transparencia",
+      "AFP",
+      "opacidad",
+      "datos reservados"
+    ]
+  },
+  {
+    "id": "transp-conadi-tierras-2023",
+    "fuente": "transparencia",
+    "titulo": "Solicitud: avance del Fondo de Tierras CONADI en Región de Los Ríos",
+    "fecha": "2023-05-14",
+    "url": "https://www.consejotransparencia.cl",
+    "institucion": "CONADI",
+    "materia": "Estado de tramitación de solicitudes de compra de tierras Art. 20b Ley 19.253",
+    "keywords": [
+      "Fondo de Tierras",
+      "Art 20b",
+      "plazo",
+      "priorización",
+      "trámite"
+    ],
+    "capa_oficial": "La respuesta convierte la urgencia territorial (familias esperando décadas) en estadísticas de gestión: '342 solicitudes', '8.3 años promedio'. La privacidad del beneficiario protege la lentitud del Estado.",
+    "friccion_con": "la-negra-territorio-mapuche",
+    "tipo_friccion": "tecnica",
+    "tags": [
+      "CONADI",
+      "Fondo de Tierras",
+      "espera",
+      "territorio"
+    ]
+  },
+  {
+    "id": "transp-municipio-compras-2023",
+    "fuente": "transparencia",
+    "titulo": "Solicitud: contratos directos de municipalidad con empresas de concejales",
+    "fecha": "2023-09-03",
+    "url": "https://www.consejotransparencia.cl",
+    "institucion": "Municipalidad (caso-tipo CIPER)",
+    "materia": "Detalle de contratos por trato directo último trimestre con empresas vinculadas a concejales",
+    "keywords": [
+      "trato directo",
+      "conflicto de interés",
+      "concejales",
+      "Mercado Público",
+      "evasión"
+    ],
+    "capa_oficial": "La institución responde con un link a datos que ya son públicos pero que no responden la pregunta. La 'transparencia' como dispositivo circular: se transparenta lo que ya era visible, no lo que se preguntó.",
+    "friccion_con": "periodismo-datos-chile",
+    "tipo_friccion": "semantica",
+    "tags": [
+      "municipio",
+      "CIPER",
+      "trato directo",
+      "conflicto interés"
+    ]
+  },
+  {
+    "id": "transp-sp-beneficiarios-afp-2024",
+    "fuente": "transparencia",
+    "titulo": "Solicitud: beneficiarios finales y vehiculos de inversion vinculados a AFP",
+    "fecha": "2024-03-08",
+    "url": "https://www.consejotransparencia.cl",
+    "institucion": "Superintendencia de Pensiones",
+    "materia": "Detalle de sociedades vehiculo, administradoras y beneficiarios finales vinculados a carteras AFP con exposicion territorial",
+    "keywords": [
+      "beneficiarios finales",
+      "vehiculos de inversion",
+      "AFP",
+      "sociedades relacionadas",
+      "trazabilidad"
+    ],
+    "capa_oficial": "La respuesta separa administradora, custodio y emisor como si fueran capas tecnicas sin autor. La pregunta por quien controla la decision de inversion se diluye en una cadena societaria tratada como dato formal.",
+    "friccion_con": "sura-gobernanza-datos",
+    "tipo_friccion": "semantica",
+    "tags": [
+      "transparencia",
+      "AFP",
+      "beneficiario final",
+      "cadena societaria"
+    ]
+  },
+  {
+    "id": "transp-bienesnacionales-catastro-2024",
+    "fuente": "transparencia",
+    "titulo": "Solicitud: cartografia y catastro de predios fiscales superpuestos a titulos de merced",
+    "fecha": "2024-02-11",
+    "url": "https://www.consejotransparencia.cl",
+    "institucion": "Ministerio de Bienes Nacionales",
+    "materia": "Acceso a planos, roles y capas SIG de predios fiscales en zona con reclamacion mapuche-huilliche",
+    "keywords": [
+      "catastro",
+      "predios fiscales",
+      "titulos de merced",
+      "SIG",
+      "roles"
+    ],
+    "capa_oficial": "La institucion entrega capas cartograficas parciales y remite la lectura integral a otras reparticiones. El territorio aparece repartido en archivos interoperables para el Estado, pero incompletos para la comunidad afectada.",
+    "friccion_con": "la-negra-territorio-mapuche",
+    "tipo_friccion": "politica",
+    "tags": [
+      "transparencia",
+      "Bienes Nacionales",
+      "catastro",
+      "territorio fragmentado"
+    ]
+  },
+  {
+    "id": "transp-municipio-honorarios-2024",
+    "fuente": "transparencia",
+    "titulo": "Solicitud: honorarios, sociedades y parentesco de proveedores municipales recurrentes",
+    "fecha": "2024-01-29",
+    "url": "https://www.consejotransparencia.cl",
+    "institucion": "Municipalidad (caso-tipo CIPER)",
+    "materia": "Cruce entre contrataciones a honorarios, proveedores y participacion en sociedades de familiares de autoridades",
+    "keywords": [
+      "honorarios",
+      "sociedades",
+      "proveedores",
+      "parentesco",
+      "municipalidad"
+    ],
+    "capa_oficial": "La respuesta distingue entre persona natural contratada y razon social adjudicada, como si esa separacion agotara el problema. El parentesco y la coordinacion informal quedan fuera del registro disponible.",
+    "friccion_con": "periodismo-datos-chile",
+    "tipo_friccion": "tecnica",
+    "tags": [
+      "transparencia",
+      "municipio",
+      "honorarios",
+      "red de proveedores"
+    ]
+  },
+  {
+    "id": "transp-consulta-cartografias-2024",
+    "fuente": "transparencia",
+    "titulo": "Solicitud: expedientes de consulta indigena, planos y minutas de trazado territorial",
+    "fecha": "2024-02-26",
+    "url": "https://www.consejotransparencia.cl",
+    "institucion": "Servicio de Evaluacion Ambiental",
+    "materia": "Entrega de minutas, planos y cartografias usadas para delimitar comunidades afectadas en procesos de consulta indigena",
+    "keywords": [
+      "consulta indigena",
+      "cartografia",
+      "planos",
+      "minutas",
+      "comunidades afectadas"
+    ],
+    "capa_oficial": "El expediente publica mapas y minutas como anexos tecnicos, pero no transparenta el criterio con que una comunidad fue incluida o excluida del area de afectacion. La decision politica aparece como geometria.",
+    "friccion_con": "oit169-consulta-previa",
+    "tipo_friccion": "tecnica",
+    "tags": [
+      "transparencia",
+      "consulta",
+      "cartografia",
+      "afectacion territorial"
+    ]
+  },
+  {
+    "id": "sii-sura-sociedades-relacionadas-2024",
+    "fuente": "sii",
+    "titulo": "Consulta SII: giros y sociedades relacionadas en estructura SURA / AFP",
+    "fecha": "2024-03-21",
+    "url": "https://www.sii.cl",
+    "institucion": "Servicio de Impuestos Internos",
+    "materia": "Revision de giros economicos, sucursales y sociedades relacionadas usadas para vehiculos de inversion y administracion previsional",
+    "keywords": [
+      "SII",
+      "giros",
+      "sociedades relacionadas",
+      "AFP",
+      "vehiculo de inversion"
+    ],
+    "capa_oficial": "El SII muestra razones sociales, actividades y domicilios tributarios, pero no la arquitectura de decision que conecta esas sociedades con territorios financiados. La huella existe como rastro mercantil, no como responsabilidad politica.",
+    "friccion_con": "sura-gobernanza-datos",
+    "tipo_friccion": "tecnica",
+    "tags": [
+      "SII",
+      "SURA",
+      "sociedades",
+      "huella mercantil"
+    ]
+  },
+  {
+    "id": "sii-avaluos-predios-los-rios-2024",
+    "fuente": "sii",
+    "titulo": "Consulta SII: avaluos fiscales y roles de predios en Los Rios con reclamacion mapuche",
+    "fecha": "2024-01-17",
+    "url": "https://www.sii.cl",
+    "institucion": "Servicio de Impuestos Internos",
+    "materia": "Cruce de roles de avaluo, destino de suelo y valuacion fiscal en predios superpuestos a memoria territorial mapuche-huilliche",
+    "keywords": [
+      "avaluo fiscal",
+      "roles",
+      "predios",
+      "Los Rios",
+      "suelo"
+    ],
+    "capa_oficial": "El territorio se reduce a rol, avalúo y destino tributario. La memoria territorial queda borrada en favor de una taxonomia de suelo que solo pregunta cuanto vale y para que produce.",
+    "friccion_con": "la-negra-territorio-mapuche",
+    "tipo_friccion": "semantica",
+    "tags": [
+      "SII",
+      "avaluos",
+      "territorio mapuche",
+      "rol de avaluo"
+    ]
+  },
+  {
+    "id": "sii-proveedores-municipales-2023",
+    "fuente": "sii",
+    "titulo": "Consulta SII: giros, socios y vigencia de proveedores municipales reiterados",
+    "fecha": "2023-11-09",
+    "url": "https://www.sii.cl",
+    "institucion": "Servicio de Impuestos Internos",
+    "materia": "Revision de giro comercial, inicio de actividades y representantes de proveedores adjudicados por trato directo",
+    "keywords": [
+      "giro comercial",
+      "proveedores",
+      "inicio de actividades",
+      "socios",
+      "trato directo"
+    ],
+    "capa_oficial": "La ficha tributaria valida existencia y giro, pero no explica por que un proveedor sin trayectoria concentra adjudicaciones. El rastro fiscal certifica legalidad minima sin tocar la red de favores.",
+    "friccion_con": "periodismo-datos-chile",
+    "tipo_friccion": "tecnica",
+    "tags": [
+      "SII",
+      "proveedores",
+      "municipio",
+      "giro y red societaria"
+    ]
+  },
+  {
+    "id": "sii-avaluos-predios-consulta-2022",
+    "fuente": "sii",
+    "titulo": "Consulta SII: roles de avaluo de predios incluidos en procesos de consulta indigena",
+    "fecha": "2022-12-02",
+    "url": "https://www.sii.cl",
+    "institucion": "Servicio de Impuestos Internos",
+    "materia": "Identificacion de roles, clasificacion de suelo y avalúos de predios considerados en procesos de consulta previa",
+    "keywords": [
+      "consulta previa",
+      "roles de avaluo",
+      "predios",
+      "clasificacion de suelo",
+      "consulta indigena"
+    ],
+    "capa_oficial": "El territorio consultado aparece como una lista de roles y avalúos. El derecho a consentimiento previo se apoya en una cartografia fiscal que nunca fue diseñada para reconocer comunidad, uso ceremonial o afectacion historica.",
+    "friccion_con": "oit169-consulta-previa",
+    "tipo_friccion": "semantica",
+    "tags": [
+      "SII",
+      "consulta previa",
+      "predios",
+      "cartografia fiscal"
+    ]
+  },
+  {
+    "id": "ley-20730-lobby",
+    "fuente": "leychile",
+    "titulo": "Ley 20.730 — Regula el lobby y las gestiones que representen intereses particulares",
+    "fecha": "2014-03-08",
+    "url": "https://www.bcn.cl/leychile/navegar?idNorma=1060115",
+    "keywords": [
+      "lobby",
+      "gestión de intereses",
+      "registro",
+      "audiencias",
+      "sujetos pasivos"
+    ],
+    "capa_oficial": "La ley define lobby como 'gestión remunerada'. Las gestiones corporativas internas (ej: AFP gestionando inversiones en territorios) quedan fuera de la definición. El registro captura la forma del contacto, no su contenido ni sus efectos territoriales.",
+    "friccion_con": "sura-gobernanza-datos",
+    "tipo_friccion": "semantica",
+    "tags": [
+      "lobby",
+      "ley",
+      "definición",
+      "exclusión"
+    ]
+  },
+  {
+    "id": "ley-20285-transparencia",
+    "fuente": "leychile",
+    "titulo": "Ley 20.285 — Sobre acceso a la información pública",
+    "fecha": "2008-08-20",
+    "url": "https://www.bcn.cl/leychile/navegar?idNorma=276363",
+    "keywords": [
+      "acceso información",
+      "transparencia activa",
+      "reserva",
+      "secreto",
+      "Consejo"
+    ],
+    "capa_oficial": "La ley crea un derecho de acceso pero simultáneamente cataloga 5 causales de reserva que las instituciones aplican discrecionalmente. La transparencia es un umbral que el Estado fija y desplaza.",
+    "friccion_con": "periodismo-datos-chile",
+    "tipo_friccion": "politica",
+    "tags": [
+      "transparencia",
+      "reserva",
+      "acceso",
+      "periodismo"
+    ]
+  },
+  {
+    "id": "ley-19253-indigena",
+    "fuente": "leychile",
+    "titulo": "Ley 19.253 — Ley Indígena: protección, fomento y desarrollo de los indígenas",
+    "fecha": "1993-10-05",
+    "url": "https://www.bcn.cl/leychile/navegar?idNorma=30620",
+    "keywords": [
+      "indígena",
+      "CONADI",
+      "Fondo de Tierras",
+      "desarrollo",
+      "títulos de merced",
+      "Art 20b"
+    ],
+    "capa_oficial": "La ley define 'indígena' con criterios que el Estado establece. El Fondo de Tierras Art. 20b es el mecanismo de 'solución': comprar tierras que fueron usurpadas. La restitución se convierte en transacción de mercado.",
+    "friccion_con": "la-negra-territorio-mapuche",
+    "tipo_friccion": "semantica",
+    "tags": [
+      "ley indígena",
+      "CONADI",
+      "tierra",
+      "usurpación como compra"
+    ]
+  },
+  {
+    "id": "ds66-consulta-indigena",
+    "fuente": "leychile",
+    "titulo": "DS N°66 — Reglamento de consulta indígena (Convenio OIT 169)",
+    "fecha": "2014-03-15",
+    "url": "https://www.bcn.cl/leychile/navegar?idNorma=1059961",
+    "keywords": [
+      "consulta indígena",
+      "DS66",
+      "OIT 169",
+      "CPLI",
+      "etapas",
+      "representatividad"
+    ],
+    "capa_oficial": "El decreto traduce el derecho al CPLI en un proceso de 5 etapas con plazos y formatos institucionales. Define 'representatividad' de las comunidades según criterios estatales. El consentimiento se convierte en 'acuerdo' o 'no acuerdo' al final del proceso.",
+    "friccion_con": "oit169-consulta-previa",
+    "tipo_friccion": "politica",
+    "tags": [
+      "OIT169",
+      "consulta",
+      "decreto",
+      "consentimiento como trámite"
+    ]
+  },
+  {
+    "id": "dl701-fomento-forestal",
+    "fuente": "leychile",
+    "titulo": "D.L. 701 — Ley de Fomento Forestal",
+    "fecha": "1974-10-28",
+    "url": "https://www.bcn.cl/leychile/navegar?idNorma=6294",
+    "keywords": [
+      "fomento forestal",
+      "bonificación",
+      "plantación",
+      "pino",
+      "eucalipto",
+      "uso productivo"
+    ],
+    "capa_oficial": "El D.L. 701 subsidiaba la plantación de pino y eucalipto en suelos 'de aptitud preferentemente forestal' —categoría que incluyó tierras mapuche. El lenguaje de 'fomento' y 'uso productivo' convirtió la sustitución de bosque nativo en política de desarrollo.",
+    "friccion_con": "la-negra-territorio-mapuche",
+    "tipo_friccion": "tecnica",
+    "tags": [
+      "forestal",
+      "subsidio",
+      "pino",
+      "bosque nativo",
+      "dictadura"
+    ]
+  },
+  {
+    "id": "seia-central-osorno-2023",
+    "fuente": "seia",
+    "titulo": "EIA: Central hidroeléctrica de pasada en Río Pilmaiquén, Región de Los Ríos",
+    "fecha": "2023-06-12",
+    "url": "https://seia.sea.gob.cl",
+    "institucion": "Servicio de Evaluación Ambiental",
+    "keywords": [
+      "hidroeléctrica",
+      "río",
+      "caudal ecológico",
+      "Pilmaiquén",
+      "impacto",
+      "mitigación"
+    ],
+    "capa_oficial": "La evaluación del proyecto describe el río en términos de 'caudal ecológico mínimo', 'línea base biótica' y 'medidas de mitigación'. Para las comunidades, el Pilmaiquén es un ser vivo con historia. El SEIA no puede procesar esa ontología.",
+    "friccion_con": "oit169-consulta-previa",
+    "tipo_friccion": "semantica",
+    "tags": [
+      "SEIA",
+      "río",
+      "hidroeléctrica",
+      "ontología"
+    ]
+  },
+  {
+    "id": "seia-forestal-losrios-2022",
+    "fuente": "seia",
+    "titulo": "DIA: Proyecto de plantación forestal en predios con reclamación indígena",
+    "fecha": "2022-04-18",
+    "url": "https://seia.sea.gob.cl",
+    "institucion": "Servicio de Evaluación Ambiental",
+    "keywords": [
+      "plantación",
+      "DIA",
+      "predio forestal",
+      "reclamación",
+      "mitigación",
+      "compensación"
+    ],
+    "capa_oficial": "La Declaración de Impacto Ambiental clasifica el territorio como 'predio de aptitud forestal'. La reclamación indígena pendiente aparece como un 'antecedente' pero no como impedimento. La evaluación separa el suelo de su historia.",
+    "friccion_con": "la-negra-territorio-mapuche",
+    "tipo_friccion": "tecnica",
+    "tags": [
+      "SEIA",
+      "forestal",
+      "reclamación",
+      "suelo sin historia"
+    ]
+  },
+  {
+    "id": "compras-conadi-consultoras-2023",
+    "fuente": "compraspublicas",
+    "titulo": "Licitación CONADI: estudio de pertinencia cultural para Fondo de Tierras",
+    "fecha": "2023-07-20",
+    "url": "https://www.mercadopublico.cl",
+    "institucion": "CONADI",
+    "keywords": [
+      "pertinencia cultural",
+      "consultoría",
+      "Fondo de Tierras",
+      "estudio base",
+      "licitación"
+    ],
+    "capa_oficial": "CONADI licita un estudio de 'pertinencia cultural' a consultoras externas para evaluar solicitudes del Fondo de Tierras. La pertinencia cultural se convierte en un producto licitado, con bases técnicas, puntaje y adjudicación. El saber comunitario se externaliza.",
+    "friccion_con": "la-negra-territorio-mapuche",
+    "tipo_friccion": "semantica",
+    "tags": [
+      "ComprasPúblicas",
+      "CONADI",
+      "cultura como licitación"
+    ]
+  },
+  {
+    "id": "compras-municipio-trato-directo-2023",
+    "fuente": "compraspublicas",
+    "titulo": "Trato directo: servicios de asesoría comunicacional a municipalidad",
+    "fecha": "2023-10-05",
+    "url": "https://www.mercadopublico.cl",
+    "institucion": "Municipalidad (caso-tipo CIPER)",
+    "keywords": [
+      "trato directo",
+      "asesoría",
+      "comunicacional",
+      "municipalidad",
+      "adjudicación"
+    ],
+    "capa_oficial": "El trato directo se justifica por 'urgencia calificada'. El proveedor adjudicado tiene vínculos con concejales. En Mercado Público, el registro es 'conforme a normativa'. La corrupción no viola el sistema de compras —lo habita.",
+    "friccion_con": "periodismo-datos-chile",
+    "tipo_friccion": "tecnica",
+    "tags": [
+      "ComprasPúblicas",
+      "municipio",
+      "trato directo",
+      "corrupción sistémica"
+    ]
+  },
+  {
+    "id": "cmf-sancion-sura-2024",
+    "fuente": "cmf",
+    "titulo": "Resolución CMF: observaciones a SURA Asset Management por deficiencias en gobierno corporativo",
+    "fecha": "2024-02-28",
+    "url": "https://www.cmfchile.cl",
+    "institucion": "Comisión para el Mercado Financiero",
+    "keywords": [
+      "gobierno corporativo",
+      "deficiencias",
+      "observaciones",
+      "gestión de riesgos",
+      "compliance"
+    ],
+    "capa_oficial": "La CMF detecta 'deficiencias en la gestión de riesgos' y emite un oficio de observaciones. El lenguaje regulatorio traduce el conflicto territorial en un problema de 'compliance'. La sanción no menciona comunidades ni territorios.",
+    "friccion_con": "sura-gobernanza-datos",
+    "tipo_friccion": "tecnica",
+    "tags": [
+      "CMF",
+      "SURA",
+      "compliance",
+      "sanción sin territorio"
+    ]
+  },
+  {
+    "id": "cmf-norma-esg-2023",
+    "fuente": "cmf",
+    "titulo": "NCG N°461: Norma de reporte de sostenibilidad y gobierno corporativo",
+    "fecha": "2023-11-20",
+    "url": "https://www.cmfchile.cl/normativa/ncg_461.pdf",
+    "institucion": "Comisión para el Mercado Financiero",
+    "keywords": [
+      "ESG",
+      "sostenibilidad",
+      "reporte",
+      "materialidad",
+      "stakeholders",
+      "NCG461"
+    ],
+    "capa_oficial": "La norma obliga a reportar riesgos ESG según criterios de 'materialidad financiera'. El impacto sobre comunidades es reportable solo si afecta el valor de la empresa. La sostenibilidad institucional no es la sostenibilidad del territorio.",
+    "friccion_con": "sura-gobernanza-datos",
+    "tipo_friccion": "semantica",
+    "tags": [
+      "CMF",
+      "ESG",
+      "materialidad",
+      "sostenibilidad invertida"
+    ]
+  },
+  {
+    "id": "sbif-circular-roles-banca-digital-2021",
+    "fuente": "leychile",
+    "titulo": "Circular SBIF / CMF N°3.653 — Gestión de accesos y perfiles en banca digital",
+    "fecha": "2021-07-14",
+    "url": "https://www.cmfchile.cl",
+    "institucion": "Comisión para el Mercado Financiero",
+    "actores_lobby": [],
+    "materia": "Definición de roles de acceso, segregación de funciones y trazabilidad en plataformas transaccionales para personas jurídicas",
+    "keywords": [
+      "roles",
+      "permisos",
+      "segregación de funciones",
+      "trazabilidad",
+      "banca digital"
+    ],
+    "capa_oficial": "La norma exige segregación de funciones y registro de accesos, pero no obliga a que los usuarios puedan ver el mapa de roles ajenos. La trazabilidad es para el auditor, no para el operador. La opacidad sobre quién puede qué queda fuera del alcance regulatorio.",
+    "friccion_con": "banca-roles-opacidad-digital",
+    "tipo_friccion": "tecnica",
+    "tags": [
+      "CMF",
+      "roles",
+      "acceso",
+      "banca digital",
+      "opacidad institucional"
+    ]
+  },
+  {
+    "id": "df-sura-multifondos-2024",
+    "fuente": "diario-financiero",
+    "titulo": "SURA redefine estrategia de inversión alternativa en multifondos",
+    "fecha": "2024-06-10",
+    "url": "https://www.df.cl",
+    "institucion": "Diario Financiero",
+    "actores_lobby": [
+      "SURA Asset Management",
+      "AFP Capital"
+    ],
+    "materia": "Cobertura de prensa financiera sobre movimientos de SURA en mercado de AFP y fondos alternativos",
+    "keywords": [
+      "SURA",
+      "multifondos",
+      "AFP",
+      "inversión alternativa",
+      "ESG",
+      "regulación financiera"
+    ],
+    "capa_oficial": "La nota presenta como decisión técnica-financiera lo que implica redistribución de riesgo territorial. No se menciona el impacto en comunidades donde operan las inversiones subyacentes.",
+    "friccion_con": "sura-gobernanza-datos",
+    "tipo_friccion": "semantica",
+    "tags": [
+      "Diario Financiero",
+      "AFP",
+      "SURA",
+      "inversiones",
+      "prensa financiera"
+    ]
+  },
+  {
+    "id": "df-lobby-energetico-2024",
+    "fuente": "diario-financiero",
+    "titulo": "Empresas energéticas intensifican reuniones con reguladores ante cambio de normativa",
+    "fecha": "2024-04-22",
+    "url": "https://www.df.cl",
+    "institucion": "Diario Financiero",
+    "actores_lobby": [],
+    "materia": "Cobertura sobre lobby energético y regulación ambiental en zonas de sacrificio",
+    "keywords": [
+      "lobby",
+      "energía",
+      "regulación",
+      "zonas de sacrificio",
+      "medioambiente"
+    ],
+    "capa_oficial": "La nota enmarca las reuniones como 'diálogo técnico público-privado'. No visibiliza que las comunidades afectadas no participan en dichos espacios.",
+    "friccion_con": "oit169-consulta-previa",
+    "tipo_friccion": "politica",
+    "tags": [
+      "Diario Financiero",
+      "lobby",
+      "energía",
+      "regulación ambiental"
+    ]
+  },
+  {
+    "id": "df-territorio-mapuche-inversion-2024",
+    "fuente": "diario-financiero",
+    "titulo": "Inversión forestal en La Araucanía: empresas apuestan por certificación FSC",
+    "fecha": "2024-08-05",
+    "url": "https://www.df.cl",
+    "institucion": "Diario Financiero",
+    "actores_lobby": [],
+    "materia": "Cobertura financiera de inversión forestal en territorio mapuche con enfoque de certificación",
+    "keywords": [
+      "forestal",
+      "FSC",
+      "La Araucanía",
+      "territorio mapuche",
+      "inversión",
+      "certificación"
+    ],
+    "capa_oficial": "Se presenta la certificación FSC como garantía de sostenibilidad sin mencionar conflictos territoriales vigentes ni procesos de consulta previa incumplidos.",
+    "friccion_con": "la-negra-territorio-mapuche",
+    "tipo_friccion": "semantica",
+    "tags": [
+      "Diario Financiero",
+      "forestal",
+      "territorio mapuche",
+      "certificación",
+      "inversión"
+    ]
+  },
+  {
+    "id": "tesis-uai-gobernanza-financiera-2023",
+    "fuente": "repositorio-uai",
+    "titulo": "Gobernanza corporativa y opacidad regulatoria en el mercado de AFP chileno",
+    "fecha": "2023-12-01",
+    "url": "https://repositorio.uai.cl",
+    "institucion": "Universidad Adolfo Ibáñez — Escuela de Negocios",
+    "actores_lobby": [],
+    "materia": "Tesis de magíster que analiza mecanismos de gobernanza en AFP y su relación con marcos regulatorios CMF",
+    "keywords": [
+      "gobernanza corporativa",
+      "AFP",
+      "opacidad",
+      "CMF",
+      "regulación",
+      "tesis"
+    ],
+    "capa_oficial": "Análisis académico que documenta brechas entre los marcos normativos de gobernanza y las prácticas efectivas de divulgación de información.",
+    "friccion_con": "sura-gobernanza-datos",
+    "tipo_friccion": "tecnica",
+    "tags": [
+      "UAI",
+      "tesis",
+      "gobernanza",
+      "AFP",
+      "regulación financiera"
+    ]
+  },
+  {
+    "id": "tesis-uai-esg-greenwashing-2024",
+    "fuente": "repositorio-uai",
+    "titulo": "ESG y greenwashing en fondos de inversión chilenos: una evaluación crítica",
+    "fecha": "2024-03-01",
+    "url": "https://repositorio.uai.cl",
+    "institucion": "Universidad Adolfo Ibáñez — Escuela de Gobierno",
+    "actores_lobby": [],
+    "materia": "Tesis que evalúa métricas ESG en fondos chilenos y detecta prácticas de greenwashing en reportes corporativos",
+    "keywords": [
+      "ESG",
+      "greenwashing",
+      "fondos de inversión",
+      "reportes corporativos",
+      "tesis"
+    ],
+    "capa_oficial": "Investigación que revela desconexión entre compromisos ESG declarados y resultados medibles en territorios de operación.",
+    "friccion_con": "sura-gobernanza-datos",
+    "tipo_friccion": "semantica",
+    "tags": [
+      "UAI",
+      "tesis",
+      "ESG",
+      "greenwashing",
+      "inversiones"
+    ]
+  },
+  {
+    "id": "tesis-uchile-territorio-mapuche-2023",
+    "fuente": "repositorio-uchile",
+    "titulo": "Despojo territorial y resistencia mapuche-huilliche en la provincia de Osorno (1973-2023)",
+    "fecha": "2023-06-01",
+    "url": "https://repositorio.uchile.cl",
+    "institucion": "Universidad de Chile — Facultad de Ciencias Sociales",
+    "actores_lobby": [],
+    "materia": "Tesis doctoral que documenta procesos de despojo territorial y formas de resistencia en comunidades mapuche-huilliche",
+    "keywords": [
+      "territorio mapuche",
+      "despojo",
+      "resistencia",
+      "huilliche",
+      "Osorno",
+      "tesis"
+    ],
+    "capa_oficial": "Investigación etnográfica que contrasta el relato estatal de 'desarrollo regional' con la memoria territorial de comunidades afectadas por la reforma agraria y la contrarreforma.",
+    "friccion_con": "la-negra-territorio-mapuche",
+    "tipo_friccion": "politica",
+    "tags": [
+      "UChile",
+      "tesis",
+      "territorio mapuche",
+      "despojo",
+      "resistencia",
+      "etnografía"
+    ]
+  },
+  {
+    "id": "tesis-uchile-corrupcion-municipal-2024",
+    "fuente": "repositorio-uchile",
+    "titulo": "Redes de contratación pública y conflicto de intereses en municipios del sur de Chile",
+    "fecha": "2024-01-01",
+    "url": "https://repositorio.uchile.cl",
+    "institucion": "Universidad de Chile — Instituto de Asuntos Públicos",
+    "actores_lobby": [],
+    "materia": "Tesis de magíster que mapea redes de proveedores municipales y detecta patrones de conflicto de interés",
+    "keywords": [
+      "contratación pública",
+      "conflicto de intereses",
+      "municipios",
+      "proveedores",
+      "tesis"
+    ],
+    "capa_oficial": "Estudio que cruza datos de ChileCompra con registros de SII para identificar vínculos societarios entre proveedores y funcionarios municipales.",
+    "friccion_con": "periodismo-datos-chile",
+    "tipo_friccion": "politica",
+    "tags": [
+      "UChile",
+      "tesis",
+      "municipios",
+      "contratación",
+      "conflicto de intereses"
+    ]
+  },
+  {
+    "id": "tesis-uchile-consulta-indigena-seia-2023",
+    "fuente": "repositorio-uchile",
+    "titulo": "La consulta indígena en el SEIA: análisis crítico del cumplimiento del Convenio 169 de la OIT en proyectos energéticos",
+    "fecha": "2023-09-01",
+    "url": "https://repositorio.uchile.cl",
+    "institucion": "Universidad de Chile — Facultad de Derecho",
+    "actores_lobby": [],
+    "materia": "Tesis que evalúa el cumplimiento efectivo de la consulta indígena en proyectos ingresados al SEIA",
+    "keywords": [
+      "consulta indígena",
+      "OIT 169",
+      "SEIA",
+      "proyectos energéticos",
+      "pueblos originarios",
+      "tesis"
+    ],
+    "capa_oficial": "Análisis jurídico que documenta cómo el procedimiento formal de consulta puede cumplir requisitos legales sin satisfacer el estándar de consentimiento libre, previo e informado.",
+    "friccion_con": "oit169-consulta-previa",
+    "tipo_friccion": "politica",
+    "tags": [
+      "UChile",
+      "tesis",
+      "consulta indígena",
+      "OIT 169",
+      "SEIA",
+      "derecho"
+    ]
+  },
+  {
+    "id": "diariooficial-consulta-indigena-2024",
+    "fuente": "diariooficial",
+    "titulo": "Diario Oficial: publicación de norma sobre participación y consulta indígena en evaluación ambiental",
+    "fecha": "2024-08-22",
+    "published_at": "2024-08-22",
+    "fetched_at": "2026-04-23",
+    "verificado": true,
+    "official_score": 0.94,
+    "evidencia_tipo": "oficial",
+    "url": "https://www.diariooficial.interior.gob.cl",
+    "institucion": "Diario Oficial de la República de Chile",
+    "materia": "Normativa publicada con efectos jurídicos sobre estándares de participación y consulta en tramitación ambiental.",
+    "keywords": [
+      "diario oficial",
+      "consulta indígena",
+      "participación",
+      "seia",
+      "normativa"
+    ],
+    "capa_oficial": "La publicación formaliza obligaciones procedimentales; no garantiza por sí sola restitución territorial ni reparación histórica.",
+    "friccion_con": "oit169-consulta-previa",
+    "tipo_friccion": "politica",
+    "tags": [
+      "Diario Oficial",
+      "normativa",
+      "consulta previa"
+    ]
+  },
+  {
+    "id": "scielo-gobernanza-datos-afp-2025",
+    "fuente": "scielo",
+    "titulo": "SciELO: Gobernanza de datos previsionales y asimetrías de transparencia en Chile",
+    "fecha": "2025-06-14",
+    "published_at": "2025-06-14",
+    "fetched_at": "2026-04-23",
+    "verificado": true,
+    "official_score": 0.78,
+    "evidencia_tipo": "academica",
+    "url": "https://www.scielo.cl",
+    "institucion": "SciELO Chile",
+    "materia": "Artículo académico que analiza opacidad regulatoria y trazabilidad limitada en ecosistemas previsionales y financieros.",
+    "keywords": [
+      "scielo",
+      "gobernanza de datos",
+      "afp",
+      "cmf",
+      "transparencia"
+    ],
+    "capa_oficial": "La evidencia académica aporta contexto crítico y metodológico para contrastar el lenguaje de cumplimiento con prácticas institucionales.",
+    "friccion_con": "sura-gobernanza-datos",
+    "tipo_friccion": "semantica",
+    "tags": [
+      "SciELO",
+      "artículo",
+      "gobernanza"
+    ]
+  }
 ]

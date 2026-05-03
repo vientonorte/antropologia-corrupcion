@@ -16,44 +16,74 @@
 
 /* ─── CONSTANTES ─── */
 
-var FUENTE_ICONS = {
-    bcn: '🏛',
-    infolobby: '🏛',
-    sii: '🧾',
-    transparencia: '🔍',
-    leychile: '⚖',
-    seia: '🌿',
-    compraspublicas: '📋',
-    cmf: '💹'
+var DEFAULT_SOURCE_CATALOG = {
+    bcn: { id: 'bcn', label: 'BCN Tramitación', icon: '🏛', color: '#6f8fcb', tipo: 'oficial', activa: true },
+    infolobby: { id: 'infolobby', label: 'InfoLobby', icon: '🏛', color: '#e8b84b', tipo: 'oficial', activa: true },
+    sii: { id: 'sii', label: 'SII', icon: '🧾', color: '#4c9b8a', tipo: 'oficial', activa: true },
+    transparencia: { id: 'transparencia', label: 'Transparencia', icon: '🔍', color: '#5ba3d9', tipo: 'oficial', activa: true },
+    leychile: { id: 'leychile', label: 'LeyChile', icon: '⚖', color: '#c8a96e', tipo: 'oficial', activa: true },
+    seia: { id: 'seia', label: 'SEIA', icon: '🌿', color: '#7a9e6e', tipo: 'oficial', activa: true },
+    compraspublicas: { id: 'compraspublicas', label: 'ComprasPúblicas', icon: '📋', color: '#d97b5b', tipo: 'oficial', activa: true },
+    cmf: { id: 'cmf', label: 'CMF', icon: '💹', color: '#a07acc', tipo: 'oficial', activa: true },
+    diariooficial: { id: 'diariooficial', label: 'Diario Oficial', icon: '📰', color: '#7b8cde', tipo: 'oficial', activa: true },
+    scielo: { id: 'scielo', label: 'SciELO', icon: '📚', color: '#d06f9c', tipo: 'academica', activa: true }
 };
 
-var FUENTE_LABELS = {
-    bcn: 'BCN Tramitación',
-    infolobby: 'InfoLobby',
-    sii: 'SII',
-    transparencia: 'Transparencia',
-    leychile: 'LeyChile',
-    seia: 'SEIA',
-    compraspublicas: 'ComprasPúblicas',
-    cmf: 'CMF'
-};
-
-var FUENTE_COLORS = {
-    bcn: '#6f8fcb',
-    infolobby: '#e8b84b',
-    sii: '#4c9b8a',
-    transparencia: '#5ba3d9',
-    leychile: '#c8a96e',
-    seia: '#7a9e6e',
-    compraspublicas: '#d97b5b',
-    cmf: '#a07acc'
-};
+var FUENTE_ICONS = Object.keys(DEFAULT_SOURCE_CATALOG).reduce(function(acc, key) {
+    acc[key] = DEFAULT_SOURCE_CATALOG[key].icon;
+    return acc;
+}, {});
+var FUENTE_LABELS = Object.keys(DEFAULT_SOURCE_CATALOG).reduce(function(acc, key) {
+    acc[key] = DEFAULT_SOURCE_CATALOG[key].label;
+    return acc;
+}, {});
+var FUENTE_COLORS = Object.keys(DEFAULT_SOURCE_CATALOG).reduce(function(acc, key) {
+    acc[key] = DEFAULT_SOURCE_CATALOG[key].color;
+    return acc;
+}, {});
 
 var SEARCH_SCORE_WEIGHTS = {
     overlap: 0.5,
     marker: 0.3,
     tipo: 0.2
 };
+
+function buildSourceCatalog(config) {
+    var list = config && Array.isArray(config.sources) ? config.sources : [];
+    var out = {};
+    var i;
+
+    for (i = 0; i < list.length; i++) {
+        var item = list[i] || {};
+        if (!item.id) continue;
+        out[item.id] = {
+            id: item.id,
+            label: item.label || item.id,
+            icon: item.icon || '📄',
+            color: item.color || '#888',
+            tipo: item.tipo || 'oficial',
+            activa: item.activa !== false,
+            url_base: item.url_base || ''
+        };
+    }
+
+    if (!Object.keys(out).length) {
+        var keys = Object.keys(DEFAULT_SOURCE_CATALOG);
+        for (i = 0; i < keys.length; i++) out[keys[i]] = DEFAULT_SOURCE_CATALOG[keys[i]];
+    }
+
+    return out;
+}
+
+function getSourceMeta(catalog, sourceId) {
+    if (catalog && catalog[sourceId]) return catalog[sourceId];
+    if (DEFAULT_SOURCE_CATALOG[sourceId]) return DEFAULT_SOURCE_CATALOG[sourceId];
+    return { id: sourceId || '', label: sourceId || 'Fuente', icon: '📄', color: '#888', tipo: 'oficial', activa: true };
+}
+
+function _sourceEvidenceLabel(tipo) {
+    return tipo === 'academica' ? 'Académica' : 'Oficial';
+}
 
 function _seFrictionTip(score) {
     var v = score;
@@ -309,6 +339,7 @@ function normalizeBcnDataset(dataset) {
 function FrictionSearchEngine(opts) {
     this.registros = opts.registros || [];
     this.casos = opts.casos || [];
+    this.sourceCatalog = buildSourceCatalog(opts.sourceConfig || {});
     this._casoMap = {};
     for (var i = 0; i < this.casos.length; i++) {
         this._casoMap[this.casos[i].id] = this.casos[i];
@@ -319,17 +350,21 @@ function FrictionSearchEngine(opts) {
  * Busca registros que coincidan con el query y/o filtros
  * @param {Object} params
  * @param {string} [params.query] - Texto libre
- * @param {string} [params.fuente] - Filtrar por fuente (infolobby|sii|transparencia|leychile|seia|compraspublicas|cmf)
+ * @param {string} [params.fuente] - Filtrar por fuente (dinámico según config)
+ * @param {string} [params.evidencia] - oficial | academica | all
  * @param {string} [params.caso] - Filtrar por caso vinculado (id)
  * @param {string} [params.tipo] - Filtrar por tipo de fricción (politica|semantica|tecnica)
+ * @param {string} [params.sort] - friction | recent
  * @returns {SearchResult[]}
  */
 FrictionSearchEngine.prototype.search = function(params) {
     params = params || {};
     var query = params.query || '';
     var fuenteFilter = params.fuente || 'all';
+    var evidenciaFilter = params.evidencia || 'all';
     var casoFilter = params.caso || 'all';
     var tipoFilter = params.tipo || 'all';
+    var sortBy = params.sort || 'friction';
 
     var results = [];
     var self = this;
@@ -339,6 +374,8 @@ FrictionSearchEngine.prototype.search = function(params) {
 
         // Apply filters
         if (fuenteFilter !== 'all' && reg.fuente !== fuenteFilter) continue;
+        var regTipo = reg.evidencia_tipo || getSourceMeta(this.sourceCatalog, reg.fuente).tipo || 'oficial';
+        if (evidenciaFilter !== 'all' && regTipo !== evidenciaFilter) continue;
         if (casoFilter !== 'all' && reg.friccion_con !== casoFilter) continue;
         if (tipoFilter !== 'all' && reg.tipo_friccion !== tipoFilter) continue;
 
@@ -362,6 +399,11 @@ FrictionSearchEngine.prototype.search = function(params) {
 
     // Sort: relevance first, then friction score
     results.sort(function(a, b) {
+        if (sortBy === 'recent') {
+            var dateA = Date.parse((a.registro && (a.registro.published_at || a.registro.fecha)) || '') || 0;
+            var dateB = Date.parse((b.registro && (b.registro.published_at || b.registro.fecha)) || '') || 0;
+            if (dateA !== dateB) return dateB - dateA;
+        }
         if (Math.abs(a.relevance - b.relevance) > 0.1) return b.relevance - a.relevance;
         return b.frictionScore - a.frictionScore;
     });
@@ -379,6 +421,7 @@ FrictionSearchEngine.prototype.getStats = function(results) {
             avgFriction: 0,
             byFuente: {},
             byTipo: {},
+            byEvidence: {},
             components: {
                 overlap: 0,
                 marker: 0,
@@ -391,6 +434,7 @@ FrictionSearchEngine.prototype.getStats = function(results) {
     var sum = 0;
     var byFuente = {};
     var byTipo = {};
+    var byEvidence = {};
     var componentTotals = {
         overlap: 0,
         marker: 0,
@@ -407,6 +451,8 @@ FrictionSearchEngine.prototype.getStats = function(results) {
 
         var t = r.registro.tipo_friccion;
         byTipo[t] = (byTipo[t] || 0) + 1;
+        var evidence = r.registro.evidencia_tipo || getSourceMeta(this.sourceCatalog, f).tipo || 'oficial';
+        byEvidence[evidence] = (byEvidence[evidence] || 0) + 1;
 
         var audit = r.frictionAudit || {};
         componentTotals.overlap += audit.overlapScore || 0;
@@ -420,6 +466,7 @@ FrictionSearchEngine.prototype.getStats = function(results) {
         avgFriction: parseFloat((sum / results.length).toFixed(3)),
         byFuente: byFuente,
         byTipo: byTipo,
+        byEvidence: byEvidence,
         components: {
             overlap: parseFloat((componentTotals.overlap / results.length).toFixed(3)),
             marker: parseFloat((componentTotals.marker / results.length).toFixed(3)),
@@ -440,9 +487,17 @@ function renderSearchCard(result, context) {
     var audit = result.frictionAudit || { overlapScore: score, markerScore: 0, tipoPenalty: 0, markers: [] };
     context = context || {};
     var fuente = reg.fuente;
-    var color = FUENTE_COLORS[fuente] || '#888';
-    var icon = FUENTE_ICONS[fuente] || '📄';
-    var label = FUENTE_LABELS[fuente] || fuente;
+    var sourceCatalog = context.sourceCatalog || {};
+    var sourceMeta = getSourceMeta(sourceCatalog, fuente);
+    var color = sourceMeta.color || '#888';
+    var icon = sourceMeta.icon || '📄';
+    var label = sourceMeta.label || fuente;
+    var evidenciaTipo = reg.evidencia_tipo || sourceMeta.tipo || 'oficial';
+    var evidenciaLabel = _sourceEvidenceLabel(evidenciaTipo);
+    var verificado = reg.verificado === true;
+    var officialScore = typeof reg.official_score === 'number' ? reg.official_score : null;
+    var publishedAt = reg.published_at || reg.fecha || '';
+    var fetchedAt = reg.fetched_at || '';
 
     // Color del score según intensidad
     var scoreColor = score > 0.7 ? '#c85f4a' : score > 0.4 ? '#e8b84b' : '#7a9e6e';
@@ -513,6 +568,20 @@ function renderSearchCard(result, context) {
         '</div>' +
         '</details>';
 
+    var trustHtml = '<div class="se-card-badges">' +
+        '<span class="se-pill se-pill--' + (evidenciaTipo === 'academica' ? 'academica' : 'oficial') + '">' + _escHtml(evidenciaLabel) + '</span>' +
+        '<span class="se-pill se-pill--' + (verificado ? 'ok' : 'warn') + '">' + (verificado ? 'Verificado' : 'Sin verificar') + '</span>' +
+        (officialScore != null ? '<span class="se-pill se-pill--score">Confianza ' + Math.round(officialScore * 100) + '%</span>' : '') +
+        '</div>';
+
+    var freshnessHtml = '';
+    if (publishedAt || fetchedAt) {
+        freshnessHtml = '<div class="se-card-freshness">' +
+            (publishedAt ? '<span class="se-pill-muted">Publicado: ' + _escHtml(publishedAt) + '</span>' : '') +
+            (fetchedAt ? '<span class="se-pill-muted">Actualizado: ' + _escHtml(fetchedAt) + '</span>' : '') +
+            '</div>';
+    }
+
     var html = '<article class="se-card" data-result-id="' + _escHtml(reg.id || '') + '" data-fuente="' + fuente + '" data-score="' + score + '">' +
         '<div class="se-card-header">' +
         '<span class="se-card-icon" style="color:' + color + '">' + icon + '</span>' +
@@ -521,6 +590,8 @@ function renderSearchCard(result, context) {
         '</div>' +
         '<h3 class="se-card-title">' + _escHtml(reg.titulo) + '</h3>' +
         '<p class="se-card-capa">' + _escHtml(reg.capa_oficial || '') + '</p>' +
+        trustHtml +
+        freshnessHtml +
         '<div class="se-card-meta">' +
         '<div class="se-card-score-wrap">' +
         '<span class="se-card-score-label">Fricción</span>' +
@@ -552,7 +623,7 @@ function renderSearchCard(result, context) {
 /**
  * Genera HTML del panel de estadísticas
  */
-function renderSearchStats(stats) {
+function renderSearchStats(stats, sourceCatalog) {
     if (!stats.total) return '<div class="se-stats-empty">Sin resultados para esta búsqueda. Prueba un término más general o cambia los filtros.</div>';
 
     var fuenteBars = '';
@@ -561,13 +632,16 @@ function renderSearchStats(stats) {
         var f = fuentes[i];
         var count = stats.byFuente[f];
         var pct = (count / stats.total * 100).toFixed(0);
-        var clr = FUENTE_COLORS[f] || '#888';
+        var meta = getSourceMeta(sourceCatalog, f);
+        var clr = meta.color || '#888';
         fuenteBars += '<div class="se-stat-row">' +
-            '<span class="se-stat-label" style="color:' + clr + '">' + (FUENTE_ICONS[f] || '') + ' ' + (FUENTE_LABELS[f] || f) + '</span>' +
+            '<span class="se-stat-label" style="color:' + clr + '">' + (meta.icon || '') + ' ' + (meta.label || f) + '</span>' +
             '<div class="se-stat-bar"><div class="se-stat-fill" style="width:' + pct + '%;background:' + clr + '"></div></div>' +
             '<span class="se-stat-val">' + count + '</span>' +
             '</div>';
     }
+    var officialCount = stats.byEvidence && stats.byEvidence.oficial ? stats.byEvidence.oficial : 0;
+    var academicaCount = stats.byEvidence && stats.byEvidence.academica ? stats.byEvidence.academica : 0;
 
     var avgColor = stats.avgFriction > 0.7 ? '#c85f4a' : stats.avgFriction > 0.4 ? '#e8b84b' : '#7a9e6e';
     var overlapPct = (stats.components.overlap || 0) * 100;
@@ -603,6 +677,10 @@ function renderSearchStats(stats) {
         '<div class="se-stat-big"><span class="se-stat-num">' + stats.total + '</span><span class="se-stat-desc">registros</span></div>' +
         '<div class="se-stat-big"><span class="se-stat-num" style="color:' + avgColor + '">' + (stats.avgFriction * 100).toFixed(0) + '%</span><span class="se-stat-desc">fricción promedio</span></div>' +
         '<div class="se-stat-big"><span class="se-stat-num">' + activationPct.toFixed(0) + '%</span><span class="se-stat-desc">con marcador activo</span></div>' +
+        '</div>' +
+        '<div class="se-stats-evidence">' +
+        '<span class="se-pill se-pill--oficial">Oficial: ' + officialCount + '</span>' +
+        '<span class="se-pill se-pill--academica">Académica: ' + academicaCount + '</span>' +
         '</div>' +
         '<div class="se-stats-components">' +
         '<div class="se-stats-components-title">Componentes del score</div>' +
@@ -731,11 +809,22 @@ function renderSearchFacets(results, params) {
     var fuenteItems = _seCountBy(results, function(result) {
         var fuente = result.registro && result.registro.fuente;
         if (!fuente) return null;
+        var meta = getSourceMeta(params.sourceCatalog || {}, fuente);
         return {
             value: fuente,
-            label: (FUENTE_ICONS[fuente] || '•') + ' ' + (FUENTE_LABELS[fuente] || fuente)
+            label: (meta.icon || '•') + ' ' + (meta.label || fuente)
         };
     }).slice(0, 5);
+
+    var evidenciaItems = _seCountBy(results, function(result) {
+        var fuente = result.registro && result.registro.fuente;
+        var evidence = result.registro && result.registro.evidencia_tipo || getSourceMeta(params.sourceCatalog || {}, fuente).tipo;
+        if (!evidence) return null;
+        return {
+            value: evidence,
+            label: _sourceEvidenceLabel(evidence)
+        };
+    }).slice(0, 3);
 
     var tipoItems = _seCountBy(results, function(result) {
         var tipo = result.registro && result.registro.tipo_friccion;
@@ -769,7 +858,7 @@ function renderSearchFacets(results, params) {
         return html;
     }
 
-    var hasFilters = !!((params.query && params.query.trim()) || params.fuente !== 'all' || params.caso !== 'all' || params.tipo !== 'all');
+    var hasFilters = !!((params.query && params.query.trim()) || params.fuente !== 'all' || params.evidencia !== 'all' || params.caso !== 'all' || params.tipo !== 'all');
 
     return '<div class="se-facets">' +
         '<div class="se-facets-head">' +
@@ -780,6 +869,7 @@ function renderSearchFacets(results, params) {
         (hasFilters ? '<button class="se-facets-reset" type="button" data-facet-reset="1">Limpiar búsqueda</button>' : '') +
         '</div>' +
         (fuenteItems.length ? '<div class="se-facet-group"><div class="se-facet-label">Fuentes dominantes</div><div class="se-facet-items">' + renderFacetButtons(fuenteItems, 'fuente', params.fuente) + '</div></div>' : '') +
+        (evidenciaItems.length ? '<div class="se-facet-group"><div class="se-facet-label">Tipo de evidencia</div><div class="se-facet-items">' + renderFacetButtons(evidenciaItems, 'evidencia', params.evidencia) + '</div></div>' : '') +
         (tipoItems.length ? '<div class="se-facet-group"><div class="se-facet-label">Tipos de fricción</div><div class="se-facet-items">' + renderFacetButtons(tipoItems, 'tipo', params.tipo) + '</div></div>' : '') +
         (casoItems.length ? '<div class="se-facet-group"><div class="se-facet-label">Casos vinculados</div><div class="se-facet-items">' + renderFacetButtons(casoItems, 'caso', params.caso) + '</div></div>' : '') +
         '</div>';
@@ -800,6 +890,7 @@ function initSearchUI(opts) {
 
     var searchInput = document.getElementById('se-search-input');
     var fuenteFilter = document.getElementById('se-filter-fuente');
+    var evidenciaFilter = document.getElementById('se-filter-evidencia');
     var casoFilter = document.getElementById('se-filter-caso');
     var tipoFilter = document.getElementById('se-filter-tipo');
     var facetsContainer = document.getElementById('se-facets-panel');
@@ -813,12 +904,32 @@ function initSearchUI(opts) {
 
     _seMountSuggestions(searchInput, opts.registros || [], opts.casos || []);
 
+    function populateFuenteFilter(selectEl, catalog) {
+        if (!selectEl) return;
+        var html = '<option value="all">Todas las fuentes</option>';
+        var keys = Object.keys(catalog || {}).filter(function(key) {
+            return catalog[key] && catalog[key].activa !== false;
+        }).sort(function(a, b) {
+            var labelA = (catalog[a] && catalog[a].label || a).toLowerCase();
+            var labelB = (catalog[b] && catalog[b].label || b).toLowerCase();
+            return labelA.localeCompare(labelB);
+        });
+        for (var i = 0; i < keys.length; i++) {
+            var item = catalog[keys[i]];
+            html += '<option value="' + _escHtml(item.id) + '">' + _escHtml((item.icon || '') + ' ' + (item.label || item.id)) + '</option>';
+        }
+        selectEl.innerHTML = html;
+    }
+
+    populateFuenteFilter(fuenteFilter, engine.sourceCatalog);
+
     var controller = {
         search: doSearch,
         setFilters: function(next) {
             next = next || {};
             if (Object.prototype.hasOwnProperty.call(next, 'query')) searchInput.value = next.query || '';
             if (fuenteFilter && Object.prototype.hasOwnProperty.call(next, 'fuente')) fuenteFilter.value = next.fuente || 'all';
+            if (evidenciaFilter && Object.prototype.hasOwnProperty.call(next, 'evidencia')) evidenciaFilter.value = next.evidencia || 'all';
             if (casoFilter && Object.prototype.hasOwnProperty.call(next, 'caso')) casoFilter.value = next.caso || 'all';
             if (tipoFilter && Object.prototype.hasOwnProperty.call(next, 'tipo')) tipoFilter.value = next.tipo || 'all';
             selectedResultId = null;
@@ -828,6 +939,7 @@ function initSearchUI(opts) {
             return {
                 query: searchInput.value,
                 fuente: fuenteFilter ? fuenteFilter.value : 'all',
+                evidencia: evidenciaFilter ? evidenciaFilter.value : 'all',
                 caso: casoFilter ? casoFilter.value : 'all',
                 tipo: tipoFilter ? tipoFilter.value : 'all'
             };
@@ -841,13 +953,18 @@ function initSearchUI(opts) {
         exportCurrentResultsCSV: function() {
             if (!lastResults.length) return;
 
-            var headers = ['id', 'fuente', 'fecha', 'titulo', 'institucion', 'caso_vinculado', 'tipo_friccion', 'relevance_pct', 'friction_score_pct', 'overlap_pct', 'marker_pct', 'tipo_pct', 'source', 'url', 'markers'];
+            var headers = ['id', 'fuente', 'evidencia_tipo', 'fecha', 'published_at', 'fetched_at', 'verificado', 'official_score', 'titulo', 'institucion', 'caso_vinculado', 'tipo_friccion', 'relevance_pct', 'friction_score_pct', 'overlap_pct', 'marker_pct', 'tipo_pct', 'source', 'url', 'markers'];
             var rows = lastResults.map(function(result) {
                 var audit = result.frictionAudit || {};
                 return [
                     result.registro && result.registro.id || '',
                     result.registro && result.registro.fuente || '',
+                    result.registro && result.registro.evidencia_tipo || '',
                     result.registro && result.registro.fecha || '',
+                    result.registro && result.registro.published_at || '',
+                    result.registro && result.registro.fetched_at || '',
+                    result.registro && result.registro.verificado === true ? 'si' : 'no',
+                    result.registro && typeof result.registro.official_score === 'number' ? Math.round(result.registro.official_score * 100) : '',
                     result.registro && result.registro.titulo || '',
                     result.registro && result.registro.institucion || '',
                     result.casoVinculado && result.casoVinculado.id || result.registro && result.registro.friccion_con || '',
@@ -871,6 +988,7 @@ function initSearchUI(opts) {
         var params = {
             query: searchInput.value,
             fuente: fuenteFilter ? fuenteFilter.value : 'all',
+            evidencia: evidenciaFilter ? evidenciaFilter.value : 'all',
             caso: casoFilter ? casoFilter.value : 'all',
             tipo: tipoFilter ? tipoFilter.value : 'all'
         };
@@ -886,16 +1004,18 @@ function initSearchUI(opts) {
 
         // Render stats
         if (statsContainer) {
-            statsContainer.innerHTML = renderSearchStats(stats);
+            statsContainer.innerHTML = renderSearchStats(stats, engine.sourceCatalog);
         }
 
         if (facetsContainer) {
+            params.sourceCatalog = engine.sourceCatalog;
             facetsContainer.innerHTML = renderSearchFacets(results, params);
         }
 
         // Render results
         var html = '';
         for (var i = 0; i < results.length; i++) {
+            params.sourceCatalog = engine.sourceCatalog;
             html += renderSearchCard(results[i], params);
         }
         resultsContainer.innerHTML = html || '<div class="se-no-results">No se encontraron registros. Intenta: buscar un término general (ej. "territorio"), quitar filtros, o explorar los campos en la sección anterior.</div>';
@@ -937,6 +1057,7 @@ function initSearchUI(opts) {
 
     // Filter changes
     if (fuenteFilter) fuenteFilter.addEventListener('change', doSearch);
+    if (evidenciaFilter) evidenciaFilter.addEventListener('change', doSearch);
     if (casoFilter) casoFilter.addEventListener('change', doSearch);
     if (tipoFilter) tipoFilter.addEventListener('change', doSearch);
 
@@ -959,6 +1080,7 @@ function initSearchUI(opts) {
             if (resetBtn) {
                 searchInput.value = '';
                 if (fuenteFilter) fuenteFilter.value = 'all';
+                if (evidenciaFilter) evidenciaFilter.value = 'all';
                 if (casoFilter) casoFilter.value = 'all';
                 if (tipoFilter) tipoFilter.value = 'all';
                 selectedResultId = null;
@@ -975,6 +1097,8 @@ function initSearchUI(opts) {
 
             if (group === 'fuente' && fuenteFilter) {
                 fuenteFilter.value = fuenteFilter.value === value ? 'all' : value;
+            } else if (group === 'evidencia' && evidenciaFilter) {
+                evidenciaFilter.value = evidenciaFilter.value === value ? 'all' : value;
             } else if (group === 'caso' && casoFilter) {
                 casoFilter.value = casoFilter.value === value ? 'all' : value;
             } else if (group === 'tipo' && tipoFilter) {
@@ -1032,4 +1156,5 @@ if (typeof window !== 'undefined') {
     window.FrictionSearchEngine = FrictionSearchEngine;
     window.initSearchUI = initSearchUI;
     window.normalizeBcnDataset = normalizeBcnDataset;
+    window.buildSourceCatalog = buildSourceCatalog;
 }
