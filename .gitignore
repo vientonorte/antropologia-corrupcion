@@ -49,6 +49,7 @@ Estado del Arte/*
 # === BUILD & DEPENDENCIAS ===
 dist/
 node_modules/
+*.tsbuildinfo
 
 # === DUPLICADOS iCLOUD (archivos con " 2" sufijo) ===
 *\ 2.*
