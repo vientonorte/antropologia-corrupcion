@@ -1,0 +1,35 @@
+node_modules/
+.next/
+*.local
+*.env
+.env.local
+.env.*.local
+dist/
+build/
+out/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Corpus repo (no commitear)
+corpus-repo/
+/corpus-repo/
+
+# Testing
+coverage/
+.nyc_output/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.pnpm-debug.log*
