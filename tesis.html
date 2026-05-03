@@ -251,7 +251,7 @@
     <a href="landing.html">Inicio</a>
     <a href="buscador.html">Buscador</a>
     <a href="index.html">Instrumento</a>
-    <a href="privado.html" class="nav-cta">Área privada →</a>
+    <a href="login.html" class="nav-cta" id="nav-cta-auth">Acceder →</a>
   </nav>
 </header>
 
@@ -450,10 +450,15 @@
   /* ── Auth check ── */
   function checkAuth() {
     var banner = document.getElementById('access-banner');
+    var navCta = document.getElementById('nav-cta-auth');
     try {
       if (typeof window.PasskeyAuth !== 'undefined' && window.PasskeyAuth.isAuthenticated()) {
         isAuthenticated = true;
         if (banner) banner.style.display = 'none';
+        if (navCta) {
+          navCta.href = 'privado.html';
+          navCta.textContent = 'Área privada →';
+        }
         render();
       }
     } catch (e) {
