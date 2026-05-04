@@ -38,7 +38,8 @@
         "tipo": "politica",
         "descripcion": "Ambos sujetos son formalmente protegidos por la ley y materialmente excluidos del poder de decisión sobre sus propias condiciones"
       }
-    ]
+    ],
+    "nota_nodos": "Los IDs en enlaces_transversales referencian nodos definidos en cada caso dentro del array casos. El grafo valida estas referencias al construir el índice de nodos."
   },
   "casos": [
     {
@@ -749,7 +750,8 @@
           "fecha_evidencia": "2021-07-14",
           "descripcion": "Arquitectura de roles digitales: evidencia material de opacidad estructurada donde visibilidad y agencia están sistemáticamente desacopladas"
         }
-      ]
+      ],
+      "nota_cobertura": "Caso en fase inicial de documentación. Nodos mínimos mientras se consolida evidencia del registro SBIF. Ver HANDOFF.md para estado de avance."
     }
   ]
 }
