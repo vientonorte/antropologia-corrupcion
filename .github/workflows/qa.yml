@@ -12,6 +12,9 @@ concurrency:
   group: qa-${{ github.head_ref }}
   cancel-in-progress: true
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
   changes:
     name: "🔎 Detectar cambios"
