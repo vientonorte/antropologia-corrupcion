@@ -1,0 +1,78 @@
+cff-version: 1.2.0
+message: "Si usas este instrumento en tu investigación, por favor cítalo como se indica a continuación."
+type: software
+title: "Contra-Archivo: Antropología y Corrupción"
+abstract: >
+  Instrumento cualitativo de análisis multi-situado para cuantificar tensiones 
+  de mistranslation institucional entre tres regímenes de verdad: ético, 
+  institucional y material. Desarrollado como parte de una investigación doctoral 
+  en antropología sobre corrupción institucional en Chile.
+authors:
+  - name: "Colectivo Viento Norte"
+    city: "Santiago"
+    country: "CL"
+repository-code: "https://github.com/vientonorte/antropologia-corrupcion"
+url: "https://vientonorte.github.io/antropologia-corrupcion/"
+license: CC-BY-NC-SA-4.0
+keywords:
+  - antropología
+  - corrupción
+  - mistranslation
+  - etnografía
+  - chile
+  - instituciones
+  - epistemología
+  - regímenes de verdad
+  - metodología cualitativa
+  - grounded theory
+  - decolonial
+date-released: "2024-01-01"
+version: "1.0.0"
+preferred-citation:
+  type: thesis
+  title: "Contra-Archivo: Antropología y Corrupción. Instrumento cualitativo de análisis multi-situado para cuantificar tensiones de mistranslation institucional"
+  authors:
+    - name: "Colectivo Viento Norte"
+  year: 2026
+  institution:
+    name: "Universidad de Chile"
+  department: "Antropología"
+  thesis-type: "Tesis Doctoral"
+  url: "https://vientonorte.github.io/antropologia-corrupcion/"
+  keywords:
+    - antropología de la corrupción
+    - mistranslation institucional
+    - etnografía multi-situada
+    - Chile
+    - regímenes de verdad
+references:
+  - type: book
+    authors:
+      - family-names: Salazar
+        given-names: Gabriel
+    title: "Historia de la acumulación capitalista en Chile"
+    year: 2003
+    publisher:
+      name: "LOM Ediciones"
+  - type: book
+    authors:
+      - family-names: Harvey
+        given-names: David
+    title: "The New Imperialism"
+    year: 2003
+    publisher:
+      name: "Oxford University Press"
+  - type: book
+    authors:
+      - family-names: Dussel
+        given-names: Enrique
+    title: "Filosofía de la Liberación"
+    year: 1977
+    publisher:
+      name: "Ediciones Sigueme"
+  - type: book
+    authors:
+      - family-names: Quijano
+        given-names: Aníbal
+    title: "Colonialidad del poder, eurocentrismo y América Latina"
+    year: 2000

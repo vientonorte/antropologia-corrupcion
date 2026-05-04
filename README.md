@@ -1,5 +1,10 @@
 # Contra-Archivo — Antropología y Corrupción
 
+[![License: CC BY-NC-SA 4.0](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
+[![GitHub Pages](https://img.shields.io/badge/demo-GitHub%20Pages-blue)](https://vientonorte.github.io/antropologia-corrupcion/)
+[![Tests](https://github.com/vientonorte/antropologia-corrupcion/actions/workflows/qa.yml/badge.svg)](https://github.com/vientonorte/antropologia-corrupcion/actions/workflows/qa.yml)
+[![Lighthouse](https://img.shields.io/badge/lighthouse-passing-brightgreen)](https://github.com/vientonorte/antropologia-corrupcion/actions/workflows/lighthouse.yml)
+
 **Instrumento cualitativo de análisis multi-situado** para cuantificar tensiones de *mistranslation* institucional entre tres regímenes de verdad: ético, institucional y material.
 
 > *La institución traduce. La traducción falla. El fallo es el sistema.*
@@ -239,7 +244,54 @@ npx serve .
 | `6cb1289` | fix | Eliminar frame-skip en render methods (`clearRect` borra cada frame y hace desaparecer capas) |
 | `63fa073` | feat | Buscador de fricción, narrativa Gödel y evidencia AFP integrados en el sitio |
 
+## Contribuir
+
+¿Te interesa contribuir a este proyecto de investigación? Lee nuestra [Guía de Contribución](CONTRIBUTING.md).
+
+**Importante**: 
+- Solo aceptamos datos de fuentes públicas oficiales (InfoLobby, CMF, Transparencia, SEIA, LeyChile, BCN, ComprasPublicas, SII)
+- No incluimos datos personales identificables o testimonios sin anonimizar
+- Revisa nuestro [Código de Conducta](CODE_OF_CONDUCT.md) y [Política de Seguridad](SECURITY.md)
+
+## Seguridad y Privacidad
+
+Este repositorio contiene datos de investigación etnográfica anonimizados. Si encuentras algún dato sensible expuesto o tienes una preocupación de seguridad, por favor revisa nuestra [Política de Seguridad](SECURITY.md) para reportarlo de forma responsable.
+
+**Todos los datos provienen exclusivamente de fuentes públicas oficiales chilenas.** No hay filtraciones, leaks ni documentos confidenciales.
+
+## Citación Académica
+
+Si usas este instrumento en tu investigación, por favor cita:
+
+```bibtex
+@phdthesis{vientonorte2026,
+  author = {Colectivo Viento Norte},
+  title = {Contra-Archivo: Antropología y Corrupción. Instrumento cualitativo de análisis multi-situado para cuantificar tensiones de mistranslation institucional},
+  school = {Universidad de Chile},
+  year = {2026},
+  type = {Tesis Doctoral},
+  department = {Antropología},
+  url = {https://vientonorte.github.io/antropologia-corrupcion/}
+}
+```
+
+O en formato APA:
+```
+Colectivo Viento Norte (2026). Contra-Archivo: Antropología y Corrupción. 
+Instrumento cualitativo de análisis multi-situado para cuantificar tensiones de 
+mistranslation institucional [Tesis doctoral]. Universidad de Chile.
+https://vientonorte.github.io/antropologia-corrupcion/
+```
+
+También puedes usar el archivo [CITATION.cff](CITATION.cff) incluido en el repositorio.
+
 ## Licencia
+
+Esta obra está bajo una Licencia **Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International**.
+
+[![CC BY-NC-SA 4.0](https://licensebuttons.net/l/by-nc-sa/4.0/88x31.png)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
+
+Eres libre de compartir y adaptar este material para fines no comerciales, siempre que des crédito apropiado y distribuyas bajo la misma licencia. Ver [LICENSE](LICENSE) para más detalles.
 
 Tesis doctoral en Antropología — Chile, 2026.
 
