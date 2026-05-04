@@ -81,6 +81,17 @@
                 ">Ingresar ⊘</button>
             </form>
 
+            <!-- Acceso privado alternativo -->
+            <div style="text-align:center;padding:4px 0;">
+                <a href="login.html" style="
+                    font-size:10px;letter-spacing:.1em;color:#c8a96e;
+                    text-decoration:none;text-transform:uppercase;
+                    opacity:.75;transition:opacity .2s;
+                " onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='.75'">
+                    ⊘ Acceder al espacio privado →
+                </a>
+            </div>
+
             <!-- Footer colectivo -->
             <div style="border-top:1px solid #1e1e1e;padding-top:16px;display:flex;justify-content:space-between;align-items:center;">
                 <span style="font-size:9px;letter-spacing:.12em;color:#3e3e3e;text-transform:uppercase;">© 2026 Viento Norte</span>
@@ -93,6 +104,7 @@
         (function() {
             const HASH = '08e45c25008c7c94e33dc9ad18ee8013b5c32746b8ab3f1520f4e45721fbfd9a';
             const SESSION_KEY = 'ca_auth';
+            const PASSKEY_SESSION_KEY = 'ca_passkey_session';
 
             async function sha256(str) {
                 const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
@@ -109,8 +121,9 @@
                 sessionStorage.setItem(SESSION_KEY, '1');
             }
 
-            // Si ya autenticó en esta sesión, no mostrar gate
-            if (sessionStorage.getItem(SESSION_KEY) === '1') {
+            // Si ya autenticó en esta sesión (contraseña o passkey), no mostrar gate
+            if (sessionStorage.getItem(SESSION_KEY) === '1' ||
+                sessionStorage.getItem(PASSKEY_SESSION_KEY) === 'active') {
                 document.getElementById('ca-gate').style.display = 'none';
             }
 
