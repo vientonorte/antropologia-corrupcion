@@ -55,6 +55,8 @@ const FRICTION_MARKERS = [
     { a: 'custodia transnacional', b: 'regulación', tipo: FRICTION_TYPES.POLITICA, peso: 0.86 },
     { a: 'opacidad', b: 'patrimonio depurado', tipo: FRICTION_TYPES.TECNICA, peso: 0.80 },
     { a: 'trabajador', b: 'cartera de custodia', tipo: FRICTION_TYPES.SEMANTICA, peso: 0.91 },
+    // Epistemológico: la Terraza registra evidencia que el grafo público no puede mostrar
+    { a: 'hash_evidencia', b: 'acceso_publico', tipo: FRICTION_TYPES.SEMANTICA, peso: 0.93 },
 ];
 
 /* ─── UTILIDADES ─── */
