@@ -6,6 +6,20 @@
 *.swo
 *~
 
+# === SEGURIDAD (nunca commitear) ===
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+*.p12
+*.pfx
+secrets/
+credentials/
+*.secret
+.npmrc
+.yarnrc
+
 # === ARCHIVO ACADÉMICO (iCloud, nunca en GitHub) ===
 # Documentos, imágenes y proyectos de investigación viven en iCloud Drive.
 # Usamos `Estado del Arte/*` (no `/`) para que git descienda y las negaciones funcionen.
