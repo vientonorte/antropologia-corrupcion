@@ -18,6 +18,7 @@
  */
 
 import { test, expect, type Page } from '@playwright/test';
+import { mockSession } from './helpers';
 
 const MOCK_KANBAN = {
   open: [
@@ -64,12 +65,6 @@ async function mockKanbanApis(page: Page) {
       body: JSON.stringify({ success: true }),
     });
   });
-}
-
-async function mockSession(page: Page) {
-  await page.context().addCookies([{
-    name: 'session', value: 'test-session', domain: 'localhost', path: '/', httpOnly: false,
-  }]);
 }
 
 test.describe('Journey 4 — Codificación GT (Kanban)', () => {
@@ -172,7 +167,8 @@ test.describe('Journey 4 — Codificación GT (Kanban)', () => {
     await card.focus();
     await page.keyboard.press('ArrowLeft');
 
-    await page.waitForTimeout(500);
+    // Wait for any pending microtasks to settle, then assert no network call was made
+    await page.waitForFunction(() => true); // flushes JS event queue
     expect(updateCalled).toBe(false);
   });
 

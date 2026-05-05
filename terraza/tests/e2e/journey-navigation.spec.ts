@@ -15,28 +15,8 @@
  *   8. Las páginas no producen errores de consola
  */
 
-import { test, expect, type Page } from '@playwright/test';
-
-async function mockSession(page: Page) {
-  await page.context().addCookies([{
-    name: 'session', value: 'test-session', domain: 'localhost', path: '/', httpOnly: false,
-  }]);
-}
-
-async function mockEmptyCorpus(page: Page) {
-  await page.route('**/api/corpus/list', async (route) => {
-    await route.fulfill({ status: 200, body: JSON.stringify({ uploads: [] }) });
-  });
-  await page.route('**/api/corpus/sync-status', async (route) => {
-    await route.fulfill({ status: 200, body: JSON.stringify({ pending: [], remoteStatus: { ahead: 0, behind: 0 } }) });
-  });
-  await page.route('**/api/corpus/by-estado', async (route) => {
-    await route.fulfill({ status: 200, body: JSON.stringify({ grouped: { open: [], axial: [], selective: [], verificado: [] } }) });
-  });
-  await page.route('**/api/corpus/graph-data', async (route) => {
-    await route.fulfill({ status: 200, body: JSON.stringify({ nodes: [], edges: [] }) });
-  });
-}
+import { test, expect } from '@playwright/test';
+import { mockSession, mockEmptyCorpus } from './helpers';
 
 test.describe('Journey 6 — Navegación y accesibilidad transversal', () => {
   // ── Skip link ─────────────────────────────────────────────────────────────
@@ -197,7 +177,23 @@ test.describe('Journey 6 — Navegación y accesibilidad transversal', () => {
 
   // ── Sin errores de consola en páginas clave ───────────────────────────────
 
-  test('J6-16 · /login no produce errores de consola', async ({ page }) => {
+  // Known non-critical patterns that appear in Next.js dev builds and should not fail tests:
+  // - React hydration warnings (reconciliation differences between SSR and CSR)
+  // - ResizeObserver loop notifications (browser-level, not application errors)
+  // - Next.js internal warnings (prefetch, routing)
+  const KNOWN_DEV_PATTERNS = [
+    /Warning:/,
+    /Hydration/i,
+    /did not match/i,
+    /ResizeObserver loop/i,
+    /Cannot update a component/i,
+  ];
+
+  function isCriticalError(msg: string): boolean {
+    return !KNOWN_DEV_PATTERNS.some((pattern) => pattern.test(msg));
+  }
+
+  test('J6-16 · /login no produce errores de consola críticos', async ({ page }) => {
     const errors: string[] = [];
     page.on('console', (msg) => {
       if (msg.type() === 'error') errors.push(msg.text());
@@ -206,14 +202,11 @@ test.describe('Journey 6 — Navegación y accesibilidad transversal', () => {
     await page.goto('/login');
     await page.waitForLoadState('networkidle');
 
-    // Filtramos errores esperados de Next.js en dev
-    const criticalErrors = errors.filter(
-      (e) => !e.includes('Warning:') && !e.includes('hydrat') && !e.includes('ResizeObserver')
-    );
+    const criticalErrors = errors.filter(isCriticalError);
     expect(criticalErrors).toHaveLength(0);
   });
 
-  test('J6-17 · /register no produce errores de consola', async ({ page }) => {
+  test('J6-17 · /register no produce errores de consola críticos', async ({ page }) => {
     const errors: string[] = [];
     page.on('console', (msg) => {
       if (msg.type() === 'error') errors.push(msg.text());
@@ -222,9 +215,7 @@ test.describe('Journey 6 — Navegación y accesibilidad transversal', () => {
     await page.goto('/register');
     await page.waitForLoadState('networkidle');
 
-    const criticalErrors = errors.filter(
-      (e) => !e.includes('Warning:') && !e.includes('hydrat') && !e.includes('ResizeObserver')
-    );
+    const criticalErrors = errors.filter(isCriticalError);
     expect(criticalErrors).toHaveLength(0);
   });
 

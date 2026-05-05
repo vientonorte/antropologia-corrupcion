@@ -19,6 +19,7 @@
  */
 
 import { test, expect, type Page } from '@playwright/test';
+import { mockSession } from './helpers';
 
 const MOCK_UPLOADS = [
   {
@@ -73,12 +74,6 @@ async function mockCorpusApis(page: Page, uploads = MOCK_UPLOADS) {
       body: JSON.stringify({ pending: [], remoteStatus: { ahead: 0, behind: 0 } }),
     });
   });
-}
-
-async function mockSession(page: Page) {
-  await page.context().addCookies([{
-    name: 'session', value: 'test-session', domain: 'localhost', path: '/', httpOnly: false,
-  }]);
 }
 
 test.describe('Journey 3 — Corpus browser', () => {

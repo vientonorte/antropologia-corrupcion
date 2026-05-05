@@ -48,7 +48,8 @@ export function KanbanGT({ initialData, onMoved }: KanbanGTProps) {
   const [movingId, setMovingId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  const moveCard = useCallback(async (cardId: string, from: GTEstado, to: GTEstado) => {    if (from === to) return;
+  const moveCard = useCallback(async (cardId: string, from: GTEstado, to: GTEstado) => {
+    if (from === to) return;
 
     // Optimistic update
     setColumns((prev) => {

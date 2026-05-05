@@ -17,17 +17,8 @@
  *   [fix] Error div en UploadForm no tenía role="alert" → añadido
  */
 
-import { test, expect, type Page } from '@playwright/test';
-
-async function mockSession(page: Page) {
-  await page.context().addCookies([{
-    name: 'session',
-    value: 'test-session-token',
-    domain: 'localhost',
-    path: '/',
-    httpOnly: false,
-  }]);
-}
+import { test, expect } from '@playwright/test';
+import { mockSession } from './helpers';
 
 test.describe('Journey 2 — Subir captura', () => {
   // ── Acceso a la página ────────────────────────────────────────────────────

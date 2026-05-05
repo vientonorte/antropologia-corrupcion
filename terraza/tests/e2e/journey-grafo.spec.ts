@@ -13,7 +13,8 @@
  *   6. Contador de nodos/aristas visible en el header
  */
 
-import { test, expect, type Page } from '@playwright/test';
+import { test, expect } from '@playwright/test';
+import { mockSession } from './helpers';
 
 const MOCK_GRAPH_DATA = {
   nodes: [
@@ -26,12 +27,6 @@ const MOCK_GRAPH_DATA = {
     { source: 'upload-001', target: 'upload-003', weight: 1, sharedTags: ['cmf'] },
   ],
 };
-
-async function mockSession(page: Page) {
-  await page.context().addCookies([{
-    name: 'session', value: 'test-session', domain: 'localhost', path: '/', httpOnly: false,
-  }]);
-}
 
 test.describe('Journey 5 — Grafo de correlaciones', () => {
   test.beforeEach(async ({ page }) => {
