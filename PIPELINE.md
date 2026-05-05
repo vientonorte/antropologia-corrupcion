@@ -82,6 +82,8 @@ git push origin feat/nombre-descriptivo
 | 🔦 Lighthouse CI | `qa.yml` → `lighthouse` | ⚠️ Warning |
 | 📊 Integridad datos | `qa.yml` → `data-integrity` | ✅ Sí |
 
+> **Nota sobre `LHCI_GITHUB_APP_TOKEN`**: El secret no está configurado en este repositorio. Lighthouse corre sin autenticación de PR — los resultados aparecen en los logs pero no se publican como comentario en el PR. El QA Gate ya trata Lighthouse como advertencia (no bloquea merge), por lo que esto es correcto y esperado.
+
 ### Qué revisa Claude Code
 
 1. **Código:** Selectores CSS genéricos, cache-bust sincronizado, nav con clases

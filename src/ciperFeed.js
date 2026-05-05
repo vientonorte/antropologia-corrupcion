@@ -18,6 +18,9 @@
   /* ─── CONSTANTES ─── */
 
   var FEED_URL = 'https://www.ciperchile.cl/feed/';
+  // Proxy CORS de terceros necesario para acceso client-side desde GitHub Pages.
+  // Privacidad: el proxy recibe la URL del feed de CIPER (dato público), no
+  // información de la usuaria. En caso de fallo, se sirven artículos de respaldo.
   var PROXY_URL = 'https://api.allorigins.win/raw?url=';
   var FETCH_TIMEOUT_MS = 8000;
 
