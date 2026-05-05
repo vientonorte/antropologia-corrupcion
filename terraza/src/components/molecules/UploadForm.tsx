@@ -197,7 +197,7 @@ export function UploadForm({ onSuccess }: UploadFormProps) {
       </div>
 
       {error && (
-        <div className="p-3 bg-red-50 border border-red-200 rounded-lg text-sm text-red-800">
+        <div role="alert" className="p-3 bg-red-50 border border-red-200 rounded-lg text-sm text-red-800">
           {error}
         </div>
       )}
