@@ -537,7 +537,7 @@ module.exports = function (describe, it, assert, assertEqual, assertDeepEqual, a
             };
             var scoreBase = fe.calculateZuboffIndex(baseCaso).score;
             var scoreRich = fe.calculateZuboffIndex(richCaso).score;
-            assert(scoreRich >= scoreBase, 'richer keywords should produce equal or higher score');
+            assert(scoreRich > scoreBase, 'richer surveillance keywords should produce strictly higher score');
         });
     });
 };

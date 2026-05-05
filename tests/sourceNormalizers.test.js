@@ -63,6 +63,7 @@ module.exports = function (describe, it, assert, assertEqual, assertDeepEqual, a
         it('deduplicates keywords (case-insensitive)', function () {
             var r = sn.normalizeScieloRecord({ keywords: ['Alpha', 'alpha', 'ALPHA'] });
             assertEqual(r.keywords.length, 1);
+            assertEqual(r.keywords[0], 'alpha');
         });
 
         it('converts keywords to lowercase', function () {
@@ -187,9 +188,15 @@ module.exports = function (describe, it, assert, assertEqual, assertDeepEqual, a
         });
 
         it('keywords array contains no empty or falsy entries', function () {
-            var r = sn.normalizeDiarioOficialRecord({});
+            // null norma_tipo and null numero_norma should be filtered out
+            var r = sn.normalizeDiarioOficialRecord({ norma_tipo: null, numero_norma: undefined });
             r.keywords.forEach(function (kw) {
-                assert(kw && kw.trim() !== '', 'keyword should not be empty');
+                assert(kw && kw.trim() !== '', 'keyword should not be empty or falsy');
+            });
+            // Empty string values should also be filtered
+            var r2 = sn.normalizeDiarioOficialRecord({ norma_tipo: '', numero_norma: '   ' });
+            r2.keywords.forEach(function (kw) {
+                assert(kw && kw.trim() !== '', 'keyword should not be empty string');
             });
         });
     });

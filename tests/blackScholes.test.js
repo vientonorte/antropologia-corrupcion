@@ -375,11 +375,14 @@ module.exports = function (describe, it, assert, assertEqual, assertDeepEqual, a
         });
 
         it('sets bs to null when priceCaso throws', function () {
-            // Provide a deliberately broken caso to trigger error path
-            var brokenCaso = { id: 'broken', anio: NaN };
-            var nodes = [{ id: 'broken', intensidad: 0.5 }];
-            // Should not throw
-            BS.enrichNodes(nodes, [brokenCaso]);
+            // Manufacture a caso that triggers the try/catch by using a getter that throws
+            var throwingCaso = { id: 'bad', anio: 2020 };
+            Object.defineProperty(throwingCaso, 'actores', {
+                get: function () { throw new Error('forced error'); },
+            });
+            var nodes = [{ id: 'bad', intensidad: 0.5 }];
+            BS.enrichNodes(nodes, [throwingCaso]);
+            assertEqual(nodes[0].bs, null, 'bs should be null when priceCaso throws');
         });
 
         it('handles empty nodes array gracefully', function () {
