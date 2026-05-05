@@ -85,7 +85,7 @@ describe('UploadInitSchema', () => {
     expect(() => UploadInitSchema.parse({ casoId: '1' })).toThrow();
   });
 
-  it('rejects all four valid casoIds correctly', () => {
+  it('accepts and transforms all four valid casoIds correctly', () => {
     ['1', '2', '3', '4'].forEach((id) => {
       const result = UploadInitSchema.parse({ ...validPayload, casoId: id });
       expect(result.casoId).toBe(parseInt(id, 10));

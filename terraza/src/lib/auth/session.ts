@@ -5,9 +5,22 @@ const SESSION_COOKIE_NAME = 'auth-session';
 const SESSION_COOKIE_MAX_AGE = 7 * 24 * 60 * 60; // 7 days
 
 // Signing secret — must be set via NEXTAUTH_SECRET in production.
-// Falls back to a fixed dev string so tests and local dev work without config.
-const SIGNING_SECRET =
-  process.env.NEXTAUTH_SECRET ?? 'dev-secret-change-in-production';
+// In development/test, a fixed string is used so no config is required.
+// A runtime warning is emitted if the fallback is active in production.
+const SIGNING_SECRET = (() => {
+  const secret = process.env.NEXTAUTH_SECRET;
+  if (!secret) {
+    if (process.env.NODE_ENV === 'production') {
+      // eslint-disable-next-line no-console
+      console.warn(
+        '[session] NEXTAUTH_SECRET is not set — using insecure dev fallback. ' +
+          'Set NEXTAUTH_SECRET in your environment before deploying.',
+      );
+    }
+    return 'dev-secret-change-in-production';
+  }
+  return secret;
+})();
 
 export interface SessionData {
   userId: string;

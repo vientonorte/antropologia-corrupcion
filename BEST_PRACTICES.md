@@ -211,7 +211,7 @@ Todos los tests del proyecto pasaron exitosamente:
 - [x] **Cookie firmada (HMAC-SHA256)**: `session.ts` firma y verifica cada cookie con `NEXTAUTH_SECRET`
 - [x] **SameSite strict**: Cookie de sesión usa `sameSite: 'strict'`
 - [x] **Security headers HTTP**: `next.config.ts` incluye `X-Frame-Options`, `X-Content-Type-Options`, `Referrer-Policy`, `Permissions-Policy`, `CSP`, `HSTS`
-- [x] **Rate limiting**: Middleware limita `/api/auth/*` a 20 req/min por IP
+- [x] **Rate limiting**: Middleware limita `/api/auth/*` a 20 req/min por IP (in-memory Map, adecuado para instancia única; reemplazar con Redis para despliegue multi-instancia)
 - [x] **Tests de seguridad**: `tests/lib/auth/session.test.ts` (7 tests HMAC), `tests/lib/corpus/schemas.test.ts` (14 tests Zod)
 
 ### Deploy pipeline (implementado 2026-05-05)
