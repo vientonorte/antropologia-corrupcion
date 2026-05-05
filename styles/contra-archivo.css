@@ -455,7 +455,8 @@ a:focus-visible,
 section {
     padding: 80px 40px;
     max-width: 960px;
-    margin: 0 auto
+    margin: 0 auto;
+    scroll-margin-top: 60px /* nav height 52px + 8px breathing room */
 }
 
 .section-eyebrow {
@@ -981,6 +982,64 @@ h2 {
     overflow: hidden;
     position: relative;
     height: 460px
+}
+
+/* ── Graph node inline panel ── */
+#graph-node-panel {
+    display: none;
+    margin-top: 16px;
+    animation: gnp-in .22s ease
+}
+#graph-node-panel.visible {
+    display: block
+}
+@keyframes gnp-in {
+    from { opacity: 0; transform: translateY(8px) }
+    to   { opacity: 1; transform: translateY(0) }
+}
+.gnp-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px
+}
+.gnp-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text)
+}
+.gnp-close {
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 12px;
+    padding: 4px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: color .15s, border-color .15s
+}
+.gnp-close:hover {
+    color: var(--text);
+    border-color: var(--text)
+}
+.gnp-layers {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 2px
+}
+.gnp-meta {
+    margin-top: 8px;
+    background: var(--s1);
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+    padding: 16px 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px
+}
+@media (max-width: 700px) {
+    .gnp-layers { grid-template-columns: 1fr }
+    .gnp-meta   { grid-template-columns: 1fr }
 }
 
 #ca-graph-canvas,

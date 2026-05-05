@@ -359,6 +359,9 @@
                 </div>
             </div>
 
+            <!-- PANEL INLINE DE NODO SELECCIONADO -->
+            <div id="graph-node-panel" role="region" aria-label="Detalle del campo seleccionado" aria-live="polite"></div>
+
             <!-- CÓMO LEER ESTE GRAFO -->
             <div class="graph-thesis" id="graph-thesis">
                 <button class="graph-thesis-toggle" onclick="this.parentElement.classList.toggle('open');this.setAttribute('aria-expanded',this.parentElement.classList.contains('open'))" aria-expanded="false" aria-controls="gt-body">
@@ -1042,10 +1045,10 @@ function initGrafo() {
           nodes: gd.nodes,
           links: gd.links,
           onNodeClick: function(node) {
-            activateTension(node.id);
-            setGraphFocusMessage('Foco activo: ' + shortCaseTitle(node) + '. Baja para contrastar la ficha narrativa con buscador y triage.');
-            var tv = document.getElementById('tension-viewer');
-            if (tv) tv.scrollIntoView({behavior:'smooth', block:'nearest'});
+            renderGraphNodePanel(node.id);
+            setGraphFocusMessage('Foco activo: ' + shortCaseTitle(node) + '. Despliega las tres capas del campo a continuación.');
+            var panel = document.getElementById('graph-node-panel');
+            if (panel) panel.scrollIntoView({behavior:'smooth', block:'nearest'});
           },
           onNodeHover: function() {},
         });
@@ -1065,6 +1068,8 @@ function initGrafo() {
               clearGraphSelection(G);
               G.setActiveLayer('all');
               if (G.setFrictionTypeFilter) G.setFrictionTypeFilter('all');
+              closeGraphNodePanel();
+              setGraphFocusMessage();
               return;
             }
             document.querySelectorAll('#graph-controls .gc-btn').forEach(function(b) { b.classList.remove('active'); });
@@ -1374,6 +1379,56 @@ function escTriage(str) {
 function shortCaseTitle(caso) {
     if (!caso || !caso.titulo) return 'Caso';
     return caso.titulo.split('—')[0].split(':')[0].trim();
+}
+
+function closeGraphNodePanel() {
+    var panel = document.getElementById('graph-node-panel');
+    if (panel) { panel.classList.remove('visible'); panel.innerHTML = ''; }
+}
+
+function renderGraphNodePanel(id) {
+    var c = CASOS.find(function(x) { return x.id === id; });
+    if (!c) return;
+    var panel = document.getElementById('graph-node-panel');
+    if (!panel) return;
+
+    var fc = c.friccion.intensidad;
+    var layers = [
+        { key: 'etica',         cls: 'tv-e', sym: '◎ ÉTICA',         acc: 'kw-e', data: c.etica         },
+        { key: 'institucional', cls: 'tv-i', sym: '▣ INSTITUCIONAL',  acc: 'kw-i', data: c.institucional },
+        { key: 'material',      cls: 'tv-m', sym: '◈ MATERIAL',       acc: 'kw-m', data: c.material      },
+    ];
+    var layersHtml = layers.map(function(l) {
+        var d = l.data;
+        return '<div class="tv-capa ' + l.cls + '">' +
+            '<div class="tvc-sym">' + l.sym + '</div>' +
+            '<div class="tvc-title">' + d.titulo + '</div>' +
+            '<div class="tvc-body">' + d.descripcion.substring(0, 260) + '…</div>' +
+            '<div class="tvc-kws">' +
+                (d.keywords || []).map(function(k) { return '<span class="kw ' + l.acc + '">' + k + '</span>'; }).join('') +
+            '</div></div>';
+    }).join('');
+
+    panel.innerHTML =
+        '<div class="gnp-header">' +
+            '<div class="gnp-title">' + c.titulo + '</div>' +
+            '<button class="gnp-close" type="button" aria-label="Cerrar detalle del campo" onclick="closeGraphNodePanel();clearGraphSelection(window.__CA_GRAPH);setGraphFocusMessage()">✕ Cerrar</button>' +
+        '</div>' +
+        '<div class="gnp-layers">' + layersHtml + '</div>' +
+        '<div class="gnp-meta">' +
+            '<div class="tm-item"><div class="tm-label">Intensidad de fricción</div>' +
+                '<div class="tm-val" style="color:' + frictionColor(fc) + '">' + fc.toFixed(2) + ' / 1.00</div>' +
+                '<div class="intensity-bar"><div class="ib-fill" style="width:' + (fc * 100) + '%;background:' + frictionColor(fc) + '"></div></div>' +
+            '</div>' +
+            '<div class="tm-item"><div class="tm-label">Tipo de fricción</div>' +
+                '<div class="tm-val">' + c.friccion.tipo + (c.friccion.subtipo ? ' · ' + c.friccion.subtipo : '') + '</div>' +
+            '</div>' +
+            '<div class="tm-item"><div class="tm-label">Tensión central</div>' +
+                '<div class="tm-sub" style="font-size:12px;color:var(--text)">' + c.friccion.tension_central + '</div>' +
+            '</div>' +
+        '</div>';
+
+    panel.classList.add('visible');
 }
 
 function triagePct(value) {
