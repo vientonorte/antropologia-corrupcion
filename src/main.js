@@ -406,6 +406,18 @@ function waitForModules(cb, retries = 20) {
         setTimeout(() => waitForModules(cb, retries - 1), 100);
     } else {
         console.error('[Contra-Archivo] Módulos no disponibles tras reintentos');
+        var canvas = document.getElementById('ca-graph-canvas');
+        if (canvas) {
+            showFallbackError(new Error('Los módulos del grafo no se cargaron. Verifica tu conexión y recarga la página.'));
+        } else {
+            var toast = document.createElement('div');
+            toast.setAttribute('role', 'alert');
+            toast.style.cssText = 'position:fixed;bottom:1rem;left:50%;transform:translateX(-50%);' +
+                'background:#1a1a1a;color:#e0e0e0;border:1px solid #c85f4a;padding:.75rem 1.25rem;' +
+                'border-radius:6px;font-size:.85rem;z-index:9999;max-width:90vw;text-align:center';
+            toast.textContent = 'El grafo no pudo iniciar. Verifica tu conexión y recarga la página.';
+            document.body.appendChild(toast);
+        }
     }
 }
 

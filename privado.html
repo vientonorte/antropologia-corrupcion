@@ -1041,7 +1041,7 @@
             <div class="sb-section">
                 <div class="sb-title">Buscador</div>
                 <div class="sb-search-wrap">
-                    <input type="search" id="sb-search-input" placeholder="Buscar en el contra-archivo…" autocomplete="off">
+                    <input type="search" id="sb-search-input" aria-label="Buscar en el contra-archivo" placeholder="Buscar en el contra-archivo…" autocomplete="off">
                 </div>
                 <div class="sb-count" id="sb-search-count"></div>
             </div>
@@ -1068,14 +1068,14 @@
                 <details id="seg-add-details">
                     <summary class="sb-btn" style="list-style:none;width:100%;text-align:center">+ Nuevo seguimiento</summary>
                     <div class="sb-add-form" style="margin-top:8px">
-                        <input type="text" id="seg-add-nombre" placeholder="Nombre">
-                        <select id="seg-add-tipo">
+                        <input type="text" id="seg-add-nombre" aria-label="Nombre del seguimiento" placeholder="Nombre">
+                        <select id="seg-add-tipo" aria-label="Tipo de seguimiento">
             <option value="actor">👤 Actor</option>
             <option value="institucion">🏛 Institución</option>
             <option value="ley">⚖ Ley</option>
             <option value="caso">📁 Caso</option>
           </select>
-                        <input type="text" id="seg-add-tags" placeholder="Tags (separados por coma)">
+                        <input type="text" id="seg-add-tags" aria-label="Tags del seguimiento (separados por coma)" placeholder="Tags (separados por coma)">
                         <button class="sb-btn" id="seg-add-btn" style="background:var(--etica);color:#000;border-color:var(--etica)">Agregar</button>
                     </div>
                 </details>
@@ -1125,7 +1125,7 @@
                 <div class="chat-wrap">
                     <div class="chat-messages" id="chat-messages"></div>
                     <div class="chat-input-row">
-                        <input type="text" id="chat-input" placeholder="Pregunta sobre casos, actores o fricción…" autocomplete="off">
+                        <input type="text" id="chat-input" aria-label="Escribe tu pregunta sobre el contra-archivo" placeholder="Pregunta sobre casos, actores o fricción…" autocomplete="off">
                         <button class="chat-send" id="chat-send" aria-label="Enviar mensaje al chat">Enviar</button>
                     </div>
                 </div>

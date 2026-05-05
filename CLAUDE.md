@@ -8,7 +8,7 @@ App admin **privada** para alimentar el contra-archivo doctoral de Rö (antropol
 
 ---
 
-## Estado actual del proyecto (2026-05-03)
+## Estado actual del proyecto (2026-05-05)
 
 ### Implementado y merged en `main`
 
@@ -23,21 +23,13 @@ App admin **privada** para alimentar el contra-archivo doctoral de Rö (antropol
 | C7 | Corpus browser: CaptureCard + AnalysisPanel + APIs list/update | ✅ |
 | C8 | Audit HTML/a11y: skip link, nav semántico, login wired, WCAG 2.2 tabs/dropzone | ✅ |
 | C9 | Sync simple-git: corpus-writer, commit-queue, APIs commit/sync-status, CommitQueue UI | ✅ |
+| C10 | CommitQueue UI — cola de commits en corpus page (cola colapsable) | ✅ |
+| C11 | Kanban GT (`/codificacion`) — drag-and-drop HTML5 nativo | ✅ |
+| C12 | Preview force graph d3 (`/grafo`) + export consolidado | ✅ |
 
-### En rama activa: `claude/admin-screenshot-dashboard-zKGaF`
+### Completado
 
-C10 en progreso: wiring CommitQueue en corpus page (cola colapsable), stubs mejorados.
-
-### Próximo (F4 — no comenzado)
-
-- C11: Kanban GT (`/codificacion`) — columnas open/axial/selective con drag entre estados
-- C12: Preview force graph d3 (`/grafo`)
-- C13: Export consolidado del corpus
-
-### Stubs activos
-
-- `/codificacion` — placeholder semántico (sin Kanban todavía)
-- `/grafo` — placeholder semántico (sin d3 todavía)
+F1 ✅ · F2 ✅ · F3 ✅ · F4 ✅ — todos los commits mergeados en `main`. Ver git log para detalle.
 
 ---
 
@@ -170,8 +162,8 @@ terraza/
 │   │   ├── (admin)/
 │   │   │   ├── corpus/          ✅ implementado
 │   │   │   ├── upload/          ✅ implementado
-│   │   │   ├── codificacion/    🔲 stub F4
-│   │   │   └── grafo/           🔲 stub F4
+│   │   │   ├── codificacion/    ✅ Kanban GT (C11)
+│   │   │   └── grafo/           ✅ force graph preview (C12)
 │   │   └── layout.tsx
 │   ├── components/
 │   │   ├── atoms/         Button, Spinner  ✅
@@ -181,7 +173,7 @@ terraza/
 │   ├── lib/
 │   │   ├── claude/        client + analyze + 3 prompts  ✅
 │   │   ├── db/            schema + migrations + queries  ✅
-│   │   ├── git/           (pendiente F3)
+│   │   ├── git/           simple-git + commit-queue + polling  ✅
 │   │   ├── auth/          passkey + session  ✅
 │   │   └── corpus/        schemas Zod + cases  ✅
 │   └── middleware.ts       ✅
@@ -271,5 +263,5 @@ NEXTAUTH_URL=http://localhost:3000
 
 - **F1** ✅: Scaffold + auth passkey + UI shell + SQLite + design tokens.
 - **F2** ✅: Upload + integración Claude Vision + tres prompts especializados + edición inline.
-- **F3** 🔲: Sync con repo privado vía simple-git + cola de commits + detección de push.
-- **F4** 🔲: Kanban GT + export consolidado + preview del force graph.
+- **F3** ✅: Sync con repo privado vía simple-git + cola de commits + detección de push.
+- **F4** ✅: Kanban GT + export consolidado + preview del force graph.

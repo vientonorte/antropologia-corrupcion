@@ -32,6 +32,17 @@
     --ca-panel-width: 420px;
     --ca-panel-mobile-height: 60vh;
     --ca-transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    /* Tokens base: fallback para páginas que no cargan styles.css */
+    --color-bg: #0d0d0d;
+    --color-surface: #1a1a1a;
+    --color-border: #2e2e2e;
+    --color-accent: #c8a96e;
+    --color-accent-dim: #7a6340;
+    --color-accent-subtle: rgba(200, 169, 110, 0.04);
+    --color-text: #e8e0d0;
+    --color-text-muted: #9e9484;
+    --font-mono: 'Courier New', monospace;
+    --font-serif: 'Georgia', 'Times New Roman', serif;
 }
 
 
