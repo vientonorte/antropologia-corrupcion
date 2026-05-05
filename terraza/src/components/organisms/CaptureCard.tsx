@@ -111,13 +111,23 @@ export function CaptureCard({ upload, onAnalyzed, onCommitted, onSelect, isSelec
     <article
       className={`
         rounded-lg border p-4 transition-colors cursor-pointer
+        focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600
         ${isSelected
           ? 'border-blue-500 bg-blue-50'
           : 'border-gray-200 bg-white hover:border-gray-300'
         }
       `}
+      tabIndex={0}
+      role="button"
+      aria-pressed={isSelected}
+      aria-label={`Seleccionar captura ${upload.fileName}`}
       onClick={() => onSelect?.(upload.id)}
-      aria-selected={isSelected}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          onSelect?.(upload.id);
+        }
+      }}
     >
       <div className="flex items-start justify-between gap-3 mb-3">
         <div className="min-w-0">

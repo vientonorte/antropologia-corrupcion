@@ -30,6 +30,8 @@ const COLUMNS: { id: GTEstado; label: string; description: string; color: string
   { id: 'verificado',label: 'Verificado', description: 'Codificación revisada y aprobada', color: 'border-green-400 bg-green-50 dark:bg-green-950/30' },
 ];
 
+const COLUMN_IDS: GTEstado[] = COLUMNS.map((c) => c.id);
+
 function casoLabel(casoId: 1 | 2 | 3 | 4): string {
   return Object.values(CASOS).find((c) => c.id === casoId)?.label ?? `Caso ${casoId}`;
 }
@@ -90,6 +92,26 @@ export function KanbanGT({ initialData, onMoved }: KanbanGTProps) {
       setMovingId(null);
     }
   }, [onMoved]);
+
+  const handleCardKeyDown = (
+    e: React.KeyboardEvent,
+    cardId: string,
+    currentCol: GTEstado,
+  ) => {
+    const colIndex = COLUMN_IDS.indexOf(currentCol);
+    let targetCol: GTEstado | null = null;
+
+    if (e.key === 'ArrowRight' && colIndex < COLUMN_IDS.length - 1) {
+      targetCol = COLUMN_IDS[colIndex + 1];
+    } else if (e.key === 'ArrowLeft' && colIndex > 0) {
+      targetCol = COLUMN_IDS[colIndex - 1];
+    } else {
+      return;
+    }
+
+    e.preventDefault();
+    if (targetCol) void moveCard(cardId, currentCol, targetCol);
+  };
 
   const handleDragStart = (e: React.DragEvent, cardId: string, from: GTEstado) => {
     e.dataTransfer.effectAllowed = 'move';
@@ -161,9 +183,11 @@ export function KanbanGT({ initialData, onMoved }: KanbanGTProps) {
                   <li key={card.id}>
                     <article
                       draggable
+                      tabIndex={0}
                       onDragStart={(e) => handleDragStart(e, card.id, col.id)}
                       onDragEnd={handleDragEnd}
-                      aria-label={`${card.fileName} — arrastrar para cambiar estado`}
+                      onKeyDown={(e) => handleCardKeyDown(e, card.id, col.id)}
+                      aria-label={`${card.fileName} — en ${col.label}. Usa ← → para mover entre columnas`}
                       className={`
                         p-3 bg-white dark:bg-gray-900 rounded border border-gray-200 dark:border-gray-700
                         cursor-grab active:cursor-grabbing select-none
