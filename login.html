@@ -224,6 +224,23 @@ body{
 /* ── Utilities ─────────────────────────────── */
 .hidden{display:none!important}
 
+/* ── Skip link ─────────────────────────────── */
+.skip-to-content{
+  position:absolute;
+  left:-9999px;width:1px;height:1px;overflow:hidden;
+}
+.skip-to-content:focus{
+  position:fixed;top:12px;left:12px;
+  width:auto;height:auto;overflow:visible;
+  padding:10px 18px;
+  background:var(--accent);color:#0c0c0c;
+  border-radius:6px;
+  font-size:13px;font-weight:600;
+  z-index:9999;
+  outline:2px solid #0c0c0c;
+  text-decoration:none;
+}
+
 /* ── Responsive ───────────────────────────── */
 @media (max-width: 480px) {
   body { padding: 0 16px; }
@@ -233,9 +250,22 @@ body{
   .btn-secondary { padding: 10px 20px; }
   .login-footer { flex-direction: column; gap: 12px; text-align: center; }
 }
+@media (max-width: 360px) {
+  .login-card { padding: 28px 16px; }
+  .card-title { font-size: 20px; }
+  .btn-primary { font-size: 13px; }
+}
+
+/* ── Reduced motion ────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .spinner { animation: none; border-top-color: var(--accent); opacity: .6; }
+  .state-view { transition: none; }
+}
 </style>
 </head>
 <body>
+
+<a href="#main-content" class="skip-to-content">Saltar al formulario de acceso</a>
 
 <!-- Nav -->
 <header class="site-header">
@@ -248,12 +278,12 @@ body{
   </nav>
 </header>
 
-<div class="login-card" role="main">
+<main class="login-card" id="main-content" aria-labelledby="login-title">
 
   <!-- Header -->
   <div class="eyebrow">Colectivo Viento Norte</div>
   <div class="logo-symbol" aria-hidden="true">⊘</div>
-  <h1 class="card-title">Contra-Archivo</h1>
+  <h1 id="login-title" class="card-title">Contra-Archivo</h1>
   <p class="card-subtitle">Acceso al espacio de investigación</p>
 
   <!-- Status area -->
@@ -299,7 +329,7 @@ body{
         autocomplete="current-password"
         aria-label="Clave de acceso al Contra-Archivo"
       >
-      <div id="fallback-error" class="fallback-error" role="alert" aria-live="polite">Clave incorrecta. Inténtalo de nuevo.</div>
+      <div id="fallback-error" class="fallback-error" role="alert" aria-live="assertive">Clave incorrecta. Inténtalo de nuevo.</div>
       <button class="btn-primary" type="submit" style="font-size:13px;padding:14px 24px">Ingresar con clave</button>
     </form>
   </div>
@@ -307,12 +337,19 @@ body{
   <!-- Footer links -->
   <div class="login-footer">
     <a href="landing.html">← Volver al buscador</a>
-    <a href="index.html">Más información</a>
+    <button type="button" id="btn-show-fallback" class="hidden" style="
+      background:none;border:none;padding:0;
+      font-size:12px;color:var(--muted);
+      cursor:pointer;font-family:inherit;
+      transition:color .2s;
+    " onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--muted)'">
+      Usar contraseña
+    </button>
   </div>
 
-</div>
+</main>
 
-<script defer src="src/passkey.js?v=20260419"></script>
+<script defer src="src/passkey.js?v=20260505"></script>
 <script>
 (function () {
   'use strict';
@@ -387,11 +424,23 @@ body{
     /* Feature detection */
     var supported = window.PasskeyAuth.isSupported();
 
+    var btnShowFallback = document.getElementById('btn-show-fallback');
+
     if (!supported) {
       passkeyActions.classList.add('hidden');
       fallbackArea.classList.remove('hidden');
       fallbackMsg.textContent = window.PasskeyAuth.UNSUPPORTED_MSG;
       setState('initial');
+      fallbackInput.focus();
+    } else {
+      btnLogin.focus();
+      btnShowFallback.classList.remove('hidden');
+      btnShowFallback.addEventListener('click', function () {
+        fallbackMsg.textContent = 'Acceso con clave de investigación.';
+        fallbackArea.classList.remove('hidden');
+        btnShowFallback.classList.add('hidden');
+        fallbackInput.focus();
+      });
     }
 
     /* ── Passkey login ───────────────────────── */
