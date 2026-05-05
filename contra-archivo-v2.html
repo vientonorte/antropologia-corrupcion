@@ -1278,138 +1278,27 @@
 
 <body>
 
-    <!-- ═══ PASSKEY GATE ═══════════════════════════════════════════════════ -->
-    <script src="src/passkey.js?v=20260429"></script>
-    <div id="ca-gate" role="dialog" aria-modal="true" aria-labelledby="ca-gate-title" style="
-        position:fixed;inset:0;z-index:9999;
-        background:#060608;
-        display:flex;flex-direction:column;
-        align-items:center;justify-content:center;
-        padding:24px;
-        font-family:'Courier New',monospace;
-    ">
-        <div style="width:100%;max-width:360px;display:flex;flex-direction:column;gap:28px;">
-
-            <div style="display:flex;flex-direction:column;gap:6px;">
-                <span style="font-size:10px;letter-spacing:.18em;color:#7a6340;text-transform:uppercase;">Colectivo</span>
-                <span style="font-size:18px;letter-spacing:.12em;color:#c8a96e;text-transform:uppercase;font-weight:600;">Viento Norte</span>
-                <div style="width:40px;height:1px;background:#1e1e1e;margin-top:4px;"></div>
-            </div>
-
-            <div style="display:flex;flex-direction:column;gap:8px;">
-                <div style="font-size:10px;letter-spacing:.15em;color:#9e9484;text-transform:uppercase;">Acceso restringido</div>
-                <h1 id="ca-gate-title" style="font-size:22px;color:#e8e0d0;letter-spacing:.06em;font-family:Georgia,serif;margin:0;font-weight:normal;">
-                    Contra-Archivo
-                </h1>
-                <p id="ca-gate-desc" style="font-size:11px;color:#9e9484;margin:0;line-height:1.6;">
-                    Verifica tu identidad para acceder al instrumento.
-                </p>
-            </div>
-
-            <div style="display:flex;flex-direction:column;gap:10px;">
-                <button id="ca-gate-btn" style="
-                    padding:13px 24px;
-                    background:#c8a96e;color:#060608;
-                    border:none;cursor:pointer;
-                    font-family:'Courier New',monospace;
-                    font-size:12px;letter-spacing:.12em;
-                    text-transform:uppercase;font-weight:600;
-                    transition:background .2s;
-                " onmouseover="this.style.background='#b8966a'" onmouseout="this.style.background='#c8a96e'">
-                    Cargando…
-                </button>
-                <div id="ca-gate-error" role="alert" aria-live="polite" style="
-                    font-size:11px;color:#c0392b;letter-spacing:.05em;
-                    min-height:14px;display:none;line-height:1.5;
-                "></div>
-                <div id="ca-gate-unsupported" style="display:none;font-size:11px;color:#9e9484;line-height:1.6;"></div>
-            </div>
-
-            <div style="border-top:1px solid #1a1a1a;padding-top:14px;display:flex;justify-content:space-between;align-items:center;">
-                <span style="font-size:9px;letter-spacing:.12em;color:#3e3e3e;text-transform:uppercase;">© 2026 Viento Norte</span>
-                <span style="font-size:9px;letter-spacing:.1em;color:#3e3e3e;">Tesis Doctoral · Antropología</span>
-            </div>
-        </div>
-    </div>
-
+    <!-- ═══ AUTH GUARD ══════════════════════════════════════════════════════ -->
+    <script src="src/passkey.js?v=20260505"></script>
     <script>
     (function () {
-        var gate     = document.getElementById('ca-gate');
-        var btn      = document.getElementById('ca-gate-btn');
-        var errEl    = document.getElementById('ca-gate-error');
-        var descEl   = document.getElementById('ca-gate-desc');
-        var unsupp   = document.getElementById('ca-gate-unsupported');
-
-        function unlock() {
-            gate.style.transition = 'opacity .4s';
-            gate.style.opacity = '0';
-            setTimeout(function () { gate.style.display = 'none'; }, 400);
+        function waitFor(check, cb, tries) {
+            if (tries > 40) { cb(); return; }
+            if (check()) { cb(); return; }
+            setTimeout(function () { waitFor(check, cb, tries + 1); }, 80);
         }
-
-        function showError(msg) {
-            errEl.textContent = msg;
-            errEl.style.display = 'block';
-        }
-
-        function clearError() {
-            errEl.style.display = 'none';
-            errEl.textContent = '';
-        }
-
-        // Si ya hay sesión activa en este tab, pasar directamente
-        if (window.PasskeyAuth && window.PasskeyAuth.isAuthenticated()) {
-            gate.style.display = 'none';
-            return;
-        }
-
-        // Navegador sin soporte WebAuthn
-        if (!window.PasskeyAuth || !window.PasskeyAuth.isSupported()) {
-            btn.style.display = 'none';
-            unsupp.textContent = window.PasskeyAuth
-                ? window.PasskeyAuth.UNSUPPORTED_MSG
-                : 'PasskeyAuth no disponible. Verifica la carga del script.';
-            unsupp.style.display = 'block';
-            return;
-        }
-
-        var hasCredential = !!localStorage.getItem('ca_passkey_cred');
-
-        if (hasCredential) {
-            btn.textContent = 'Autenticar con passkey ⊘';
-            descEl.textContent = 'Usa tu huella, Face ID o clave del dispositivo para continuar.';
-        } else {
-            btn.textContent = 'Registrar passkey ⊕';
-            descEl.textContent = 'Primera vez: registra tu passkey biométrica para acceder.';
-        }
-
-        btn.addEventListener('click', function () {
-            clearError();
-            btn.disabled = true;
-            btn.textContent = 'Verificando…';
-
-            var action = hasCredential
-                ? window.PasskeyAuth.login()
-                : window.PasskeyAuth.register();
-
-            action.then(function () {
-                unlock();
-            }).catch(function (err) {
-                btn.disabled = false;
-                // Después de registrar, el próximo intento es login
-                hasCredential = !!localStorage.getItem('ca_passkey_cred');
-                btn.textContent = hasCredential ? 'Autenticar con passkey ⊘' : 'Registrar passkey ⊕';
-                if (err && err.name === 'NotAllowedError') {
-                    showError('Autenticación cancelada. Inténtalo de nuevo.');
-                } else if (err && err.message) {
-                    showError(err.message);
-                } else {
-                    showError('No se pudo completar la autenticación.');
+        waitFor(
+            function () { return typeof window.PasskeyAuth !== 'undefined'; },
+            function () {
+                if (!window.PasskeyAuth || !window.PasskeyAuth.isAuthenticated()) {
+                    window.location.replace('login.html?from=contra-archivo-v2.html');
                 }
-            });
-        });
+            },
+            0
+        );
     })();
     </script>
-    <!-- ═══ / PASSKEY GATE ══════════════════════════════════════════════════ -->
+    <!-- ═══ / AUTH GUARD ═════════════════════════════════════════════════════ -->
 
     <div id="reading-progress" role="progressbar" aria-label="Progreso de lectura" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
     <a href="#main-content" class="skip-to-content">Saltar al contenido principal</a>
