@@ -49,8 +49,8 @@ const BS_CONFIG = Object.freeze({
     // 6% refleja: rotación de autoridades, prescripción administrativa, olvido mediático
     EROSION_RATE: 0.06,
 
-    // Año actual para calcular T
-    CURRENT_YEAR: 2026,
+    // Año actual para calcular T — dinámico para evitar staleness anual
+    CURRENT_YEAR: new Date().getFullYear(),
 
     // Tiempo mínimo (evita singularidad en T→0)
     MIN_T: 0.25,
