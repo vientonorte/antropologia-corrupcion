@@ -1583,7 +1583,146 @@ h2 {
 }
 
 
-/* ══════════════════════════════════════ ARCHIVO */
+/* ── Pipeline de exportación dual ── */
+
+.protocolo-pipeline {
+    margin-top: 32px;
+    border: 1px solid rgba(74, 127, 165, .25);
+    border-radius: var(--r);
+    padding: 28px;
+    background: rgba(74, 127, 165, .04)
+}
+
+.pp-header {
+    margin-bottom: 24px
+}
+
+.pp-eyebrow {
+    font-size: 11px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--institucional);
+    margin-bottom: 6px
+}
+
+.pp-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text);
+    margin: 0 0 8px
+}
+
+.pp-desc {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.6;
+    max-width: 640px;
+    margin: 0
+}
+
+.pp-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 20px
+}
+
+.pp-card {
+    background: var(--s1);
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px
+}
+
+.pp-card-icon {
+    font-size: 24px;
+    line-height: 1
+}
+
+.pp-card-label {
+    font-size: 10px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--muted)
+}
+
+.pp-card-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text)
+}
+
+.pp-card-body {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.6;
+    flex: 1
+}
+
+.pp-select {
+    background: var(--s2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    color: var(--text);
+    font-size: 12px;
+    padding: 6px 8px;
+    width: 100%;
+    cursor: pointer
+}
+
+.pp-select:focus {
+    outline: 2px solid var(--institucional);
+    outline-offset: 1px
+}
+
+.pp-btn {
+    border: none;
+    border-radius: 4px;
+    font-size: 12px;
+    padding: 7px 14px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: opacity .15s
+}
+
+.pp-btn:hover:not(:disabled) { opacity: .85 }
+.pp-btn:disabled { opacity: .4; cursor: not-allowed }
+
+.pp-btn-primary {
+    background: var(--institucional);
+    color: #fff
+}
+
+.pp-btn-secondary {
+    background: var(--s2);
+    color: var(--text);
+    border: 1px solid var(--border)
+}
+
+.pp-export-btns {
+    display: flex;
+    gap: 8px
+}
+
+.pp-zuboff-nota {
+    font-size: 11px;
+    color: var(--muted);
+    border-top: 1px solid var(--border);
+    padding-top: 14px;
+    line-height: 1.6
+}
+
+.pp-zuboff-nota strong { color: var(--etica) }
+
+@media (max-width: 768px) {
+    .pp-grid { grid-template-columns: 1fr }
+}
+
+
+
 
 #archivo {
     border-top: 1px solid var(--border)

@@ -596,6 +596,70 @@
                     y qué condiciones mínimas deben cumplirse para que la comunicación institucional no sea, en sí misma, violencia epistemológica.
                 </p>
             </div>
+
+            <!-- ═══ PIPELINE DE SALIDA DUAL ═══ -->
+            <div class="protocolo-pipeline" id="pipeline-export" aria-label="Pipeline de exportación">
+                <div class="pp-header">
+                    <div class="pp-eyebrow">Pipeline de salida</div>
+                    <h3 class="pp-title">Desde el corpus hacia la denuncia y la investigación</h3>
+                    <p class="pp-desc">El mismo corpus genera tres artefactos distintos según el destino:
+                        una ficha de evidencia para denuncia civil, un mapa de actores transversal,
+                        o un export estructurado para análisis estadístico académico.</p>
+                </div>
+                <div class="pp-grid">
+                    <div class="pp-card">
+                        <div class="pp-card-icon" aria-hidden="true">📄</div>
+                        <div class="pp-card-label">Denuncia civil</div>
+                        <div class="pp-card-title">Ficha de Evidencia</div>
+                        <div class="pp-card-body">
+                            Genera un documento HTML imprimible (→ PDF) con cadena de custodia,
+                            régimen de verdad comprometido, fricción cuantificada e Índice Zuboff.
+                        </div>
+                        <label for="pp-caso-select" class="sr-only">Seleccionar caso para ficha de evidencia</label>
+                        <select id="pp-caso-select" class="pp-select" aria-label="Seleccionar caso">
+                            <option value="">— seleccionar caso —</option>
+                        </select>
+                        <button type="button" class="pp-btn pp-btn-primary" id="pp-btn-ficha"
+                                aria-disabled="true" disabled>
+                            ⬇ Generar ficha PDF
+                        </button>
+                    </div>
+                    <div class="pp-card">
+                        <div class="pp-card-icon" aria-hidden="true">🗺</div>
+                        <div class="pp-card-label">Análisis estructural</div>
+                        <div class="pp-card-title">Mapa de Actores</div>
+                        <div class="pp-card-body">
+                            Tabla cruzada: qué actores e instituciones aparecen en qué casos,
+                            con qué rol (lobby, institución, actor directo). Exportable como CSV.
+                        </div>
+                        <button type="button" class="pp-btn pp-btn-secondary" id="pp-btn-actores">
+                            ⊞ Ver mapa de actores
+                        </button>
+                    </div>
+                    <div class="pp-card">
+                        <div class="pp-card-icon" aria-hidden="true">📊</div>
+                        <div class="pp-card-label">Investigación académica</div>
+                        <div class="pp-card-title">Export Académico</div>
+                        <div class="pp-card-body">
+                            CSV para SPSS/R y JSON citable: frecuencias de fricción por tipo,
+                            saturación teórica GT, Índice Zuboff por caso, mistranslations por régimen.
+                        </div>
+                        <div class="pp-export-btns">
+                            <button type="button" class="pp-btn pp-btn-secondary" id="pp-btn-csv">
+                                ⬇ CSV (SPSS/R)
+                            </button>
+                            <button type="button" class="pp-btn pp-btn-secondary" id="pp-btn-json">
+                                ⬇ JSON citable
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="pp-zuboff-nota" role="note">
+                    <strong>Índice Zuboff</strong> — Mide 5 dimensiones del capitalismo de vigilancia
+                    (Zuboff, 2019): extracción unilateral, excedente conductual, productos de predicción,
+                    desigualdad epistémica, modificación de conducta. Integrado en todos los exports.
+                </div>
+            </div>
         </section>
 
         <!-- ══════════════════════════════════════ ARCHIVO -->
@@ -731,6 +795,7 @@
     <script src="src/socialField.js?v=20260419" defer></script>
     <script src="src/sourceNormalizers.js?v=20260423" defer></script>
     <script src="src/searchEngine.js?v=20260419" defer></script>
+    <script src="src/exportPipeline.js?v=20260505" defer></script>
 
     <script>
         'use strict';
@@ -1693,6 +1758,70 @@ function initBuscador() {
   }
 }
 
+/* ══════════════ PIPELINE DE EXPORTACIÓN ══════════════ */
+function initPipeline() {
+    var select = document.getElementById('pp-caso-select');
+    var btnFicha = document.getElementById('pp-btn-ficha');
+    var btnActores = document.getElementById('pp-btn-actores');
+    var btnCsv = document.getElementById('pp-btn-csv');
+    var btnJson = document.getElementById('pp-btn-json');
+
+    if (!select || !btnFicha) return;
+
+    // Poblar selector de casos
+    var casosArr = CASOS || (CASOS_DATA && CASOS_DATA.casos) || [];
+    casosArr.forEach(function(caso) {
+        var opt = document.createElement('option');
+        opt.value = caso.id;
+        opt.textContent = caso.titulo;
+        select.appendChild(opt);
+    });
+
+    // Habilitar botón cuando hay selección
+    select.addEventListener('change', function() {
+        var hasVal = !!select.value;
+        btnFicha.disabled = !hasVal;
+        btnFicha.setAttribute('aria-disabled', String(!hasVal));
+    });
+
+    // Ficha de evidencia
+    btnFicha.addEventListener('click', function() {
+        var casoId = select.value;
+        if (!casoId || !window.exportPipeline) return;
+        var arr = CASOS || (CASOS_DATA && CASOS_DATA.casos) || [];
+        var caso = arr.find(function(c) { return c.id === casoId; });
+        if (!caso) return;
+        window.exportPipeline.buildEvidenceCard(caso, FUENTES_DATA || []);
+    });
+
+    // Mapa de actores
+    if (btnActores) {
+        btnActores.addEventListener('click', function() {
+            if (!window.exportPipeline) return;
+            var arr = CASOS || (CASOS_DATA && CASOS_DATA.casos) || [];
+            window.exportPipeline.buildActorMap(arr, FUENTES_DATA || []);
+        });
+    }
+
+    // Export CSV académico
+    if (btnCsv) {
+        btnCsv.addEventListener('click', function() {
+            if (!window.exportPipeline) return;
+            var arr = CASOS || (CASOS_DATA && CASOS_DATA.casos) || [];
+            window.exportPipeline.buildAcademicExport(arr, FUENTES_DATA || [], 'csv');
+        });
+    }
+
+    // Export JSON citable
+    if (btnJson) {
+        btnJson.addEventListener('click', function() {
+            if (!window.exportPipeline) return;
+            var arr = CASOS || (CASOS_DATA && CASOS_DATA.casos) || [];
+            window.exportPipeline.buildAcademicExport(arr, FUENTES_DATA || [], 'json');
+        });
+    }
+}
+
 /* ══════════════ BOOTSTRAP ══════════════ */
 function _runInits() {
   var inits = [
@@ -1707,7 +1836,8 @@ function _runInits() {
     ['BottomNav', initBottomNav],
     ['ScrollTopFab', initScrollTopFab],
     ['DeepLink', initDeepLink],
-    ['GraphOnboarding', initGraphOnboarding]
+    ['GraphOnboarding', initGraphOnboarding],
+    ['Pipeline', initPipeline],
   ];
   for (var i = 0; i < inits.length; i++) {
     try { inits[i][1](); }
