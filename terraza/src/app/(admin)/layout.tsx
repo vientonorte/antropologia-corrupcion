@@ -1,6 +1,8 @@
 'use client';
 
+import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { BottomNav } from '@/components/molecules/BottomNav';
 
 const NAV_LINKS = [
   { href: '/corpus', label: 'Corpus' },
@@ -9,17 +11,17 @@ const NAV_LINKS = [
   { href: '/grafo', label: 'Grafo' },
 ];
 
-function AdminNav() {
+function SidebarNav() {
   const pathname = usePathname();
 
   return (
-    <nav aria-label="Navegación principal">
+    <nav aria-label="Navegación lateral">
       <ul className="space-y-1" role="list">
         {NAV_LINKS.map(({ href, label }) => {
           const isActive = pathname === href || pathname.startsWith(href + '/');
           return (
             <li key={href}>
-              <a
+              <Link
                 href={href}
                 aria-current={isActive ? 'page' : undefined}
                 className={`
@@ -32,7 +34,7 @@ function AdminNav() {
                 `}
               >
                 {label}
-              </a>
+              </Link>
             </li>
           );
         })}
@@ -48,18 +50,28 @@ export default function AdminLayout({
 }): React.ReactElement {
   return (
     <div className="flex min-h-screen bg-white dark:bg-gray-950">
+      {/* Sidebar — visible solo en md+ */}
       <aside
-        className="w-64 shrink-0 border-r border-gray-200 dark:border-gray-800 p-4 flex flex-col"
+        className="hidden md:flex w-64 shrink-0 border-r border-gray-200 dark:border-gray-800 p-4 flex-col"
         aria-label="Barra lateral"
       >
         <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider px-4 mb-3">
           Contra-archivo
         </p>
-        <AdminNav />
+        <SidebarNav />
       </aside>
-      <main id="main-content" className="flex-1 p-8 min-w-0" tabIndex={-1}>
+
+      {/* Contenido principal — padding-bottom en mobile para el bottom nav */}
+      <main
+        id="main-content"
+        className="flex-1 p-4 md:p-8 min-w-0 pb-20 md:pb-8"
+        tabIndex={-1}
+      >
         {children}
       </main>
+
+      {/* Bottom nav — persiste en todas las páginas del dashboard */}
+      <BottomNav />
     </div>
   );
 }
