@@ -27,7 +27,12 @@
 
 function _safeText(val) {
     if (!val) return '—';
-    return String(val).replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    return String(val)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
 }
 
 function _formatDate(iso) {
@@ -245,7 +250,9 @@ function buildEvidenceCard(caso, registros) {
     if (w) {
         w.document.write(html);
         w.document.close();
-        setTimeout(function() { w.focus(); }, 300);
+        // window.focus() after document.close() requires a brief delay in some browsers
+        // to allow the new window's event loop to initialize before focusing.
+        w.focus();
     }
 }
 
@@ -411,9 +418,17 @@ function buildAcademicExport(casos, registros, formato) {
             });
         }
 
-        // Saturación teórica: ratio de marcadores activados / marcadores totales
+        // Saturación teórica: ratio de marcadores ÚNICOS activados / marcadores totales
+        // Usar Set para evitar contar el mismo marcador múltiples veces cuando
+        // aparece en más de un par de capas.
         var totalMarkers = fe ? fe.FRICTION_MARKERS.length : 18;
-        var activeMarkers = frictionAudit ? frictionAudit.pairs.reduce(function(sum, p) { return sum + p.markers.length; }, 0) : 0;
+        var uniqueMarkerLabels = {};
+        if (frictionAudit && frictionAudit.pairs) {
+            frictionAudit.pairs.forEach(function(p) {
+                p.markers.forEach(function(m) { uniqueMarkerLabels[m.label] = true; });
+            });
+        }
+        var activeMarkers = Object.keys(uniqueMarkerLabels).length;
         var saturacion = parseFloat((activeMarkers / totalMarkers).toFixed(3));
 
         // Mistranslations por régimen

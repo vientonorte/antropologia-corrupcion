@@ -477,6 +477,15 @@ function filterByIntensity(nodes, minIntensidad) {
 //   4. desigualdad_epistemica  — institución sabe; trabajador/comunidad no sabe (p.176)
 //   5. modificacion_conducta   — mecanismos que redirigen comportamiento (p.202)
 
+// Umbral de score mínimo para marcar una dimensión como activa.
+// Una dimensión está activa si al menos 1 keyword coincide Y su score supera este valor.
+var ZUBOFF_MIN_ACTIVE_SCORE = 0.05;
+
+// Umbrales de severidad del índice agregado
+var ZUBOFF_CRITICAL_THRESHOLD = 0.6;
+var ZUBOFF_HIGH_THRESHOLD = 0.4;
+var ZUBOFF_MEDIUM_THRESHOLD = 0.2;
+
 const ZUBOFF_DIMENSIONS = Object.freeze({
     extraccion_unilateral: {
         label: 'Extracción unilateral',
@@ -598,14 +607,14 @@ function calculateZuboffIndex(caso) {
             label: dim.label,
             cita: dim.cita,
             score: dimScore,
-            activo: hits >= 1 && dimScore >= 0.05, // activo si al menos 1 keyword hace match con score significativo
+            activo: hits >= 1 && dimScore >= ZUBOFF_MIN_ACTIVE_SCORE,
         });
     }
 
     var score = parseFloat((activePeso / totalPeso).toFixed(3));
-    var nivel = score >= 0.6 ? 'crítico' :
-        score >= 0.4 ? 'alto' :
-        score >= 0.2 ? 'medio' : 'bajo';
+    var nivel = score >= ZUBOFF_CRITICAL_THRESHOLD ? 'crítico' :
+        score >= ZUBOFF_HIGH_THRESHOLD ? 'alto' :
+        score >= ZUBOFF_MEDIUM_THRESHOLD ? 'medio' : 'bajo';
 
     var interpretacionMap = {
         'crítico': 'El caso documenta la lógica completa del capitalismo de vigilancia aplicada a este dominio.',

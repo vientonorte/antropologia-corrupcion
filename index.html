@@ -620,7 +620,7 @@
                             <option value="">— seleccionar caso —</option>
                         </select>
                         <button type="button" class="pp-btn pp-btn-primary" id="pp-btn-ficha"
-                                aria-disabled="true" disabled>
+                                disabled>
                             ⬇ Generar ficha PDF
                         </button>
                     </div>
@@ -1781,7 +1781,6 @@ function initPipeline() {
     select.addEventListener('change', function() {
         var hasVal = !!select.value;
         btnFicha.disabled = !hasVal;
-        btnFicha.setAttribute('aria-disabled', String(!hasVal));
     });
 
     // Ficha de evidencia
