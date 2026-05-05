@@ -48,6 +48,12 @@ jobs:
         with:
           enablement: true
 
+      - name: Preparar artefacto de sitio estático
+        run: |
+          # Excluir terraza/ (código fuente Next.js), Estado del Arte/ y otros
+          # directorios de desarrollo que no deben ser accesibles en producción.
+          rm -rf terraza "Estado del Arte" "Ensayo Traducción de Saberes" docs
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:

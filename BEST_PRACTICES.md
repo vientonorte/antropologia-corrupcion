@@ -189,30 +189,45 @@ Todos los tests del proyecto pasaron exitosamente:
 
 ---
 
-## 7. Recomendaciones Adicionales (Opcionales)
+## 7. Recomendaciones Adicionales
 
-### Consideraciones Futuras
+### GitHub Security Features
 
-#### GitHub Security Features
+- [x] **Dependabot**: Configurado en `.github/dependabot.yml` — monitorea `/terraza/package.json` semanalmente
+- [x] **Code Scanning (CodeQL)**: Configurado en `.github/workflows/codeql.yml` — JavaScript/TypeScript, push a main + PRs + cron semanal
 
-- [ ] **Dependabot**: Ya está habilitado por defecto en repos públicos
-  - Monitorea `/terraza/package.json` automáticamente
-  - Crea PRs automáticos para vulnerabilidades conocidas
+### Privacy by Design (implementado 2026-05-05)
 
-- [ ] **Code Scanning (CodeQL)**: Considerar activar para análisis estático
-  - Detecta vulnerabilidades automáticamente
-  - Requiere configuración en `.github/workflows/codeql.yml`
-  - Gratuito para repositorios públicos
+- [x] **CSP**: `Content-Security-Policy` + `Referrer-Policy` en las 7 páginas HTML públicas/privadas
+- [x] **robots.txt**: Bloquea indexación de `/privado.html` y `/admin.html`
+- [x] **sitemap.xml**: Páginas públicas (`/`, `landing.html`, `buscador.html`, `tesis.html`)
+- [x] **noindex**: `<meta name="robots" content="noindex, nofollow">` en `privado.html` y `admin.html`
+- [x] **og:* eliminado**: Etiquetas Open Graph removidas de `privado.html` y `admin.html`
+- [x] **Proxy CORS documentado**: `ciperFeed.js` documenta nota de privacidad del proxy `allorigins.win`
+- [x] **Passkey documentado**: `passkey.js` documenta explícitamente que es auth simbólica (client-only)
 
-#### Branch Protection
+### Terraza Admin — Seguridad (implementado 2026-05-05)
 
-Configurar protecciones en la rama `main`:
+- [x] **Cookie firmada (HMAC-SHA256)**: `session.ts` firma y verifica cada cookie con `NEXTAUTH_SECRET`
+- [x] **SameSite strict**: Cookie de sesión usa `sameSite: 'strict'`
+- [x] **Security headers HTTP**: `next.config.ts` incluye `X-Frame-Options`, `X-Content-Type-Options`, `Referrer-Policy`, `Permissions-Policy`, `CSP`, `HSTS`
+- [x] **Rate limiting**: Middleware limita `/api/auth/*` a 20 req/min por IP (in-memory Map, adecuado para instancia única; reemplazar con Redis para despliegue multi-instancia)
+- [x] **Tests de seguridad**: `tests/lib/auth/session.test.ts` (7 tests HMAC), `tests/lib/corpus/schemas.test.ts` (14 tests Zod)
+
+### Deploy pipeline (implementado 2026-05-05)
+
+- [x] **nextjs.yml eliminado**: Conflicto con `deploy.yml` resuelto
+- [x] **Artifact limpio**: `deploy.yml` excluye `terraza/`, `Estado del Arte/` y `docs/` del sitio público
+
+### Branch Protection
+
+Configurar protecciones en la rama `main` (verificar en Settings → Branches):
 - [ ] Requerir review de PR antes de merge
-- [ ] Requerir que status checks pasen (qa-gate ya está configurado)
+- [ ] Requerir que status checks pasen (`qa-gate` ya está configurado)
 - [ ] Requerir branches actualizados antes de merge
 - [ ] Restringir quién puede hacer push directo
 
-#### Documentación Complementaria
+### Documentación Complementaria
 
 - [ ] **GOVERNANCE.md**: Si el proyecto crece, documentar toma de decisiones
 - [ ] **SUPPORT.md**: Canales de soporte y preguntas frecuentes
