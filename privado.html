@@ -1007,78 +1007,131 @@
             }
         }
 
-        /* ── Brecha 1: Onboarding overlay (primera visita) ── */
-        .pv-onboarding-overlay {
-            position: fixed;
-            inset: 0;
-            z-index: 9999;
-            background: rgba(0,0,0,.75);
-            display: flex;
+        /* ── UX contextual: welcome inline + ayuda bajo demanda ── */
+        .pv-help-btn {
+            margin-left: auto;
+            min-width: 44px;
+            min-height: 44px;
+            border: 1px solid var(--border);
+            border-radius: var(--r);
+            color: var(--muted);
+            background: transparent;
+            display: inline-flex;
             align-items: center;
             justify-content: center;
-            backdrop-filter: blur(4px)
-        }
-        .pv-onboarding-box {
-            background: var(--s2, #161616);
-            border: 1px solid var(--border);
-            border-radius: var(--r, 8px);
-            padding: 28px 32px 24px;
-            max-width: 460px;
-            width: 90%;
-            outline: none
-        }
-        .pv-onboarding-title {
-            font-size: 1rem;
             font-weight: 700;
+            transition: color .15s, background .15s, border-color .15s
+        }
+        .pv-help-btn:hover {
             color: var(--text);
-            margin: 0 0 6px
+            border-color: var(--dim);
+            background: var(--s2)
         }
-        .pv-onboarding-lead {
-            font-size: .8rem;
-            color: var(--dim);
-            margin: 0 0 16px
+        .pv-help-btn:focus-visible {
+            outline: 2px solid var(--etica);
+            outline-offset: 2px
         }
-        .pv-onboarding-steps {
-            list-style: none;
-            padding: 0;
-            margin: 0 0 16px;
-            display: flex;
-            flex-direction: column;
-            gap: 9px
+        .pv-help-popover {
+            position: fixed;
+            top: calc(var(--nav-h) + 10px);
+            right: 12px;
+            width: min(380px, calc(100vw - 24px));
+            z-index: var(--z-dropdown, 10);
+            padding: 12px 14px;
+            border: 1px solid var(--border);
+            border-radius: var(--r);
+            background: var(--s1);
+            box-shadow: var(--shadow-lg, 0 8px 24px rgba(0, 0, 0, .5))
         }
-        .pv-onboarding-steps li {
-            font-size: .82rem;
-            color: var(--muted);
-            display: flex;
-            gap: 8px;
-            align-items: flex-start;
-            line-height: 1.4
-        }
-        .pv-onboarding-steps li strong {
+        .pv-help-title {
+            margin: 0 0 8px;
+            font-size: .86rem;
             color: var(--text)
         }
-        .pv-onboarding-footer {
-            font-size: .73rem;
-            color: var(--dim);
-            margin: 0 0 12px
+        .pv-help-list {
+            margin: 0;
+            padding-left: 18px;
+            color: var(--muted);
+            display: grid;
+            gap: 6px;
+            font-size: .8rem
         }
-        .pv-onboarding-footer a {
-            color: var(--etica)
+        .pv-help-close {
+            margin-top: 10px;
+            width: 100%
         }
-        .pv-onboarding-dismiss {
-            width: 100%;
-            padding: 10px;
-            background: var(--etica);
-            border: none;
-            border-radius: var(--r, 8px);
-            color: #000;
+        .pv-welcome-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin: 12px 12px 0;
+            padding: 10px 12px;
+            border: 1px solid var(--border);
+            border-left: 3px solid var(--etica);
+            border-radius: var(--r);
+            background: var(--s1);
+            flex-wrap: wrap
+        }
+        .pv-welcome-copy {
+            font-size: .8rem;
+            color: var(--muted)
+        }
+        .pv-welcome-copy strong {
+            color: var(--text)
+        }
+        .pv-welcome-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px
+        }
+        .pv-welcome-start {
+            color: var(--etica);
+            font-size: .8rem;
             font-weight: 700;
-            font-size: .88rem;
-            cursor: pointer;
-            transition: opacity .15s
+            text-decoration: none
         }
-        .pv-onboarding-dismiss:hover {
-            opacity: .85
+        .pv-welcome-start:hover {
+            text-decoration: underline
+        }
+        .pv-welcome-dismiss {
+            border: 1px solid var(--border);
+            border-radius: var(--r);
+            color: var(--dim);
+            background: transparent;
+            min-width: 32px;
+            min-height: 32px;
+            line-height: 1
+        }
+        .pv-welcome-dismiss:hover {
+            color: var(--text);
+            border-color: var(--dim)
+        }
+        .pv-main-empty {
+            margin: 16px 12px 0;
+            padding: 14px;
+            border: 1px dashed var(--border);
+            border-radius: var(--r);
+            font-size: .82rem;
+            color: var(--muted);
+            background: var(--s1)
+        }
+        .pv-main-empty strong {
+            color: var(--text)
+        }
+        .seg-empty-state {
+            margin-top: 8px;
+            padding: 10px;
+            border: 1px dashed var(--border);
+            border-radius: var(--r);
+            background: var(--s2);
+            display: grid;
+            gap: 8px
+        }
+        .seg-empty-state p {
+            margin: 0;
+            font-size: .78rem;
+            color: var(--dim)
         }
 
         /* ── Brecha 3: Chat context bar ── */
@@ -1149,23 +1202,6 @@
 </head>
 
 <body>
-    <!-- ── Brecha 1: Onboarding overlay (primera visita) ── -->
-    <div class="pv-onboarding-overlay" id="pv-onboarding" role="dialog" aria-modal="true" aria-labelledby="pv-onboarding-title" hidden>
-        <div class="pv-onboarding-box" tabindex="-1">
-            <p class="pv-onboarding-title" id="pv-onboarding-title">Bienvenida al Espacio Privado</p>
-            <p class="pv-onboarding-lead">Tu centro de investigación. Un recorrido rápido por las herramientas:</p>
-            <ul class="pv-onboarding-steps">
-                <li><span aria-hidden="true">🔎</span> <span><strong>Sidebar:</strong> busca, revisa historial y gestiona seguimientos de actores</span></li>
-                <li><span aria-hidden="true">📊</span> <span><strong>Simulación:</strong> grafo de fricción + campo social termodinámico</span></li>
-                <li><span aria-hidden="true">💬</span> <span><strong>Chat:</strong> consulta asistida — se inyecta contexto del actor activo automáticamente</span></li>
-                <li><span aria-hidden="true">📰</span> <span><strong>Noticias:</strong> feed CIPER filtrado por tus seguimientos</span></li>
-                <li><span aria-hidden="true">🔍</span> <span><strong>Huella Digital:</strong> exposición institucional cruzada — haz clic en cualquier seguimiento</span></li>
-            </ul>
-            <p class="pv-onboarding-footer">Cuando tengas evidencia lista, usa el <a href="index.html#protocolo">Protocolo de denuncia →</a></p>
-            <button class="pv-onboarding-dismiss" id="pv-onboarding-dismiss" type="button">Entendido, comenzar →</button>
-        </div>
-    </div>
-
     <a href="#pv-main" class="skip-link">Saltar al contenido</a>
 
     <h1 class="sr-only">Espacio Privado — Contra-Archivo</h1>
@@ -1182,7 +1218,17 @@
             <a href="#" id="nav-seg-btn">Mis seguimientos</a>
             <button class="btn-salir" id="logout-btn">Salir</button>
         </div>
+        <button class="pv-help-btn" id="pv-help-btn" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="pv-help-popover" aria-label="Abrir guía rápida"><span aria-hidden="true">[?]</span></button>
     </nav>
+    <aside class="pv-help-popover" id="pv-help-popover" role="dialog" aria-label="Guía rápida del espacio privado" hidden>
+        <p class="pv-help-title">Guía rápida</p>
+        <ol class="pv-help-list">
+            <li>Abre <strong>+ Nuevo seguimiento</strong> en el sidebar.</li>
+            <li>Agrega un actor, institución, ley o caso.</li>
+            <li>Haz clic en el seguimiento para ver Huella Digital y usar el chat con contexto.</li>
+        </ol>
+        <button class="sb-btn pv-help-close" id="pv-help-close" type="button">Cerrar ayuda</button>
+    </aside>
 
     <!-- LAYOUT -->
     <div class="pv-layout">
@@ -1221,6 +1267,10 @@
                 <div class="sb-title">Mis seguimientos</div>
                 <div class="seg-counts" id="seg-counts"></div>
                 <div id="seg-list"></div>
+                <div class="seg-empty-state" id="seg-empty-state" hidden>
+                    <p>Aún no tienes seguimientos activos.</p>
+                    <button class="sb-btn" id="seg-empty-add-first" type="button">+ Añadir primero</button>
+                </div>
                 <details id="seg-add-details">
                     <summary class="sb-btn" style="list-style:none;width:100%;text-align:center">+ Nuevo seguimiento</summary>
                     <div class="sb-add-form" style="margin-top:8px">
@@ -1241,6 +1291,18 @@
 
         <!-- MAIN -->
         <div class="pv-main" id="pv-main">
+            <div class="pv-welcome-bar" id="pv-welcome-bar" aria-live="polite" hidden>
+                <div class="pv-welcome-copy">
+                    <strong>Bienvenida.</strong> Comienza agregando un seguimiento para activar huella, noticias y chat contextual.
+                </div>
+                <div class="pv-welcome-actions">
+                    <a href="#" class="pv-welcome-start" id="pv-welcome-start">Comienza agregando un seguimiento →</a>
+                    <button class="pv-welcome-dismiss" id="pv-welcome-dismiss" type="button" aria-label="Cerrar bienvenida">✕</button>
+                </div>
+            </div>
+            <div class="pv-main-empty" id="pv-main-empty" aria-live="polite" hidden>
+                <strong>Primer paso:</strong> agrega tu primer seguimiento desde el panel izquierdo para iniciar la lectura situada del caso.
+            </div>
             <div class="pv-tabs" role="tablist" aria-label="Secciones del espacio privado">
                 <button class="pv-tab active" id="tab-simulacion" data-tab="simulacion" role="tab" aria-selected="true" aria-controls="panel-simulacion" tabindex="0">Simulación</button>
                 <button class="pv-tab" id="tab-chat" data-tab="chat" role="tab" aria-selected="false" aria-controls="panel-chat" tabindex="-1">Chat</button>
@@ -1350,6 +1412,9 @@
             var newsLoaded = false;
             var searchCount = 0;
             var pvActiveContext = null; /* Brecha 3: contexto activo para el chat */
+            var MOBILE_QUERY_STRING = '(max-width:767px)';
+            var mobileMediaQuery = null;
+            var hasSeguimientosWarned = false;
 
             /* ── Helpers ── */
             function $(id) {
@@ -1377,27 +1442,108 @@
                 }
             }
 
-            /* Brecha 1: Inicializar onboarding de primera visita */
-            function initOnboarding() {
-                var overlay = $('pv-onboarding');
-                if (!overlay) return;
-                if (!localStorage.getItem('ca_onboarding_ok')) {
-                    overlay.hidden = false;
-                    /* Usar rAF para garantizar que el layout esté listo antes de enfocar */
-                    requestAnimationFrame(function() {
-                        var box = overlay.querySelector('.pv-onboarding-box');
-                        if (box) box.focus();
+            /* UX contextual: bienvenida inline (primera visita) */
+            function hasSeguimientos() {
+                try {
+                    if (!window.Seguimientos || !window.Seguimientos.listar) return false;
+                    return window.Seguimientos.listar().length > 0;
+                } catch (err) {
+                    if (!hasSeguimientosWarned) {
+                        console.warn('[Privado] Error al verificar seguimientos:', err);
+                        hasSeguimientosWarned = true;
+                    }
+                    return false;
+                }
+            }
+
+            function isWelcomeDismissed() {
+                try {
+                    return !!localStorage.getItem('ca_onboarding_ok');
+                } catch (err) {
+                    console.warn('[Privado] No se pudo leer estado onboarding:', err);
+                    return false;
+                }
+            }
+
+            function dismissWelcome() {
+                try {
+                    localStorage.setItem('ca_onboarding_ok', '1');
+                } catch (err) {
+                    console.warn('[Privado] No se pudo persistir estado onboarding:', err);
+                }
+                setWelcomeVisibility();
+            }
+
+            function openSeguimientoForm() {
+                var details = $('seg-add-details');
+                var input = $('seg-add-nombre');
+                if (details) details.setAttribute('open', 'open');
+                if (input) input.focus();
+            }
+
+            function setWelcomeVisibility() {
+                var welcome = $('pv-welcome-bar');
+                var mainEmpty = $('pv-main-empty');
+                var show = !isWelcomeDismissed() && !hasSeguimientos();
+                if (welcome) welcome.hidden = !show;
+                if (mainEmpty) mainEmpty.hidden = !show;
+            }
+
+            function initWelcomeExperience() {
+                mobileMediaQuery = window.matchMedia(MOBILE_QUERY_STRING);
+                setWelcomeVisibility();
+                var dismissBtn = $('pv-welcome-dismiss');
+                if (dismissBtn) dismissBtn.addEventListener('click', dismissWelcome);
+
+                var startBtn = $('pv-welcome-start');
+                if (startBtn) {
+                    startBtn.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        var isMobile = mobileMediaQuery ? mobileMediaQuery.matches : window.matchMedia(MOBILE_QUERY_STRING).matches;
+                        if (isMobile) {
+                            var sidebar = $('sidebar');
+                            if (sidebar && !sidebar.classList.contains('open')) {
+                                var navBtn = $('nav-seg-btn');
+                                if (navBtn) navBtn.click();
+                            }
+                        }
+                        openSeguimientoForm();
                     });
                 }
-                function dismiss() {
-                    localStorage.setItem('ca_onboarding_ok', '1');
-                    overlay.hidden = true;
+            }
+
+            function initHelpGuide() {
+                var openBtn = $('pv-help-btn');
+                var popover = $('pv-help-popover');
+                var closeBtn = $('pv-help-close');
+                if (!openBtn || !popover) return;
+
+                function closeHelp() {
+                    popover.hidden = true;
+                    openBtn.setAttribute('aria-expanded', 'false');
+                    openBtn.focus();
                 }
-                var btn = $('pv-onboarding-dismiss');
-                if (btn) btn.addEventListener('click', dismiss);
-                /* Capturar Escape en el overlay, independiente de dónde esté el foco interno */
-                overlay.addEventListener('keydown', function(e) {
-                    if (e.key === 'Escape') dismiss();
+
+                openBtn.addEventListener('click', function() {
+                    var isOpen = !popover.hidden;
+                    if (isOpen) {
+                        closeHelp();
+                        return;
+                    }
+                    popover.hidden = false;
+                    openBtn.setAttribute('aria-expanded', 'true');
+                    if (closeBtn) closeBtn.focus();
+                });
+                if (closeBtn) closeBtn.addEventListener('click', closeHelp);
+                document.addEventListener('keydown', function(e) {
+                    if (e.key === 'Escape' && !popover.hidden) closeHelp();
+                });
+                document.addEventListener('click', function(e) {
+                    if (popover.hidden) return;
+                    if (e.target === openBtn || openBtn.contains(e.target)) return;
+                    if (popover.contains(e.target)) return;
+                    popover.hidden = true;
+                    openBtn.setAttribute('aria-expanded', 'false');
                 });
             }
 
@@ -1617,7 +1763,8 @@
 
             /* ── App Init ── */
             function initApp() {
-                initOnboarding(); /* Brecha 1 */
+                initWelcomeExperience();
+                initHelpGuide();
                 initTabs();
                 initSidebar();
                 initTesis();
@@ -1782,6 +1929,12 @@
                 });
 
                 $('seg-add-btn').addEventListener('click', addSeguimiento);
+                var addFirstBtn = $('seg-empty-add-first');
+                if (addFirstBtn) {
+                    addFirstBtn.addEventListener('click', function() {
+                        openSeguimientoForm();
+                    });
+                }
 
                 refreshHistory();
                 refreshPatterns();
@@ -1916,10 +2069,14 @@
                 }).join('');
 
                 var list = $('seg-list');
+                var emptyState = $('seg-empty-state');
                 if (!items.length) {
                     list.innerHTML = '<div style="font-size:.78rem;color:var(--dim);padding:4px 8px">Sin seguimientos</div>';
+                    if (emptyState) emptyState.hidden = false;
+                    setWelcomeVisibility();
                     return;
                 }
+                if (emptyState) emptyState.hidden = true;
                 list.innerHTML = items.map(function(item) {
                     var tags = (item.tags || []).map(function(t) {
                         return '<span class="seg-tag">' + esc(t) + '</span>';
@@ -1945,6 +2102,7 @@
                         showHuella(nombre);
                     });
                 });
+                setWelcomeVisibility();
             }
 
             function addSeguimiento() {
