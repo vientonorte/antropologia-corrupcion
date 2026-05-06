@@ -1383,21 +1383,21 @@
                 if (!overlay) return;
                 if (!localStorage.getItem('ca_onboarding_ok')) {
                     overlay.hidden = false;
-                    var box = overlay.querySelector('.pv-onboarding-box');
-                    if (box) box.focus();
-                }
-                var btn = $('pv-onboarding-dismiss');
-                if (btn) {
-                    btn.addEventListener('click', function() {
-                        localStorage.setItem('ca_onboarding_ok', '1');
-                        overlay.hidden = true;
+                    /* Usar rAF para garantizar que el layout esté listo antes de enfocar */
+                    requestAnimationFrame(function() {
+                        var box = overlay.querySelector('.pv-onboarding-box');
+                        if (box) box.focus();
                     });
                 }
+                function dismiss() {
+                    localStorage.setItem('ca_onboarding_ok', '1');
+                    overlay.hidden = true;
+                }
+                var btn = $('pv-onboarding-dismiss');
+                if (btn) btn.addEventListener('click', dismiss);
+                /* Capturar Escape en el overlay, independiente de dónde esté el foco interno */
                 overlay.addEventListener('keydown', function(e) {
-                    if (e.key === 'Escape') {
-                        localStorage.setItem('ca_onboarding_ok', '1');
-                        overlay.hidden = true;
-                    }
+                    if (e.key === 'Escape') dismiss();
                 });
             }
 
@@ -2119,7 +2119,8 @@
                 }
                 input.value = '';
                 sessionStorage.setItem('ca_chat_last', String(now));
-                // Brecha 3: inyectar contexto activo en la query enviada a la IA (sin modificar el texto visible)
+                // Brecha 3: enriquecer query con contexto activo solo para la IA —
+                // el usuario ve 'q' limpio en el historial; 'sendQ' lleva el prefijo de contexto
                 var sendQ = pvActiveContext ? '[Contexto: ' + pvActiveContext + '] ' + q : q;
                 messages.push({
                     role: 'user',

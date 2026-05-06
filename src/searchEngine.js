@@ -620,7 +620,7 @@ function renderSearchCard(result, context) {
             'data-seguir-nombre="' + _escHtml(reg.titulo || reg.id || '') + '" ' +
             'data-seguir-tipo="institucion" ' +
             'aria-label="Agregar ' + _escHtml(reg.titulo || reg.id || '') + ' a seguimientos">' +
-            '⊕ Seguir' +
+            '<span aria-hidden="true">⊕</span> Seguir' +
         '</button>' +
         '</article>';
 

@@ -1830,7 +1830,7 @@ function initBuscador() {
       if (!nombre) return;
       if (btn.classList.contains('is-seguido')) {
         btn.classList.remove('is-seguido');
-        btn.textContent = '⊕ Seguir';
+        btn.innerHTML = '<span aria-hidden="true">⊕</span> Seguir';
         btn.setAttribute('aria-label', 'Agregar ' + nombre + ' a seguimientos');
         return;
       }
@@ -1841,18 +1841,18 @@ function initBuscador() {
         try {
           var raw = localStorage.getItem('ca_seguimientos');
           var items = raw ? JSON.parse(raw) : [];
-          var existe = items.some(function(it) { return it.nombre === nombre && it.tipo === tipo; });
+          var nombreNorm = nombre.trim().toLowerCase();
+          var existe = items.some(function(it) { return it.nombre.trim().toLowerCase() === nombreNorm && it.tipo === tipo; });
           if (!existe) {
             var ahora = Date.now();
-            var arr = new Uint32Array(2);
-            if (typeof crypto !== 'undefined' && crypto.getRandomValues) crypto.getRandomValues(arr);
-            items.push({ id: String(ahora) + '-' + (arr[0] || Math.random()).toString(36), tipo: tipo, nombre: nombre, tags: [], fechaCreacion: ahora, ultimaRevision: ahora, notas: '' });
+            var slug = nombre.trim().toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '').slice(0, 40);
+            items.push({ id: slug + '-' + String(ahora), tipo: tipo, nombre: nombre, tags: [], fechaCreacion: ahora, ultimaRevision: ahora, notas: '' });
             localStorage.setItem('ca_seguimientos', JSON.stringify(items));
           }
         } catch (err) { /* silent */ }
       }
       btn.classList.add('is-seguido');
-      btn.textContent = '✓ Siguiendo';
+      btn.innerHTML = '<span aria-hidden="true">✓</span> Siguiendo';
       btn.setAttribute('aria-label', nombre + ' ya está en tus seguimientos');
     });
   }
