@@ -1403,6 +1403,9 @@
             function initOnboarding() {
                 var overlay = $('pv-onboarding');
                 if (!overlay) return;
+                function onDocumentEscape(e) {
+                    if (!overlay.hidden && e.key === 'Escape') dismiss();
+                }
                 if (!localStorage.getItem('ca_onboarding_ok')) {
                     overlay.hidden = false;
                     /* Usar rAF para garantizar que el layout esté listo antes de enfocar */
@@ -1418,6 +1421,7 @@
                         console.warn('[Privado] No se pudo persistir estado onboarding:', err);
                     }
                     overlay.hidden = true;
+                    document.removeEventListener('keydown', onDocumentEscape);
                 }
                 var btn = $('pv-onboarding-dismiss');
                 if (btn) btn.addEventListener('click', dismiss);
@@ -1430,9 +1434,7 @@
                 overlay.addEventListener('keydown', function(e) {
                     if (e.key === 'Escape') dismiss();
                 });
-                document.addEventListener('keydown', function(e) {
-                    if (!overlay.hidden && e.key === 'Escape') dismiss();
-                });
+                document.addEventListener('keydown', onDocumentEscape);
             }
 
             function fmtDate(d) {
