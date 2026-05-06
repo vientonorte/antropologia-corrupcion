@@ -1406,13 +1406,20 @@
                 function onDocumentEscape(e) {
                     if (!overlay.hidden && e.key === 'Escape') dismiss();
                 }
-                if (!localStorage.getItem('ca_onboarding_ok')) {
+                var shouldShow = true;
+                try {
+                    shouldShow = !localStorage.getItem('ca_onboarding_ok');
+                } catch (err) {
+                    console.warn('[Privado] No se pudo leer estado onboarding:', err);
+                }
+                if (shouldShow) {
                     overlay.hidden = false;
                     /* Usar rAF para garantizar que el layout esté listo antes de enfocar */
                     requestAnimationFrame(function() {
                         var box = overlay.querySelector('.pv-onboarding-box');
                         if (box) box.focus();
                     });
+                    document.addEventListener('keydown', onDocumentEscape);
                 }
                 function dismiss() {
                     try {
@@ -1434,7 +1441,6 @@
                 overlay.addEventListener('keydown', function(e) {
                     if (e.key === 'Escape') dismiss();
                 });
-                document.addEventListener('keydown', onDocumentEscape);
             }
 
             function fmtDate(d) {
