@@ -1416,6 +1416,8 @@
             var searchCount = 0;
             var pvActiveContext = null; /* Brecha 3: contexto activo para el chat */
             var MOBILE_QUERY = '(max-width:767px)';
+            var mobileMediaQuery = null;
+            var hasSeguimientosWarned = false;
 
             /* ── Helpers ── */
             function $(id) {
@@ -1449,7 +1451,10 @@
                     if (!window.Seguimientos || !window.Seguimientos.listar) return false;
                     return window.Seguimientos.listar().length > 0;
                 } catch (err) {
-                    console.warn('[Privado] Error al verificar seguimientos:', err);
+                    if (!hasSeguimientosWarned) {
+                        console.warn('[Privado] Error al verificar seguimientos:', err);
+                        hasSeguimientosWarned = true;
+                    }
                     return false;
                 }
             }
@@ -1488,6 +1493,7 @@
             }
 
             function initWelcomeExperience() {
+                mobileMediaQuery = window.matchMedia(MOBILE_QUERY);
                 setWelcomeVisibility();
                 var dismissBtn = $('pv-welcome-dismiss');
                 if (dismissBtn) dismissBtn.addEventListener('click', dismissWelcome);
@@ -1496,7 +1502,7 @@
                 if (startBtn) {
                     startBtn.addEventListener('click', function(e) {
                         e.preventDefault();
-                        if (window.matchMedia(MOBILE_QUERY).matches) {
+                        if (mobileMediaQuery && mobileMediaQuery.matches) {
                             var sidebar = $('sidebar');
                             if (sidebar && !sidebar.classList.contains('open')) {
                                 var navBtn = $('nav-seg-btn');
