@@ -536,6 +536,11 @@
             <div class="triage-table-wrap">
                 <table class="triage-table" id="triage-table"></table>
             </div>
+            <!-- Brecha 2: señalización hacia el Protocolo de denuncia -->
+            <div class="triage-protocolo-cta">
+                <span class="triage-protocolo-cta-text">¿Identificaste el caso más urgente? El siguiente paso es generar la evidencia formal.</span>
+                <a href="#protocolo" class="triage-protocolo-link">Protocolo de denuncia →</a>
+            </div>
         </section>
 
         <!-- ══════════════════════════════════════ PROTOCOLO -->
@@ -1812,6 +1817,44 @@ function initBuscador() {
     obs.observe(section);
   } else {
     doInit();
+  }
+
+  /* Brecha 4: delegación de click para botones "Seguir" en tarjetas de búsqueda */
+  var seResults = document.getElementById('se-results');
+  if (seResults) {
+    seResults.addEventListener('click', function(e) {
+      var btn = e.target.closest('.se-card-seguir');
+      if (!btn) return;
+      var nombre = btn.getAttribute('data-seguir-nombre') || '';
+      var tipo = btn.getAttribute('data-seguir-tipo') || 'institucion';
+      if (!nombre) return;
+      if (btn.classList.contains('is-seguido')) {
+        btn.classList.remove('is-seguido');
+        btn.innerHTML = '<span aria-hidden="true">⊕</span> Seguir';
+        btn.setAttribute('aria-label', 'Agregar ' + nombre + ' a seguimientos');
+        return;
+      }
+      if (window.Seguimientos && typeof window.Seguimientos.seguir === 'function') {
+        window.Seguimientos.seguir({ nombre: nombre, tipo: tipo, tags: [] });
+      } else {
+        /* Fallback: escribir directo al mismo localStorage key que seguimientos.js */
+        try {
+          var raw = localStorage.getItem('ca_seguimientos');
+          var items = raw ? JSON.parse(raw) : [];
+          var nombreNorm = nombre.trim().toLowerCase();
+          var existe = items.some(function(it) { return it.nombre.trim().toLowerCase() === nombreNorm && it.tipo === tipo; });
+          if (!existe) {
+            var ahora = Date.now();
+            var slug = nombre.trim().toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '').slice(0, 40);
+            items.push({ id: slug + '-' + String(ahora), tipo: tipo, nombre: nombre, tags: [], fechaCreacion: ahora, ultimaRevision: ahora, notas: '' });
+            localStorage.setItem('ca_seguimientos', JSON.stringify(items));
+          }
+        } catch (err) { /* silent */ }
+      }
+      btn.classList.add('is-seguido');
+      btn.innerHTML = '<span aria-hidden="true">✓</span> Siguiendo';
+      btn.setAttribute('aria-label', nombre + ' ya está en tus seguimientos');
+    });
   }
 }
 

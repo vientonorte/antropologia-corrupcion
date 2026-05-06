@@ -1532,6 +1532,65 @@ h2 {
     color: var(--text)
 }
 
+/* Brecha 2: CTA Triage → Protocolo */
+.triage-protocolo-cta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 24px;
+    padding: 14px 20px;
+    background: var(--s1);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--mat, #7a9e6e);
+    border-radius: var(--r, 8px);
+    flex-wrap: wrap
+}
+
+.triage-protocolo-cta-text {
+    font-size: .84rem;
+    color: var(--muted)
+}
+
+.triage-protocolo-link {
+    font-size: .84rem;
+    color: var(--mat, #7a9e6e);
+    font-weight: 700;
+    text-decoration: none;
+    white-space: nowrap
+}
+
+.triage-protocolo-link:hover {
+    text-decoration: underline
+}
+
+/* Brecha 4: botón Seguir en cards de búsqueda */
+.se-card-seguir {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 8px;
+    padding: 4px 10px;
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    color: var(--muted);
+    font-size: 11px;
+    cursor: pointer;
+    transition: border-color .15s, color .15s
+}
+
+.se-card-seguir:hover {
+    border-color: var(--etica);
+    color: var(--etica)
+}
+
+.se-card-seguir.is-seguido {
+    border-color: var(--etica);
+    color: var(--etica);
+    background: rgba(200,169,110,.08)
+}
+
 .protocolo-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
