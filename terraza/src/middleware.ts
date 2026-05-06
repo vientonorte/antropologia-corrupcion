@@ -3,7 +3,7 @@ import type { NextRequest } from 'next/server';
 
 const SESSION_COOKIE_NAME = 'auth-session';
 const PUBLIC_ROUTES = ['/login', '/api/auth'];
-const PROTECTED_ROUTES = ['/corpus', '/codificacion', '/upload', '/grafo'];
+const PROTECTED_ROUTES = ['/corpus', '/codificacion', '/upload', '/grafo', '/sistema'];
 
 // ─── Rate limiter ─────────────────────────────────────────────────────────────
 // Simple in-memory rate limiter for auth routes.

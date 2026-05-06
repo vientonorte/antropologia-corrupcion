@@ -2,10 +2,19 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createRegistrationOptions } from '@/lib/auth/passkey';
 import { RegistrationStartSchema } from '@/lib/auth/schemas';
 import { createChallenge } from '@/lib/db/challenges';
-import { userExists } from '@/lib/db/credentials';
+import { userExists, countAllUsers } from '@/lib/db/credentials';
 
 export async function POST(request: NextRequest) {
   try {
+    // Security: registration is only allowed when no users exist yet (first-time setup).
+    // After the admin passkey is registered, this endpoint returns 403 for everyone.
+    if (countAllUsers() > 0) {
+      return NextResponse.json(
+        { error: 'Sistema ya configurado. Solo el administrador puede acceder.' },
+        { status: 403 },
+      );
+    }
+
     const body = await request.json();
     const { userName } = RegistrationStartSchema.parse(body);
 
