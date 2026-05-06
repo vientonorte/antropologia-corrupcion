@@ -239,3 +239,36 @@ export function getUploadByHash(hashSource: string): UploadRecord | null {
     updatedAt: row.updated_at as number,
   };
 }
+
+export interface UploadStats {
+  total: number;
+  byCaso: Record<number, number>;
+  byEstado: Record<EstadoCodificacion, number>;
+  byFuente: Record<FuenteTipo, number>;
+}
+
+export function getUploadStats(): UploadStats {
+  const db = getDatabase();
+
+  const total = (db.prepare('SELECT COUNT(*) as count FROM uploads').get() as Record<string, unknown>).count as number;
+
+  const byCasoRows = db.prepare('SELECT caso_id, COUNT(*) as count FROM uploads GROUP BY caso_id').all() as Record<string, unknown>[];
+  const byCaso: Record<number, number> = {};
+  for (const row of byCasoRows) {
+    byCaso[row.caso_id as number] = row.count as number;
+  }
+
+  const byEstadoRows = db.prepare('SELECT estado_codificacion, COUNT(*) as count FROM uploads GROUP BY estado_codificacion').all() as Record<string, unknown>[];
+  const byEstado = {} as Record<EstadoCodificacion, number>;
+  for (const row of byEstadoRows) {
+    byEstado[row.estado_codificacion as EstadoCodificacion] = row.count as number;
+  }
+
+  const byFuenteRows = db.prepare('SELECT fuente_tipo, COUNT(*) as count FROM uploads GROUP BY fuente_tipo').all() as Record<string, unknown>[];
+  const byFuente = {} as Record<FuenteTipo, number>;
+  for (const row of byFuenteRows) {
+    byFuente[row.fuente_tipo as FuenteTipo] = row.count as number;
+  }
+
+  return { total, byCaso, byEstado, byFuente };
+}

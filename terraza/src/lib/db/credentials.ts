@@ -110,3 +110,24 @@ export function userExists(userName: string): boolean {
   const row = stmt.get(userName) as Record<string, unknown>;
   return (row.count as number) > 0;
 }
+
+export function countAllUsers(): number {
+  const db = getDatabase();
+  const stmt = db.prepare('SELECT COUNT(*) as count FROM credentials');
+  const row = stmt.get() as Record<string, unknown>;
+  return row.count as number;
+}
+
+export function listAllCredentials(): Pick<CredentialRecord, 'id' | 'userId' | 'userName' | 'createdAt' | 'updatedAt'>[] {
+  const db = getDatabase();
+  const rows = db.prepare(
+    'SELECT id, user_id, user_name, created_at, updated_at FROM credentials ORDER BY created_at ASC',
+  ).all() as Record<string, unknown>[];
+  return rows.map((row) => ({
+    id: row.id as string,
+    userId: row.user_id as string,
+    userName: row.user_name as string,
+    createdAt: row.created_at as number,
+    updatedAt: row.updated_at as number,
+  }));
+}

@@ -9,6 +9,7 @@ const NAV_LINKS = [
   { href: '/upload', label: 'Subir captura' },
   { href: '/codificacion', label: 'Codificación' },
   { href: '/grafo', label: 'Grafo' },
+  { href: '/sistema', label: 'Sistema' },
 ];
 
 function SidebarNav() {
