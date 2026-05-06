@@ -938,9 +938,6 @@
             .pv-nav-links {
                 display: flex
             }
-            .pv-help-btn {
-                margin-left: 6px
-            }
             .pv-nav {
                 padding: 0 var(--sp-5, 20px)
             }
@@ -1415,7 +1412,7 @@
             var newsLoaded = false;
             var searchCount = 0;
             var pvActiveContext = null; /* Brecha 3: contexto activo para el chat */
-            var MOBILE_QUERY = '(max-width:767px)';
+            var MOBILE_QUERY_STRING = '(max-width:767px)';
             var mobileMediaQuery = null;
             var hasSeguimientosWarned = false;
 
@@ -1493,7 +1490,7 @@
             }
 
             function initWelcomeExperience() {
-                mobileMediaQuery = window.matchMedia(MOBILE_QUERY);
+                mobileMediaQuery = window.matchMedia(MOBILE_QUERY_STRING);
                 setWelcomeVisibility();
                 var dismissBtn = $('pv-welcome-dismiss');
                 if (dismissBtn) dismissBtn.addEventListener('click', dismissWelcome);
@@ -1502,7 +1499,8 @@
                 if (startBtn) {
                     startBtn.addEventListener('click', function(e) {
                         e.preventDefault();
-                        if (mobileMediaQuery && mobileMediaQuery.matches) {
+                        var isMobile = mobileMediaQuery ? mobileMediaQuery.matches : window.matchMedia(MOBILE_QUERY_STRING).matches;
+                        if (isMobile) {
                             var sidebar = $('sidebar');
                             if (sidebar && !sidebar.classList.contains('open')) {
                                 var navBtn = $('nav-seg-btn');
