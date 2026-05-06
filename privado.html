@@ -1403,9 +1403,6 @@
             function initOnboarding() {
                 var overlay = $('pv-onboarding');
                 if (!overlay) return;
-                function onDocumentEscape(e) {
-                    if (!overlay.hidden && e.key === 'Escape') dismiss();
-                }
                 var shouldShow = true;
                 try {
                     shouldShow = !localStorage.getItem('ca_onboarding_ok');
@@ -1419,7 +1416,6 @@
                         var box = overlay.querySelector('.pv-onboarding-box');
                         if (box) box.focus();
                     });
-                    document.addEventListener('keydown', onDocumentEscape);
                 }
                 function dismiss() {
                     try {
@@ -1428,7 +1424,6 @@
                         console.warn('[Privado] No se pudo persistir estado onboarding:', err);
                     }
                     overlay.hidden = true;
-                    document.removeEventListener('keydown', onDocumentEscape);
                 }
                 var btn = $('pv-onboarding-dismiss');
                 if (btn) btn.addEventListener('click', dismiss);
