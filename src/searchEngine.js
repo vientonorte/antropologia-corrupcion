@@ -1025,7 +1025,9 @@ function initSearchUI(opts) {
             params.sourceCatalog = engine.sourceCatalog;
             html += renderSearchCard(results[i], params);
         }
-        resultsContainer.innerHTML = html || '<div class="se-no-results">No se encontraron registros. Intenta: buscar un término general (ej. "territorio"), quitar filtros, o explorar los campos en la sección anterior.</div>';
+        // When there are no results the stats panel already shows the empty-state message,
+        // so leave the results container empty to avoid showing duplicate notices.
+        resultsContainer.innerHTML = html;
 
         if (selectedResultId) {
             var selectedCard = resultsContainer.querySelector('.se-card[data-result-id="' + selectedResultId + '"]');
