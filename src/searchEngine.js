@@ -615,6 +615,13 @@ function renderSearchCard(result, context) {
         detailsHtml +
         '<div class="se-card-tags">' + tagsHtml + '</div>' +
         (reg.url ? '<a class="se-card-link" href="' + _escHtml(reg.url) + '" target="_blank" rel="noopener noreferrer">Ver fuente oficial ↗</a>' : '') +
+        /* Brecha 4: botón para agregar a seguimientos desde el resultado */
+        '<button class="se-card-seguir" type="button" ' +
+            'data-seguir-nombre="' + _escHtml(reg.titulo || reg.id || '') + '" ' +
+            'data-seguir-tipo="institucion" ' +
+            'aria-label="Agregar ' + _escHtml(reg.titulo || reg.id || '') + ' a seguimientos">' +
+            '⊕ Seguir' +
+        '</button>' +
         '</article>';
 
     return html;
