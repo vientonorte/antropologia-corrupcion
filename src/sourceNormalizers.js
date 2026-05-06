@@ -48,6 +48,7 @@ function _snCanonicalRecord(base) {
         friccion_con: base.friccion_con || 'periodismo-datos-chile',
         tipo_friccion: base.tipo_friccion || 'semantica',
         tags: _snArray(base.tags),
+        actores_lobby: _snArray(base.actores_lobby),
         published_at: base.published_at || base.fecha || '',
         fetched_at: base.fetched_at || '',
         verificado: Boolean(base.verificado),

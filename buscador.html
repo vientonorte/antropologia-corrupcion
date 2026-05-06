@@ -628,7 +628,7 @@
   </footer>
 
   <script defer src="src/frictionEngine.js?v=20260419"></script>
-  <script defer src="src/searchEngine.js?v=20260419"></script>
+  <script defer src="src/searchEngine.js?v=20260506"></script>
   <script>
     (function () {
       'use strict';
@@ -843,7 +843,7 @@
           if (r._frictionScore < frictionMin) return false;
           if (hasSourceFilter && !checkedSources[r.fuente]) return false;
           if (q) {
-            var haystack = [r.titulo, r.institucion, r.capa_oficial, (r.keywords || []).join(' '), (r.tags || []).join(' ')].join(' ').toLowerCase();
+            var haystack = [r.titulo, r.materia || '', r.institucion, r.capa_oficial, (r.keywords || []).join(' '), (r.tags || []).join(' '), (r.actores_lobby || []).join(' ')].join(' ').toLowerCase();
             if (haystack.indexOf(q) === -1) return false;
           }
           return true;
