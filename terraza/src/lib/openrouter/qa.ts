@@ -102,8 +102,17 @@ Genera el informe QA Nivel 1 en JSON.`;
     temperature: 0.1,
   });
 
-  // Extract JSON if wrapped in markdown
-  const jsonMatch = raw.match(/```json\s*([\s\S]*?)```/) ?? raw.match(/(\{[\s\S]*\})/);
+  // Extract JSON — prefer fenced block, then a full-string JSON object
+  const jsonMatch =
+    raw.match(/```json\s*([\s\S]*?)```/) ??
+    raw.match(/^\s*(\{[\s\S]*\})\s*$/);
   const jsonStr = jsonMatch ? jsonMatch[1].trim() : raw.trim();
-  return JSON.parse(jsonStr) as QAResult;
+
+  try {
+    return JSON.parse(jsonStr) as QAResult;
+  } catch {
+    throw new Error(
+      `No se pudo interpretar la respuesta QA de Claude. Respuesta recibida: ${jsonStr.slice(0, 200)}`,
+    );
+  }
 }

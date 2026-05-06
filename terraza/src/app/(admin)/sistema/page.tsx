@@ -215,7 +215,7 @@ function APIHealthSection({ health }: { health: ApiHealth }) {
   );
 }
 
-function QASection({ result, loading, onRun }: { result: QAResult | null; loading: boolean; onRun: () => void }) {
+function QASection({ result, loading, onRun }: { result: QAResult | null; loading: boolean; onRun: () => Promise<void> }) {
   return (
     <section aria-labelledby="qa-heading">
       <div className="flex items-center justify-between mb-3">
@@ -371,7 +371,7 @@ export default function SistemaPage(): React.ReactElement {
             type="button"
             variant="secondary"
             disabled={loadingDb}
-            onClick={() => void fetchDb()}
+            onClick={fetchDb}
           >
             {loadingDb ? <span className="flex items-center gap-2"><Spinner size="sm" /> Cargando…</span> : 'Actualizar BD'}
           </Button>
@@ -394,7 +394,7 @@ export default function SistemaPage(): React.ReactElement {
             type="button"
             variant="secondary"
             disabled={loadingApi}
-            onClick={() => void fetchApi()}
+            onClick={fetchApi}
           >
             {loadingApi ? <span className="flex items-center gap-2"><Spinner size="sm" /> Verificando…</span> : 'Verificar APIs'}
           </Button>
@@ -413,7 +413,7 @@ export default function SistemaPage(): React.ReactElement {
       {qaError && (
         <p role="alert" className="text-sm text-red-600">{qaError}</p>
       )}
-      <QASection result={qaResult} loading={loadingQa} onRun={() => void runQa()} />
+      <QASection result={qaResult} loading={loadingQa} onRun={runQa} />
     </div>
   );
 }

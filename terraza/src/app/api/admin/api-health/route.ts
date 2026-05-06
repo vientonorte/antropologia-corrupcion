@@ -16,13 +16,19 @@ const ENDPOINTS = [
 
 const TIMEOUT_MS = 5_000;
 
+// Use the configured server URL instead of deriving it from the request
+// to prevent SSRF via a user-controlled Host header.
+function getServerOrigin(): string {
+  return process.env.NEXTAUTH_URL ?? 'http://localhost:3000';
+}
+
 export async function GET(request: Request) {
   const session = await getSession();
   if (!session) {
     return NextResponse.json({ error: 'No autorizado' }, { status: 401 });
   }
 
-  const origin = new URL(request.url).origin;
+  const origin = getServerOrigin();
 
   const results = await Promise.all(
     ENDPOINTS.map(async ({ path, label }) => {

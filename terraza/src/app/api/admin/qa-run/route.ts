@@ -5,6 +5,11 @@ import { getUploadStats } from '@/lib/db/uploads';
 import { getDatabase } from '@/lib/db/init';
 import { runQALevel1, type QAInput } from '@/lib/openrouter/qa';
 
+// Use the configured server URL to avoid SSRF via user-controlled Host header.
+function getServerOrigin(): string {
+  return process.env.NEXTAUTH_URL ?? 'http://localhost:3000';
+}
+
 export async function POST(request: NextRequest) {
   const session = await getSession();
   if (!session) {
@@ -27,8 +32,14 @@ export async function POST(request: NextRequest) {
 
     const uploadStats = getUploadStats();
 
-    // Collect API health snapshot (forwarded from request context)
-    const origin = new URL(request.url).origin;
+    // Convert number-keyed byCaso to string-keyed for QAInput (JS object keys are always strings)
+    const byCasoStr: Record<string, number> = {};
+    for (const [k, v] of Object.entries(uploadStats.byCaso)) {
+      byCasoStr[String(k)] = v;
+    }
+
+    // Collect API health snapshot using the configured server origin
+    const origin = getServerOrigin();
     const endpoints = [
       '/api/corpus/list',
       '/api/corpus/by-estado',
@@ -69,7 +80,7 @@ export async function POST(request: NextRequest) {
         usuarios: countAllUsers(),
         uploads: {
           total: uploadStats.total,
-          byCaso: uploadStats.byCaso as Record<string, number>,
+          byCaso: byCasoStr,
           byEstado: uploadStats.byEstado as Record<string, number>,
           byFuente: uploadStats.byFuente as Record<string, number>,
         },
