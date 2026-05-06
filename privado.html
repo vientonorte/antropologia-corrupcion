@@ -1221,7 +1221,7 @@
             <a href="#" id="nav-seg-btn">Mis seguimientos</a>
             <button class="btn-salir" id="logout-btn">Salir</button>
         </div>
-        <button class="pv-help-btn" id="pv-help-btn" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="pv-help-popover" aria-label="Abrir guía rápida"><span aria-hidden="true">[?]</span><span class="sr-only">Abrir guía rápida</span></button>
+        <button class="pv-help-btn" id="pv-help-btn" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="pv-help-popover" aria-label="Abrir guía rápida"><span aria-hidden="true">[?]</span></button>
     </nav>
     <aside class="pv-help-popover" id="pv-help-popover" role="dialog" aria-label="Guía rápida del espacio privado" hidden>
         <p class="pv-help-title">Guía rápida</p>
@@ -1446,7 +1446,8 @@
             /* UX contextual: bienvenida inline (primera visita) */
             function hasSeguimientos() {
                 try {
-                    return !!(window.Seguimientos && window.Seguimientos.listar && window.Seguimientos.listar().length);
+                    if (!window.Seguimientos || !window.Seguimientos.listar) return false;
+                    return window.Seguimientos.listar().length > 0;
                 } catch (err) {
                     console.warn('[Privado] Error al verificar seguimientos:', err);
                     return false;
@@ -1539,7 +1540,6 @@
                     if (popover.contains(e.target)) return;
                     popover.hidden = true;
                     openBtn.setAttribute('aria-expanded', 'false');
-                    openBtn.focus();
                 });
             }
 
