@@ -1221,7 +1221,7 @@
             <a href="#" id="nav-seg-btn">Mis seguimientos</a>
             <button class="btn-salir" id="logout-btn">Salir</button>
         </div>
-        <button class="pv-help-btn" id="pv-help-btn" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="pv-help-popover" aria-label="Abrir guía rápida">[?]</button>
+        <button class="pv-help-btn" id="pv-help-btn" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="pv-help-popover" aria-label="Abrir guía rápida"><span aria-hidden="true">[?]</span><span class="sr-only">Abrir guía rápida</span></button>
     </nav>
     <aside class="pv-help-popover" id="pv-help-popover" role="dialog" aria-label="Guía rápida del espacio privado" hidden>
         <p class="pv-help-title">Guía rápida</p>
@@ -1415,6 +1415,7 @@
             var newsLoaded = false;
             var searchCount = 0;
             var pvActiveContext = null; /* Brecha 3: contexto activo para el chat */
+            var MOBILE_QUERY = '(max-width:767px)';
 
             /* ── Helpers ── */
             function $(id) {
@@ -1447,6 +1448,7 @@
                 try {
                     return !!(window.Seguimientos && window.Seguimientos.listar && window.Seguimientos.listar().length);
                 } catch (err) {
+                    console.warn('[Privado] Error al verificar seguimientos:', err);
                     return false;
                 }
             }
@@ -1493,7 +1495,7 @@
                 if (startBtn) {
                     startBtn.addEventListener('click', function(e) {
                         e.preventDefault();
-                        if (window.matchMedia('(max-width:767px)').matches) {
+                        if (window.matchMedia(MOBILE_QUERY).matches) {
                             var sidebar = $('sidebar');
                             if (sidebar && !sidebar.classList.contains('open')) {
                                 var navBtn = $('nav-seg-btn');
@@ -1537,6 +1539,7 @@
                     if (popover.contains(e.target)) return;
                     popover.hidden = true;
                     openBtn.setAttribute('aria-expanded', 'false');
+                    openBtn.focus();
                 });
             }
 
