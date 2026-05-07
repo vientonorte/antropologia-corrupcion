@@ -104,6 +104,37 @@ export function updateCredentialCounter(userId: string, newCounter: number): voi
   stmt.run(newCounter, Date.now(), userId);
 }
 
+/**
+ * Reemplaza la credencial passkey de un usuario existente.
+ * Se usa al registrar un nuevo dispositivo bajo sesión autenticada.
+ * Mantiene user_id/user_name, reinicia el contador y rota la credencial previa.
+ * La credencial anterior queda inválida para autenticaciones futuras.
+ */
+export function replaceCredentialForUser(
+  userId: string,
+  userName: string,
+  credentialId: Uint8Array,
+  credentialPublicKey: Uint8Array,
+  transports?: AuthenticatorTransport[],
+): void {
+  const db = getDatabase();
+  const stmt = db.prepare(`
+    UPDATE credentials
+    SET credential_id = ?, credential_public_key = ?, counter = ?, transports = ?, updated_at = ?
+    WHERE user_id = ? AND user_name = ?
+  `);
+
+  stmt.run(
+    Buffer.from(credentialId),
+    Buffer.from(credentialPublicKey),
+    0,
+    transports ? JSON.stringify(transports) : null,
+    Date.now(),
+    userId,
+    userName,
+  );
+}
+
 export function userExists(userName: string): boolean {
   const db = getDatabase();
   const stmt = db.prepare('SELECT COUNT(*) as count FROM credentials WHERE user_name = ?');
