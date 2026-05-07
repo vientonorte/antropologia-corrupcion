@@ -1348,12 +1348,11 @@ function initSocialField() {
       const regimeBadge = document.getElementById('sf-eq-regime-badge');
       if (regimeBadge) {
         SF._regimeInterval = setInterval(function() {
-          const r = SF._logisticR || 1.5;
-          const regime = SF._logisticRegime || 'ESTABLE';
-          regimeBadge.textContent = 'r\u2009=\u2009' + r.toFixed(2) + '\u2009\u00B7\u2009' + regime;
+          const state = SF.getLogisticState();
+          regimeBadge.textContent = 'r\u2009=\u2009' + state.r.toFixed(2) + '\u2009\u00B7\u2009' + state.regime;
           regimeBadge.className = 'sf-bs-badge sf-badge-' + (
-            regime === 'CAOS' ? 'chaos' :
-            regime.startsWith('BIFURCACIÓN') || regime === 'CASCADA' ? 'bifurc' :
+            state.regime === 'CAOS' ? 'chaos' :
+            state.regime.startsWith('BIFURCACIÓN') || state.regime === 'CASCADA' ? 'bifurc' :
             'stable'
           );
         }, 800);

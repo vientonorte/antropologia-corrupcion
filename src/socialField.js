@@ -463,7 +463,9 @@ class SocialField {
             this._logisticX + (Math.random() - 0.5) * 0.05, // pequeña perturbación inicial
             THERMO_CONFIG.LOGISTIC_WARMUP
         );
-        // Asegurar que logX esté en [0,1] (el mapa puede salir del rango por errores numéricos)
+        // Asegurar que logX esté en [0,1] (salvaguarda numérica: con r~3.9 y errores de redondeo
+        // el mapa puede producir valores ε fuera de rango, lo que es un artefacto computacional,
+        // no un comportamiento matemático — la ecuación en exacta aritmética siempre devuelve [0,1])
         const logXClamped = Math.max(0, Math.min(1, logX));
         // Combinar valor logístico con ruido base para diversidad de agentes
         const baseNecessity = 0.3 + Math.random() * 0.4;
@@ -1155,6 +1157,18 @@ class SocialField {
     }
 
     /* ─── API PÚBLICA ─── */
+
+    /**
+     * Devuelve el estado actual del mapa logístico (lectura pública segura).
+     * @returns {{ r: number, regime: string, x: number }}
+     */
+    getLogisticState() {
+        return {
+            r: this._logisticR,
+            regime: this._logisticRegime,
+            x: this._logisticX,
+        };
+    }
 
     updateNodes(nodes, links) {
         this.nodes = nodes;
