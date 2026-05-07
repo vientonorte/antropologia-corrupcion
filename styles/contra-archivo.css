@@ -2580,6 +2580,199 @@ footer {
 }
 
 
+/* ─── Black-Scholes equation display (campo-social) ─── */
+
+.sf-bs-equation {
+    border: 1px solid rgba(74, 127, 165, .25);
+    border-left: 3px solid rgba(74, 127, 165, .6);
+    background: rgba(74, 127, 165, .04);
+    border-radius: 4px;
+    padding: 20px 24px;
+    margin: 24px 0;
+    font-size: .85rem
+}
+
+.sf-bs-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+    flex-wrap: wrap
+}
+
+.sf-bs-eyebrow {
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    font-size: .72rem;
+    color: rgba(74, 127, 165, .8);
+    text-transform: uppercase;
+    letter-spacing: .06em
+}
+
+.sf-bs-badge {
+    font-size: .72rem;
+    color: var(--dim);
+    border: 1px solid rgba(255, 255, 255, .1);
+    border-radius: 3px;
+    padding: 1px 7px
+}
+
+.sf-bs-formula {
+    font-family: 'SF Mono', 'Fira Code', 'Courier New', monospace;
+    font-size: 1.3rem;
+    letter-spacing: .04em;
+    margin: 14px 0 18px;
+    line-height: 1.8
+}
+
+.sf-bs-op {
+    color: var(--dim);
+    margin: 0 2px
+}
+
+.sf-bs-fn {
+    color: rgba(200, 169, 110, .75)
+}
+
+.sf-bs-c { color: var(--etica); font-weight: 600 }
+.sf-bs-s { color: rgba(74, 127, 165, .9); font-weight: 600 }
+.sf-bs-k { color: var(--mat); font-weight: 600 }
+
+.sf-bs-reinterp {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 6px 16px;
+    margin-bottom: 14px
+}
+
+.sf-bs-var-row {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    font-size: .8rem
+}
+
+.sf-bs-var {
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    font-size: .95rem;
+    font-weight: 700;
+    min-width: 18px
+}
+
+.sf-bs-sigma { color: rgba(200, 169, 110, .9) }
+.sf-bs-t     { color: var(--dim) }
+
+.sf-bs-var-label {
+    color: var(--dim);
+    line-height: 1.4
+}
+
+.sf-bs-nota {
+    font-size: .8rem;
+    color: var(--dim);
+    line-height: 1.6;
+    border-top: 1px solid rgba(255, 255, 255, .06);
+    padding-top: 12px;
+    margin: 0
+}
+
+/* ─── Grid de dos ecuaciones ─── */
+
+.sf-equations-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 24px 0
+}
+
+@media(max-width: 900px) {
+    .sf-equations-grid {
+        grid-template-columns: 1fr
+    }
+}
+
+/* Mapa logístico: acento levemente distinto */
+.sf-eq-logistic {
+    border-left-color: rgba(200, 169, 110, .6)
+}
+
+/* Black-Scholes PDE: acento azul */
+.sf-eq-bs {
+    border-left-color: rgba(74, 127, 165, .6)
+}
+
+/* Fracciones PDE: ∂V/∂t */
+.sf-bs-frac {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    vertical-align: middle;
+    line-height: 1.1;
+    font-size: .9em;
+    margin: 0 2px
+}
+
+.sf-bs-frac-num {
+    border-bottom: 1px solid rgba(255, 255, 255, .35);
+    padding: 0 2px 1px
+}
+
+.sf-bs-frac-den {
+    padding: 1px 2px 0
+}
+
+/* PDE formula: más compacta que la solución cerrada */
+.sf-bs-formula--pde {
+    font-size: 1.05rem;
+    margin-bottom: 8px
+}
+
+/* Solución cerrada: debajo de la PDE, con etiqueta */
+.sf-bs-formula--closed {
+    font-size: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, .06);
+    padding-top: 10px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 2px
+}
+
+.sf-bs-sub-label {
+    font-size: .7rem;
+    color: var(--dim);
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    margin-right: 8px
+}
+
+.sf-bs-sub {
+    font-size: .7em;
+    vertical-align: sub
+}
+
+/* Badges de régimen del mapa logístico */
+.sf-badge-stable {
+    color: rgba(74, 127, 165, .9);
+    border-color: rgba(74, 127, 165, .3)
+}
+
+.sf-badge-bifurc {
+    color: rgba(200, 169, 110, .9);
+    border-color: rgba(200, 169, 110, .3)
+}
+
+.sf-badge-chaos {
+    color: rgba(180, 60, 50, .9);
+    border-color: rgba(180, 60, 50, .4);
+    animation: sf-pulse 1.2s ease-in-out infinite
+}
+
+/* Métrica de mapa logístico en panel */
+.sf-metric--logistic .sf-label {
+    font-size: .6rem
+}
+
+
 /* ═══════════════ VIZ RESPONSIVE (post-cascade) ═══════════════ */
 
 @media(max-width:768px) {
