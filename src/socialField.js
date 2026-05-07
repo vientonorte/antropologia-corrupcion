@@ -38,6 +38,9 @@
 
 const THERMO_CONFIG = Object.freeze({
     // Constante gravitacional social (cuán fuerte curva el poder el espacio)
+    // Incrementada de 2400 a 3600 para asegurar que los agentes alcancen los nodos
+    // antes de agotar su vida (300 frames). Con la modulación logística, agentes con
+    // necesidad alta (mapa en r>3) necesitan ser atraídos más fuerte para interactuar.
     G_SOCIAL: 3600,
     // Factor de Boltzmann social (relación energía-desorden)
     K_BOLTZMANN: 0.08,
@@ -339,6 +342,7 @@ class SocialField {
             // Contar tipos de fricción en un solo recorrido (O(n))
             const counts = records.reduce(function(acc, r) {
                 const t = r.tipo_friccion;
+                if (!t) return acc; // registro sin tipo_friccion — ignorar
                 acc[t] = (acc[t] || 0) + 1;
                 return acc;
             }, {});
@@ -459,10 +463,12 @@ class SocialField {
             this._logisticX + (Math.random() - 0.5) * 0.05, // pequeña perturbación inicial
             THERMO_CONFIG.LOGISTIC_WARMUP
         );
+        // Asegurar que logX esté en [0,1] (el mapa puede salir del rango por errores numéricos)
+        const logXClamped = Math.max(0, Math.min(1, logX));
         // Combinar valor logístico con ruido base para diversidad de agentes
         const baseNecessity = 0.3 + Math.random() * 0.4;
         const necessity = baseNecessity * (1 - THERMO_CONFIG.LOGISTIC_WEIGHT) +
-            logX * THERMO_CONFIG.LOGISTIC_WEIGHT;
+            logXClamped * THERMO_CONFIG.LOGISTIC_WEIGHT;
 
         return {
             x,
@@ -631,7 +637,9 @@ class SocialField {
         // Actualizar r del mapa logístico según la entropía actual
         this._logisticR = logisticR(this.entropy);
         // Avanzar el estado compartido del mapa (una iteración por llamada)
-        this._logisticX = this._logisticR * this._logisticX * (1 - this._logisticX);
+        // Clampear a (0,1) para evitar colapso a 0 exacto (mapa se atasco indefinidamente)
+        const nextX = this._logisticR * this._logisticX * (1 - this._logisticX);
+        this._logisticX = Math.max(0.001, Math.min(0.999, nextX));
         // Guardar para acceso en métricas
         this._logisticRegime = logisticRegime(this._logisticR);
     }
@@ -1188,6 +1196,7 @@ class SocialField {
         if (this.animFrame) cancelAnimationFrame(this.animFrame);
         if (this._io) this._io.disconnect();
         if (this.canvas && this.canvas.parentNode) this.canvas.parentNode.removeChild(this.canvas);
+        if (this._regimeInterval) clearInterval(this._regimeInterval);
     }
 }
 

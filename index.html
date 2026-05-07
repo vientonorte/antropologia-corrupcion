@@ -1347,7 +1347,7 @@ function initSocialField() {
       // Actualizar badge del régimen del mapa logístico en tiempo real
       const regimeBadge = document.getElementById('sf-eq-regime-badge');
       if (regimeBadge) {
-        setInterval(function() {
+        SF._regimeInterval = setInterval(function() {
           const r = SF._logisticR || 1.5;
           const regime = SF._logisticRegime || 'ESTABLE';
           regimeBadge.textContent = 'r\u2009=\u2009' + r.toFixed(2) + '\u2009\u00B7\u2009' + regime;
