@@ -15,7 +15,7 @@ const ActionSchema = z.object({
   action: z.enum(['test', 'toggle', 'retry', 'consolidate']),
   sourceId: z.string().optional(),
   active: z.boolean().optional(),
-  sourceIds: z.array(z.string()).optional(),
+  sourceIds: z.array(z.string()).nonempty().optional(),
 });
 
 export async function GET() {

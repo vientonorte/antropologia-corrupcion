@@ -42,4 +42,30 @@ describe('runQALevel1 fallback', () => {
     expect(result.score).toBe(75);
     expect(openClawAsk).toHaveBeenCalledTimes(1);
   });
+
+  it('mantiene OpenRouter como proveedor primario cuando responde OK', async () => {
+    vi.mocked(openRouterChat).mockResolvedValue(
+      JSON.stringify({
+        score: 90,
+        nivel: 'OK',
+        resumen: 'primary',
+        hallazgos: [],
+        timestamp: new Date().toISOString(),
+      }),
+    );
+    vi.mocked(openClawAsk).mockResolvedValue('{"score":0}');
+
+    const result = await runQALevel1({
+      dbStats: {
+        usuarios: 1,
+        uploads: { total: 1, byCaso: { '1': 1 }, byEstado: { pendiente: 1 }, byFuente: {} },
+        commitQueue: { pending: 0, committed: 0, synced: 0, error: 0 },
+      },
+      apiHealth: [],
+    });
+
+    expect(result.provider).toBe('openrouter');
+    expect(result.score).toBe(90);
+    expect(openClawAsk).not.toHaveBeenCalled();
+  });
 });

@@ -44,6 +44,14 @@ function mapEvidenceType(
   return 'oficial';
 }
 
+function parseTipoFriccion(value: unknown): 'politica' | 'semantica' | 'tecnica' {
+  const normalized = normalizeText(value).toLowerCase();
+  if (normalized === 'politica') return 'politica';
+  if (normalized === 'tecnica') return 'tecnica';
+  // Default conservador: cuando no hay tipo explícito, tratamos la fricción como semántica.
+  return 'semantica';
+}
+
 export function normalizeSourceRecord(
   source: SourceRegistryItem,
   raw: Record<string, unknown>,
@@ -75,7 +83,7 @@ export function normalizeSourceRecord(
       raw.capa_oficial || `Registro normalizado desde ${source.label} (${source.metodo_acceso}).`,
     ),
     friccion_con: normalizeText(raw.friccion_con || 'periodismo-datos-chile'),
-    tipo_friccion: (normalizeText(raw.tipo_friccion) as 'politica' | 'semantica' | 'tecnica') || 'semantica',
+    tipo_friccion: parseTipoFriccion(raw.tipo_friccion),
     tags,
     published_at: normalizeText(raw.published_at || raw.fecha || now),
     fetched_at: now,

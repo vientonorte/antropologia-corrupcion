@@ -297,21 +297,24 @@ function SourcesSection({
                     <div className="inline-flex gap-2">
                       <button
                         type="button"
-                        className="text-xs underline text-gray-600 hover:text-gray-900"
+                        className="text-xs underline text-gray-600 hover:text-gray-900 hover:no-underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 rounded"
+                        aria-label={`Probar conexión de ${source.label}`}
                         onClick={() => void onAction('test', source.sourceId)}
                       >
                         test
                       </button>
                       <button
                         type="button"
-                        className="text-xs underline text-gray-600 hover:text-gray-900"
+                        className="text-xs underline text-gray-600 hover:text-gray-900 hover:no-underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 rounded"
+                        aria-label={`Reintentar conexión de ${source.label}`}
                         onClick={() => void onAction('retry', source.sourceId)}
                       >
                         reintentar
                       </button>
                       <button
                         type="button"
-                        className="text-xs underline text-gray-600 hover:text-gray-900"
+                        className="text-xs underline text-gray-600 hover:text-gray-900 hover:no-underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 rounded"
+                        aria-label={`${source.active ? 'Desactivar' : 'Activar'} ${source.label}`}
                         onClick={() => void onAction('toggle', source.sourceId, !source.active)}
                       >
                         {source.active ? 'desactivar' : 'activar'}
