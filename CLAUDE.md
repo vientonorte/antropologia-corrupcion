@@ -1,5 +1,7 @@
 # Contra-archivo · Terraza Admin
 
+> Documento canónico del contexto privado `terraza/`. No usar este archivo para documentar la arquitectura pública de la raíz del repositorio.
+
 ## Contexto del proyecto
 
 App admin **privada** para alimentar el contra-archivo doctoral de Rö (antropología de la corrupción). La terraza recibe capturas (screenshots, fotos de documentos, PDFs), las analiza con Claude API según el tag asignado, y persiste resultados versionados en un **repo privado** de GitHub. El sitio público (`vientonorte/antropologia-corrupcion`) consume solo el grafo agregado/anonimizado.
