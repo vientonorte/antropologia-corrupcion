@@ -533,29 +533,91 @@
                 <em>muerte térmica</em>: toda transacción requiere soborno.
             </p>
 
-            <!-- Ecuación de Black-Scholes aplicada al campo de fricción -->
-            <div class="sf-bs-equation" role="note" aria-label="Ecuación de Black-Scholes aplicada a fricción epistemológica">
-                <div class="sf-bs-header">
-                    <span class="sf-bs-eyebrow">Black &amp; Scholes (1973) → contra-archivo (2026)</span>
-                    <span class="sf-bs-badge">la ecuación que "eliminó" la incertidumbre</span>
+            <!-- Marco teórico: dos ecuaciones de Veritasium que articulan la simulación -->
+            <div class="sf-equations-grid" role="note" aria-label="Marco teórico de la simulación: mapa logístico y Black-Scholes PDE">
+
+                <!-- Ecuación 1: Mapa logístico — "Esto es el Caos" -->
+                <div class="sf-bs-equation sf-eq-logistic">
+                    <div class="sf-bs-header">
+                        <span class="sf-bs-eyebrow">May (1976) · Veritasium — "Esto es el Caos"</span>
+                        <span class="sf-bs-badge" id="sf-eq-regime-badge">r = 1.50 · ESTABLE</span>
+                    </div>
+                    <div class="sf-bs-formula" aria-label="x sub n más 1 igual a r por x sub n por el factor 1 menos x sub n" aria-describedby="sf-logistic-reinterp">
+                        <span class="sf-bs-fn">x</span><sub class="sf-bs-sub">n+1</sub>
+                        <span class="sf-bs-op"> = </span>
+                        <span class="sf-bs-sigma">r</span>
+                        <span class="sf-bs-op">·</span>
+                        <span class="sf-bs-fn">x</span><sub class="sf-bs-sub">n</sub>
+                        <span class="sf-bs-op">·(1 −</span>
+                        <span class="sf-bs-fn">x</span><sub class="sf-bs-sub">n</sub>
+                        <span class="sf-bs-op">)</span>
+                    </div>
+                    <div class="sf-bs-reinterp" id="sf-logistic-reinterp">
+                        <div class="sf-bs-var-row"><span class="sf-bs-var sf-bs-fn">x<sub>n</sub></span><span class="sf-bs-var-label">Nivel de necesidad/presión informal del agente en el paso n (0→1)</span></div>
+                        <div class="sf-bs-var-row"><span class="sf-bs-var sf-bs-sigma">r</span><span class="sf-bs-var-label">Tasa de reproducción de la corrupción — crece con la entropía del sistema</span></div>
+                        <div class="sf-bs-var-row">
+                            <span class="sf-bs-var sf-bs-fn">r</span>
+                            <span class="sf-bs-var-label">
+                                <strong>&lt; 3.0</strong> → punto fijo (corrupción predecible) ·
+                                <strong>3.0–3.57</strong> → bifurcaciones periódicas ·
+                                <strong>≥ 3.57</strong> → <em>caos determinista</em>
+                            </span>
+                        </div>
+                    </div>
+                    <p class="sf-bs-nota">
+                        La misma ecuación que modela el crecimiento de poblaciones produce caos con un solo parámetro. Aquí <strong>r sube con la entropía del sistema</strong>: a medida que la corrupción se extiende, la necesidad de cada agente se vuelve impredecible. Dos ciudadanos con necesidades casi idénticas evolucionan de forma completamente diferente — sensibilidad a condiciones iniciales.
+                    </p>
                 </div>
-                <div class="sf-bs-formula" aria-label="C igual a S por N de d1 menos K por e elevado a menos rT por N de d2" aria-describedby="sf-bs-reinterp">
-                    <span class="sf-bs-c">C</span>
-                    <span class="sf-bs-op">=</span>
-                    <span class="sf-bs-s">S</span><span class="sf-bs-op">·</span><span class="sf-bs-fn">N(d₁)</span>
-                    <span class="sf-bs-op"> − </span>
-                    <span class="sf-bs-k">K</span><span class="sf-bs-op">·</span><span class="sf-bs-fn">e<sup>−rT</sup></span><span class="sf-bs-op">·</span><span class="sf-bs-fn">N(d₂)</span>
+
+                <!-- Ecuación 2: Black-Scholes PDE completa + solución cerrada -->
+                <div class="sf-bs-equation sf-eq-bs">
+                    <div class="sf-bs-header">
+                        <span class="sf-bs-eyebrow">Black &amp; Scholes (1973) · Veritasium — "la ecuación que eliminó la incertidumbre"</span>
+                        <span class="sf-bs-badge">PDE completa</span>
+                    </div>
+                    <!-- PDE diferencial -->
+                    <div class="sf-bs-formula sf-bs-formula--pde" aria-label="Derivada parcial de V respecto a t, más r S por derivada parcial de V respecto a S, más un medio sigma cuadrado S cuadrado por segunda derivada de V respecto a S al cuadrado, menos rV, igual a 0" aria-describedby="sf-bs-reinterp">
+                        <span class="sf-bs-frac">
+                            <span class="sf-bs-frac-num">∂<span class="sf-bs-c">V</span></span>
+                            <span class="sf-bs-frac-den">∂t</span>
+                        </span>
+                        <span class="sf-bs-op"> + </span>
+                        <span class="sf-bs-sigma">r</span><span class="sf-bs-s">S</span>
+                        <span class="sf-bs-frac">
+                            <span class="sf-bs-frac-num">∂<span class="sf-bs-c">V</span></span>
+                            <span class="sf-bs-frac-den">∂<span class="sf-bs-s">S</span></span>
+                        </span>
+                        <span class="sf-bs-op"> + </span>
+                        <span class="sf-bs-fn">½</span><span class="sf-bs-fn">σ²</span><span class="sf-bs-s">S²</span>
+                        <span class="sf-bs-frac">
+                            <span class="sf-bs-frac-num">∂²<span class="sf-bs-c">V</span></span>
+                            <span class="sf-bs-frac-den">∂<span class="sf-bs-s">S</span>²</span>
+                        </span>
+                        <span class="sf-bs-op"> − </span>
+                        <span class="sf-bs-sigma">r</span><span class="sf-bs-c">V</span>
+                        <span class="sf-bs-op"> = 0</span>
+                    </div>
+                    <!-- Solución cerrada -->
+                    <div class="sf-bs-formula sf-bs-formula--closed" aria-label="Solución: C igual a S por N de d1 menos K por e elevado a menos rT por N de d2">
+                        <span class="sf-bs-sub-label">Solución cerrada →</span>
+                        <span class="sf-bs-c">C</span>
+                        <span class="sf-bs-op">=</span>
+                        <span class="sf-bs-s">S</span><span class="sf-bs-op">·</span><span class="sf-bs-fn">N(d₁)</span>
+                        <span class="sf-bs-op"> − </span>
+                        <span class="sf-bs-k">K</span><span class="sf-bs-op">·</span><span class="sf-bs-fn">e<sup>−rT</sup></span><span class="sf-bs-op">·</span><span class="sf-bs-fn">N(d₂)</span>
+                    </div>
+                    <div class="sf-bs-reinterp" id="sf-bs-reinterp">
+                        <div class="sf-bs-var-row"><span class="sf-bs-var sf-bs-c">V, C</span><span class="sf-bs-var-label">Probabilidad de resolución epistémica — valor esperado del caso</span></div>
+                        <div class="sf-bs-var-row"><span class="sf-bs-var sf-bs-s">S</span><span class="sf-bs-var-label">Presión pública (actores + instituciones + conexiones documentadas)</span></div>
+                        <div class="sf-bs-var-row"><span class="sf-bs-var sf-bs-k">K</span><span class="sf-bs-var-label">Umbral de resolución institucional (varía: abierta 1.0 · archivada 1.6)</span></div>
+                        <div class="sf-bs-var-row"><span class="sf-bs-var sf-bs-sigma">σ</span><span class="sf-bs-var-label">Volatilidad epistemológica — intensidad de fricción entre capas</span></div>
+                        <div class="sf-bs-var-row"><span class="sf-bs-var sf-bs-t">T</span><span class="sf-bs-var-label">Tiempo transcurrido — Θ &lt; 0: cada año sin presión erosiona el valor</span></div>
+                    </div>
+                    <p class="sf-bs-nota">
+                        Black &amp; Scholes asumieron que el riesgo se puede <em>eliminar</em> cubriendo la posición. El instrumento invierte esa premisa: <strong>σ mide la incertidumbre que la institución produce</strong> al traducir entre regímenes de verdad. No la elimina — la cuantifica como evidencia. La PDE y la solución cerrada están implementadas en <code>blackScholes.js</code> y calculan el valor de resolución de cada caso en el grafo.
+                    </p>
                 </div>
-                <div class="sf-bs-reinterp" id="sf-bs-reinterp">
-                    <div class="sf-bs-var-row"><span class="sf-bs-var sf-bs-c">C</span><span class="sf-bs-var-label">Probabilidad esperada de resolución epistémica (valor del caso)</span></div>
-                    <div class="sf-bs-var-row"><span class="sf-bs-var sf-bs-s">S</span><span class="sf-bs-var-label">Presión pública actual (actores + instituciones + conexiones documentadas)</span></div>
-                    <div class="sf-bs-var-row"><span class="sf-bs-var sf-bs-k">K</span><span class="sf-bs-var-label">Umbral de resolución institucional (umbral de visibilidad del caso)</span></div>
-                    <div class="sf-bs-var-row"><span class="sf-bs-var sf-bs-sigma">σ</span><span class="sf-bs-var-label">Volatilidad epistemológica — intensidad de fricción entre capas</span></div>
-                    <div class="sf-bs-var-row"><span class="sf-bs-var sf-bs-t">T</span><span class="sf-bs-var-label">Tiempo transcurrido — años de silencio erosionan el valor (Θ &lt; 0)</span></div>
-                </div>
-                <p class="sf-bs-nota">
-                    Black &amp; Scholes asumieron que el riesgo se puede cubrir completamente y la incertidumbre eliminar con derivados. El instrumento invierte esa premisa: aquí <strong>σ mide la incertidumbre que la institución produce</strong> al traducir entre regímenes de verdad. No la elimina — la cuantifica como evidencia de mistranslation estructural. El modelo ya calcula estos valores para cada caso en el grafo.
-                </p>
+
             </div>
 
             <div id="campo-social-wrap">
@@ -1281,6 +1343,21 @@ function initSocialField() {
       // Ocultar loading skeleton
       const loader = document.getElementById('sf-loading');
       if (loader) loader.classList.add('loaded');
+
+      // Actualizar badge del régimen del mapa logístico en tiempo real
+      const regimeBadge = document.getElementById('sf-eq-regime-badge');
+      if (regimeBadge) {
+        setInterval(function() {
+          const r = SF._logisticR || 1.5;
+          const regime = SF._logisticRegime || 'ESTABLE';
+          regimeBadge.textContent = 'r\u2009=\u2009' + r.toFixed(2) + '\u2009\u00B7\u2009' + regime;
+          regimeBadge.className = 'sf-bs-badge sf-badge-' + (
+            regime === 'CAOS' ? 'chaos' :
+            regime.startsWith('BIFURCACIÓN') || regime === 'CASCADA' ? 'bifurc' :
+            'stable'
+          );
+        }, 800);
+      }
 
       // Controles
       const resetBtn = document.getElementById('sf-reset');
