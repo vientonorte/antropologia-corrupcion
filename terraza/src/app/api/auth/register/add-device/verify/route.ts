@@ -62,11 +62,7 @@ export async function POST(request: NextRequest) {
       session.userName,
       verification.registrationInfo.credentialID,
       verification.registrationInfo.credentialPublicKey,
-      (
-        verification.registrationInfo.credentialDeviceType === 'multiDevice'
-          ? ['internal']
-          : ['platform']
-      ) as AuthenticatorTransport[],
+      (registrationResponse.response.transports ?? []) as AuthenticatorTransport[],
     );
 
     deleteChallenge(registrationResponse.challengeId);

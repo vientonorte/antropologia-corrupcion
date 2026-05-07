@@ -64,10 +64,10 @@ body{display:flex;flex-direction:column;align-items:center;padding:0 24px;min-he
 
   <form id="reader-form" class="reader-form" autocomplete="on">
     <label class="reader-label" for="reader-name">Nombre</label>
-    <input id="reader-name" class="reader-input" type="text" required minlength="2" maxlength="80" autocomplete="name">
+    <input id="reader-name" class="reader-input" type="text" required aria-required="true" minlength="2" maxlength="80" autocomplete="name">
 
     <label class="reader-label" for="reader-email">Correo</label>
-    <input id="reader-email" class="reader-input" type="email" required maxlength="120" autocomplete="email">
+    <input id="reader-email" class="reader-input" type="email" required aria-required="true" maxlength="120" autocomplete="email">
 
     <div id="reader-error" class="reader-error" role="alert" aria-live="assertive">Completa nombre y correo para continuar.</div>
     <button class="btn-primary" type="submit">Entrar al instrumento</button>

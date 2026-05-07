@@ -6,6 +6,7 @@ import { Button } from '@/components/atoms/Button';
 import { Spinner } from '@/components/atoms/Spinner';
 
 type AddDeviceState = 'idle' | 'loading' | 'success' | 'error';
+type StartRegistrationOptions = Parameters<typeof startRegistration>[0];
 
 export default function AddDevicePage(): React.ReactElement {
   const [state, setState] = useState<AddDeviceState>('idle');
@@ -26,16 +27,17 @@ export default function AddDevicePage(): React.ReactElement {
         throw new Error(data.error ?? 'No se pudo iniciar el registro de dispositivo');
       }
 
-      const options = (await optionsRes.json()) as Record<string, unknown> & {
+      const payload = (await optionsRes.json()) as StartRegistrationOptions & {
         challengeId: string;
       };
+      const { challengeId, ...registrationOptions } = payload;
 
-      const credential = await startRegistration(options as never);
+      const credential = await startRegistration(registrationOptions);
 
       const verifyRes = await fetch('/api/auth/register/add-device/verify', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...credential, challengeId: options.challengeId }),
+        body: JSON.stringify({ ...credential, challengeId }),
       });
 
       if (!verifyRes.ok) {

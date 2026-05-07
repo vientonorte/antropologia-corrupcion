@@ -104,6 +104,11 @@ export function updateCredentialCounter(userId: string, newCounter: number): voi
   stmt.run(newCounter, Date.now(), userId);
 }
 
+/**
+ * Reemplaza la credencial passkey de un usuario existente.
+ * Se usa al registrar un nuevo dispositivo bajo sesión autenticada.
+ * Mantiene user_id/user_name y reinicia el contador del autenticador.
+ */
 export function replaceCredentialForUser(
   userId: string,
   userName: string,

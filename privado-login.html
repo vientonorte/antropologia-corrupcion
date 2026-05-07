@@ -139,7 +139,6 @@ body{display:flex;flex-direction:column;align-items:center;padding:0 24px;min-he
   'use strict';
 
   var HASH = '08e45c25008c7c94e33dc9ad18ee8013b5c32746b8ab3f1520f4e45721fbfd9a';
-  var MASTER_HASH = HASH;
   var SESSION_KEY = 'ca_passkey_session';
   var REDIRECT_DELAY = 1500;
   var REDIRECT_URL = 'privado.html';
@@ -262,7 +261,7 @@ body{display:flex;flex-direction:column;align-items:center;padding:0 24px;min-he
     masterForm.addEventListener('submit', function (event) {
       event.preventDefault();
       sha256(masterInput.value).then(function (hash) {
-        if (hash === MASTER_HASH) {
+        if (hash === HASH) {
           unlockRegister();
         } else {
           masterError.style.display = 'block';
