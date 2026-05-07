@@ -253,10 +253,15 @@ class SocialField {
             const state = this.nodeState.get(nodeId);
             if (!state) continue;
 
-            // Calor proporcional al número y tipo de registros de fricción
-            const politicaCount = records.filter(r => r.tipo_friccion === 'politica').length;
-            const semanticaCount = records.filter(r => r.tipo_friccion === 'semantica').length;
-            const tecnicaCount = records.filter(r => r.tipo_friccion === 'tecnica').length;
+            // Contar tipos de fricción en un solo recorrido (O(n))
+            const counts = records.reduce(function(acc, r) {
+                const t = r.tipo_friccion;
+                acc[t] = (acc[t] || 0) + 1;
+                return acc;
+            }, {});
+            const politicaCount  = counts['politica']  || 0;
+            const semanticaCount = counts['semantica'] || 0;
+            const tecnicaCount   = counts['tecnica']   || 0;
 
             // Fricción política pesa más (0.12 por registro), semántica (0.10), técnica (0.08)
             const heatSeed = Math.min(THERMO_CONFIG.PRESEED_HEAT_MAX,
