@@ -403,4 +403,29 @@ Nivel investigador (manual):
 
 ---
 
+## Sprint siguiente — Carry-over + priorización (2026-05-07)
+
+### Objetivo
+- Cerrar los 2 ítems **P0** y al menos 1 ítem **P1** con evidencia en PR.
+
+### Matriz de priorización
+
+| Ítem | Impacto | Esfuerzo | Riesgo | Dependencias | Prioridad |
+|---|---|---|---|---|---|
+| Dossier de actor expandible (P2) | Alto | Medio | Medio | Buscador + panel lateral | **P0** |
+| Robustecer Admin APIs (retry/circuit UX fino) | Alto | Medio | Bajo | Source registry ya mergeado | **P0** |
+| Cierre técnico `terraza` (lint/tests/build) | Medio | Medio | Medio | Ajustes de entorno/config | **P1** |
+| Mejoras de observabilidad QA (reportes/salidas) | Medio | Bajo | Bajo | Workflows actuales | **P1** |
+| Refactor menor/documentación | Bajo | Bajo | Bajo | Ninguna | **P2** |
+
+### Plan de ejecución (5 días)
+
+- **Día 1**: alcance y criterios de aceptación de P0.
+- **Día 2**: implementación base Dossier de actor expandible.
+- **Día 3**: robustecimiento Admin APIs y validación operativa.
+- **Día 4**: cierre de un P1 (preferente observabilidad QA) y ajustes.
+- **Día 5**: consolidación, validación final y evidencia en PR.
+
+---
+
 *Diseño iniciado: 15/Abril/2026 · Cuaderno página 20 · Colectivo Viento Norte*

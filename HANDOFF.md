@@ -1,5 +1,54 @@
 # Handoff Operativo — Contra-Archivo
 
+## Actualización de cierre — 2026-05-07
+
+### 0) Cierre merge/deploy (hoy)
+
+- **QA Pipeline (PR #115)**: `run 25469129795` ✅
+  - `🧪 Tests unitarios` ✅
+  - `📊 Integridad de datos` ✅
+  - `🔦 Lighthouse CI` ⚠️ (fallo tolerado en workflow)
+  - `✅ QA Gate` ✅
+- **Merge a `main`**: commit de merge `f43a70c9fdc93bbe64fbb7d0d0014c1d4d1045c3` ✅
+- **Deploy Pages**: `Deploy to GitHub Pages` `run 25469245078` ✅
+  - job `Tests (node)` ✅
+  - job `Deploy` ✅
+- **Limpieza de rama**: `🧹 branch-cleanup` `run 25469245122` ✅
+
+### 1) Carry-over al siguiente sprint
+
+- Feature D pendiente: **Dossier de actor expandible (P2)**.
+- Robustecimiento de Admin APIs: **retry/circuit + UX de operación fina**.
+- Cierre técnico `terraza`: **lint/tests/build preexistentes**.
+- Observabilidad QA: **reportes/salidas para diagnóstico rápido**.
+- Ajustes de documentación operativa solo cuando cambie el flujo real.
+
+### 2) Matriz de priorización (Impacto × Esfuerzo × Riesgo × Dependencias)
+
+| Ítem | Impacto | Esfuerzo | Riesgo | Dependencias | Prioridad |
+|---|---|---|---|---|---|
+| Dossier de actor expandible (P2) | Alto | Medio | Medio | Buscador + panel lateral | **P0** |
+| Robustecer Admin APIs (retry/circuit UX fino) | Alto | Medio | Bajo | Source registry ya mergeado | **P0** |
+| Cierre técnico `terraza` (lint/tests/build) | Medio | Medio | Medio | Ajustes de entorno/config | **P1** |
+| Mejoras de observabilidad QA (reportes/salidas) | Medio | Bajo | Bajo | Workflows actuales | **P1** |
+| Refactor menor/documentación | Bajo | Bajo | Bajo | Ninguna | **P2** |
+
+### 3) Backlog siguiente sprint (día por día)
+
+- **Día 1**: definir alcance funcional + criterios de aceptación de los 2 ítems P0.
+- **Día 2**: implementar base de Dossier (estructura, estados UI, navegación lateral).
+- **Día 3**: completar Admin APIs (retry/circuit/feedback operativo) y smoke tests.
+- **Día 4**: cerrar 1 ítem P1 (preferencia: observabilidad QA) + hardening.
+- **Día 5**: validación integral, evidencia en PR (QA checklist + estado deploy + decisiones de priorización).
+
+### 4) Objetivo del sprint siguiente
+
+- Cerrar **P0 completos**.
+- Cerrar al menos **1 ítem P1**.
+- Dejar trazabilidad explícita en PR: checklist QA, estado deploy y justificación de prioridades.
+
+---
+
 Fecha: 2026-04-08
 Rama: `main`
 Commit: `dd2c79d`
