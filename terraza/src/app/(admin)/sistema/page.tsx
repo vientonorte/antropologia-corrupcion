@@ -28,6 +28,7 @@ interface ApiHealthEntry {
 
 interface ApiHealth {
   endpoints: ApiHealthEntry[];
+  externalSources?: SourceHealthEntry[];
 }
 
 interface QAHallazgo {
@@ -41,8 +42,32 @@ interface QAResult {
   score: number;
   nivel: 'OK' | 'ADVERTENCIA' | 'CRÍTICO';
   resumen: string;
+  provider?: 'openrouter' | 'openclaw';
   hallazgos: QAHallazgo[];
   timestamp: string;
+}
+
+interface SourceHealthEntry {
+  sourceId: string;
+  label: string;
+  tipo: 'oficial' | 'academica' | 'periodistica';
+  criticidad: 'alta' | 'media' | 'baja';
+  estado: 'mvp' | 'fase-2' | 'deprecated';
+  active: boolean;
+  endpoint: string;
+  method: 'web' | 'rss' | 'api' | 'scraping' | 'manual' | 'discovery';
+  ok: boolean;
+  status: number | null;
+  latencyMs: number | null;
+  error?: string;
+  checkedAt: string;
+  lastSuccessAt?: string | null;
+  failureCount: number;
+  circuitOpen: boolean;
+}
+
+interface SourcesResponse {
+  health: SourceHealthEntry[];
 }
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
@@ -215,6 +240,97 @@ function APIHealthSection({ health }: { health: ApiHealth }) {
   );
 }
 
+function SourcesSection({
+  sources,
+  loading,
+  onRefresh,
+  onAction,
+}: {
+  sources: SourceHealthEntry[] | null;
+  loading: boolean;
+  onRefresh: () => Promise<void>;
+  onAction: (action: 'test' | 'retry' | 'toggle', sourceId: string, active?: boolean) => Promise<void>;
+}) {
+  return (
+    <section aria-labelledby="sources-heading">
+      <div className="flex items-center justify-between mb-3">
+        <SectionHeading>
+          <span id="sources-heading">Fuentes públicas (Administrador de APIs)</span>
+        </SectionHeading>
+        <Button type="button" variant="secondary" disabled={loading} onClick={onRefresh}>
+          {loading ? <span className="flex items-center gap-2"><Spinner size="sm" /> Actualizando…</span> : 'Actualizar fuentes'}
+        </Button>
+      </div>
+      {!sources ? (
+        <p className="text-sm text-gray-400">Presiona &ldquo;Actualizar fuentes&rdquo; para ver conectividad externa.</p>
+      ) : (
+        <div className="rounded-lg border border-gray-200 dark:border-gray-800 overflow-hidden">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="border-b border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900">
+                <th className="text-left px-4 py-2 text-xs font-semibold text-gray-500">Fuente</th>
+                <th className="text-right px-4 py-2 text-xs font-semibold text-gray-500">Estado</th>
+                <th className="text-right px-4 py-2 text-xs font-semibold text-gray-500">Latencia</th>
+                <th className="text-right px-4 py-2 text-xs font-semibold text-gray-500">Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              {sources.map((source) => (
+                <tr key={source.sourceId} className="border-b border-gray-100 dark:border-gray-800/60 last:border-0">
+                  <td className="px-4 py-2">
+                    <p className="font-medium text-gray-800 dark:text-gray-200">{source.label}</p>
+                    <p className="text-xs text-gray-500">{source.sourceId} · {source.tipo} · {source.estado}</p>
+                  </td>
+                  <td className="px-4 py-2 text-right">
+                    <span className={`inline-flex items-center gap-1 font-medium ${source.ok ? 'text-green-700 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`}>
+                      {source.ok ? '✓' : '✗'} {source.status ?? '—'}
+                    </span>
+                    {source.circuitOpen && (
+                      <p role="status" aria-live="polite" className="text-[11px] text-red-500">circuito abierto</p>
+                    )}
+                    {!!source.error && source.error !== 'desactivada' && (
+                      <p className="text-[11px] text-gray-500">{source.error}</p>
+                    )}
+                  </td>
+                  <td className="px-4 py-2 text-right text-gray-500">{source.latencyMs != null ? `${source.latencyMs}ms` : '—'}</td>
+                  <td className="px-4 py-2 text-right">
+                    <div className="inline-flex gap-2">
+                      <button
+                        type="button"
+                        className="text-xs underline text-gray-600 hover:text-gray-900 hover:no-underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 rounded"
+                        aria-label={`Probar conexión de ${source.label}`}
+                        onClick={() => void onAction('test', source.sourceId)}
+                      >
+                        test
+                      </button>
+                      <button
+                        type="button"
+                        className="text-xs underline text-gray-600 hover:text-gray-900 hover:no-underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 rounded"
+                        aria-label={`Reintentar conexión de ${source.label}`}
+                        onClick={() => void onAction('retry', source.sourceId)}
+                      >
+                        reintentar
+                      </button>
+                      <button
+                        type="button"
+                        className="text-xs underline text-gray-600 hover:text-gray-900 hover:no-underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 rounded"
+                        aria-label={`${source.active ? 'Desactivar' : 'Activar'} ${source.label}`}
+                        onClick={() => void onAction('toggle', source.sourceId, !source.active)}
+                      >
+                        {source.active ? 'desactivar' : 'activar'}
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </section>
+  );
+}
+
 function QASection({ result, loading, onRun }: { result: QAResult | null; loading: boolean; onRun: () => Promise<void> }) {
   return (
     <section aria-labelledby="qa-heading">
@@ -247,6 +363,9 @@ function QASection({ result, loading, onRun }: { result: QAResult | null; loadin
               </p>
               <time className="text-xs text-gray-400">{new Date(result.timestamp).toLocaleString('es-CL')}</time>
             </div>
+            {result.provider && (
+              <p className="text-xs text-gray-500 mb-2">Proveedor IA: {result.provider}</p>
+            )}
             <div className="h-2 rounded-full bg-gray-100 dark:bg-gray-800 overflow-hidden">
               <div
                 className={`h-full rounded-full transition-all ${scoreBar(result.score)}`}
@@ -300,14 +419,17 @@ export default function SistemaPage(): React.ReactElement {
   const [dbStats, setDbStats] = useState<DbStats | null>(null);
   const [apiHealth, setApiHealth] = useState<ApiHealth | null>(null);
   const [qaResult, setQaResult] = useState<QAResult | null>(null);
+  const [sources, setSources] = useState<SourceHealthEntry[] | null>(null);
 
   const [loadingDb, setLoadingDb] = useState(false);
   const [loadingApi, setLoadingApi] = useState(false);
   const [loadingQa, setLoadingQa] = useState(false);
+  const [loadingSources, setLoadingSources] = useState(false);
 
   const [dbError, setDbError] = useState<string | null>(null);
   const [apiError, setApiError] = useState<string | null>(null);
   const [qaError, setQaError] = useState<string | null>(null);
+  const [sourcesError, setSourcesError] = useState<string | null>(null);
 
   const fetchDb = useCallback(async () => {
     setLoadingDb(true);
@@ -353,6 +475,45 @@ export default function SistemaPage(): React.ReactElement {
       setLoadingQa(false);
     }
   }, []);
+
+  const fetchSources = useCallback(async () => {
+    setLoadingSources(true);
+    setSourcesError(null);
+    try {
+      const res = await fetch('/api/admin/sources');
+      if (!res.ok) throw new Error(`Error ${res.status}`);
+      const payload = (await res.json()) as SourcesResponse;
+      setSources(payload.health);
+    } catch (e) {
+      setSourcesError(e instanceof Error ? e.message : 'Error');
+    } finally {
+      setLoadingSources(false);
+    }
+  }, []);
+
+  const sourceAction = useCallback(
+    async (action: 'test' | 'retry' | 'toggle', sourceId: string, active?: boolean) => {
+      setLoadingSources(true);
+      setSourcesError(null);
+      try {
+        const res = await fetch('/api/admin/sources', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ action, sourceId, active }),
+        });
+        if (!res.ok) {
+          const d = (await res.json()) as { error?: string };
+          throw new Error(d.error ?? `Error ${res.status}`);
+        }
+        await fetchSources();
+      } catch (e) {
+        setSourcesError(e instanceof Error ? e.message : 'Error');
+      } finally {
+        setLoadingSources(false);
+      }
+    },
+    [fetchSources],
+  );
 
   return (
     <div className="max-w-3xl mx-auto space-y-10">
@@ -422,6 +583,17 @@ export default function SistemaPage(): React.ReactElement {
         <p role="alert" className="text-sm text-red-600">{qaError}</p>
       )}
       <QASection result={qaResult} loading={loadingQa} onRun={runQa} />
+
+      {/* Sources admin */}
+      {sourcesError && (
+        <p role="alert" className="text-sm text-red-600">{sourcesError}</p>
+      )}
+      <SourcesSection
+        sources={sources}
+        loading={loadingSources}
+        onRefresh={fetchSources}
+        onAction={sourceAction}
+      />
     </div>
   );
 }

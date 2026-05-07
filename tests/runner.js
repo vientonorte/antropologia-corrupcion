@@ -258,6 +258,7 @@ var path = require('path');
 
 var casosData = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data', 'casos.json'), 'utf8'));
 var fuentesData = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data', 'fuentes-oficiales.json'), 'utf8'));
+var fuentesConfig = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data', 'fuentes-config.json'), 'utf8'));
 var bcnData = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data', 'bcn-legislativo.json'), 'utf8'));
 var huellaData = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data', 'huella-digital-publica.json'), 'utf8'));
 
@@ -265,7 +266,7 @@ var huellaData = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data', '
 
 require('./frictionEngine.test.js')(describe, it, assert, assertEqual, assertDeepEqual, assertApprox, assertGreaterThan, assertLessThan, assertArrayIncludes, casosData);
 require('./searchEngine.test.js')(describe, it, assert, assertEqual, assertDeepEqual, assertApprox, assertGreaterThan, assertLessThan, assertArrayIncludes, casosData, fuentesData, bcnData);
-require('./dataValidation.test.js')(describe, it, assert, assertEqual, assertDeepEqual, assertApprox, assertGreaterThan, assertArrayIncludes, casosData, fuentesData, bcnData);
+require('./dataValidation.test.js')(describe, it, assert, assertEqual, assertDeepEqual, assertApprox, assertGreaterThan, assertArrayIncludes, casosData, fuentesData, bcnData, fuentesConfig);
 require('./huellaDigital.test.js')(describe, it, assert, assertEqual, assertDeepEqual, assertApprox, assertGreaterThan, assertArrayIncludes, casosData, fuentesData, bcnData, huellaData);
 require('./graph.test.js')(describe, it, assert, assertEqual, assertDeepEqual, assertApprox, assertGreaterThan, assertLessThan, assertArrayIncludes);
 require('./ciperFeed.test.js')(describe, it, assert, assertEqual, assertDeepEqual, assertApprox, assertGreaterThan, assertLessThan, assertArrayIncludes, casosData);

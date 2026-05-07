@@ -4,7 +4,7 @@
 
 'use strict';
 
-module.exports = function (describe, it, assert, assertEqual, assertDeepEqual, assertApprox, assertGreaterThan, assertArrayIncludes, casosData, fuentesData, bcnData) {
+module.exports = function (describe, it, assert, assertEqual, assertDeepEqual, assertApprox, assertGreaterThan, assertArrayIncludes, casosData, fuentesData, bcnData, fuentesConfig) {
 
     /* ─── casos.json schema ─── */
 
@@ -159,20 +159,8 @@ module.exports = function (describe, it, assert, assertEqual, assertDeepEqual, a
         });
 
         it('fuente values are from known set', function () {
-            var validFuentes = [
-                'infolobby',
-                'sii',
-                'transparencia',
-                'leychile',
-                'seia',
-                'compraspublicas',
-                'cmf',
-                'diario-financiero',
-                'repositorio-uai',
-                'repositorio-uchile',
-                'diariooficial',
-                'scielo'
-            ];
+            var validFuentes = (fuentesConfig && Array.isArray(fuentesConfig.sources) ? fuentesConfig.sources : [])
+                .map(function(source) { return source.id; });
             for (var i = 0; i < fuentesData.length; i++) {
                 assertArrayIncludes(validFuentes, fuentesData[i].fuente,
                     'registro[' + i + '] fuente "' + fuentesData[i].fuente + '" should be valid');

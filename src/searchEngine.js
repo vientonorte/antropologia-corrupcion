@@ -26,7 +26,13 @@ var DEFAULT_SOURCE_CATALOG = {
     compraspublicas: { id: 'compraspublicas', label: 'ComprasPúblicas', icon: '📋', color: '#d97b5b', tipo: 'oficial', activa: true },
     cmf: { id: 'cmf', label: 'CMF', icon: '💹', color: '#a07acc', tipo: 'oficial', activa: true },
     diariooficial: { id: 'diariooficial', label: 'Diario Oficial', icon: '📰', color: '#7b8cde', tipo: 'oficial', activa: true },
-    scielo: { id: 'scielo', label: 'SciELO', icon: '📚', color: '#d06f9c', tipo: 'academica', activa: true }
+    scielo: { id: 'scielo', label: 'SciELO', icon: '📚', color: '#d06f9c', tipo: 'academica', activa: true },
+    'repositorio-uai': { id: 'repositorio-uai', label: 'Repositorio UAI', icon: '🎓', color: '#7a9ec2', tipo: 'academica', activa: false },
+    'repositorio-uchile': { id: 'repositorio-uchile', label: 'Repositorio UChile', icon: '🎓', color: '#8e86c9', tipo: 'academica', activa: false },
+    ciper: { id: 'ciper', label: 'CIPER Chile', icon: '🗞', color: '#9a7ce8', tipo: 'periodistica', activa: true },
+    'diario-financiero': { id: 'diario-financiero', label: 'Diario Financiero', icon: '📰', color: '#6f7a8a', tipo: 'periodistica', activa: false },
+    'google-scholar': { id: 'google-scholar', label: 'Google Scholar', icon: '🎓', color: '#9b9b9b', tipo: 'academica', activa: false },
+    'google-news': { id: 'google-news', label: 'Google News', icon: '📰', color: '#9b9b9b', tipo: 'periodistica', activa: false }
 };
 
 var FUENTE_ICONS = Object.keys(DEFAULT_SOURCE_CATALOG).reduce(function(acc, key) {

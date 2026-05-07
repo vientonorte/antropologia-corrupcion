@@ -2,6 +2,7 @@
 // Retorna un informe estructurado en JSON para el dashboard /sistema
 
 import { openRouterChat } from './client';
+import { openClawAsk } from '@/lib/openclaw/client';
 
 export interface QAInput {
   dbStats: {
@@ -32,6 +33,7 @@ export interface QAResult {
   score: number; // 0-100
   nivel: 'OK' | 'ADVERTENCIA' | 'CRÍTICO';
   resumen: string;
+  provider?: 'openrouter' | 'openclaw';
   hallazgos: Array<{
     tipo: 'info' | 'advertencia' | 'error';
     area: 'base_datos' | 'api' | 'corpus' | 'seguridad';
@@ -93,14 +95,25 @@ ${input.apiHealth.map((h) => `- ${h.endpoint}: ${h.ok ? `✓ OK (${h.latencyMs}m
 
 Genera el informe QA Nivel 1 en JSON.`;
 
-  const raw = await openRouterChat({
-    messages: [
-      { role: 'system', content: QA_SYSTEM },
-      { role: 'user', content: userMessage },
-    ],
-    max_tokens: 2048,
-    temperature: 0.1,
-  });
+  let raw = '';
+  let provider: 'openrouter' | 'openclaw' = 'openrouter';
+  try {
+    raw = await openRouterChat({
+      messages: [
+        { role: 'system', content: QA_SYSTEM },
+        { role: 'user', content: userMessage },
+      ],
+      max_tokens: 2048,
+      temperature: 0.1,
+    });
+  } catch {
+    raw = await openClawAsk({
+      system: QA_SYSTEM,
+      question: userMessage,
+      lang: 'es',
+    });
+    provider = 'openclaw';
+  }
 
   // Extract JSON — prefer fenced block, then a full-string JSON object
   const jsonMatch =
@@ -109,7 +122,9 @@ Genera el informe QA Nivel 1 en JSON.`;
   const jsonStr = jsonMatch ? jsonMatch[1].trim() : raw.trim();
 
   try {
-    return JSON.parse(jsonStr) as QAResult;
+    const parsed = JSON.parse(jsonStr) as QAResult;
+    parsed.provider = provider;
+    return parsed;
   } catch {
     throw new Error(
       `No se pudo interpretar la respuesta QA de Claude. Respuesta recibida: ${jsonStr.slice(0, 200)}`,
