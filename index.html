@@ -24,6 +24,92 @@
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⊘</text></svg>">
     <link rel="stylesheet" href="styles/shared.css?v=20260419">
     <link rel="stylesheet" href="styles/contra-archivo.css?v=20260419">
+    <style>
+        .reader-mode-panel {
+            position: fixed;
+            top: 82px;
+            right: 18px;
+            width: 280px;
+            z-index: 180;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: rgba(12, 12, 12, .92);
+            backdrop-filter: blur(8px);
+            padding: 14px;
+            display: grid;
+            gap: 10px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, .35);
+        }
+        .reader-mode-title {
+            font-size: 11px;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            color: var(--etica);
+        }
+        .reader-mode-name {
+            font-size: 14px;
+            color: var(--text);
+            margin-bottom: 4px;
+        }
+        .reader-mode-list {
+            display: grid;
+            gap: 6px;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        .reader-mode-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 11px;
+            color: var(--muted);
+        }
+        .reader-mode-notes {
+            width: 100%;
+            min-height: 88px;
+            resize: vertical;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            background: #121212;
+            color: var(--text);
+            font-size: 12px;
+            padding: 8px 9px;
+            font-family: var(--font-sans);
+        }
+        .reader-mode-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 8px;
+        }
+        .reader-mode-badge {
+            font-size: 10px;
+            color: var(--dim);
+            letter-spacing: .06em;
+            text-transform: uppercase;
+        }
+        .reader-mode-logout {
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            background: transparent;
+            color: var(--muted);
+            padding: 6px 8px;
+            font-size: 11px;
+            cursor: pointer;
+        }
+        .reader-mode-logout:hover {
+            color: var(--etica);
+            border-color: var(--etica);
+        }
+        @media (max-width: 980px) {
+            .reader-mode-panel {
+                position: static;
+                width: auto;
+                margin: 86px 20px 0;
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -85,7 +171,7 @@
 
             <!-- Acceso privado alternativo -->
             <div style="text-align:center;padding:4px 0;">
-                <a href="login.html" style="
+                <a href="privado-login.html" style="
                     font-size:10px;letter-spacing:.1em;color:#c8a96e;
                     text-decoration:none;text-transform:uppercase;
                     opacity:.75;transition:opacity .2s;
@@ -164,6 +250,35 @@
         <a class="nav-cta" href="landing.html">Buscador ↗</a>
         <a class="nav-cta" href="admin.html">Admin ↗</a>
     </nav>
+
+    <aside id="reader-mode-panel" class="reader-mode-panel" aria-label="Modo lector" hidden>
+        <div>
+            <div class="reader-mode-title">Modo lector activo</div>
+            <div class="reader-mode-name">Sesión de <strong id="reader-mode-name">Lectora</strong></div>
+        </div>
+        <ul class="reader-mode-list" aria-label="Fuentes seguidas">
+            <li class="reader-mode-item">
+                <input id="reader-source-cmf" type="checkbox" name="reader-source" value="cmf">
+                <label for="reader-source-cmf">Seguir fuente CMF</label>
+            </li>
+            <li class="reader-mode-item">
+                <input id="reader-source-transparencia" type="checkbox" name="reader-source" value="transparencia">
+                <label for="reader-source-transparencia">Seguir Transparencia</label>
+            </li>
+            <li class="reader-mode-item">
+                <input id="reader-source-bcn" type="checkbox" name="reader-source" value="bcn">
+                <label for="reader-source-bcn">Seguir trazabilidad BCN</label>
+            </li>
+        </ul>
+        <div>
+            <label class="reader-mode-title" for="reader-mode-notes">Notas de lectura</label>
+            <textarea id="reader-mode-notes" class="reader-mode-notes" placeholder="Escribe tus observaciones del instrumento..."></textarea>
+        </div>
+        <div class="reader-mode-actions">
+            <span class="reader-mode-badge">LocalStorage</span>
+            <button id="reader-mode-logout" class="reader-mode-logout" type="button">Cerrar modo lector</button>
+        </div>
+    </aside>
 
     <main>
         <!-- ══════════════════════════════════════ HERO -->
@@ -809,6 +924,7 @@
     <script src="src/sourceNormalizers.js?v=20260506" defer></script>
     <script src="src/searchEngine.js?v=20260506" defer></script>
     <script src="src/exportPipeline.js?v=20260505" defer></script>
+    <script src="src/readerMode.js?v=20260507" defer></script>
 
     <script>
         'use strict';

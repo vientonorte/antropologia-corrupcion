@@ -104,6 +104,31 @@ export function updateCredentialCounter(userId: string, newCounter: number): voi
   stmt.run(newCounter, Date.now(), userId);
 }
 
+export function replaceCredentialForUser(
+  userId: string,
+  userName: string,
+  credentialId: Uint8Array,
+  credentialPublicKey: Uint8Array,
+  transports?: AuthenticatorTransport[],
+): void {
+  const db = getDatabase();
+  const stmt = db.prepare(`
+    UPDATE credentials
+    SET credential_id = ?, credential_public_key = ?, counter = ?, transports = ?, updated_at = ?
+    WHERE user_id = ? AND user_name = ?
+  `);
+
+  stmt.run(
+    Buffer.from(credentialId),
+    Buffer.from(credentialPublicKey),
+    0,
+    transports ? JSON.stringify(transports) : null,
+    Date.now(),
+    userId,
+    userName,
+  );
+}
+
 export function userExists(userName: string): boolean {
   const db = getDatabase();
   const stmt = db.prepare('SELECT COUNT(*) as count FROM credentials WHERE user_name = ?');

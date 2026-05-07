@@ -361,6 +361,14 @@ export default function SistemaPage(): React.ReactElement {
         <p className="text-sm text-gray-500 mt-1">
           Visualización de la BD, estado de APIs y QA automatizado Nivel 1.
         </p>
+        <p className="mt-2">
+          <a
+            href="/sistema/agregar-dispositivo"
+            className="text-sm text-accent-700 hover:underline"
+          >
+            Agregar dispositivo administrativo →
+          </a>
+        </p>
       </header>
 
       {/* DB Stats */}
