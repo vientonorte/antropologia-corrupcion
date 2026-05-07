@@ -67,6 +67,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ result });
     }
 
+    // Si sourceIds se omite, el pipeline usa el fallback MVP (primeras fuentes activas).
     const consolidated = await runConsolidationPipeline(body.sourceIds ?? []);
     return NextResponse.json({ consolidated });
   } catch (error) {

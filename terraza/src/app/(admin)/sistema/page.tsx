@@ -286,7 +286,7 @@ function SourcesSection({
                       {source.ok ? '✓' : '✗'} {source.status ?? '—'}
                     </span>
                     {source.circuitOpen && (
-                      <p className="text-[11px] text-red-500">circuito abierto</p>
+                      <p role="status" aria-live="polite" className="text-[11px] text-red-500">circuito abierto</p>
                     )}
                     {!!source.error && source.error !== 'desactivada' && (
                       <p className="text-[11px] text-gray-500">{source.error}</p>

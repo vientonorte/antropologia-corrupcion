@@ -23,7 +23,7 @@ function isCircuitOpen(sourceId: string): boolean {
   return state.circuitOpenUntil > Date.now();
 }
 
-function shouldUseGetForHealthCheck(method: SourceRegistryItem['metodo_acceso']): boolean {
+function requiresGetForHealthCheck(method: SourceRegistryItem['metodo_acceso']): boolean {
   // RSS/discovery need GET to verify payload delivery/content-type for feed-like endpoints.
   // For web/api/scraping/manual, HEAD availability is enough for uptime checks and
   // reduces payload transfer during periodic polling.
@@ -43,7 +43,7 @@ async function runHealthCheck(
   const controller = withTimeout(source.timeout_ms);
 
   try {
-    const useGet = shouldUseGetForHealthCheck(source.metodo_acceso);
+    const useGet = requiresGetForHealthCheck(source.metodo_acceso);
     const res = await fetch(source.endpoint, {
       method: useGet ? 'GET' : 'HEAD',
       signal: controller.signal,
@@ -179,6 +179,7 @@ export function resetSourceCircuit(sourceId: string): void {
 function generateSampleRecords(source: SourceRegistryItem): Record<string, unknown>[] {
   // MVP scaffold: this creates placeholder raw records until source-specific fetchers
   // are fully wired to external providers in production ingestion pipelines.
+  // Replace with real adapters/API-RSS fetchers in Fase 2.
   const now = new Date().toISOString().slice(0, 10);
   if (source.id === 'scielo') {
     return [

@@ -48,7 +48,8 @@ function parseTipoFriccion(value: unknown): 'politica' | 'semantica' | 'tecnica'
   const normalized = normalizeText(value).toLowerCase();
   if (normalized === 'politica') return 'politica';
   if (normalized === 'tecnica') return 'tecnica';
-  // Default conservador: cuando no hay tipo explícito, tratamos la fricción como semántica.
+  // Default conservador: ante ambigüedad, usamos "semántica" porque no presupone
+  // ni conflicto de poder ("política") ni fallo de implementación ("técnica").
   return 'semantica';
 }
 
@@ -57,6 +58,7 @@ export function normalizeSourceRecord(
   raw: Record<string, unknown>,
 ): CanonicalSourceRecord {
   const now = new Date().toISOString().slice(0, 10);
+  // Campos raw esperados en esta etapa MVP: keywords[] + aliases tema/topic/norma_tipo.
   const keywords = normalizeKeywords([
     ...(Array.isArray(raw.keywords) ? raw.keywords : []),
     raw.tema,

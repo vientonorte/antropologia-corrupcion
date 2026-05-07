@@ -39,7 +39,7 @@ export async function openClawAsk(req: OpenClawRequest): Promise<string> {
   const data = (await res.json()) as OpenClawResponse;
   // OpenCLAW responses have shown slight field drift across versions:
   // some deployments use `answer`, others `result` or `output`.
-  // TODO: simplificar cuando OpenCLAW consolide contrato estable.
+  // TODO(2026-Q3): simplificar cuando OpenCLAW consolide contrato estable.
   const content = data.answer ?? data.result ?? data.output ?? '';
   if (!content) {
     throw new Error('OpenCLAW devolvió respuesta vacía');
