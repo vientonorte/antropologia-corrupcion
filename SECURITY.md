@@ -1,94 +1,100 @@
 # Política de Seguridad
 
-## Versiones Soportadas
+> Este documento es la **fuente de verdad** para seguridad, privacidad y reporte responsable.
 
-Este proyecto es una investigación doctoral activa. La versión actual desplegada en GitHub Pages es la única versión soportada.
+## Versiones soportadas
 
-| Versión | Soportada          |
-| ------- | ------------------ |
-| main    | :white_check_mark: |
-| Otras   | :x:                |
+La rama soportada es `main`. La versión desplegada en GitHub Pages se genera desde ese estado.
 
-## Reportar una Vulnerabilidad
+| Versión | Soportada |
+|---|---|
+| `main` | ✅ |
+| otras | ❌ |
 
-### Vulnerabilidades de Seguridad
+## Reportar una vulnerabilidad
 
-Si descubres una vulnerabilidad de seguridad en este repositorio, por favor **NO** la reportes públicamente a través de un issue. En su lugar:
+No abras un issue público para vulnerabilidades de seguridad.
 
-1. Envía un correo a: **seguridad@vientonorte.cl** con:
-   - Descripción detallada de la vulnerabilidad
-   - Pasos para reproducirla
-   - Impacto potencial
-   - Sugerencias de mitigación (si las tienes)
+Envía un correo a **seguridad@vientonorte.cl** con:
 
-2. Te responderemos en un plazo máximo de **72 horas** para confirmar la recepción.
+- descripción del problema
+- pasos para reproducirlo
+- impacto potencial
+- archivos o rutas afectadas
+- mitigación sugerida, si la tienes
 
-3. Trabajaremos en una solución y te mantendremos informado del progreso.
+**Compromiso de respuesta inicial:** 72 horas.
 
-4. Una vez solucionada, publicaremos un aviso de seguridad y te acreditaremos (si lo deseas).
+## Alcance por contexto
 
-### Alcance de la Política de Seguridad
+### 1. Sitio estático en la raíz
 
-#### Dentro del alcance:
+Dentro del alcance:
 
-- Exposición de datos sensibles no anonimizados
-- Vulnerabilidades XSS en la aplicación web
-- Problemas de inyección (SQL, HTML, JS)
-- Exposición de secretos (API keys, tokens) en código o historial
-- Problemas de autenticación/autorización (módulo passkey en `/terraza`)
-- Vulnerabilidades en dependencias (terraza/package.json)
+- XSS en páginas HTML o módulos JS
+- exposición de datos sensibles no anonimizados
+- errores de sanitización o inyección HTML/JS
+- publicación accidental de secretos o credenciales
+- problemas en exportación o exposición de datos oficiales
 
-#### Fuera del alcance:
+### 2. `terraza/`
 
-- Issues de usabilidad o UX que no afecten la seguridad
-- Bugs en navegadores específicos sin implicaciones de seguridad
-- Ataques de ingeniería social
-- Ataques físicos a infraestructura
-- Ataques DDoS contra GitHub Pages
+Dentro del alcance:
 
-### Datos Sensibles y Privacidad
+- autenticación, sesión y passkeys
+- autorización indebida sobre recursos privados
+- exposición de secretos o configuración sensible
+- vulnerabilidades en dependencias y rutas API
+- errores en persistencia local o sync que expongan datos privados
 
-#### Datos públicos en este repositorio:
+La superficie privada de `terraza/` se describe operativamente en [`CLAUDE.md`](CLAUDE.md).
 
-- **Fuentes oficiales**: Todos los datos en `/data/*.json` provienen exclusivamente de registros públicos oficiales chilenos (InfoLobby, Transparencia, CMF, SEIA, LeyChile, BCN, ComprasPublicas, SII)
-- **Anonimización**: Los casos etnográficos no contienen nombres reales de participantes
-- **Agregación**: Los testimonios están agregados temáticamente, no identificables individualmente
+## Fuera del alcance
 
-#### Datos que NUNCA deben estar en este repositorio:
+- problemas de UX sin implicancias de seguridad
+- diferencias de renderizado sin impacto de seguridad
+- ataques de ingeniería social fuera del repo
+- ataques físicos a infraestructura de terceros
+- DDoS contra GitHub Pages
 
-- Nombres reales de participantes de investigación etnográfica
-- Datos personales identificables (RUT, direcciones, teléfonos)
-- Credenciales o secretos (API keys, passwords, tokens)
-- Documentos internos de instituciones no públicos
-- Grabaciones de audio o video sin consentimiento publicado
-- Imágenes de personas sin consentimiento informado
+## Datos y privacidad
 
-#### Si encuentras datos sensibles expuestos:
+### Datos permitidos en este repositorio
 
-1. **NO** los copies ni los compartas
-2. Repórtalo inmediatamente a **seguridad@vientonorte.cl**
-3. Indica la ubicación exacta (archivo, línea, commit hash si aplica)
-4. El equipo evaluará y tomará acción inmediata (eliminar del historial si es necesario)
+- registros públicos oficiales chilenos
+- casos etnográficos anonimizados
+- materiales documentales sin información personal identificable
 
-### Buenas Prácticas para Colaboradores
+### Datos que nunca deben estar aquí
 
-Si planeas contribuir a este repositorio:
+- nombres reales de participantes etnográficos
+- RUT, direcciones, teléfonos o correos personales
+- tokens, contraseñas, claves privadas o `.env` reales
+- documentos internos no públicos
+- imágenes o grabaciones sin consentimiento explícito publicado
 
-- **Nunca** hagas commit de archivos `.env` con valores reales
-- **Nunca** incluyas datos personales de participantes reales
-- **Verifica** que tus cambios no expongan información sensible
-- **Usa** `.gitignore` correctamente para excluir archivos locales sensibles
-- **Revisa** el historial de tus commits antes de hacer push
-- **Consulta** con el equipo si tienes dudas sobre qué datos son públicos
+## Qué hacer si encuentras datos sensibles
 
-### Historial de Seguridad
+1. no los redistribuyas
+2. repórtalos de inmediato a **seguridad@vientonorte.cl**
+3. indica archivo, línea, commit o workflow si aplica
+4. evita abrir un issue público con el contenido expuesto
 
-Esta sección documentará cualquier incidente de seguridad una vez resuelto:
+## Buenas prácticas para colaboradores
 
-- **2026-05-04**: Repositorio hecho público - Auditoría inicial de seguridad completada. No se encontraron secretos en el historial. Todos los datos son de fuentes públicas oficiales.
+- revisa tus cambios antes de hacer commit
+- no subas secretos ni archivos locales sensibles
+- valida que las fuentes añadidas sean públicas y verificables
+- si cambias seguridad, actualiza este documento antes que cualquier resumen auxiliar
+- si cambias `terraza/`, revisa también [`CLAUDE.md`](CLAUDE.md)
 
-### Contacto
+## Historial resumido
 
-- **Seguridad**: seguridad@vientonorte.cl
-- **General**: [@vientonorte](https://github.com/vientonorte)
-- **Proyecto**: https://vientonorte.github.io/antropologia-corrupcion/
+- **2026-05-04**: auditoría integral previa a la apertura pública del repositorio
+- **2026-05-05**: hardening adicional en CSP, `robots.txt`, `sitemap.xml`, CodeQL, Dependabot y seguridad de `terraza/`
+
+## Referencias relacionadas
+
+- colaboración y límites éticos → [`CONTRIBUTING.md`](CONTRIBUTING.md)
+- CI/CD y workflows de seguridad → [`PIPELINE.md`](PIPELINE.md)
+- snapshot histórico de hardening → [`BEST_PRACTICES.md`](BEST_PRACTICES.md)
