@@ -37,7 +37,9 @@ export const AddDeviceVerifySchema = z.object({
   response: z.object({
     clientDataJSON: z.string().min(1),
     attestationObject: z.string().min(1),
-    transports: z.array(z.string()).optional(),
+    transports: z
+      .array(z.enum(['usb', 'nfc', 'ble', 'internal', 'hybrid']))
+      .optional(),
   }),
   type: z.literal('public-key'),
   challengeId: z.string().uuid(),

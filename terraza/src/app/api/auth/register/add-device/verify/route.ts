@@ -42,7 +42,7 @@ export async function POST(request: NextRequest) {
         response: {
           clientDataJSON: registrationResponse.response.clientDataJSON,
           attestationObject: registrationResponse.response.attestationObject,
-          transports: (registrationResponse.response.transports ?? []) as AuthenticatorTransport[],
+          transports: registrationResponse.response.transports ?? [],
         },
         type: registrationResponse.type,
         clientExtensionResults: {},
@@ -62,7 +62,7 @@ export async function POST(request: NextRequest) {
       session.userName,
       verification.registrationInfo.credentialID,
       verification.registrationInfo.credentialPublicKey,
-      (registrationResponse.response.transports ?? []) as AuthenticatorTransport[],
+      registrationResponse.response.transports ?? [],
     );
 
     deleteChallenge(registrationResponse.challengeId);

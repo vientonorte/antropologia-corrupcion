@@ -4,12 +4,12 @@
   var PROFILE_KEY = 'ca_public_reader_profile';
   var NOTES_KEY = 'ca_public_reader_notes';
   var SOURCES_KEY = 'ca_public_reader_sources';
-  var SESSION_KEY = 'ca_auth';
 
   function safeParse(json, fallback) {
     try {
       return JSON.parse(json);
-    } catch (_) {
+    } catch (error) {
+      console.warn('[ReaderMode] JSON inválido en localStorage:', error);
       return fallback;
     }
   }
@@ -62,7 +62,6 @@
       localStorage.removeItem(PROFILE_KEY);
       localStorage.removeItem(NOTES_KEY);
       localStorage.removeItem(SOURCES_KEY);
-      sessionStorage.removeItem(SESSION_KEY);
       window.location.href = 'login.html';
     });
   }
