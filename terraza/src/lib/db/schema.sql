@@ -58,6 +58,20 @@ CREATE TABLE IF NOT EXISTS commit_queue (
   FOREIGN KEY (upload_id) REFERENCES uploads(id)
 );
 
+-- Source admin state: operational controls for API/source connectors
+CREATE TABLE IF NOT EXISTS source_admin_state (
+  source_id TEXT PRIMARY KEY,
+  active_override INTEGER,
+  failure_count INTEGER NOT NULL DEFAULT 0,
+  circuit_open_until INTEGER,
+  last_error TEXT,
+  last_status INTEGER,
+  last_latency_ms INTEGER,
+  last_success_at INTEGER,
+  last_checked_at INTEGER,
+  updated_at INTEGER NOT NULL
+);
+
 -- Create indexes for faster lookups
 CREATE INDEX IF NOT EXISTS idx_credentials_user_id ON credentials(user_id);
 CREATE INDEX IF NOT EXISTS idx_credentials_user_name ON credentials(user_name);
@@ -67,3 +81,4 @@ CREATE INDEX IF NOT EXISTS idx_uploads_user_id ON uploads(user_id);
 CREATE INDEX IF NOT EXISTS idx_uploads_caso_id ON uploads(caso_id);
 CREATE INDEX IF NOT EXISTS idx_uploads_created_at ON uploads(created_at);
 CREATE INDEX IF NOT EXISTS idx_uploads_estado ON uploads(estado_codificacion);
+CREATE INDEX IF NOT EXISTS idx_source_admin_updated_at ON source_admin_state(updated_at);

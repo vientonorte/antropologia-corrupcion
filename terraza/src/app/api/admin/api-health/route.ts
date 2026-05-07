@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getSession } from '@/lib/auth/session';
+import { getAllSourcesHealth } from '@/lib/sources/health';
 
 // Internal API endpoints to health-check. These are Next.js route handlers
 // served on the same origin, so we hit them with a GET/HEAD request.
@@ -30,7 +31,8 @@ export async function GET(request: Request) {
 
   const origin = getServerOrigin();
 
-  const results = await Promise.all(
+  const [results, externalSources] = await Promise.all([
+    Promise.all(
     ENDPOINTS.map(async ({ path, label }) => {
       const start = Date.now();
       try {
@@ -57,7 +59,9 @@ export async function GET(request: Request) {
         };
       }
     }),
-  );
+    ),
+    getAllSourcesHealth(),
+  ]);
 
-  return NextResponse.json({ endpoints: results });
+  return NextResponse.json({ endpoints: results, externalSources });
 }
