@@ -38,7 +38,7 @@
 
 const THERMO_CONFIG = Object.freeze({
     // Constante gravitacional social (cuán fuerte curva el poder el espacio)
-    G_SOCIAL: 2400,
+    G_SOCIAL: 3600,
     // Factor de Boltzmann social (relación energía-desorden)
     K_BOLTZMANN: 0.08,
     // Resistencia base de un funcionario íntegro (0-1)
@@ -59,8 +59,10 @@ const THERMO_CONFIG = Object.freeze({
     AGENT_LIFE: 300,
     // Tasa de transferencia de energía en interacción
     TRANSFER_RATE: 0.15,
-    // Radio de influencia gravitacional (px)
-    GRAVITY_RADIUS: 200,
+    // Radio de influencia gravitacional (px) — ampliado para que más agentes sean atraídos
+    GRAVITY_RADIUS: 300,
+    // Porcentaje de agentes que nacen cerca de un nodo (en vez de en el borde)
+    NEAR_NODE_SPAWN_RATIO: 0.25,
 });
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -104,17 +106,19 @@ const THERMO_PALETTE = (() => {
 
 class SocialField {
     /**
-     * @param {Object} options
+     * @param {Object}      options
      * @param {HTMLElement} options.container  - contenedor del grafo
      * @param {Object[]}    options.nodes      - nodos del grafo (con x, y, intensidad, tipo)
      * @param {Object[]}    options.links      - aristas del grafo
      * @param {HTMLElement} options.metricsEl  - elemento para métricas termodinámicas
+     * @param {Object[]}    [options.fuentes]  - registros de fuentes-oficiales para pre-semilla de entropía
      */
-    constructor({ container, nodes, links, metricsEl }) {
+    constructor({ container, nodes, links, metricsEl, fuentes }) {
         this.container = container;
         this.nodes = nodes;
         this.links = links;
         this.metricsEl = metricsEl || null;
+        this._fuentes = Array.isArray(fuentes) ? fuentes : [];
         this.width = 0;
         this.height = 0;
 
@@ -185,6 +189,9 @@ class SocialField {
         // Inicializar estado de nodos
         this._initNodeState();
 
+        // Pre-semillar entropía desde datos reales de fuentes-oficiales
+        if (this._fuentes.length > 0) this._preSeedFromFuentes();
+
         // Inicializar agentes (reduce en pantallas pequeñas para perf)
         this._agentScale = this.width < 500 ? 0.5 : 1;
         this._initAgents();
@@ -204,6 +211,58 @@ class SocialField {
             }
         }, { threshold: 0.05 });
         this._io.observe(this.container);
+    }
+
+    /* ─── PRE-SEMILLA DESDE FUENTES OFICIALES ─── */
+
+    /**
+     * Usa los registros de fuentes-oficiales.json para inicializar el estado
+     * termodinámico del sistema con datos reales de fricción.
+     * Cada registro de fricción representa una interacción pasada entre el
+     * sistema informal y el campo institucional.
+     */
+    _preSeedFromFuentes() {
+        // Agrupar registros por nodo (caso al que corresponde la fricción)
+        const byNode = new Map();
+        for (const f of this._fuentes) {
+            const id = f.friccion_con;
+            if (!id) continue;
+            if (!byNode.has(id)) byNode.set(id, []);
+            byNode.get(id).push(f);
+        }
+
+        for (const [nodeId, records] of byNode) {
+            const state = this.nodeState.get(nodeId);
+            if (!state) continue;
+
+            // Calor proporcional al número y tipo de registros de fricción
+            const politicaCount = records.filter(r => r.tipo_friccion === 'politica').length;
+            const semanticaCount = records.filter(r => r.tipo_friccion === 'semantica').length;
+            const tecnicaCount = records.filter(r => r.tipo_friccion === 'tecnica').length;
+
+            // Fricción política pesa más (0.12 por registro), semántica (0.10), técnica (0.08)
+            const heatSeed = Math.min(0.65,
+                politicaCount * 0.12 + semanticaCount * 0.10 + tecnicaCount * 0.08);
+
+            state.heat = Math.max(state.heat, heatSeed);
+            state.temperature = state.heat / (state.integrity + 0.1);
+
+            // Simular interacciones previas: ~70% de los registros generan corriente corrupta
+            const corruptRecs = Math.floor(records.length * 0.7);
+            const totalRecs = records.length;
+
+            this.corruptTransactions += corruptRecs;
+            this.totalTransactions += totalRecs;
+            state.corruptCount += corruptRecs;
+            this.systemHeat += heatSeed;
+
+            // La integridad se ha erosionado proporcionalmente
+            const integrityLoss = corruptRecs * THERMO_CONFIG.INTEGRITY_DECAY * 1.5;
+            state.integrity = Math.max(0.15, state.integrity - integrityLoss);
+        }
+
+        // Calcular entropía inicial con los datos sembrados
+        if (this.totalTransactions > 0) this._updateEntropy();
     }
 
     /* ─── ESTADO DE NODOS ─── */
@@ -243,26 +302,44 @@ class SocialField {
         }
     }
 
-    _spawnAgent() {
-        // Spawn en borde aleatorio (ciudadano entra al sistema)
-        const side = Math.floor(Math.random() * 4);
+    _spawnAgent(nearNode) {
         let x, y;
-        switch (side) {
-            case 0:
-                x = Math.random() * this.width;
-                y = -10;
-                break;
-            case 1:
-                x = this.width + 10;
-                y = Math.random() * this.height;
-                break;
-            case 2:
-                x = Math.random() * this.width;
-                y = this.height + 10;
-                break;
-            default:
-                x = -10;
-                y = Math.random() * this.height;
+        // Un porcentaje de agentes nace cerca de un nodo para acelerar interacciones
+        const spawnNear = nearNode || (
+            this.nodes.length > 0 &&
+            Math.random() < THERMO_CONFIG.NEAR_NODE_SPAWN_RATIO
+                ? this.nodes[Math.floor(Math.random() * this.nodes.length)]
+                : null
+        );
+
+        if (spawnNear && spawnNear.x && spawnNear.y) {
+            const angle = Math.random() * Math.PI * 2;
+            const dist = 60 + Math.random() * 80; // entre 60 y 140px del nodo
+            x = spawnNear.x + Math.cos(angle) * dist;
+            y = spawnNear.y + Math.sin(angle) * dist;
+            // Mantener dentro del canvas
+            x = Math.max(5, Math.min(this.width - 5, x));
+            y = Math.max(5, Math.min(this.height - 5, y));
+        } else {
+            // Spawn en borde aleatorio (ciudadano entra al sistema)
+            const side = Math.floor(Math.random() * 4);
+            switch (side) {
+                case 0:
+                    x = Math.random() * this.width;
+                    y = -10;
+                    break;
+                case 1:
+                    x = this.width + 10;
+                    y = Math.random() * this.height;
+                    break;
+                case 2:
+                    x = Math.random() * this.width;
+                    y = this.height + 10;
+                    break;
+                default:
+                    x = -10;
+                    y = Math.random() * this.height;
+            }
         }
 
         // Necesidad = presión por resolver trámite (V en I=V/R)
@@ -953,7 +1030,9 @@ class SocialField {
         this.corruptTransactions = 0;
         this.collapseTriggered = false;
         this.entropyHistory = [];
+        this._metricsBuilt = false;
         this._initNodeState();
+        if (this._fuentes.length > 0) this._preSeedFromFuentes();
         this._initAgents();
     }
 

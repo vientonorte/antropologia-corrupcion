@@ -533,6 +533,31 @@
                 <em>muerte térmica</em>: toda transacción requiere soborno.
             </p>
 
+            <!-- Ecuación de Black-Scholes aplicada al campo de fricción -->
+            <div class="sf-bs-equation" role="note" aria-label="Ecuación de Black-Scholes aplicada a fricción epistemológica">
+                <div class="sf-bs-header">
+                    <span class="sf-bs-eyebrow">Black &amp; Scholes (1973) → contra-archivo (2026)</span>
+                    <span class="sf-bs-badge">la ecuación que "eliminó" la incertidumbre</span>
+                </div>
+                <div class="sf-bs-formula" aria-label="C igual a S por N de d1 menos K por e elevado a menos rT por N de d2">
+                    <span class="sf-bs-c">C</span>
+                    <span class="sf-bs-op">=</span>
+                    <span class="sf-bs-s">S</span><span class="sf-bs-op">·</span><span class="sf-bs-fn">N(d₁)</span>
+                    <span class="sf-bs-op"> − </span>
+                    <span class="sf-bs-k">K</span><span class="sf-bs-op">·</span><span class="sf-bs-fn">e<sup>−rT</sup></span><span class="sf-bs-op">·</span><span class="sf-bs-fn">N(d₂)</span>
+                </div>
+                <div class="sf-bs-reinterp">
+                    <div class="sf-bs-var-row"><span class="sf-bs-var sf-bs-c">C</span><span class="sf-bs-var-label">Probabilidad esperada de resolución epistémica (valor del caso)</span></div>
+                    <div class="sf-bs-var-row"><span class="sf-bs-var sf-bs-s">S</span><span class="sf-bs-var-label">Presión pública actual (actores + instituciones + conexiones documentadas)</span></div>
+                    <div class="sf-bs-var-row"><span class="sf-bs-var sf-bs-k">K</span><span class="sf-bs-var-label">Umbral de resolución institucional (umbral de visibilidad del caso)</span></div>
+                    <div class="sf-bs-var-row"><span class="sf-bs-var sf-bs-sigma">σ</span><span class="sf-bs-var-label">Volatilidad epistemológica — intensidad de fricción entre capas</span></div>
+                    <div class="sf-bs-var-row"><span class="sf-bs-var sf-bs-t">T</span><span class="sf-bs-var-label">Tiempo transcurrido — años de silencio erosionan el valor (Θ &lt; 0)</span></div>
+                </div>
+                <p class="sf-bs-nota">
+                    Black &amp; Scholes asumieron que el riesgo se puede cubrir completamente y la incertidumbre eliminar con derivados. El instrumento invierte esa premisa: aquí <strong>σ mide la incertidumbre que la institución produce</strong> al traducir entre regímenes de verdad. No la elimina — la cuantifica como evidencia de mistranslation estructural. El modelo ya calcula estos valores para cada caso en el grafo.
+                </p>
+            </div>
+
             <div id="campo-social-wrap">
                 <div class="viz-loading" id="sf-loading">
                     <div class="viz-loading-inner">
@@ -1241,11 +1266,16 @@ function initSocialField() {
       const gd = window.frictionEngine.buildGraph(CASOS);
       const wrap = document.getElementById('campo-social-canvas');
       if (!wrap) return;
+      // Normalizar fuentes: el JSON puede ser array directo o {registros:[...]}
+      var fuentesArr = Array.isArray(FUENTES_DATA)
+        ? FUENTES_DATA
+        : (FUENTES_DATA && Array.isArray(FUENTES_DATA.registros) ? FUENTES_DATA.registros : []);
       const SF = new window.SocialField({
         container: wrap,
         nodes: gd.nodes,
         links: gd.links,
         metricsEl: document.getElementById('sf-metrics-panel'),
+        fuentes: fuentesArr,
       });
 
       // Ocultar loading skeleton
