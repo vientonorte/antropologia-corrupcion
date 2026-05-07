@@ -1267,7 +1267,7 @@ function initSocialField() {
       const wrap = document.getElementById('campo-social-canvas');
       if (!wrap) return;
       // Normalizar fuentes: el JSON puede ser array directo o {registros:[...]}
-      var fuentesArr = Array.isArray(FUENTES_DATA)
+      const fuentesArr = Array.isArray(FUENTES_DATA)
         ? FUENTES_DATA
         : (FUENTES_DATA && Array.isArray(FUENTES_DATA.registros) ? FUENTES_DATA.registros : []);
       const SF = new window.SocialField({
