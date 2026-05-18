@@ -1,0 +1,1632 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Archivo de Lecturas — Contra-Archivo</title>
+    <meta name="description" content="Archivo privado de citas y notas del corpus — Contra-Archivo: Antropología y Corrupción">
+    <meta name="robots" content="noindex, nofollow">
+    <meta property="og:title" content="Archivo de Lecturas — Contra-Archivo">
+    <meta property="og:type" content="website">
+    <meta name="theme-color" content="#0c0c0c">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⊘</text></svg>">
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="styles/shared.css?v=20260504">
+    <link rel="stylesheet" href="styles/ui-kit.css?v=20260504">
+    <style>
+        /* ══════════════════════════════════════════
+           archivo-lecturas.html
+           Archivo de Lecturas del Contra-Archivo
+           Clave A (Bullet Ro) + Clave B (Libros académicos)
+           ══════════════════════════════════════════ */
+
+        :root {
+            --nav-h: 56px;
+            /* Clave A */
+            --ca-pink:   #e8847a;
+            --ca-gray:   #8a8a8a;
+            --ca-teal:   #4ab8a5;
+            --ca-orange: #e8a24a;
+            --ca-yellow: #f4d35e;
+            /* Clave B extra */
+            --cb-blue:   #4a90d9;
+            --cb-green:  #7bc67e;
+            --cb-purple: #b07fc4;
+        }
+
+        /* ── NAV ── */
+        .ca-nav {
+            position: sticky; top: 0; z-index: var(--z-nav, 100);
+            display: flex; align-items: center; gap: var(--sp-3, 12px);
+            height: var(--nav-h); padding: 0 var(--sp-4, 16px);
+            background: var(--bg); border-bottom: 1px solid var(--border);
+        }
+        .ca-nav-logo {
+            display: flex; align-items: center; gap: var(--sp-2, 8px);
+            font-weight: 700; font-size: 1.05rem; white-space: nowrap;
+            text-decoration: none; color: var(--text);
+        }
+        .ca-nav-badge {
+            font-size: .68rem; padding: 2px 7px; border-radius: var(--r-sm, 4px);
+            background: var(--ca-teal); color: #000;
+            font-weight: 600; letter-spacing: .3px; text-transform: uppercase;
+        }
+        .ca-nav-links { display: flex; gap: var(--sp-2, 8px); margin-left: auto; align-items: center; }
+        .ca-nav-links a, .ca-nav-links button {
+            font-size: .82rem; color: var(--muted);
+            padding: var(--sp-2, 8px) var(--sp-3, 12px); border-radius: var(--r, 8px);
+            transition: color var(--dur, .2s), background var(--dur, .2s);
+            background: none; border: none; cursor: pointer;
+            min-height: var(--touch-min, 44px); display: flex; align-items: center; text-decoration: none;
+        }
+        .ca-nav-links a:hover, .ca-nav-links button:hover { color: var(--text); background: var(--s2); }
+        .ca-nav-links .btn-salir { color: var(--crit); }
+
+        /* ── MAIN LAYOUT ── */
+        .ca-main { max-width: 1100px; margin: 0 auto; padding: var(--sp-6, 24px) var(--sp-4, 16px); }
+
+        /* ── PAGE HEADER ── */
+        .ca-page-header {
+            display: flex; align-items: flex-start; gap: var(--sp-4, 16px);
+            margin-bottom: var(--sp-5, 20px); flex-wrap: wrap;
+        }
+        .ca-page-header-text { flex: 1; min-width: 200px; }
+        .ca-page-title { font-size: 1.5rem; font-weight: 700; color: var(--text); margin-bottom: var(--sp-1, 4px); }
+        .ca-page-subtitle { font-size: .82rem; color: var(--muted); font-family: var(--font-mono); }
+        .ca-page-actions { display: flex; gap: var(--sp-2, 8px); flex-wrap: wrap; align-items: center; }
+
+        /* ── BUTTONS ── */
+        .ca-btn {
+            display: inline-flex; align-items: center; gap: var(--sp-2, 8px);
+            padding: var(--sp-2, 8px) var(--sp-4, 16px); border-radius: var(--r, 8px);
+            font-size: .85rem; font-weight: 600; cursor: pointer;
+            transition: all var(--dur, .2s); border: 1px solid var(--border);
+            background: var(--s2); color: var(--text); min-height: var(--touch-min, 44px);
+        }
+        .ca-btn:hover { background: var(--s3); }
+        .ca-btn-primary { background: var(--ca-teal); color: #000; border-color: var(--ca-teal); }
+        .ca-btn-primary:hover { background: #3aa394; }
+        .ca-btn-sm {
+            font-size: .72rem; padding: 4px 10px; border-radius: 6px;
+            border: 1px solid var(--border); background: var(--s2); color: var(--muted);
+            cursor: pointer; transition: all var(--dur, .2s); min-height: 32px;
+        }
+        .ca-btn-sm:hover { border-color: var(--muted); color: var(--text); }
+        .ca-btn-sm.approve { border-color: var(--ca-teal); color: var(--ca-teal); }
+        .ca-btn-sm.approve:hover { background: var(--ca-teal); color: #000; }
+        .ca-btn-sm.danger:hover { border-color: var(--crit); color: var(--crit); }
+
+        /* ── UPLOAD PANEL ── */
+        .ca-upload-section {
+            background: var(--s1); border: 1px solid var(--border);
+            border-radius: var(--r-lg, 12px); padding: var(--sp-5, 20px);
+            margin-bottom: var(--sp-5, 20px);
+        }
+        .ca-upload-title {
+            font-size: 1rem; font-weight: 700; margin-bottom: var(--sp-4, 16px);
+            display: flex; align-items: center; gap: var(--sp-2, 8px);
+        }
+        .ca-drop-zone {
+            border: 2px dashed var(--border); border-radius: var(--r, 8px);
+            padding: var(--sp-6, 24px) var(--sp-4, 16px); text-align: center;
+            cursor: pointer; transition: all var(--dur, .2s); position: relative;
+            background: var(--s2); margin-bottom: var(--sp-4, 16px);
+        }
+        .ca-drop-zone:hover, .ca-drop-zone.drag-over { border-color: var(--ca-teal); background: var(--s3); }
+        .ca-drop-zone:focus-visible { outline: 2px solid var(--ca-teal); outline-offset: 2px; }
+        .ca-drop-icon { font-size: 2rem; display: block; margin-bottom: var(--sp-2, 8px); }
+        .ca-drop-text { color: var(--text); font-size: .9rem; margin-bottom: 4px; }
+        .ca-drop-hint { color: var(--dim); font-size: .75rem; font-family: var(--font-mono); }
+        .ca-preview-wrap {
+            position: relative; margin-bottom: var(--sp-4, 16px);
+            display: flex; gap: var(--sp-3, 12px); align-items: flex-start; flex-wrap: wrap;
+        }
+        .ca-preview-img {
+            max-height: 200px; max-width: 100%; border-radius: var(--r, 8px);
+            border: 1px solid var(--border); object-fit: contain;
+        }
+        .ca-preview-meta { flex: 1; min-width: 160px; }
+        .ca-preview-name { font-size: .8rem; font-family: var(--font-mono); color: var(--muted); margin-bottom: var(--sp-2, 8px); }
+
+        /* ── CLAVE FIELDSET ── */
+        .ca-clave-fieldset {
+            border: 1px solid var(--border); border-radius: var(--r, 8px);
+            padding: var(--sp-3, 12px); margin-bottom: var(--sp-4, 16px);
+        }
+        .ca-clave-fieldset legend {
+            font-size: .75rem; font-weight: 700; color: var(--muted);
+            text-transform: uppercase; letter-spacing: .05em; padding: 0 4px;
+        }
+        .ca-clave-opt {
+            display: flex; flex-direction: column; gap: 2px;
+            padding: var(--sp-2, 8px); border-radius: var(--r-sm, 4px);
+            cursor: pointer; transition: background var(--dur, .2s);
+            margin-bottom: 4px;
+        }
+        .ca-clave-opt:hover { background: var(--s2); }
+        .ca-clave-opt-header { display: flex; align-items: center; gap: var(--sp-2, 8px); }
+        .ca-clave-opt-header input { flex-shrink: 0; }
+        .ca-clave-opt-title { font-size: .88rem; font-weight: 600; }
+        .ca-clave-opt-desc {
+            font-size: .72rem; color: var(--dim); font-family: var(--font-mono);
+            margin-left: 20px; line-height: 1.5;
+        }
+
+        /* ── FORM ── */
+        .ca-form-group {
+            display: flex; flex-direction: column; gap: var(--sp-1, 4px);
+            margin-bottom: var(--sp-4, 16px);
+        }
+        .ca-form-label {
+            font-size: .78rem; color: var(--muted); font-weight: 600;
+            text-transform: uppercase; letter-spacing: .04em;
+        }
+        .ca-form-input, .ca-form-textarea, .ca-form-select {
+            background: var(--s2); border: 1px solid var(--border);
+            border-radius: var(--r, 8px); color: var(--text);
+            font-size: .88rem; padding: var(--sp-3, 12px);
+            font-family: var(--font-sans); transition: border-color var(--dur, .2s); width: 100%;
+        }
+        .ca-form-input:focus, .ca-form-textarea:focus, .ca-form-select:focus {
+            outline: none; border-color: var(--ca-teal);
+        }
+        .ca-form-textarea { resize: vertical; min-height: 80px; line-height: 1.6; }
+        .ca-form-select { appearance: none; -webkit-appearance: none; }
+        .ca-form-row { display: grid; grid-template-columns: 1fr auto; gap: var(--sp-3, 12px); }
+        .ca-form-row .ca-form-group:last-child { width: 100px; }
+        .ca-checkbox-label {
+            display: flex; align-items: center; gap: var(--sp-2, 8px);
+            font-size: .8rem; color: var(--muted); cursor: pointer;
+        }
+        .ca-radio-opt {
+            display: flex; align-items: center; gap: var(--sp-2, 8px);
+            font-size: .85rem; cursor: pointer; padding: var(--sp-1, 4px) 0;
+        }
+        .ca-form-actions {
+            display: flex; gap: var(--sp-2, 8px); justify-content: flex-end; flex-wrap: wrap;
+        }
+
+        /* ── API DETAILS ── */
+        .ca-api-details {
+            background: var(--s2); border: 1px solid var(--border); border-radius: var(--r, 8px);
+            padding: var(--sp-3, 12px); margin-bottom: var(--sp-4, 16px);
+        }
+        .ca-api-details summary {
+            font-size: .8rem; color: var(--muted); cursor: pointer; font-weight: 600;
+            text-transform: uppercase; letter-spacing: .04em;
+        }
+        .ca-api-inner { padding-top: var(--sp-3, 12px); }
+        .ca-api-key-wrap { display: flex; gap: var(--sp-2, 8px); }
+        .ca-api-key-wrap .ca-form-input { flex: 1; }
+        .ca-api-key-wrap button {
+            flex-shrink: 0; background: var(--s3); border: 1px solid var(--border);
+            border-radius: var(--r, 8px); cursor: pointer; padding: 0 var(--sp-3, 12px);
+            color: var(--muted); min-height: var(--touch-min, 44px);
+        }
+        .ca-api-warn {
+            font-size: .72rem; color: var(--ca-orange); font-family: var(--font-mono);
+            margin-top: 4px;
+        }
+
+        /* ── UPLOAD ACTIONS / STATUS ── */
+        .ca-upload-actions { display: flex; gap: var(--sp-3, 12px); align-items: center; flex-wrap: wrap; }
+        .ca-status-msg {
+            font-size: .82rem; color: var(--muted); font-family: var(--font-mono);
+        }
+        .ca-status-msg.error { color: var(--crit); }
+        .ca-status-msg.success { color: var(--ca-teal); }
+
+        /* ── ANALYSIS RESULTS ── */
+        .ca-results-wrap { margin-top: var(--sp-5, 20px); }
+        .ca-results-title { font-size: .95rem; font-weight: 700; margin-bottom: 4px; }
+        .ca-results-hint { font-size: .78rem; color: var(--dim); margin-bottom: var(--sp-3, 12px); }
+        .ca-results-list { display: flex; flex-direction: column; gap: var(--sp-3, 12px); margin-bottom: var(--sp-4, 16px); }
+        .ca-result-card {
+            background: var(--s2); border: 1px solid var(--border);
+            border-radius: var(--r, 8px); padding: var(--sp-3, 12px);
+            border-left: 3px solid var(--border);
+        }
+        .ca-result-card.dismissed { opacity: .4; pointer-events: none; }
+        .ca-result-meta { display: flex; gap: var(--sp-2, 8px); align-items: center; flex-wrap: wrap; margin-bottom: var(--sp-2, 8px); }
+        .ca-result-page { font-size: .68rem; font-family: var(--font-mono); color: var(--dim); background: var(--s3); padding: 2px 6px; border-radius: 4px; }
+        .ca-result-cat { font-size: .68rem; color: var(--muted); background: var(--s3); padding: 2px 6px; border-radius: 4px; }
+        .ca-result-clave {
+            font-size: .65rem; font-weight: 700; padding: 1px 6px; border-radius: 3px;
+            text-transform: uppercase; letter-spacing: .05em;
+        }
+        .ca-result-clave.a { background: var(--ca-pink); color: #000; }
+        .ca-result-clave.b { background: var(--cb-blue); color: #fff; }
+        .ca-result-text { font-size: .85rem; color: var(--text); font-style: italic; line-height: 1.6; margin-bottom: var(--sp-2, 8px); }
+        .ca-result-note { font-size: .75rem; color: var(--muted); line-height: 1.5; margin-bottom: var(--sp-2, 8px); }
+        .ca-result-actions { display: flex; gap: var(--sp-2, 8px); }
+
+        /* ── STATS ── */
+        .ca-stats {
+            display: flex; gap: var(--sp-4, 16px); padding: var(--sp-4, 16px);
+            background: var(--s1); border: 1px solid var(--border);
+            border-radius: var(--r, 8px); margin-bottom: var(--sp-4, 16px); flex-wrap: wrap;
+        }
+        .ca-stat { display: flex; flex-direction: column; gap: 2px; }
+        .ca-stat-value { font-size: 1.4rem; font-weight: 700; color: var(--text); font-family: var(--font-mono); }
+        .ca-stat-label { font-size: .68rem; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; }
+
+        /* ── FILTERS ── */
+        .ca-filters {
+            display: flex; gap: var(--sp-2, 8px); margin-bottom: var(--sp-4, 16px);
+            flex-wrap: wrap; align-items: center;
+        }
+        .ca-filter-label { font-size: .73rem; color: var(--dim); font-family: var(--font-mono); }
+        .ca-filter-sep { width: 1px; height: 20px; background: var(--border); flex-shrink: 0; }
+        .ca-search {
+            background: var(--s2); border: 1px solid var(--border);
+            border-radius: var(--r, 8px); color: var(--text); font-size: .88rem;
+            padding: var(--sp-2, 8px) var(--sp-3, 12px); font-family: var(--font-sans);
+            width: 100%; max-width: 260px;
+        }
+        .ca-search:focus { outline: none; border-color: var(--ca-teal); }
+        .ca-chip {
+            font-size: .73rem; padding: 4px 10px; border-radius: 20px;
+            border: 1px solid var(--border); background: var(--s2); color: var(--muted);
+            cursor: pointer; transition: all var(--dur, .2s);
+            display: inline-flex; align-items: center; gap: 5px; min-height: 32px;
+        }
+        .ca-chip:hover { border-color: var(--muted); color: var(--text); }
+        .ca-chip.active { border-color: var(--text); color: var(--text); background: var(--s3); }
+        .ca-chip-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; flex-shrink: 0; }
+
+        /* ── GRID ── */
+        .ca-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: var(--sp-4, 16px);
+        }
+
+        /* ── CARD ── */
+        .ca-card {
+            background: var(--s1); border: 1px solid var(--border);
+            border-radius: var(--r-lg, 12px); padding: var(--sp-4, 16px);
+            display: flex; flex-direction: column; gap: var(--sp-3, 12px);
+            transition: border-color var(--dur, .2s), box-shadow var(--dur, .2s);
+            border-left-width: 3px;
+        }
+        .ca-card:hover { box-shadow: var(--shadow-md); }
+        .ca-card-meta { display: flex; gap: var(--sp-2, 8px); align-items: center; flex-wrap: wrap; }
+        .ca-card-page { font-size: .68rem; font-family: var(--font-mono); color: var(--dim); background: var(--s2); padding: 2px 6px; border-radius: 4px; }
+        .ca-card-cat { font-size: .68rem; color: var(--muted); background: var(--s2); padding: 2px 6px; border-radius: 4px; }
+        .ca-card-clave {
+            font-size: .62rem; font-weight: 700; padding: 1px 5px; border-radius: 3px;
+            text-transform: uppercase; letter-spacing: .05em;
+        }
+        .ca-card-clave.a { background: rgba(232,132,122,.25); color: var(--ca-pink); border: 1px solid var(--ca-pink); }
+        .ca-card-clave.b { background: rgba(74,144,217,.2); color: var(--cb-blue); border: 1px solid var(--cb-blue); }
+        .ca-card-color-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; margin-left: auto; }
+        .ca-card-fuente { font-size: .72rem; color: var(--dim); font-family: var(--font-mono); border-top: 1px solid var(--border); padding-top: var(--sp-1, 4px); }
+        .ca-card-text { font-size: .88rem; color: var(--text); line-height: 1.6; font-style: italic; }
+        .ca-card-note { font-size: .76rem; color: var(--muted); line-height: 1.5; border-top: 1px solid var(--border); padding-top: var(--sp-2, 8px); }
+        .ca-card-actions { display: flex; gap: var(--sp-2, 8px); margin-top: auto; }
+
+        /* ── MODAL ── */
+        .ca-modal-overlay {
+            display: none; position: fixed; inset: 0;
+            background: rgba(0,0,0,.7); z-index: var(--z-overlay, 80);
+            align-items: center; justify-content: center; padding: var(--sp-4, 16px);
+        }
+        .ca-modal-overlay.open { display: flex; }
+        .ca-modal {
+            background: var(--s1); border: 1px solid var(--border);
+            border-radius: var(--r-lg, 12px); padding: var(--sp-6, 24px);
+            width: 100%; max-width: 580px; max-height: 92vh; overflow-y: auto; position: relative;
+        }
+        .ca-modal-title { font-size: 1.1rem; font-weight: 700; margin-bottom: var(--sp-4, 16px); }
+        .ca-modal-close {
+            position: absolute; top: var(--sp-4, 16px); right: var(--sp-4, 16px);
+            background: none; border: none; font-size: 1.2rem; color: var(--muted);
+            cursor: pointer; padding: var(--sp-1, 4px);
+            min-width: var(--touch-min, 44px); min-height: var(--touch-min, 44px);
+            display: flex; align-items: center; justify-content: center; border-radius: var(--r, 8px);
+        }
+        .ca-modal-close:hover { color: var(--text); background: var(--s2); }
+
+        /* ── COLOR PICKER ── */
+        .ca-color-picker { display: flex; gap: var(--sp-2, 8px); flex-wrap: wrap; }
+        .ca-color-btn {
+            width: 36px; height: 36px; border-radius: 50%; border: 3px solid transparent;
+            cursor: pointer; transition: transform var(--dur, .2s), border-color var(--dur, .2s); flex-shrink: 0;
+        }
+        .ca-color-btn:hover { transform: scale(1.15); }
+        .ca-color-btn.selected { border-color: var(--text); transform: scale(1.1); }
+        .ca-color-legend { font-size: .72rem; color: var(--dim); margin-top: 4px; font-family: var(--font-mono); }
+
+        /* ── CLAVE RADIOS (in modal) ── */
+        .ca-clave-radios { display: flex; gap: var(--sp-4, 16px); flex-wrap: wrap; }
+
+        /* ── EMPTY ── */
+        .ca-empty {
+            text-align: center; padding: var(--sp-8, 32px) var(--sp-4, 16px);
+            color: var(--dim); font-size: .9rem; grid-column: 1 / -1;
+        }
+        .ca-empty-icon { font-size: 2.5rem; margin-bottom: var(--sp-3, 12px); display: block; }
+
+        /* ── AUTH MSG ── */
+        .ca-auth-msg {
+            display: flex; align-items: center; justify-content: center;
+            min-height: calc(100vh - var(--nav-h));
+            flex-direction: column; gap: var(--sp-4, 16px); color: var(--muted);
+        }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 600px) {
+            .ca-grid { grid-template-columns: 1fr; }
+            .ca-page-header { flex-direction: column; }
+            .ca-page-actions { width: 100%; }
+            .ca-form-row { grid-template-columns: 1fr; }
+            .ca-form-row .ca-form-group:last-child { width: auto; }
+        }
+    </style>
+</head>
+
+<body>
+    <a class="sr-only" href="#main-content">Saltar al contenido</a>
+
+    <!-- ═══════════════════════ NAV ═══════════════════════ -->
+    <nav class="ca-nav" aria-label="Navegación Archivo de Lecturas">
+        <a href="privado.html" class="ca-nav-logo">
+            <span aria-hidden="true">⊘</span> Contra-Archivo <span class="ca-nav-badge">Corpus</span>
+        </a>
+        <div class="ca-nav-links">
+            <a href="privado.html">← Espacio privado</a>
+            <button class="btn-salir" id="logout-btn" type="button">Salir</button>
+        </div>
+    </nav>
+
+    <!-- ═══════════════════════ AUTH GATE ═══════════════════════ -->
+    <div class="ca-auth-msg" id="auth-msg" aria-live="polite">
+        <span style="font-size:2rem" aria-hidden="true">⊘</span>
+        <p>Verificando acceso…</p>
+    </div>
+
+    <!-- ═══════════════════════ MAIN ═══════════════════════ -->
+    <main class="ca-main" id="main-content" hidden>
+
+        <!-- PAGE HEADER -->
+        <div class="ca-page-header">
+            <div class="ca-page-header-text">
+                <h1 class="ca-page-title">Archivo de Lecturas</h1>
+                <p class="ca-page-subtitle">
+                    Citas del corpus doctoral · Clave A (Bullet Ro) + Clave B (Libros académicos)
+                </p>
+            </div>
+            <div class="ca-page-actions">
+                <button class="ca-btn" id="btn-toggle-upload" type="button" aria-expanded="false" aria-controls="upload-section">
+                    📷 Analizar imagen
+                </button>
+                <button class="ca-btn" id="btn-export-json" type="button" aria-label="Exportar en JSON">↓ JSON</button>
+                <button class="ca-btn" id="btn-export-csv" type="button" aria-label="Exportar en CSV">↓ CSV</button>
+                <button class="ca-btn ca-btn-primary" id="btn-nueva" type="button">+ Nueva cita</button>
+            </div>
+        </div>
+
+        <!-- UPLOAD / ANALYSIS PANEL -->
+        <section class="ca-upload-section" id="upload-section" hidden aria-label="Análisis de imagen con Clave A o B">
+            <h2 class="ca-upload-title" aria-hidden="false">📷 Analizar imagen</h2>
+
+            <!-- Drop zone -->
+            <div
+                class="ca-drop-zone"
+                id="drop-zone"
+                role="button"
+                tabindex="0"
+                aria-label="Zona de carga: arrastra una imagen o pulsa Enter para seleccionar"
+            >
+                <span class="ca-drop-icon" aria-hidden="true">🖼</span>
+                <p class="ca-drop-text">Arrastra una foto aquí o haz clic para seleccionar</p>
+                <p class="ca-drop-hint">JPG · PNG · WebP · Máx 5 MB</p>
+                <input
+                    type="file" id="file-input" accept="image/jpeg,image/png,image/webp,image/gif"
+                    style="position:absolute;opacity:0;width:0;height:0;pointer-events:none"
+                    tabindex="-1" aria-hidden="true"
+                >
+            </div>
+            <div class="ca-preview-wrap" id="image-preview-wrap" hidden>
+                <img class="ca-preview-img" id="image-preview-img" alt="Vista previa de la imagen cargada" src="">
+                <div class="ca-preview-meta">
+                    <p class="ca-preview-name" id="image-preview-name"></p>
+                    <button type="button" class="ca-btn-sm danger" id="btn-clear-image">✕ Quitar imagen</button>
+                </div>
+            </div>
+
+            <!-- Clave selector -->
+            <fieldset class="ca-clave-fieldset">
+                <legend>Clave cromática a aplicar</legend>
+
+                <label class="ca-clave-opt" for="clave-upload-b">
+                    <div class="ca-clave-opt-header">
+                        <input type="radio" name="upload-clave" value="B" id="clave-upload-b" checked>
+                        <span class="ca-clave-opt-title">Clave B — Libros académicos</span>
+                    </div>
+                    <span class="ca-clave-opt-desc">
+                        🟡 Amarillo = Concepto clave &nbsp;·&nbsp; 🔵 Azul = Argumento central &nbsp;·&nbsp; 🟢 Verde = Dato/evidencia<br>
+                        🩷 Rosa = Crítica/tensión &nbsp;·&nbsp; 🟣 Púrpura = Teoría/marco &nbsp;·&nbsp; 🟠 Naranja = Conexión con caso
+                    </span>
+                </label>
+
+                <label class="ca-clave-opt" for="clave-upload-a">
+                    <div class="ca-clave-opt-header">
+                        <input type="radio" name="upload-clave" value="A" id="clave-upload-a">
+                        <span class="ca-clave-opt-title">Clave A — Bullet Ro / Post-its</span>
+                    </div>
+                    <span class="ca-clave-opt-desc">
+                        🩷 Rosa = Personal &nbsp;·&nbsp; ⬛ Gris = Vínculos &nbsp;·&nbsp; 🩵 Turquesa = Camila<br>
+                        🟠 Naranja = Laboral &nbsp;·&nbsp; 🟡 Amarillo = Referencias
+                    </span>
+                </label>
+            </fieldset>
+
+            <!-- Fuente por defecto -->
+            <div class="ca-form-group">
+                <label class="ca-form-label" for="upload-fuente">Fuente por defecto</label>
+                <input
+                    type="text" id="upload-fuente" class="ca-form-input"
+                    placeholder="Ej: Zuboff, The Age of Surveillance Capitalism, 2019  —  o BJ 2026-05"
+                >
+                <span style="font-size:.72rem;color:var(--dim)">
+                    Se aplica a todas las citas extraídas. Se puede editar por cita individual.
+                </span>
+            </div>
+
+            <!-- API settings -->
+            <details class="ca-api-details">
+                <summary>Configuración API Claude</summary>
+                <div class="ca-api-inner">
+                    <div class="ca-form-group">
+                        <label class="ca-form-label" for="api-key-input">Anthropic API Key</label>
+                        <div class="ca-api-key-wrap">
+                            <input type="password" id="api-key-input" class="ca-form-input" placeholder="sk-ant-…" autocomplete="off">
+                            <button type="button" id="btn-toggle-key" aria-label="Mostrar u ocultar clave API">👁</button>
+                        </div>
+                        <p class="ca-api-warn">🔒 La clave no se almacena — se introduce una vez por sesión y se descarta al cerrar la pestaña.</p>
+                    </div>
+                    <div class="ca-form-group">
+                        <label class="ca-form-label" for="api-model-input">Modelo</label>
+                        <input type="text" id="api-model-input" class="ca-form-input" value="claude-opus-4-7"
+                            placeholder="claude-opus-4-7">
+                    </div>
+                </div>
+            </details>
+
+            <!-- Actions -->
+            <div class="ca-upload-actions">
+                <button type="button" class="ca-btn ca-btn-primary" id="btn-analyze" disabled>
+                    Analizar imagen
+                </button>
+                <div id="analyze-status" role="status" aria-live="polite" class="ca-status-msg"></div>
+            </div>
+
+            <!-- Results -->
+            <div class="ca-results-wrap" id="analysis-results" hidden>
+                <h3 class="ca-results-title" id="results-title">Citas detectadas</h3>
+                <p class="ca-results-hint">Revisa cada cita. Haz clic en "Agregar" para incluirla en el archivo.</p>
+                <div class="ca-results-list" id="results-list" role="list"></div>
+                <div style="display:flex;gap:var(--sp-2);flex-wrap:wrap">
+                    <button type="button" class="ca-btn ca-btn-primary" id="btn-add-all">✓ Agregar todas</button>
+                    <button type="button" class="ca-btn" id="btn-discard-results">Descartar resultados</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- STATS -->
+        <div class="ca-stats" role="region" aria-label="Estadísticas del archivo">
+            <div class="ca-stat">
+                <span class="ca-stat-value" id="stat-total">0</span>
+                <span class="ca-stat-label">Citas</span>
+            </div>
+            <div class="ca-stat">
+                <span class="ca-stat-value" id="stat-fuentes">0</span>
+                <span class="ca-stat-label">Fuentes</span>
+            </div>
+            <div class="ca-stat">
+                <span class="ca-stat-value" id="stat-cats">0</span>
+                <span class="ca-stat-label">Categorías</span>
+            </div>
+            <div class="ca-stat">
+                <span class="ca-stat-value" id="stat-a">0</span>
+                <span class="ca-stat-label">Clave A</span>
+            </div>
+            <div class="ca-stat">
+                <span class="ca-stat-value" id="stat-b">0</span>
+                <span class="ca-stat-label">Clave B</span>
+            </div>
+        </div>
+
+        <!-- FILTERS -->
+        <div class="ca-filters" role="group" aria-label="Filtros de búsqueda">
+            <input type="search" class="ca-search" id="filter-search" placeholder="Buscar en citas…" aria-label="Buscar en citas">
+            <span class="ca-filter-sep" aria-hidden="true"></span>
+            <span class="ca-filter-label">Clave:</span>
+            <div id="filter-clave" style="display:flex;gap:6px" role="group" aria-label="Filtrar por clave cromática"></div>
+            <span class="ca-filter-sep" aria-hidden="true"></span>
+            <span class="ca-filter-label">Color:</span>
+            <div id="filter-colors" style="display:flex;gap:6px;flex-wrap:wrap" role="group" aria-label="Filtrar por color"></div>
+            <span class="ca-filter-sep" aria-hidden="true"></span>
+            <span class="ca-filter-label">Cat.:</span>
+            <div id="filter-cats" style="display:flex;gap:6px;flex-wrap:wrap" role="group" aria-label="Filtrar por categoría"></div>
+            <button class="ca-chip" id="btn-clear-filters" type="button">✕ Limpiar</button>
+        </div>
+
+        <!-- GRID -->
+        <div class="ca-grid" id="citations-grid" role="list" aria-label="Citas del archivo"></div>
+
+    </main>
+
+    <!-- ═══════════════════════ MODAL ═══════════════════════ -->
+    <div
+        class="ca-modal-overlay"
+        id="modal-overlay"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modal-title"
+    >
+        <div class="ca-modal" id="modal">
+            <button class="ca-modal-close" id="modal-close" type="button" aria-label="Cerrar modal">✕</button>
+            <h2 class="ca-modal-title" id="modal-title">Nueva cita</h2>
+
+            <form id="citation-form" novalidate>
+                <input type="hidden" id="field-id">
+
+                <div class="ca-form-group">
+                    <label class="ca-form-label" for="field-texto">Texto de la cita *</label>
+                    <textarea
+                        class="ca-form-textarea"
+                        id="field-texto"
+                        rows="4"
+                        required
+                        aria-required="true"
+                        placeholder="Fragmento exacto del libro, nota de campo, o transcripción BJ…"
+                    ></textarea>
+                </div>
+
+                <div class="ca-form-row">
+                    <div class="ca-form-group">
+                        <label class="ca-form-label" for="field-fuente">Fuente / Origen *</label>
+                        <input
+                            class="ca-form-input"
+                            id="field-fuente"
+                            type="text"
+                            required
+                            aria-required="true"
+                            placeholder="Autor, Título, Año  —  o BJ D17 / Nota de campo 2026-05"
+                        >
+                    </div>
+                    <div class="ca-form-group">
+                        <label class="ca-form-label" for="field-pagina">Página</label>
+                        <input
+                            class="ca-form-input"
+                            id="field-pagina"
+                            type="text"
+                            placeholder="23 o D17"
+                        >
+                    </div>
+                </div>
+
+                <div class="ca-form-group">
+                    <span class="ca-form-label" id="label-clave">Clave cromática *</span>
+                    <div class="ca-clave-radios" role="radiogroup" aria-labelledby="label-clave">
+                        <label class="ca-radio-opt" for="form-clave-b">
+                            <input type="radio" name="form-clave" value="B" id="form-clave-b">
+                            Clave B — Libros
+                        </label>
+                        <label class="ca-radio-opt" for="form-clave-a">
+                            <input type="radio" name="form-clave" value="A" id="form-clave-a">
+                            Clave A — BJ / Notas
+                        </label>
+                    </div>
+                </div>
+
+                <div class="ca-form-group">
+                    <label class="ca-form-label" for="field-categoria">Categoría *</label>
+                    <select class="ca-form-select" id="field-categoria" required aria-required="true">
+                        <option value="">— Selecciona —</option>
+                        <option value="marco-teorico">Marco teórico</option>
+                        <option value="concepto-clave">Concepto clave</option>
+                        <option value="evidencia-dato">Evidencia / dato</option>
+                        <option value="critica-tension">Crítica / tensión</option>
+                        <option value="mistranslation">Mistranslation / fricción</option>
+                        <option value="practica-informal">Práctica informal</option>
+                        <option value="instituciones">Instituciones / Estado</option>
+                        <option value="metodologia">Metodología</option>
+                        <option value="notas-campo">Notas de campo</option>
+                        <option value="conexion-caso">Conexión con caso</option>
+                    </select>
+                </div>
+
+                <div class="ca-form-group" id="color-picker-group">
+                    <span class="ca-form-label" id="label-color">Color de anotación *</span>
+                    <div class="ca-color-picker" id="color-picker" role="radiogroup" aria-labelledby="label-color"></div>
+                    <p class="ca-color-legend" id="color-legend"></p>
+                    <input type="hidden" id="field-color">
+                </div>
+
+                <div class="ca-form-group">
+                    <label class="ca-form-label" for="field-notas">Notas analíticas</label>
+                    <textarea
+                        class="ca-form-textarea"
+                        id="field-notas"
+                        rows="2"
+                        placeholder="Conexión con casos, análisis GT, mistranslation detectada…"
+                    ></textarea>
+                </div>
+
+                <div id="form-error" role="alert" style="display:none;color:var(--crit);font-size:.8rem;margin-bottom:var(--sp-3)"></div>
+
+                <div class="ca-form-actions">
+                    <button type="button" class="ca-btn" id="btn-cancel">Cancelar</button>
+                    <button type="submit" class="ca-btn ca-btn-primary" id="btn-save">Guardar cita</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script defer src="src/passkey.js?v=20260504"></script>
+    <script>
+        (function () {
+            'use strict';
+
+            /* ════════════════════════════════════════
+               CONSTANTES
+            ════════════════════════════════════════ */
+
+            var STORAGE_KEY = 'contraarchivoLecturas';
+            var STORAGE_API_MODEL = 'contraarchivoApiModel';
+
+            /* Clave A — Bullet Ro */
+            var COLORS_A = [
+                { id: 'pink',   hex: '#e8847a', label: 'Rosa — Personal' },
+                { id: 'gray',   hex: '#8a8a8a', label: 'Gris — Vínculos' },
+                { id: 'teal',   hex: '#4ab8a5', label: 'Turquesa — Camila' },
+                { id: 'orange', hex: '#e8a24a', label: 'Naranja — Laboral' },
+                { id: 'yellow', hex: '#f4d35e', label: 'Amarillo — Referencias' }
+            ];
+
+            /* Clave B — Libros académicos */
+            var COLORS_B = [
+                { id: 'yellow', hex: '#f4d35e', label: 'Amarillo — Concepto clave' },
+                { id: 'blue',   hex: '#4a90d9', label: 'Azul — Argumento central' },
+                { id: 'green',  hex: '#7bc67e', label: 'Verde — Dato / evidencia' },
+                { id: 'pink',   hex: '#e8847a', label: 'Rosa — Crítica / tensión' },
+                { id: 'purple', hex: '#b07fc4', label: 'Púrpura — Teoría / marco' },
+                { id: 'orange', hex: '#e8a24a', label: 'Naranja — Conexión con caso' }
+            ];
+
+            var CATS = {
+                'marco-teorico':    'Marco teórico',
+                'concepto-clave':   'Concepto clave',
+                'evidencia-dato':   'Evidencia / dato',
+                'critica-tension':  'Crítica / tensión',
+                'mistranslation':   'Mistranslation',
+                'practica-informal':'Práctica informal',
+                'instituciones':    'Instituciones / Estado',
+                'metodologia':      'Metodología',
+                'notas-campo':      'Notas de campo',
+                'conexion-caso':    'Conexión con caso'
+            };
+
+            /* ════════════════════════════════════════
+               ESTADO
+            ════════════════════════════════════════ */
+
+            var citations = [];
+            var filterColor = null;
+            var filterCat = null;
+            var filterClave = null;
+            var filterSearch = '';
+            var editingId = null;
+            var selectedColor = '';
+            var selectedFormClave = 'B';
+
+            /* Upload state */
+            var uploadImageBase64 = null;
+            var uploadImageType = 'image/jpeg';
+            var analysisResults = [];
+
+            /* ════════════════════════════════════════
+               HELPERS
+            ════════════════════════════════════════ */
+
+            function colorsByKey(clave) {
+                return clave === 'A' ? COLORS_A : COLORS_B;
+            }
+
+            function colorHex(id, clave) {
+                var colors = colorsByKey(clave);
+                for (var i = 0; i < colors.length; i++) {
+                    if (colors[i].id === id) return colors[i].hex;
+                }
+                /* fallback: search both keys */
+                var all = COLORS_A.concat(COLORS_B);
+                for (var j = 0; j < all.length; j++) {
+                    if (all[j].id === id) return all[j].hex;
+                }
+                return '#888';
+            }
+
+            function colorLabel(id, clave) {
+                var colors = colorsByKey(clave);
+                for (var i = 0; i < colors.length; i++) {
+                    if (colors[i].id === id) return colors[i].label;
+                }
+                return id;
+            }
+
+            function catLabel(id) { return CATS[id] || id; }
+
+            function uuid() {
+                return 'c-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 7);
+            }
+
+            function today() { return new Date().toISOString().slice(0, 10); }
+
+            /* ════════════════════════════════════════
+               STORAGE
+            ════════════════════════════════════════ */
+
+            function load() {
+                try {
+                    var raw = localStorage.getItem(STORAGE_KEY);
+                    citations = raw ? JSON.parse(raw) : [];
+                } catch (e) { citations = []; }
+            }
+
+            function save() {
+                try { localStorage.setItem(STORAGE_KEY, JSON.stringify(citations)); } catch (e) {}
+            }
+
+            /* ════════════════════════════════════════
+               STATS
+            ════════════════════════════════════════ */
+
+            function updateStats() {
+                var fuentes = {}, cats = {}, countA = 0, countB = 0;
+                citations.forEach(function (c) {
+                    if (c.fuente) fuentes[c.fuente] = true;
+                    if (c.categoria) cats[c.categoria] = true;
+                    if (c.clave === 'A') countA++;
+                    if (c.clave === 'B') countB++;
+                });
+                document.getElementById('stat-total').textContent = citations.length;
+                document.getElementById('stat-fuentes').textContent = Object.keys(fuentes).length;
+                document.getElementById('stat-cats').textContent = Object.keys(cats).length;
+                document.getElementById('stat-a').textContent = countA;
+                document.getElementById('stat-b').textContent = countB;
+            }
+
+            /* ════════════════════════════════════════
+               FILTER CHIPS
+            ════════════════════════════════════════ */
+
+            function renderFilterChips() {
+                /* Clave filter */
+                var claveDiv = document.getElementById('filter-clave');
+                claveDiv.innerHTML = '';
+                ['A', 'B'].forEach(function (k) {
+                    var btn = document.createElement('button');
+                    btn.type = 'button';
+                    btn.className = 'ca-chip' + (filterClave === k ? ' active' : '');
+                    btn.setAttribute('aria-pressed', filterClave === k ? 'true' : 'false');
+                    btn.textContent = 'Clave ' + k;
+                    btn.addEventListener('click', function () {
+                        filterClave = filterClave === k ? null : k;
+                        renderFilterChips(); renderGrid();
+                    });
+                    claveDiv.appendChild(btn);
+                });
+
+                /* Color filter — show all colors from both keys, deduplicated by id */
+                var colorsDiv = document.getElementById('filter-colors');
+                colorsDiv.innerHTML = '';
+                var seen = {};
+                var allColors = COLORS_B.concat(COLORS_A);
+                allColors.forEach(function (c) {
+                    if (seen[c.id]) return;
+                    seen[c.id] = true;
+                    var btn = document.createElement('button');
+                    btn.type = 'button';
+                    btn.className = 'ca-chip' + (filterColor === c.id ? ' active' : '');
+                    btn.setAttribute('aria-pressed', filterColor === c.id ? 'true' : 'false');
+                    btn.setAttribute('aria-label', 'Filtrar por color ' + c.id);
+                    var dotSpan = document.createElement('span');
+                    dotSpan.className = 'ca-chip-dot';
+                    dotSpan.style.background = c.hex;
+                    btn.appendChild(dotSpan);
+                    btn.addEventListener('click', function () {
+                        filterColor = filterColor === c.id ? null : c.id;
+                        renderFilterChips(); renderGrid();
+                    });
+                    colorsDiv.appendChild(btn);
+                });
+
+                /* Category filter */
+                var catsDiv = document.getElementById('filter-cats');
+                catsDiv.innerHTML = '';
+                Object.keys(CATS).forEach(function (key) {
+                    var btn = document.createElement('button');
+                    btn.type = 'button';
+                    btn.className = 'ca-chip' + (filterCat === key ? ' active' : '');
+                    btn.setAttribute('aria-pressed', filterCat === key ? 'true' : 'false');
+                    btn.setAttribute('aria-label', 'Filtrar por ' + CATS[key]);
+                    btn.textContent = CATS[key].split(' ')[0];
+                    btn.addEventListener('click', function () {
+                        filterCat = filterCat === key ? null : key;
+                        renderFilterChips(); renderGrid();
+                    });
+                    catsDiv.appendChild(btn);
+                });
+            }
+
+            /* ════════════════════════════════════════
+               GRID
+            ════════════════════════════════════════ */
+
+            function filteredCitations() {
+                return citations.filter(function (c) {
+                    if (filterClave && c.clave !== filterClave) return false;
+                    if (filterColor && c.color !== filterColor) return false;
+                    if (filterCat && c.categoria !== filterCat) return false;
+                    if (filterSearch) {
+                        var q = filterSearch.toLowerCase();
+                        var hay = (c.texto + ' ' + (c.notas || '') + ' ' + (c.fuente || '') + ' ' + catLabel(c.categoria)).toLowerCase();
+                        if (hay.indexOf(q) === -1) return false;
+                    }
+                    return true;
+                });
+            }
+
+            function renderGrid() {
+                var grid = document.getElementById('citations-grid');
+                var filtered = filteredCitations();
+                grid.innerHTML = '';
+
+                if (!filtered.length) {
+                    var empty = document.createElement('div');
+                    empty.className = 'ca-empty';
+                    var emptyIcon = document.createElement('span');
+                    emptyIcon.className = 'ca-empty-icon';
+                    emptyIcon.setAttribute('aria-hidden', 'true');
+                    emptyIcon.textContent = '📚';
+                    empty.appendChild(emptyIcon);
+                    empty.appendChild(document.createTextNode(
+                        citations.length ? 'No hay citas que coincidan con los filtros.' : 'El archivo está vacío. Agrega la primera cita.'
+                    ));
+                    grid.appendChild(empty);
+                    return;
+                }
+
+                filtered.forEach(function (c) {
+                    var card = document.createElement('article');
+                    card.className = 'ca-card';
+                    var hex = colorHex(c.color, c.clave || 'B');
+                    card.style.borderLeftColor = hex;
+                    card.setAttribute('role', 'listitem');
+                    card.setAttribute('aria-label', 'Cita de ' + (c.fuente || 'fuente desconocida') + (c.pagina ? ', p.' + c.pagina : ''));
+
+                    var claveClass = (c.clave || 'B').toLowerCase();
+                    var claveLabel = 'Clave ' + (c.clave || 'B');
+
+                    /* Build card with DOM methods — no innerHTML with user data */
+                    var meta = document.createElement('div');
+                    meta.className = 'ca-card-meta';
+                    if (c.pagina) {
+                        var pageEl = document.createElement('span');
+                        pageEl.className = 'ca-card-page';
+                        pageEl.textContent = 'p. ' + c.pagina;
+                        meta.appendChild(pageEl);
+                    }
+                    var catEl = document.createElement('span');
+                    catEl.className = 'ca-card-cat';
+                    catEl.textContent = catLabel(c.categoria);
+                    meta.appendChild(catEl);
+                    var claveEl = document.createElement('span');
+                    claveEl.className = 'ca-card-clave ' + claveClass;
+                    claveEl.textContent = claveLabel;
+                    meta.appendChild(claveEl);
+                    var dotEl = document.createElement('span');
+                    dotEl.className = 'ca-card-color-dot';
+                    dotEl.style.background = hex;
+                    dotEl.title = colorLabel(c.color, c.clave || 'B');
+                    meta.appendChild(dotEl);
+                    card.appendChild(meta);
+
+                    if (c.fuente) {
+                        var fuenteEl = document.createElement('p');
+                        fuenteEl.className = 'ca-card-fuente';
+                        fuenteEl.textContent = c.fuente;
+                        card.appendChild(fuenteEl);
+                    }
+                    var textEl = document.createElement('p');
+                    textEl.className = 'ca-card-text';
+                    textEl.textContent = '“' + c.texto + '”';
+                    card.appendChild(textEl);
+                    if (c.notas) {
+                        var notasEl = document.createElement('p');
+                        notasEl.className = 'ca-card-note';
+                        notasEl.textContent = '📝 ' + c.notas;
+                        card.appendChild(notasEl);
+                    }
+                    var actionsEl = document.createElement('div');
+                    actionsEl.className = 'ca-card-actions';
+                    var editBtn = document.createElement('button');
+                    editBtn.className = 'ca-btn-sm';
+                    editBtn.type = 'button';
+                    editBtn.textContent = 'Editar';
+                    editBtn.setAttribute('data-edit', c.id);
+                    actionsEl.appendChild(editBtn);
+                    var delBtn = document.createElement('button');
+                    delBtn.className = 'ca-btn-sm danger';
+                    delBtn.type = 'button';
+                    delBtn.setAttribute('aria-label', 'Eliminar cita');
+                    delBtn.textContent = 'Eliminar';
+                    delBtn.setAttribute('data-del', c.id);
+                    actionsEl.appendChild(delBtn);
+                    card.appendChild(actionsEl);
+                    grid.appendChild(card);
+                });
+
+                grid.querySelectorAll('[data-edit]').forEach(function (btn) {
+                    btn.addEventListener('click', function () { openEdit(btn.getAttribute('data-edit')); });
+                });
+                grid.querySelectorAll('[data-del]').forEach(function (btn) {
+                    btn.addEventListener('click', function () { deleteCitation(btn.getAttribute('data-del')); });
+                });
+            }
+
+            /* ════════════════════════════════════════
+               MODAL
+            ════════════════════════════════════════ */
+
+            function openModal(title) {
+                document.getElementById('modal-title').textContent = title;
+                document.getElementById('modal-overlay').classList.add('open');
+                document.getElementById('form-error').style.display = 'none';
+                setTimeout(function () { document.getElementById('field-texto').focus(); }, 50);
+            }
+
+            function closeModal() {
+                document.getElementById('modal-overlay').classList.remove('open');
+                document.getElementById('citation-form').reset();
+                document.getElementById('field-id').value = '';
+                document.getElementById('field-color').value = '';
+                selectedColor = '';
+                selectedFormClave = 'B';
+                editingId = null;
+                renderColorPicker('B', '');
+            }
+
+            function openNew() {
+                editingId = null;
+                document.getElementById('field-id').value = '';
+                document.getElementById('form-clave-b').checked = true;
+                selectedFormClave = 'B';
+                renderColorPicker('B', '');
+                openModal('Nueva cita');
+            }
+
+            function openEdit(id) {
+                var c = citations.find(function (x) { return x.id === id; });
+                if (!c) return;
+                editingId = id;
+                document.getElementById('field-id').value = id;
+                document.getElementById('field-texto').value = c.texto || '';
+                document.getElementById('field-fuente').value = c.fuente || '';
+                document.getElementById('field-pagina').value = c.pagina || '';
+                document.getElementById('field-categoria').value = c.categoria || '';
+                document.getElementById('field-notas').value = c.notas || '';
+                document.getElementById('field-color').value = c.color || '';
+                selectedColor = c.color || '';
+                selectedFormClave = c.clave || 'B';
+                if (c.clave === 'A') {
+                    document.getElementById('form-clave-a').checked = true;
+                } else {
+                    document.getElementById('form-clave-b').checked = true;
+                }
+                renderColorPicker(selectedFormClave, c.color || '');
+                openModal('Editar cita');
+            }
+
+            /* ════════════════════════════════════════
+               COLOR PICKER (dynamic by clave)
+            ════════════════════════════════════════ */
+
+            function renderColorPicker(clave, selected) {
+                var picker = document.getElementById('color-picker');
+                var legend = document.getElementById('color-legend');
+                picker.innerHTML = '';
+                var colors = colorsByKey(clave);
+
+                colors.forEach(function (c) {
+                    var btn = document.createElement('button');
+                    btn.type = 'button';
+                    btn.className = 'ca-color-btn' + (selected === c.id ? ' selected' : '');
+                    btn.style.background = c.hex;
+                    btn.title = c.label;
+                    btn.setAttribute('aria-label', c.label + (selected === c.id ? ' (seleccionado)' : ''));
+                    btn.setAttribute('aria-pressed', selected === c.id ? 'true' : 'false');
+                    btn.setAttribute('role', 'radio');
+                    btn.addEventListener('click', function () {
+                        selectedColor = c.id;
+                        document.getElementById('field-color').value = c.id;
+                        legend.textContent = c.label;
+                        renderColorPicker(selectedFormClave, c.id);
+                    });
+                    picker.appendChild(btn);
+                });
+
+                var sel = colors.find(function (c) { return c.id === selected; });
+                legend.textContent = sel ? sel.label : '';
+            }
+
+            /* ════════════════════════════════════════
+               CRUD
+            ════════════════════════════════════════ */
+
+            function saveCitation(data) {
+                if (editingId) {
+                    var idx = citations.findIndex(function (x) { return x.id === editingId; });
+                    if (idx !== -1) citations[idx] = Object.assign({}, citations[idx], data);
+                } else {
+                    citations.unshift(data);
+                }
+                save(); updateStats(); renderGrid(); closeModal();
+            }
+
+            function deleteCitation(id) {
+                if (!window.confirm('¿Eliminar esta cita? No se puede deshacer.')) return;
+                citations = citations.filter(function (c) { return c.id !== id; });
+                save(); updateStats(); renderGrid();
+            }
+
+            /* ════════════════════════════════════════
+               EXPORT
+            ════════════════════════════════════════ */
+
+            function dateStamp() { return new Date().toISOString().slice(0, 10).replace(/-/g, ''); }
+
+            function exportJSON() {
+                var blob = new Blob([JSON.stringify(citations, null, 2)], { type: 'application/json' });
+                var a = document.createElement('a');
+                a.href = URL.createObjectURL(blob);
+                a.download = 'contra-archivo-lecturas-' + dateStamp() + '.json';
+                a.click();
+                URL.revokeObjectURL(a.href);
+            }
+
+            function csvRow(fields) {
+                return fields.map(function (f) {
+                    var s = String(f == null ? '' : f);
+                    if (s.indexOf(',') !== -1 || s.indexOf('"') !== -1 || s.indexOf('\n') !== -1) {
+                        s = '"' + s.replace(/"/g, '""') + '"';
+                    }
+                    return s;
+                }).join(',');
+            }
+
+            function exportCSV() {
+                var rows = [csvRow(['id', 'clave', 'fuente', 'pagina', 'categoria', 'color', 'texto', 'notas', 'fecha'])];
+                citations.forEach(function (c) {
+                    rows.push(csvRow([
+                        c.id, c.clave || 'B', c.fuente || '', c.pagina || '',
+                        catLabel(c.categoria), c.color || '', c.texto, c.notas || '', c.fecha || ''
+                    ]));
+                });
+                var blob = new Blob([rows.join('\r\n')], { type: 'text/csv;charset=utf-8;' });
+                var a = document.createElement('a');
+                a.href = URL.createObjectURL(blob);
+                a.download = 'contra-archivo-lecturas-' + dateStamp() + '.csv';
+                a.click();
+                URL.revokeObjectURL(a.href);
+            }
+
+            /* ════════════════════════════════════════
+               FORM SUBMIT
+            ════════════════════════════════════════ */
+
+            function handleFormSubmit(e) {
+                e.preventDefault();
+                var errEl = document.getElementById('form-error');
+                errEl.style.display = 'none';
+
+                var texto = document.getElementById('field-texto').value.trim();
+                var fuente = document.getElementById('field-fuente').value.trim();
+                var pagina = document.getElementById('field-pagina').value.trim();
+                var clave = document.querySelector('input[name="form-clave"]:checked');
+                var categoria = document.getElementById('field-categoria').value;
+                var color = document.getElementById('field-color').value;
+                var notas = document.getElementById('field-notas').value.trim();
+
+                if (!texto) { errEl.textContent = 'El texto de la cita es obligatorio.'; errEl.style.display = 'block'; return; }
+                if (!fuente) { errEl.textContent = 'La fuente / origen es obligatoria.'; errEl.style.display = 'block'; return; }
+                if (!clave) { errEl.textContent = 'Selecciona una clave cromática.'; errEl.style.display = 'block'; return; }
+                if (!categoria) { errEl.textContent = 'La categoría es obligatoria.'; errEl.style.display = 'block'; return; }
+                if (!color) { errEl.textContent = 'Elige un color de anotación.'; errEl.style.display = 'block'; return; }
+
+                var id = editingId || uuid();
+                saveCitation({
+                    id: id, texto: texto, fuente: fuente, pagina: pagina,
+                    clave: clave.value, categoria: categoria, color: color, notas: notas, fecha: today()
+                });
+            }
+
+            /* ════════════════════════════════════════
+               UPLOAD PANEL
+            ════════════════════════════════════════ */
+
+            function getSelectedUploadClave() {
+                var radio = document.querySelector('input[name="upload-clave"]:checked');
+                return radio ? radio.value : 'B';
+            }
+
+            function setStatus(msg, type) {
+                var el = document.getElementById('analyze-status');
+                el.textContent = msg;
+                el.className = 'ca-status-msg' + (type ? ' ' + type : '');
+            }
+
+            function getAnalyzePrompt(clave) {
+                if (clave === 'A') {
+                    return 'Eres un asistente de investigación doctoral. Analiza esta imagen del Bullet Journal (Bullet Ro) con anotaciones según la Clave A del Protocolo Bujo-Ro:\n\nCLAVE A:\n- Rosa: Personal\n- Gris: Vínculos\n- Turquesa/Verde: Camila (vínculo)\n- Naranja: Laboral\n- Amarillo: Referencias\n\nINSTRUCCIONES:\n1. Transcribe fielmente todos los fragmentos marcados o resaltados con color (respeta formato BJ: viñetas ●○◆>*—, flechas, tachaduras)\n2. Marca los ilegibles como [ilegible] con hipótesis si existe: [ilegible — posible: "X"]\n3. Identifica el número o referencia de página si es visible (ej: D17, paginación interna)\n4. Determina el color del marcador/resaltado\n5. Captura el contexto circundante como "notas" si aporta sentido\n\nCategories disponibles: marco-teorico, concepto-clave, evidencia-dato, critica-tension, mistranslation, practica-informal, instituciones, metodologia, notas-campo, conexion-caso\n\nDevuelve SOLO un JSON array válido (sin texto adicional, sin markdown, sin bloques de código):\n[{"texto":"transcripción fiel del fragmento","pagina":"D17 u otro identificador si es visible o null","color":"pink|gray|teal|orange|yellow","categoria":"slug-de-categoria","notas":"contexto circundante o cadena vacía","fuente_detectada":"identificación de página/sección o cadena vacía"}]';
+                }
+                return 'Eres un asistente de investigación doctoral en antropología de la corrupción en Chile. Analiza esta imagen de páginas de libro académico con anotaciones de color según la Clave B del Protocolo Bujo-Ro:\n\nCLAVE B:\n- Amarillo: Concepto clave\n- Azul: Argumento central\n- Verde: Dato / evidencia\n- Rosa: Crítica / tensión\n- Púrpura: Teoría / marco\n- Naranja: Conexión con caso\n\nINSTRUCCIONES:\n1. Identifica todos los fragmentos subrayados, resaltados o marcados con color\n2. Extrae el texto exacto (cita fiel sin modificaciones)\n3. Identifica el número de página si es visible\n4. Determina el color del marcador/subrayado\n5. Captura anotaciones marginales como "notas"\n6. Detecta autor/título si son visibles en la página\n\nCategorías disponibles: marco-teorico, concepto-clave, evidencia-dato, critica-tension, mistranslation, practica-informal, instituciones, metodologia, notas-campo, conexion-caso\n\nDevuelve SOLO un JSON array válido (sin texto adicional, sin markdown, sin bloques de código):\n[{"texto":"fragmento exacto entre comillas","pagina":42,"color":"yellow|blue|green|pink|purple|orange","categoria":"slug-de-categoria","notas":"anotación marginal o cadena vacía","fuente_detectada":"Autor, Título si visible o cadena vacía"}]';
+            }
+
+            function parseClaudeJSON(raw) {
+                /* Strip markdown code fences if present */
+                var stripped = raw.trim();
+                var fence = stripped.match(/```(?:json)?\s*([\s\S]*?)```/);
+                if (fence) stripped = fence[1].trim();
+                /* Find first [ and last ] */
+                var start = stripped.indexOf('[');
+                var end = stripped.lastIndexOf(']');
+                if (start !== -1 && end !== -1 && end > start) {
+                    stripped = stripped.slice(start, end + 1);
+                }
+                return JSON.parse(stripped);
+            }
+
+            function loadApiSettings() {
+                /* API key is never persisted — user re-enters each session */
+                var model = localStorage.getItem(STORAGE_API_MODEL);
+                if (model) {
+                    document.getElementById('api-model-input').value = model;
+                }
+                updateAnalyzeBtn();
+            }
+
+            function updateAnalyzeBtn() {
+                var hasImage = !!uploadImageBase64;
+                var hasKey = !!document.getElementById('api-key-input').value.trim();
+                document.getElementById('btn-analyze').disabled = !(hasImage && hasKey);
+            }
+
+            function handleImageLoad(file) {
+                if (file.size > 5 * 1024 * 1024) {
+                    setStatus('La imagen supera 5 MB. Reduce el tamaño antes de subir.', 'error');
+                    return;
+                }
+                var mimeType = file.type;
+                var allowed = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
+                if (allowed.indexOf(mimeType) === -1) {
+                    setStatus('Formato no admitido. Usa JPG, PNG o WebP.', 'error');
+                    return;
+                }
+                uploadImageType = mimeType;
+                var reader = new FileReader();
+                reader.onload = function (ev) {
+                    var dataUrl = ev.target.result;
+                    /* Extract base64 part */
+                    var comma = dataUrl.indexOf(',');
+                    uploadImageBase64 = dataUrl.slice(comma + 1);
+
+                    /* Show preview */
+                    var preview = document.getElementById('image-preview-img');
+                    preview.src = dataUrl;
+                    document.getElementById('image-preview-name').textContent = file.name + ' · ' + (file.size / 1024).toFixed(0) + ' KB';
+                    document.getElementById('drop-zone').hidden = true;
+                    document.getElementById('image-preview-wrap').hidden = false;
+                    setStatus('', '');
+                    updateAnalyzeBtn();
+                };
+                reader.readAsDataURL(file);
+            }
+
+            function clearImage() {
+                uploadImageBase64 = null;
+                uploadImageType = 'image/jpeg';
+                document.getElementById('image-preview-img').src = '';
+                document.getElementById('image-preview-wrap').hidden = true;
+                document.getElementById('drop-zone').hidden = false;
+                document.getElementById('file-input').value = '';
+                updateAnalyzeBtn();
+            }
+
+            function renderAnalysisResults(results, clave, defaultFuente) {
+                analysisResults = results.map(function (r, i) {
+                    return Object.assign({ _id: 'r-' + i, _clave: clave, _fuente: defaultFuente }, r);
+                });
+
+                var list = document.getElementById('results-list');
+                list.innerHTML = '';
+                var wrap = document.getElementById('analysis-results');
+
+                if (!results.length) {
+                    wrap.hidden = false;
+                    var emptyP = document.createElement('p');
+                    emptyP.style.cssText = 'color:var(--dim);font-size:.85rem';
+                    emptyP.textContent = 'No se detectaron fragmentos marcados. Intenta con una imagen más nítida o diferente.';
+                    list.appendChild(emptyP);
+                    document.getElementById('btn-add-all').hidden = true;
+                    return;
+                }
+
+                document.getElementById('btn-add-all').hidden = false;
+                document.getElementById('results-title').textContent = 'Citas detectadas (' + results.length + ')';
+
+                results.forEach(function (r, i) {
+                    var hex = colorHex(r.color, clave);
+                    var card = document.createElement('div');
+                    card.className = 'ca-result-card';
+                    card.style.borderLeftColor = hex;
+                    card.setAttribute('role', 'listitem');
+                    card.setAttribute('data-result-idx', String(i));
+
+                    var pagDisplay = r.pagina != null ? String(r.pagina) : '';
+                    var fuenteDisplay = r.fuente_detectada || defaultFuente || '';
+
+                    /* Build with DOM methods — no innerHTML with API-derived data */
+                    var rMeta = document.createElement('div');
+                    rMeta.className = 'ca-result-meta';
+                    if (pagDisplay) {
+                        var rPage = document.createElement('span');
+                        rPage.className = 'ca-result-page';
+                        rPage.textContent = 'p. ' + pagDisplay;
+                        rMeta.appendChild(rPage);
+                    }
+                    var rCat = document.createElement('span');
+                    rCat.className = 'ca-result-cat';
+                    rCat.textContent = catLabel(r.categoria || 'concepto-clave');
+                    rMeta.appendChild(rCat);
+                    var rClave = document.createElement('span');
+                    rClave.className = 'ca-result-clave ' + clave.toLowerCase();
+                    rClave.textContent = 'Clave ' + clave;
+                    rMeta.appendChild(rClave);
+                    var rDot = document.createElement('span');
+                    rDot.style.cssText = 'width:10px;height:10px;border-radius:50%;display:inline-block;margin-left:auto;flex-shrink:0';
+                    rDot.style.background = hex;
+                    rMeta.appendChild(rDot);
+                    card.appendChild(rMeta);
+
+                    if (fuenteDisplay) {
+                        var rFuente = document.createElement('p');
+                        rFuente.style.cssText = 'font-size:.72rem;color:var(--dim);font-family:var(--font-mono);margin-bottom:4px';
+                        rFuente.textContent = fuenteDisplay;
+                        card.appendChild(rFuente);
+                    }
+                    var rText = document.createElement('p');
+                    rText.className = 'ca-result-text';
+                    rText.textContent = '"' + (r.texto || '') + '"';
+                    card.appendChild(rText);
+                    if (r.notas) {
+                        var rNota = document.createElement('p');
+                        rNota.className = 'ca-result-note';
+                        rNota.textContent = '📝 ' + r.notas;
+                        card.appendChild(rNota);
+                    }
+                    var rActions = document.createElement('div');
+                    rActions.className = 'ca-result-actions';
+                    var approveBtn = document.createElement('button');
+                    approveBtn.className = 'ca-btn-sm approve';
+                    approveBtn.type = 'button';
+                    approveBtn.textContent = '✓ Agregar';
+                    approveBtn.setAttribute('data-approve', String(i));
+                    rActions.appendChild(approveBtn);
+                    var skipBtn = document.createElement('button');
+                    skipBtn.className = 'ca-btn-sm danger';
+                    skipBtn.type = 'button';
+                    skipBtn.textContent = '✕ Omitir';
+                    skipBtn.setAttribute('data-skip', String(i));
+                    rActions.appendChild(skipBtn);
+                    card.appendChild(rActions);
+
+                    list.appendChild(card);
+                });
+
+                list.querySelectorAll('[data-approve]').forEach(function (btn) {
+                    btn.addEventListener('click', function () {
+                        var idx = parseInt(btn.getAttribute('data-approve'), 10);
+                        approveResult(idx);
+                    });
+                });
+                list.querySelectorAll('[data-skip]').forEach(function (btn) {
+                    btn.addEventListener('click', function () {
+                        var idx = parseInt(btn.getAttribute('data-skip'), 10);
+                        skipResult(idx);
+                    });
+                });
+
+                wrap.hidden = false;
+            }
+
+            function approveResult(idx) {
+                var r = analysisResults[idx];
+                if (!r || r._added) return;
+                var fuente = r.fuente_detectada || r._fuente || '';
+                var pagina = r.pagina != null ? String(r.pagina) : '';
+                citations.unshift({
+                    id: uuid(),
+                    texto: r.texto || '',
+                    fuente: fuente,
+                    pagina: pagina,
+                    clave: r._clave || 'B',
+                    categoria: r.categoria || 'concepto-clave',
+                    color: r.color || 'yellow',
+                    notas: r.notas || '',
+                    fecha: today()
+                });
+                save(); updateStats(); renderGrid();
+                r._added = true;
+                /* Mark card as added */
+                var card = document.querySelector('[data-result-idx="' + idx + '"]');
+                if (card) {
+                    card.classList.add('dismissed');
+                    card.querySelector('[data-approve]').textContent = '✓ Agregada';
+                }
+            }
+
+            function skipResult(idx) {
+                if (analysisResults[idx]) analysisResults[idx]._skipped = true;
+                var card = document.querySelector('[data-result-idx="' + idx + '"]');
+                if (card) card.classList.add('dismissed');
+            }
+
+            async function analyzeImage() {
+                var apiKey = document.getElementById('api-key-input').value.trim();
+                var model = document.getElementById('api-model-input').value.trim() || 'claude-opus-4-7';
+                var clave = getSelectedUploadClave();
+                var fuente = document.getElementById('upload-fuente').value.trim();
+
+                /* Persist model preference only — API key is never stored */
+                try { localStorage.setItem(STORAGE_API_MODEL, model); } catch (e) {}
+
+                if (!uploadImageBase64 || !apiKey) return;
+
+                var btn = document.getElementById('btn-analyze');
+                btn.disabled = true;
+                setStatus('Analizando imagen…', '');
+
+                var prompt = getAnalyzePrompt(clave);
+
+                try {
+                    var response = await fetch('https://api.anthropic.com/v1/messages', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'x-api-key': apiKey,
+                            'anthropic-version': '2023-06-01',
+                            'anthropic-dangerous-direct-browser-access': 'true'
+                        },
+                        body: JSON.stringify({
+                            model: model,
+                            max_tokens: 4096,
+                            messages: [{
+                                role: 'user',
+                                content: [
+                                    {
+                                        type: 'image',
+                                        source: {
+                                            type: 'base64',
+                                            media_type: uploadImageType,
+                                            data: uploadImageBase64
+                                        }
+                                    },
+                                    {
+                                        type: 'text',
+                                        text: prompt
+                                    }
+                                ]
+                            }]
+                        })
+                    });
+
+                    if (!response.ok) {
+                        var err = await response.json().catch(function () { return {}; });
+                        setStatus('Error API: ' + (err.error && err.error.message ? err.error.message : response.status), 'error');
+                        btn.disabled = false;
+                        return;
+                    }
+
+                    var data = await response.json();
+                    var rawText = data.content && data.content[0] && data.content[0].text ? data.content[0].text : '';
+
+                    var parsed;
+                    try {
+                        parsed = parseClaudeJSON(rawText);
+                    } catch (parseErr) {
+                        setStatus('No se pudo interpretar la respuesta. Ver consola.', 'error');
+                        console.error('Respuesta cruda:', rawText);
+                        btn.disabled = false;
+                        return;
+                    }
+
+                    if (!Array.isArray(parsed)) {
+                        setStatus('El modelo devolvió un formato inesperado. Intenta de nuevo o revisa la imagen.', 'error');
+                        console.error('Respuesta no es un array:', parsed);
+                        btn.disabled = false;
+                        return;
+                    }
+
+                    setStatus(parsed.length + ' cita' + (parsed.length !== 1 ? 's' : '') + ' detectada' + (parsed.length !== 1 ? 's' : '') + '.', 'success');
+                    renderAnalysisResults(parsed, clave, fuente);
+
+                } catch (fetchErr) {
+                    setStatus('Error de red: ' + fetchErr.message, 'error');
+                    console.error(fetchErr);
+                } finally {
+                    btn.disabled = false;
+                    updateAnalyzeBtn();
+                }
+            }
+
+            /* ════════════════════════════════════════
+               AUTH GATE + BOOT
+            ════════════════════════════════════════ */
+
+            function waitFor(check, cb, tries) {
+                tries = tries || 0;
+                if (tries > 60) return;
+                if (check()) return cb();
+                setTimeout(function () { waitFor(check, cb, tries + 1); }, 80);
+            }
+
+            function boot() {
+                waitFor(
+                    function () { return typeof window.PasskeyAuth !== 'undefined'; },
+                    function () {
+                        if (!window.PasskeyAuth.isAuthenticated()) {
+                            window.location.href = 'login.html?redirect=archivo-lecturas.html';
+                            return;
+                        }
+                        initApp();
+                    }
+                );
+            }
+
+            function initApp() {
+                document.getElementById('auth-msg').hidden = true;
+                document.getElementById('main-content').hidden = false;
+
+                load();
+                loadApiSettings();
+                renderFilterChips();
+                updateStats();
+                renderGrid();
+
+                /* Logout */
+                document.getElementById('logout-btn').addEventListener('click', function () {
+                    if (window.PasskeyAuth && window.PasskeyAuth.logout) window.PasskeyAuth.logout();
+                    window.location.href = 'login.html';
+                });
+
+                /* Toggle upload panel */
+                document.getElementById('btn-toggle-upload').addEventListener('click', function () {
+                    var section = document.getElementById('upload-section');
+                    var isHidden = section.hidden;
+                    section.hidden = !isHidden;
+                    this.setAttribute('aria-expanded', isHidden ? 'true' : 'false');
+                    if (isHidden) section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                });
+
+                /* New citation */
+                document.getElementById('btn-nueva').addEventListener('click', openNew);
+
+                /* Export */
+                document.getElementById('btn-export-json').addEventListener('click', exportJSON);
+                document.getElementById('btn-export-csv').addEventListener('click', exportCSV);
+
+                /* Clear filters */
+                document.getElementById('btn-clear-filters').addEventListener('click', function () {
+                    filterColor = null; filterCat = null; filterClave = null; filterSearch = '';
+                    document.getElementById('filter-search').value = '';
+                    renderFilterChips(); renderGrid();
+                });
+
+                /* Search */
+                document.getElementById('filter-search').addEventListener('input', function () {
+                    filterSearch = this.value.trim();
+                    renderGrid();
+                });
+
+                /* Modal close */
+                document.getElementById('modal-close').addEventListener('click', closeModal);
+                document.getElementById('btn-cancel').addEventListener('click', closeModal);
+                document.getElementById('modal-overlay').addEventListener('click', function (e) {
+                    if (e.target === this) closeModal();
+                });
+
+                /* Form submit */
+                document.getElementById('citation-form').addEventListener('submit', handleFormSubmit);
+
+                /* Clave radio change in form → update color picker */
+                document.querySelectorAll('input[name="form-clave"]').forEach(function (radio) {
+                    radio.addEventListener('change', function () {
+                        if (this.checked) {
+                            selectedFormClave = this.value;
+                            selectedColor = '';
+                            document.getElementById('field-color').value = '';
+                            renderColorPicker(selectedFormClave, '');
+                        }
+                    });
+                });
+
+                /* ESC close modal */
+                document.addEventListener('keydown', function (e) {
+                    if (e.key === 'Escape') closeModal();
+                });
+
+                /* ── Drop zone ── */
+                var dropZone = document.getElementById('drop-zone');
+                var fileInput = document.getElementById('file-input');
+
+                dropZone.addEventListener('click', function () { fileInput.click(); });
+                dropZone.addEventListener('keydown', function (e) {
+                    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); fileInput.click(); }
+                });
+                dropZone.addEventListener('dragover', function (e) {
+                    e.preventDefault(); dropZone.classList.add('drag-over');
+                });
+                dropZone.addEventListener('dragleave', function () {
+                    dropZone.classList.remove('drag-over');
+                });
+                dropZone.addEventListener('drop', function (e) {
+                    e.preventDefault(); dropZone.classList.remove('drag-over');
+                    var file = e.dataTransfer.files[0];
+                    if (file) handleImageLoad(file);
+                });
+                fileInput.addEventListener('change', function () {
+                    if (this.files[0]) handleImageLoad(this.files[0]);
+                });
+
+                /* Clear image */
+                document.getElementById('btn-clear-image').addEventListener('click', clearImage);
+
+                /* API key visibility toggle */
+                document.getElementById('btn-toggle-key').addEventListener('click', function () {
+                    var input = document.getElementById('api-key-input');
+                    input.type = input.type === 'password' ? 'text' : 'password';
+                    this.textContent = input.type === 'password' ? '👁' : '🙈';
+                });
+
+                /* API key input changes → update analyze button */
+                document.getElementById('api-key-input').addEventListener('input', updateAnalyzeBtn);
+
+                /* Analyze button */
+                document.getElementById('btn-analyze').addEventListener('click', analyzeImage);
+
+                /* Add all results */
+                document.getElementById('btn-add-all').addEventListener('click', function () {
+                    analysisResults.forEach(function (r, i) {
+                        if (!r._added && !r._skipped) approveResult(i);
+                    });
+                    setStatus('Todas las citas agregadas al archivo.', 'success');
+                });
+
+                /* Discard results */
+                document.getElementById('btn-discard-results').addEventListener('click', function () {
+                    document.getElementById('analysis-results').hidden = true;
+                    analysisResults = [];
+                    setStatus('', '');
+                });
+            }
+
+            boot();
+        }());
+    </script>
+</body>
+
+</html>
