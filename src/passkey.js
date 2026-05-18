@@ -1,4 +1,16 @@
 'use strict';
+/**
+ * passkey.js — Autenticación simbólica client-side (WebAuthn MVP sin servidor)
+ *
+ * NOTA DE DISEÑO: Este módulo implementa un flujo WebAuthn que opera íntegramente
+ * en el navegador, sin backend real. La credencial se almacena en localStorage y
+ * la sesión en sessionStorage. Es coherente con el deploy en GitHub Pages (no hay
+ * servidor), pero NO debe considerarse autenticación de producción — su función
+ * es crear una barrera de acceso UX y demostrar el flujo passkey en el prototipo.
+ *
+ * Para la terraza admin (Next.js), la autenticación real usa @simplewebauthn/server
+ * con verificación server-side.
+ */
 (function () {
 
   var CRED_KEY = 'ca_passkey_cred';

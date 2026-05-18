@@ -6,6 +6,20 @@
 *.swo
 *~
 
+# === SEGURIDAD (nunca commitear) ===
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+*.p12
+*.pfx
+secrets/
+credentials/
+*.secret
+.npmrc
+.yarnrc
+
 # === ARCHIVO ACADÉMICO (iCloud, nunca en GitHub) ===
 # Documentos, imágenes y proyectos de investigación viven en iCloud Drive.
 # Usamos `Estado del Arte/*` (no `/`) para que git descienda y las negaciones funcionen.
@@ -19,6 +33,26 @@ Estado del Arte/*
 !Estado del Arte/pendiente/
 !Estado del Arte/Proyectos/
 !Estado del Arte/Referencias/
+
+# === PII / DATOS PERSONALES SENSIBLES (nunca en GitHub) ===
+# Spreadsheets, CSV, email, webp/imágenes en subdirectorios de trabajo personal.
+# Protege: RUTs, datos de clientes, registros financieros, terapia, registros personales.
+Estado del Arte/Proyectos/Estrategia Gaona/Evidencia/
+Estado del Arte/Proyectos/Estrategia Gaona/Artefactos/*.csv
+Estado del Arte/Proyectos/Mila/
+Estado del Arte/Proyectos/Terapia/
+Estado del Arte/Proyectos/ZOOM Financiero/
+# Bloqueo global de tipos con datos personales dentro de Proyectos/
+Estado del Arte/Proyectos/**/*.xlsx
+Estado del Arte/Proyectos/**/*.xls
+Estado del Arte/Proyectos/**/*.csv
+Estado del Arte/Proyectos/**/*.eml
+Estado del Arte/Proyectos/**/*.webp
+# Excepciones explícitas: proyectos de código y fuentes tipográficas
+!Estado del Arte/Proyectos/.gitkeep
+!Estado del Arte/Proyectos/Chillax_Complete/
+!Estado del Arte/Proyectos/dihe-extension/
+!Estado del Arte/Proyectos/Ensayo Traducción de Saberes/
 
 # === BINARIOS (excepción: /img/ y capturas Estado del Arte) ===
 *.CR2
@@ -49,6 +83,7 @@ Estado del Arte/*
 # === BUILD & DEPENDENCIAS ===
 dist/
 node_modules/
+*.tsbuildinfo
 
 # === DUPLICADOS iCLOUD (archivos con " 2" sufijo) ===
 *\ 2.*

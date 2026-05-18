@@ -1,0 +1,66 @@
+@import url('https://fonts.bunny.net/css?family=newsreader:400,700|inter:400,500,600,700|jetbrains-mono:400,600');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+  --accent-50: #faf7f2;
+  --accent-100: #f5f0e6;
+  --accent-200: #e8dfc8;
+  --accent-300: #dcc7a1;
+  --accent-400: #d1ad7a;
+  --accent-500: #c8a96e;
+  --accent-600: #b89651;
+  --accent-700: #967a3d;
+  --accent-800: #6b5629;
+  --accent-900: #4a3c1a;
+  --accent-950: #2a220d;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+  }
+}
+
+* {
+  @apply antialiased;
+}
+
+body {
+  @apply bg-white text-gray-900 dark:bg-gray-950 dark:text-gray-100;
+}
+
+/* Focus visible custom */
+:focus-visible {
+  @apply outline-2 outline-offset-2;
+  outline-color: var(--accent-600);
+}
+
+/* Skip-to-main link — visible only on focus */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 0;
+  padding: 0.5rem 1rem;
+  background-color: var(--accent-600);
+  color: #fff;
+  font-weight: 600;
+  z-index: 9999;
+  border-radius: 0 0 0.375rem 0;
+  text-decoration: none;
+}
+.skip-link:focus {
+  top: 0;
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    @apply transition-none !important;
+    animation-duration: 0.01ms !important;
+  }
+}

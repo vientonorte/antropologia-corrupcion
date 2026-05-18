@@ -1277,6 +1277,29 @@
 </head>
 
 <body>
+
+    <!-- ═══ AUTH GUARD ══════════════════════════════════════════════════════ -->
+    <script src="src/passkey.js?v=20260505"></script>
+    <script>
+    (function () {
+        function waitFor(check, cb, tries) {
+            if (tries > 40) { cb(); return; }
+            if (check()) { cb(); return; }
+            setTimeout(function () { waitFor(check, cb, tries + 1); }, 80);
+        }
+        waitFor(
+            function () { return typeof window.PasskeyAuth !== 'undefined'; },
+            function () {
+                if (!window.PasskeyAuth || !window.PasskeyAuth.isAuthenticated()) {
+                    window.location.replace('login.html?from=contra-archivo-v2.html');
+                }
+            },
+            0
+        );
+    })();
+    </script>
+    <!-- ═══ / AUTH GUARD ═════════════════════════════════════════════════════ -->
+
     <div id="reading-progress" role="progressbar" aria-label="Progreso de lectura" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
     <a href="#main-content" class="skip-to-content">Saltar al contenido principal</a>
     <!-- ═══════════════════════════════════════════════════════════════════ -->
@@ -3595,6 +3618,7 @@
     <!-- Módulos del sistema de grafo (defer = no bloquean rendering) -->
     <script src="src/frictionEngine.js?v=20260419" type="module"></script>
     <script src="src/fieldPhysics.js?v=20260419" type="module"></script>
+    <script src="src/blackScholes.js?v=20260429" type="module"></script>
     <script src="src/graph.js?v=20260419" type="module"></script>
     <script src="src/nodeRenderer.js?v=20260419" type="module"></script>
     <script src="src/main.js?v=20260419" type="module"></script>

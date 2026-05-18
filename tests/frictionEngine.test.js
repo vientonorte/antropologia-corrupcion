@@ -444,4 +444,100 @@ module.exports = function (describe, it, assert, assertEqual, assertDeepEqual, a
             }
         });
     });
+
+    /* ─── calculateZuboffIndex ─── */
+
+    describe('frictionEngine.calculateZuboffIndex', function () {
+        var caso = casosData.casos[0];
+
+        it('returns all required fields', function () {
+            var result = fe.calculateZuboffIndex(caso);
+            assert(typeof result.score === 'number', 'score missing');
+            assert(typeof result.nivel === 'string', 'nivel missing');
+            assert(typeof result.interpretacion === 'string', 'interpretacion missing');
+            assert(Array.isArray(result.dimensiones), 'dimensiones should be an array');
+        });
+
+        it('score is between 0 and 1', function () {
+            var result = fe.calculateZuboffIndex(caso);
+            assert(result.score >= 0 && result.score <= 1, 'score out of [0,1]');
+        });
+
+        it('nivel is one of the valid levels', function () {
+            var valid = ['bajo', 'medio', 'alto', 'crítico'];
+            var result = fe.calculateZuboffIndex(caso);
+            assertArrayIncludes(valid, result.nivel);
+        });
+
+        it('interpretacion is non-empty', function () {
+            var result = fe.calculateZuboffIndex(caso);
+            assert(result.interpretacion.length > 0, 'interpretacion should not be empty');
+        });
+
+        it('each dimensión has id, label, cita, score, activo', function () {
+            var result = fe.calculateZuboffIndex(caso);
+            result.dimensiones.forEach(function (dim) {
+                assert(typeof dim.id === 'string', 'dimension id missing');
+                assert(typeof dim.label === 'string', 'dimension label missing');
+                assert(typeof dim.cita === 'string', 'dimension cita missing');
+                assert(typeof dim.score === 'number', 'dimension score missing');
+                assert(typeof dim.activo === 'boolean', 'dimension activo missing');
+            });
+        });
+
+        it('dimension count matches ZUBOFF_DIMENSIONS', function () {
+            var result = fe.calculateZuboffIndex(caso);
+            var dimCount = Object.keys(fe.ZUBOFF_DIMENSIONS).length;
+            assertEqual(result.dimensiones.length, dimCount);
+        });
+
+        it('each dimension score is non-negative', function () {
+            var result = fe.calculateZuboffIndex(caso);
+            result.dimensiones.forEach(function (dim) {
+                assert(dim.score >= 0, 'dimension score must be >= 0');
+            });
+        });
+
+        it('nivel is "bajo" for a caso with no matching keywords', function () {
+            var emptyCaso = {
+                id: 'test-empty',
+                titulo: 'Caso sin keywords',
+                etica: {},
+                institucional: {},
+                material: {},
+                tags: [],
+                actores: [],
+                instituciones: [],
+            };
+            var result = fe.calculateZuboffIndex(emptyCaso);
+            assertEqual(result.nivel, 'bajo');
+            assertApprox(result.score, 0, 0.001);
+        });
+
+        it('returns valid results for all casos in the dataset', function () {
+            casosData.casos.forEach(function (c) {
+                var result = fe.calculateZuboffIndex(c);
+                assert(!isNaN(result.score), 'score is NaN for ' + c.id);
+                assert(['bajo', 'medio', 'alto', 'crítico'].indexOf(result.nivel) !== -1, 'invalid nivel for ' + c.id);
+            });
+        });
+
+        it('score increases when relevant surveillance keywords are present', function () {
+            var baseCaso = {
+                id: 'zuboff-test',
+                etica: { descripcion: 'sin keywords relevantes' },
+                institucional: {},
+                material: {},
+            };
+            var richCaso = {
+                id: 'zuboff-rich',
+                etica: { descripcion: 'extraccion cotizacion afp zona de sacrificio borramiento' },
+                institucional: { descripcion: 'prevision cartera inversiones cmf multifondos' },
+                material: { descripcion: 'pino deforestacion forestales bosque nativo' },
+            };
+            var scoreBase = fe.calculateZuboffIndex(baseCaso).score;
+            var scoreRich = fe.calculateZuboffIndex(richCaso).score;
+            assert(scoreRich > scoreBase, 'richer surveillance keywords should produce strictly higher score');
+        });
+    });
 };

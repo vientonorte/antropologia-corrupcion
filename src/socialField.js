@@ -38,7 +38,10 @@
 
 const THERMO_CONFIG = Object.freeze({
     // Constante gravitacional social (cuán fuerte curva el poder el espacio)
-    G_SOCIAL: 2400,
+    // Incrementada de 2400 a 3600 para asegurar que los agentes alcancen los nodos
+    // antes de agotar su vida (300 frames). Con la modulación logística, agentes con
+    // necesidad alta (mapa en r>3) necesitan ser atraídos más fuerte para interactuar.
+    G_SOCIAL: 3600,
     // Factor de Boltzmann social (relación energía-desorden)
     K_BOLTZMANN: 0.08,
     // Resistencia base de un funcionario íntegro (0-1)
@@ -59,8 +62,53 @@ const THERMO_CONFIG = Object.freeze({
     AGENT_LIFE: 300,
     // Tasa de transferencia de energía en interacción
     TRANSFER_RATE: 0.15,
-    // Radio de influencia gravitacional (px)
-    GRAVITY_RADIUS: 200,
+    // Radio de influencia gravitacional (px) — ampliado para que más agentes sean atraídos
+    GRAVITY_RADIUS: 300,
+    // Porcentaje de agentes que nacen cerca de un nodo (en vez de en el borde)
+    NEAR_NODE_SPAWN_RATIO: 0.25,
+
+    // ── Pre-semilla desde fuentes-oficiales ──────────────────────────────────
+    // Calor inicial por registro de fricción según tipo (0–1 normalizado)
+    // Política > semántica > técnica: el tipo político tiene mayor peso porque
+    // implica captura del proceso de decisión, no solo traducción defectuosa.
+    PRESEED_HEAT_POLITICA:  0.12,
+    PRESEED_HEAT_SEMANTICA: 0.10,
+    PRESEED_HEAT_TECNICA:   0.08,
+    // Calor máximo que puede sembrar el pre-seed (evita saturación inmediata)
+    PRESEED_HEAT_MAX: 0.65,
+    // Proporción de registros que se tratan como transacciones corruptas.
+    // 70% es consistente con la literatura de ethnographic surveys sobre
+    // informalidad burocrática en Chile (Mönckeberg, 2015; Salazar, 2009).
+    PRESEED_CORRUPTION_RATIO: 0.70,
+    // Multiplicador de degradación de integridad para fricción histórica vs. runtime.
+    // Los registros documentados representan patrones repetidos (no eventos únicos),
+    // por lo que erosionan la integridad 1.5× más que una sola interacción en tiempo real.
+    PRESEED_INTEGRITY_MULTIPLIER: 1.5,
+
+    // ── Mapa logístico (Veritasium — "Esto es el Caos") ─────────────────────
+    // x_{n+1} = r · x_n · (1 − x_n)
+    //
+    // r (tasa de reproducción de la corrupción) se deriva de la entropía actual:
+    //   r = LOGISTIC_R_MIN + entropy · (LOGISTIC_R_MAX − LOGISTIC_R_MIN)
+    //
+    // Regímenes según r:
+    //   r < 1.0            → Extinción (sistema se autoregula perfectamente)
+    //   1.0 ≤ r < 3.0      → Punto fijo estable (corrupción acotada y predecible)
+    //   3.0 ≤ r < 3.449    → Bifurcación periodo-2 (oscilación entre dos estados)
+    //   3.449 ≤ r < 3.544  → Bifurcación periodo-4
+    //   3.544 ≤ r < ~3.57  → Bifurcaciones en cascada
+    //   r ≥ 3.57           → CAOS determinista — comportamiento impredecible
+    //   r = 4.0            → Caos máximo — el sistema explora todo el rango [0,1]
+    //
+    // r_min corresponde a entropía=0 (sistema sano, r~1.5 → necesidad tiende a punto fijo)
+    // r_max corresponde a entropía=1 (colapso total, r~3.9 → caos pleno)
+    LOGISTIC_R_MIN: 1.5,
+    LOGISTIC_R_MAX: 3.9,
+    // Iteraciones de warm-up del mapa antes de usar el valor (descarta transitorio)
+    LOGISTIC_WARMUP: 20,
+    // Fracción de la necesidad del agente que se modula por el mapa logístico
+    // (el resto es ruido aleatorio base para mantener diversidad de agentes)
+    LOGISTIC_WEIGHT: 0.65,
 });
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -102,19 +150,71 @@ const THERMO_PALETTE = (() => {
    CLASE: SocialField — Motor de Entropía Social
 ═══════════════════════════════════════════════════════════════════════════ */
 
+/* ═══════════════════════════════════════════════════════════════════════════
+   MAPA LOGÍSTICO — x_{n+1} = r · x_n · (1 − x_n)
+   ─────────────────────────────────────────────────────────────────────────
+   Ecuación de Verhulst (1845) popularizada por May (1976) y Veritasium
+   ("Esto es el Caos"). El mismo mecanismo que produce las bifurcaciones
+   de las poblaciones biológicas opera en los sistemas corruptos:
+   · x_n  = nivel normalizado de necesidad/presión informal del agente (0→1)
+   · r    = tasa de reproducción de la corrupción — crece con la entropía
+   Un sistema con r < 3 converge a un nivel estable de corrupción.
+   Con r ≥ 3.57, el comportamiento se vuelve caótico: nadie puede predecir
+   quién va a necesitar sobornar para resolver su trámite.
+═══════════════════════════════════════════════════════════════════════════ */
+
+/**
+ * Calcula la tasa de crecimiento r del mapa logístico según la entropía actual.
+ * @param {number} entropy - Entropía actual del sistema (0→1)
+ * @returns {number} r — tasa de reproducción de la corrupción
+ */
+function logisticR(entropy) {
+    return THERMO_CONFIG.LOGISTIC_R_MIN +
+        entropy * (THERMO_CONFIG.LOGISTIC_R_MAX - THERMO_CONFIG.LOGISTIC_R_MIN);
+}
+
+/**
+ * Retorna el régimen del mapa logístico como string legible.
+ * @param {number} r
+ * @returns {string}
+ */
+function logisticRegime(r) {
+    if (r < 3.0)    return 'ESTABLE';
+    if (r < 3.449)  return 'BIFURCACIÓN×2';
+    if (r < 3.544)  return 'BIFURCACIÓN×4';
+    if (r < 3.57)   return 'CASCADA';
+    return 'CAOS';
+}
+
+/**
+ * Itera el mapa logístico partiendo de x0 y devuelve el valor después
+ * de `warmup` iteraciones (descarta el transitorio) + 1 paso útil.
+ * @param {number} r    - tasa de crecimiento
+ * @param {number} x0   - condición inicial (0→1)
+ * @param {number} warmup - iteraciones de descarte
+ * @returns {number} valor x en [0, 1]
+ */
+function logisticIterate(r, x0, warmup) {
+    let x = Math.max(0.001, Math.min(0.999, x0));
+    for (let i = 0; i < warmup; i++) x = r * x * (1 - x);
+    return r * x * (1 - x);
+}
+
 class SocialField {
     /**
-     * @param {Object} options
+     * @param {Object}      options
      * @param {HTMLElement} options.container  - contenedor del grafo
      * @param {Object[]}    options.nodes      - nodos del grafo (con x, y, intensidad, tipo)
      * @param {Object[]}    options.links      - aristas del grafo
      * @param {HTMLElement} options.metricsEl  - elemento para métricas termodinámicas
+     * @param {Object[]}    [options.fuentes]  - registros de fuentes-oficiales para pre-semilla de entropía
      */
-    constructor({ container, nodes, links, metricsEl }) {
+    constructor({ container, nodes, links, metricsEl, fuentes }) {
         this.container = container;
         this.nodes = nodes;
         this.links = links;
         this.metricsEl = metricsEl || null;
+        this._fuentes = Array.isArray(fuentes) ? fuentes : [];
         this.width = 0;
         this.height = 0;
 
@@ -124,6 +224,11 @@ class SocialField {
         this.totalTransactions = 0; // Interacciones totales
         this.corruptTransactions = 0;
         this.collapseTriggered = false;
+
+        // Mapa logístico: estado compartido del sistema
+        // x_n es la "necesidad poblacional" actual — muta con el sistema
+        this._logisticX = 0.3 + Math.random() * 0.4; // condición inicial alejada de 0/1
+        this._logisticR = THERMO_CONFIG.LOGISTIC_R_MIN; // r actual (actualizado con entropía)
 
         // Estado por nodo
         this.nodeState = new Map();
@@ -141,6 +246,9 @@ class SocialField {
 
         // Historial de entropía para sparkline
         this.entropyHistory = [];
+
+        // Régimen inicial del mapa logístico
+        this._logisticRegime = logisticRegime(this._logisticR);
 
         this._init();
     }
@@ -185,6 +293,9 @@ class SocialField {
         // Inicializar estado de nodos
         this._initNodeState();
 
+        // Pre-semillar entropía desde datos reales de fuentes-oficiales
+        if (this._fuentes.length > 0) this._preSeedFromFuentes();
+
         // Inicializar agentes (reduce en pantallas pequeñas para perf)
         this._agentScale = this.width < 500 ? 0.5 : 1;
         this._initAgents();
@@ -204,6 +315,66 @@ class SocialField {
             }
         }, { threshold: 0.05 });
         this._io.observe(this.container);
+    }
+
+    /* ─── PRE-SEMILLA DESDE FUENTES OFICIALES ─── */
+
+    /**
+     * Usa los registros de fuentes-oficiales.json para inicializar el estado
+     * termodinámico del sistema con datos reales de fricción.
+     * Cada registro de fricción representa una interacción pasada entre el
+     * sistema informal y el campo institucional.
+     */
+    _preSeedFromFuentes() {
+        // Agrupar registros por nodo (caso al que corresponde la fricción)
+        const byNode = new Map();
+        for (const f of this._fuentes) {
+            const id = f.friccion_con;
+            if (!id) continue;
+            if (!byNode.has(id)) byNode.set(id, []);
+            byNode.get(id).push(f);
+        }
+
+        for (const [nodeId, records] of byNode) {
+            const state = this.nodeState.get(nodeId);
+            if (!state) continue;
+
+            // Contar tipos de fricción en un solo recorrido (O(n))
+            const counts = records.reduce(function(acc, r) {
+                const t = r.tipo_friccion;
+                if (!t) return acc; // registro sin tipo_friccion — ignorar
+                acc[t] = (acc[t] || 0) + 1;
+                return acc;
+            }, {});
+            const politicaCount  = counts['politica']  || 0;
+            const semanticaCount = counts['semantica'] || 0;
+            const tecnicaCount   = counts['tecnica']   || 0;
+
+            // Fricción política pesa más (0.12 por registro), semántica (0.10), técnica (0.08)
+            const heatSeed = Math.min(THERMO_CONFIG.PRESEED_HEAT_MAX,
+                politicaCount  * THERMO_CONFIG.PRESEED_HEAT_POLITICA +
+                semanticaCount * THERMO_CONFIG.PRESEED_HEAT_SEMANTICA +
+                tecnicaCount   * THERMO_CONFIG.PRESEED_HEAT_TECNICA);
+
+            state.heat = Math.max(state.heat, heatSeed);
+            state.temperature = state.heat / (state.integrity + 0.1);
+
+            // Simular interacciones previas proporcionales a los registros documentados
+            const corruptRecs = Math.floor(records.length * THERMO_CONFIG.PRESEED_CORRUPTION_RATIO);
+            const totalRecs = records.length;
+
+            this.corruptTransactions += corruptRecs;
+            this.totalTransactions += totalRecs;
+            state.corruptCount += corruptRecs;
+            this.systemHeat += heatSeed;
+
+            // La integridad se ha erosionado proporcionalmente
+            const integrityLoss = corruptRecs * THERMO_CONFIG.INTEGRITY_DECAY * THERMO_CONFIG.PRESEED_INTEGRITY_MULTIPLIER;
+            state.integrity = Math.max(0.15, state.integrity - integrityLoss);
+        }
+
+        // Calcular entropía inicial con los datos sembrados
+        if (this.totalTransactions > 0) this._updateEntropy();
     }
 
     /* ─── ESTADO DE NODOS ─── */
@@ -243,30 +414,63 @@ class SocialField {
         }
     }
 
-    _spawnAgent() {
-        // Spawn en borde aleatorio (ciudadano entra al sistema)
-        const side = Math.floor(Math.random() * 4);
+    _spawnAgent(targetNode) {
         let x, y;
-        switch (side) {
-            case 0:
-                x = Math.random() * this.width;
-                y = -10;
-                break;
-            case 1:
-                x = this.width + 10;
-                y = Math.random() * this.height;
-                break;
-            case 2:
-                x = Math.random() * this.width;
-                y = this.height + 10;
-                break;
-            default:
-                x = -10;
-                y = Math.random() * this.height;
+        // Un porcentaje de agentes nace cerca de un nodo para acelerar interacciones
+        const spawnNear = targetNode || (
+            this.nodes.length > 0 &&
+            Math.random() < THERMO_CONFIG.NEAR_NODE_SPAWN_RATIO
+                ? this.nodes[Math.floor(Math.random() * this.nodes.length)]
+                : null
+        );
+
+        if (spawnNear && spawnNear.x && spawnNear.y) {
+            const angle = Math.random() * Math.PI * 2;
+            const dist = 60 + Math.random() * 80; // entre 60 y 140px del nodo
+            x = spawnNear.x + Math.cos(angle) * dist;
+            y = spawnNear.y + Math.sin(angle) * dist;
+            // Mantener dentro del canvas
+            x = Math.max(5, Math.min(this.width - 5, x));
+            y = Math.max(5, Math.min(this.height - 5, y));
+        } else {
+            // Spawn en borde aleatorio (ciudadano entra al sistema)
+            const side = Math.floor(Math.random() * 4);
+            switch (side) {
+                case 0:
+                    x = Math.random() * this.width;
+                    y = -10;
+                    break;
+                case 1:
+                    x = this.width + 10;
+                    y = Math.random() * this.height;
+                    break;
+                case 2:
+                    x = Math.random() * this.width;
+                    y = this.height + 10;
+                    break;
+                default:
+                    x = -10;
+                    y = Math.random() * this.height;
+            }
         }
 
-        // Necesidad = presión por resolver trámite (V en I=V/R)
-        const necessity = 0.3 + Math.random() * 0.7;
+        // Necesidad del agente: modulada por el mapa logístico del sistema
+        // El mapa conecta la condición individual con el régimen colectivo:
+        // En caos (r≥3.57), dos agentes con necesidades casi idénticas evolucionan
+        // de forma completamente diferente — predecibilidad cero.
+        const logX = logisticIterate(
+            this._logisticR,
+            this._logisticX + (Math.random() - 0.5) * 0.05, // pequeña perturbación inicial
+            THERMO_CONFIG.LOGISTIC_WARMUP
+        );
+        // Asegurar que logX esté en [0,1] (salvaguarda numérica: con r~3.9 y errores de redondeo
+        // el mapa puede producir valores ε fuera de rango, lo que es un artefacto computacional,
+        // no un comportamiento matemático — la ecuación en exacta aritmética siempre devuelve [0,1])
+        const logXClamped = Math.max(0, Math.min(1, logX));
+        // Combinar valor logístico con ruido base para diversidad de agentes
+        const baseNecessity = 0.3 + Math.random() * 0.4;
+        const necessity = baseNecessity * (1 - THERMO_CONFIG.LOGISTIC_WEIGHT) +
+            logXClamped * THERMO_CONFIG.LOGISTIC_WEIGHT;
 
         return {
             x,
@@ -431,6 +635,15 @@ class SocialField {
         if (this.entropy >= THERMO_CONFIG.ENTROPY_CRITICAL && !this.collapseTriggered) {
             this.collapseTriggered = true;
         }
+
+        // Actualizar r del mapa logístico según la entropía actual
+        this._logisticR = logisticR(this.entropy);
+        // Avanzar el estado compartido del mapa (una iteración por llamada)
+        // Clampear a (0,1) para evitar colapso a 0 exacto (mapa se atasco indefinidamente)
+        const nextX = this._logisticR * this._logisticX * (1 - this._logisticX);
+        this._logisticX = Math.max(0.001, Math.min(0.999, nextX));
+        // Guardar para acceso en métricas
+        this._logisticRegime = logisticRegime(this._logisticR);
     }
 
     /* ─── ACTUALIZACIÓN DE AGENTES ─── */
@@ -894,7 +1107,13 @@ class SocialField {
               '<div class="sf-metric sf-metric--status">' +
                 '<span class="sf-label">ESTADO</span>' +
                 '<span class="sf-value" id="sf-m-status"></span>' +
-              '</div></div>';
+              '</div>' +
+              '<div class="sf-metric sf-metric--logistic">' +
+                '<span class="sf-label">MAPA LOG\u00CDSTICOx<sub>n+1</sub>=rx<sub>n</sub>(1\u2212x<sub>n</sub>)</span>' +
+                '<span class="sf-value" id="sf-m-log-r"></span>' +
+                '<span class="sf-sub" id="sf-m-log-regime"></span>' +
+              '</div>' +
+              '</div>';
         }
         // Update only the text/attributes that changed
         var eEl = document.getElementById('sf-m-entropy');
@@ -914,6 +1133,19 @@ class SocialField {
         if (csEl) csEl.textContent = this.corruptTransactions + ' / ' + this.totalTransactions;
         var sEl = document.getElementById('sf-m-status');
         if (sEl) { sEl.textContent = status; sEl.className = 'sf-value ' + statusCls; }
+        // Mapa logístico
+        var lrEl = document.getElementById('sf-m-log-r');
+        if (lrEl) {
+            lrEl.textContent = 'r = ' + (this._logisticR || THERMO_CONFIG.LOGISTIC_R_MIN).toFixed(2);
+            const regime = this._logisticRegime || 'ESTABLE';
+            const regimeCls = regime === 'CAOS' ? 'sf-status--collapse' :
+                regime.startsWith('BIFURCACIÓN') ? 'sf-status--degraded' :
+                regime === 'CASCADA' ? 'sf-status--critical' :
+                'sf-status--stable';
+            lrEl.className = 'sf-value ' + regimeCls;
+        }
+        var lregEl = document.getElementById('sf-m-log-regime');
+        if (lregEl) lregEl.textContent = this._logisticRegime || 'ESTABLE';
         // Update sparkline SVG efficiently
         var spkEl = document.getElementById('sf-m-spark');
         if (spkEl) {
@@ -925,6 +1157,18 @@ class SocialField {
     }
 
     /* ─── API PÚBLICA ─── */
+
+    /**
+     * Devuelve el estado actual del mapa logístico (lectura pública segura).
+     * @returns {{ r: number, regime: string, x: number }}
+     */
+    getLogisticState() {
+        return {
+            r: this._logisticR,
+            regime: this._logisticRegime,
+            x: this._logisticX,
+        };
+    }
 
     updateNodes(nodes, links) {
         this.nodes = nodes;
@@ -953,7 +1197,12 @@ class SocialField {
         this.corruptTransactions = 0;
         this.collapseTriggered = false;
         this.entropyHistory = [];
+        this._metricsBuilt = false;
+        this._logisticX = 0.3 + Math.random() * 0.4;
+        this._logisticR = THERMO_CONFIG.LOGISTIC_R_MIN;
+        this._logisticRegime = 'ESTABLE';
         this._initNodeState();
+        if (this._fuentes.length > 0) this._preSeedFromFuentes();
         this._initAgents();
     }
 
@@ -961,6 +1210,7 @@ class SocialField {
         if (this.animFrame) cancelAnimationFrame(this.animFrame);
         if (this._io) this._io.disconnect();
         if (this.canvas && this.canvas.parentNode) this.canvas.parentNode.removeChild(this.canvas);
+        if (this._regimeInterval) clearInterval(this._regimeInterval);
     }
 }
 

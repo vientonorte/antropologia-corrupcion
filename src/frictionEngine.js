@@ -55,6 +55,8 @@ const FRICTION_MARKERS = [
     { a: 'custodia transnacional', b: 'regulación', tipo: FRICTION_TYPES.POLITICA, peso: 0.86 },
     { a: 'opacidad', b: 'patrimonio depurado', tipo: FRICTION_TYPES.TECNICA, peso: 0.80 },
     { a: 'trabajador', b: 'cartera de custodia', tipo: FRICTION_TYPES.SEMANTICA, peso: 0.91 },
+    // Epistemológico: la Terraza registra evidencia que el grafo público no puede mostrar
+    { a: 'hash_evidencia', b: 'acceso_publico', tipo: FRICTION_TYPES.SEMANTICA, peso: 0.93 },
 ];
 
 /* ─── UTILIDADES ─── */
@@ -459,6 +461,172 @@ function filterByIntensity(nodes, minIntensidad) {
     return nodes.map(n => ({...n, _dimmed: n.intensidad < minIntensidad }));
 }
 
+/* ─── ÍNDICE DE ZUBOFF ─── */
+// Basado en Zuboff, S. (2019). The Age of Surveillance Capitalism.
+// PublicAffairs, Nueva York.
+//
+// Mide en qué medida un caso exhibe la lógica del capitalismo de vigilancia:
+// extracción unilateral de experiencia humana como materia prima conductual,
+// producción de instrumentos de predicción/modificación del comportamiento, y
+// la desigualdad epistémica resultante.
+//
+// Cinco dimensiones (0.0–1.0 cada una):
+//   1. extraccion_unilateral   — datos tomados sin consentimiento (Zuboff p.8)
+//   2. excedente_conductual    — experiencia → materia prima financiera (p.96)
+//   3. productos_prediccion    — instrumentos que modelan conducta futura (p.97)
+//   4. desigualdad_epistemica  — institución sabe; trabajador/comunidad no sabe (p.176)
+//   5. modificacion_conducta   — mecanismos que redirigen comportamiento (p.202)
+
+// Umbral de score mínimo para marcar una dimensión como activa.
+// Una dimensión está activa si al menos 1 keyword coincide Y su score supera este valor.
+var ZUBOFF_MIN_ACTIVE_SCORE = 0.05;
+
+// Umbrales de severidad del índice agregado
+var ZUBOFF_CRITICAL_THRESHOLD = 0.6;
+var ZUBOFF_HIGH_THRESHOLD = 0.4;
+var ZUBOFF_MEDIUM_THRESHOLD = 0.2;
+
+const ZUBOFF_DIMENSIONS = Object.freeze({
+    extraccion_unilateral: {
+        label: 'Extracción unilateral',
+        cita: 'Surveillance capitalism unilaterally claims human experience as free raw material. (p.8)',
+        peso: 1.0,
+        keywords: [
+            // Vocabulario AFP/financiero
+            'cotizacion', 'afiliacion', 'afiliados', 'extractivismo', 'capital financiero',
+            'zona de sacrificio', 'multifondo',
+            // Vocabulario territorial/etnográfico
+            'catastro', 'dl701', 'titulos de merced', 'borramiento', 'extraccion',
+            // Vocabulario periodismo/datos
+            'filtracion', 'datos anonimizados', 'fuente confidencial',
+        ],
+    },
+    excedente_conductual: {
+        label: 'Excedente conductual',
+        cita: 'Behavioral surplus is the raw material... translated into prediction products. (p.96)',
+        peso: 0.9,
+        keywords: [
+            // La vida del trabajador → materia prima financiera
+            'afp', 'prevision', 'ahorro obligatorio', 'cartera', 'custodia',
+            'inversiones', 'fondo de pensiones',
+            // El territorio como materia prima extractiva
+            'pino', 'deforestacion', 'napa freatica', 'bosque nativo', 'forestales',
+        ],
+    },
+    productos_prediccion: {
+        label: 'Productos de predicción',
+        cita: 'These prediction products are sold in behavioral futures markets. (p.97)',
+        peso: 0.85,
+        keywords: [
+            // Instrumentos financieros que predicen/modelan conducta
+            'esg', 'fecu', 'cmf', 'regulacion de inversiones',
+            'multifondos', 'riesgo sistemico',
+            // Instrumentos legales que clasifican/predicen conducta
+            'ley antiterrorista', 'testigos reservados', 'dl701',
+            // Periodismo de datos como contra-producto de predicción
+            'periodismo de datos', 'verificacion de datos',
+        ],
+    },
+    desigualdad_epistemica: {
+        label: 'Desigualdad epistémica',
+        cita: 'Epistemic inequality: unequal access to learning imposed by asymmetric knowledge and power. (p.176)',
+        peso: 1.0,
+        keywords: [
+            // Vocabulario en el corpus
+            'opacidad', 'mistranslation', 'borramiento', 'distorsion',
+            'conadi', 'ilegible',
+            // Asimetría epistémica territorio/estado
+            'saber situado', 'conocimiento situado', 'lonko', 'testimonio',
+            // Asimetría AFP/trabajador
+            'trabajadores afiliados', 'autonomia', 'transparencia',
+        ],
+    },
+    modificacion_conducta: {
+        label: 'Modificación de conducta',
+        cita: 'The goal is to modify behavior at scale for third parties\' interests. (p.202)',
+        peso: 0.8,
+        keywords: [
+            // Dispositivos de neutralización en el corpus
+            'consulta previa', 'proceso administrativo', 'admisibilidad',
+            'oit 169', 'oit169', 'regulacion', 'resolucion',
+            // Militarización como modificación conductual territorial
+            'militarizacion', 'ley antiterrorista', 'fuerzas especiales',
+            // Lobby como modificación de decisiones
+            'lobby', 'infolobby', 'influencia regulatoria',
+        ],
+    },
+});
+
+/**
+ * Calcula el Índice de Zuboff para un caso.
+ * Retorna un score 0.0–1.0 y el desglose por dimensión.
+ *
+ * Estrategia: busca keywords COMPUESTOS (frases) en el corpus del caso.
+ * Un hit solo cuenta si la frase normalizada aparece como substring en
+ * el texto del caso. Evita inflación por palabras genéricas sueltas.
+ *
+ * @param {Object} caso - caso completo del JSON
+ * @returns {{ score: number, dimensiones: Object[], nivel: string, interpretacion: string }}
+ */
+function calculateZuboffIndex(caso) {
+    // Texto completo del caso como string normalizado para búsqueda de frases
+    var casoText = [
+        caso.etica ? (caso.etica.titulo || '') + ' ' + (caso.etica.descripcion || '') + ' ' + (caso.etica.keywords || []).join(' ') : '',
+        caso.institucional ? (caso.institucional.titulo || '') + ' ' + (caso.institucional.descripcion || '') + ' ' + (caso.institucional.clasificaciones || []).join(' ') + ' ' + (caso.institucional.keywords || []).join(' ') : '',
+        caso.material ? (caso.material.titulo || '') + ' ' + (caso.material.descripcion || '') + ' ' + (caso.material.keywords || []).join(' ') : '',
+        (caso.tags || []).join(' '),
+        (caso.actores || []).join(' '),
+        (caso.instituciones || []).join(' '),
+        caso.friccion ? ((caso.friccion.descripcion || '') + ' ' + (caso.friccion.tension_central || '')) : '',
+    ].join(' ');
+    var normCasoText = normalizeStr(casoText);
+
+    var totalPeso = 0;
+    var activePeso = 0;
+    var dimensiones = [];
+
+    var dimIds = Object.keys(ZUBOFF_DIMENSIONS);
+    for (var di = 0; di < dimIds.length; di++) {
+        var dimId = dimIds[di];
+        var dim = ZUBOFF_DIMENSIONS[dimId];
+        var hits = 0;
+        // Buscar cada keyword como frase completa (no dividida en palabras)
+        for (var ki = 0; ki < dim.keywords.length; ki++) {
+            var normKw = normalizeStr(dim.keywords[ki]);
+            if (normCasoText.indexOf(normKw) !== -1) hits++;
+        }
+        // Score = (hits / keywords.length) * peso del dimension
+        var hitRatio = hits / dim.keywords.length;
+        var dimScore = parseFloat((hitRatio * dim.peso).toFixed(3));
+
+        totalPeso += dim.peso;
+        activePeso += dimScore;
+
+        dimensiones.push({
+            id: dimId,
+            label: dim.label,
+            cita: dim.cita,
+            score: dimScore,
+            activo: hits >= 1 && dimScore >= ZUBOFF_MIN_ACTIVE_SCORE,
+        });
+    }
+
+    var score = parseFloat((activePeso / totalPeso).toFixed(3));
+    var nivel = score >= ZUBOFF_CRITICAL_THRESHOLD ? 'crítico' :
+        score >= ZUBOFF_HIGH_THRESHOLD ? 'alto' :
+        score >= ZUBOFF_MEDIUM_THRESHOLD ? 'medio' : 'bajo';
+
+    var interpretacionMap = {
+        'crítico': 'El caso documenta la lógica completa del capitalismo de vigilancia aplicada a este dominio.',
+        'alto': 'Múltiples dimensiones de extracción/predicción activas. Asimetría epistémica pronunciada.',
+        'medio': 'Presencia parcial de mecanismos de vigilancia; fricción documenta la opacidad resultante.',
+        'bajo': 'Dimensiones de vigilancia limitadas o indirectas en el corpus disponible.',
+    };
+    var interpretacion = interpretacionMap[nivel] || '';
+
+    return { score: score, nivel: nivel, interpretacion: interpretacion, dimensiones: dimensiones };
+}
+
 /* ─── EXPORTS MODULARES (también funciona como IIFE para vanilla JS) ─── */
 // Si el entorno no soporta ES modules, se exporta al global
 if (typeof window !== 'undefined' && !window.frictionEngine) {
@@ -474,5 +642,7 @@ if (typeof window !== 'undefined' && !window.frictionEngine) {
         normalizeStr,
         FRICTION_MARKERS,
         FRICTION_TYPES,
+        ZUBOFF_DIMENSIONS,
+        calculateZuboffIndex,
     };
 }

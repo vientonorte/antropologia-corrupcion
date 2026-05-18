@@ -1,6 +1,0 @@
-ID Riesgo,Descripción del Riesgo,Impacto,Probabilidad,TAG RISK,Fuente/Referencia
-R1,"Duplicación o mezcla de bases de datos entre AFP y SURA, sin consentimiento informado del cliente",Alto,Alta,Ético/Jurídico,Transcripción anonimizada - reunión técnica interna (Infante et al.)
-R2,Falta de visibilidad del cliente sobre la existencia del mandato AFP dentro de la plataforma,Alto,Media,Ético/UX,"Experiencia directa de usuario en SURA Investments, observación de flujo mandato"
-R3,Dependencia tecnológica de infraestructura compartida sin claridad en propiedad y responsabilidad,Medio,Alta,Tecnológico/Legal,Transcripción + requerimientos técnicos del documento DEI v2.0
-R4,Posible retención o eliminación no autorizada de datos tras separación institucional,Alto,Media,Legal/Operativo,"Reunión técnica, mención de posible salida de AFP y retención de datos (Argomedo et al.)"
-R5,Ausencia de protocolo claro sobre la revocación de mandato y portabilidad del perfil inversionista,Alto,Alta,Ético/Legal,Documentación interna + falta de visibilidad en términos y condiciones del cliente

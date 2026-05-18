@@ -4,7 +4,42 @@
       "etica": "Testimonio situado, cuidado, contexto vivido",
       "institucional": "Registro oficial, clasificación, distorsión normativa",
       "material": "Territorio, evidencia, densidad histórica"
-    }
+    },
+    "enlaces_transversales": [
+      {
+        "id": "capital-territorio",
+        "nodo_a": "jpmorgan-custodia",
+        "nodo_b": "comunidad-lafkenche",
+        "friccion": 0.93,
+        "tipo": "estructural",
+        "descripcion": "Acumulación por desposesión (Harvey): el circuito financiero transnacional extrae valor de territorios en disputa"
+      },
+      {
+        "id": "regulacion-autonomia",
+        "nodo_a": "cmf-semaforo",
+        "nodo_b": "convenio-oit169",
+        "friccion": 0.88,
+        "tipo": "semantica",
+        "descripcion": "El régimen regulatorio financiero y el marco de derechos colectivos comparten vocabulario de 'cumplimiento' con lógicas incompatibles"
+      },
+      {
+        "id": "dato-testimonio",
+        "nodo_a": "fecu-liquidez",
+        "nodo_b": "comunidad-lafkenche",
+        "friccion": 0.85,
+        "tipo": "epistemologica",
+        "descripcion": "El dato financiero y el testimonio territorial son formas de verdad que el sistema nunca pone a dialogar"
+      },
+      {
+        "id": "ley-practica",
+        "nodo_a": "ds66-consulta",
+        "nodo_b": "cotizante-dl3500",
+        "friccion": 0.8,
+        "tipo": "politica",
+        "descripcion": "Ambos sujetos son formalmente protegidos por la ley y materialmente excluidos del poder de decisión sobre sus propias condiciones"
+      }
+    ],
+    "nota_nodos": "Los IDs en enlaces_transversales referencian nodos definidos en cada caso dentro del array casos. El grafo valida estas referencias al construir el índice de nodos."
   },
   "casos": [
     {
@@ -99,6 +134,62 @@
         "territorio",
         "datos",
         "corrupción sistémica"
+      ],
+      "nodos": [
+        {
+          "id": "cotizante-dl3500",
+          "capa": "etica",
+          "tipo": "actor",
+          "peso_friccion": 0.91,
+          "fuente_id": "transp-sp-beneficiarios-afp-2024",
+          "fecha_evidencia": "2024-03-08",
+          "descripcion": "Afiliado obligatorio al sistema previsional; sin acceso interpretativo real a su cartera de inversión"
+        },
+        {
+          "id": "sura-afp-capital",
+          "capa": "institucional",
+          "tipo": "actor",
+          "peso_friccion": 0.82,
+          "fuente_id": "lobby-sura-cmf-2024",
+          "fecha_evidencia": "2024-03-15",
+          "descripcion": "SURA Investments / AFP Capital: actor financiero que articula la cadena cotizante → AFP → cartera transnacional"
+        },
+        {
+          "id": "cmf-semaforo",
+          "capa": "institucional",
+          "tipo": "dispositivo",
+          "peso_friccion": 0.84,
+          "fuente_id": "cmf-sancion-sura-2024",
+          "fecha_evidencia": "2024-02-28",
+          "descripcion": "Sistema de semáforos CMF que valida liquidez sin activar alertas ante volatilidad estructural (+279% índice de intermediación)"
+        },
+        {
+          "id": "fecu-liquidez",
+          "capa": "institucional",
+          "tipo": "dato",
+          "peso_friccion": 0.86,
+          "fuente_id": "transp-afp-carteras-2024",
+          "fecha_evidencia": "2024-01-20",
+          "descripcion": "FECU CMF Corredora SURA: instrumento regulatorio que opacifica la cadena de custodia transnacional mediante lenguaje técnico financiero"
+        },
+        {
+          "id": "jpmorgan-custodia",
+          "capa": "material",
+          "tipo": "actor",
+          "peso_friccion": 0.86,
+          "fuente_id": "transp-afp-carteras-2024",
+          "fecha_evidencia": "2024-01-20",
+          "descripcion": "JP Morgan como co-custodio de cartera: capital golondrina (Salazar) que materializa la acumulación aberrante en circuitos nor-occidentales"
+        },
+        {
+          "id": "fondos-mutuos-rescates",
+          "capa": "material",
+          "tipo": "dato",
+          "peso_friccion": 0.84,
+          "fuente_id": "cmf-norma-esg-2023",
+          "fecha_evidencia": "2023-11-20",
+          "descripcion": "Rescates masivos de fondos mutuos: evidencia material de la desconexión entre cumplimiento normativo y volatilidad real absorbida por cotizantes"
+        }
       ]
     },
     {
@@ -196,6 +287,62 @@
         "CONADI",
         "forestales",
         "soberanía"
+      ],
+      "nodos": [
+        {
+          "id": "comunidad-lafkenche",
+          "capa": "etica",
+          "tipo": "territorio",
+          "peso_friccion": 0.94,
+          "fuente_id": "etnografia-directa",
+          "fecha_evidencia": "2023-08-22",
+          "descripcion": "Comunidad Mapuche-Lafkenche de La Negra: testimonio situado sobre territorio como organismo vivo con historia irreductible a catastro"
+        },
+        {
+          "id": "conadi-tierras",
+          "capa": "institucional",
+          "tipo": "dispositivo",
+          "peso_friccion": 0.9,
+          "fuente_id": "transp-conadi-tierras-2023",
+          "fecha_evidencia": "2023-05-14",
+          "descripcion": "CONADI como dispositivo de gestión de tierras: traduce soberanía territorial a proceso administrativo de adquisición parcelas"
+        },
+        {
+          "id": "dl701-subsidio-forestal",
+          "capa": "institucional",
+          "tipo": "norma",
+          "peso_friccion": 0.88,
+          "fuente_id": "dl701-fomento-forestal",
+          "fecha_evidencia": "1974-10-28",
+          "descripcion": "DL 701 (1974): subsidio forestal que convierte territorio en 'uso productivo', negando la memoria territorial mapuche desde la dictadura"
+        },
+        {
+          "id": "predios-avaluos-sii",
+          "capa": "material",
+          "tipo": "dato",
+          "peso_friccion": 0.85,
+          "fuente_id": "sii-avaluos-predios-los-rios-2024",
+          "fecha_evidencia": "2024-01-17",
+          "descripcion": "Avalúo fiscal SII de predios en Los Ríos: tasación como acto de violencia epistemológica — el mercado asigna valor donde hay historia"
+        },
+        {
+          "id": "seia-central-osorno",
+          "capa": "institucional",
+          "tipo": "dispositivo",
+          "peso_friccion": 0.87,
+          "fuente_id": "seia-central-osorno-2023",
+          "fecha_evidencia": "2023-06-12",
+          "descripcion": "EIA Central Osorno en SEIA: el sistema de evaluación ambiental como mecanismo de captura que convierte oposición en 'admisibilidad'"
+        },
+        {
+          "id": "forestal-losrios",
+          "capa": "material",
+          "tipo": "territorio",
+          "peso_friccion": 0.88,
+          "fuente_id": "seia-forestal-losrios-2022",
+          "fecha_evidencia": "2022-04-18",
+          "descripcion": "Territorio forestal Los Ríos: evidencia material de la deforestación como uso productivo autorizado sobre territorio en disputa histórica"
+        }
       ]
     },
     {
@@ -291,6 +438,53 @@
         "datos",
         "transparencia",
         "corrupción"
+      ],
+      "nodos": [
+        {
+          "id": "ciper-fuente",
+          "capa": "etica",
+          "tipo": "actor",
+          "peso_friccion": 0.78,
+          "fuente_id": "etnografia-directa",
+          "fecha_evidencia": "2023-09-03",
+          "descripcion": "Fuente/whistleblower CIPER Chile: testimonio situado que activa el campo de fricción entre proceso regular y denuncia pública"
+        },
+        {
+          "id": "municipio-trato-directo",
+          "capa": "institucional",
+          "tipo": "dato",
+          "peso_friccion": 0.75,
+          "fuente_id": "compras-municipio-trato-directo-2023",
+          "fecha_evidencia": "2023-10-05",
+          "descripcion": "Contratos municipales por trato directo en ChileCompra: dato institucional que registra la irregularidad sin nombrarla como corrupción"
+        },
+        {
+          "id": "transp-municipio-honorarios",
+          "capa": "institucional",
+          "tipo": "dato",
+          "peso_friccion": 0.71,
+          "fuente_id": "transp-municipio-honorarios-2024",
+          "fecha_evidencia": "2024-01-29",
+          "descripcion": "Honorarios municipales en Portal de Transparencia: opacidad estructurada donde la visibilidad formal encubre la cadena real de pagos"
+        },
+        {
+          "id": "sii-proveedores",
+          "capa": "material",
+          "tipo": "dato",
+          "peso_friccion": 0.7,
+          "fuente_id": "sii-proveedores-municipales-2023",
+          "fecha_evidencia": "2023-11-09",
+          "descripcion": "Registro SII de proveedores municipales: evidencia material cruzada con contratos que revela la estructura real de extracción local"
+        },
+        {
+          "id": "ley-20285-info-publica",
+          "capa": "institucional",
+          "tipo": "norma",
+          "peso_friccion": 0.68,
+          "fuente_id": "ley-20285-transparencia",
+          "fecha_evidencia": "2008-08-20",
+          "descripcion": "Ley 20.285 de Transparencia: norma que garantiza acceso formal a documentos pero no el acceso interpretativo a la lógica del poder"
+        }
       ]
     },
     {
@@ -390,6 +584,53 @@
         "SEIA",
         "territorio indígena",
         "derechos"
+      ],
+      "nodos": [
+        {
+          "id": "convenio-oit169",
+          "capa": "etica",
+          "tipo": "norma",
+          "peso_friccion": 0.89,
+          "fuente_id": "ley-19253-indigena",
+          "fecha_evidencia": "1993-10-05",
+          "descripcion": "OIT 169: marco decolonial del consentimiento libre, previo e informado — define consulta como veto, no como diálogo"
+        },
+        {
+          "id": "ds66-consulta",
+          "capa": "institucional",
+          "tipo": "dispositivo",
+          "peso_friccion": 0.85,
+          "fuente_id": "ds66-consulta-indigena",
+          "fecha_evidencia": "2014-03-15",
+          "descripcion": "DS 66 Reglamento de Consulta Indígena: traduce el consentimiento OIT 169 en trámite administrativo sin capacidad real de veto"
+        },
+        {
+          "id": "ley19253-indigena",
+          "capa": "institucional",
+          "tipo": "norma",
+          "peso_friccion": 0.82,
+          "fuente_id": "ley-19253-indigena",
+          "fecha_evidencia": "1993-10-05",
+          "descripcion": "Ley 19.253 Indígena: ley chilena que reconoce pueblos originarios pero subordina autonomía territorial a regulación estatal"
+        },
+        {
+          "id": "seia-admisibilidad",
+          "capa": "institucional",
+          "tipo": "dispositivo",
+          "peso_friccion": 0.85,
+          "fuente_id": "seia-forestal-losrios-2022",
+          "fecha_evidencia": "2022-04-18",
+          "descripcion": "SEIA como filtro de admisibilidad: convierte resistencia en 'observaciones procesadas', absorbiendo el conflicto sin resolverlo"
+        },
+        {
+          "id": "diariooficial-consulta-2024",
+          "capa": "institucional",
+          "tipo": "dato",
+          "peso_friccion": 0.87,
+          "fuente_id": "diariooficial-consulta-indigena-2024",
+          "fecha_evidencia": "2024-08-22",
+          "descripcion": "Último decreto de consulta indígena en Diario Oficial: formalización que consagra la soberanía estatal sobre CONADI frente a soberanía territorial"
+        }
       ]
     },
     {
@@ -489,7 +730,28 @@
         "opacidad institucional",
         "accountability",
         "artefacto rescatado"
-      ]
+      ],
+      "nodos": [
+        {
+          "id": "sbif-circular-roles",
+          "capa": "institucional",
+          "tipo": "norma",
+          "peso_friccion": 0.73,
+          "fuente_id": "sbif-circular-roles-banca-digital-2021",
+          "fecha_evidencia": "2021-07-14",
+          "descripcion": "Circular SBIF de roles banca digital: norma que asigna accesos por categoría pero deja sin nombrar el rol de máximo acceso sin accountability"
+        },
+        {
+          "id": "opacidad-plataforma",
+          "capa": "material",
+          "tipo": "dato",
+          "peso_friccion": 0.82,
+          "fuente_id": "sbif-circular-roles-banca-digital-2021",
+          "fecha_evidencia": "2021-07-14",
+          "descripcion": "Arquitectura de roles digitales: evidencia material de opacidad estructurada donde visibilidad y agencia están sistemáticamente desacopladas"
+        }
+      ],
+      "nota_cobertura": "Caso en fase inicial de documentación. Nodos mínimos mientras se consolida evidencia del registro SBIF. Ver HANDOFF.md para estado de avance."
     }
   ]
 }

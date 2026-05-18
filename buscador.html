@@ -2,6 +2,8 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'">
+  <meta name="referrer" content="no-referrer-when-downgrade">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Buscador Inteligente — Contra-Archivo</title>
   <meta name="description" content="Buscador inteligente con 5 categorías de datos oficiales chilenos. Cruza fuentes para revelar fricciones institucionales.">
@@ -522,6 +524,7 @@
   </style>
 </head>
 <body>
+<a href="#searchInput" class="skip-link">Saltar al buscador</a>
 
   <!-- Nav -->
   <header class="site-header">
@@ -625,7 +628,7 @@
   </footer>
 
   <script defer src="src/frictionEngine.js?v=20260419"></script>
-  <script defer src="src/searchEngine.js?v=20260419"></script>
+  <script defer src="src/searchEngine.js?v=20260506"></script>
   <script>
     (function () {
       'use strict';
@@ -840,7 +843,7 @@
           if (r._frictionScore < frictionMin) return false;
           if (hasSourceFilter && !checkedSources[r.fuente]) return false;
           if (q) {
-            var haystack = [r.titulo, r.institucion, r.capa_oficial, (r.keywords || []).join(' '), (r.tags || []).join(' ')].join(' ').toLowerCase();
+            var haystack = [r.titulo, r.materia || '', r.institucion, r.capa_oficial, (r.keywords || []).join(' '), (r.tags || []).join(' '), (r.actores_lobby || []).join(' ')].join(' ').toLowerCase();
             if (haystack.indexOf(q) === -1) return false;
           }
           return true;

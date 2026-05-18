@@ -3,13 +3,12 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https://api.allorigins.win; frame-ancestors 'none'; base-uri 'self'; form-action 'self'">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <meta name="robots" content="noindex, nofollow">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <title>Espacio Privado — Contra-Archivo</title>
     <meta name="description" content="Área privada para investigadores — Contra-Archivo: Antropología y Corrupción">
-    <meta property="og:title" content="Espacio Privado — Contra-Archivo">
-    <meta property="og:description" content="Área privada para investigadores — Contra-Archivo: Antropología y Corrupción">
-    <meta property="og:type" content="website">
-    <meta property="og:image" content="https://vientonorte.github.io/antropologia-corrupcion/img/an-lisis-ux-ui-mapeo-de-vulnerabilidades-de-expe.jpg">
     <meta name="theme-color" content="#0c0c0c">
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⊘</text></svg>">
     <link rel="manifest" href="manifest.json">
@@ -1007,10 +1006,203 @@
                 left: -26px
             }
         }
+
+        /* ── UX contextual: welcome inline + ayuda bajo demanda ── */
+        .pv-help-btn {
+            margin-left: auto;
+            min-width: 44px;
+            min-height: 44px;
+            border: 1px solid var(--border);
+            border-radius: var(--r);
+            color: var(--muted);
+            background: transparent;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            transition: color .15s, background .15s, border-color .15s
+        }
+        .pv-help-btn:hover {
+            color: var(--text);
+            border-color: var(--dim);
+            background: var(--s2)
+        }
+        .pv-help-btn:focus-visible {
+            outline: 2px solid var(--etica);
+            outline-offset: 2px
+        }
+        .pv-help-popover {
+            position: fixed;
+            top: calc(var(--nav-h) + 10px);
+            right: 12px;
+            width: min(380px, calc(100vw - 24px));
+            z-index: var(--z-dropdown, 10);
+            padding: 12px 14px;
+            border: 1px solid var(--border);
+            border-radius: var(--r);
+            background: var(--s1);
+            box-shadow: var(--shadow-lg, 0 8px 24px rgba(0, 0, 0, .5))
+        }
+        .pv-help-title {
+            margin: 0 0 8px;
+            font-size: .86rem;
+            color: var(--text)
+        }
+        .pv-help-list {
+            margin: 0;
+            padding-left: 18px;
+            color: var(--muted);
+            display: grid;
+            gap: 6px;
+            font-size: .8rem
+        }
+        .pv-help-close {
+            margin-top: 10px;
+            width: 100%
+        }
+        .pv-welcome-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin: 12px 12px 0;
+            padding: 10px 12px;
+            border: 1px solid var(--border);
+            border-left: 3px solid var(--etica);
+            border-radius: var(--r);
+            background: var(--s1);
+            flex-wrap: wrap
+        }
+        .pv-welcome-copy {
+            font-size: .8rem;
+            color: var(--muted)
+        }
+        .pv-welcome-copy strong {
+            color: var(--text)
+        }
+        .pv-welcome-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px
+        }
+        .pv-welcome-start {
+            color: var(--etica);
+            font-size: .8rem;
+            font-weight: 700;
+            text-decoration: none
+        }
+        .pv-welcome-start:hover {
+            text-decoration: underline
+        }
+        .pv-welcome-dismiss {
+            border: 1px solid var(--border);
+            border-radius: var(--r);
+            color: var(--dim);
+            background: transparent;
+            min-width: 32px;
+            min-height: 32px;
+            line-height: 1
+        }
+        .pv-welcome-dismiss:hover {
+            color: var(--text);
+            border-color: var(--dim)
+        }
+        .pv-main-empty {
+            margin: 16px 12px 0;
+            padding: 14px;
+            border: 1px dashed var(--border);
+            border-radius: var(--r);
+            font-size: .82rem;
+            color: var(--muted);
+            background: var(--s1)
+        }
+        .pv-main-empty strong {
+            color: var(--text)
+        }
+        .seg-empty-state {
+            margin-top: 8px;
+            padding: 10px;
+            border: 1px dashed var(--border);
+            border-radius: var(--r);
+            background: var(--s2);
+            display: grid;
+            gap: 8px
+        }
+        .seg-empty-state p {
+            margin: 0;
+            font-size: .78rem;
+            color: var(--dim)
+        }
+
+        /* ── Brecha 3: Chat context bar ── */
+        .chat-context-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 5px 12px;
+            background: var(--s1, #111);
+            border: 1px solid var(--border);
+            border-bottom: none;
+            border-radius: var(--r, 8px) var(--r, 8px) 0 0;
+            font-size: .75rem;
+            color: var(--muted)
+        }
+        .chat-context-label {
+            display: flex;
+            align-items: center;
+            gap: 5px
+        }
+        .chat-context-name {
+            color: var(--etica);
+            font-family: var(--font-mono)
+        }
+        .chat-context-clear {
+            background: none;
+            border: none;
+            color: var(--dim);
+            cursor: pointer;
+            font-size: 1rem;
+            line-height: 1;
+            padding: 0 2px;
+            transition: color .1s
+        }
+        .chat-context-clear:hover {
+            color: var(--crit)
+        }
+
+        /* ── Brecha 5: Huella → Protocolo CTA ── */
+        .huella-protocolo-cta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-top: 24px;
+            padding: 12px 16px;
+            background: var(--s1, #111);
+            border: 1px solid var(--border);
+            border-left: 3px solid var(--mat, #7a9e6e);
+            border-radius: var(--r, 8px);
+            flex-wrap: wrap
+        }
+        .huella-protocolo-cta-text {
+            font-size: .8rem;
+            color: var(--muted)
+        }
+        .huella-protocolo-cta-link {
+            font-size: .8rem;
+            color: var(--mat, #7a9e6e);
+            font-weight: 700;
+            text-decoration: none;
+            white-space: nowrap
+        }
+        .huella-protocolo-cta-link:hover {
+            text-decoration: underline
+        }
     </style>
 </head>
 
 <body>
+    <a href="#pv-main" class="skip-link">Saltar al contenido</a>
 
     <h1 class="sr-only">Espacio Privado — Contra-Archivo</h1>
 
@@ -1022,10 +1214,21 @@
             <a href="tesis.html">Biblioteca</a>
             <a href="landing.html">Buscador</a>
             <a href="index.html">Instrumento</a>
+            <a href="zuboff-citas.html">⑤ Zuboff</a>
             <a href="#" id="nav-seg-btn">Mis seguimientos</a>
             <button class="btn-salir" id="logout-btn">Salir</button>
         </div>
+        <button class="pv-help-btn" id="pv-help-btn" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="pv-help-popover" aria-label="Abrir guía rápida"><span aria-hidden="true">[?]</span></button>
     </nav>
+    <aside class="pv-help-popover" id="pv-help-popover" role="dialog" aria-label="Guía rápida del espacio privado" hidden>
+        <p class="pv-help-title">Guía rápida</p>
+        <ol class="pv-help-list">
+            <li>Abre <strong>+ Nuevo seguimiento</strong> en el sidebar.</li>
+            <li>Agrega un actor, institución, ley o caso.</li>
+            <li>Haz clic en el seguimiento para ver Huella Digital y usar el chat con contexto.</li>
+        </ol>
+        <button class="sb-btn pv-help-close" id="pv-help-close" type="button">Cerrar ayuda</button>
+    </aside>
 
     <!-- LAYOUT -->
     <div class="pv-layout">
@@ -1040,7 +1243,7 @@
             <div class="sb-section">
                 <div class="sb-title">Buscador</div>
                 <div class="sb-search-wrap">
-                    <input type="search" id="sb-search-input" placeholder="Buscar en el contra-archivo…" autocomplete="off">
+                    <input type="search" id="sb-search-input" aria-label="Buscar en el contra-archivo" placeholder="Buscar en el contra-archivo…" autocomplete="off">
                 </div>
                 <div class="sb-count" id="sb-search-count"></div>
             </div>
@@ -1064,17 +1267,21 @@
                 <div class="sb-title">Mis seguimientos</div>
                 <div class="seg-counts" id="seg-counts"></div>
                 <div id="seg-list"></div>
+                <div class="seg-empty-state" id="seg-empty-state" hidden>
+                    <p>Aún no tienes seguimientos activos.</p>
+                    <button class="sb-btn" id="seg-empty-add-first" type="button">+ Añadir primero</button>
+                </div>
                 <details id="seg-add-details">
                     <summary class="sb-btn" style="list-style:none;width:100%;text-align:center">+ Nuevo seguimiento</summary>
                     <div class="sb-add-form" style="margin-top:8px">
-                        <input type="text" id="seg-add-nombre" placeholder="Nombre">
-                        <select id="seg-add-tipo">
+                        <input type="text" id="seg-add-nombre" aria-label="Nombre del seguimiento" placeholder="Nombre">
+                        <select id="seg-add-tipo" aria-label="Tipo de seguimiento">
             <option value="actor">👤 Actor</option>
             <option value="institucion">🏛 Institución</option>
             <option value="ley">⚖ Ley</option>
             <option value="caso">📁 Caso</option>
           </select>
-                        <input type="text" id="seg-add-tags" placeholder="Tags (separados por coma)">
+                        <input type="text" id="seg-add-tags" aria-label="Tags del seguimiento (separados por coma)" placeholder="Tags (separados por coma)">
                         <button class="sb-btn" id="seg-add-btn" style="background:var(--etica);color:#000;border-color:var(--etica)">Agregar</button>
                     </div>
                 </details>
@@ -1083,7 +1290,19 @@
         </aside>
 
         <!-- MAIN -->
-        <div class="pv-main">
+        <div class="pv-main" id="pv-main">
+            <div class="pv-welcome-bar" id="pv-welcome-bar" aria-live="polite" hidden>
+                <div class="pv-welcome-copy">
+                    <strong>Bienvenida.</strong> Comienza agregando un seguimiento para activar huella, noticias y chat contextual.
+                </div>
+                <div class="pv-welcome-actions">
+                    <a href="#" class="pv-welcome-start" id="pv-welcome-start">Comienza agregando un seguimiento →</a>
+                    <button class="pv-welcome-dismiss" id="pv-welcome-dismiss" type="button" aria-label="Cerrar bienvenida">✕</button>
+                </div>
+            </div>
+            <div class="pv-main-empty" id="pv-main-empty" aria-live="polite" hidden>
+                <strong>Primer paso:</strong> agrega tu primer seguimiento desde el panel izquierdo para iniciar la lectura situada del caso.
+            </div>
             <div class="pv-tabs" role="tablist" aria-label="Secciones del espacio privado">
                 <button class="pv-tab active" id="tab-simulacion" data-tab="simulacion" role="tab" aria-selected="true" aria-controls="panel-simulacion" tabindex="0">Simulación</button>
                 <button class="pv-tab" id="tab-chat" data-tab="chat" role="tab" aria-selected="false" aria-controls="panel-chat" tabindex="-1">Chat</button>
@@ -1123,8 +1342,13 @@
             <div class="pv-panel" id="panel-chat" role="tabpanel" aria-labelledby="tab-chat">
                 <div class="chat-wrap">
                     <div class="chat-messages" id="chat-messages"></div>
+                    <!-- Brecha 3: Barra de contexto activo -->
+                    <div class="chat-context-bar" id="chat-context-bar" hidden aria-live="polite">
+                        <span class="chat-context-label">Contexto: <strong class="chat-context-name" id="chat-context-name"></strong></span>
+                        <button class="chat-context-clear" id="chat-context-clear" type="button" aria-label="Limpiar contexto activo del chat">×</button>
+                    </div>
                     <div class="chat-input-row">
-                        <input type="text" id="chat-input" placeholder="Pregunta sobre casos, actores o fricción…" autocomplete="off">
+                        <input type="text" id="chat-input" aria-label="Escribe tu pregunta sobre el contra-archivo" placeholder="Pregunta sobre casos, actores o fricción…" autocomplete="off">
                         <button class="chat-send" id="chat-send" aria-label="Enviar mensaje al chat">Enviar</button>
                     </div>
                 </div>
@@ -1187,6 +1411,10 @@
             var chatInited = false;
             var newsLoaded = false;
             var searchCount = 0;
+            var pvActiveContext = null; /* Brecha 3: contexto activo para el chat */
+            var MOBILE_QUERY_STRING = '(max-width:767px)';
+            var mobileMediaQuery = null;
+            var hasSeguimientosWarned = false;
 
             /* ── Helpers ── */
             function $(id) {
@@ -1197,6 +1425,126 @@
                 var d = document.createElement('div');
                 d.textContent = s;
                 return d.innerHTML;
+            }
+
+            /* Brecha 3: Gestión de contexto activo del chat */
+            function setPvActiveContext(label) {
+                pvActiveContext = label || null;
+                var bar = $('chat-context-bar');
+                var name = $('chat-context-name');
+                if (!bar || !name) return;
+                if (pvActiveContext) {
+                    name.textContent = pvActiveContext;
+                    bar.hidden = false;
+                } else {
+                    bar.hidden = true;
+                    name.textContent = '';
+                }
+            }
+
+            /* UX contextual: bienvenida inline (primera visita) */
+            function hasSeguimientos() {
+                try {
+                    if (!window.Seguimientos || !window.Seguimientos.listar) return false;
+                    return window.Seguimientos.listar().length > 0;
+                } catch (err) {
+                    if (!hasSeguimientosWarned) {
+                        console.warn('[Privado] Error al verificar seguimientos:', err);
+                        hasSeguimientosWarned = true;
+                    }
+                    return false;
+                }
+            }
+
+            function isWelcomeDismissed() {
+                try {
+                    return !!localStorage.getItem('ca_onboarding_ok');
+                } catch (err) {
+                    console.warn('[Privado] No se pudo leer estado onboarding:', err);
+                    return false;
+                }
+            }
+
+            function dismissWelcome() {
+                try {
+                    localStorage.setItem('ca_onboarding_ok', '1');
+                } catch (err) {
+                    console.warn('[Privado] No se pudo persistir estado onboarding:', err);
+                }
+                setWelcomeVisibility();
+            }
+
+            function openSeguimientoForm() {
+                var details = $('seg-add-details');
+                var input = $('seg-add-nombre');
+                if (details) details.setAttribute('open', 'open');
+                if (input) input.focus();
+            }
+
+            function setWelcomeVisibility() {
+                var welcome = $('pv-welcome-bar');
+                var mainEmpty = $('pv-main-empty');
+                var show = !isWelcomeDismissed() && !hasSeguimientos();
+                if (welcome) welcome.hidden = !show;
+                if (mainEmpty) mainEmpty.hidden = !show;
+            }
+
+            function initWelcomeExperience() {
+                mobileMediaQuery = window.matchMedia(MOBILE_QUERY_STRING);
+                setWelcomeVisibility();
+                var dismissBtn = $('pv-welcome-dismiss');
+                if (dismissBtn) dismissBtn.addEventListener('click', dismissWelcome);
+
+                var startBtn = $('pv-welcome-start');
+                if (startBtn) {
+                    startBtn.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        var isMobile = mobileMediaQuery ? mobileMediaQuery.matches : window.matchMedia(MOBILE_QUERY_STRING).matches;
+                        if (isMobile) {
+                            var sidebar = $('sidebar');
+                            if (sidebar && !sidebar.classList.contains('open')) {
+                                var navBtn = $('nav-seg-btn');
+                                if (navBtn) navBtn.click();
+                            }
+                        }
+                        openSeguimientoForm();
+                    });
+                }
+            }
+
+            function initHelpGuide() {
+                var openBtn = $('pv-help-btn');
+                var popover = $('pv-help-popover');
+                var closeBtn = $('pv-help-close');
+                if (!openBtn || !popover) return;
+
+                function closeHelp() {
+                    popover.hidden = true;
+                    openBtn.setAttribute('aria-expanded', 'false');
+                    openBtn.focus();
+                }
+
+                openBtn.addEventListener('click', function() {
+                    var isOpen = !popover.hidden;
+                    if (isOpen) {
+                        closeHelp();
+                        return;
+                    }
+                    popover.hidden = false;
+                    openBtn.setAttribute('aria-expanded', 'true');
+                    if (closeBtn) closeBtn.focus();
+                });
+                if (closeBtn) closeBtn.addEventListener('click', closeHelp);
+                document.addEventListener('keydown', function(e) {
+                    if (e.key === 'Escape' && !popover.hidden) closeHelp();
+                });
+                document.addEventListener('click', function(e) {
+                    if (popover.hidden) return;
+                    if (e.target === openBtn || openBtn.contains(e.target)) return;
+                    if (popover.contains(e.target)) return;
+                    popover.hidden = true;
+                    openBtn.setAttribute('aria-expanded', 'false');
+                });
             }
 
             function fmtDate(d) {
@@ -1415,6 +1763,8 @@
 
             /* ── App Init ── */
             function initApp() {
+                initWelcomeExperience();
+                initHelpGuide();
                 initTabs();
                 initSidebar();
                 initTesis();
@@ -1579,6 +1929,12 @@
                 });
 
                 $('seg-add-btn').addEventListener('click', addSeguimiento);
+                var addFirstBtn = $('seg-empty-add-first');
+                if (addFirstBtn) {
+                    addFirstBtn.addEventListener('click', function() {
+                        openSeguimientoForm();
+                    });
+                }
 
                 refreshHistory();
                 refreshPatterns();
@@ -1713,10 +2069,14 @@
                 }).join('');
 
                 var list = $('seg-list');
+                var emptyState = $('seg-empty-state');
                 if (!items.length) {
                     list.innerHTML = '<div style="font-size:.78rem;color:var(--dim);padding:4px 8px">Sin seguimientos</div>';
+                    if (emptyState) emptyState.hidden = false;
+                    setWelcomeVisibility();
                     return;
                 }
+                if (emptyState) emptyState.hidden = true;
                 list.innerHTML = items.map(function(item) {
                     var tags = (item.tags || []).map(function(t) {
                         return '<span class="seg-tag">' + esc(t) + '</span>';
@@ -1742,6 +2102,7 @@
                         showHuella(nombre);
                     });
                 });
+                setWelcomeVisibility();
             }
 
             function addSeguimiento() {
@@ -1879,6 +2240,13 @@
                 $('chat-input').addEventListener('keydown', function(e) {
                     if (e.key === 'Enter') sendChat(messages);
                 });
+                // Brecha 3: limpiar contexto activo
+                var clearCtxBtn = $('chat-context-clear');
+                if (clearCtxBtn) {
+                    clearCtxBtn.addEventListener('click', function() {
+                        setPvActiveContext(null);
+                    });
+                }
 
                 chatInited = true;
             }
@@ -1909,6 +2277,9 @@
                 }
                 input.value = '';
                 sessionStorage.setItem('ca_chat_last', String(now));
+                // Brecha 3: enriquecer query con contexto activo solo para la IA —
+                // el usuario ve 'q' limpio en el historial; 'sendQ' lleva el prefijo de contexto
+                var sendQ = pvActiveContext ? '[Contexto: ' + pvActiveContext + '] ' + q : q;
                 messages.push({
                     role: 'user',
                     text: q,
@@ -1917,7 +2288,7 @@
                 renderChat(messages);
 
                 // Primero intenta con IA
-                generateIAResponse(q).then(function(iaResponse) {
+                generateIAResponse(sendQ).then(function(iaResponse) {
                     if (iaResponse && iaResponse.text && iaResponse.text.length > 0 && !iaResponse.text.match(/^no encontr/gi)) {
                         messages.push({
                             role: 'bot',
@@ -1928,14 +2299,14 @@
                         renderChat(messages);
                     } else {
                         // Si la IA no responde útil, busca localmente
-                        var response = generateResponse(q);
+                        var response = generateResponse(sendQ);
                         messages.push(response);
                         sessionStorage.setItem('ca_chat_history', JSON.stringify(messages));
                         renderChat(messages);
                     }
                 }).catch(function() {
                     // Si la IA falla, busca localmente
-                    var response = generateResponse(q);
+                    var response = generateResponse(sendQ);
                     messages.push(response);
                     sessionStorage.setItem('ca_chat_history', JSON.stringify(messages));
                     renderChat(messages);
@@ -2249,6 +2620,9 @@
 
             /* ── Tab 5: Huella Digital ── */
             function showHuella(actorName) {
+                // Brecha 3: establecer contexto activo para el chat
+                setPvActiveContext(actorName);
+
                 var tabs = document.querySelectorAll('.pv-tab');
                 tabs.forEach(function(t) {
                     t.classList.remove('active');
@@ -2406,6 +2780,12 @@
                         html += '</div>';
                     }
                 }
+
+                // Brecha 5: CTA de cierre narrativo → Protocolo
+                html += '<div class="huella-protocolo-cta">' +
+                    '<span class="huella-protocolo-cta-text">¿Fricción alta? Lleva esta evidencia al siguiente paso.</span>' +
+                    '<a href="index.html#protocolo" class="huella-protocolo-cta-link">Protocolo de denuncia →</a>' +
+                    '</div>';
 
                 content.innerHTML = html;
             }

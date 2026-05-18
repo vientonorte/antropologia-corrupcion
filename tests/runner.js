@@ -11,20 +11,33 @@
 /* ─── MINIMAL DOM MOCK ─── */
 
 global.window = global;
+function _makeDomElement() {
+    var el = {
+        setAttribute: function() {},
+        getAttribute: function() { return null; },
+        style: {},
+        classList: { add: function() {}, remove: function() {}, toggle: function() {} },
+        appendChild: function() {},
+        prepend: function() {},
+        remove: function() {},
+        click: function() {},
+        addEventListener: function() {},
+        querySelector: function() { return _makeDomElement(); },
+        querySelectorAll: function() { return []; },
+        innerHTML: '',
+        textContent: '',
+        href: '',
+        download: '',
+    };
+    return el;
+}
+
 global.document = {
-    createElement: function() {
-        return {
-            setAttribute: function() {},
-            style: {},
-            classList: { add: function() {}, remove: function() {}, toggle: function() {} },
-            appendChild: function() {},
-            innerHTML: '',
-            textContent: '',
-        };
-    },
-    getElementById: function() { return null; },
+    createElement: function() { return _makeDomElement(); },
+    getElementById: function() { return _makeDomElement(); },
     querySelector: function() { return null; },
     querySelectorAll: function() { return []; },
+    addEventListener: function() {},
     body: {
         appendChild: function() {},
     },
@@ -90,6 +103,17 @@ global.cancelAnimationFrame = function() {};
 global.IntersectionObserver = function() {
     this.observe = function() {};
     this.disconnect = function() {};
+};
+
+/* ─── WINDOW.OPEN MOCK (for exportPipeline.js) ─── */
+
+global.window.open = function() {
+    var mockDoc = {
+        write: function() {},
+        close: function() {},
+        querySelector: function() { return null; },
+    };
+    return { document: mockDoc, focus: function() {} };
 };
 
 /* ─── DOMPARSER MOCK (for ciperFeed.js) ─── */
@@ -218,6 +242,15 @@ require('../src/seguimientos.js');
 // passkey.js exposes via window.PasskeyAuth
 require('../src/passkey.js');
 
+// blackScholes.js exposes via window.BlackScholes
+require('../src/blackScholes.js');
+
+// sourceNormalizers.js exposes via window.normalizeScieloRecord, window.normalizeDiarioOficialRecord, window.normalizeAnySourceRecord
+require('../src/sourceNormalizers.js');
+
+// exportPipeline.js exposes via window.exportPipeline
+require('../src/exportPipeline.js');
+
 /* ─── LOAD DATA ─── */
 
 var fs = require('fs');
@@ -225,6 +258,7 @@ var path = require('path');
 
 var casosData = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data', 'casos.json'), 'utf8'));
 var fuentesData = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data', 'fuentes-oficiales.json'), 'utf8'));
+var fuentesConfig = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data', 'fuentes-config.json'), 'utf8'));
 var bcnData = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data', 'bcn-legislativo.json'), 'utf8'));
 var huellaData = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data', 'huella-digital-publica.json'), 'utf8'));
 
@@ -232,7 +266,7 @@ var huellaData = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data', '
 
 require('./frictionEngine.test.js')(describe, it, assert, assertEqual, assertDeepEqual, assertApprox, assertGreaterThan, assertLessThan, assertArrayIncludes, casosData);
 require('./searchEngine.test.js')(describe, it, assert, assertEqual, assertDeepEqual, assertApprox, assertGreaterThan, assertLessThan, assertArrayIncludes, casosData, fuentesData, bcnData);
-require('./dataValidation.test.js')(describe, it, assert, assertEqual, assertDeepEqual, assertApprox, assertGreaterThan, assertArrayIncludes, casosData, fuentesData, bcnData);
+require('./dataValidation.test.js')(describe, it, assert, assertEqual, assertDeepEqual, assertApprox, assertGreaterThan, assertArrayIncludes, casosData, fuentesData, bcnData, fuentesConfig);
 require('./huellaDigital.test.js')(describe, it, assert, assertEqual, assertDeepEqual, assertApprox, assertGreaterThan, assertArrayIncludes, casosData, fuentesData, bcnData, huellaData);
 require('./graph.test.js')(describe, it, assert, assertEqual, assertDeepEqual, assertApprox, assertGreaterThan, assertLessThan, assertArrayIncludes);
 require('./ciperFeed.test.js')(describe, it, assert, assertEqual, assertDeepEqual, assertApprox, assertGreaterThan, assertLessThan, assertArrayIncludes, casosData);
@@ -240,6 +274,10 @@ require('./seguimientos.test.js')(describe, it, assert, assertEqual, assertDeepE
 require('./passkey.test.js')(describe, it, assert, assertEqual, assertDeepEqual, assertApprox, assertGreaterThan, assertLessThan, assertArrayIncludes);
 require('./htmlLint.test.js')(describe, it, assert, assertEqual);
 require('./privadoChat.test.js')(describe, it, assert, assertEqual);
+require('./privadoChatValidation.test.js')(describe, it, assert, assertEqual);
+require('./blackScholes.test.js')(describe, it, assert, assertEqual, assertDeepEqual, assertApprox, assertGreaterThan, assertLessThan, assertArrayIncludes, casosData);
+require('./sourceNormalizers.test.js')(describe, it, assert, assertEqual, assertDeepEqual, assertApprox, assertGreaterThan, assertLessThan, assertArrayIncludes);
+require('./exportPipeline.test.js')(describe, it, assert, assertEqual, assertDeepEqual, assertApprox, assertGreaterThan, assertLessThan, assertArrayIncludes, casosData, fuentesData);
 
 /* ─── SUMMARY ─── */
 

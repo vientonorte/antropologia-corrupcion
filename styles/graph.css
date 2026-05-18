@@ -32,6 +32,17 @@
     --ca-panel-width: 420px;
     --ca-panel-mobile-height: 60vh;
     --ca-transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    /* Tokens base: fallback para páginas que no cargan styles.css */
+    --color-bg: #0d0d0d;
+    --color-surface: #1a1a1a;
+    --color-border: #2e2e2e;
+    --color-accent: #c8a96e;
+    --color-accent-dim: #7a6340;
+    --color-accent-subtle: rgba(200, 169, 110, 0.04);
+    --color-text: #e8e0d0;
+    --color-text-muted: #9e9484;
+    --font-mono: 'Courier New', monospace;
+    --font-serif: 'Georgia', 'Times New Roman', serif;
 }
 
 
@@ -1359,4 +1370,281 @@
 
 .ca-field-btn:not(.active) {
     opacity: 0.5;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   BLACK-SCHOLES — Panel de valoración epistémica
+   ∂V/∂t + rS·∂V/∂S + ½σ²S²·∂²V/∂S² − rV = 0
+══════════════════════════════════════════════════════════════════════════ */
+
+.ca-panel__bs {
+    padding: 1.25rem 1.5rem;
+    border-top: 1px solid rgba(200, 169, 110, 0.25);
+    background: rgba(200, 169, 110, 0.02);
+}
+
+.ca-panel__bs-head {
+    margin-bottom: 1rem;
+}
+
+.ca-panel__bs-title-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    margin-bottom: 0.6rem;
+}
+
+.ca-panel__bs-icon {
+    font-family: var(--font-mono);
+    font-size: 1.4rem;
+    color: var(--ca-friction-high);
+    opacity: 0.7;
+    line-height: 1;
+    padding-top: 0.1rem;
+}
+
+.ca-panel__bs-kicker {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.55rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    margin-bottom: 0.15rem;
+}
+
+.ca-panel__bs-heading {
+    font-size: 0.78rem;
+    font-weight: bold;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ca-friction-high);
+    margin: 0;
+}
+
+.ca-panel__bs-desc {
+    font-size: 0.68rem;
+    color: var(--color-text-muted);
+    line-height: 1.55;
+    margin: 0;
+}
+
+/* Bloque principal: probabilidad + moneyness */
+.ca-panel__bs-main {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.ca-panel__bs-prob-block {
+    flex: 1;
+}
+
+.ca-panel__bs-prob-bar-wrap {
+    height: 4px;
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: 2px;
+    overflow: hidden;
+    margin-bottom: 0.3rem;
+}
+
+.ca-panel__bs-prob-bar {
+    height: 100%;
+    background: linear-gradient(to right, var(--ca-friction-low), var(--ca-friction-high));
+    border-radius: 2px;
+    transition: width 0.4s ease;
+}
+
+.ca-panel__bs-prob-label {
+    display: flex;
+    align-items: baseline;
+    gap: 0.4rem;
+}
+
+.ca-panel__bs-prob-pct {
+    font-family: var(--font-mono);
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: var(--ca-friction-high);
+}
+
+.ca-panel__bs-prob-text {
+    font-size: 0.62rem;
+    color: var(--color-text-muted);
+}
+
+.ca-panel__bs-prob-text em {
+    font-style: normal;
+    font-family: var(--font-mono);
+    color: var(--ca-friction-high);
+    opacity: 0.7;
+}
+
+/* Moneyness badge */
+.ca-panel__bs-moneyness {
+    text-align: center;
+    padding: 0.4rem 0.6rem;
+    border-radius: 3px;
+    border: 1px solid;
+    min-width: 5rem;
+}
+
+.ca-panel__bs-moneyness--itm {
+    border-color: rgba(122, 158, 110, 0.5);
+    background: rgba(122, 158, 110, 0.06);
+    color: #7a9e6e;
+}
+
+.ca-panel__bs-moneyness--otm {
+    border-color: rgba(74, 127, 165, 0.4);
+    background: rgba(74, 127, 165, 0.05);
+    color: #4a7fa5;
+}
+
+.ca-panel__bs-money-val {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+
+.ca-panel__bs-money-label {
+    font-size: 0.55rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    opacity: 0.8;
+}
+
+/* Parámetros del modelo */
+.ca-panel__bs-params {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.35rem 0.75rem;
+    margin-bottom: 1rem;
+    padding: 0.75rem;
+    border: 1px solid var(--color-border);
+    background: rgba(255, 255, 255, 0.015);
+}
+
+.ca-panel__bs-param {
+    display: flex;
+    align-items: baseline;
+    gap: 0.35rem;
+    font-size: 0.65rem;
+}
+
+.ca-panel__bs-param-sym {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: bold;
+    color: var(--ca-friction-high);
+    opacity: 0.85;
+    min-width: 0.9rem;
+}
+
+.ca-panel__bs-param-name {
+    color: var(--color-text-muted);
+    flex: 1;
+}
+
+.ca-panel__bs-param strong {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: var(--color-text);
+}
+
+/* Letras griegas */
+.ca-panel__bs-greeks {
+    margin-bottom: 0.75rem;
+}
+
+.ca-panel__bs-greeks-title {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    margin: 0 0 0.5rem;
+}
+
+.ca-panel__bs-greek-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0.5rem;
+}
+
+@media (max-width: 480px) {
+    .ca-panel__bs-greek-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.ca-panel__bs-greek {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0.4rem;
+    border: 1px solid var(--color-border);
+    text-align: center;
+}
+
+.ca-panel__bs-greek-sym {
+    font-family: Georgia, serif;
+    font-size: 1rem;
+    color: var(--ca-friction-high);
+    opacity: 0.8;
+    line-height: 1.2;
+}
+
+.ca-panel__bs-greek-val {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    color: var(--color-text);
+    margin: 0.1rem 0;
+}
+
+.ca-panel__bs-greek-desc {
+    font-size: 0.52rem;
+    color: var(--color-text-muted);
+    line-height: 1.3;
+}
+
+/* Descomposición del valor */
+.ca-panel__bs-decomp {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.ca-panel__bs-decomp-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 0.4rem 0.5rem;
+    border: 1px solid var(--color-border);
+    font-size: 0.62rem;
+}
+
+.ca-panel__bs-decomp-item span:first-child {
+    color: var(--color-text-muted);
+    margin-bottom: 0.15rem;
+}
+
+.ca-panel__bs-decomp-item span:last-child {
+    font-family: var(--font-mono);
+    color: var(--color-text);
+}
+
+/* Ecuación al pie */
+.ca-panel__bs-note {
+    font-family: var(--font-mono);
+    font-size: 0.58rem;
+    color: var(--color-text-muted);
+    opacity: 0.5;
+    text-align: center;
+    margin: 0;
+    letter-spacing: 0.03em;
+    border-top: 1px solid var(--color-border);
+    padding-top: 0.6rem;
 }
