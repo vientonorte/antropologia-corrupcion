@@ -1389,6 +1389,7 @@
             }
 
             function skipResult(idx) {
+                if (analysisResults[idx]) analysisResults[idx]._skipped = true;
                 var card = document.querySelector('[data-result-idx="' + idx + '"]');
                 if (card) card.classList.add('dismissed');
             }
@@ -1458,6 +1459,13 @@
                     } catch (parseErr) {
                         setStatus('No se pudo interpretar la respuesta. Ver consola.', 'error');
                         console.error('Respuesta cruda:', rawText);
+                        btn.disabled = false;
+                        return;
+                    }
+
+                    if (!Array.isArray(parsed)) {
+                        setStatus('El modelo devolvió un formato inesperado. Intenta de nuevo o revisa la imagen.', 'error');
+                        console.error('Respuesta no es un array:', parsed);
                         btn.disabled = false;
                         return;
                     }
@@ -1612,7 +1620,7 @@
                 /* Add all results */
                 document.getElementById('btn-add-all').addEventListener('click', function () {
                     analysisResults.forEach(function (r, i) {
-                        if (!r._added) approveResult(i);
+                        if (!r._added && !r._skipped) approveResult(i);
                     });
                     setStatus('Todas las citas agregadas al archivo.', 'success');
                 });
