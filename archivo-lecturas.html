@@ -484,11 +484,7 @@
                             <input type="password" id="api-key-input" class="ca-form-input" placeholder="sk-ant-…" autocomplete="off">
                             <button type="button" id="btn-toggle-key" aria-label="Mostrar u ocultar clave API">👁</button>
                         </div>
-                        <label class="ca-checkbox-label" style="margin-top:6px">
-                            <input type="checkbox" id="api-key-save">
-                            Guardar en este dispositivo (localStorage)
-                        </label>
-                        <p class="ca-api-warn">⚠ La clave se almacena en localStorage de este navegador. Solo usar en dispositivo personal.</p>
+                        <p class="ca-api-warn">🔒 La clave no se almacena — se introduce una vez por sesión y se descarta al cerrar la pestaña.</p>
                     </div>
                     <div class="ca-form-group">
                         <label class="ca-form-label" for="api-model-input">Modelo</label>
@@ -680,7 +676,6 @@
             ════════════════════════════════════════ */
 
             var STORAGE_KEY = 'contraarchivoLecturas';
-            var STORAGE_API_KEY = 'contraarchivoApiKey';
             var STORAGE_API_MODEL = 'contraarchivoApiModel';
 
             /* Clave A — Bullet Ro */
@@ -847,7 +842,10 @@
                     btn.className = 'ca-chip' + (filterColor === c.id ? ' active' : '');
                     btn.setAttribute('aria-pressed', filterColor === c.id ? 'true' : 'false');
                     btn.setAttribute('aria-label', 'Filtrar por color ' + c.id);
-                    btn.innerHTML = '<span class="ca-chip-dot" style="background:' + c.hex + '"></span>';
+                    var dotSpan = document.createElement('span');
+                    dotSpan.className = 'ca-chip-dot';
+                    dotSpan.style.background = c.hex;
+                    btn.appendChild(dotSpan);
                     btn.addEventListener('click', function () {
                         filterColor = filterColor === c.id ? null : c.id;
                         renderFilterChips(); renderGrid();
@@ -899,8 +897,14 @@
                 if (!filtered.length) {
                     var empty = document.createElement('div');
                     empty.className = 'ca-empty';
-                    empty.innerHTML = '<span class="ca-empty-icon" aria-hidden="true">📚</span>'
-                        + (citations.length ? 'No hay citas que coincidan con los filtros.' : 'El archivo está vacío. Agrega la primera cita.');
+                    var emptyIcon = document.createElement('span');
+                    emptyIcon.className = 'ca-empty-icon';
+                    emptyIcon.setAttribute('aria-hidden', 'true');
+                    emptyIcon.textContent = '📚';
+                    empty.appendChild(emptyIcon);
+                    empty.appendChild(document.createTextNode(
+                        citations.length ? 'No hay citas que coincidan con los filtros.' : 'El archivo está vacío. Agrega la primera cita.'
+                    ));
                     grid.appendChild(empty);
                     return;
                 }
@@ -916,25 +920,62 @@
                     var claveClass = (c.clave || 'B').toLowerCase();
                     var claveLabel = 'Clave ' + (c.clave || 'B');
 
-                    var html = '<div class="ca-card-meta">'
-                        + (c.pagina ? '<span class="ca-card-page">p.&nbsp;' + escapeHtml(c.pagina) + '</span>' : '')
-                        + '<span class="ca-card-cat">' + escapeHtml(catLabel(c.categoria)) + '</span>'
-                        + '<span class="ca-card-clave ' + claveClass + '">' + escapeHtml(claveLabel) + '</span>'
-                        + '<span class="ca-card-color-dot" style="background:' + hex + '" title="' + escapeHtml(colorLabel(c.color, c.clave || 'B')) + '"></span>'
-                        + '</div>'
-                        + (c.fuente ? '<p class="ca-card-fuente">' + escapeHtml(c.fuente) + '</p>' : '')
-                        + '<p class="ca-card-text">"' + escapeHtml(c.texto) + '"</p>';
-
-                    if (c.notas) {
-                        html += '<p class="ca-card-note">📝 ' + escapeHtml(c.notas) + '</p>';
+                    /* Build card with DOM methods — no innerHTML with user data */
+                    var meta = document.createElement('div');
+                    meta.className = 'ca-card-meta';
+                    if (c.pagina) {
+                        var pageEl = document.createElement('span');
+                        pageEl.className = 'ca-card-page';
+                        pageEl.textContent = 'p. ' + c.pagina;
+                        meta.appendChild(pageEl);
                     }
+                    var catEl = document.createElement('span');
+                    catEl.className = 'ca-card-cat';
+                    catEl.textContent = catLabel(c.categoria);
+                    meta.appendChild(catEl);
+                    var claveEl = document.createElement('span');
+                    claveEl.className = 'ca-card-clave ' + claveClass;
+                    claveEl.textContent = claveLabel;
+                    meta.appendChild(claveEl);
+                    var dotEl = document.createElement('span');
+                    dotEl.className = 'ca-card-color-dot';
+                    dotEl.style.background = hex;
+                    dotEl.title = colorLabel(c.color, c.clave || 'B');
+                    meta.appendChild(dotEl);
+                    card.appendChild(meta);
 
-                    html += '<div class="ca-card-actions">'
-                        + '<button class="ca-btn-sm" data-edit="' + escapeHtml(c.id) + '" type="button">Editar</button>'
-                        + '<button class="ca-btn-sm danger" data-del="' + escapeHtml(c.id) + '" type="button" aria-label="Eliminar cita">Eliminar</button>'
-                        + '</div>';
-
-                    card.innerHTML = html;
+                    if (c.fuente) {
+                        var fuenteEl = document.createElement('p');
+                        fuenteEl.className = 'ca-card-fuente';
+                        fuenteEl.textContent = c.fuente;
+                        card.appendChild(fuenteEl);
+                    }
+                    var textEl = document.createElement('p');
+                    textEl.className = 'ca-card-text';
+                    textEl.textContent = '“' + c.texto + '”';
+                    card.appendChild(textEl);
+                    if (c.notas) {
+                        var notasEl = document.createElement('p');
+                        notasEl.className = 'ca-card-note';
+                        notasEl.textContent = '📝 ' + c.notas;
+                        card.appendChild(notasEl);
+                    }
+                    var actionsEl = document.createElement('div');
+                    actionsEl.className = 'ca-card-actions';
+                    var editBtn = document.createElement('button');
+                    editBtn.className = 'ca-btn-sm';
+                    editBtn.type = 'button';
+                    editBtn.textContent = 'Editar';
+                    editBtn.setAttribute('data-edit', c.id);
+                    actionsEl.appendChild(editBtn);
+                    var delBtn = document.createElement('button');
+                    delBtn.className = 'ca-btn-sm danger';
+                    delBtn.type = 'button';
+                    delBtn.setAttribute('aria-label', 'Eliminar cita');
+                    delBtn.textContent = 'Eliminar';
+                    delBtn.setAttribute('data-del', c.id);
+                    actionsEl.appendChild(delBtn);
+                    card.appendChild(actionsEl);
                     grid.appendChild(card);
                 });
 
@@ -1159,11 +1200,7 @@
             }
 
             function loadApiSettings() {
-                var stored = localStorage.getItem(STORAGE_API_KEY);
-                if (stored) {
-                    document.getElementById('api-key-input').value = stored;
-                    document.getElementById('api-key-save').checked = true;
-                }
+                /* API key is never persisted — user re-enters each session */
                 var model = localStorage.getItem(STORAGE_API_MODEL);
                 if (model) {
                     document.getElementById('api-model-input').value = model;
@@ -1229,7 +1266,10 @@
 
                 if (!results.length) {
                     wrap.hidden = false;
-                    list.innerHTML = '<p style="color:var(--dim);font-size:.85rem">No se detectaron fragmentos marcados. Intenta con una imagen más nítida o diferente.</p>';
+                    var emptyP = document.createElement('p');
+                    emptyP.style.cssText = 'color:var(--dim);font-size:.85rem';
+                    emptyP.textContent = 'No se detectaron fragmentos marcados. Intenta con una imagen más nítida o diferente.';
+                    list.appendChild(emptyP);
                     document.getElementById('btn-add-all').hidden = true;
                     return;
                 }
@@ -1243,24 +1283,65 @@
                     card.className = 'ca-result-card';
                     card.style.borderLeftColor = hex;
                     card.setAttribute('role', 'listitem');
-                    card.setAttribute('data-result-idx', i);
+                    card.setAttribute('data-result-idx', String(i));
 
                     var pagDisplay = r.pagina != null ? String(r.pagina) : '';
                     var fuenteDisplay = r.fuente_detectada || defaultFuente || '';
 
-                    card.innerHTML = '<div class="ca-result-meta">'
-                        + (pagDisplay ? '<span class="ca-result-page">p.&nbsp;' + escapeHtml(pagDisplay) + '</span>' : '')
-                        + '<span class="ca-result-cat">' + escapeHtml(catLabel(r.categoria || 'concepto-clave')) + '</span>'
-                        + '<span class="ca-result-clave ' + clave.toLowerCase() + '">Clave ' + escapeHtml(clave) + '</span>'
-                        + '<span style="width:10px;height:10px;border-radius:50%;background:' + hex + ';display:inline-block;margin-left:auto;flex-shrink:0"></span>'
-                        + '</div>'
-                        + (fuenteDisplay ? '<p style="font-size:.72rem;color:var(--dim);font-family:var(--font-mono);margin-bottom:4px">' + escapeHtml(fuenteDisplay) + '</p>' : '')
-                        + '<p class="ca-result-text">"' + escapeHtml(r.texto || '') + '"</p>'
-                        + (r.notas ? '<p class="ca-result-note">📝 ' + escapeHtml(r.notas) + '</p>' : '')
-                        + '<div class="ca-result-actions">'
-                        + '<button class="ca-btn-sm approve" data-approve="' + i + '" type="button">✓ Agregar</button>'
-                        + '<button class="ca-btn-sm danger" data-skip="' + i + '" type="button">✕ Omitir</button>'
-                        + '</div>';
+                    /* Build with DOM methods — no innerHTML with API-derived data */
+                    var rMeta = document.createElement('div');
+                    rMeta.className = 'ca-result-meta';
+                    if (pagDisplay) {
+                        var rPage = document.createElement('span');
+                        rPage.className = 'ca-result-page';
+                        rPage.textContent = 'p. ' + pagDisplay;
+                        rMeta.appendChild(rPage);
+                    }
+                    var rCat = document.createElement('span');
+                    rCat.className = 'ca-result-cat';
+                    rCat.textContent = catLabel(r.categoria || 'concepto-clave');
+                    rMeta.appendChild(rCat);
+                    var rClave = document.createElement('span');
+                    rClave.className = 'ca-result-clave ' + clave.toLowerCase();
+                    rClave.textContent = 'Clave ' + clave;
+                    rMeta.appendChild(rClave);
+                    var rDot = document.createElement('span');
+                    rDot.style.cssText = 'width:10px;height:10px;border-radius:50%;display:inline-block;margin-left:auto;flex-shrink:0';
+                    rDot.style.background = hex;
+                    rMeta.appendChild(rDot);
+                    card.appendChild(rMeta);
+
+                    if (fuenteDisplay) {
+                        var rFuente = document.createElement('p');
+                        rFuente.style.cssText = 'font-size:.72rem;color:var(--dim);font-family:var(--font-mono);margin-bottom:4px';
+                        rFuente.textContent = fuenteDisplay;
+                        card.appendChild(rFuente);
+                    }
+                    var rText = document.createElement('p');
+                    rText.className = 'ca-result-text';
+                    rText.textContent = '"' + (r.texto || '') + '"';
+                    card.appendChild(rText);
+                    if (r.notas) {
+                        var rNota = document.createElement('p');
+                        rNota.className = 'ca-result-note';
+                        rNota.textContent = '📝 ' + r.notas;
+                        card.appendChild(rNota);
+                    }
+                    var rActions = document.createElement('div');
+                    rActions.className = 'ca-result-actions';
+                    var approveBtn = document.createElement('button');
+                    approveBtn.className = 'ca-btn-sm approve';
+                    approveBtn.type = 'button';
+                    approveBtn.textContent = '✓ Agregar';
+                    approveBtn.setAttribute('data-approve', String(i));
+                    rActions.appendChild(approveBtn);
+                    var skipBtn = document.createElement('button');
+                    skipBtn.className = 'ca-btn-sm danger';
+                    skipBtn.type = 'button';
+                    skipBtn.textContent = '✕ Omitir';
+                    skipBtn.setAttribute('data-skip', String(i));
+                    rActions.appendChild(skipBtn);
+                    card.appendChild(rActions);
 
                     list.appendChild(card);
                 });
@@ -1318,10 +1399,8 @@
                 var clave = getSelectedUploadClave();
                 var fuente = document.getElementById('upload-fuente').value.trim();
 
-                if (document.getElementById('api-key-save').checked) {
-                    try { localStorage.setItem(STORAGE_API_KEY, apiKey); } catch (e) {}
-                    try { localStorage.setItem(STORAGE_API_MODEL, model); } catch (e) {}
-                }
+                /* Persist model preference only — API key is never stored */
+                try { localStorage.setItem(STORAGE_API_MODEL, model); } catch (e) {}
 
                 if (!uploadImageBase64 || !apiKey) return;
 
