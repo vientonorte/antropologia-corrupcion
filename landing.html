@@ -3,8 +3,6 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'">
-    <meta name="referrer" content="no-referrer-when-downgrade">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Buscador de Huella Digital — Contra-Archivo</title>
     <meta name="description" content="Busca cualquier actor público, institución o política. Cruzamos su huella digital en 6 bases de datos oficiales chilenas.">
@@ -18,28 +16,27 @@
     <link rel="stylesheet" href="styles/shared.css?v=20260419">
     <style>
         /* ══════════════════════════════════════ PAGE-SPECIFIC */
-
+        
         body {
             line-height: 1.65;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
         }
-
+        
         a:hover {
             opacity: .8;
         }
-
+        
         .site-logo {
             letter-spacing: .04em;
         }
-
+        
         .site-nav a:hover {
             opacity: 1;
         }
-
         /* ══════════════════════════════════════ HERO */
-
+        
         .hero {
             flex: 1;
             display: flex;
@@ -50,7 +47,7 @@
             text-align: center;
             min-height: 60vh;
         }
-
+        
         .hero-eyebrow {
             font-family: var(--font-mono);
             font-size: 11px;
@@ -59,7 +56,7 @@
             color: var(--muted);
             margin-bottom: 20px;
         }
-
+        
         .hero-title {
             font-size: clamp(40px, 8vw, 72px);
             font-weight: 700;
@@ -68,7 +65,7 @@
             margin-bottom: 16px;
             color: var(--text);
         }
-
+        
         .hero-subtitle {
             max-width: 560px;
             font-size: 16px;
@@ -76,20 +73,19 @@
             line-height: 1.6;
             margin-bottom: 40px;
         }
-
         /* ══════════════════════════════════════ SEARCH */
-
+        
         .search-wrap {
             position: relative;
             width: 100%;
             max-width: 600px;
         }
-
+        
         .search-input {
             font-size: 18px;
             padding: 16px 20px;
         }
-
+        
         .search-sources {
             margin-top: 14px;
             font-size: 12px;
@@ -97,9 +93,8 @@
             color: var(--dim);
             letter-spacing: .02em;
         }
-
         /* ══════════════════════════════════════ AUTOSUGGEST */
-
+        
         .suggest-dropdown {
             display: none;
             position: absolute;
@@ -113,11 +108,11 @@
             z-index: 100;
             box-shadow: 0 8px 32px rgba(0, 0, 0, .5);
         }
-
+        
         .suggest-dropdown.active {
             display: block;
         }
-
+        
         .suggest-item {
             display: flex;
             align-items: center;
@@ -127,12 +122,12 @@
             cursor: pointer;
             transition: background .15s;
         }
-
+        
         .suggest-item:hover,
         .suggest-item.selected {
             background: var(--s2);
         }
-
+        
         .suggest-item-name {
             color: var(--text);
             overflow: hidden;
@@ -141,7 +136,7 @@
             flex: 1;
             margin-right: 10px;
         }
-
+        
         .suggest-badge {
             font-size: 10px;
             font-family: var(--font-mono);
@@ -151,9 +146,8 @@
             white-space: nowrap;
             flex-shrink: 0;
         }
-
         /* ══════════════════════════════════════ RESULTS */
-
+        
         .results-section {
             display: none;
             max-width: 720px;
@@ -161,11 +155,11 @@
             margin: 0 auto;
             padding: 0 24px 64px;
         }
-
+        
         .results-section.active {
             display: block;
         }
-
+        
         .results-header {
             display: flex;
             align-items: baseline;
@@ -174,26 +168,25 @@
             padding-bottom: 12px;
             border-bottom: 1px solid var(--border);
         }
-
+        
         .results-title {
             font-size: 14px;
             color: var(--muted);
             font-family: var(--font-mono);
         }
-
+        
         .results-title strong {
             color: var(--text);
             font-weight: 600;
         }
-
+        
         .results-query {
             font-size: 13px;
             color: var(--dim);
             font-family: var(--font-mono);
         }
-
         /* ── Result Card ── */
-
+        
         .result-card {
             background: var(--s1);
             border: 1px solid var(--border);
@@ -202,11 +195,11 @@
             margin-bottom: 12px;
             transition: border-color .2s;
         }
-
+        
         .result-card:hover {
             border-color: rgba(255, 255, 255, .14);
         }
-
+        
         .result-card-top {
             display: flex;
             align-items: flex-start;
@@ -214,14 +207,14 @@
             gap: 12px;
             margin-bottom: 10px;
         }
-
+        
         .result-card-title {
             font-size: 15px;
             font-weight: 600;
             line-height: 1.4;
             flex: 1;
         }
-
+        
         .result-fuente-badge {
             font-size: 10px;
             font-family: var(--font-mono);
@@ -232,30 +225,29 @@
             flex-shrink: 0;
             letter-spacing: .03em;
         }
-
+        
         .result-description {
             font-size: 13px;
             color: var(--muted);
             line-height: 1.55;
             margin-bottom: 14px;
         }
-
         /* ── Friction Bar ── */
-
+        
         .friction-row {
             display: flex;
             align-items: center;
             gap: 10px;
             margin-bottom: 14px;
         }
-
+        
         .friction-label {
             font-size: 11px;
             font-family: var(--font-mono);
             color: var(--dim);
             white-space: nowrap;
         }
-
+        
         .friction-track {
             flex: 1;
             height: 4px;
@@ -263,13 +255,13 @@
             border-radius: 2px;
             overflow: hidden;
         }
-
+        
         .friction-fill {
             height: 100%;
             border-radius: 2px;
             transition: width .4s ease;
         }
-
+        
         .friction-value {
             font-size: 11px;
             font-family: var(--font-mono);
@@ -277,7 +269,7 @@
             min-width: 32px;
             text-align: right;
         }
-
+        
         .result-cta {
             display: inline-block;
             font-size: 13px;
@@ -286,13 +278,12 @@
             padding: 6px 0;
             transition: opacity .2s;
         }
-
+        
         .result-cta:hover {
             opacity: .75;
         }
-
         /* ── More results prompt ── */
-
+        
         .more-results {
             display: none;
             text-align: center;
@@ -302,59 +293,51 @@
             border-radius: var(--r);
             margin-top: 4px;
         }
-
+        
         .more-results.active {
             display: block;
         }
-
+        
         .more-results p {
             font-size: 14px;
             color: var(--muted);
             margin-bottom: 10px;
         }
-
+        
         .more-results a {
             font-family: var(--font-mono);
             font-size: 13px;
         }
-
         /* ══════════════════════════════════════ FOOTER */
-
+        
         .site-footer {
             padding: 32px 24px;
             font-size: 12px;
         }
-
         /* ══════════════════════════════════════ RESPONSIVE */
-
+        
         @media (max-width: 600px) {
             .site-header {
                 padding: 12px 16px;
             }
-
             .site-nav {
                 gap: 14px;
                 font-size: 12px;
             }
-
             .hero {
                 padding: 48px 16px 32px;
                 min-height: 50vh;
             }
-
             .hero-subtitle {
                 font-size: 15px;
             }
-
             .search-input {
                 font-size: 16px;
                 padding: 14px 16px;
             }
-
             .results-section {
                 padding: 0 16px 48px;
             }
-
             .result-card {
                 padding: 16px;
             }
@@ -363,7 +346,6 @@
 </head>
 
 <body>
-<a href="#hero" class="skip-link">Saltar al contenido</a>
 
     <!-- ═══════════════════════ HEADER ═══════════════════════ -->
     <header class="site-header">
@@ -372,6 +354,7 @@
             <a href="buscador.html">Buscador</a>
             <a href="index.html">Instrumento</a>
             <a href="tesis.html">Biblioteca</a>
+            <a href="zuboff-archivo.html">⑤ Zuboff</a>
             <a href="login.html" class="nav-cta">Acceder →</a>
         </nav>
     </header>
@@ -382,21 +365,11 @@
         <h1 class="hero-title">¿Quién es?</h1>
         <p class="hero-subtitle">Busca cualquier actor público, institución o política. Cruzamos su huella digital en 6 bases de datos oficiales chilenas.</p>
         <p style="font-size:12px;color:var(--dim);font-family:var(--font-mono);max-width:480px;line-height:1.6;margin-bottom:32px;margin-top:-20px">
-          Fricción institucional: la distancia entre lo que una institución declara y lo que los datos oficiales registran.
+            Fricción institucional: la distancia entre lo que una institución declara y lo que los datos oficiales registran.
         </p>
 
         <div class="search-wrap" id="search-wrap">
-            <input
-                type="text"
-                class="search-input"
-                id="search-input"
-                placeholder="Nombre, institución, ley..."
-                autocomplete="off"
-                spellcheck="false"
-                aria-label="Buscar actor público, institución o política"
-                aria-autocomplete="list"
-                aria-controls="suggest-dropdown"
-            >
+            <input type="text" class="search-input" id="search-input" placeholder="Nombre, institución, ley..." autocomplete="off" spellcheck="false" aria-label="Buscar actor público, institución o política" aria-autocomplete="list" aria-controls="suggest-dropdown">
             <div class="suggest-dropdown" id="suggest-dropdown"></div>
         </div>
 
@@ -426,403 +399,438 @@
     <script defer src="src/frictionEngine.js?v=20260419"></script>
     <script defer src="src/searchEngine.js?v=20260419"></script>
     <script>
-    (function () {
-        'use strict';
+        (function() {
+            'use strict';
 
-        /* ─── Estado ─── */
-        var registros = [];
-        var casos = [];
-        var bcnRegistros = [];
-        var suggestionIndex = [];
-        var debounceTimer = null;
-        var selectedSuggest = -1;
-        var searchEngine = null;
+            /* ─── Estado ─── */
+            var registros = [];
+            var casos = [];
+            var bcnRegistros = [];
+            var suggestionIndex = [];
+            var debounceTimer = null;
+            var selectedSuggest = -1;
+            var searchEngine = null;
 
-        var FUENTE_COLORS_LOCAL = {
-            bcn: '#6f8fcb',
-            infolobby: '#e8b84b',
-            transparencia: '#5ba3d9',
-            leychile: '#c8a96e',
-            seia: '#7a9e6e',
-            compraspublicas: '#d97b5b',
-            cmf: '#a07acc'
-        };
+            var FUENTE_COLORS_LOCAL = {
+                bcn: '#6f8fcb',
+                infolobby: '#e8b84b',
+                transparencia: '#5ba3d9',
+                leychile: '#c8a96e',
+                seia: '#7a9e6e',
+                compraspublicas: '#d97b5b',
+                cmf: '#4a7fa5'
+            };
 
-        var FUENTE_LABELS_LOCAL = {
-            bcn: 'BCN',
-            infolobby: 'InfoLobby',
-            transparencia: 'Transparencia',
-            leychile: 'LeyChile',
-            seia: 'SEIA',
-            compraspublicas: 'ComprasPúblicas',
-            cmf: 'CMF'
-        };
+            var FUENTE_LABELS_LOCAL = {
+                bcn: 'BCN',
+                infolobby: 'InfoLobby',
+                transparencia: 'Transparencia',
+                leychile: 'LeyChile',
+                seia: 'SEIA',
+                compraspublicas: 'ComprasPúblicas',
+                cmf: 'CMF'
+            };
 
-        var MAX_PUBLIC_RESULTS = 3;
-        var MAX_SUGGESTIONS = 8;
+            var MAX_PUBLIC_RESULTS = 3;
+            var MAX_SUGGESTIONS = 8;
 
-        /* ─── DOM refs ─── */
-        var input = document.getElementById('search-input');
-        var dropdown = document.getElementById('suggest-dropdown');
-        var resultsSection = document.getElementById('results-section');
-        var resultsList = document.getElementById('results-list');
-        var resultsCount = document.getElementById('results-count');
-        var resultsQuery = document.getElementById('results-query');
-        var moreResults = document.getElementById('more-results');
+            /* ─── DOM refs ─── */
+            var input = document.getElementById('search-input');
+            var dropdown = document.getElementById('suggest-dropdown');
+            var resultsSection = document.getElementById('results-section');
+            var resultsList = document.getElementById('results-list');
+            var resultsCount = document.getElementById('results-count');
+            var resultsQuery = document.getElementById('results-query');
+            var moreResults = document.getElementById('more-results');
 
-        /* ─── Cargar datos ─── */
-        var dataStatus = document.getElementById('data-status');
-        function setStatus(msg) { if (dataStatus) { dataStatus.textContent = msg; dataStatus.style.display = msg ? 'block' : 'none'; } }
+            /* ─── Cargar datos ─── */
+            var dataStatus = document.getElementById('data-status');
 
-        function loadData() {
-            setStatus('Cargando fuentes…');
-            var fetches = [
-                fetch('data/fuentes-oficiales.json').then(function (r) { return r.json(); }),
-                fetch('data/casos.json').then(function (r) { return r.json(); }),
-                fetch('data/bcn-legislativo.json').then(function (r) { return r.json(); })
-            ];
+            function setStatus(msg) {
+                if (dataStatus) {
+                    dataStatus.textContent = msg;
+                    dataStatus.style.display = msg ? 'block' : 'none';
+                }
+            }
 
-            Promise.all(fetches).then(function (results) {
-                registros = Array.isArray(results[0]) ? results[0] : [];
+            function loadData() {
+                setStatus('Cargando fuentes…');
+                var fetches = [
+                    fetch('data/fuentes-oficiales.json').then(function(r) {
+                        return r.json();
+                    }),
+                    fetch('data/casos.json').then(function(r) {
+                        return r.json();
+                    }),
+                    fetch('data/bcn-legislativo.json').then(function(r) {
+                        return r.json();
+                    })
+                ];
 
-                var casosData = results[1];
-                casos = casosData && casosData.casos ? casosData.casos : [];
+                Promise.all(fetches).then(function(results) {
+                    registros = Array.isArray(results[0]) ? results[0] : [];
 
-                var bcnData = results[2];
-                if (typeof window.normalizeBcnDataset === 'function') {
-                    bcnRegistros = window.normalizeBcnDataset(bcnData);
-                } else {
-                    var boletines = bcnData && bcnData.boletines ? bcnData.boletines : [];
-                    bcnRegistros = boletines.map(function (b) {
+                    var casosData = results[1];
+                    casos = casosData && casosData.casos ? casosData.casos : [];
+
+                    var bcnData = results[2];
+                    if (typeof window.normalizeBcnDataset === 'function') {
+                        bcnRegistros = window.normalizeBcnDataset(bcnData);
+                    } else {
+                        var boletines = bcnData && bcnData.boletines ? bcnData.boletines : [];
+                        bcnRegistros = boletines.map(function(b) {
+                            return {
+                                id: b.id,
+                                fuente: 'bcn',
+                                titulo: b.titulo,
+                                fecha: b.fecha_ingreso,
+                                url: b.url,
+                                institucion: (b.autores || []).join(', '),
+                                materia: (b.materias || []).join(', '),
+                                keywords: (b.materias || []).concat(b.actores_clave || []),
+                                capa_oficial: b.capa_oficial || b.resumen || '',
+                                friccion_con: b.friccion_con || '',
+                                tipo_friccion: b.tipo_friccion || '',
+                                tags: b.tags || [],
+                                actores_lobby: b.actores_clave || []
+                            };
+                        });
+                    }
+
+                    /* Initialize FrictionSearchEngine if available */
+                    if (typeof window.FrictionSearchEngine === 'function') {
+                        searchEngine = new window.FrictionSearchEngine({
+                            registros: registros.concat(bcnRegistros),
+                            casos: casos
+                        });
+                    }
+
+                    buildSuggestionIndex();
+                    setStatus('');
+                }).catch(function(err) {
+                    console.error('Error cargando datos:', err);
+                    setStatus('Error al cargar las fuentes. Intenta recargar la página.');
+                });
+            }
+
+            /* ─── Índice de sugerencias ─── */
+            function buildSuggestionIndex() {
+                var seen = {};
+
+                function addEntry(name, source, sourceColor) {
+                    var key = name.toLowerCase().trim();
+                    if (!key || key.length < 2 || seen[key]) return;
+                    seen[key] = true;
+                    suggestionIndex.push({
+                        name: name.trim(),
+                        source: source,
+                        color: sourceColor
+                    });
+                }
+
+                casos.forEach(function(c) {
+                    (c.actores || []).forEach(function(a) {
+                        addEntry(a, 'caso', '#c8a96e');
+                    });
+                    (c.instituciones || []).forEach(function(i) {
+                        addEntry(i, 'caso', '#4a7fa5');
+                    });
+                    addEntry(c.titulo, 'caso', '#c8a96e');
+                });
+
+                registros.forEach(function(r) {
+                    addEntry(r.titulo, FUENTE_LABELS_LOCAL[r.fuente] || r.fuente, FUENTE_COLORS_LOCAL[r.fuente] || '#888');
+                    if (r.institucion) addEntry(r.institucion, FUENTE_LABELS_LOCAL[r.fuente] || r.fuente, FUENTE_COLORS_LOCAL[r.fuente] || '#888');
+                    (r.actores_lobby || []).forEach(function(a) {
+                        addEntry(a, FUENTE_LABELS_LOCAL[r.fuente] || r.fuente, FUENTE_COLORS_LOCAL[r.fuente] || '#888');
+                    });
+                });
+
+                bcnRegistros.forEach(function(r) {
+                    addEntry(r.titulo, 'BCN', FUENTE_COLORS_LOCAL.bcn);
+                    (r.actores_lobby || []).forEach(function(a) {
+                        addEntry(a, 'BCN', FUENTE_COLORS_LOCAL.bcn);
+                    });
+                });
+            }
+
+            /* ─── Normalización ─── */
+            function normalize(str) {
+                return str
+                    .toLowerCase()
+                    .normalize('NFD')
+                    .replace(/[\u0300-\u036f]/g, '')
+                    .replace(/[^a-z0-9\s]/g, ' ')
+                    .trim();
+            }
+
+            /* ─── Autosuggest ─── */
+            function filterSuggestions(query) {
+                var q = normalize(query);
+                if (q.length < 2) return [];
+                var tokens = q.split(/\s+/);
+
+                return suggestionIndex.filter(function(item) {
+                    var norm = normalize(item.name);
+                    return tokens.every(function(t) {
+                        return norm.indexOf(t) !== -1;
+                    });
+                }).slice(0, MAX_SUGGESTIONS);
+            }
+
+            function renderSuggestions(items) {
+                selectedSuggest = -1;
+                if (!items.length) {
+                    dropdown.classList.remove('active');
+                    dropdown.innerHTML = '';
+                    return;
+                }
+
+                dropdown.innerHTML = items.map(function(item, i) {
+                    return '<div class="suggest-item" data-index="' + i + '">' +
+                        '<span class="suggest-item-name">' + escapeHtml(item.name) + '</span>' +
+                        '<span class="suggest-badge" style="background:' + item.color + '">' + escapeHtml(item.source) + '</span>' +
+                        '</div>';
+                }).join('');
+
+                dropdown.classList.add('active');
+            }
+
+            function escapeHtml(str) {
+                var div = document.createElement('div');
+                div.textContent = str;
+                return div.innerHTML;
+            }
+
+            /* ─── Búsqueda ─── */
+            function performSearch(query) {
+                dropdown.classList.remove('active');
+                if (!query || query.trim().length < 2) {
+                    resultsSection.classList.remove('active');
+                    return;
+                }
+
+                var scored;
+
+                /* Use FrictionSearchEngine if initialized */
+                if (searchEngine) {
+                    var engineResults = searchEngine.search({
+                        query: query,
+                        fuente: 'all',
+                        caso: 'all',
+                        tipo: 'all'
+                    });
+                    scored = engineResults.map(function(r) {
                         return {
-                            id: b.id,
-                            fuente: 'bcn',
-                            titulo: b.titulo,
-                            fecha: b.fecha_ingreso,
-                            url: b.url,
-                            institucion: (b.autores || []).join(', '),
-                            materia: (b.materias || []).join(', '),
-                            keywords: (b.materias || []).concat(b.actores_clave || []),
-                            capa_oficial: b.capa_oficial || b.resumen || '',
-                            friccion_con: b.friccion_con || '',
-                            tipo_friccion: b.tipo_friccion || '',
-                            tags: b.tags || [],
-                            actores_lobby: b.actores_clave || []
+                            registro: r.registro,
+                            caso: r.caso || null,
+                            textScore: r.relevance || 0,
+                            frictionScore: r.frictionScore || 0,
+                            combinedScore: r.score || 0
                         };
                     });
-                }
+                } else {
+                    /* Fallback: manual scoring */
+                    var allRegistros = registros.concat(bcnRegistros);
+                    var casosMap = {};
+                    casos.forEach(function(c) {
+                        casosMap[c.id] = c;
+                    });
 
-                /* Initialize FrictionSearchEngine if available */
-                if (typeof window.FrictionSearchEngine === 'function') {
-                    searchEngine = new window.FrictionSearchEngine({
-                        registros: registros.concat(bcnRegistros),
-                        casos: casos
+                    scored = allRegistros.map(function(reg) {
+                        var textScore = textMatch(reg, query);
+                        var caso = casosMap[reg.friccion_con] || null;
+                        var frictionScore = computeFriction(reg, caso);
+                        return {
+                            registro: reg,
+                            caso: caso,
+                            textScore: textScore,
+                            frictionScore: frictionScore,
+                            combinedScore: textScore * 0.6 + frictionScore * 0.4
+                        };
+                    }).filter(function(r) {
+                        return r.textScore > 0;
                     });
                 }
 
-                buildSuggestionIndex();
-                setStatus('');
-            }).catch(function (err) {
-                console.error('Error cargando datos:', err);
-                setStatus('Error al cargar las fuentes. Intenta recargar la página.');
-            });
-        }
-
-        /* ─── Índice de sugerencias ─── */
-        function buildSuggestionIndex() {
-            var seen = {};
-
-            function addEntry(name, source, sourceColor) {
-                var key = name.toLowerCase().trim();
-                if (!key || key.length < 2 || seen[key]) return;
-                seen[key] = true;
-                suggestionIndex.push({ name: name.trim(), source: source, color: sourceColor });
-            }
-
-            casos.forEach(function (c) {
-                (c.actores || []).forEach(function (a) { addEntry(a, 'caso', '#c8a96e'); });
-                (c.instituciones || []).forEach(function (i) { addEntry(i, 'caso', '#4a7fa5'); });
-                addEntry(c.titulo, 'caso', '#c8a96e');
-            });
-
-            registros.forEach(function (r) {
-                addEntry(r.titulo, FUENTE_LABELS_LOCAL[r.fuente] || r.fuente, FUENTE_COLORS_LOCAL[r.fuente] || '#888');
-                if (r.institucion) addEntry(r.institucion, FUENTE_LABELS_LOCAL[r.fuente] || r.fuente, FUENTE_COLORS_LOCAL[r.fuente] || '#888');
-                (r.actores_lobby || []).forEach(function (a) {
-                    addEntry(a, FUENTE_LABELS_LOCAL[r.fuente] || r.fuente, FUENTE_COLORS_LOCAL[r.fuente] || '#888');
+                scored.sort(function(a, b) {
+                    return b.frictionScore - a.frictionScore;
                 });
-            });
 
-            bcnRegistros.forEach(function (r) {
-                addEntry(r.titulo, 'BCN', FUENTE_COLORS_LOCAL.bcn);
-                (r.actores_lobby || []).forEach(function (a) {
-                    addEntry(a, 'BCN', FUENTE_COLORS_LOCAL.bcn);
-                });
-            });
-        }
-
-        /* ─── Normalización ─── */
-        function normalize(str) {
-            return str
-                .toLowerCase()
-                .normalize('NFD')
-                .replace(/[\u0300-\u036f]/g, '')
-                .replace(/[^a-z0-9\s]/g, ' ')
-                .trim();
-        }
-
-        /* ─── Autosuggest ─── */
-        function filterSuggestions(query) {
-            var q = normalize(query);
-            if (q.length < 2) return [];
-            var tokens = q.split(/\s+/);
-
-            return suggestionIndex.filter(function (item) {
-                var norm = normalize(item.name);
-                return tokens.every(function (t) { return norm.indexOf(t) !== -1; });
-            }).slice(0, MAX_SUGGESTIONS);
-        }
-
-        function renderSuggestions(items) {
-            selectedSuggest = -1;
-            if (!items.length) {
-                dropdown.classList.remove('active');
-                dropdown.innerHTML = '';
-                return;
+                renderResults(scored, query);
             }
 
-            dropdown.innerHTML = items.map(function (item, i) {
-                return '<div class="suggest-item" data-index="' + i + '">' +
-                    '<span class="suggest-item-name">' + escapeHtml(item.name) + '</span>' +
-                    '<span class="suggest-badge" style="background:' + item.color + '">' + escapeHtml(item.source) + '</span>' +
-                    '</div>';
-            }).join('');
+            /* Text match — uses searchEngine.js _seTextMatch if available, else local */
+            function textMatch(registro, query) {
+                if (typeof _seTextMatch === 'function') {
+                    return _seTextMatch(registro, query);
+                }
+                var q = normalize(query);
+                var tokens = q.split(/\s+/).filter(Boolean);
+                if (!tokens.length) return 1;
 
-            dropdown.classList.add('active');
-        }
+                var searchable = normalize([
+                    registro.titulo || '',
+                    registro.materia || '',
+                    registro.capa_oficial || '',
+                    (registro.keywords || []).join(' '),
+                    (registro.tags || []).join(' '),
+                    registro.institucion || '',
+                    (registro.actores_lobby || []).join(' ')
+                ].join(' '));
 
-        function escapeHtml(str) {
-            var div = document.createElement('div');
-            div.textContent = str;
-            return div.innerHTML;
-        }
-
-        /* ─── Búsqueda ─── */
-        function performSearch(query) {
-            dropdown.classList.remove('active');
-            if (!query || query.trim().length < 2) {
-                resultsSection.classList.remove('active');
-                return;
+                var hits = 0;
+                for (var i = 0; i < tokens.length; i++) {
+                    if (searchable.indexOf(tokens[i]) !== -1) hits++;
+                }
+                return hits / tokens.length;
             }
 
-            var scored;
-
-            /* Use FrictionSearchEngine if initialized */
-            if (searchEngine) {
-                var engineResults = searchEngine.search({ query: query, fuente: 'all', caso: 'all', tipo: 'all' });
-                scored = engineResults.map(function (r) {
-                    return {
-                        registro: r.registro,
-                        caso: r.caso || null,
-                        textScore: r.relevance || 0,
-                        frictionScore: r.frictionScore || 0,
-                        combinedScore: r.score || 0
-                    };
-                });
-            } else {
-                /* Fallback: manual scoring */
-                var allRegistros = registros.concat(bcnRegistros);
-                var casosMap = {};
-                casos.forEach(function (c) { casosMap[c.id] = c; });
-
-                scored = allRegistros.map(function (reg) {
-                    var textScore = textMatch(reg, query);
-                    var caso = casosMap[reg.friccion_con] || null;
-                    var frictionScore = computeFriction(reg, caso);
-                    return {
-                        registro: reg,
-                        caso: caso,
-                        textScore: textScore,
-                        frictionScore: frictionScore,
-                        combinedScore: textScore * 0.6 + frictionScore * 0.4
-                    };
-                }).filter(function (r) {
-                    return r.textScore > 0;
-                });
+            /* Friction score — uses searchEngine.js computeFrictionScore if available */
+            function computeFriction(registro, caso) {
+                if (typeof computeFrictionScore === 'function') {
+                    return computeFrictionScore(registro, caso);
+                }
+                return 0.5;
             }
 
-            scored.sort(function (a, b) { return b.frictionScore - a.frictionScore; });
+            /* ─── Renderizar resultados ─── */
+            function renderResults(scored, query) {
+                resultsSection.classList.add('active');
+                resultsCount.textContent = scored.length;
+                resultsQuery.textContent = '«' + query + '»';
+                resultsList.innerHTML = '';
 
-            renderResults(scored, query);
-        }
+                if (scored.length === 0) {
+                    resultsList.innerHTML = '<p style="color:var(--dim);font-size:14px;font-family:var(--font-mono);padding:24px 0">Sin resultados para «' + escapeHtml(query) + '». Prueba con otro término o institución.</p>';
+                    moreResults.classList.remove('active');
+                    return;
+                }
 
-        /* Text match — uses searchEngine.js _seTextMatch if available, else local */
-        function textMatch(registro, query) {
-            if (typeof _seTextMatch === 'function') {
-                return _seTextMatch(registro, query);
-            }
-            var q = normalize(query);
-            var tokens = q.split(/\s+/).filter(Boolean);
-            if (!tokens.length) return 1;
+                var visible = scored.slice(0, MAX_PUBLIC_RESULTS);
 
-            var searchable = normalize([
-                registro.titulo || '',
-                registro.materia || '',
-                registro.capa_oficial || '',
-                (registro.keywords || []).join(' '),
-                (registro.tags || []).join(' '),
-                registro.institucion || '',
-                (registro.actores_lobby || []).join(' ')
-            ].join(' '));
+                visible.forEach(function(item) {
+                    var reg = item.registro;
+                    var fs = item.frictionScore;
+                    var color = frictionColor(fs);
+                    var fuente = reg.fuente || 'desconocida';
+                    var badgeColor = FUENTE_COLORS_LOCAL[fuente] || '#888';
+                    var label = FUENTE_LABELS_LOCAL[fuente] || fuente;
+                    var desc = (reg.capa_oficial || '').length > 150 ?
+                        reg.capa_oficial.substring(0, 150) + '…' :
+                        (reg.capa_oficial || '—');
 
-            var hits = 0;
-            for (var i = 0; i < tokens.length; i++) {
-                if (searchable.indexOf(tokens[i]) !== -1) hits++;
-            }
-            return hits / tokens.length;
-        }
-
-        /* Friction score — uses searchEngine.js computeFrictionScore if available */
-        function computeFriction(registro, caso) {
-            if (typeof computeFrictionScore === 'function') {
-                return computeFrictionScore(registro, caso);
-            }
-            return 0.5;
-        }
-
-        /* ─── Renderizar resultados ─── */
-        function renderResults(scored, query) {
-            resultsSection.classList.add('active');
-            resultsCount.textContent = scored.length;
-            resultsQuery.textContent = '«' + query + '»';
-            resultsList.innerHTML = '';
-
-            if (scored.length === 0) {
-                resultsList.innerHTML = '<p style="color:var(--dim);font-size:14px;font-family:var(--font-mono);padding:24px 0">Sin resultados para «' + escapeHtml(query) + '». Prueba con otro término o institución.</p>';
-                moreResults.classList.remove('active');
-                return;
-            }
-
-            var visible = scored.slice(0, MAX_PUBLIC_RESULTS);
-
-            visible.forEach(function (item) {
-                var reg = item.registro;
-                var fs = item.frictionScore;
-                var color = frictionColor(fs);
-                var fuente = reg.fuente || 'desconocida';
-                var badgeColor = FUENTE_COLORS_LOCAL[fuente] || '#888';
-                var label = FUENTE_LABELS_LOCAL[fuente] || fuente;
-                var desc = (reg.capa_oficial || '').length > 150
-                    ? reg.capa_oficial.substring(0, 150) + '…'
-                    : (reg.capa_oficial || '—');
-
-                var card = document.createElement('div');
-                card.className = 'result-card';
-                card.innerHTML =
-                    '<div class="result-card-top">' +
+                    var card = document.createElement('div');
+                    card.className = 'result-card';
+                    card.innerHTML =
+                        '<div class="result-card-top">' +
                         '<div class="result-card-title">' + escapeHtml(reg.titulo) + '</div>' +
                         '<span class="result-fuente-badge" style="background:' + badgeColor + '">' + escapeHtml(label) + '</span>' +
-                    '</div>' +
-                    '<div class="friction-row">' +
+                        '</div>' +
+                        '<div class="friction-row">' +
                         '<span class="friction-label">Fricción</span>' +
                         '<div class="friction-track">' +
-                            '<div class="friction-fill" style="width:' + (fs * 100) + '%;background:' + color + '"></div>' +
+                        '<div class="friction-fill" style="width:' + (fs * 100) + '%;background:' + color + '"></div>' +
                         '</div>' +
                         '<span class="friction-value">' + fs.toFixed(2) + '</span>' +
-                    '</div>' +
-                    '<p class="result-description">' + escapeHtml(desc) + '</p>' +
-                    '<a class="result-cta" href="login.html">Ver análisis completo →</a>';
+                        '</div>' +
+                        '<p class="result-description">' + escapeHtml(desc) + '</p>' +
+                        '<a class="result-cta" href="login.html">Ver análisis completo →</a>';
 
-                resultsList.appendChild(card);
+                    resultsList.appendChild(card);
+                });
+
+                if (scored.length > MAX_PUBLIC_RESULTS) {
+                    moreResults.classList.add('active');
+                } else {
+                    moreResults.classList.remove('active');
+                }
+
+                resultsSection.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+
+            function frictionColor(score) {
+                if (score >= 0.85) return '#c85f4a';
+                if (score >= 0.70) return '#e8b84b';
+                if (score >= 0.45) return '#c8a96e';
+                return '#4a7fa5';
+            }
+
+            /* ─── Eventos ─── */
+            input.addEventListener('input', function() {
+                var val = input.value;
+                clearTimeout(debounceTimer);
+                debounceTimer = setTimeout(function() {
+                    var items = filterSuggestions(val);
+                    renderSuggestions(items);
+                }, 300);
             });
 
-            if (scored.length > MAX_PUBLIC_RESULTS) {
-                moreResults.classList.add('active');
-            } else {
-                moreResults.classList.remove('active');
-            }
+            input.addEventListener('keydown', function(e) {
+                var items = dropdown.querySelectorAll('.suggest-item');
+                if (!items.length) {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        performSearch(input.value);
+                    }
+                    return;
+                }
 
-            resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-
-        function frictionColor(score) {
-            if (score >= 0.85) return '#c85f4a';
-            if (score >= 0.70) return '#e8b84b';
-            if (score >= 0.45) return '#c8a96e';
-            return '#4a7fa5';
-        }
-
-        /* ─── Eventos ─── */
-        input.addEventListener('input', function () {
-            var val = input.value;
-            clearTimeout(debounceTimer);
-            debounceTimer = setTimeout(function () {
-                var items = filterSuggestions(val);
-                renderSuggestions(items);
-            }, 300);
-        });
-
-        input.addEventListener('keydown', function (e) {
-            var items = dropdown.querySelectorAll('.suggest-item');
-            if (!items.length) {
-                if (e.key === 'Enter') {
+                if (e.key === 'ArrowDown') {
                     e.preventDefault();
-                    performSearch(input.value);
+                    selectedSuggest = Math.min(selectedSuggest + 1, items.length - 1);
+                    updateSelected(items);
+                } else if (e.key === 'ArrowUp') {
+                    e.preventDefault();
+                    selectedSuggest = Math.max(selectedSuggest - 1, -1);
+                    updateSelected(items);
+                } else if (e.key === 'Enter') {
+                    e.preventDefault();
+                    if (selectedSuggest >= 0 && items[selectedSuggest]) {
+                        var name = items[selectedSuggest].querySelector('.suggest-item-name').textContent;
+                        input.value = name;
+                        performSearch(name);
+                    } else {
+                        performSearch(input.value);
+                    }
+                } else if (e.key === 'Escape') {
+                    dropdown.classList.remove('active');
+                    selectedSuggest = -1;
                 }
-                return;
-            }
+            });
 
-            if (e.key === 'ArrowDown') {
-                e.preventDefault();
-                selectedSuggest = Math.min(selectedSuggest + 1, items.length - 1);
-                updateSelected(items);
-            } else if (e.key === 'ArrowUp') {
-                e.preventDefault();
-                selectedSuggest = Math.max(selectedSuggest - 1, -1);
-                updateSelected(items);
-            } else if (e.key === 'Enter') {
-                e.preventDefault();
-                if (selectedSuggest >= 0 && items[selectedSuggest]) {
-                    var name = items[selectedSuggest].querySelector('.suggest-item-name').textContent;
-                    input.value = name;
-                    performSearch(name);
-                } else {
-                    performSearch(input.value);
+            function updateSelected(items) {
+                for (var i = 0; i < items.length; i++) {
+                    items[i].classList.toggle('selected', i === selectedSuggest);
                 }
-            } else if (e.key === 'Escape') {
-                dropdown.classList.remove('active');
-                selectedSuggest = -1;
             }
-        });
 
-        function updateSelected(items) {
-            for (var i = 0; i < items.length; i++) {
-                items[i].classList.toggle('selected', i === selectedSuggest);
+            dropdown.addEventListener('click', function(e) {
+                var item = e.target.closest('.suggest-item');
+                if (!item) return;
+                var name = item.querySelector('.suggest-item-name').textContent;
+                input.value = name;
+                performSearch(name);
+            });
+
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('#search-wrap')) {
+                    dropdown.classList.remove('active');
+                }
+            });
+
+            /* ─── Init ─── */
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', loadData);
+            } else {
+                loadData();
             }
-        }
-
-        dropdown.addEventListener('click', function (e) {
-            var item = e.target.closest('.suggest-item');
-            if (!item) return;
-            var name = item.querySelector('.suggest-item-name').textContent;
-            input.value = name;
-            performSearch(name);
-        });
-
-        document.addEventListener('click', function (e) {
-            if (!e.target.closest('#search-wrap')) {
-                dropdown.classList.remove('active');
-            }
-        });
-
-        /* ─── Init ─── */
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', loadData);
-        } else {
-            loadData();
-        }
-    })();
+        })();
     </script>
+<script>(function(){if(window.__CA_UNIFIED_SHELL_LOADER__){return;}window.__CA_UNIFIED_SHELL_LOADER__=true;var s=document.createElement('script');var b=location.pathname.indexOf('/antropologia-corrupcion/')===0?'/antropologia-corrupcion/':'/';s.src=b+'shared-shell.js';s.defer=true;document.head.appendChild(s);}());</script>
 </body>
 
 </html>
