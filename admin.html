@@ -3,11 +3,20 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'">
-    <meta name="referrer" content="no-referrer-when-downgrade">
-    <meta name="robots" content="noindex, nofollow">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Administrador · Contra-Archivo</title>
+    <meta name="robots" content="noindex,nofollow,noarchive">
+    <script>
+        (function() {
+            var host = (window.location.hostname || '').toLowerCase();
+            var isPublicHost = host.indexOf('github.io') !== -1;
+            var isLocal = host === 'localhost' || host === '127.0.0.1' || host === '';
+
+            if (isPublicHost && !isLocal) {
+                window.location.replace('index.html');
+            }
+        })();
+    </script>
     <style>
         /* ─── TOKENS ─── */
         
@@ -1840,6 +1849,19 @@
             threshold: 0.3
         });
         sections.forEach(s => observer.observe(s));
+    </script>
+    <script>
+        (function() {
+            if (window.__CA_UNIFIED_SHELL_LOADER__) {
+                return;
+            }
+            window.__CA_UNIFIED_SHELL_LOADER__ = true;
+            var s = document.createElement('script');
+            var b = location.pathname.indexOf('/antropologia-corrupcion/') === 0 ? '/antropologia-corrupcion/' : '/';
+            s.src = b + 'shared-shell.js';
+            s.defer = true;
+            document.head.appendChild(s);
+        }());
     </script>
 </body>
 

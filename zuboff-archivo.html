@@ -1,664 +1,923 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>⑤ Archivo de Citas — Zuboff · Contra-Archivo</title>
-<meta name="description" content="Módulo de captura y codificación de citas de Shoshana Zuboff (La era del capitalismo de la vigilancia) para alineación con la tesis de mistranslation institucional.">
-<meta property="og:title" content="Archivo de Citas Zuboff — Contra-Archivo">
-<meta property="og:description" content="Captura, código y exportación de extractos de Zuboff para análisis de mistranslation institucional.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://vientonorte.github.io/antropologia-corrupcion/zuboff-archivo.html">
-<link rel="manifest" href="manifest.json">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📚</text></svg>">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⑤ Archivo de Citas — Corpus Físico · Contra-Archivo</title>
+    <meta name="description" content="Módulo de captura y codificación de citas para libros físicos del corpus doctoral, con Clave B y trazabilidad para análisis de mistranslation institucional.">
+    <meta property="og:title" content="Archivo de Citas — Corpus Físico · Contra-Archivo">
+    <meta property="og:description" content="Captura, codifica y exporta citas de libros físicos para construir el contra-archivo doctoral.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://vientonorte.github.io/antropologia-corrupcion/zuboff-archivo.html">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📚</text></svg>">
 
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400&family=Fraunces:ital,wght@0,300;0,600;1,300&display=swap');
-
-  :root {
-    --ro: #C2432A;
-    --ro-soft: #f0ded9;
-    --ro-mid: #e8b4a8;
-    --zuboff: #2A5FAC;
-    --zuboff-soft: #dae4f5;
-    --zuboff-mid: #9ab8e4;
-    --ink: #1a1410;
-    --paper: #f7f3ed;
-    --paper-dark: #ede8e0;
-    --line: #c8bfb0;
-    --neutral: #7a6f62;
-    --accent-gold: #c4962a;
-    --accent-green: #3a7a4a;
-  }
-
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-
-  body {
-    font-family: 'DM Mono', monospace;
-    background: var(--paper);
-    color: var(--ink);
-    font-size: 13px;
-    line-height: 1.6;
-    min-height: 100vh;
-  }
-
-  /* ── HEADER ── */
-  .header {
-    background: var(--ink);
-    color: var(--paper);
-    padding: 40px 48px 32px;
-    position: relative;
-    overflow: hidden;
-  }
-  .header::before {
-    content: '';
-    position: absolute;
-    top: -60px; right: -60px;
-    width: 300px; height: 300px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(42,95,172,0.25) 0%, transparent 70%);
-  }
-  .header::after {
-    content: '';
-    position: absolute;
-    bottom: -40px; left: 200px;
-    width: 200px; height: 200px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(194,67,42,0.2) 0%, transparent 70%);
-  }
-  .header-label {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--neutral);
-    margin-bottom: 12px;
-  }
-  .header h1 {
-    font-family: 'Fraunces', serif;
-    font-size: clamp(28px, 5vw, 52px);
-    font-weight: 300;
-    line-height: 1.1;
-    margin-bottom: 8px;
-  }
-  .header h1 em {
-    font-style: italic;
-    color: var(--zuboff-mid);
-  }
-  .header-sub {
-    font-size: 11px;
-    color: var(--neutral);
-    letter-spacing: 0.1em;
-  }
-  .header-back {
-    position: absolute;
-    top: 20px; left: 20px;
-    color: var(--paper);
-    text-decoration: none;
-    font-size: 11px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    padding: 6px 12px;
-    border: 1px solid var(--neutral);
-    border-radius: 2px;
-    transition: all 0.2s;
-    z-index: 2;
-  }
-  .header-back:hover { background: var(--paper); color: var(--ink); }
-
-  /* ── PANEL ── */
-  .panel { padding: 48px; }
-
-  /* ── ARCHIVO ── */
-  .archive-intro {
-    background: var(--paper-dark);
-    padding: 24px;
-    border-radius: 4px;
-    margin-bottom: 32px;
-  }
-  .archive-intro p {
-    font-size: 12px;
-    line-height: 1.6;
-    color: var(--ink);
-  }
-  .archive-intro strong { color: var(--zuboff); }
-
-  .archive-controls {
-    display: flex;
-    gap: 12px;
-    flex-wrap: wrap;
-    margin-bottom: 32px;
-    align-items: center;
-  }
-  .btn-primary {
-    padding: 10px 18px;
-    background: var(--ink);
-    color: var(--paper);
-    border: none;
-    border-radius: 2px;
-    cursor: pointer;
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    transition: all 0.2s;
-  }
-  .btn-primary:hover { background: #2d1710; }
-  .btn-secondary {
-    padding: 10px 18px;
-    background: var(--paper-dark);
-    color: var(--ink);
-    border: 1px solid var(--line);
-    border-radius: 2px;
-    cursor: pointer;
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    transition: all 0.2s;
-  }
-  .btn-secondary:hover { background: var(--line); }
-
-  .filter-group {
-    display: flex;
-    gap: 8px;
-    align-items: center;
-  }
-  .filter-label {
-    font-size: 10px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--neutral);
-  }
-  .filter-select {
-    padding: 6px 12px;
-    border: 1px solid var(--line);
-    border-radius: 2px;
-    background: var(--paper);
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    color: var(--ink);
-    cursor: pointer;
-  }
-
-  .citation-list { max-width: 1200px; }
-
-  .citation-item {
-    background: var(--paper-dark);
-    border-left: 4px solid;
-    padding: 20px;
-    margin-bottom: 16px;
-    border-radius: 0 4px 4px 0;
-    cursor: pointer;
-    transition: all 0.2s;
-    position: relative;
-  }
-  .citation-item:hover {
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    transform: translateX(4px);
-  }
-
-  .citation-item.mark-red { border-left-color: var(--ro); background: rgba(194,67,42,0.08); }
-  .citation-item.mark-yellow { border-left-color: #e6c800; background: rgba(230,200,0,0.08); }
-  .citation-item.mark-pink { border-left-color: #e066a6; background: rgba(224,102,166,0.08); }
-  .citation-item.mark-green { border-left-color: var(--accent-green); background: rgba(58,122,74,0.08); }
-  .citation-item.mark-blue { border-left-color: var(--zuboff); background: rgba(42,95,172,0.08); }
-  .citation-item.mark-orange { border-left-color: var(--accent-gold); background: rgba(196,150,42,0.08); }
-
-  .citation-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 12px;
-    gap: 16px;
-  }
-  .citation-page {
-    font-size: 10px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--neutral);
-    flex-shrink: 0;
-  }
-  .citation-text {
-    font-family: 'Fraunces', serif;
-    font-size: 13px;
-    line-height: 1.6;
-    color: var(--ink);
-    font-style: italic;
-    margin-bottom: 12px;
-  }
-  .citation-meta {
-    display: flex;
-    gap: 12px;
-    flex-wrap: wrap;
-    align-items: center;
-  }
-  .citation-color-label {
-    font-size: 9px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    padding: 3px 8px;
-    border-radius: 2px;
-    font-weight: 500;
-  }
-  .citation-color-label.red { background: rgba(194,67,42,0.2); color: var(--ro); }
-  .citation-color-label.yellow { background: rgba(230,200,0,0.2); color: #7a5c00; }
-  .citation-color-label.pink { background: rgba(224,102,166,0.2); color: #8b1458; }
-  .citation-color-label.green { background: rgba(58,122,74,0.2); color: var(--accent-green); }
-  .citation-color-label.blue { background: rgba(42,95,172,0.2); color: var(--zuboff); }
-  .citation-color-label.orange { background: rgba(196,150,42,0.2); color: var(--accent-gold); }
-
-  .citation-category {
-    font-size: 9px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    padding: 3px 8px;
-    background: var(--ink);
-    color: var(--paper);
-    border-radius: 2px;
-  }
-  .citation-note {
-    display: none;
-    margin-top: 12px;
-    padding: 12px;
-    background: rgba(0,0,0,0.03);
-    border-radius: 2px;
-    border-left: 2px solid var(--line);
-  }
-  .citation-item.open .citation-note { display: block; }
-  .citation-note-label {
-    font-size: 9px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--neutral);
-    margin-bottom: 6px;
-    display: block;
-  }
-  .citation-note textarea {
-    width: 100%;
-    min-height: 80px;
-    padding: 8px;
-    border: 1px solid var(--line);
-    border-radius: 2px;
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    resize: vertical;
-  }
-
-  .archive-stats {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 16px;
-    margin-bottom: 32px;
-  }
-  .stat-card {
-    background: var(--ink);
-    color: var(--paper);
-    padding: 20px;
-    border-radius: 4px;
-    text-align: center;
-  }
-  .stat-value {
-    font-family: 'Playfair Display', serif;
-    font-size: 36px;
-    line-height: 1;
-    margin-bottom: 8px;
-  }
-  .stat-label {
-    font-size: 10px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: rgba(247,243,237,0.7);
-  }
-
-  /* Modal */
-  .modal-backdrop {
-    display: none;
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background: rgba(0,0,0,0.5);
-    z-index: 1000;
-    padding: 40px 20px;
-    overflow-y: auto;
-  }
-  .modal-backdrop.open { display: flex; }
-  .modal-card {
-    background: var(--paper);
-    max-width: 700px;
-    margin: 0 auto;
-    padding: 32px;
-    border-radius: 4px;
-    width: 100%;
-    height: fit-content;
-  }
-  .modal-head {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 24px;
-  }
-  .modal-head h2 {
-    font-family: 'Fraunces', serif;
-    font-size: 22px;
-    font-weight: 300;
-  }
-  .modal-close {
-    background: none;
-    border: none;
-    font-size: 20px;
-    cursor: pointer;
-    color: var(--ink);
-  }
-  .field { margin-bottom: 16px; }
-  .field label.lbl {
-    font-size: 10px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--neutral);
-    display: block;
-    margin-bottom: 6px;
-  }
-  .field input[type="number"],
-  .field textarea,
-  .field select {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid var(--line);
-    border-radius: 2px;
-    font-family: 'DM Mono', monospace;
-    font-size: 13px;
-    background: var(--paper);
-    color: var(--ink);
-  }
-  .field textarea#captureText {
-    font-family: 'Fraunces', serif;
-    min-height: 100px;
-    resize: vertical;
-  }
-  .field textarea#captureNotes {
-    min-height: 80px;
-    resize: vertical;
-    font-size: 11px;
-  }
-  .color-grid {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-  }
-  .color-grid label {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    cursor: pointer;
-    font-size: 12px;
-  }
-  .modal-actions {
-    display: flex;
-    gap: 12px;
-  }
-  .modal-actions button { flex: 1; }
-
-  /* ── ANALIZADOR CLAVE B ── */
-  .analyzer-section {
-    background: var(--paper-dark);
-    border: 2px dashed var(--line);
-    border-radius: 4px;
-    margin-bottom: 32px;
-    overflow: hidden;
-    transition: border-color 0.2s;
-  }
-  .analyzer-section.has-key { border-color: var(--accent-gold); border-style: solid; }
-
-  .analyzer-header {
-    padding: 16px 24px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    cursor: pointer;
-    user-select: none;
-  }
-  .analyzer-header-left { display: flex; align-items: center; gap: 10px; }
-  .analyzer-title {
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--ink);
-    font-weight: 500;
-  }
-  .analyzer-badge {
-    font-size: 9px;
-    padding: 2px 7px;
-    background: var(--accent-gold);
-    color: #fff;
-    border-radius: 2px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-  }
-  .analyzer-toggle {
-    font-size: 10px;
-    color: var(--neutral);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-  }
-
-  .analyzer-body { display: none; padding: 0 24px 24px; }
-  .analyzer-section.open .analyzer-body { display: block; }
-
-  .api-key-row {
-    display: flex;
-    gap: 8px;
-    align-items: center;
-    margin-bottom: 16px;
-  }
-  .api-key-row input {
-    flex: 1;
-    padding: 8px 12px;
-    border: 1px solid var(--line);
-    border-radius: 2px;
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    background: var(--paper);
-    color: var(--ink);
-  }
-  .api-key-row input:focus { outline: 2px solid var(--accent-gold); }
-  .api-key-status {
-    font-size: 10px;
-    letter-spacing: 0.1em;
-    color: var(--neutral);
-    white-space: nowrap;
-  }
-  .api-key-status.saved { color: var(--accent-green); }
-
-  .drop-zone {
-    border: 2px dashed var(--line);
-    border-radius: 4px;
-    padding: 32px 20px;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.2s;
-    position: relative;
-    background: var(--paper);
-  }
-  .drop-zone:hover, .drop-zone.drag-over {
-    border-color: var(--accent-gold);
-    background: rgba(196,150,42,0.04);
-  }
-  .drop-zone input[type="file"] {
-    position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%;
-  }
-  .drop-zone-icon { font-size: 28px; margin-bottom: 8px; }
-  .drop-zone-label {
-    font-size: 11px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--neutral);
-  }
-  .drop-zone-sub { font-size: 10px; color: var(--line); margin-top: 4px; }
-
-  .preview-img {
-    display: none;
-    width: 100%;
-    max-height: 300px;
-    object-fit: contain;
-    border-radius: 4px;
-    border: 1px solid var(--line);
-    margin-top: 12px;
-  }
-  .preview-img.visible { display: block; }
-
-  .analyzer-actions {
-    display: flex;
-    gap: 8px;
-    margin-top: 12px;
-    align-items: center;
-  }
-  .analyze-status {
-    font-size: 10px;
-    letter-spacing: 0.08em;
-    color: var(--neutral);
-    font-family: 'DM Mono', monospace;
-  }
-  .analyze-status.error { color: var(--ro); }
-  .analyze-status.success { color: var(--accent-green); }
-
-  .results-preview {
-    display: none;
-    margin-top: 16px;
-    border: 1px solid var(--line);
-    border-radius: 4px;
-    overflow: hidden;
-  }
-  .results-preview.visible { display: block; }
-  .results-preview-header {
-    padding: 8px 14px;
-    background: var(--ink);
-    color: var(--paper);
-    font-size: 10px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .result-item {
-    padding: 12px 14px;
-    border-bottom: 1px solid var(--line);
-    display: flex;
-    gap: 10px;
-    align-items: flex-start;
-  }
-  .result-item:last-child { border-bottom: none; }
-  .result-color-dot {
-    width: 12px; height: 12px;
-    border-radius: 50%;
-    flex-shrink: 0;
-    margin-top: 3px;
-  }
-  .result-text { font-family: 'Fraunces', serif; font-size: 12px; font-style: italic; flex: 1; }
-  .result-meta { font-size: 10px; color: var(--neutral); margin-top: 4px; }
-  .btn-import-all {
-    padding: 6px 14px;
-    background: var(--accent-green);
-    color: #fff;
-    border: none;
-    border-radius: 2px;
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: background 0.2s;
-  }
-  .btn-import-all:hover { background: #2d6639; }
-
-  /* Responsive */
-  @media (max-width: 768px) {
-    .header, .panel { padding: 24px 20px; }
-    .header { padding-top: 70px; }
-    .header-back { top: 12px; left: 12px; }
-    .archive-controls { flex-direction: column; align-items: stretch; }
-    .filter-group { flex-direction: column; align-items: stretch; }
-    .api-key-row { flex-direction: column; align-items: stretch; }
-  }
-</style>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400&family=Fraunces:ital,wght@0,300;0,600;1,300&display=swap');
+         :root {
+            --ro: #C2432A;
+            --ro-soft: #f0ded9;
+            --ro-mid: #e8b4a8;
+            --zuboff: #2A5FAC;
+            --zuboff-soft: #dae4f5;
+            --zuboff-mid: #9ab8e4;
+            --ink: #1a1410;
+            --paper: #f7f3ed;
+            --paper-dark: #ede8e0;
+            --line: #c8bfb0;
+            --neutral: #7a6f62;
+            --accent-gold: #c4962a;
+            --accent-green: #3a7a4a;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'DM Mono', monospace;
+            background: var(--paper);
+            color: var(--ink);
+            font-size: 13px;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        /* ── HEADER ── */
+        
+        .header {
+            background: var(--ink);
+            color: var(--paper);
+            padding: 40px 48px 32px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -60px;
+            right: -60px;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(42, 95, 172, 0.25) 0%, transparent 70%);
+        }
+        
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: -40px;
+            left: 200px;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(194, 67, 42, 0.2) 0%, transparent 70%);
+        }
+        
+        .header-label {
+            font-family: 'DM Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--neutral);
+            margin-bottom: 12px;
+        }
+        
+        .header h1 {
+            font-family: 'Fraunces', serif;
+            font-size: clamp(28px, 5vw, 52px);
+            font-weight: 300;
+            line-height: 1.1;
+            margin-bottom: 8px;
+        }
+        
+        .header h1 em {
+            font-style: italic;
+            color: var(--zuboff-mid);
+        }
+        
+        .header-sub {
+            font-size: 11px;
+            color: var(--neutral);
+            letter-spacing: 0.1em;
+        }
+        
+        .header-back {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: var(--paper);
+            text-decoration: none;
+            font-size: 11px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            padding: 6px 12px;
+            border: 1px solid var(--neutral);
+            border-radius: 2px;
+            transition: all 0.2s;
+            z-index: 2;
+        }
+        
+        .header-back:hover {
+            background: var(--paper);
+            color: var(--ink);
+        }
+        /* ── PANEL ── */
+        
+        .panel {
+            padding: 48px;
+        }
+        /* ── ARCHIVO ── */
+        
+        .archive-intro {
+            background: var(--paper-dark);
+            padding: 24px;
+            border-radius: 4px;
+            margin-bottom: 32px;
+        }
+        
+        .archive-intro p {
+            font-size: 12px;
+            line-height: 1.6;
+            color: var(--ink);
+        }
+        
+        .archive-intro strong {
+            color: var(--zuboff);
+        }
+        
+        .archive-controls {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 32px;
+            align-items: center;
+        }
+        
+        .btn-primary {
+            padding: 10px 18px;
+            background: var(--ink);
+            color: var(--paper);
+            border: none;
+            border-radius: 2px;
+            cursor: pointer;
+            font-family: 'DM Mono', monospace;
+            font-size: 11px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            transition: all 0.2s;
+        }
+        
+        .btn-primary:hover {
+            background: #2d1710;
+        }
+        
+        .btn-secondary {
+            padding: 10px 18px;
+            background: var(--paper-dark);
+            color: var(--ink);
+            border: 1px solid var(--line);
+            border-radius: 2px;
+            cursor: pointer;
+            font-family: 'DM Mono', monospace;
+            font-size: 11px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            transition: all 0.2s;
+        }
+        
+        .btn-secondary:hover {
+            background: var(--line);
+        }
+        
+        .filter-group {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+        
+        .filter-label {
+            font-size: 10px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--neutral);
+        }
+        
+        .filter-select {
+            padding: 6px 12px;
+            border: 1px solid var(--line);
+            border-radius: 2px;
+            background: var(--paper);
+            font-family: 'DM Mono', monospace;
+            font-size: 11px;
+            color: var(--ink);
+            cursor: pointer;
+        }
+        
+        .citation-list {
+            max-width: 1200px;
+        }
+        
+        .citation-item {
+            background: var(--paper-dark);
+            border-left: 4px solid;
+            padding: 20px;
+            margin-bottom: 16px;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+        }
+        
+        .citation-item:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transform: translateX(4px);
+        }
+        
+        .citation-item.mark-red {
+            border-left-color: var(--ro);
+            background: rgba(194, 67, 42, 0.08);
+        }
+        
+        .citation-item.mark-yellow {
+            border-left-color: #e6c800;
+            background: rgba(230, 200, 0, 0.08);
+        }
+        
+        .citation-item.mark-pink {
+            border-left-color: #e066a6;
+            background: rgba(224, 102, 166, 0.08);
+        }
+        
+        .citation-item.mark-green {
+            border-left-color: var(--accent-green);
+            background: rgba(58, 122, 74, 0.08);
+        }
+        
+        .citation-item.mark-blue {
+            border-left-color: var(--zuboff);
+            background: rgba(42, 95, 172, 0.08);
+        }
+        
+        .citation-item.mark-orange {
+            border-left-color: var(--accent-gold);
+            background: rgba(196, 150, 42, 0.08);
+        }
+        
+        .citation-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+            gap: 16px;
+        }
+        
+        .citation-page {
+            font-size: 10px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--neutral);
+            flex-shrink: 0;
+        }
+        
+        .citation-text {
+            font-family: 'Fraunces', serif;
+            font-size: 13px;
+            line-height: 1.6;
+            color: var(--ink);
+            font-style: italic;
+            margin-bottom: 12px;
+        }
+        
+        .citation-meta {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        
+        .citation-color-label {
+            font-size: 9px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            padding: 3px 8px;
+            border-radius: 2px;
+            font-weight: 500;
+        }
+        
+        .citation-color-label.gray {
+            background: #e8e8e8;
+            color: #555;
+        }
+        
+        .citation-color-label.red {
+            background: rgba(194, 67, 42, 0.2);
+            color: var(--ro);
+        }
+        
+        .citation-color-label.yellow {
+            background: rgba(230, 200, 0, 0.2);
+            color: #7a5c00;
+        }
+        
+        .citation-color-label.pink {
+            background: rgba(224, 102, 166, 0.2);
+            color: #8b1458;
+        }
+        
+        .citation-color-label.green {
+            background: rgba(58, 122, 74, 0.2);
+            color: var(--accent-green);
+        }
+        
+        .citation-color-label.blue {
+            background: rgba(42, 95, 172, 0.2);
+            color: var(--zuboff);
+        }
+        
+        .citation-color-label.orange {
+            background: rgba(196, 150, 42, 0.2);
+            color: var(--accent-gold);
+        }
+        
+        .citation-category {
+            font-size: 9px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            padding: 3px 8px;
+            background: var(--ink);
+            color: var(--paper);
+            border-radius: 2px;
+        }
+        
+        .citation-note {
+            display: none;
+            margin-top: 12px;
+            padding: 12px;
+            background: rgba(0, 0, 0, 0.03);
+            border-radius: 2px;
+            border-left: 2px solid var(--line);
+        }
+        
+        .citation-item.open .citation-note {
+            display: block;
+        }
+        
+        .citation-note-label {
+            font-size: 9px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--neutral);
+            margin-bottom: 6px;
+            display: block;
+        }
+        
+        .citation-note textarea {
+            width: 100%;
+            min-height: 80px;
+            padding: 8px;
+            border: 1px solid var(--line);
+            border-radius: 2px;
+            font-family: 'DM Mono', monospace;
+            font-size: 11px;
+            resize: vertical;
+        }
+        
+        .archive-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+        
+        .stat-card {
+            background: var(--ink);
+            color: var(--paper);
+            padding: 20px;
+            border-radius: 4px;
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-family: 'Playfair Display', serif;
+            font-size: 36px;
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+        
+        .stat-label {
+            font-size: 10px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: rgba(247, 243, 237, 0.7);
+        }
+        /* Modal */
+        
+        .modal-backdrop {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            padding: 40px 20px;
+            overflow-y: auto;
+        }
+        
+        .modal-backdrop.open {
+            display: flex;
+        }
+        
+        .modal-card {
+            background: var(--paper);
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 32px;
+            border-radius: 4px;
+            width: 100%;
+            height: fit-content;
+        }
+        
+        .modal-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+        
+        .modal-head h2 {
+            font-family: 'Fraunces', serif;
+            font-size: 22px;
+            font-weight: 300;
+        }
+        
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: var(--ink);
+        }
+        
+        .field {
+            margin-bottom: 16px;
+        }
+        
+        .field label.lbl {
+            font-size: 10px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--neutral);
+            display: block;
+            margin-bottom: 6px;
+        }
+        
+        .field input[type="number"],
+        .field textarea,
+        .field select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid var(--line);
+            border-radius: 2px;
+            font-family: 'DM Mono', monospace;
+            font-size: 13px;
+            background: var(--paper);
+            color: var(--ink);
+        }
+        
+        .field textarea#captureText {
+            font-family: 'Fraunces', serif;
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .field textarea#captureNotes {
+            min-height: 80px;
+            resize: vertical;
+            font-size: 11px;
+        }
+        
+        .color-grid {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        
+        .color-grid label {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        
+        .modal-actions {
+            display: flex;
+            gap: 12px;
+        }
+        
+        .modal-actions button {
+            flex: 1;
+        }
+        /* ── ANALIZADOR CLAVE B ── */
+        
+        .analyzer-section {
+            background: var(--paper-dark);
+            border: 2px dashed var(--line);
+            border-radius: 4px;
+            margin-bottom: 32px;
+            overflow: hidden;
+            transition: border-color 0.2s;
+        }
+        
+        .analyzer-section.has-key {
+            border-color: var(--accent-gold);
+            border-style: solid;
+        }
+        
+        .analyzer-header {
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            cursor: pointer;
+            user-select: none;
+        }
+        
+        .analyzer-header-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .analyzer-title {
+            font-family: 'DM Mono', monospace;
+            font-size: 11px;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--ink);
+            font-weight: 500;
+        }
+        
+        .analyzer-badge {
+            font-size: 9px;
+            padding: 2px 7px;
+            background: var(--accent-gold);
+            color: #fff;
+            border-radius: 2px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+        
+        .analyzer-toggle {
+            font-size: 10px;
+            color: var(--neutral);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+        
+        .analyzer-body {
+            display: none;
+            padding: 0 24px 24px;
+        }
+        
+        .analyzer-section.open .analyzer-body {
+            display: block;
+        }
+        
+        .api-key-row {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        
+        .api-key-row input {
+            flex: 1;
+            padding: 8px 12px;
+            border: 1px solid var(--line);
+            border-radius: 2px;
+            font-family: 'DM Mono', monospace;
+            font-size: 11px;
+            background: var(--paper);
+            color: var(--ink);
+        }
+        
+        .api-key-row input:focus {
+            outline: 2px solid var(--accent-gold);
+        }
+        
+        .api-key-status {
+            font-size: 10px;
+            letter-spacing: 0.1em;
+            color: var(--neutral);
+            white-space: nowrap;
+        }
+        
+        .api-key-status.saved {
+            color: var(--accent-green);
+        }
+        
+        .drop-zone {
+            border: 2px dashed var(--line);
+            border-radius: 4px;
+            padding: 32px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+            background: var(--paper);
+        }
+        
+        .drop-zone:hover,
+        .drop-zone.drag-over {
+            border-color: var(--accent-gold);
+            background: rgba(196, 150, 42, 0.04);
+        }
+        
+        .drop-zone input[type="file"] {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            cursor: pointer;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .drop-zone-icon {
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+        
+        .drop-zone-label {
+            font-size: 11px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--neutral);
+        }
+        
+        .drop-zone-sub {
+            font-size: 10px;
+            color: var(--line);
+            margin-top: 4px;
+        }
+        
+        .preview-img {
+            display: none;
+            width: 100%;
+            max-height: 300px;
+            object-fit: contain;
+            border-radius: 4px;
+            border: 1px solid var(--line);
+            margin-top: 12px;
+        }
+        
+        .preview-img.visible {
+            display: block;
+        }
+        
+        .analyzer-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+            align-items: center;
+        }
+        
+        .analyze-status {
+            font-size: 10px;
+            letter-spacing: 0.08em;
+            color: var(--neutral);
+            font-family: 'DM Mono', monospace;
+        }
+        
+        .analyze-status.error {
+            color: var(--ro);
+        }
+        
+        .analyze-status.success {
+            color: var(--accent-green);
+        }
+        
+        .results-preview {
+            display: none;
+            margin-top: 16px;
+            border: 1px solid var(--line);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .results-preview.visible {
+            display: block;
+        }
+        
+        .results-preview-header {
+            padding: 8px 14px;
+            background: var(--ink);
+            color: var(--paper);
+            font-size: 10px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .result-item {
+            padding: 12px 14px;
+            border-bottom: 1px solid var(--line);
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+        }
+        
+        .result-item:last-child {
+            border-bottom: none;
+        }
+        
+        .result-color-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            margin-top: 3px;
+        }
+        
+        .result-text {
+            font-family: 'Fraunces', serif;
+            font-size: 12px;
+            font-style: italic;
+            flex: 1;
+        }
+        
+        .result-meta {
+            font-size: 10px;
+            color: var(--neutral);
+            margin-top: 4px;
+        }
+        
+        .btn-import-all {
+            padding: 6px 14px;
+            background: var(--accent-green);
+            color: #fff;
+            border: none;
+            border-radius: 2px;
+            font-family: 'DM Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        
+        .btn-import-all:hover {
+            background: #2d6639;
+        }
+        /* Responsive */
+        
+        @media (max-width: 768px) {
+            .header,
+            .panel {
+                padding: 24px 20px;
+            }
+            .header {
+                padding-top: 70px;
+            }
+            .header-back {
+                top: 12px;
+                left: 12px;
+            }
+            .archive-controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .filter-group {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .api-key-row {
+                flex-direction: column;
+                align-items: stretch;
+            }
+        }
+    </style>
 </head>
+
 <body>
 
-<div class="header">
-  <a href="contra-archivo-v2.html" class="header-back">← Contra-Archivo</a>
-  <div class="header-label">Módulo ⑤ · Archivo de Citas · Mayo 2026</div>
-  <h1>Citas <em>de Zuboff</em></h1>
-  <div class="header-sub">La era del capitalismo de la vigilancia · Codificación cromática · Alineación con tesis de mistranslation institucional</div>
-</div>
-
-<div class="panel">
-  <div class="archive-intro">
-    <p><strong>Historial de citas codificadas</strong> — Captura extractos de <em>La era del capitalismo de la vigilancia</em> con tu sistema de marcadores (rojo/amarillo/rosa/verde/azul/naranja). Cada cita se archiva con página, categoría temática y notas de alineación con tu tesis sobre "mistranslation" institucional y contra-archivo.</p>
-    <p style="margin-top:12px; font-size:11px; color:var(--neutral);">Exporta como JSON para procesamiento posterior: filtrado, clustering temático, mapeo a dimensiones de tu doctorado (AFP/vigilancia/epistémica/institucional). Las citas se guardan localmente en tu navegador (localStorage).</p>
-  </div>
-
-  <!-- ANALIZADOR CLAVE B -->
-  <div class="analyzer-section" id="analyzerSection">
-    <div class="analyzer-header" onclick="toggleAnalyzer()">
-      <div class="analyzer-header-left">
-        <span class="analyzer-title">📷 Analizar foto con Clave B</span>
-        <span class="analyzer-badge">Claude API</span>
-      </div>
-      <span class="analyzer-toggle" id="analyzerToggleLabel">Abrir</span>
+    <div class="header">
+        <a href="contra-archivo.html" class="header-back">← Contra-Archivo</a>
+        <div class="header-label">Módulo ⑤ · Archivo de Citas · Mayo 2026</div>
+        <h1>Citas <em>del corpus físico</em></h1>
+        <div class="header-sub">Clave B · Libros impresos · Trazabilidad para tesis de mistranslation institucional</div>
     </div>
-    <div class="analyzer-body">
 
-      <div class="api-key-row">
-        <input type="password" id="apiKeyInput" placeholder="sk-ant-… (se guarda en localStorage, nunca sale del browser)" autocomplete="off">
-        <button class="btn-secondary" onclick="saveApiKey()" style="flex-shrink:0;">Guardar key</button>
-        <span class="api-key-status" id="apiKeyStatus">Sin key</span>
-      </div>
-
-      <div class="drop-zone" id="dropZone">
-        <input type="file" id="photoInput" accept="image/*" onchange="handlePhotoSelect(event)">
-        <div class="drop-zone-icon">📖</div>
-        <div class="drop-zone-label">Arrastra o selecciona foto del libro</div>
-        <div class="drop-zone-sub">JPG · PNG · HEIC · hasta 20MB</div>
-      </div>
-      <img id="previewImg" class="preview-img" alt="Vista previa">
-
-      <div class="analyzer-actions">
-        <button class="btn-primary" id="analyzeBtn" onclick="analyzePhoto()" disabled>Analizar con Clave B</button>
-        <button class="btn-secondary" id="clearPhotoBtn" onclick="clearPhoto()" style="display:none;">Limpiar</button>
-        <span class="analyze-status" id="analyzeStatus"></span>
-      </div>
-
-      <div class="results-preview" id="resultsPreview">
-        <div class="results-preview-header">
-          <span id="resultsCount">0 citas detectadas</span>
-          <button class="btn-import-all" onclick="importAllResults()">Importar todas →</button>
+    <div class="panel">
+        <div class="archive-intro">
+            <p><strong>Historial de citas codificadas</strong> — Captura extractos de libros físicos del corpus (no solo Zuboff) con tu sistema de marcadores (rojo/amarillo/rosa/verde/azul/naranja). Cada cita se archiva con libro, autor, página, categoría
+                temática y notas de alineación con tu tesis sobre "mistranslation" institucional y contra-archivo.</p>
+            <p style="margin-top:12px; font-size:11px; color:var(--neutral);">Base metodológica alineada a BJ_analisis_consolidado_D17_Intro. Exporta JSON/CSV para análisis cruzado por libro, categoría y fricción epistemológica. Las citas se guardan localmente en tu navegador (localStorage).</p>
         </div>
-        <div id="resultsList"></div>
-      </div>
 
-    </div>
-  </div>
+        <!-- ANALIZADOR CLAVE B -->
+        <div class="analyzer-section" id="analyzerSection">
+            <div class="analyzer-header" onclick="toggleAnalyzer()">
+                <div class="analyzer-header-left">
+                    <span class="analyzer-title">📷 Analizar foto con Clave B</span>
+                    <span class="analyzer-badge">Claude API</span>
+                </div>
+                <span class="analyzer-toggle" id="analyzerToggleLabel">Abrir</span>
+            </div>
+            <div class="analyzer-body">
 
-  <div class="archive-controls">
-    <button class="btn-primary" onclick="openCaptureModal()">+ CAPTURAR CITA</button>
-    <div class="filter-group">
-      <span class="filter-label">Filtrar por:</span>
-      <select class="filter-select" id="filterColor" onchange="filterCitations()">
+                <div class="api-key-row">
+                    <input type="password" id="apiKeyInput" placeholder="sk-ant-… (se guarda en localStorage, nunca sale del browser)" autocomplete="off">
+                    <button class="btn-secondary" onclick="saveApiKey()" style="flex-shrink:0;">Guardar key</button>
+                    <span class="api-key-status" id="apiKeyStatus">Sin key</span>
+                </div>
+
+                <div class="drop-zone" id="dropZone">
+                    <input type="file" id="photoInput" accept="image/*" onchange="handlePhotoSelect(event)">
+                    <div class="drop-zone-icon">📖</div>
+                    <div class="drop-zone-label">Arrastra o selecciona foto del libro</div>
+                    <div class="drop-zone-sub">JPG · PNG · HEIC · hasta 20MB</div>
+                </div>
+                <img id="previewImg" class="preview-img" alt="Vista previa">
+
+                <div class="analyzer-actions">
+                    <button class="btn-primary" id="analyzeBtn" onclick="analyzePhoto()" disabled>Analizar con Clave B</button>
+                    <button class="btn-secondary" id="clearPhotoBtn" onclick="clearPhoto()" style="display:none;">Limpiar</button>
+                    <span class="analyze-status" id="analyzeStatus"></span>
+                </div>
+
+                <div class="results-preview" id="resultsPreview">
+                    <div class="results-preview-header">
+                        <span id="resultsCount">0 citas detectadas</span>
+                        <button class="btn-import-all" onclick="importAllResults()">Importar todas →</button>
+                    </div>
+                    <div id="resultsList"></div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ANALIZADOR BUJO-RO -->
+        <div class="analyzer-section" id="bujoSection">
+            <div class="analyzer-header" onclick="toggleBujo()">
+                <div class="analyzer-header-left">
+                    <span class="analyzer-title">✏️ Analizar página Bullet Ro</span>
+                    <span class="analyzer-badge">Claude API · bujo-ro v1.2</span>
+                </div>
+                <span class="analyzer-toggle" id="bujoToggleLabel">Abrir</span>
+            </div>
+            <div class="analyzer-body">
+                <p style="font-size:11px;color:var(--neutral);margin-bottom:12px;">Sube una foto de una página manuscrita del cuaderno (dot grid, post-it, wireframe). Claude extrae notas estructuradas según el protocolo bujo-ro v1.2 — Clave A.</p>
+
+                <div class="drop-zone" id="bujoDropZone">
+                    <input type="file" id="bujoPhotoInput" accept="image/*" onchange="handleBujoPhotoSelect(event)">
+                    <div class="drop-zone-icon">📓</div>
+                    <div class="drop-zone-label">Arrastra o selecciona foto del cuaderno</div>
+                    <div class="drop-zone-sub">JPG · PNG · HEIC · hasta 20MB</div>
+                </div>
+                <img id="bujoPreviewImg" class="preview-img" alt="Vista previa cuaderno">
+
+                <div class="analyzer-actions">
+                    <button class="btn-primary" id="bujoAnalyzeBtn" onclick="analyzeBujo()" disabled>Analizar con bujo-ro</button>
+                    <button class="btn-secondary" id="bujoClearBtn" onclick="clearBujoPhoto()" style="display:none;">Limpiar</button>
+                    <span class="analyze-status" id="bujoStatus"></span>
+                </div>
+
+                <div class="results-preview" id="bujoResultsPreview">
+                    <div class="results-preview-header">
+                        <span id="bujoResultsCount">0 notas detectadas</span>
+                    </div>
+                    <div id="bujoResultsList" style="font-size:12px;line-height:1.6;white-space:pre-wrap;padding:8px 0;color:var(--ink);"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="archive-controls">
+            <button class="btn-primary" onclick="openCaptureModal()">+ CAPTURAR CITA</button>
+            <div class="filter-group">
+                <span class="filter-label">Filtrar por:</span>
+                <select class="filter-select" id="filterColor" onchange="filterCitations()">
         <option value="">— Todos los colores</option>
-        <option value="red">🔴 Concepto clave</option>
-        <option value="yellow">🟡 Referencia</option>
-        <option value="pink">🩷 Interesa/Recurso</option>
-        <option value="green">🟢 Reflexión</option>
-        <option value="blue">🔵 Investigación</option>
-        <option value="orange">🟠 Comparación</option>
+        <option value="red">🟥 Concepto clave</option>
+        <option value="gray">⬛ Investigar</option>
+        <option value="yellow">🟨 Referencia</option>
+        <option value="green">🟩 Persona de interés</option>
+        <option value="blue">🟦 Reflexión</option>
+        <option value="orange">🟧 Compartir</option>
       </select>
-    </div>
-    <div class="filter-group">
-      <span class="filter-label">Categoría:</span>
-      <select class="filter-select" id="filterCategory" onchange="filterCitations()">
+            </div>
+            <div class="filter-group">
+                <span class="filter-label">Categoría:</span>
+                <select class="filter-select" id="filterCategory" onchange="filterCitations()">
         <option value="">— Todas las categorías</option>
         <option value="hogar">Hogar / Nostos</option>
         <option value="vigilancia_inst">Vigilancia Institucional</option>
@@ -668,69 +927,83 @@
         <option value="democracia">Democracia</option>
         <option value="metodologia">Metodología</option>
       </select>
-    </div>
-  </div>
+            </div>
+            <div class="filter-group">
+                <span class="filter-label">Libro:</span>
+                <input class="filter-select" id="filterBook" type="text" placeholder="Filtrar por título" oninput="filterCitations()" style="min-width:180px;">
+            </div>
+        </div>
 
-  <div class="archive-stats">
-    <div class="stat-card">
-      <div class="stat-value" id="statTotal">0</div>
-      <div class="stat-label">Citas archivadas</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-value" id="statPages">0</div>
-      <div class="stat-label">Páginas cubiertas</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-value" id="statCategories">0</div>
-      <div class="stat-label">Categorías utilizadas</div>
-    </div>
-  </div>
+        <div class="archive-stats">
+            <div class="stat-card">
+                <div class="stat-value" id="statTotal">0</div>
+                <div class="stat-label">Citas archivadas</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="statBooks">0</div>
+                <div class="stat-label">Libros cubiertos</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="statCategories">0</div>
+                <div class="stat-label">Categorías utilizadas</div>
+            </div>
+        </div>
 
-  <div class="archive-controls">
-    <button class="btn-secondary" onclick="exportArchive('json')">📥 Exportar JSON</button>
-    <button class="btn-secondary" onclick="exportArchive('csv')">📥 Exportar CSV</button>
-    <button class="btn-secondary" onclick="downloadTemplate()">📋 Descargar template</button>
-    <button class="btn-secondary" onclick="clearArchive()" style="color:var(--ro);">🗑 Limpiar historial</button>
-  </div>
+        <div class="archive-controls">
+            <button class="btn-secondary" onclick="exportArchive('json')">📥 Exportar JSON</button>
+            <button class="btn-secondary" onclick="exportArchive('csv')">📥 Exportar CSV</button>
+            <button class="btn-secondary" onclick="downloadTemplate()">📋 Descargar template</button>
+            <button class="btn-secondary" onclick="clearArchive()" style="color:var(--ro);">🗑 Limpiar historial</button>
+        </div>
 
-  <div class="citation-list" id="citationList">
-    <!-- Citations will be populated here -->
-  </div>
-</div>
-
-<!-- MODAL DE CAPTURA -->
-<div id="captureModal" class="modal-backdrop">
-  <div class="modal-card">
-    <div class="modal-head">
-      <h2>Capturar cita</h2>
-      <button class="modal-close" onclick="closeCaptureModal()">✕</button>
+        <div class="citation-list" id="citationList">
+            <!-- Citations will be populated here -->
+        </div>
     </div>
 
-    <div class="field">
-      <label class="lbl">Página</label>
-      <input type="number" id="capturePageNo" placeholder="Ej: 17" min="1" max="500">
-    </div>
+    <!-- MODAL DE CAPTURA -->
+    <div id="captureModal" class="modal-backdrop">
+        <div class="modal-card">
+            <div class="modal-head">
+                <h2>Capturar cita</h2>
+                <button class="modal-close" onclick="closeCaptureModal()">✕</button>
+            </div>
 
-    <div class="field">
-      <label class="lbl">Cita (textual)</label>
-      <textarea id="captureText" placeholder="&quot;Capitalismo de la vigilancia reclama para sí la experiencia humana...&quot;"></textarea>
-    </div>
+            <div class="field">
+                <label class="lbl">Libro</label>
+                <input type="text" id="captureBookTitle" placeholder="Ej: La era del capitalismo de la vigilancia">
+            </div>
 
-    <div class="field">
-      <label class="lbl">Marcador (tu código de color)</label>
-      <div class="color-grid">
-        <label><input type="radio" name="color" value="red"> 🔴 Concepto clave (rojo)</label>
-        <label><input type="radio" name="color" value="yellow"> 🟡 Referencia (amarillo)</label>
-        <label><input type="radio" name="color" value="pink"> 🩷 Interesa/Recurso (rosa)</label>
-        <label><input type="radio" name="color" value="green"> 🟢 Reflexión (verde)</label>
-        <label><input type="radio" name="color" value="blue"> 🔵 Investigación (azul)</label>
-        <label><input type="radio" name="color" value="orange"> 🟠 Comparación (naranja)</label>
-      </div>
-    </div>
+            <div class="field">
+                <label class="lbl">Autor</label>
+                <input type="text" id="captureAuthor" placeholder="Ej: Shoshana Zuboff">
+            </div>
 
-    <div class="field">
-      <label class="lbl">Categoría temática</label>
-      <select id="captureCategory">
+            <div class="field">
+                <label class="lbl">Página</label>
+                <input type="number" id="capturePageNo" placeholder="Ej: 17" min="1" max="500">
+            </div>
+
+            <div class="field">
+                <label class="lbl">Cita (textual)</label>
+                <textarea id="captureText" placeholder="&quot;Capitalismo de la vigilancia reclama para sí la experiencia humana...&quot;"></textarea>
+            </div>
+
+            <div class="field">
+                <label class="lbl">Marcador (tu código de color)</label>
+                <div class="color-grid">
+                    <label><input type="radio" name="color" value="red"> 🟥 Concepto clave (rosa fucsia)</label>
+                    <label><input type="radio" name="color" value="gray"> ⬛ Investigar (gris)</label>
+                    <label><input type="radio" name="color" value="yellow"> 🟨 Referencia (amarillo)</label>
+                    <label><input type="radio" name="color" value="green"> 🟩 Persona de interés (verde)</label>
+                    <label><input type="radio" name="color" value="blue"> 🟦 Reflexión (azul claro)</label>
+                    <label><input type="radio" name="color" value="orange"> 🟧 Compartir (naranja salmón)</label>
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="lbl">Categoría temática</label>
+                <select id="captureCategory">
         <option value="">— Selecciona categoría</option>
         <option value="hogar">Hogar / Nostos / Santuario</option>
         <option value="vigilancia_inst">Vigilancia Institucional (AFP/Carabineros/SURA)</option>
@@ -740,172 +1013,207 @@
         <option value="democracia">Democracia Amenazada / Poder Instrumentario</option>
         <option value="metodologia">Metodología / Cómo Medir Mistranslation</option>
       </select>
+            </div>
+
+            <div class="field">
+                <label class="lbl">Notas (alineación con tu tesis)</label>
+                <textarea id="captureNotes" placeholder="Cómo se conecta con contra-archivo, mistranslation, vigilancia AFP, etc."></textarea>
+            </div>
+
+            <div class="modal-actions">
+                <button class="btn-primary" onclick="saveCitation()">Guardar cita</button>
+                <button class="btn-secondary" onclick="closeCaptureModal()">Cancelar</button>
+            </div>
+        </div>
     </div>
 
-    <div class="field">
-      <label class="lbl">Notas (alineación con tu tesis)</label>
-      <textarea id="captureNotes" placeholder="Cómo se conecta con contra-archivo, mistranslation, vigilancia AFP, etc."></textarea>
-    </div>
+    <script>
+        // Citation Archive Management
+        const STORAGE_KEY = 'corpusBookCitations';
+        const LEGACY_STORAGE_KEY = 'zuboffCitations';
+        const DEFAULT_BOOK_TITLE = 'Zuboff — La era del capitalismo de la vigilancia';
+        const DEFAULT_AUTHOR = 'Shoshana Zuboff';
 
-    <div class="modal-actions">
-      <button class="btn-primary" onclick="saveCitation()">Guardar cita</button>
-      <button class="btn-secondary" onclick="closeCaptureModal()">Cancelar</button>
-    </div>
-  </div>
-</div>
+        let citations = JSON.parse(localStorage.getItem(STORAGE_KEY) || localStorage.getItem(LEGACY_STORAGE_KEY)) || [{
+            id: 1001,
+            bookTitle: 'Zuboff — La era del capitalismo de la vigilancia',
+            author: 'Shoshana Zuboff',
+            pageNo: 17,
+            text: "No hay un fin de la historia: cada generación debe afirmar su voluntad y su imaginación ante nuevas amenazas que nos obligan a juzgar de nuevo la misma causa en cada época sucesiva.",
+            color: "yellow",
+            category: "metodologia",
+            notes: "Marco genealógico para tu tesis: la corrupción no es anomalía sino estructura que cada generación debe nombrar de nuevo. Conecta con contra-archivo como práctica recursiva.",
+            timestamp: new Date().toISOString()
+        }, {
+            id: 1002,
+            bookTitle: 'Zuboff — La era del capitalismo de la vigilancia',
+            author: 'Shoshana Zuboff',
+            pageNo: 17,
+            text: "sin nuestra orientación, estamos perdidos.",
+            color: "red",
+            category: "democracia",
+            notes: "Pérdida de agencia colectiva. Zuboff lo dice sobre desorientación digital; tú lo aplicas a mistranslation institucional (AFP/Carabineros pierden legitimidad porque no pueden nombrar lo que hacen).",
+            timestamp: new Date().toISOString()
+        }, {
+            id: 1003,
+            bookTitle: 'Zuboff — La era del capitalismo de la vigilancia',
+            author: 'Shoshana Zuboff',
+            pageNo: 17,
+            text: "el nostos, el hallar un hogar, es una de nuestras necesidades más profundas se hace evidente en el precio que estamos dispuestos a pagar por él.",
+            color: "pink",
+            category: "hogar",
+            notes: "Toque directo a tu herida. Expulsión a los 15. El contra-archivo como búsqueda del hogar epistémico perdido.",
+            timestamp: new Date().toISOString()
+        }, {
+            id: 1004,
+            bookTitle: 'Zuboff — La era del capitalismo de la vigilancia',
+            author: 'Shoshana Zuboff',
+            pageNo: 17,
+            text: "El hogar es donde conocemos y somos conocidos, donde amamos y somos amados. El hogar es dominio de nuestros actos, es voz, es relación y es asilo: tiene parte de libertad, parte de florecimiento..., parte de refugio, parte de perspectiva de futuro.",
+            color: "red",
+            category: "hogar",
+            notes: "Definición que Zuboff recupera de Homero. Tu construcción de familia elegida es respuesta activa a esta deprivación. Conecta con polysecure como hogar epistémico.",
+            timestamp: new Date().toISOString()
+        }, {
+            id: 1005,
+            bookTitle: 'Zuboff — La era del capitalismo de la vigilancia',
+            author: 'Shoshana Zuboff',
+            pageNo: 18,
+            text: "saudade, un término que, al parecer, capta la nostalgia y el anhelo que, desde hace siglos, produce en los emigrantes separarse de su patria.",
+            color: "yellow",
+            category: "hogar",
+            notes: "Genealogía afectiva de la migración. Tu experiencia como exiliado del hogar materno. La diáspora como condición política de la cognición.",
+            timestamp: new Date().toISOString()
+        }, {
+            id: 1006,
+            bookTitle: 'Zuboff — La era del capitalismo de la vigilancia',
+            author: 'Shoshana Zuboff',
+            pageNo: 21,
+            text: "medios de modificación de la conducta y de creciente fortalecimiento del poder instrumentario.",
+            color: "red",
+            category: "poder_epistemico",
+            notes: "Núcleo: poder instrumentario = capacidad de moldear comportamiento sin consentimiento. Aplica directamente a AFP (moldea ahorros futuros) y Carabineros (moldea protesta).",
+            timestamp: new Date().toISOString()
+        }, {
+            id: 1007,
+            bookTitle: 'Zuboff — La era del capitalismo de la vigilancia',
+            author: 'Shoshana Zuboff',
+            pageNo: 23,
+            text: "Google inventó y perfeccionó el capitalismo de la vigilancia en un sentido muy similar a como General Motors inventó y perfeccionó el capitalismo gerencial hace un siglo.",
+            color: "yellow",
+            category: "extraccion_datos",
+            notes: "Genealogía de acumulación. Zuboff establece que vigilancia = modelo económico nuevo. Tu pregunta: ¿cómo AFP/SURA reproducen este modelo? ¿cuál es la mistranslation?",
+            timestamp: new Date().toISOString()
+        }, {
+            id: 1008,
+            bookTitle: 'Zuboff — La era del capitalismo de la vigilancia',
+            author: 'Shoshana Zuboff',
+            pageNo: 23,
+            text: "La conexión digital es hoy un medio para satisfacer los fines comerciales de otros. En su fundamento mismo, el capitalismo de la vigilancia es parasítico y autorreferencial.",
+            color: "red",
+            category: "extraccion_datos",
+            notes: "Síntesis del modelo extractivo. Zuboff lo dice de Google/Meta. Tú: ¿SURA/AFP operan con lógica similar? ¿cómo diferenciarlo?",
+            timestamp: new Date().toISOString()
+        }, {
+            id: 1009,
+            bookTitle: 'Zuboff — La era del capitalismo de la vigilancia',
+            author: 'Shoshana Zuboff',
+            pageNo: 23,
+            text: "Karl Marx retrato el capitalismo como un vampiro que se alimenta del trabajador, pero le da un giro inesperado: en lugar de los trabajadores, la fuente de alimento del capitalismo de la vigilancia es cualquier aspecto de la experiencia de cualquier ser humano.",
+            color: "blue",
+            category: "regimenes_verdad",
+            notes: "Reflexión: Zuboff usa Marx para desplazar la fuente extractiva. Tú: ¿quién es el vampiro en AFP? ¿el estado, el mercado, la corrupción?",
+            timestamp: new Date().toISOString()
+        }, {
+            id: 1010,
+            bookTitle: 'Zuboff — La era del capitalismo de la vigilancia',
+            author: 'Shoshana Zuboff',
+            pageNo: 24,
+            text: "Actualmente protegidos por la ilegibilidad intrínseca de los procesos automatizados que están bajo su dominio, por la ignorancia a propósito de lo que tales procesos podrían lograr.",
+            color: "yellow",
+            category: "metodologia",
+            notes: "Clave metodológica: la opacidad operacional como táctica política. Tu contra-archivo intenta hacerlo legible. D3-force para visualizar poder oculto.",
+            timestamp: new Date().toISOString()
+        }];
 
-<script>
-  // Citation Archive Management
-  let citations = JSON.parse(localStorage.getItem('zuboffCitations')) || [
-    {
-      id: 1001,
-      pageNo: 17,
-      text: "No hay un fin de la historia: cada generación debe afirmar su voluntad y su imaginación ante nuevas amenazas que nos obligan a juzgar de nuevo la misma causa en cada época sucesiva.",
-      color: "yellow",
-      category: "metodologia",
-      notes: "Marco genealógico para tu tesis: la corrupción no es anomalía sino estructura que cada generación debe nombrar de nuevo. Conecta con contra-archivo como práctica recursiva.",
-      timestamp: new Date().toISOString()
-    },
-    {
-      id: 1002,
-      pageNo: 17,
-      text: "sin nuestra orientación, estamos perdidos.",
-      color: "red",
-      category: "democracia",
-      notes: "Pérdida de agencia colectiva. Zuboff lo dice sobre desorientación digital; tú lo aplicas a mistranslation institucional (AFP/Carabineros pierden legitimidad porque no pueden nombrar lo que hacen).",
-      timestamp: new Date().toISOString()
-    },
-    {
-      id: 1003,
-      pageNo: 17,
-      text: "el nostos, el hallar un hogar, es una de nuestras necesidades más profundas se hace evidente en el precio que estamos dispuestos a pagar por él.",
-      color: "pink",
-      category: "hogar",
-      notes: "Toque directo a tu herida. Expulsión a los 15. El contra-archivo como búsqueda del hogar epistémico perdido.",
-      timestamp: new Date().toISOString()
-    },
-    {
-      id: 1004,
-      pageNo: 17,
-      text: "El hogar es donde conocemos y somos conocidos, donde amamos y somos amados. El hogar es dominio de nuestros actos, es voz, es relación y es asilo: tiene parte de libertad, parte de florecimiento..., parte de refugio, parte de perspectiva de futuro.",
-      color: "red",
-      category: "hogar",
-      notes: "Definición que Zuboff recupera de Homero. Tu construcción de familia elegida es respuesta activa a esta deprivación. Conecta con polysecure como hogar epistémico.",
-      timestamp: new Date().toISOString()
-    },
-    {
-      id: 1005,
-      pageNo: 18,
-      text: "saudade, un término que, al parecer, capta la nostalgia y el anhelo que, desde hace siglos, produce en los emigrantes separarse de su patria.",
-      color: "yellow",
-      category: "hogar",
-      notes: "Genealogía afectiva de la migración. Tu experiencia como exiliado del hogar materno. La diáspora como condición política de la cognición.",
-      timestamp: new Date().toISOString()
-    },
-    {
-      id: 1006,
-      pageNo: 21,
-      text: "medios de modificación de la conducta y de creciente fortalecimiento del poder instrumentario.",
-      color: "red",
-      category: "poder_epistemico",
-      notes: "Núcleo: poder instrumentario = capacidad de moldear comportamiento sin consentimiento. Aplica directamente a AFP (moldea ahorros futuros) y Carabineros (moldea protesta).",
-      timestamp: new Date().toISOString()
-    },
-    {
-      id: 1007,
-      pageNo: 23,
-      text: "Google inventó y perfeccionó el capitalismo de la vigilancia en un sentido muy similar a como General Motors inventó y perfeccionó el capitalismo gerencial hace un siglo.",
-      color: "yellow",
-      category: "extraccion_datos",
-      notes: "Genealogía de acumulación. Zuboff establece que vigilancia = modelo económico nuevo. Tu pregunta: ¿cómo AFP/SURA reproducen este modelo? ¿cuál es la mistranslation?",
-      timestamp: new Date().toISOString()
-    },
-    {
-      id: 1008,
-      pageNo: 23,
-      text: "La conexión digital es hoy un medio para satisfacer los fines comerciales de otros. En su fundamento mismo, el capitalismo de la vigilancia es parasítico y autorreferencial.",
-      color: "red",
-      category: "extraccion_datos",
-      notes: "Síntesis del modelo extractivo. Zuboff lo dice de Google/Meta. Tú: ¿SURA/AFP operan con lógica similar? ¿cómo diferenciarlo?",
-      timestamp: new Date().toISOString()
-    },
-    {
-      id: 1009,
-      pageNo: 23,
-      text: "Karl Marx retrato el capitalismo como un vampiro que se alimenta del trabajador, pero le da un giro inesperado: en lugar de los trabajadores, la fuente de alimento del capitalismo de la vigilancia es cualquier aspecto de la experiencia de cualquier ser humano.",
-      color: "blue",
-      category: "regimenes_verdad",
-      notes: "Reflexión: Zuboff usa Marx para desplazar la fuente extractiva. Tú: ¿quién es el vampiro en AFP? ¿el estado, el mercado, la corrupción?",
-      timestamp: new Date().toISOString()
-    },
-    {
-      id: 1010,
-      pageNo: 24,
-      text: "Actualmente protegidos por la ilegibilidad intrínseca de los procesos automatizados que están bajo su dominio, por la ignorancia a propósito de lo que tales procesos podrían lograr.",
-      color: "yellow",
-      category: "metodologia",
-      notes: "Clave metodológica: la opacidad operacional como táctica política. Tu contra-archivo intenta hacerlo legible. D3-force para visualizar poder oculto.",
-      timestamp: new Date().toISOString()
-    }
-  ];
+        citations = citations.map(c => ({
+            ...c,
+            bookTitle: c.bookTitle || DEFAULT_BOOK_TITLE,
+            author: c.author || DEFAULT_AUTHOR
+        }));
 
-  function openCaptureModal() {
-    document.getElementById('captureModal').classList.add('open');
-  }
+        function persistCitations() {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(citations));
+        }
 
-  function closeCaptureModal() {
-    document.getElementById('captureModal').classList.remove('open');
-    document.getElementById('capturePageNo').value = '';
-    document.getElementById('captureText').value = '';
-    document.getElementById('captureNotes').value = '';
-    document.querySelectorAll('input[name="color"]').forEach(r => r.checked = false);
-    document.getElementById('captureCategory').value = '';
-  }
+        persistCitations();
 
-  function saveCitation() {
-    const pageNo = document.getElementById('capturePageNo').value;
-    const text = document.getElementById('captureText').value;
-    const color = document.querySelector('input[name="color"]:checked')?.value;
-    const category = document.getElementById('captureCategory').value;
-    const notes = document.getElementById('captureNotes').value;
+        function openCaptureModal() {
+            document.getElementById('captureModal').classList.add('open');
+        }
 
-    if (!pageNo || !text || !color || !category) {
-      alert('Por favor completa todos los campos obligatorios (página, cita, color, categoría).');
-      return;
-    }
+        function closeCaptureModal() {
+            document.getElementById('captureModal').classList.remove('open');
+            document.getElementById('captureBookTitle').value = '';
+            document.getElementById('captureAuthor').value = '';
+            document.getElementById('capturePageNo').value = '';
+            document.getElementById('captureText').value = '';
+            document.getElementById('captureNotes').value = '';
+            document.querySelectorAll('input[name="color"]').forEach(r => r.checked = false);
+            document.getElementById('captureCategory').value = '';
+        }
 
-    const citation = {
-      id: Date.now(),
-      pageNo: parseInt(pageNo),
-      text: text,
-      color: color,
-      category: category,
-      notes: notes,
-      timestamp: new Date().toISOString()
-    };
+        function saveCitation() {
+            const bookTitle = document.getElementById('captureBookTitle').value.trim();
+            const author = document.getElementById('captureAuthor').value.trim();
+            const pageNo = document.getElementById('capturePageNo').value;
+            const text = document.getElementById('captureText').value;
+            const checkedColor = document.querySelector('input[name="color"]:checked');
+            const color = checkedColor ? checkedColor.value : '';
+            const category = document.getElementById('captureCategory').value;
+            const notes = document.getElementById('captureNotes').value;
 
-    citations.push(citation);
-    localStorage.setItem('zuboffCitations', JSON.stringify(citations));
-    renderCitations();
-    updateStats();
-    closeCaptureModal();
-  }
+            if (!bookTitle || !author || !pageNo || !text || !color || !category) {
+                alert('Por favor completa todos los campos obligatorios (libro, autor, página, cita, color, categoría).');
+                return;
+            }
 
-  function renderCitations(filtered = null) {
-    const list = document.getElementById('citationList');
-    const toRender = filtered || citations;
+            const citation = {
+                id: Date.now(),
+                bookTitle: bookTitle,
+                author: author,
+                pageNo: parseInt(pageNo),
+                text: text,
+                color: color,
+                category: category,
+                notes: notes,
+                timestamp: new Date().toISOString()
+            };
 
-    if (toRender.length === 0) {
-      list.innerHTML = '<p style="color:var(--neutral); text-align:center; padding:40px 20px;">No hay citas archivadas aún. Comienza capturando extractos mientras lees.</p>';
-      return;
-    }
+            citations.push(citation);
+            persistCitations();
+            renderCitations();
+            updateStats();
+            closeCaptureModal();
+        }
 
-    list.innerHTML = toRender.map(c => `
+        function renderCitations(filtered = null) {
+            const list = document.getElementById('citationList');
+            const toRender = filtered || citations;
+
+            if (toRender.length === 0) {
+                list.innerHTML = '<p style="color:var(--neutral); text-align:center; padding:40px 20px;">No hay citas archivadas aún. Comienza capturando extractos mientras lees.</p>';
+                return;
+            }
+
+            list.innerHTML = toRender.map(c => `
       <div class="citation-item mark-${c.color}" onclick="toggleCitationExpand(this)">
         <div class="citation-header">
           <div style="flex:1;">
             <div class="citation-text">"${escapeHtml(c.text)}"</div>
             <div class="citation-meta">
+                            <span class="citation-page">${escapeHtml(c.bookTitle)} · ${escapeHtml(c.author)}</span>
+                            <span>•</span>
               <span class="citation-page">p. ${c.pageNo}</span>
               <span class="citation-color-label ${c.color}">${getColorLabel(c.color)}</span>
               <span class="citation-category">${getCategoryLabel(c.category)}</span>
@@ -919,130 +1227,142 @@
         </div>
       </div>
     `).join('');
-  }
+        }
 
-  function escapeHtml(str) {
-    if (!str) return '';
-    return String(str)
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;');
-  }
+        function escapeHtml(str) {
+            if (!str) return '';
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;');
+        }
 
-  function filterCitations() {
-    const colorFilter = document.getElementById('filterColor').value;
-    const categoryFilter = document.getElementById('filterCategory').value;
+        function filterCitations() {
+            const colorFilter = document.getElementById('filterColor').value;
+            const categoryFilter = document.getElementById('filterCategory').value;
+            const bookFilter = (document.getElementById('filterBook').value || '').trim().toLowerCase();
 
-    const filtered = citations.filter(c => {
-      const colorMatch = !colorFilter || c.color === colorFilter;
-      const categoryMatch = !categoryFilter || c.category === categoryFilter;
-      return colorMatch && categoryMatch;
-    });
+            const filtered = citations.filter(c => {
+                const colorMatch = !colorFilter || c.color === colorFilter;
+                const categoryMatch = !categoryFilter || c.category === categoryFilter;
+                const bookMatch = !bookFilter || (c.bookTitle || '').toLowerCase().indexOf(bookFilter) !== -1;
+                return colorMatch && categoryMatch && bookMatch;
+            });
 
-    renderCitations(filtered);
-  }
+            renderCitations(filtered);
+        }
 
-  function toggleCitationExpand(el) {
-    document.querySelectorAll('.citation-item').forEach(item => {
-      if (item !== el) item.classList.remove('open');
-    });
-    el.classList.toggle('open');
-  }
+        function toggleCitationExpand(el) {
+            document.querySelectorAll('.citation-item').forEach(item => {
+                if (item !== el) item.classList.remove('open');
+            });
+            el.classList.toggle('open');
+        }
 
-  function deleteCitation(id) {
-    if (confirm('¿Eliminar esta cita?')) {
-      citations = citations.filter(c => c.id !== id);
-      localStorage.setItem('zuboffCitations', JSON.stringify(citations));
-      renderCitations();
-      updateStats();
-    }
-  }
+        function deleteCitation(id) {
+            if (confirm('¿Eliminar esta cita?')) {
+                citations = citations.filter(c => c.id !== id);
+                persistCitations();
+                renderCitations();
+                updateStats();
+            }
+        }
 
-  function updateStats() {
-    document.getElementById('statTotal').textContent = citations.length;
-    const pages = new Set(citations.map(c => c.pageNo)).size;
-    document.getElementById('statPages').textContent = pages;
-    const categories = new Set(citations.map(c => c.category)).size;
-    document.getElementById('statCategories').textContent = categories;
-  }
+        function updateStats() {
+            document.getElementById('statTotal').textContent = citations.length;
+            const books = new Set(citations.map(c => c.bookTitle || DEFAULT_BOOK_TITLE)).size;
+            document.getElementById('statBooks').textContent = books;
+            const categories = new Set(citations.map(c => c.category)).size;
+            document.getElementById('statCategories').textContent = categories;
+        }
 
-  function getColorLabel(color) {
-    const labels = {
-      red: 'Concepto clave',
-      yellow: 'Referencia',
-      pink: 'Interesa/Recurso',
-      green: 'Reflexión',
-      blue: 'Investigación',
-      orange: 'Comparación'
-    };
-    return labels[color] || color;
-  }
+        function getColorLabel(color) {
+            const labels = {
+                red: 'Concepto clave',
+                yellow: 'Referencia',
+                pink: 'Interesa/Recurso',
+                green: 'Reflexión',
+                blue: 'Investigación',
+                orange: 'Comparación'
+            };
+            return labels[color] || color;
+        }
 
-  function getCategoryLabel(cat) {
-    const labels = {
-      hogar: 'Hogar/Nostos',
-      vigilancia_inst: 'Vigilancia Inst.',
-      poder_epistemico: 'Poder Epistémico',
-      regimenes_verdad: 'Regímenes Verdad',
-      extraccion_datos: 'Extracción Datos',
-      democracia: 'Democracia',
-      metodologia: 'Metodología'
-    };
-    return labels[cat] || cat;
-  }
+        function getCategoryLabel(cat) {
+            const labels = {
+                hogar: 'Hogar/Nostos',
+                vigilancia_inst: 'Vigilancia Inst.',
+                poder_epistemico: 'Poder Epistémico',
+                regimenes_verdad: 'Regímenes Verdad',
+                extraccion_datos: 'Extracción Datos',
+                democracia: 'Democracia',
+                metodologia: 'Metodología'
+            };
+            return labels[cat] || cat;
+        }
 
-  function exportArchive(format) {
-    if (citations.length === 0) {
-      alert('No hay citas para exportar.');
-      return;
-    }
+        function exportArchive(format) {
+            if (citations.length === 0) {
+                alert('No hay citas para exportar.');
+                return;
+            }
 
-    let data, filename, type;
-    const dateStr = new Date().toISOString().slice(0, 10);
+            let data, filename, type;
+            const dateStr = new Date().toISOString().slice(0, 10);
 
-    if (format === 'json') {
-      data = JSON.stringify(citations, null, 2);
-      filename = `zuboff-citas-${dateStr}.json`;
-      type = 'application/json';
-    } else if (format === 'csv') {
-      const rows = [['Página', 'Color', 'Categoría', 'Cita', 'Notas', 'Fecha']];
-      citations.forEach(c => {
-        rows.push([
-          c.pageNo,
-          getColorLabel(c.color),
-          getCategoryLabel(c.category),
-          `"${(c.text || '').replace(/"/g, '""')}"`,
-          `"${(c.notes || '').replace(/"/g, '""')}"`,
-          new Date(c.timestamp).toLocaleDateString('es-CL')
-        ]);
-      });
-      data = rows.map(r => r.join(',')).join('\n');
-      filename = `zuboff-citas-${dateStr}.csv`;
-      type = 'text/csv';
-    }
+            if (format === 'json') {
+                data = JSON.stringify(citations, null, 2);
+                filename = `corpus-citas-${dateStr}.json`;
+                type = 'application/json';
+            } else if (format === 'csv') {
+                const rows = [
+                    ['Libro', 'Autor', 'Página', 'Color', 'Categoría', 'Cita', 'Notas', 'Fecha']
+                ];
+                citations.forEach(c => {
+                    rows.push([
+                        `"${(c.bookTitle || DEFAULT_BOOK_TITLE).replace(/"/g, '""')}"`,
+                        `"${(c.author || DEFAULT_AUTHOR).replace(/"/g, '""')}"`,
+                        c.pageNo,
+                        getColorLabel(c.color),
+                        getCategoryLabel(c.category),
+                        `"${(c.text || '').replace(/"/g, '""')}"`,
+                        `"${(c.notes || '').replace(/"/g, '""')}"`,
+                        new Date(c.timestamp).toLocaleDateString('es-CL')
+                    ]);
+                });
+                data = rows.map(r => r.join(',')).join('\n');
+                filename = `corpus-citas-${dateStr}.csv`;
+                type = 'text/csv';
+            }
 
-    const blob = new Blob([data], { type: type });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = filename;
-    a.click();
-    URL.revokeObjectURL(url);
-  }
+            const blob = new Blob([data], {
+                type: type
+            });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
 
-  function downloadTemplate() {
-    const template = `Plantilla de citas — La era del capitalismo de la vigilancia (Zuboff)
+        function downloadTemplate() {
+            const template = `Plantilla de citas — Corpus de libros físicos (Contra-Archivo)
 ====================================================================
 
 INSTRUCCIONES:
 - Copia esta plantilla cada vez que subrayes una nueva cita
-- Mantén el orden de campos: página | color | categoría | cita | notas
+- Mantén el orden de campos: libro | autor | página | color | categoría | cita | notas
 - Colores: RED (Concepto clave) | YELLOW (Referencia) | PINK (Interesa) | GREEN (Reflexión) | BLUE (Investigación) | ORANGE (Comparación)
 - Categorías: hogar | vigilancia_inst | poder_epistemico | regimenes_verdad | extraccion_datos | democracia | metodologia
+- Referencia metodológica: BJ_analisis_consolidado_D17_Intro
 
 REGISTRO:
 ---------
+
+Libro: [título del libro]
+Autor: [autor]
 
 Página: [número]
 Color: [RED|YELLOW|PINK|GREEN|BLUE|ORANGE]
@@ -1061,136 +1381,138 @@ Cita: "El hogar es donde conocemos y somos conocidos, donde amamos y somos amado
 Notas: Conexión directa con tu experiencia de expulsión a los 15. Lo que perdiste y construiste. Eje de la herida fundante en contra-archivo.
 `;
 
-    const blob = new Blob([template], { type: 'text/plain' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'template-citas-zuboff.txt';
-    a.click();
-    URL.revokeObjectURL(url);
-  }
+            const blob = new Blob([template], {
+                type: 'text/plain'
+            });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'template-citas-corpus-fisico.txt';
+            a.click();
+            URL.revokeObjectURL(url);
+        }
 
-  function clearArchive() {
-    if (confirm('¿Eliminar todo el historial de citas? Esta acción no se puede deshacer.')) {
-      citations = [];
-      localStorage.setItem('zuboffCitations', JSON.stringify(citations));
-      renderCitations();
-      updateStats();
-    }
-  }
+        function clearArchive() {
+            if (confirm('¿Eliminar todo el historial de citas? Esta acción no se puede deshacer.')) {
+                citations = [];
+                persistCitations();
+                renderCitations();
+                updateStats();
+            }
+        }
 
-  // Cerrar modal al hacer click en backdrop
-  document.getElementById('captureModal').addEventListener('click', (e) => {
-    if (e.target.id === 'captureModal') closeCaptureModal();
-  });
+        // Cerrar modal al hacer click en backdrop
+        document.getElementById('captureModal').addEventListener('click', (e) => {
+            if (e.target.id === 'captureModal') closeCaptureModal();
+        });
 
-  // Cerrar modal con ESC
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') closeCaptureModal();
-  });
+        // Cerrar modal con ESC
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeCaptureModal();
+        });
 
-  // Initialize
-  renderCitations();
-  updateStats();
+        // Initialize
+        renderCitations();
+        updateStats();
 
-  // ── ANALIZADOR CLAVE B ──────────────────────────────────────────────────────
+        // ── ANALIZADOR CLAVE B ──────────────────────────────────────────────────────
 
-  let currentPhotoBase64 = null;
-  let currentPhotoType = null;
-  let pendingResults = [];
+        let currentPhotoBase64 = null;
+        let currentPhotoType = null;
+        let pendingResults = [];
 
-  function toggleAnalyzer() {
-    const section = document.getElementById('analyzerSection');
-    const label = document.getElementById('analyzerToggleLabel');
-    section.classList.toggle('open');
-    label.textContent = section.classList.contains('open') ? 'Cerrar' : 'Abrir';
-  }
+        function toggleAnalyzer() {
+            const section = document.getElementById('analyzerSection');
+            const label = document.getElementById('analyzerToggleLabel');
+            section.classList.toggle('open');
+            label.textContent = section.classList.contains('open') ? 'Cerrar' : 'Abrir';
+        }
 
-  function saveApiKey() {
-    const key = document.getElementById('apiKeyInput').value.trim();
-    if (!key.startsWith('sk-ant-')) {
-      setApiKeyStatus('Key inválida (debe empezar con sk-ant-)', false);
-      return;
-    }
-    localStorage.setItem('anthropicApiKey', key);
-    document.getElementById('apiKeyInput').value = '';
-    setApiKeyStatus('Guardada ✓', true);
-    document.getElementById('analyzerSection').classList.add('has-key');
-  }
+        function saveApiKey() {
+            const key = document.getElementById('apiKeyInput').value.trim();
+            if (!key.startsWith('sk-ant-')) {
+                setApiKeyStatus('Key inválida (debe empezar con sk-ant-)', false);
+                return;
+            }
+            localStorage.setItem('anthropicApiKey', key);
+            document.getElementById('apiKeyInput').value = '';
+            setApiKeyStatus('Guardada ✓', true);
+            document.getElementById('analyzerSection').classList.add('has-key');
+        }
 
-  function setApiKeyStatus(msg, ok) {
-    const el = document.getElementById('apiKeyStatus');
-    el.textContent = msg;
-    el.className = 'api-key-status' + (ok ? ' saved' : '');
-  }
+        function setApiKeyStatus(msg, ok) {
+            const el = document.getElementById('apiKeyStatus');
+            el.textContent = msg;
+            el.className = 'api-key-status' + (ok ? ' saved' : '');
+        }
 
-  function handlePhotoSelect(e) {
-    const file = e.target.files[0];
-    if (!file) return;
-    loadPhoto(file);
-  }
+        function handlePhotoSelect(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            loadPhoto(file);
+        }
 
-  function loadPhoto(file) {
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      const dataUrl = e.target.result;
-      currentPhotoBase64 = dataUrl.split(',')[1];
-      currentPhotoType = file.type || 'image/jpeg';
-      const preview = document.getElementById('previewImg');
-      preview.src = dataUrl;
-      preview.classList.add('visible');
-      document.getElementById('analyzeBtn').disabled = false;
-      document.getElementById('clearPhotoBtn').style.display = '';
-      document.getElementById('resultsPreview').classList.remove('visible');
-      setAnalyzeStatus('');
-    };
-    reader.readAsDataURL(file);
-  }
+        function loadPhoto(file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const dataUrl = e.target.result;
+                currentPhotoBase64 = dataUrl.split(',')[1];
+                currentPhotoType = file.type || 'image/jpeg';
+                const preview = document.getElementById('previewImg');
+                preview.src = dataUrl;
+                preview.classList.add('visible');
+                document.getElementById('analyzeBtn').disabled = false;
+                document.getElementById('clearPhotoBtn').style.display = '';
+                document.getElementById('resultsPreview').classList.remove('visible');
+                setAnalyzeStatus('');
+            };
+            reader.readAsDataURL(file);
+        }
 
-  function clearPhoto() {
-    currentPhotoBase64 = null;
-    currentPhotoType = null;
-    pendingResults = [];
-    document.getElementById('photoInput').value = '';
-    const preview = document.getElementById('previewImg');
-    preview.src = '';
-    preview.classList.remove('visible');
-    document.getElementById('analyzeBtn').disabled = true;
-    document.getElementById('clearPhotoBtn').style.display = 'none';
-    document.getElementById('resultsPreview').classList.remove('visible');
-    setAnalyzeStatus('');
-  }
+        function clearPhoto() {
+            currentPhotoBase64 = null;
+            currentPhotoType = null;
+            pendingResults = [];
+            document.getElementById('photoInput').value = '';
+            const preview = document.getElementById('previewImg');
+            preview.src = '';
+            preview.classList.remove('visible');
+            document.getElementById('analyzeBtn').disabled = true;
+            document.getElementById('clearPhotoBtn').style.display = 'none';
+            document.getElementById('resultsPreview').classList.remove('visible');
+            setAnalyzeStatus('');
+        }
 
-  function setAnalyzeStatus(msg, type = '') {
-    const el = document.getElementById('analyzeStatus');
-    el.textContent = msg;
-    el.className = 'analyze-status' + (type ? ' ' + type : '');
-  }
+        function setAnalyzeStatus(msg, type = '') {
+            const el = document.getElementById('analyzeStatus');
+            el.textContent = msg;
+            el.className = 'analyze-status' + (type ? ' ' + type : '');
+        }
 
-  async function analyzePhoto() {
-    const apiKey = localStorage.getItem('anthropicApiKey');
-    if (!apiKey) {
-      setAnalyzeStatus('Guarda tu API key primero.', 'error');
-      return;
-    }
-    if (!currentPhotoBase64) {
-      setAnalyzeStatus('Selecciona una foto primero.', 'error');
-      return;
-    }
+        async function analyzePhoto() {
+            const apiKey = localStorage.getItem('anthropicApiKey');
+            if (!apiKey) {
+                setAnalyzeStatus('Guarda tu API key primero.', 'error');
+                return;
+            }
+            if (!currentPhotoBase64) {
+                setAnalyzeStatus('Selecciona una foto primero.', 'error');
+                return;
+            }
 
-    const btn = document.getElementById('analyzeBtn');
-    btn.disabled = true;
-    setAnalyzeStatus('Analizando con Claude…');
+            const btn = document.getElementById('analyzeBtn');
+            btn.disabled = true;
+            setAnalyzeStatus('Analizando con Claude…');
 
-    const systemPrompt = `Eres el skill lectura-clave-b del protocolo bujo-ro v1.2.
+            const systemPrompt = `Eres el skill lectura-clave-b del protocolo bujo-ro v1.2.
 Analizas fotos de páginas de libros académicos anotados con marcadores de color.
 
 CLAVE B — sistema cromático para libros impresos:
 - Rosa fucsia → concepto_clave → color JSON: "red"
-- Gris → investigar → color JSON: "blue"
-- Amarillo → referencia → color JSON: "yellow"
-- Verde → persona_interes → color JSON: "green"
-- Azul claro → reflexion → color JSON: "blue"
+- Gris        → investigar    → color JSON: "gray"
+- Amarillo    → referencia    → color JSON: "yellow"
+- Verde       → persona_interes → color JSON: "green"
+- Azul claro  → reflexion    → color JSON: "blue"
 - Naranja salmón → compartir → color JSON: "orange"
 
 Extrae TODOS los fragmentos marcados visibles en la imagen.
@@ -1205,74 +1527,87 @@ Para cada uno devuelve un objeto JSON con estos campos exactos:
 
 Responde SOLO con un JSON array válido. Sin texto adicional, sin markdown, sin explicaciones.`;
 
-    try {
-      const response = await fetch('https://api.anthropic.com/v1/messages', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-api-key': apiKey,
-          'anthropic-version': '2023-06-01',
-          'anthropic-dangerous-direct-browser-access': 'true'
-        },
-        body: JSON.stringify({
-          model: 'claude-opus-4-5',
-          max_tokens: 2048,
-          system: systemPrompt,
-          messages: [{
-            role: 'user',
-            content: [{
-              type: 'image',
-              source: { type: 'base64', media_type: currentPhotoType, data: currentPhotoBase64 }
-            }, {
-              type: 'text',
-              text: 'Extrae todas las citas marcadas con Clave B de esta página.'
-            }]
-          }]
-        })
-      });
+            try {
+                const response = await fetch('https://api.anthropic.com/v1/messages', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'x-api-key': apiKey,
+                        'anthropic-version': '2023-06-01',
+                        'anthropic-dangerous-direct-browser-access': 'true'
+                    },
+                    body: JSON.stringify({
+                        model: 'claude-sonnet-4-6',
+                        max_tokens: 2048,
+                        system: systemPrompt,
+                        messages: [{
+                            role: 'user',
+                            content: [{
+                                type: 'image',
+                                source: {
+                                    type: 'base64',
+                                    media_type: currentPhotoType,
+                                    data: currentPhotoBase64
+                                }
+                            }, {
+                                type: 'text',
+                                text: 'Extrae todas las citas marcadas con Clave B de esta página.'
+                            }]
+                        }]
+                    })
+                });
 
-      if (!response.ok) {
-        const err = await response.json().catch(() => ({}));
-        throw new Error(err.error?.message || `HTTP ${response.status}`);
-      }
+                if (!response.ok) {
+                    const err = await response.json().catch(() => ({}));
+                    const errorMessage = err && err.error && err.error.message ? err.error.message : `HTTP ${response.status}`;
+                    throw new Error(errorMessage);
+                }
 
-      const data = await response.json();
-      const raw = data.content[0]?.text || '[]';
-      const cleaned = raw.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
-      pendingResults = JSON.parse(cleaned);
+                const data = await response.json();
+                const raw = data && data.content && data.content[0] && data.content[0].text ? data.content[0].text : '[]';
+                const cleaned = raw.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
+                pendingResults = JSON.parse(cleaned);
 
-      if (!Array.isArray(pendingResults) || pendingResults.length === 0) {
-        setAnalyzeStatus('No se detectaron citas marcadas.', '');
-        btn.disabled = false;
-        return;
-      }
+                if (!Array.isArray(pendingResults) || pendingResults.length === 0) {
+                    setAnalyzeStatus('No se detectaron citas marcadas.', '');
+                    btn.disabled = false;
+                    return;
+                }
 
-      renderResults(pendingResults);
-      setAnalyzeStatus(`${pendingResults.length} cita${pendingResults.length > 1 ? 's' : ''} detectada${pendingResults.length > 1 ? 's' : ''}.`, 'success');
+                renderResults(pendingResults);
+                setAnalyzeStatus(`${pendingResults.length} cita${pendingResults.length > 1 ? 's' : ''} detectada${pendingResults.length > 1 ? 's' : ''}.`, 'success');
 
-    } catch (err) {
-      setAnalyzeStatus('Error: ' + err.message, 'error');
-      console.error(err);
-    }
+            } catch (err) {
+                setAnalyzeStatus('Error: ' + err.message, 'error');
+                console.error(err);
+            }
 
-    btn.disabled = false;
-  }
+            btn.disabled = false;
+        }
 
-  const COLOR_DOTS = {
-    red: '#C2432A', yellow: '#e6c800', pink: '#e066a6',
-    green: '#3a7a4a', blue: '#2A5FAC', orange: '#c4962a'
-  };
-  const COLOR_LABELS = {
-    red: 'Concepto clave', yellow: 'Referencia', pink: 'Interesa',
-    green: 'P. interés', blue: 'Reflexión', orange: 'Compartir'
-  };
+        const COLOR_DOTS = {
+            red: '#e066a6',
+            gray: '#888888',
+            yellow: '#e6c800',
+            green: '#3a7a4a',
+            blue: '#2A5FAC',
+            orange: '#c4962a'
+        };
+        const COLOR_LABELS = {
+            red: 'Concepto clave',
+            gray: 'Investigar',
+            yellow: 'Referencia',
+            green: 'Persona de interés',
+            blue: 'Reflexión',
+            orange: 'Compartir'
+        };
 
-  function renderResults(results) {
-    const preview = document.getElementById('resultsPreview');
-    const list = document.getElementById('resultsList');
-    document.getElementById('resultsCount').textContent = `${results.length} cita${results.length > 1 ? 's' : ''} detectada${results.length > 1 ? 's' : ''}`;
+        function renderResults(results) {
+            const preview = document.getElementById('resultsPreview');
+            const list = document.getElementById('resultsList');
+            document.getElementById('resultsCount').textContent = `${results.length} cita${results.length > 1 ? 's' : ''} detectada${results.length > 1 ? 's' : ''}`;
 
-    list.innerHTML = results.map((r, i) => `
+            list.innerHTML = results.map((r, i) => `
       <div class="result-item">
         <div class="result-color-dot" style="background:${COLOR_DOTS[r.color] || '#888'}"></div>
         <div style="flex:1">
@@ -1285,64 +1620,246 @@ Responde SOLO con un JSON array válido. Sin texto adicional, sin markdown, sin 
       </div>
     `).join('');
 
-    preview.classList.add('visible');
-  }
+            preview.classList.add('visible');
+        }
 
-  function importSingle(i) {
-    const r = pendingResults[i];
-    if (!r) return;
-    addResultToCitations(r);
-    setAnalyzeStatus(`Cita ${i + 1} importada.`, 'success');
-  }
+        function importSingle(i) {
+            const r = pendingResults[i];
+            if (!r) return;
+            addResultToCitations(r);
+            setAnalyzeStatus(`Cita ${i + 1} importada.`, 'success');
+        }
 
-  function importAllResults() {
-    pendingResults.forEach(r => addResultToCitations(r));
-    setAnalyzeStatus(`${pendingResults.length} citas importadas.`, 'success');
-    renderCitations();
-    updateStats();
-  }
+        function importAllResults() {
+            pendingResults.forEach(r => addResultToCitations(r));
+            setAnalyzeStatus(`${pendingResults.length} citas importadas.`, 'success');
+            renderCitations();
+            updateStats();
+        }
 
-  function addResultToCitations(r) {
-    citations.push({
-      id: Date.now() + Math.random(),
-      pageNo: r.pagina || 0,
-      text: r.texto || '',
-      color: r.color || 'yellow',
-      category: mapCategoryToLocal(r.categoria),
-      notes: r.notas_clave_b || '',
-      timestamp: new Date().toISOString()
-    });
-    localStorage.setItem('zuboffCitations', JSON.stringify(citations));
-  }
+        function addResultToCitations(r) {
+            citations.push({
+                id: Date.now() + Math.random(),
+                bookTitle: r.libro || DEFAULT_BOOK_TITLE,
+                author: r.autor || DEFAULT_AUTHOR,
+                pageNo: r.pagina || 0,
+                text: r.texto || '',
+                color: r.color || 'yellow',
+                category: mapCategoryToLocal(r.categoria),
+                notes: r.notas_clave_b || '',
+                timestamp: new Date().toISOString()
+            });
+            persistCitations();
+        }
 
-  function mapCategoryToLocal(cat) {
-    const map = {
-      concepto_clave: 'poder_epistemico',
-      referencia: 'metodologia',
-      persona_interes: 'vigilancia_inst',
-      reflexion: 'regimenes_verdad',
-      compartir: 'metodologia',
-      investigar: 'metodologia'
-    };
-    return map[cat] || 'metodologia';
-  }
+        function mapCategoryToLocal(cat) {
+            const map = {
+                concepto_clave: 'poder_epistemico',
+                referencia: 'metodologia',
+                persona_interes: 'vigilancia_inst',
+                reflexion: 'regimenes_verdad',
+                compartir: 'metodologia',
+                investigar: 'metodologia'
+            };
+            return map[cat] || 'metodologia';
+        }
 
-  // Drag & drop
-  const dropZone = document.getElementById('dropZone');
-  dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('drag-over'); });
-  dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
-  dropZone.addEventListener('drop', e => {
-    e.preventDefault();
-    dropZone.classList.remove('drag-over');
-    const file = e.dataTransfer.files[0];
-    if (file && file.type.startsWith('image/')) loadPhoto(file);
-  });
+        // ─── BUJO-RO ───
+        let bujoPhotoBase64 = null;
+        let bujoPhotoType = null;
 
-  // Restaurar estado de API key al cargar
-  if (localStorage.getItem('anthropicApiKey')) {
-    setApiKeyStatus('Key guardada ✓', true);
-    document.getElementById('analyzerSection').classList.add('has-key');
-  }
-</script>
+        function toggleBujo() {
+            const section = document.getElementById('bujoSection');
+            const label = document.getElementById('bujoToggleLabel');
+            section.classList.toggle('open');
+            label.textContent = section.classList.contains('open') ? 'Cerrar' : 'Abrir';
+        }
+
+        function handleBujoPhotoSelect(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            loadBujoPhoto(file);
+        }
+
+        function loadBujoPhoto(file) {
+            const reader = new FileReader();
+            reader.onload = ev => {
+                const dataUrl = ev.target.result;
+                const match = dataUrl.match(/^data:(image\/[a-z+]+);base64,(.+)$/);
+                if (!match) return;
+                bujoPhotoType = match[1] === 'image/heic' ? 'image/jpeg' : match[1];
+                bujoPhotoBase64 = match[2];
+                const img = document.getElementById('bujoPreviewImg');
+                img.src = dataUrl;
+                img.style.display = 'block';
+                document.getElementById('bujoAnalyzeBtn').disabled = false;
+                document.getElementById('bujoClearBtn').style.display = '';
+                document.getElementById('bujoResultsPreview').classList.remove('visible');
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function clearBujoPhoto() {
+            bujoPhotoBase64 = null;
+            bujoPhotoType = null;
+            document.getElementById('bujoPreviewImg').style.display = 'none';
+            document.getElementById('bujoPreviewImg').src = '';
+            document.getElementById('bujoPhotoInput').value = '';
+            document.getElementById('bujoAnalyzeBtn').disabled = true;
+            document.getElementById('bujoClearBtn').style.display = 'none';
+            document.getElementById('bujoResultsPreview').classList.remove('visible');
+            document.getElementById('bujoStatus').textContent = '';
+        }
+
+        function setBujoStatus(msg, type) {
+            const el = document.getElementById('bujoStatus');
+            el.textContent = msg;
+            el.className = 'analyze-status' + (type ? ' ' + type : '');
+        }
+
+        async function analyzeBujo() {
+            const apiKey = localStorage.getItem('anthropicApiKey');
+            if (!apiKey) {
+                setBujoStatus('Guarda tu API key primero.', 'error');
+                return;
+            }
+            if (!bujoPhotoBase64) {
+                setBujoStatus('Selecciona una foto primero.', 'error');
+                return;
+            }
+
+            const btn = document.getElementById('bujoAnalyzeBtn');
+            btn.disabled = true;
+            setBujoStatus('Analizando con Claude…');
+
+            const systemPrompt = `Eres el skill bujo-ro v1.2 del protocolo bujo-ro.
+Procesas imágenes manuscritas del cuaderno Bullet Ro (dot grid, moleskine).
+
+PROTOCOLO:
+1. Transcripción fiel del texto manuscrito (marca [ilegible] donde no sea claro)
+2. Corrección mínima: solo errores de ortografía obvios, nunca cambiar el sentido
+3. División lógica en bloques temáticos
+4. Análisis técnico-lingüístico de cada bloque (NO psicológico, NO poético)
+5. Identificación de conexiones con el marco teórico del contra-archivo cuando corresponda
+6. Síntesis estructurada
+
+CLAVE A — sistema cromático para Bullet Ro:
+- Rojo/fucsia → urgente / acción inmediata
+- Naranja → importante / seguimiento
+- Amarillo → referencia / dato
+- Verde → positivo / logro / recurso
+- Azul → proceso / reflexión
+- Sin color → registro neutro
+
+REGLA DE ANONIMIZACIÓN: En el análisis (no en la transcripción), reemplazar nombres de la organización empleadora con [INSTITUCIÓN] y colegas con [colega].
+
+Responde con estructura Markdown:
+## Transcripción
+(texto fiel)
+
+## Análisis por bloques
+(análisis técnico de cada segmento)
+
+## Conexiones contra-archivo
+(si las hay)
+
+## Síntesis`;
+
+            try {
+                const response = await fetch('https://api.anthropic.com/v1/messages', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'x-api-key': apiKey,
+                        'anthropic-version': '2023-06-01',
+                        'anthropic-dangerous-direct-browser-access': 'true'
+                    },
+                    body: JSON.stringify({
+                        model: 'claude-sonnet-4-6',
+                        max_tokens: 2048,
+                        system: systemPrompt,
+                        messages: [{
+                            role: 'user',
+                            content: [{
+                                type: 'image',
+                                source: {
+                                    type: 'base64',
+                                    media_type: bujoPhotoType,
+                                    data: bujoPhotoBase64
+                                }
+                            }, {
+                                type: 'text',
+                                text: 'Analiza esta página del cuaderno Bullet Ro según el protocolo bujo-ro v1.2.'
+                            }]
+                        }]
+                    })
+                });
+
+                if (!response.ok) {
+                    const err = await response.json().catch(() => ({}));
+                    throw new Error(err && err.error && err.error.message ? err.error.message : `HTTP ${response.status}`);
+                }
+
+                const data = await response.json();
+                const text = data && data.content && data.content[0] && data.content[0].text ? data.content[0].text : '';
+                document.getElementById('bujoResultsList').textContent = text;
+                document.getElementById('bujoResultsCount').textContent = 'Análisis completo';
+                document.getElementById('bujoResultsPreview').classList.add('visible');
+                setBujoStatus('Análisis completado.', 'success');
+            } catch (err) {
+                setBujoStatus('Error: ' + err.message, 'error');
+            }
+
+            btn.disabled = false;
+        }
+
+        // Drag & drop bujo
+        const bujoDropZone = document.getElementById('bujoDropZone');
+        bujoDropZone.addEventListener('dragover', e => {
+            e.preventDefault();
+            bujoDropZone.classList.add('drag-over');
+        });
+        bujoDropZone.addEventListener('dragleave', () => bujoDropZone.classList.remove('drag-over'));
+        bujoDropZone.addEventListener('drop', e => {
+            e.preventDefault();
+            bujoDropZone.classList.remove('drag-over');
+            const file = e.dataTransfer.files[0];
+            if (file && file.type.startsWith('image/')) loadBujoPhoto(file);
+        });
+
+        // ─── DRAG & DROP libro ───
+        const dropZone = document.getElementById('dropZone');
+        dropZone.addEventListener('dragover', e => {
+            e.preventDefault();
+            dropZone.classList.add('drag-over');
+        });
+        dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
+        dropZone.addEventListener('drop', e => {
+            e.preventDefault();
+            dropZone.classList.remove('drag-over');
+            const file = e.dataTransfer.files[0];
+            if (file && file.type.startsWith('image/')) loadPhoto(file);
+        });
+
+        // Restaurar estado de API key al cargar
+        if (localStorage.getItem('anthropicApiKey')) {
+            setApiKeyStatus('Key guardada ✓', true);
+            document.getElementById('analyzerSection').classList.add('has-key');
+        }
+    </script>
+    <script>
+        (function() {
+            if (window.__CA_UNIFIED_SHELL_LOADER__) {
+                return;
+            }
+            window.__CA_UNIFIED_SHELL_LOADER__ = true;
+            var s = document.createElement('script');
+            var b = location.pathname.indexOf('/antropologia-corrupcion/') === 0 ? '/antropologia-corrupcion/' : '/';
+            s.src = b + 'shared-shell.js';
+            s.defer = true;
+            document.head.appendChild(s);
+        }());
+    </script>
 </body>
+
 </html>

@@ -2,8 +2,6 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'">
-<meta name="referrer" content="no-referrer-when-downgrade">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Biblioteca de Tesis — Contra-Archivo</title>
 <meta name="description" content="Biblioteca de publicaciones del Colectivo Viento Norte: tesis doctoral, poemarios e investigaciones etnográficas.">
@@ -245,7 +243,6 @@
 </style>
 </head>
 <body>
-<a href="#tesis-main" class="skip-link">Saltar al contenido</a>
 
 <!-- ════════════════════ HEADER ════════════════════ -->
 <header class="site-header">
@@ -254,7 +251,7 @@
     <a href="landing.html">Inicio</a>
     <a href="buscador.html">Buscador</a>
     <a href="index.html">Instrumento</a>
-    <a href="login.html" class="nav-cta" id="nav-cta-auth">Acceder →</a>
+    <a href="privado.html" class="nav-cta">Área privada →</a>
   </nav>
 </header>
 
@@ -453,15 +450,10 @@
   /* ── Auth check ── */
   function checkAuth() {
     var banner = document.getElementById('access-banner');
-    var navCta = document.getElementById('nav-cta-auth');
     try {
       if (typeof window.PasskeyAuth !== 'undefined' && window.PasskeyAuth.isAuthenticated()) {
         isAuthenticated = true;
         if (banner) banner.style.display = 'none';
-        if (navCta) {
-          navCta.href = 'privado.html';
-          navCta.textContent = 'Área privada →';
-        }
         render();
       }
     } catch (e) {
@@ -502,5 +494,6 @@
 
 })();
 </script>
+<script>(function(){if(window.__CA_UNIFIED_SHELL_LOADER__){return;}window.__CA_UNIFIED_SHELL_LOADER__=true;var s=document.createElement('script');var b=location.pathname.indexOf('/antropologia-corrupcion/')===0?'/antropologia-corrupcion/':'/';s.src=b+'shared-shell.js';s.defer=true;document.head.appendChild(s);}());</script>
 </body>
 </html>

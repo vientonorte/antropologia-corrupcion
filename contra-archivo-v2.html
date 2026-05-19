@@ -11,6 +11,7 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://vientonorte.github.io/antropologia-corrupcion/contra-archivo-v2.html">
     <meta property="og:image" content="https://vientonorte.github.io/antropologia-corrupcion/img/an-lisis-ux-ui-mapeo-de-vulnerabilidades-de-expe.jpg">
+    <link rel="canonical" href="https://vientonorte.github.io/antropologia-corrupcion/contra-archivo.html">
     <meta name="theme-color" content="#060608">
     <link rel="manifest" href="manifest.json">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🖤</text></svg>">
@@ -1277,29 +1278,6 @@
 </head>
 
 <body>
-
-    <!-- ═══ AUTH GUARD ══════════════════════════════════════════════════════ -->
-    <script src="src/passkey.js?v=20260505"></script>
-    <script>
-    (function () {
-        function waitFor(check, cb, tries) {
-            if (tries > 40) { cb(); return; }
-            if (check()) { cb(); return; }
-            setTimeout(function () { waitFor(check, cb, tries + 1); }, 80);
-        }
-        waitFor(
-            function () { return typeof window.PasskeyAuth !== 'undefined'; },
-            function () {
-                if (!window.PasskeyAuth || !window.PasskeyAuth.isAuthenticated()) {
-                    window.location.replace('login.html?from=contra-archivo-v2.html');
-                }
-            },
-            0
-        );
-    })();
-    </script>
-    <!-- ═══ / AUTH GUARD ═════════════════════════════════════════════════════ -->
-
     <div id="reading-progress" role="progressbar" aria-label="Progreso de lectura" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
     <a href="#main-content" class="skip-to-content">Saltar al contenido principal</a>
     <!-- ═══════════════════════════════════════════════════════════════════ -->
@@ -1316,6 +1294,7 @@
             <li><a href="#leer" class="nav-link active" data-mode="leer" aria-current="page">Narrativa</a></li>
             <li><a href="#explorar" class="nav-link" data-mode="explorar">Grafo</a></li>
             <li><a href="#consultar" class="nav-link" data-mode="consultar">Biblioteca</a></li>
+            <li><a href="zuboff-archivo.html" class="nav-link" title="Archivo de Citas Zuboff — Módulo ⑤">⑤ Zuboff</a></li>
         </ul>
     </nav>
 
@@ -1584,10 +1563,10 @@
                     operando simultáneamente. <strong>Mignolo</strong>: la modernidad es inseparable de la colonialidad. <strong>Walsh</strong>: no incluir lo excluido sino cuestionar el sistema.</p>
                 <p class="sec-p"><strong>Fanon</strong>: la violencia del colonizado es respuesta a la violencia del colonizador — la resistencia mapuche es respuesta a 142 años de despojo. <strong>Freire</strong>: la consciencia crítica es la primera liberación — este
                     contra-archivo es herramienta pedagógica. <strong>Butler</strong>: ¿quién cuenta como vida digna de duelo? Catrillanca fue asesinado y su GoPro destruida — el Estado decidió que su vida no era 'llorable'.</p>
-                <p class="sec-p"><strong>Scott</strong>: la infrapolítica — resistencia bajo la superficie. La Estrategia VN es infrapolítica: documentos que parecen 'estrategia corporativa' pero contienen crítica radical. Negra Colorá es infrapolítica: periodismo
-                    anónimo que circula donde el nombre propio generaría represalias.</p>
-                <p class="sec-p"><strong>Taussig</strong>: el Estado gobierna produciendo incertidumbre epistémica. <strong>Stoler</strong>: la etnografía del archivo lee al poder contra sí mismo. La Estrategia VN opera en la intersección: lee los archivos de SURA
-                    contra SURA, y los de Carabineros contra Carabineros.</p>
+                <p class="sec-p"><strong>Scott</strong>: la infrapolítica — resistencia bajo la superficie. La Estrategia VN es infrapolítica: documentos que parecen 'estrategia corporativa' pero contienen crítica radical. Negra Colorá es infrapolítica: periodismo anónimo
+                    que circula donde el nombre propio generaría represalias.</p>
+                <p class="sec-p"><strong>Taussig</strong>: el Estado gobierna produciendo incertidumbre epistémica. <strong>Stoler</strong>: la etnografía del archivo lee al poder contra sí mismo. La Estrategia VN opera en la intersección: lee los archivos de SURA contra
+                    SURA, y los de Carabineros contra Carabineros.</p>
                 <p class="sec-p">Las <strong>tres fases de la etnografía insurgente</strong>: Fase 1 — Infiltración documentada (sept 2023 – jun 2024). Fase 2 — Crítica desde adentro (jul – dic 2024). Fase 3 — Compilación de contraarquivo (ene 2025 – mar 2026): tesis
                     doctoral, dossiers, publicación del archivo como fuente primaria académica.</p>
                 <details class="sec-detail">
@@ -1611,29 +1590,103 @@
             <section id="conclusiones" class="narr-section" aria-label="Conclusiones">
                 <span class="tag">Síntesis</span>
                 <h2 class="sec-h">Conclusiones — Síntesis Transversal</h2>
-                <p class="sec-p">Esta sección sistematiza los hallazgos de los cuatro ejes de investigación a través de una lectura comparada que demuestra la operatividad transversal del concepto de <strong>mistranslation institucionalizada</strong> como dispositivo analítico para la antropología de la corrupción.</p>
+                <p class="sec-p">Esta sección sistematiza los hallazgos de los cuatro ejes de investigación a través de una lectura comparada que demuestra la operatividad transversal del concepto de <strong>mistranslation institucionalizada</strong> como dispositivo
+                    analítico para la antropología de la corrupción.</p>
 
                 <details class="sec-detail">
                     <summary>Lectura comparada: los mecanismos transversales</summary>
                     <div class="inner">
-                        <p>La <strong>fabricación de evidencia</strong> en Operación Huracán, la <strong>opacidad contable</strong> de los estados financieros FECU de SURA, el <strong>vaciamiento del consentimiento</strong> en la consulta previa (OIT 169) y la <strong>destrucción del registro audiovisual</strong> (GoPro de Catrillanca) son cuatro manifestaciones del mismo mecanismo: la institución traduce la realidad en un formato que la hace gobernable, y en esa traducción elimina lo que no cabe en su gramática.</p>
-                        <p>No se trata de errores: se trata de un <strong>sistema de producción de ignorancia institucional</strong> (Proctor, <em>Agnotology</em>). La ignorancia no es ausencia de conocimiento sino producto activo de dispositivos que clasifican, filtran y destruyen información según criterios de poder.</p>
+                        <p>La <strong>fabricación de evidencia</strong> en Operación Huracán, la <strong>opacidad contable</strong> de los estados financieros FECU de SURA, el <strong>vaciamiento del consentimiento</strong> en la consulta previa (OIT 169)
+                            y la <strong>destrucción del registro audiovisual</strong> (GoPro de Catrillanca) son cuatro manifestaciones del mismo mecanismo: la institución traduce la realidad en un formato que la hace gobernable, y en esa traducción
+                            elimina lo que no cabe en su gramática.</p>
+                        <p>No se trata de errores: se trata de un <strong>sistema de producción de ignorancia institucional</strong> (Proctor, <em>Agnotology</em>). La ignorancia no es ausencia de conocimiento sino producto activo de dispositivos que clasifican,
+                            filtran y destruyen información según criterios de poder.</p>
                     </div>
                 </details>
 
                 <details class="sec-detail">
                     <summary>Cronología del despojo territorial</summary>
                     <div class="inner">
-                        <p>El territorio de La Negra y las comunidades mapuche-huilliche de la Región de Los Ríos acumulan más de un siglo de despojo institucionalizado. La cronología documenta la continuidad entre las leyes de radicación del siglo XIX, la contrarreforma agraria de Pinochet, la Ley de Pesca artesanal y el actual modelo de plantaciones forestales financiadas por fondos de pensiones.</p>
-                        <p><strong>1884:</strong> Títulos de Merced — reducción territorial inicial. <strong>1974:</strong> DL 2.568 — división de tierras comunitarias. <strong>1979:</strong> DL 701 — subsidio forestal a plantaciones. <strong>1993:</strong> Ley 19.253 (Ley Indígena) — protección nominal sin restitución territorial. <strong>2008:</strong> Convenio 169 OIT ratificado — consulta previa sin efectos vinculantes. <strong>2026:</strong> FECU CMF documenta que fondos de pensiones financian la cadena forestal que opera en territorios bajo reclamación indígena.</p>
+                        <p>El territorio de La Negra y las comunidades mapuche-huilliche de la Región de Los Ríos acumulan más de un siglo de despojo institucionalizado. La cronología documenta la continuidad entre las leyes de radicación del siglo XIX,
+                            la contrarreforma agraria de Pinochet, la Ley de Pesca artesanal y el actual modelo de plantaciones forestales financiadas por fondos de pensiones.</p>
+                        <p><strong>1884:</strong> Títulos de Merced — reducción territorial inicial. <strong>1974:</strong> DL 2.568 — división de tierras comunitarias. <strong>1979:</strong> DL 701 — subsidio forestal a plantaciones. <strong>1993:</strong>                            Ley 19.253 (Ley Indígena) — protección nominal sin restitución territorial. <strong>2008:</strong> Convenio 169 OIT ratificado — consulta previa sin efectos vinculantes. <strong>2026:</strong> FECU CMF documenta que fondos
+                            de pensiones financian la cadena forestal que opera en territorios bajo reclamación indígena.</p>
                     </div>
                 </details>
 
                 <details class="sec-detail">
                     <summary>Agentes e intermediarios institucionales</summary>
                     <div class="inner">
-                        <p>La etnografía identifica una cadena de actores que median entre el marco normativo y las prácticas efectivas de despojo: <strong>CONADI</strong> (mediador estatal para pueblos indígenas), <strong>CONAF</strong> (regulador forestal), <strong>SAG</strong> (control fitosanitario que valida el modelo forestal), <strong>empresas forestales</strong> (Arauco, CMPC, beneficiarias directas de DL 701), <strong>corredoras de bolsa</strong> (intermediarios financieros entre AFP y sector forestal).</p>
-                        <p>Cada agente opera como un <strong>traductor institucional</strong> que normaliza la extracción: lo que para la comunidad es despojo, para CONADI es "proceso de regularización", para CONAF es "desarrollo forestal sustentable" y para las AFP es "inversión diversificada".</p>
+                        <p>La etnografía identifica una cadena de actores que median entre el marco normativo y las prácticas efectivas de despojo: <strong>CONADI</strong> (mediador estatal para pueblos indígenas), <strong>CONAF</strong> (regulador forestal),
+                            <strong>SAG</strong> (control fitosanitario que valida el modelo forestal), <strong>empresas forestales</strong> (Arauco, CMPC, beneficiarias directas de DL 701), <strong>corredoras de bolsa</strong> (intermediarios financieros
+                            entre AFP y sector forestal).</p>
+                        <p>Cada agente opera como un <strong>traductor institucional</strong> que normaliza la extracción: lo que para la comunidad es despojo, para CONADI es "proceso de regularización", para CONAF es "desarrollo forestal sustentable" y
+                            para las AFP es "inversión diversificada".</p>
+                    </div>
+                </details>
+            </section>
+
+            <div class="sec-divider"></div>
+
+            <!-- ═══════════ MARCO TEÓRICO: INCOMPLETITUD INSTITUCIONAL ═══════════ -->
+            <section id="godel-friccion" class="narr-section" aria-label="Marco teórico — Incompletitud institucional">
+                <span class="tag">Marco Teórico</span>
+                <h2 class="sec-h">De Gödel a la Fricción Institucional</h2>
+                <p class="sec-p">En 1930, David Hilbert imaginó un programa para axiomatizar toda la matemática: un sistema formal completo, consistente y decidible. Un día después, Kurt Gödel demostró que estaba equivocado. La institución moderna opera con el mismo sueño — y el contra-archivo documenta el mismo colapso.</p>
+
+                <details class="sec-detail">
+                    <summary>El axioma institucional y su límite</summary>
+                    <div class="inner">
+                        <p><strong>Axioma institucional:</strong> <em>Todo conflicto social puede traducirse en categorías administrativas. Lo que no se traduce, no existe.</em></p>
+                        <p>La ley, el reglamento, el protocolo son los axiomas. El trámite es la demostración. El fallo judicial es el teorema. La promesa implícita es que —dado suficiente tiempo y suficiente procedimiento— toda verdad relevante será capturada por el sistema.</p>
+                        <p>El Primer Teorema de Incompletitud de Gödel refuta exactamente esta promesa: en cualquier sistema formal consistente y suficientemente expresivo, existen enunciados verdaderos que el sistema no puede demostrar. La consistencia implica incompletitud. No hay escape.</p>
+                    </div>
+                </details>
+
+                <details class="sec-detail">
+                    <summary>Traducción al Contra-Archivo</summary>
+                    <div class="inner">
+                        <table style="width:100%;border-collapse:collapse;font-size:12px;margin-bottom:12px;">
+                            <thead>
+                                <tr style="border-bottom:1px solid var(--line);">
+                                    <th style="text-align:left;padding:6px 8px;font-weight:600;">Gödel (Lógica Formal)</th>
+                                    <th style="text-align:left;padding:6px 8px;font-weight:600;">Contra-Archivo (Fricción Institucional)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="border-bottom:1px solid var(--line);">
+                                    <td style="padding:6px 8px;">Sistema formal F</td>
+                                    <td style="padding:6px 8px;">Marco normativo institucional</td>
+                                </tr>
+                                <tr style="border-bottom:1px solid var(--line);">
+                                    <td style="padding:6px 8px;">Axiomas</td>
+                                    <td style="padding:6px 8px;">Ley, reglamento, protocolo</td>
+                                </tr>
+                                <tr style="border-bottom:1px solid var(--line);">
+                                    <td style="padding:6px 8px;">Demostración</td>
+                                    <td style="padding:6px 8px;">Trámite administrativo</td>
+                                </tr>
+                                <tr style="border-bottom:1px solid var(--line);">
+                                    <td style="padding:6px 8px;">Sentencia G (indecidible)</td>
+                                    <td style="padding:6px 8px;">Testimonio comunitario no traducible</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding:6px 8px;">Incompletitud</td>
+                                    <td style="padding:6px 8px;">Fricción institucional — lo que el sistema expulsa para mantenerse consistente</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p>La <strong>mistranslation</strong> no es error: es el mecanismo activo mediante el cual el sistema mantiene su consistencia interna expulsando lo que no puede demostrar. Lo que la institución llama "irregular", "anómalo" o "fuera de procedimiento" es su propia sentencia G: verdadero pero indemostrable dentro del sistema.</p>
+                    </div>
+                </details>
+
+                <details class="sec-detail">
+                    <summary>Incompletitud Institucional — formalización</summary>
+                    <div class="inner">
+                        <p>Definimos el <strong>Índice de Incompletitud Institucional</strong> como:</p>
+                        <p style="font-family:'JetBrains Mono',monospace;background:var(--paper);border:1px solid var(--line);padding:8px 12px;border-radius:2px;font-size:12px;">I(F) = 1 − |verdades expresables en F| / |verdades relevantes para el conflicto|</p>
+                        <p>Cuando I(F) → 1, el sistema es máximamente incompleto: casi ninguna verdad relevante para los afectados puede ser expresada dentro del marco institucional. Los cuatro casos del contra-archivo documentan instancias donde I(F) es cercano a 1: la GoPro de Catrillanca, los FECU de SURA, los WhatsApp de Operación Huracán, la acta de consulta previa mapuche.</p>
+                        <p>El segundo teorema de incompletitud agrega la dimensión política: <em>un sistema suficientemente expresivo no puede demostrar su propia consistencia</em>. La institución que reclama transparencia nunca puede demostrarlo desde adentro. El contra-archivo opera desde afuera.</p>
                     </div>
                 </details>
             </section>
@@ -1645,7 +1698,8 @@
                 <span class="tag">Colectivo</span>
                 <h2 class="sec-h">El Investigador</h2>
                 <p class="sec-p"><strong>Colectivo Viento Norte</strong> — Investigador doctoral en Antropología y Corrupción, Chile. El colectivo opera desde la intersección entre etnografía institucional, periodismo de investigación y activismo territorial.</p>
-                <p class="sec-p">La decisión de operar como colectivo (no como individuo) responde a una posición teórica: la autoría individual es un dispositivo de captura académica que aísla al investigador de las comunidades con las que trabaja. El contra-archivo es producto de una red: comunidades mapuche-huilliche, periodistas de datos, funcionarios disidentes, académicos críticos.</p>
+                <p class="sec-p">La decisión de operar como colectivo (no como individuo) responde a una posición teórica: la autoría individual es un dispositivo de captura académica que aísla al investigador de las comunidades con las que trabaja. El contra-archivo
+                    es producto de una red: comunidades mapuche-huilliche, periodistas de datos, funcionarios disidentes, académicos críticos.</p>
             </section>
 
             <div class="sec-divider"></div>
@@ -2791,8 +2845,14 @@
                 });
             });
 
-            document.getElementById('reset-zoom')?.addEventListener('click', resetZoom);
-            document.getElementById('center-network')?.addEventListener('click', centerNetwork);
+            var resetZoomBtn = document.getElementById('reset-zoom');
+            if (resetZoomBtn) {
+                resetZoomBtn.addEventListener('click', resetZoom);
+            }
+            var centerNetworkBtn = document.getElementById('center-network');
+            if (centerNetworkBtn) {
+                centerNetworkBtn.addEventListener('click', centerNetwork);
+            }
         }
 
         function applyGraphMode() {
@@ -3618,11 +3678,11 @@
     <!-- Módulos del sistema de grafo (defer = no bloquean rendering) -->
     <script src="src/frictionEngine.js?v=20260419" type="module"></script>
     <script src="src/fieldPhysics.js?v=20260419" type="module"></script>
-    <script src="src/blackScholes.js?v=20260429" type="module"></script>
     <script src="src/graph.js?v=20260419" type="module"></script>
     <script src="src/nodeRenderer.js?v=20260419" type="module"></script>
     <script src="src/main.js?v=20260419" type="module"></script>
 
+<script>(function(){if(window.__CA_UNIFIED_SHELL_LOADER__){return;}window.__CA_UNIFIED_SHELL_LOADER__=true;var s=document.createElement('script');var b=location.pathname.indexOf('/antropologia-corrupcion/')===0?'/antropologia-corrupcion/':'/';s.src=b+'shared-shell.js';s.defer=true;document.head.appendChild(s);}());</script>
 </body>
 
 </html>
