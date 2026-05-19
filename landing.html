@@ -4,10 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Buscador de Huella Digital — Contra-Archivo</title>
-    <meta name="description" content="Busca cualquier actor público, institución o política. Cruzamos su huella digital en 6 bases de datos oficiales chilenas.">
-    <meta property="og:title" content="Buscador de Huella Digital — Contra-Archivo">
-    <meta property="og:description" content="Busca cualquier actor público, institución o política. Cruzamos su huella digital en 6 bases de datos oficiales chilenas.">
+    <title>Inicio Público (Onboarding) — Contra-Archivo</title>
+    <meta name="description" content="Onboarding público del Contra-Archivo: búsqueda inicial para orientar la exploración antes de pasar al buscador avanzado o al instrumento.">
+    <meta property="og:title" content="Inicio Público (Onboarding) — Contra-Archivo">
+    <meta property="og:description" content="Onboarding público del Contra-Archivo: búsqueda inicial para orientar la exploración antes de pasar al buscador avanzado o al instrumento.">
     <meta property="og:type" content="website">
     <meta property="og:image" content="https://vientonorte.github.io/antropologia-corrupcion/img/an-lisis-ux-ui-mapeo-de-vulnerabilidades-de-expe.jpg">
     <meta name="theme-color" content="#0c0c0c">
@@ -351,7 +351,7 @@
     <header class="site-header">
         <a href="landing.html" class="site-logo"><span>⊘</span> Contra-Archivo</a>
         <nav class="site-nav" aria-label="Navegación principal">
-            <a href="buscador.html">Buscador</a>
+            <a href="buscador.html">Búsqueda avanzada</a>
             <a href="index.html">Instrumento</a>
             <a href="tesis.html">Biblioteca</a>
             <a href="zuboff-archivo.html">⑤ Zuboff</a>
@@ -361,15 +361,15 @@
 
     <!-- ═══════════════════════ HERO ═══════════════════════ -->
     <main class="hero" id="hero">
-        <p class="hero-eyebrow">Colectivo Viento Norte</p>
+        <p class="hero-eyebrow">Inicio público · Colectivo Viento Norte</p>
         <h1 class="hero-title">¿Quién es?</h1>
-        <p class="hero-subtitle">Busca cualquier actor público, institución o política. Cruzamos su huella digital en 6 bases de datos oficiales chilenas.</p>
+        <p class="hero-subtitle">Punto de entrada rápido del Contra-Archivo. Inicia aquí la búsqueda y luego profundiza en Búsqueda Avanzada o Instrumento.</p>
         <p style="font-size:12px;color:var(--dim);font-family:var(--font-mono);max-width:480px;line-height:1.6;margin-bottom:32px;margin-top:-20px">
             Fricción institucional: la distancia entre lo que una institución declara y lo que los datos oficiales registran.
         </p>
 
         <div class="search-wrap" id="search-wrap">
-            <input type="text" class="search-input" id="search-input" placeholder="Nombre, institución, ley..." autocomplete="off" spellcheck="false" aria-label="Buscar actor público, institución o política" aria-autocomplete="list" aria-controls="suggest-dropdown">
+            <input type="text" class="search-input" id="search-input" placeholder="Nombre, institución o ley para iniciar..." autocomplete="off" spellcheck="false" aria-label="Iniciar búsqueda de actor público, institución o política" aria-autocomplete="list" aria-controls="suggest-dropdown">
             <div class="suggest-dropdown" id="suggest-dropdown"></div>
         </div>
 
@@ -380,13 +380,13 @@
     <!-- ═══════════════════════ RESULTS ═══════════════════════ -->
     <section class="results-section" id="results-section">
         <div class="results-header">
-            <div class="results-title">Resultados: <strong id="results-count">0</strong></div>
+            <div class="results-title">Resultados de onboarding: <strong id="results-count">0</strong></div>
             <div class="results-query" id="results-query"></div>
         </div>
         <div id="results-list"></div>
         <div class="more-results" id="more-results">
-            <p>Hay más resultados disponibles para esta búsqueda.</p>
-            <a href="login.html">Ver más resultados →</a>
+            <p>Hay más resultados disponibles para profundizar en búsqueda avanzada.</p>
+            <a href="buscador.html">Ir a búsqueda avanzada →</a>
         </div>
     </section>
 
@@ -454,7 +454,7 @@
             }
 
             function loadData() {
-                setStatus('Cargando fuentes…');
+                setStatus('Cargando fuentes para onboarding…');
                 var fetches = [
                     fetch('data/fuentes-oficiales.json').then(function(r) {
                         return r.json();
@@ -509,7 +509,7 @@
                     setStatus('');
                 }).catch(function(err) {
                     console.error('Error cargando datos:', err);
-                    setStatus('Error al cargar las fuentes. Intenta recargar la página.');
+                    setStatus('Error al cargar las fuentes de onboarding. Intenta recargar la página.');
                 });
             }
 
@@ -702,7 +702,7 @@
                 resultsList.innerHTML = '';
 
                 if (scored.length === 0) {
-                    resultsList.innerHTML = '<p style="color:var(--dim);font-size:14px;font-family:var(--font-mono);padding:24px 0">Sin resultados para «' + escapeHtml(query) + '». Prueba con otro término o institución.</p>';
+                    resultsList.innerHTML = '<p style="color:var(--dim);font-size:14px;font-family:var(--font-mono);padding:24px 0">Sin resultados para «' + escapeHtml(query) + '» en onboarding. Prueba otro término o pasa a búsqueda avanzada.</p>';
                     moreResults.classList.remove('active');
                     return;
                 }
@@ -735,7 +735,7 @@
                         '<span class="friction-value">' + fs.toFixed(2) + '</span>' +
                         '</div>' +
                         '<p class="result-description">' + escapeHtml(desc) + '</p>' +
-                        '<a class="result-cta" href="login.html">Ver análisis completo →</a>';
+                        '<a class="result-cta" href="buscador.html">Profundizar en búsqueda avanzada →</a>';
 
                     resultsList.appendChild(card);
                 });
@@ -830,7 +830,19 @@
             }
         })();
     </script>
-<script>(function(){if(window.__CA_UNIFIED_SHELL_LOADER__){return;}window.__CA_UNIFIED_SHELL_LOADER__=true;var s=document.createElement('script');var b=location.pathname.indexOf('/antropologia-corrupcion/')===0?'/antropologia-corrupcion/':'/';s.src=b+'shared-shell.js';s.defer=true;document.head.appendChild(s);}());</script>
+    <script>
+        (function() {
+            if (window.__CA_UNIFIED_SHELL_LOADER__) {
+                return;
+            }
+            window.__CA_UNIFIED_SHELL_LOADER__ = true;
+            var s = document.createElement('script');
+            var b = location.pathname.indexOf('/antropologia-corrupcion/') === 0 ? '/antropologia-corrupcion/' : '/';
+            s.src = b + 'shared-shell.js';
+            s.defer = true;
+            document.head.appendChild(s);
+        }());
+    </script>
 </body>
 
 </html>

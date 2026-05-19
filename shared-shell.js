@@ -105,11 +105,11 @@
     function buildNav(basePath) {
         var currentPath = window.location.pathname;
         var links = [
-            { href: basePath + 'index.html', label: 'Inicio' },
-            { href: basePath + 'landing.html', label: 'Landing' },
-            { href: basePath + 'buscador.html', label: 'Buscador' },
+            { href: basePath + 'landing.html', label: 'Inicio publico' },
+            { href: basePath + 'buscador.html', label: 'Buscador avanzado' },
+            { href: basePath + 'index.html', label: 'Instrumento' },
             { href: basePath + 'tesis.html', label: 'Tesis' },
-            { href: basePath + 'privado.html', label: 'Privado' },
+            { href: basePath + 'login.html', label: 'Acceso privado' },
             { href: basePath + 'contra-archivo.html', label: 'Contra-Archivo' }
         ];
 
@@ -120,7 +120,7 @@
 
         var brand = document.createElement('a');
         brand.className = 'ca-unified-nav__brand';
-        brand.href = basePath + 'index.html';
+        brand.href = basePath + 'landing.html';
         brand.textContent = 'Contra-Archivo';
 
         var linksWrap = document.createElement('div');
@@ -153,9 +153,10 @@
 
         var right = document.createElement('div');
         right.innerHTML =
-            '<a href="' + basePath + 'index.html">Inicio</a> · ' +
-            '<a href="' + basePath + 'landing.html">Explorar</a> · ' +
-            '<a href="' + basePath + 'buscador.html">Fuentes</a> · ' +
+            '<a href="' + basePath + 'landing.html">Inicio publico</a> · ' +
+            '<a href="' + basePath + 'buscador.html">Buscador avanzado</a> · ' +
+            '<a href="' + basePath + 'index.html">Instrumento</a> · ' +
+            '<a href="' + basePath + 'login.html">Acceso privado</a> · ' +
             '<a href="' + basePath + 'contra-archivo.html">Contra-Archivo</a>';
 
         footer.appendChild(left);
