@@ -816,36 +816,50 @@
             var CAT_META = {
                 E: {
                     desc: 'Registros de transparencia, SEIA y otras instituciones públicas con deber de publicación activa.',
+                    desc_extendida: 'Capa institucional: lo que el Estado hace visible. Respuestas a solicitudes de transparencia, expedientes SEIA, resoluciones. El registro oficial como primera traducción de conflictos políticos a lenguaje administrativo.',
                     fuentes: ['transparencia', 'seia'],
+                    ejemplos: ['Solicitud AFP carteras', 'Expediente consulta indígena', 'Resolución territorial'],
                     filterFn: function(r) {
                         return r.fuente === 'transparencia' || r.fuente === 'seia' || (r.institucion && r.tipo_friccion);
                     }
                 },
                 F: {
                     desc: 'Registros de lobby, audiencias con funcionarios y actores vinculados a la Comisión para el Mercado Financiero.',
+                    desc_extendida: 'Trazabilidad de actores: quién habla con quién. Audiencias de lobby, reuniones con reguladores, actores corporativos. El registro oficial de influencia que documenta qué voces tienen acceso institucional.',
                     fuentes: ['infolobby', 'cmf'],
+                    ejemplos: ['Audiencia SURA-CMF', 'Lobby forestal-CONADI', 'Reunión SEA-energéticas'],
                     filterFn: function(r) {
                         return r.fuente === 'infolobby' || r.fuente === 'cmf' || (r.actores_lobby && r.actores_lobby.length > 0);
                     }
                 },
                 G: {
                     desc: 'Compras públicas, licitaciones y regulación financiera: trazabilidad de recursos estatales y mercados.',
+                    desc_extendida: 'Flujos de capital: cómo se mueve el dinero público y regulado. Licitaciones, adquisiciones, marcos regulatorios financieros. El registro contable que traduce decisiones políticas a transacciones.',
                     fuentes: ['compraspublicas', 'cmf'],
+                    ejemplos: ['Licitación municipal', 'Regulación multifondos', 'Adquisición tecnológica'],
                     filterFn: function(r) {
                         return r.fuente === 'compraspublicas' || r.fuente === 'cmf';
                     }
                 },
                 H: {
                     desc: 'Boletines legislativos y leyes vigentes: historial normativo con trazabilidad parlamentaria.',
+                    desc_extendida: 'Genealogía normativa: cómo se construye la ley. Boletines en tramitación, leyes vigentes, decretos. El archivo jurídico que registra negociaciones parlamentarias y produce el marco legal que después se aplica con fricción.',
                     fuentes: ['bcn', 'leychile'],
+                    ejemplos: ['Ley OIT 169', 'DS 66 consulta', 'Tramitación multifondos'],
                     filterFn: function(r) {
                         return r.fuente === 'bcn' || r.fuente === 'leychile';
                     }
                 },
                 I: {
                     desc: 'Registros vinculados a los 4 campos etnográficos de la tesis: SURA, La Negra, periodismo de datos y OIT 169.',
+                    desc_extendida: 'Punto de entrada analítico: registros oficiales que conectan directamente con los 4 casos etnográficos de la tesis doctoral. Evidencia documentada de mistranslation entre capas ética, institucional y material.',
                     fuentes: [],
-                    filterFn: null // built dynamically after casos load
+                    ejemplos: ['Audiencias SURA con CMF', 'Solicitud transparencia territorios mapuche', 'SEIA con consulta previa'],
+                    filterFn: function(r) {
+                        // Filtrar por friccion_con apuntando a cualquier caso etnográfico
+                        var casoIds = ['sura-gobernanza-datos', 'la-negra-territorio-mapuche', 'periodismo-datos-chile', 'oit169-consulta-previa'];
+                        return r.friccion_con && casoIds.indexOf(r.friccion_con) !== -1;
+                    }
                 }
             };
 
