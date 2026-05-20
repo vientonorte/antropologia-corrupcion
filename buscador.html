@@ -235,6 +235,22 @@
         .cat-tab .cat-icon {
             font-size: 14px;
         }
+        
+        .cat-count {
+            margin-left: 6px;
+            padding: 2px 8px;
+            background: rgba(255, 255, 255, .05);
+            border-radius: 12px;
+            font-size: 12px;
+            font-family: var(--font-mono);
+            color: var(--dim);
+        }
+        
+        .cat-tab.active .cat-count {
+            background: rgba(255, 255, 255, .1);
+            color: inherit;
+            font-weight: 600;
+        }
         /* ── Category description ── */
         
         .cat-desc {
@@ -328,6 +344,41 @@
         .friction-pill.low {
             background: rgba(122, 158, 110, .15);
             color: var(--mat);
+        }
+        
+        .cat-badge {
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 10px;
+            font-family: var(--font-mono);
+            font-weight: 600;
+            letter-spacing: .5px;
+            margin-right: 4px;
+        }
+        
+        .cat-badge.cat-E {
+            background: rgba(74, 127, 165, .15);
+            color: var(--inst);
+        }
+        
+        .cat-badge.cat-F {
+            background: rgba(200, 169, 110, .15);
+            color: var(--etica);
+        }
+        
+        .cat-badge.cat-G {
+            background: rgba(200, 95, 74, .15);
+            color: var(--crit);
+        }
+        
+        .cat-badge.cat-H {
+            background: rgba(122, 158, 110, .15);
+            color: var(--mat);
+        }
+        
+        .cat-badge.cat-I {
+            background: rgba(200, 169, 110, .15);
+            color: var(--etica);
         }
         
         .result-date {
@@ -728,34 +779,44 @@
           <span class="cat-icon" aria-hidden="true">🏛</span>
           <span class="cat-letter" aria-hidden="true">E</span>
           Entidades públicas
+          <span class="cat-count" aria-label="número de resultados">—</span>
         </button>
                 <button class="cat-tab" data-cat="F" role="tab" aria-selected="false">
           <span class="cat-icon" aria-hidden="true">👤</span>
           <span class="cat-letter" aria-hidden="true">F</span>
           Funcionarios y actores
+          <span class="cat-count" aria-label="número de resultados">—</span>
         </button>
                 <button class="cat-tab" data-cat="G" role="tab" aria-selected="false">
           <span class="cat-icon" aria-hidden="true">📋</span>
           <span class="cat-letter" aria-hidden="true">G</span>
           Gestión de recursos
+          <span class="cat-count" aria-label="número de resultados">—</span>
         </button>
                 <button class="cat-tab" data-cat="H" role="tab" aria-selected="false">
           <span class="cat-icon" aria-hidden="true">⚖</span>
           <span class="cat-letter" aria-hidden="true">H</span>
           Historial normativo
+          <span class="cat-count" aria-label="número de resultados">—</span>
         </button>
                 <button class="cat-tab" data-cat="I" role="tab" aria-selected="false">
           <span class="cat-icon" aria-hidden="true">🔍</span>
           <span class="cat-letter" aria-hidden="true">I</span>
           Investigaciones
+          <span class="cat-count" aria-label="número de resultados">—</span>
         </button>
             </div>
 
             <!-- Category description -->
-            <div class="cat-desc" id="catDesc">Registros de transparencia, SEIA y otras instituciones públicas con deber de publicación activa.</div>
+            <div class="cat-desc" id="catDesc" aria-live="polite">Registros de transparencia, SEIA y otras instituciones públicas con deber de publicación activa.</div>
 
             <!-- Results -->
-            <div class="results-status" id="resultsStatus"></div>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <div class="results-status" id="resultsStatus"></div>
+                <button id="btnExportCSV" style="display:none;padding:6px 12px;background:var(--s1);border:1px solid var(--border);border-radius:var(--r);color:var(--muted);font-size:12px;font-family:var(--font-mono);cursor:pointer;transition:all .2s" onmouseover="this.style.borderColor='rgba(255,255,255,.2)';this.style.color='var(--fg)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--muted)'">
+                    📥 Exportar CSV
+                </button>
+            </div>
             <div id="loadingState" style="display:none;padding:48px 0;text-align:center;color:var(--dim);font-size:13px;font-family:var(--font-mono)">Cargando fuentes para búsqueda avanzada…</div>
             <div id="resultsList"></div>
             <button class="btn-more hidden" id="btnMore">Mostrar más</button>
@@ -800,6 +861,7 @@
 
     <script defer src="src/frictionEngine.js?v=20260419"></script>
     <script defer src="src/searchEngine.js?v=20260419"></script>
+    <script defer src="src/categoryExport.js?v=20260520"></script>
     <script>
         (function() {
             'use strict';
@@ -893,6 +955,7 @@
             var $filterClose = document.getElementById('filterClose');
             var $loadingState = document.getElementById('loadingState');
             var $noResultsMsg = document.getElementById('noResultsMsg');
+            var $btnExportCSV = document.getElementById('btnExportCSV');
             var suggestActiveIdx = -1;
 
             /* ── Data loading ── */
@@ -978,6 +1041,7 @@
                     computeScores();
                     buildYearFilter();
                     buildSourceFilter();
+                    updateCategoryCounts();
                     $loadingState.style.display = 'none';
                     render();
                 }).catch(function(err) {
@@ -1076,10 +1140,12 @@
                     $noResults.classList.remove('hidden');
                     $resultsStatus.textContent = '';
                     $btnMore.classList.add('hidden');
+                    if ($btnExportCSV) $btnExportCSV.style.display = 'none';
                     return;
                 }
                 $noResults.classList.add('hidden');
                 $resultsStatus.textContent = filtered.length + ' resultado' + (filtered.length !== 1 ? 's' : '') + ' en búsqueda avanzada';
+                if ($btnExportCSV) $btnExportCSV.style.display = 'block';
 
                 showing.forEach(function(r, i) {
                     var item = document.createElement('div');
@@ -1090,6 +1156,8 @@
                     var pillClass = score >= 0.7 ? 'high' : score >= 0.4 ? 'mid' : 'low';
                     var fecha = r.fecha || '—';
                     var inst = r.institucion || FUENTE_LABELS[r.fuente] || r.fuente || '';
+                    var cat = getRecordCategory(r);
+                    var catBadge = '<span class="cat-badge cat-' + cat + '" aria-label="Categoría ' + cat + '">' + cat + '</span>';
 
                     var dossierId = 'dossier-' + esc(r.id);
                     item.innerHTML =
@@ -1097,6 +1165,7 @@
                         '<span class="result-idx">' + (i + 1) + '</span>' +
                         '<span class="result-title">' + esc(r.titulo || r.id) + '</span>' +
                         '<div class="result-meta">' +
+                        catBadge +
                         '<span class="result-inst">' + esc(inst) + '</span>' +
                         '<span class="friction-pill ' + pillClass + '">' + score.toFixed(2) + '</span>' +
                         '<span class="result-date">' + esc(fecha) + '</span>' +
@@ -1282,6 +1351,39 @@
                 });
             }
 
+            /* ── Category counts ── */
+            function updateCategoryCounts() {
+                var cats = ['E', 'F', 'G', 'H', 'I'];
+                cats.forEach(function(cat) {
+                    var filterFn = CAT_META[cat].filterFn;
+                    var count = 0;
+                    if (filterFn) {
+                        count = allRecords.filter(filterFn).length;
+                    }
+                    var tab = $catTabs.querySelector('[data-cat="' + cat + '"]');
+                    if (tab) {
+                        var countEl = tab.querySelector('.cat-count');
+                        if (countEl) {
+                            countEl.textContent = count;
+                        }
+                        // Update aria-label
+                        var desc = CAT_META[cat].desc;
+                        tab.setAttribute('aria-label', 'Categoría ' + cat + ': ' + desc.substring(0, 50) + '... - ' + count + ' resultados');
+                    }
+                });
+            }
+
+            function getRecordCategory(r) {
+                // Determine primary category for a record
+                // Order matters: I > F > E > G > H
+                if (CAT_META.I.filterFn && CAT_META.I.filterFn(r)) return 'I';
+                if (CAT_META.F.filterFn && CAT_META.F.filterFn(r)) return 'F';
+                if (CAT_META.E.filterFn && CAT_META.E.filterFn(r)) return 'E';
+                if (CAT_META.G.filterFn && CAT_META.G.filterFn(r)) return 'G';
+                if (CAT_META.H.filterFn && CAT_META.H.filterFn(r)) return 'H';
+                return 'E'; // default
+            }
+
             /* ── Escape HTML ── */
             function esc(s) {
                 if (!s) return '';
@@ -1335,12 +1437,45 @@
                     render();
                 });
 
+                // Keyboard navigation for category tabs (Arrow keys)
+                $catTabs.addEventListener('keydown', function(e) {
+                    var tab = e.target.closest('.cat-tab');
+                    if (!tab) return;
+                    
+                    var tabs = Array.from($catTabs.querySelectorAll('.cat-tab'));
+                    var currentIdx = tabs.indexOf(tab);
+                    var nextIdx = currentIdx;
+
+                    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+                        e.preventDefault();
+                        nextIdx = (currentIdx + 1) % tabs.length;
+                    } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+                        e.preventDefault();
+                        nextIdx = (currentIdx - 1 + tabs.length) % tabs.length;
+                    } else {
+                        return;
+                    }
+
+                    tabs[nextIdx].focus();
+                    tabs[nextIdx].click();
+                });
+
                 // Show more
                 $btnMore.addEventListener('click', function() {
                     visibleCount += 5;
                     var filtered = getFiltered();
                     renderResults(filtered);
                 });
+
+                // Export CSV
+                if ($btnExportCSV) {
+                    $btnExportCSV.addEventListener('click', function() {
+                        var filtered = getFiltered();
+                        if (window.categoryExport && window.categoryExport.exportCategoryResults) {
+                            window.categoryExport.exportCategoryResults(activeCat, filtered);
+                        }
+                    });
+                }
 
                 // Filters
                 $filterYear.addEventListener('change', function() {
