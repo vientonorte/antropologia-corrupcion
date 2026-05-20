@@ -83,6 +83,7 @@ Quedan abiertas, además, dos tensiones. La primera: el *titular en el margen* �
 
 ## Vínculos con otras fichas
 
+- [C02 — La cuenta y el núcleo](C02-sistema-pensiones-archivo.md): Ficha de sistema que aplica el marco conceptual del núcleo soberano al régimen de pensiones de capitalización individual chileno. Comparte la lectura de Abrams (máscara), Stoler (archivo), Das y Poole (margen) y Couldry/Mejias (colonialidad de datos).
 - [pendiente: fichas de casos etnográficos cuando existan]
 
 ## Referencias
