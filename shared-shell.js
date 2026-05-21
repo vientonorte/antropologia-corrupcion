@@ -105,12 +105,10 @@
     function buildNav(basePath) {
         var currentPath = window.location.pathname;
         var links = [
-            { href: basePath + 'landing.html', label: 'Inicio publico' },
-            { href: basePath + 'buscador.html', label: 'Buscador avanzado' },
+            { href: basePath + 'landing.html', label: 'Inicio' },
             { href: basePath + 'index.html', label: 'Instrumento' },
-            { href: basePath + 'tesis.html', label: 'Tesis' },
-            { href: basePath + 'login.html', label: 'Acceso privado' },
-            { href: basePath + 'contra-archivo.html', label: 'Contra-Archivo' }
+            { href: basePath + 'landing.html#public-resources-title', label: 'Archivo' },
+            { href: basePath + 'login.html', label: 'Acceso privado' }
         ];
 
         var nav = document.createElement('nav');
@@ -131,7 +129,8 @@
             a.className = 'ca-unified-nav__link';
             a.href = item.href;
             a.textContent = item.label;
-            if (currentPath === new URL(item.href, window.location.origin).pathname) {
+            var itemUrl = new URL(item.href, window.location.origin);
+            if (currentPath === itemUrl.pathname || (item.href.indexOf('#public-resources-title') !== -1 && currentPath.indexOf('/landing.html') !== -1)) {
                 a.className += ' is-active';
             }
             linksWrap.appendChild(a);
@@ -153,11 +152,10 @@
 
         var right = document.createElement('div');
         right.innerHTML =
-            '<a href="' + basePath + 'landing.html">Inicio publico</a> · ' +
-            '<a href="' + basePath + 'buscador.html">Buscador avanzado</a> · ' +
+            '<a href="' + basePath + 'landing.html">Inicio</a> · ' +
             '<a href="' + basePath + 'index.html">Instrumento</a> · ' +
-            '<a href="' + basePath + 'login.html">Acceso privado</a> · ' +
-            '<a href="' + basePath + 'contra-archivo.html">Contra-Archivo</a>';
+            '<a href="' + basePath + 'landing.html#public-resources-title">Archivo</a> · ' +
+            '<a href="' + basePath + 'login.html">Acceso privado</a>';
 
         footer.appendChild(left);
         footer.appendChild(right);
