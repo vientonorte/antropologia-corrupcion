@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Archivo público — Contra-Archivo</title>
+    <meta name="description" content="Archivo curado del Contra-Archivo: fichas publicadas, dossier de citas y biblioteca de lecturas públicas.">
+    <meta name="theme-color" content="#0c0c0c">
+    <link rel="stylesheet" href="styles/shared.css?v=20260419">
+    <style>
+        .archivo-main {
+            max-width: 1120px;
+            margin: 0 auto;
+            padding: 42px 24px 56px;
+        }
+
+        .archivo-intro {
+            margin-bottom: 30px;
+            background: var(--s1);
+            border: 1px solid var(--border);
+            border-radius: var(--r-lg);
+            padding: 24px;
+        }
+
+        .archivo-kicker {
+            font-family: var(--font-mono);
+            text-transform: uppercase;
+            letter-spacing: .12em;
+            font-size: 10px;
+            color: var(--etica);
+            margin-bottom: 10px;
+            display: inline-block;
+        }
+
+        .archivo-title {
+            font-size: clamp(32px, 6vw, 52px);
+            line-height: 1.05;
+            margin-bottom: 12px;
+            font-family: "Iowan Old Style", "Times New Roman", serif;
+            color: var(--text);
+        }
+
+        .archivo-copy {
+            max-width: 80ch;
+            color: var(--muted);
+            line-height: 1.65;
+            margin-bottom: 18px;
+        }
+
+        .estado-legend {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .estado-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 10px;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            font-size: 11px;
+            font-family: var(--font-mono);
+            color: var(--dim);
+            text-transform: uppercase;
+            letter-spacing: .05em;
+        }
+
+        .estado-chip__dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .estado-chip.is-publicable .estado-chip__dot {
+            background: var(--mat);
+        }
+
+        .estado-chip.is-revision .estado-chip__dot {
+            background: var(--warn);
+        }
+
+        .estado-chip.is-investigador .estado-chip__dot {
+            background: var(--inst);
+        }
+
+        .archivo-section {
+            margin-top: 34px;
+        }
+
+        .archivo-section__head {
+            margin-bottom: 14px;
+        }
+
+        .archivo-section__title {
+            font-size: 24px;
+            margin-bottom: 8px;
+            color: var(--text);
+        }
+
+        .archivo-section__copy {
+            font-size: 14px;
+            color: var(--muted);
+            max-width: 70ch;
+        }
+
+        .archivo-grid {
+            display: grid;
+            gap: 14px;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        }
+
+        .archivo-card {
+            display: block;
+            background: var(--s1);
+            border: 1px solid var(--border);
+            border-radius: var(--r);
+            padding: 16px;
+            text-decoration: none;
+            transition: border-color .2s, transform .2s;
+        }
+
+        .archivo-card:hover {
+            border-color: rgba(200, 169, 110, .45);
+            transform: translateY(-1px);
+            text-decoration: none;
+        }
+
+        .archivo-card__meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+
+        .archivo-card__tipo {
+            font-family: var(--font-mono);
+            text-transform: uppercase;
+            letter-spacing: .1em;
+            font-size: 10px;
+            color: var(--etica);
+        }
+
+        .archivo-card__estado {
+            font-family: var(--font-mono);
+            text-transform: uppercase;
+            letter-spacing: .07em;
+            font-size: 10px;
+            padding: 3px 8px;
+            border-radius: 999px;
+            border: 1px solid var(--border);
+            color: var(--muted);
+        }
+
+        .archivo-card__estado[data-estado="publicable"] {
+            color: var(--mat);
+            border-color: rgba(122, 158, 110, .55);
+            background: rgba(122, 158, 110, .12);
+        }
+
+        .archivo-card__estado[data-estado="en revisión"] {
+            color: var(--warn);
+            border-color: rgba(232, 184, 75, .55);
+            background: rgba(232, 184, 75, .12);
+        }
+
+        .archivo-card__title {
+            color: var(--text);
+            font-size: 16px;
+            margin-bottom: 8px;
+            line-height: 1.35;
+        }
+
+        .archivo-card__desc {
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.55;
+        }
+
+        .archivo-empty {
+            border: 1px dashed var(--border);
+            border-radius: var(--r);
+            padding: 14px;
+            color: var(--dim);
+            font-size: 13px;
+            font-family: var(--font-mono);
+        }
+
+        @media (max-width: 700px) {
+            .archivo-main {
+                padding: 30px 16px 44px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <main class="archivo-main" id="main-content">
+        <section class="archivo-intro" aria-labelledby="archivo-title">
+            <span class="archivo-kicker">Archivo público curado</span>
+            <h1 class="archivo-title" id="archivo-title">Archivo</h1>
+            <p class="archivo-copy">
+                Esta capa reúne materiales publicados como lectura: fichas, dossier documental y biblioteca abierta.
+                El Archivo funciona como interfaz de consulta pública, mientras el sistema de producción investigadora
+                permanece en la experiencia privada.
+            </p>
+            <div class="estado-legend" id="estado-legend" aria-label="Estados editoriales de fichas"></div>
+        </section>
+
+        <section class="archivo-section" aria-labelledby="fichas-publicadas-title">
+            <div class="archivo-section__head">
+                <h2 class="archivo-section__title" id="fichas-publicadas-title">Fichas publicadas</h2>
+                <p class="archivo-section__copy">Lecturas ya editadas y marcadas como publicables dentro del sistema de fichas.</p>
+            </div>
+            <div class="archivo-grid" id="archivo-fichas"></div>
+        </section>
+
+        <section class="archivo-section" aria-labelledby="archivo-citas-title">
+            <div class="archivo-section__head">
+                <h2 class="archivo-section__title" id="archivo-citas-title">Archivo de citas</h2>
+                <p class="archivo-section__copy">Dossier documental de citas y capturas en diálogo con el marco teórico del proyecto.</p>
+            </div>
+            <div class="archivo-grid" id="archivo-citas"></div>
+        </section>
+
+        <section class="archivo-section" aria-labelledby="biblioteca-publica-title">
+            <div class="archivo-section__head">
+                <h2 class="archivo-section__title" id="biblioteca-publica-title">Biblioteca / lecturas públicas</h2>
+                <p class="archivo-section__copy">Navegación de materiales curatoriales de lectura abierta asociados al Contra-Archivo.</p>
+            </div>
+            <div class="archivo-grid" id="archivo-biblioteca"></div>
+        </section>
+    </main>
+
+    <script>
+        (function() {
+            'use strict';
+
+            var PUBLIC_STATES = ['publicable', 'en revisión'];
+            var ESTADO_LABELS = ['publicable', 'en revisión', 'investigador'];
+            var ESTADO_CLASS = {
+                'publicable': 'is-publicable',
+                'en revisión': 'is-revision',
+                'investigador': 'is-investigador'
+            };
+
+            function esc(value) {
+                return String(value || '')
+                    .replace(/&/g, '&amp;')
+                    .replace(/</g, '&lt;')
+                    .replace(/>/g, '&gt;')
+                    .replace(/"/g, '&quot;')
+                    .replace(/'/g, '&#39;');
+            }
+
+            function buildCard(entry) {
+                return '<a class="archivo-card" href="' + esc(entry.url) + '">' +
+                    '<div class="archivo-card__meta">' +
+                    '<span class="archivo-card__tipo">' + esc(entry.tipo || 'archivo') + '</span>' +
+                    '<span class="archivo-card__estado" data-estado="' + esc(entry.estado) + '">' + esc(entry.estado) + '</span>' +
+                    '</div>' +
+                    '<h3 class="archivo-card__title">' + esc(entry.titulo) + '</h3>' +
+                    '<p class="archivo-card__desc">' + esc(entry.descripcion || '') + '</p>' +
+                    '</a>';
+            }
+
+            function renderSection(containerId, entries) {
+                var container = document.getElementById(containerId);
+                if (!container) return;
+                if (!entries.length) {
+                    container.innerHTML = '<div class="archivo-empty">Sin materiales públicos en esta sección por ahora.</div>';
+                    return;
+                }
+                container.innerHTML = entries.map(buildCard).join('');
+            }
+
+            function renderLegend(allEntries) {
+                var legend = document.getElementById('estado-legend');
+                if (!legend) return;
+                var counts = {};
+                ESTADO_LABELS.forEach(function(label) {
+                    counts[label] = 0;
+                });
+                (allEntries || []).forEach(function(entry) {
+                    if (counts[entry.estado] === undefined) return;
+                    counts[entry.estado] += 1;
+                });
+                legend.innerHTML = ESTADO_LABELS.map(function(label) {
+                    return '<span class="estado-chip ' + ESTADO_CLASS[label] + '">' +
+                        '<span class="estado-chip__dot" aria-hidden="true"></span>' +
+                        esc(label) + ': ' + counts[label] +
+                        '</span>';
+                }).join('');
+            }
+
+            fetch('data/archivo-index.json')
+                .then(function(response) {
+                    if (!response.ok) throw new Error('No se pudo cargar el índice del archivo');
+                    return response.json();
+                })
+                .then(function(payload) {
+                    var entries = payload && payload.entries ? payload.entries : [];
+                    var publicEntries = entries.filter(function(entry) {
+                        return PUBLIC_STATES.indexOf(entry.estado) !== -1;
+                    });
+
+                    renderLegend(entries);
+                    renderSection('archivo-fichas', publicEntries.filter(function(entry) {
+                        return entry.seccion === 'fichas';
+                    }));
+                    renderSection('archivo-citas', publicEntries.filter(function(entry) {
+                        return entry.seccion === 'citas';
+                    }));
+                    renderSection('archivo-biblioteca', publicEntries.filter(function(entry) {
+                        return entry.seccion === 'biblioteca';
+                    }));
+                })
+                .catch(function() {
+                    renderSection('archivo-fichas', []);
+                    renderSection('archivo-citas', []);
+                    renderSection('archivo-biblioteca', []);
+                });
+        }());
+    </script>
+    <script>
+        (function() {
+            if (window.__CA_UNIFIED_SHELL_LOADER__) return;
+            window.__CA_UNIFIED_SHELL_LOADER__ = true;
+            var s = document.createElement('script');
+            var b = location.pathname.indexOf('/antropologia-corrupcion/') === 0 ? '/antropologia-corrupcion/' : '/';
+            s.src = b + 'shared-shell.js';
+            s.defer = true;
+            document.head.appendChild(s);
+        }());
+    </script>
+</body>
+
+</html>

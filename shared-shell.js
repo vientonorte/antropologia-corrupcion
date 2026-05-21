@@ -107,7 +107,7 @@
         var links = [
             { href: basePath + 'landing.html', label: 'Inicio' },
             { href: basePath + 'index.html', label: 'Instrumento' },
-            { href: basePath + 'landing.html#public-resources-title', label: 'Archivo' },
+            { href: basePath + 'archivo.html', label: 'Archivo' },
             { href: basePath + 'login.html', label: 'Acceso privado' }
         ];
 
@@ -130,7 +130,7 @@
             a.href = item.href;
             a.textContent = item.label;
             var itemUrl = new URL(item.href, window.location.origin);
-            if (currentPath === itemUrl.pathname || (item.href.indexOf('#public-resources-title') !== -1 && currentPath.indexOf('/landing.html') !== -1)) {
+            if (currentPath === itemUrl.pathname) {
                 a.className += ' is-active';
             }
             linksWrap.appendChild(a);
@@ -154,7 +154,7 @@
         right.innerHTML =
             '<a href="' + basePath + 'landing.html">Inicio</a> · ' +
             '<a href="' + basePath + 'index.html">Instrumento</a> · ' +
-            '<a href="' + basePath + 'landing.html#public-resources-title">Archivo</a> · ' +
+            '<a href="' + basePath + 'archivo.html">Archivo</a> · ' +
             '<a href="' + basePath + 'login.html">Acceso privado</a>';
 
         footer.appendChild(left);
