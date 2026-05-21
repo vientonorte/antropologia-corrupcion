@@ -17,7 +17,10 @@ Este directorio contiene las fichas de investigación del proyecto Contra-Archiv
 2. **Fichas de sistema**: Analizan un sistema o dispositivo institucional
    - Ejemplo: C02 — La cuenta y el núcleo (sistema de pensiones chileno)
 
-3. **Fichas de caso etnográfico**: Documentan casos empíricos específicos
+3. **Fichas metodológicas**: Protocolos operativos, definiciones de proceso, gates de control
+   - Ejemplo: C03 — Protocolo de buenas prácticas de documentación (clasificación P/R/C, gate de pre-publicación)
+
+4. **Fichas de caso etnográfico**: Documentan casos empíricos específicos
    - [Pendientes]
 
 ### Estructura obligatoria de cada ficha
@@ -96,6 +99,7 @@ Toda ficha debe incluir:
 |---|---|---|---|
 | C01 | El núcleo y el margen | Conceptual | Borrador |
 | C02 | La cuenta y el núcleo | Sistema | Borrador |
+| C03 | Protocolo de buenas prácticas de documentación | Metodológica | Borrador |
 
 ## Definition of Done para ficha publicable
 
