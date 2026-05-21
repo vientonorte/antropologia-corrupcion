@@ -1,0 +1,53 @@
+{
+  "_meta": {
+    "version": "2026-05-21",
+    "description": "Índice editorial del archivo público con estados de publicación para fichas y dossier documental."
+  },
+  "entries": [
+    {
+      "id": "ficha-c01-nucleo-margen",
+      "tipo": "ficha",
+      "seccion": "fichas",
+      "titulo": "C01 — El núcleo y el margen",
+      "descripcion": "Concentración infraestructural de datos personales como dispositivo de opacidad.",
+      "url": "https://github.com/vientonorte/antropologia-corrupcion/blob/main/docs/fichas/C01-nucleo-margen.md",
+      "estado": "publicable"
+    },
+    {
+      "id": "ficha-c02-sistema-pensiones-archivo",
+      "tipo": "ficha",
+      "seccion": "fichas",
+      "titulo": "C02 — La cuenta y el núcleo",
+      "descripcion": "Sistema de pensiones chileno como archivo previsional privatizado y arquitectura de datos.",
+      "url": "https://github.com/vientonorte/antropologia-corrupcion/blob/main/docs/fichas/C02-sistema-pensiones-archivo.md",
+      "estado": "publicable"
+    },
+    {
+      "id": "fichas-readme-interno",
+      "tipo": "ficha",
+      "seccion": "fichas",
+      "titulo": "README — Sistema de fichas",
+      "descripcion": "Documento de operación editorial y metodología de fichas.",
+      "url": "https://github.com/vientonorte/antropologia-corrupcion/blob/main/docs/fichas/README.md",
+      "estado": "investigador"
+    },
+    {
+      "id": "attac-dossier-citas",
+      "tipo": "dossier",
+      "seccion": "citas",
+      "titulo": "Citas ATTAC — dossier documental",
+      "descripcion": "Archivo de citas y capturas para etnografía digital del circuito financiero transnacional.",
+      "url": "https://github.com/vientonorte/antropologia-corrupcion/blob/main/Estado%20del%20Arte/Citas%20Attac/README.md",
+      "estado": "publicable"
+    },
+    {
+      "id": "tesis-lecturas-publicas",
+      "tipo": "biblioteca",
+      "seccion": "biblioteca",
+      "titulo": "Tesis / lecturas públicas",
+      "descripcion": "Acceso curado a documentos y materiales de lectura abierta del proyecto.",
+      "url": "tesis.html",
+      "estado": "publicable"
+    }
+  ]
+}
