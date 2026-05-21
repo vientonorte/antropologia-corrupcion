@@ -209,6 +209,40 @@ module.exports = function (describe, it, assert, assertEqual, assertDeepEqual, a
         });
     });
 
+    /* ─── Categorías de búsqueda ─── */
+
+    describe('data/fuentes-oficiales.json — categorías', function () {
+        var validCats = ['E', 'F', 'G', 'H', 'I'];
+
+        it('categoria_primaria values are valid if present', function () {
+            for (var i = 0; i < fuentesData.length; i++) {
+                var registro = fuentesData[i];
+                if (registro.categoria_primaria) {
+                    assert(Array.isArray(registro.categoria_primaria),
+                        'registro[' + i + '] categoria_primaria should be array if present');
+                    for (var j = 0; j < registro.categoria_primaria.length; j++) {
+                        var cat = registro.categoria_primaria[j];
+                        assertArrayIncludes(validCats, cat,
+                            'registro[' + i + '] categoria "' + cat + '" should be valid (E, F, G, H, I)');
+                    }
+                }
+            }
+        });
+
+        it('categoría I solo contiene registros vinculados a casos etnográficos', function () {
+            var casoIds = ['sura-gobernanza-datos', 'la-negra-territorio-mapuche', 'periodismo-datos-chile', 'oit169-consulta-previa'];
+            for (var i = 0; i < fuentesData.length; i++) {
+                var registro = fuentesData[i];
+                if (registro.categoria_primaria && registro.categoria_primaria.indexOf('I') !== -1) {
+                    assert(registro.friccion_con,
+                        'registro[' + i + '] con categoría I debe tener friccion_con');
+                    assertArrayIncludes(casoIds, registro.friccion_con,
+                        'registro[' + i + '] categoría I debe vincular a caso etnográfico válido');
+                }
+            }
+        });
+    });
+
     /* ─── bcn-legislativo.json schema ─── */
 
     describe('data/bcn-legislativo.json — schema', function () {
