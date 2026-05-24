@@ -377,10 +377,35 @@
         }
         
         .cat-badge.cat-I {
-            background: rgba(200, 169, 110, .15);
-            color: var(--etica);
+            background: rgba(200, 95, 74, .12);
+            color: var(--crit);
         }
         
+        .results-toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        #btnExportCSV {
+            display: none;
+            padding: 6px 12px;
+            background: var(--s1);
+            border: 1px solid var(--border);
+            border-radius: var(--r);
+            color: var(--muted);
+            font-size: 12px;
+            font-family: var(--font-mono);
+            cursor: pointer;
+            transition: border-color .2s, color .2s;
+        }
+
+        #btnExportCSV:hover {
+            border-color: rgba(255, 255, 255, .2);
+            color: var(--fg);
+        }
+
         .result-date {
             font-family: var(--font-mono);
             font-size: 11px;
@@ -811,11 +836,9 @@
             <div class="cat-desc" id="catDesc" aria-live="polite">Registros de transparencia, SEIA y otras instituciones públicas con deber de publicación activa.</div>
 
             <!-- Results -->
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <div class="results-toolbar">
                 <div class="results-status" id="resultsStatus"></div>
-                <button id="btnExportCSV" style="display:none;padding:6px 12px;background:var(--s1);border:1px solid var(--border);border-radius:var(--r);color:var(--muted);font-size:12px;font-family:var(--font-mono);cursor:pointer;transition:all .2s" onmouseover="this.style.borderColor='rgba(255,255,255,.2)';this.style.color='var(--fg)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--muted)'">
-                    📥 Exportar CSV
-                </button>
+                <button id="btnExportCSV">📥 Exportar CSV</button>
             </div>
             <div id="loadingState" style="display:none;padding:48px 0;text-align:center;color:var(--dim);font-size:13px;font-family:var(--font-mono)">Cargando fuentes para búsqueda avanzada…</div>
             <div id="resultsList"></div>
