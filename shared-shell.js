@@ -83,6 +83,31 @@
             '.ca-unified-footer a:hover {',
             '  text-decoration: underline;',
             '}',
+            '.ca-skip-link {',
+            '  position: absolute;',
+            '  left: -9999px;',
+            '  top: auto;',
+            '  width: 1px;',
+            '  height: 1px;',
+            '  overflow: hidden;',
+            '}',
+            '.ca-skip-link:focus {',
+            '  position: fixed;',
+            '  top: 12px;',
+            '  left: 12px;',
+            '  width: auto;',
+            '  height: auto;',
+            '  overflow: visible;',
+            '  padding: 10px 18px;',
+            '  background: #c8a96e;',
+            '  color: #000;',
+            '  border-radius: 6px;',
+            '  font-size: 13px;',
+            '  font-weight: 600;',
+            '  z-index: 9999;',
+            '  outline: 2px solid #0d0d0d;',
+            '  text-decoration: none;',
+            '}',
             '@media (max-width: 760px) {',
             '  .ca-unified-nav {',
             '    flex-direction: column;',
@@ -108,12 +133,13 @@
             { href: basePath + 'landing.html', label: 'Inicio' },
             { href: basePath + 'index.html', label: 'Instrumento' },
             { href: basePath + 'archivo.html', label: 'Archivo' },
+            { href: basePath + 'buscador.html', label: 'Búsqueda' },
             { href: basePath + 'login.html', label: 'Acceso privado' }
         ];
 
         var nav = document.createElement('nav');
         nav.className = 'ca-unified-nav';
-        nav.setAttribute('aria-label', 'Navegacion unificada del sitio');
+        nav.setAttribute('aria-label', 'Navegación unificada del sitio');
         nav.setAttribute('data-ca-unified-nav', 'true');
 
         var brand = document.createElement('a');
@@ -299,8 +325,18 @@
 
         pruneLegacyShell();
 
+        if (!document.querySelector('.ca-skip-link')) {
+            var skip = document.createElement('a');
+            skip.className = 'ca-skip-link';
+            skip.href = '#main-content';
+            skip.textContent = 'Saltar al contenido principal';
+            document.body.insertBefore(skip, document.body.firstChild);
+        }
+
         if (!document.querySelector('[data-ca-unified-nav]')) {
-            document.body.insertBefore(buildNav(resolveBasePath()), document.body.firstChild);
+            var nav = buildNav(resolveBasePath());
+            var skipEl = document.querySelector('.ca-skip-link');
+            document.body.insertBefore(nav, skipEl ? skipEl.nextSibling : document.body.firstChild);
         }
 
         if (!document.querySelector('[data-ca-unified-footer]')) {
