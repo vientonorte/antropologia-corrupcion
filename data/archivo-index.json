@@ -41,6 +41,15 @@
       "estado": "publicable"
     },
     {
+      "id": "zuboff-citas-archivo",
+      "tipo": "dossier",
+      "seccion": "citas",
+      "titulo": "Citas Zuboff — Capitalismo de vigilancia",
+      "descripcion": "Archivo de citas de Shoshana Zuboff: capitalismo de vigilancia, datos de comportamiento, mercados de futuros conductuales y poder instrumental. Eje teórico central del caso SURA y Banca Digital.",
+      "url": "zuboff-citas.html",
+      "estado": "publicable"
+    },
+    {
       "id": "tesis-lecturas-publicas",
       "tipo": "biblioteca",
       "seccion": "biblioteca",
