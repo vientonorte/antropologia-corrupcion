@@ -89,6 +89,10 @@ node_modules/
 *\ 2.*
 *\ 2/
 
+# === CARPETAS PERSONALES / PRIVADAS (migradas a archivo-privado) ===
+docs/Estado del Arte/
+skills/sanitization-toolkit/
+
 # === HERRAMIENTAS DE TRABAJO (no deploy) ===
 _papelera_duplicados/
 _extract_branch_content.py
