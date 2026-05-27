@@ -36,8 +36,8 @@
       "tipo": "dossier",
       "seccion": "citas",
       "titulo": "Citas ATTAC — dossier documental",
-      "descripcion": "Archivo de citas y capturas para etnografía digital del circuito financiero transnacional.",
-      "url": "https://github.com/vientonorte/antropologia-corrupcion/blob/main/Estado%20del%20Arte/Citas%20Attac/README.md",
+      "descripcion": "Archivo de citas y capturas para etnografía digital del circuito financiero transnacional (ATTAC, Tasa Tobin, custodios globales). Interfaz en zuboff-archivo.",
+      "url": "zuboff-archivo.html",
       "estado": "publicable"
     },
     {
@@ -64,7 +64,7 @@
       "seccion": "poemarios",
       "titulo": "Trabajo en SURA",
       "descripcion": "Performance poética: testimonio, etnografía del terror, dualidad laboral y filosofía de la liberación.",
-      "url": "Poemarios/",
+      "url": "Poemarios/trabajo-en-sura.html",
       "estado": "publicable"
     }
   ]

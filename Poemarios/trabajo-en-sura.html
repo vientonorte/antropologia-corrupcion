@@ -22,7 +22,7 @@
     --red: #e03030;
     --gold: #c9a227;
     --blue: #4fc3f7;
-    --muted: #555;
+    --muted: #888;
     --intimate: #c4a0a0;
     --mapuche: #7dbb8a;
     --border: #222;
@@ -108,11 +108,11 @@
   /* 02 CONFESIÓN */
   .confession {
     font-family: 'Playfair Display', serif;
-    font-size: clamp(1.1rem,2.5vw,1.7rem);
+    font-size: clamp(1.25rem,2.5vw,1.7rem);
     font-style: italic;
     color: var(--intimate);
     max-width: 44ch;
-    line-height: 1.9;
+    line-height: 2.05;
   }
 
   /* 03 12.000 KM */
@@ -127,9 +127,9 @@
     letter-spacing: -0.04em;
   }
   .travel-text {
-    font-size: clamp(1rem,2.2vw,1.5rem);
+    font-size: clamp(1.15rem,2.2vw,1.5rem);
     max-width: 40ch; position: relative; z-index: 1;
-    line-height: 1.9;
+    line-height: 2;
   }
 
   /* 04 NADA */
@@ -160,8 +160,9 @@
   .t-card.t1 { border-color: var(--blue); }
   .t-card.t2 { border-color: var(--red); }
   .t-body {
-    font-size: clamp(0.9rem,1.8vw,1.1rem);
-    line-height: 2; color: #bbb;
+    font-size: clamp(1rem,1.8vw,1.15rem);
+    line-height: 2.1; color: var(--fg);
+    opacity: .85;
   }
   .code-line {
     font-family: 'Space Mono', monospace;

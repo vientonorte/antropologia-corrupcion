@@ -131,7 +131,7 @@
         var currentPath = window.location.pathname;
         var links = [
             { href: basePath + 'landing.html', label: 'Inicio' },
-            { href: basePath + 'index.html', label: 'Instrumento' },
+            { href: basePath + 'contra-archivo-v2.html', label: 'Instrumento' },
             { href: basePath + 'archivo.html', label: 'Archivo' },
             { href: basePath + 'poemas.html', label: 'Poemas' },
             { href: basePath + 'buscador.html', label: 'Búsqueda' },
@@ -180,7 +180,7 @@
         var right = document.createElement('div');
         right.innerHTML =
             '<a href="' + basePath + 'landing.html">Inicio</a> · ' +
-            '<a href="' + basePath + 'index.html">Instrumento</a> · ' +
+            '<a href="' + basePath + 'contra-archivo-v2.html">Instrumento</a> · ' +
             '<a href="' + basePath + 'archivo.html">Archivo</a> · ' +
             '<a href="' + basePath + 'poemas.html">Poemas</a> · ' +
             '<a href="' + basePath + 'login.html">Acceso privado</a>';
