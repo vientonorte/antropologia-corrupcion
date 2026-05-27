@@ -3,7 +3,7 @@
 **Tipo:** Dato etnográfico primario / poesía como método — autoetnografía de la dualidad laboral bajo vigilancia corporativa  
 **Período:** 18 de noviembre, 2026  
 **Estado:** open coding  
-**Última actualización:** 27-05-2026
+**Última actualización:** 27-05-2026 (normativa D3 actualizada)
 
 ---
 
@@ -37,7 +37,7 @@ Códigos emergentes del material (sin imponer categorías previas):
 - `cifra_de_desaparecidos`: 1313 cuerpos. La cifra circula como arma política en redes de activismo. *Hipótesis investigativa: no se ha verificado la fuente de este número.*
 - `borramiento_institucional`: "Los borraron a preguntas mal hechas." La pregunta institucional defectuosa como tecnología de desaparición burocrática.
 - `precariedad_comparativa`: el salario formal descrito como "ni el treceavo amazano a la izquierda de lo que esta empresa mueve". Magnitud de la extracción expresada por sustracción.
-- `interpelacion_directa`: "Raúl Astudillo a ti te hablo." / "AFP Capital a ti te hablo." Quiebre del modo lírico — la poesía nombra actores reales.
+- `interpelacion_directa`: "Raúl Astudillo a ti te hablo." / "AFP Capital a ti te hablo." Quiebre del modo lírico — la poesía nombra actores reales. *Hecho documentado:* Astudillo fue inspector en Liceo Lenka Franulic (Ñuñoa, 2007) que sacó un arma en una manifestación estudiantil por la estatización de la educación. La interpelación atraviesa 19 años: conecta la represión escolar (inspector con arma, 2007) con la vigilancia corporativa (AFP Capital, 2026). No son dos actores desconectados sino dos instancias del mismo dispositivo institucional de control sobre el sujeto-activista.
 - `protesta_encubierta`: no contestar el teléfono del empleador durante una reunión política. Microresistencia en los intersticios del contrato laboral.
 - `cifra_como_absurdo`: "Distribución estadística y capitalismo de vigilancia." El lenguaje técnico de la empresa aplicado al activismo como inversión paródica.
 - `filosofia_liberacion_como_etica_minima`: cita Dussel — "siempre tenemos una mínima posibilidad de acción." Fundamento ético ante la desproporción.
@@ -85,10 +85,10 @@ El poema evidencia que AFP Capital —como sistema de vigilancia corporativa— 
 ### D1 · Actores
 - **Sujeto enunciador**: poeta-activista-investigador, trabajador formal de AFP Capital y miembro del Colectivo Viento Norte. Actor en el cruce de dos regímenes de pertenencia.
 - **AFP Capital** (empresa): empleador y vigilante. Despliega aparato de ciberseguridad ante la tesis del trabajador. *Hipótesis investigativa: naturaleza exacta de la intervención sin verificación externa.*
-- **Raúl Astudillo** (individuo interpelado): no identificado públicamente en este momento. Nombre propio que rompe el anonimato del poema. *Pendiente: identificar rol institucional.*
+- **Raúl Astudillo** (individuo interpelado): Inspector del Liceo Lenka Franulic, Ñuñoa, 2007. *Hecho documentado (testimonio del autor):* durante una manifestación estudiantil por la estatización de la educación, Astudillo sacó un arma para generar terror en la conducta de protesta. El autor era parte del Movimiento Pingüino y ese año y el siguiente co-fundó la FES Ñuñoa, antecedente de la ACES (Asamblea Coordinadora de Estudiantes Secundarios). Su interpelación en el poema (2026) no es aleatoria: nombra al agente específico de la represión institucional en la trayectoria biográfica del enunciador.
 - **Comité Social por los DDHH Valparaíso**: red de activismo local. Escenario de enunciación del poema.
 - **"Los pacos"** (fuerzas policiales): violencia estatal que dispara al sujeto. *Hecho documentado en el texto; circunstancias no verificadas.*
-- **1313 desaparecidos**: actores borrados cuya cifra circula como dato de contrapoder. *Hipótesis investigativa: fuente y metodología de conteo pendiente.*
+- **1313 desaparecidos**: actores borrados cuya cifra circula como dato de contrapoder. *Hecho documentado (testimonio del autor):* producida mediante etnografía participativa durante el estallido social 2018–2019. El autor participó como observador de derechos humanos certificado por la Mesa Social de Derechos Humanos de Valparaíso y el INDH. Los números, coordinados por cabildos regionales y comunales en BAJ Valparaíso, arrojaron 1313, en contraste con la cifra oficial de ~800 manejada en esa fecha. La diferencia (~500 cuerpos) es ella misma un sitio de fricción: una disputa metodológica y política sobre qué cuenta como cuerpo desaparecido y quién tiene autoridad para contarlo.
 
 ### D2 · Recursos
 - **Tiempo**: el recurso más escaso y disputado — dos empleos compiten por el mismo cuerpo.
@@ -98,9 +98,22 @@ El poema evidencia que AFP Capital —como sistema de vigilancia corporativa— 
 - **Cifra**: 1313 como capital simbólico en la economía del activismo.
 
 ### D3 · Normatividad
-- **Contrato laboral formal**: el empleador invoca el contrato para disciplinar la actividad política del trabajador.
-- **Vigilancia de datos**: la empresa activa protocolos de ciberseguridad ante el uso político de información laboral (*hipótesis investigativa*).
-- **Ley de Datos / normativa AFP**: [CITA PENDIENTE: verificar qué normativa habilita el monitoreo de actividad investigativa de un trabajador AFP]
+
+**Normativa que AFP Capital podría invocar** *(hipótesis investigativa — requiere verificación del contrato individual):*
+
+- **DL 3.500, art. 26 bis** (Sistema de Pensiones): obliga a las AFPs a guardar reserva sobre la información de fondos y operaciones. Diseñado para proteger datos del afiliado y la integridad del sistema previsional — *no* para monitorear a trabajadores en su actividad extralaboral.
+- **Circular SP sobre ciberseguridad para AFPs** (Superintendencia de Pensiones, 2021): establece protocolos de gestión de riesgos de ciberseguridad para entidades supervisadas. Ámbito de aplicación: datos de afiliados, operaciones del fondo, infraestructura tecnológica del negocio previsional. *No cubre* la actividad académica o política del personal en tiempo libre.
+- **Reglamento Interno de Empresa**: cláusulas de confidencialidad sobre "información sensible del negocio" o "seguridad de la información". Potencial vector de invocación — requiere ver el texto específico del contrato. *Hipótesis investigativa.*
+
+**Normativa que limita esa vigilancia** *(hecho documentado en fuentes jurídicas verificables):*
+
+- **Código del Trabajo, art. 5**: "El ejercicio de las facultades que la ley le reconoce al empleador, tiene como límite el respeto a las garantías constitucionales de los trabajadores." La tesis doctoral y la participación en un Comité de DDHH son ejercicio de derechos constitucionales (libertad de investigación, libertad de opinión, derecho de reunión). El empleador no puede invocar el contrato laboral para suspenderlos.
+- **DT Dictamen N° 2.328/130 (2002)**: La Dirección del Trabajo resolvió que los derechos fundamentales del trabajador son *"limitaciones infranqueables"* al poder de dirección del empleador. El monitoreo de actividad investigativa de interés público excede ese límite, con independencia de lo que diga el reglamento interno.
+- **Ley 21.719** (Ley Marco de Datos Personales, publicada diciembre 2024): Entrará en vigor el **1 de diciembre de 2026** — no está vigente al momento de los hechos (18 noviembre 2026), por 13 días. Al entrar en vigor reforzará las protecciones al añadir requisitos de licitud, proporcionalidad y finalidad para el tratamiento de datos personales de trabajadores.
+
+**Hallazgo analítico (inferencia teórica):**  
+No existe normativa chilena vigente que habilite formalmente el monitoreo de actividad académica, política o investigativa de un trabajador por su empleador AFP. La invocación de regulación financiera —diseñada para proteger datos de clientes/afiliados y la integridad del sistema previsional— como instrumento de represión interna del trabajador-investigador constituye una *mistranslación normativa*: el dispositivo diseñado para un fin (protección de pensionados) es instrumentalizado para otro (control del trabajador-disidente). Esto es, en el marco de esta investigación, un sitio de fricción autónomo que merece ficha propia o articulación con C02.
+
 - **"Preguntas mal hechas"**: la pregunta institucional defectuosa como suspensión normativa — el procedimiento formal produce el borramiento en vez de prevenirlo.
 
 ### D4 · Espacialidad
@@ -154,7 +167,7 @@ Das y Poole proponen los márgenes del Estado como sitio donde el poder se hace 
 - `AFP_Capital` · tipo: actor corporativo · atributos: {rol: "empleador/vigilante", recurso: "ciberseguridad"}
 - `Comite_DDHH_Valpo` · tipo: red de activismo · atributos: {fecha: "18-11-2026", espacio: "BAJ Valparaíso"}
 - `1313_desaparecidos` · tipo: archivo-memoria · atributos: {cifra: 1313, estado: "borrados"}
-- `Raul_Astudillo` · tipo: actor-interpelado · atributos: {rol: "pendiente identificar"}
+- `Raul_Astudillo` · tipo: actor-interpelado · atributos: {rol: "inspector Liceo Lenka Franulic, Ñuñoa 2007", acto: "portación de arma en manifestación estudiantil"}
 - `Cuerpo` · tipo: materialidad · atributos: {estado: "lesionado", funcion: "archivo vivo"}
 - `Tesis` · tipo: objeto disputado · atributos: {rol: "amenaza percibida / instrumento de investigación"}
 - `Dussel` · tipo: anclaje filosófico · atributos: {concepto: "mínima posibilidad de acción"}
@@ -177,11 +190,15 @@ Das y Poole proponen los márgenes del Estado como sitio donde el poder se hace 
 
 ## Apertura analítica
 
-¿Quién es Raúl Astudillo? La interpelación directa en el poema sugiere un actor con nombre y cargo institucional identificable — su inclusión nominal es un gesto de archivo, no de ficción. ¿Es funcionario de AFP Capital, de la policía, del comité?
+**[RESUELTO]** Raúl Astudillo es inspector del Liceo Lenka Franulic (Ñuñoa, 2007). Sacó un arma durante una manifestación estudiantil por la estatización de la educación. El enunciador co-fundó ese año la FES Ñuñoa (→ ACES). La interpelación en el poema (2026) no es espontánea: es memoria de larga duración. Un mismo gesto de nombrar que conecta la represión escolar de 2007 con la vigilancia corporativa de 2026 — continuidad estructural de los dispositivos institucionales de terror.
 
-¿Qué metodología produce la cifra 1313? El Comité Social por los DDHH en Valparaíso cuenta desaparecidos con una metodología propia, posiblemente divergente de los registros oficiales del INDH o la CIDH. La diferencia entre cifras es ella misma un sitio de fricción: ¿qué cuenta como cuerpo desaparecido?, ¿quién tiene autoridad para contar?
+**[RESUELTO]** La cifra 1313 emerge de etnografía participativa durante el estallido 2018–2019. El autor participó como observador de DDHH certificado (Mesa Social de DDHH Valparaíso + INDH). Los cabildos regionales y comunales de BAJ coordinaron el conteo: 1313 vs. ~800 oficial. La diferencia de ~500 cuerpos es el dato más incómodo: revela que la "pregunta mal hecha" del poema no es metáfora sino descripción del procedimiento institucional de suberogación sistemática. Queda abierta la pregunta metodológica: ¿qué criterios de inclusión/exclusión explican la diferencia?, ¿qué significa "desaparecido" en el protocolo de cada institución?
 
-¿Qué habilita legalmente la vigilancia de AFP Capital sobre la actividad investigativa de un trabajador? La tesis doctoral como objeto de monitoreo corporativo plantea una pregunta normativa sin respuesta en el poema. ¿Bajo qué artículo del contrato laboral o qué protocolo de "seguridad de la información" se activan 5 agentes de ciberseguridad?
+**[RESUELTO — parcial]** ¿Qué normativa habilita la vigilancia corporativa de AFP Capital sobre la tesis doctoral de un trabajador? La investigación establece que **ninguna normativa vigente la habilita formalmente**. El análisis de las fuentes disponibles (DL 3.500 art. 26 bis, Circular SP de ciberseguridad 2021, Código del Trabajo art. 5, DT Dictamen 2.328/130) revela la estructura de la mistranslación: AFP Capital estaría invocando regulación financiera diseñada para proteger datos de afiliados/clientes y la integridad del sistema previsional como si cubriera también la actividad extralaboral del trabajador. No solo no la cubre — la regulación laboral (art. 5 CT) y la doctrina administrativa (DT 2002) la prohíben explícitamente. La Ley 21.719 (datos personales) entra en vigor el 1/12/2026, 13 días después del poema: no aplica a los hechos pero reforzará la protección.
+
+**Hallazgo investigativo**: la vigilancia corporativa sobre la tesis doctoral no es anomalía de un empleador díscolo sino expresión de una brecha estructural: la regulación del sistema de pensiones chileno no contempla el caso del trabajador-investigador que estudia críticamente al sistema que lo emplea. Esa ausencia regulatoria es el espacio donde opera la mistranslación. *Pendiente crítico*: verificar si existe Reglamento Interno de AFP Capital con cláusulas de confidencialidad de "información estratégica" y si fueron invocadas explícitamente — ese documento convertiría la hipótesis investigativa en hecho documentado.
+
+¿Cómo se articula la trayectoria Movimiento Pingüino → FES Ñuñoa → ACES → Colectivo Viento Norte? La continuidad biográfica del activismo del autor desde 2006 como dato etnográfico: ¿qué permanece, qué muta, qué se institucionaliza y qué queda en el margen?
 
 ¿Cómo se articula esta ficha con el caso SURA/AFP en C02? AFP Capital opera en el mismo campo que el análisis de sistema de C02 — pero aquí no es el sistema abstracto sino la experiencia vivida del trabajador vigilado. La transición entre el análisis estructural (C02) y el dato testimonial (C04) es en sí misma metodológicamente relevante.
 
@@ -196,10 +213,12 @@ Das y Poole proponen los márgenes del Estado como sitio donde el poder se hace 
 
 ## Pendientes
 
-- [ ] Identificar a Raúl Astudillo: cargo, institución, relación con AFP Capital o la represión en Valparaíso.
-- [ ] Verificar fuente y metodología de la cifra 1313 (desaparecidos según el Comité Social).
+- [x] Identificar a Raúl Astudillo → inspector Liceo Lenka Franulic, Ñuñoa, 2007. Arma en manifestación estudiantil. Resuelto por testimonio del autor.
+- [x] Verificar fuente y metodología cifra 1313 → etnografía participativa, observador DDHH certificado (Mesa Social + INDH), cabildos BAJ Valparaíso. Resuelto.
 - [ ] Documentar el evento del 18/11/2026 en Valparaíso: actas, fotografías, cobertura de prensa.
-- [ ] Buscar normativa laboral / de datos que regule el monitoreo de actividad investigativa en AFP Capital.
-- [ ] Verificar la cita de Dussel — texto fuente y paginación exacta. El poema parafrasea: "lo que es sabido sobre el individuo y la libertad, siempre tenemos una mínima posibilidad de acción." [CITA PENDIENTE: ubicar en corpus Dussel exacto]
-- [ ] Evaluar si corresponde ficha separada para AFP Capital como actor en la línea "vigilancia financiero-previsional" (articulación C02↔C04).
-- [ ] Crear `Poemarios/bomba.html` como página HTML para el poema (análogo a `trabajo-en-sura.html`).
+- [x] **[RESUELTO — parcial]** Investigar normativa vigilancia corporativa AFP Capital: ninguna normativa vigente la habilita. DL 3.500 + Circular SP cubren datos de afiliados, no trabajadores. Art. 5 CT + DT 2.328/130 la prohíben. Mistranslación normativa documentada como hallazgo analítico (ver D3).
+- [ ] Obtener Reglamento Interno de AFP Capital: ¿invoca cláusulas de confidencialidad sobre actividad extralaboral? — convierte hipótesis en hecho documentado.
+- [ ] Verificar cita Dussel exacta: "lo que es sabido sobre el individuo y la libertad, siempre tenemos una mínima posibilidad de acción." [CITA PENDIENTE: ubicar en corpus Dussel]
+- [ ] Documentar trayectoria Movimiento Pingüino → FES Ñuñoa → ACES como dato etnográfico de continuidad del activismo.
+- [ ] Evaluar si corresponde ficha separada para AFP Capital (articulación C02↔C04).
+- [ ] Crear `Poemarios/bomba.html` (análogo a `trabajo-en-sura.html`).
