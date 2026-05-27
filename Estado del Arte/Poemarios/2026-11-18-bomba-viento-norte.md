@@ -11,7 +11,7 @@ Quería comenzar sin hablar de mí
 
 Me cuesta digerir palabras revoltosas de niños que no salen del jardín
 
-Quería que mi poesía hablara por mí, de mis viajes innentendidos que movieron mis patiperros pies durante 12 mil kilómetros en búsqueda flácida de revolución a la antigua usanza
+Quería que mi poesía hablara por mí, de mis viajes inentendidos que movieron mis patiperros pies durante 12 mil kilómetros en búsqueda flácida de revolución a la antigua usanza
 
 Contarte de los 2 trabajos que llevo
 
