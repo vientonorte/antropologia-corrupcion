@@ -264,10 +264,12 @@
 </head>
 
 <body>
+    <a href="#main-content" class="skip-link">Saltar al contenido</a>
+
     <!-- ═══ NAV ═══ -->
-    <nav class="po-nav">
+    <nav class="po-nav" aria-label="Navegación principal">
         <a href="index.html" class="po-nav-logo">
-            <span>⊘</span>
+            <span aria-hidden="true">⊘</span>
             Contra-Archivo
             <span class="po-nav-badge">Poesía</span>
         </a>
@@ -275,11 +277,12 @@
             <a href="index.html">Inicio</a>
             <a href="buscador.html">Buscador</a>
             <a href="archivo.html">Archivo</a>
+            <a href="poemas.html" aria-current="page">Poemas</a>
         </div>
     </nav>
 
     <!-- ═══ MAIN ═══ -->
-    <main class="po-main">
+    <main class="po-main" id="main-content">
         <header class="po-header">
             <span class="po-kicker">Poesía como Método de Investigación</span>
             <h1 class="po-title">Contrapoética del Archivo</h1>
@@ -305,43 +308,11 @@
         </section>
 
         <div class="po-list">
-            <!-- Poema 1: Bomba -->
+            <!-- Poema 1: Trabajo en SURA -->
             <article class="po-card">
                 <div class="po-card-meta">
-                    <span class="po-card-meta-item">📅 18 noviembre 2026</span>
-                    <span class="po-card-meta-item">📍 Valparaíso</span>
-                    <span class="po-card-meta-item">✍️ Colectivo Viento Norte</span>
-                </div>
-                <h2 class="po-card-title">Bomba</h2>
-                <p class="po-card-author">Primer poema del Colectivo Viento Norte</p>
-                <blockquote class="po-card-excerpt">
-                    Todo lo que hago es una protesta<br><br>
-                    Desde que me levanto en la mañana<br>
-                    Buscando amar<br><br>
-                    Hasta que me acuesto en la noche después de tejer<br><br>
-                    Enhebro día a día en búsqueda de tu mirar
-                </blockquote>
-                <p class="po-card-context">
-                    <strong>Contexto etnográfico:</strong> Reunión del comité social por los DDHH en Valparaíso. 1313
-                    cuerpos desaparecidos. Fricción entre trabajo vigilado (AFP Capital, 5 agentes de ciberseguridad) y
-                    activismo político. Referencia a Enrique Dussel y la posibilidad mínima de acción ante la opresión.
-                </p>
-                <div class="po-card-tags">
-                    <span class="po-tag">Vigilancia</span>
-                    <span class="po-tag">DDHH</span>
-                    <span class="po-tag">Resistencia</span>
-                    <span class="po-tag">Etnografía</span>
-                </div>
-                <a href="Estado del Arte/Poemarios/2026-11-18-bomba-viento-norte.md" class="po-btn">
-                    Ver archivo completo (markdown) →
-                </a>
-            </article>
-
-            <!-- Poema 2: Trabajo en SURA -->
-            <article class="po-card">
-                <div class="po-card-meta">
-                    <span class="po-card-meta-item">📅 2026</span>
-                    <span class="po-card-meta-item">✍️ Rö</span>
+                    <span class="po-card-meta-item"><span aria-hidden="true">📅</span> 2026</span>
+                    <span class="po-card-meta-item"><span aria-hidden="true">✍️</span> Rö</span>
                 </div>
                 <h2 class="po-card-title">Trabajo en SURA</h2>
                 <p class="po-card-author">Performance poética de Rö</p>
