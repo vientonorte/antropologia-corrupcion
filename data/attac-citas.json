@@ -1,0 +1,156 @@
+[
+  {
+    "id": 2001,
+    "bookTitle": "ATTAC — El movimiento de la esperanza",
+    "author": "Victor Hugo de la Fuente",
+    "pageNo": 7,
+    "text": "El movimiento ciudadano ATTAC encarna las esperanzas de millones de personas, en todo el mundo, que no se resignan a vivir bajo un sistema injusto cuyo motor central es la obtención de ganancias a cualquier precio, no importando ni el futuro del planeta ni la vida de sus habitantes.",
+    "color": "blue",
+    "category": "movimiento_social",
+    "notes": "Testimonio situado: el rechazo a la lógica de ganancia como eje central. El contra-archivo opera desde la misma negativa: no resignarse a que la mistranslation institucional sea lo único posible.",
+    "timestamp": ""
+  },
+  {
+    "id": 2002,
+    "bookTitle": "ATTAC — El movimiento de la esperanza",
+    "author": "Margarita Iglesias S.",
+    "pageNo": 9,
+    "text": "ATTAC surgió para promover un impuesto a los capitales especulativos, la tasa Tobin. En coordinación con distintas asociaciones busca crear un masivo grupo de presión cívica ante los gobiernos, para la puesta en marcha efectiva de este impuesto mundial por la solidaridad.",
+    "color": "yellow",
+    "category": "tasa_tobin",
+    "notes": "Referencia fundacional: la tasa Tobin como dispositivo de regulación del capital especulativo transnacional. Relevante para el circuito AFP Capital → SURA → JP Morgan: el flujo que ATTAC intentó gravar es el mismo que custodia los fondos previsionales chilenos.",
+    "timestamp": ""
+  },
+  {
+    "id": 2003,
+    "bookTitle": "ATTAC — El movimiento de la esperanza",
+    "author": "Margarita Iglesias S.",
+    "pageNo": 12,
+    "text": "Nuestro país no se encuentra al margen de esta situación planteada por la economía neoliberal, actual ejemplo de América Latina, cuya implantación se hizo en dictadura militar bajo una política de terror y una consagración política del control neoliberal, con la Constitución de 1980 que impide terminar con los enclaves autoritarios.",
+    "color": "red",
+    "category": "chile_neoliberal",
+    "notes": "Concepto clave: implantación neoliberal bajo dictadura militar como condición estructural de la corrupción sistémica en Chile. D5 (temporalidad) de la ficha C04: el modelo AFP no es post-dictatorial, es la dictadura reconvertida en sistema de acumulación.",
+    "timestamp": ""
+  },
+  {
+    "id": 2004,
+    "bookTitle": "ATTAC — El movimiento de la esperanza",
+    "author": "Margarita Iglesias S.",
+    "pageNo": 12,
+    "text": "...la privatización de la Educación superior, del sistema de pensiones en las AFP, y de los servicios públicos esenciales...",
+    "color": "red",
+    "category": "privatizacion_afp",
+    "notes": "Concepto clave: las AFP como nodo de privatización sistémica junto a educación y servicios públicos. El sistema previsional privatizado como dispositivo extractivo del neoliberalismo chileno. El trabajador como cartera de custodia.",
+    "timestamp": ""
+  },
+  {
+    "id": 2005,
+    "bookTitle": "ATTAC — El movimiento de la esperanza",
+    "author": "ATTAC Chile",
+    "pageNo": 15,
+    "text": "ATTAC es un MOVIMIENTO INTERNACIONAL DE CIUDADANOS que forma parte de la red de redes que en el mundo entero se opone a la globalización de las injusticias. ATTAC nació en Francia en 1998 reuniendo a ciudadanos, asociaciones, sindicatos y periódicos. La idea matriz de esa iniciativa nació del editorial del Director de Le Monde Diplomatique, Ignacio Ramonet, titulado 'Desarmar los mercados'.",
+    "color": "yellow",
+    "category": "genealogia_attac",
+    "notes": "Referencia genealógica: ATTAC como red de redes, no ONG ni partido. La idea nace en el periodismo crítico (Ramonet / Le Monde Diplomatique). Modelo organizativo relevante para el Colectivo Viento Norte como contra-poder ciudadano.",
+    "timestamp": ""
+  },
+  {
+    "id": 2006,
+    "bookTitle": "ATTAC — El movimiento de la esperanza",
+    "author": "ATTAC Chile",
+    "pageNo": 19,
+    "text": "La Tasa Tobin es un dispositivo defensivo, que introduciría granos de arena dentro de los engranajes de la maquinaria especulativa, minorando su velocidad de devastación. Esto permitiría alimentar lógicas de resistencia y devolver los márgenes de maniobra que requieren los ciudadanos y los Estados para la revitalización de la política.",
+    "color": "red",
+    "category": "dispositivo_friccion",
+    "notes": "Concepto clave: el 'grano de arena' como metáfora del dispositivo de fricción. El motor de mistraducción del contra-archivo opera en la misma lógica: introducir fricción en los engranajes del capital especulativo. Insertar en Contra-Archivo (anotación original).",
+    "timestamp": ""
+  },
+  {
+    "id": 2007,
+    "bookTitle": "ATTAC — El movimiento de la esperanza",
+    "author": "ATTAC Chile",
+    "pageNo": 19,
+    "text": "No se puede luchar aislado contra la especulación y el discurso neoliberal que se plantea como único e inevitable, en un mundo que semeja cada vez más a un casino donde unos pocos entran y se enriquecen y muchos salen con sus bolsillos vacíos.",
+    "color": "red",
+    "category": "neoliberalismo",
+    "notes": "Insertar en Contra-Archivo (anotación original). La metáfora del casino: espacio de extracción con reglas opacas donde la desigualdad es estructural. AFP Capital como crupier institucional del sistema previsional privatizado.",
+    "timestamp": ""
+  },
+  {
+    "id": 2008,
+    "bookTitle": "ATTAC — El movimiento de la esperanza",
+    "author": "Fabienne Dourson (ATTAC-Moselle)",
+    "pageNo": 29,
+    "text": "En el preciso momento en que se derrumbaba el sistema monetario internacional surgido de los acuerdos de Bretton Woods, James Tobin imagina una herramienta de lucha contra la especulación financiera. En 1972, durante un coloquio, este universitario keynesiano, premio Nobel de Economía en 1981, presenta por primera vez su idea de crear un impuesto sobre todas las transacciones de cambio de divisas, 'echando un grano de arena' en estos mecanismos, para desalentar 'las especulaciones que hacen viaje de ida y vuelta en pocas semanas'.",
+    "color": "yellow",
+    "category": "genealogia_tasa_tobin",
+    "notes": "Referencia histórica: la tasa Tobin nace del colapso de Bretton Woods (1971). El 'grano de arena' como instrumento de fricción ante la especulación de corto plazo. Describir cita → contra archivo → Tasa Tobin (anotación original).",
+    "timestamp": ""
+  },
+  {
+    "id": 2009,
+    "bookTitle": "ATTAC — El movimiento de la esperanza",
+    "author": "Fabienne Dourson (ATTAC-Moselle)",
+    "pageNo": 29,
+    "text": "En un reciente informe, la OCDE dice con cinismo: 'Dada la creciente movilidad internacional de las inversiones financieras, se puede hacer necesario disminuir la fiscalidad sobre las rentas del capital. Así, la mayor parte de la carga impositiva recaerá sobre el trabajo, que es menos móvil'.",
+    "color": "red",
+    "category": "fiscalidad_capital",
+    "notes": "Concepto clave: la OCDE como dispositivo de mistranslation normativa. Legitima el traslado de carga fiscal del capital al trabajo invocando la 'movilidad'. Mecanismo estructural que afecta a trabajadores-afiliados AFP: su ahorro es móvil (circula en custodios globales), pero ellos no.",
+    "timestamp": ""
+  },
+  {
+    "id": 2010,
+    "bookTitle": "ATTAC — El movimiento de la esperanza",
+    "author": "Fabienne Dourson (ATTAC-Moselle)",
+    "pageNo": 31,
+    "text": "Desde hace diez años, se ha producido una concentración masiva del poder financiero. El 'especulador institucional' ha surgido como poderoso actor, capaz de imponerse sobre los intereses de tipo más tradicional. Gracias a diversos instrumentos, estos especuladores institucionales pueden apropiarse de una parte de la riqueza generada por los productores de bienes y servicios. Actualmente, son ellos quienes dictan frecuentemente la suerte de las empresas de Wall Street.",
+    "color": "red",
+    "category": "especulador_institucional",
+    "notes": "Concepto clave: el 'especulador institucional' como actor estructural del capitalismo financiero. AFP Capital/SURA operan exactamente como especuladores institucionales: fondos que administran la riqueza acumulada del trabajo para maximizar retornos financieros en mercados globales.",
+    "timestamp": ""
+  },
+  {
+    "id": 2011,
+    "bookTitle": "ATTAC — El movimiento de la esperanza",
+    "author": "Jacqueline Varliette / Guillermo F. Parodi / Sandrine Caquineau",
+    "pageNo": 49,
+    "text": "Es corriente oír eso, pero el tercer mundo no tiene el monopolio de la corrupción. Los casos que no paran de afectar a todo el mundo occidental desde hace varios años, el papel jugado por los grandes bancos en el reciclaje del dinero sucio, procedente de las armas o de la droga, la importancia alcanzada por paraísos fiscales que están tan cerca de nosotros, todo eso demuestra que es el conjunto del sistema el que transpira corrupción.",
+    "color": "red",
+    "category": "corrupcion_sistemica",
+    "notes": "CITA EN CONTRA-ARCHIVO (anotación original). La corrupción como propiedad sistémica del capital financiero global. No anomalía del Sur sino lógica estructural del sistema. AFP/SURA: los mecanismos de opacidad son estructurales, no excepcionales ni individuales.",
+    "timestamp": ""
+  },
+  {
+    "id": 2012,
+    "bookTitle": "ATTAC — El movimiento de la esperanza",
+    "author": "Jacqueline Varliette / Guillermo F. Parodi / Sandrine Caquineau",
+    "pageNo": 49,
+    "text": "En general, cuanto más corrupto es un sistema, menos democrático es; al contrario, en la medida que un pueblo asuma sus retos, disfrute de contra-poderes, derechos y libertades reales, la corrupción tendrá menos oportunidades de extenderse. En ese sentido, el combate por el desarrollo es inseparable del combate por el derecho a la democracia, a las libertades de expresión, organización, elección…",
+    "color": "red",
+    "category": "corrupcion_democracia",
+    "notes": "CITA EN CONTRA-ARCHIVO (anotación original). La relación inversa entre corrupción y democracia real. El 'contra-poder' como dispositivo anti-corrupción. El Colectivo Viento Norte como ejercicio de contra-poder ciudadano; el poema 'Bomba' como acto de ese contra-poder.",
+    "timestamp": ""
+  },
+  {
+    "id": 2013,
+    "bookTitle": "ATTAC — El movimiento de la esperanza",
+    "author": "Ignacio Ramonet",
+    "pageNo": 57,
+    "text": "La mundialización financiera ha creado de esta forma su propio Estado. Un Estado supranacional, que dispone de sus aparatos, de sus redes de influencia y de sus propios medios de acción. Se trata de la constelación formada por el Fondo Monetario Internacional (FMI), el Banco Mundial, la Organización para la Cooperación y el Desarrollo Económico (OCDE) y la Organización Mundial del Comercio (OMC). Estas instituciones hablan con una sola voz —amplificada por la práctica totalidad de los media— para exaltar las 'virtudes del mercado'.",
+    "color": "blue",
+    "category": "estado_supranacional",
+    "notes": "Reflexión: el Estado supranacional del capital financiero (FMI, BM, OCDE, OMC) como constelación de poder que opera sobre la regulación nacional chilena. Postcapitalismo de vigilancia (anotación original). Conecta con Zuboff: el poder instrumentario actúa también a escala supranacional.",
+    "timestamp": ""
+  },
+  {
+    "id": 2014,
+    "bookTitle": "ATTAC — El movimiento de la esperanza",
+    "author": "Ignacio Ramonet",
+    "pageNo": 57,
+    "text": "El tifón que han experimentado las bolsas de Asia amenaza al resto del mundo. La mundialización —cuyo principal motor es la optimización a escala planetaria del capital financiero— está poniendo a los pueblos en estado de inseguridad generalizada. Ignora y rebaja a las naciones y a sus Estados en tanto que espacios idóneos para el ejercicio de la democracia y como garantes del bien común.",
+    "color": "blue",
+    "category": "mundializacion_financiera",
+    "notes": "Reflexión: la mundialización financiera como dispositivo de inseguridad y vaciamiento del Estado-nación democrático. Marco para entender cómo custodios globales como JP Morgan operan sobre —y por encima de— la regulación nacional chilena (DL 3.500, CMF).",
+    "timestamp": ""
+  }
+]

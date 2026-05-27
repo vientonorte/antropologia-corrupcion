@@ -1148,6 +1148,31 @@
 
         persistCitations();
 
+        // Seed ATTAC citations from data/attac-citas.json on first visit
+        (function() {
+            if (localStorage.getItem('attacSeedV1')) return;
+            fetch('data/attac-citas.json')
+                .then(function(r) { return r.ok ? r.json() : []; })
+                .then(function(attacData) {
+                    if (!Array.isArray(attacData) || !attacData.length) return;
+                    var ts = new Date().toISOString();
+                    var added = false;
+                    attacData.forEach(function(c) {
+                        if (!citations.some(function(e) { return e.id === c.id; })) {
+                            citations.push(Object.assign({}, c, { timestamp: c.timestamp || ts }));
+                            added = true;
+                        }
+                    });
+                    if (added) {
+                        persistCitations();
+                        renderCitations();
+                        updateStats();
+                    }
+                    localStorage.setItem('attacSeedV1', 'true');
+                })
+                .catch(function() {});
+        }());
+
         function openCaptureModal() {
             document.getElementById('captureModal').classList.add('open');
         }
