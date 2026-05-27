@@ -234,6 +234,14 @@
             </div>
             <div class="archivo-grid" id="archivo-biblioteca"></div>
         </section>
+
+        <section class="archivo-section" aria-labelledby="poemarios-title">
+            <div class="archivo-section__head">
+                <h2 class="archivo-section__title" id="poemarios-title">Poemarios</h2>
+                <p class="archivo-section__copy">Piezas poéticas y performances textuales producidas en el marco del Contra-Archivo.</p>
+            </div>
+            <div class="archivo-grid" id="archivo-poemarios"></div>
+        </section>
     </main>
 
     <script>
@@ -318,11 +326,15 @@
                     renderSection('archivo-biblioteca', publicEntries.filter(function(entry) {
                         return entry.seccion === 'biblioteca';
                     }));
+                    renderSection('archivo-poemarios', publicEntries.filter(function(entry) {
+                        return entry.seccion === 'poemarios';
+                    }));
                 })
                 .catch(function() {
                     renderSection('archivo-fichas', []);
                     renderSection('archivo-citas', []);
                     renderSection('archivo-biblioteca', []);
+                    renderSection('archivo-poemarios', []);
                 });
         }());
     </script>

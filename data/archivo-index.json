@@ -48,6 +48,15 @@
       "descripcion": "Acceso curado a documentos y materiales de lectura abierta del proyecto.",
       "url": "tesis.html",
       "estado": "publicable"
+    },
+    {
+      "id": "poema-trabajo-en-sura",
+      "tipo": "poemario",
+      "seccion": "poemarios",
+      "titulo": "Trabajo en SURA",
+      "descripcion": "Performance poética: testimonio, etnografía del terror, dualidad laboral y filosofía de la liberación.",
+      "url": "Poemarios/",
+      "estado": "publicable"
     }
   ]
 }
