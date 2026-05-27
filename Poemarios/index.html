@@ -936,7 +936,7 @@
 <script>
   /* SCROLL REVEAL */
   const obs = new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    for (const e of entries) { if (e.isIntersecting) e.target.classList.add('visible'); }
   }, { threshold: 0.12 });
   document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
 
@@ -957,13 +957,13 @@
   let done = false;
 
   const secObs = new IntersectionObserver(entries => {
-    entries.forEach(e => {
+    for (const e of entries) {
       if (e.isIntersecting) {
         document.getElementById('bpregunta').classList.add('vis');
         setTimeout(() => document.getElementById('bword').classList.add('visible'), 500);
         setTimeout(() => { if (!done) explode(); }, 2200);
       }
-    });
+    }
   }, { threshold: 0.55 });
   secObs.observe(document.getElementById('s16'));
 
