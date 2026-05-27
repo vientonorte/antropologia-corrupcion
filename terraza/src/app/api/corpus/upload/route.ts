@@ -49,7 +49,7 @@ export async function POST(request: NextRequest) {
     let uploadMeta;
     try {
       uploadMeta = UploadInitSchema.parse(JSON.parse(metadata));
-    } catch (err) {
+    } catch {
       return NextResponse.json(
         { error: 'Invalid metadata' },
         { status: 400 },
