@@ -2,6 +2,11 @@
 
 Esta carpeta contiene los poemarios de la tesis doctoral sobre Antropología y Corrupción.
 
+## Índice de Poemarios
+
+- **[Bomba](2026-11-18-bomba-viento-norte.md)** — Colectivo Viento Norte (18 de noviembre, 2026)  
+  Primer poema del colectivo. Contexto: reunión del comité social por los DDHH en Valparaíso. Fricción entre trabajo vigilado (AFP Capital) y activismo político. 1313 cuerpos desaparecidos.
+
 ## La poesía como método de investigación: justificación epistémica
 
 Los poemarios integran el archivo como una forma de conocimiento que no se somete a la lógica de la evidencia documental, sino que trabaja con la memoria, el cuerpo y la voz. La poesía en esta tesis doctoral es también un **método de investigación**: una forma de aproximarse a experiencias que los documentos institucionales no capturan o deliberadamente oscurecen.

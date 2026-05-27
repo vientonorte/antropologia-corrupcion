@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## [2026-05-27] Categoría Poesía — primer poema Colectivo Viento Norte
+
+| Área | Cambio |
+|---|---|
+| **archivo-lecturas.html** | Nueva categoría `poesia` agregada al sistema de citas |
+| **archivo-lecturas.html** | Color violeta (#9b7fc4) para categoría poesía en Clave B |
+| **archivo-lecturas.html** | Prompts de IA actualizados con categoría `poesia` |
+| **Poemarios/** | Creado `2026-11-18-bomba-viento-norte.md` — primer poema del colectivo |
+| **Poemarios/README.md** | Agregado índice con poema "Bomba" |
+| **Metodología** | Poesía como dato etnográfico primario y método de investigación |
+
 ## [2026-04-19] Sprint UX/QA — páginas públicas + CI + sincronización local↔nube
 
 | Área | Cambio |

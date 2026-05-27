@@ -636,6 +636,7 @@
                         <option value="metodologia">Metodología</option>
                         <option value="notas-campo">Notas de campo</option>
                         <option value="conexion-caso">Conexión con caso</option>
+                        <option value="poesia">Poesía</option>
                     </select>
                 </div>
 
@@ -694,7 +695,8 @@
                 { id: 'green',  hex: '#7bc67e', label: 'Verde — Dato / evidencia' },
                 { id: 'pink',   hex: '#e8847a', label: 'Rosa — Crítica / tensión' },
                 { id: 'purple', hex: '#b07fc4', label: 'Púrpura — Teoría / marco' },
-                { id: 'orange', hex: '#e8a24a', label: 'Naranja — Conexión con caso' }
+                { id: 'orange', hex: '#e8a24a', label: 'Naranja — Conexión con caso' },
+                { id: 'violet', hex: '#9b7fc4', label: 'Violeta — Poesía' }
             ];
 
             var CATS = {
@@ -707,7 +709,8 @@
                 'instituciones':    'Instituciones / Estado',
                 'metodologia':      'Metodología',
                 'notas-campo':      'Notas de campo',
-                'conexion-caso':    'Conexión con caso'
+                'conexion-caso':    'Conexión con caso',
+                'poesia':           'Poesía'
             };
 
             /* ════════════════════════════════════════
@@ -1171,9 +1174,9 @@
 
             function getAnalyzePrompt(clave) {
                 if (clave === 'A') {
-                    return 'Eres un asistente de investigación doctoral. Analiza esta imagen del Bullet Journal (Bullet Ro) con anotaciones según la Clave A del Protocolo Bujo-Ro:\n\nCLAVE A:\n- Rosa: Personal\n- Gris: Vínculos\n- Turquesa/Verde: Camila (vínculo)\n- Naranja: Laboral\n- Amarillo: Referencias\n\nINSTRUCCIONES:\n1. Transcribe fielmente todos los fragmentos marcados o resaltados con color (respeta formato BJ: viñetas ●○◆>*—, flechas, tachaduras)\n2. Marca los ilegibles como [ilegible] con hipótesis si existe: [ilegible — posible: "X"]\n3. Identifica el número o referencia de página si es visible (ej: D17, paginación interna)\n4. Determina el color del marcador/resaltado\n5. Captura el contexto circundante como "notas" si aporta sentido\n\nCategories disponibles: marco-teorico, concepto-clave, evidencia-dato, critica-tension, mistranslation, practica-informal, instituciones, metodologia, notas-campo, conexion-caso\n\nDevuelve SOLO un JSON array válido (sin texto adicional, sin markdown, sin bloques de código):\n[{"texto":"transcripción fiel del fragmento","pagina":"D17 u otro identificador si es visible o null","color":"pink|gray|teal|orange|yellow","categoria":"slug-de-categoria","notas":"contexto circundante o cadena vacía","fuente_detectada":"identificación de página/sección o cadena vacía"}]';
+                    return 'Eres un asistente de investigación doctoral. Analiza esta imagen del Bullet Journal (Bullet Ro) con anotaciones según la Clave A del Protocolo Bujo-Ro:\n\nCLAVE A:\n- Rosa: Personal\n- Gris: Vínculos\n- Turquesa/Verde: Camila (vínculo)\n- Naranja: Laboral\n- Amarillo: Referencias\n\nINSTRUCCIONES:\n1. Transcribe fielmente todos los fragmentos marcados o resaltados con color (respeta formato BJ: viñetas ●○◆>*—, flechas, tachaduras)\n2. Marca los ilegibles como [ilegible] con hipótesis si existe: [ilegible — posible: "X"]\n3. Identifica el número o referencia de página si es visible (ej: D17, paginación interna)\n4. Determina el color del marcador/resaltado\n5. Captura el contexto circundante como "notas" si aporta sentido\n\nCategories disponibles: marco-teorico, concepto-clave, evidencia-dato, critica-tension, mistranslation, practica-informal, instituciones, metodologia, notas-campo, conexion-caso, poesia\n\nDevuelve SOLO un JSON array válido (sin texto adicional, sin markdown, sin bloques de código):\n[{"texto":"transcripción fiel del fragmento","pagina":"D17 u otro identificador si es visible o null","color":"pink|gray|teal|orange|yellow","categoria":"slug-de-categoria","notas":"contexto circundante o cadena vacía","fuente_detectada":"identificación de página/sección o cadena vacía"}]';
                 }
-                return 'Eres un asistente de investigación doctoral en antropología de la corrupción en Chile. Analiza esta imagen de páginas de libro académico con anotaciones de color según la Clave B del Protocolo Bujo-Ro:\n\nCLAVE B:\n- Amarillo: Concepto clave\n- Azul: Argumento central\n- Verde: Dato / evidencia\n- Rosa: Crítica / tensión\n- Púrpura: Teoría / marco\n- Naranja: Conexión con caso\n\nINSTRUCCIONES:\n1. Identifica todos los fragmentos subrayados, resaltados o marcados con color\n2. Extrae el texto exacto (cita fiel sin modificaciones)\n3. Identifica el número de página si es visible\n4. Determina el color del marcador/subrayado\n5. Captura anotaciones marginales como "notas"\n6. Detecta autor/título si son visibles en la página\n\nCategorías disponibles: marco-teorico, concepto-clave, evidencia-dato, critica-tension, mistranslation, practica-informal, instituciones, metodologia, notas-campo, conexion-caso\n\nDevuelve SOLO un JSON array válido (sin texto adicional, sin markdown, sin bloques de código):\n[{"texto":"fragmento exacto entre comillas","pagina":42,"color":"yellow|blue|green|pink|purple|orange","categoria":"slug-de-categoria","notas":"anotación marginal o cadena vacía","fuente_detectada":"Autor, Título si visible o cadena vacía"}]';
+                return 'Eres un asistente de investigación doctoral en antropología de la corrupción en Chile. Analiza esta imagen de páginas de libro académico con anotaciones de color según la Clave B del Protocolo Bujo-Ro:\n\nCLAVE B:\n- Amarillo: Concepto clave\n- Azul: Argumento central\n- Verde: Dato / evidencia\n- Rosa: Crítica / tensión\n- Púrpura: Teoría / marco\n- Naranja: Conexión con caso\n- Violeta: Poesía\n\nINSTRUCCIONES:\n1. Identifica todos los fragmentos subrayados, resaltados o marcados con color\n2. Extrae el texto exacto (cita fiel sin modificaciones)\n3. Identifica el número de página si es visible\n4. Determina el color del marcador/subrayado\n5. Captura anotaciones marginales como "notas"\n6. Detecta autor/título si son visibles en la página\n\nCategorías disponibles: marco-teorico, concepto-clave, evidencia-dato, critica-tension, mistranslation, practica-informal, instituciones, metodologia, notas-campo, conexion-caso, poesia\n\nDevuelve SOLO un JSON array válido (sin texto adicional, sin markdown, sin bloques de código):\n[{"texto":"fragmento exacto entre comillas","pagina":42,"color":"yellow|blue|green|pink|purple|orange|violet","categoria":"slug-de-categoria","notas":"anotación marginal o cadena vacía","fuente_detectada":"Autor, Título si visible o cadena vacía"}]';
             }
 
             function parseClaudeJSON(raw) {
