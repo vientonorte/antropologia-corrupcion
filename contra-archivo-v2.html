@@ -11,7 +11,7 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://vientonorte.github.io/antropologia-corrupcion/contra-archivo-v2.html">
     <meta property="og:image" content="https://vientonorte.github.io/antropologia-corrupcion/img/an-lisis-ux-ui-mapeo-de-vulnerabilidades-de-expe.jpg">
-    <link rel="canonical" href="https://vientonorte.github.io/antropologia-corrupcion/contra-archivo.html">
+    <link rel="canonical" href="https://vientonorte.github.io/antropologia-corrupcion/contra-archivo-v2.html">
     <meta name="theme-color" content="#060608">
     <link rel="manifest" href="manifest.json">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🖤</text></svg>">
@@ -1289,8 +1289,8 @@
             <span></span><span></span><span></span>
         </button>
         <ul class="nav-links" id="nav-menu" role="list">
-            <li><a href="index.html" class="nav-link">← Instrumento</a></li>
-            <li><a href="landing.html" class="nav-link">Buscador</a></li>
+            <li><a href="landing.html" class="nav-link">← Inicio</a></li>
+            <li><a href="buscador.html" class="nav-link">Buscador</a></li>
             <li><a href="#leer" class="nav-link active" data-mode="leer" aria-current="page">Narrativa</a></li>
             <li><a href="#explorar" class="nav-link" data-mode="explorar">Grafo</a></li>
             <li><a href="#consultar" class="nav-link" data-mode="consultar">Biblioteca</a></li>
@@ -1393,7 +1393,7 @@
                 <p class="sec-p">En septiembre de 2023, una investigadora fue contratada por SURA Investments como Associate en Estrategia Digital. Desde esa posición, realizó una etnografía crítica del sistema financiero chileno — lo que James Scott llamaría <strong>infrapolítica</strong>:
                     resistencia que opera bajo la superficie visible del poder.</p>
                 <p class="sec-p">Lo que documentó: la migración de datos previsionales de AFP Capital hacia SURA Investments se ejecutó sin consentimiento explícito de millones de cotizantes. La tabla maestra <strong>'Persona Natural'</strong> (ID, RUT, Nombre, subtablas
-                    por línea de negocio: AFP=14, Inversiones=13, Seguros=2) hace ficticia la separación mandatada por la reforma previsional 2022. El arquitecto TI Víctor Cantero Concha confirmó en reunión del 28 julio 2025: <em>'El prioritario lo hereda de la tabla primaria'</em>                    — confesión técnica de que la separación es formal pero no operativa.</p>
+                    por línea de negocio: AFP=14, Inversiones=13, Seguros=2) hace ficticia la separación mandatada por la reforma previsional 2022. El arquitecto TI responsable de la arquitectura de datos (fuente interna·SURA, 28 jul 2025) confirmó: <em>'El prioritario lo hereda de la tabla primaria'</em>                    — confesión técnica de que la separación es formal pero no operativa.</p>
                 <p class="sec-p">El mecanismo del tecno-feudalismo previsional opera en <strong>5 fases</strong>: Captura de la obligatoriedad (DL 3.500) → Integración de datos (tabla Persona Natural) → Extracción de renta informacional (targeting, perfilamiento) → Dependencia
                     técnica irreversible (portabilidad imposible) → Imposición de renta digital (comisiones sobre cliente cautivo). Marx: 'No es el obrero quien emplea los medios de producción, sino los medios de producción los que emplean al obrero.'</p>
                 <p class="sec-p">Varoufakis: SURA es un 'señor feudal digital' — extrae renta del acceso obligatorio. Salazar: la 'acumulación aberrante' transferida al capital financiero. Dussel: la 'lógica vampírica'. Gramsci: la hegemonía cultural naturaliza todo esto
@@ -1980,7 +1980,7 @@
             "label": "Tabla \"Persona Natural\"",
             "connections": 7,
             "span": 2,
-            "body": "<p>La tabla maestra 'Persona Natural' hace ficticia la separación AFP-SURA. Un registro por cliente: ID, RUT, Nombre, DIR_Principal (flag 0/1). Subtablas: Línea 14 (AFP), Línea 13 (Inversiones), Línea 2 (Seguros). Email: 74.420 registros. El arquitecto Víctor Cantero Concha confirmó (28 julio 2025): 'El prioritario lo hereda de la tabla primaria.' Un cliente no puede tener datos separados entre AFP e Inversiones. La 'separación' es legalmente formal pero operativamente ficticia.</p>",
+            "body": "<p>La tabla maestra 'Persona Natural' hace ficticia la separación AFP-SURA. Un registro por cliente: ID, RUT, Nombre, DIR_Principal (flag 0/1). Subtablas: Línea 14 (AFP), Línea 13 (Inversiones), Línea 2 (Seguros). Email: 74.420 registros. El arquitecto TI responsable (fuente interna·SURA, 28 jul 2025) confirmó: 'El prioritario lo hereda de la tabla primaria.' Un cliente no puede tener datos separados entre AFP e Inversiones. La 'separación' es legalmente formal pero operativamente ficticia.</p>",
             "why": "<p>Marx: la inversión sujeto-objeto. No es el cliente quien usa SURA; es SURA la que usa los datos del cliente como materia prima. La tabla 'Persona Natural' es la expresión material: el ciudadano reducido a registro donde su identidad sirve como clave primaria para extracción. Varoufakis: el 'cloud capital' se construye centralizando datos de usuarios cautivos en infraestructura privada.</p>",
             "proves": "<p>Transcripción del 28 julio 2025 documenta la 'confesión técnica'. Capturas 'datos de ficha previsional.png' y 'bases de datos sura investments.png' muestran la estructura. Los 74.420 registros de email confirman la escala. El flag DIR_Principal demuestra herencia de prioridades.</p>"
         }, {
@@ -2442,7 +2442,7 @@
             "type": "Transcripción",
             "analyticalRole": "Evidencia primaria",
             "depth": "Fundacional",
-            "desc": "Víctor Cantero Concha confirma que la herencia de prioridades impide separación real de datos.",
+            "desc": "Fuente interna ArqTI·SURA confirma: la herencia de prioridades impide separación real de datos (28 jul 2025).",
             "relatedNodes": ["persona-natural", "ilegitimidad-3d"]
         }, {
             "eje": 2,
