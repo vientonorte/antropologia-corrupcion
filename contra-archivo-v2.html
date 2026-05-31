@@ -40,6 +40,10 @@
             --text-muted: #8a8a8a;
             --border: #242424;
             --accent: var(--red);
+            /* aliases used in inline styles */
+            --paper: var(--surface-alt);
+            --line: var(--border);
+            --muted: var(--text-muted);
         }
         
         body {
@@ -1272,6 +1276,23 @@
                 scroll-behavior: auto !important;
             }
         }
+        /* Evidence figure placeholders — redacted documents */
+        .ev-fig--placeholder {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 160px;
+            background: var(--surface);
+            border: 1px dashed var(--border);
+            margin: 0;
+        }
+        .ev-fig--placeholder figcaption {
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            font-style: italic;
+            text-align: center;
+            padding: 1rem;
+        }
     </style>
     <!-- Graph system — progressive enhancement -->
     <link rel="stylesheet" href="styles/graph.css?v=20260419">
@@ -1343,17 +1364,17 @@
                     destruida deliberadamente. Ann Laura Stoler (<em>Along the Archival Grain</em>) llama a esto 'destrucción archival': el Estado no solo produce terror sino que elimina los registros de su producción.</p>
                 <p class="sec-p">Wallmapu es el 'espacio de muerte' contemporáneo de Chile (Taussig): un territorio donde la Ley 18.314 (Ley Antiterrorista, heredada de la dictadura) suspende garantías constitucionales. Su aplicación es selectiva — casi exclusivamente
                     contra comunidades mapuche, nunca contra actores empresariales o forestales — revelando su función real: proteger la extracción, no combatir el terrorismo.</p>
-                <figure class="ev-fig ">
-                    <img src="img/reconstrucci-n-de-los-hechos-infograf-a-de-inves.jpg" alt="Reconstrucción de los hechos — Infografía de investigación, Negra Colorá 2018" loading="lazy" onerror="this.style.background='#1a1a2e';this.style.minHeight='200px';this.alt='Imagen no disponible'">
-                    <figcaption>Reconstrucción de los hechos — Infografía de investigación, Negra Colorá 2018</figcaption>
+                <figure class="ev-fig">
+                    <img src="img/reconstrucci-n-de-los-hechos-infograf-a-de-inves.jpg" alt="Reconstrucción de los hechos — Infografía de investigación periodística, 2018" loading="lazy" onerror="this.style.background='#1a1a2e';this.style.minHeight='200px';this.alt='Imagen no disponible'">
+                    <figcaption>Reconstrucción de los hechos — Infografía de investigación periodística, 2018</figcaption>
                 </figure>
 
                 <p class="sec-p">Este eje rastrea el aparato de seguridad del Estado chileno en su dimensión represiva: desde la estructura de inteligencia de Carabineros hasta el asesinato de Camilo Catrillanca en noviembre de 2018, pasando por el rol de la Agencia Nacional
                     de Inteligencia (ANI) y las operaciones de contrainsurgencia en Wallmapu.</p>
 
-                <figure class="ev-fig ">
-                    <img src="img/caso-catrillanca-infograf-a-de-investigaci-n-ne.jpg" alt="Caso Catrillanca — Infografía de investigación, Negra Colorá 2018" loading="lazy" onerror="this.style.background='#1a1a2e';this.style.minHeight='200px';this.alt='Imagen no disponible'">
-                    <figcaption>Caso Catrillanca — Infografía de investigación, Negra Colorá 2018</figcaption>
+                <figure class="ev-fig">
+                    <img src="img/caso-catrillanca-infograf-a-de-investigaci-n-ne.jpg" alt="Caso Catrillanca — Infografía de investigación periodística, 2018" loading="lazy" onerror="this.style.background='#1a1a2e';this.style.minHeight='200px';this.alt='Imagen no disponible'">
+                    <figcaption>Caso Catrillanca — Infografía de investigación periodística, 2018</figcaption>
                 </figure>
 
                 <details class="sec-detail">
@@ -1361,9 +1382,9 @@
                     <div class="inner">
                         <p>El Comando Jungla fue una unidad especial de Carabineros entrenada en Colombia para operaciones de contrainsurgencia. Fue desplegada en Wallmapu como parte de la estrategia de militarización del territorio. El 14 de noviembre de
                             2018, un miembro del Comando Jungla disparó contra Camilo Catrillanca en Temucuicui. Las cámaras GoPro corporales filmaron el operativo; los carabineros destruyeron la tarjeta de memoria.</p>
-                        <figure class="ev-fig ">
-                            <img src="img/investigaci-n-sobre-comando-jungla-negra-color.jpg" alt="Investigación sobre Comando Jungla — Negra Colorá, diciembre 2018" loading="lazy" onerror="this.style.background='#1a1a2e';this.style.minHeight='200px';this.alt='Imagen no disponible'">
-                            <figcaption>Investigación sobre Comando Jungla — Negra Colorá, diciembre 2018</figcaption>
+                        <figure class="ev-fig">
+                            <img src="img/investigaci-n-sobre-comando-jungla-negra-color.jpg" alt="Investigación sobre Comando Jungla — Periodismo de investigación, diciembre 2018" loading="lazy" onerror="this.style.background='#1a1a2e';this.style.minHeight='200px';this.alt='Imagen no disponible'">
+                            <figcaption>Investigación sobre Comando Jungla — Periodismo de investigación, diciembre 2018</figcaption>
                         </figure>
                     </div>
                 </details>
@@ -1373,9 +1394,9 @@
                     <div class="inner">
                         <p>El Lof Ñanco como caso de estudio de resistencia comunitaria frente a la expansión forestal y la militarización. Documentación de la articulación entre demandas territoriales basadas en Títulos de Merced y la defensa ante operativos
                             de seguridad.</p>
-                        <figure class="ev-fig ">
-                            <img src="img/lof-anco-infograf-a-de-investigaci-n-negra-col.jpg" alt="Lof Ñanco — Infografía de investigación, Negra Colorá" loading="lazy" onerror="this.style.background='#1a1a2e';this.style.minHeight='200px';this.alt='Imagen no disponible'">
-                            <figcaption>Lof Ñanco — Infografía de investigación, Negra Colorá</figcaption>
+                        <figure class="ev-fig">
+                            <img src="img/lof-anco-infograf-a-de-investigaci-n-negra-col.jpg" alt="Lof Ñanco — Infografía de investigación periodística" loading="lazy" onerror="this.style.background='#1a1a2e';this.style.minHeight='200px';this.alt='Imagen no disponible'">
+                            <figcaption>Lof Ñanco — Infografía de investigación periodística</figcaption>
                         </figure>
                     </div>
                 </details>
@@ -1393,14 +1414,14 @@
                 <p class="sec-p">En septiembre de 2023, una investigadora fue contratada por SURA Investments como Associate en Estrategia Digital. Desde esa posición, realizó una etnografía crítica del sistema financiero chileno — lo que James Scott llamaría <strong>infrapolítica</strong>:
                     resistencia que opera bajo la superficie visible del poder.</p>
                 <p class="sec-p">Lo que documentó: la migración de datos previsionales de AFP Capital hacia SURA Investments se ejecutó sin consentimiento explícito de millones de cotizantes. La tabla maestra <strong>'Persona Natural'</strong> (ID, RUT, Nombre, subtablas
-                    por línea de negocio: AFP=14, Inversiones=13, Seguros=2) hace ficticia la separación mandatada por la reforma previsional 2022. El arquitecto TI responsable de la arquitectura de datos (fuente interna·SURA, 28 jul 2025) confirmó: <em>'El prioritario lo hereda de la tabla primaria'</em>                    — confesión técnica de que la separación es formal pero no operativa.</p>
+                    por línea de negocio: AFP=14, Inversiones=13, Seguros=2) hace ficticia la separación mandatada por la reforma previsional 2022. El arquitecto TI responsable de la arquitectura de datos (fuente interna, SURA) confirmó: <em>'El prioritario lo hereda de la tabla primaria'</em>                    — confesión técnica de que la separación es formal pero no operativa.</p>
                 <p class="sec-p">El mecanismo del tecno-feudalismo previsional opera en <strong>5 fases</strong>: Captura de la obligatoriedad (DL 3.500) → Integración de datos (tabla Persona Natural) → Extracción de renta informacional (targeting, perfilamiento) → Dependencia
                     técnica irreversible (portabilidad imposible) → Imposición de renta digital (comisiones sobre cliente cautivo). Marx: 'No es el obrero quien emplea los medios de producción, sino los medios de producción los que emplean al obrero.'</p>
                 <p class="sec-p">Varoufakis: SURA es un 'señor feudal digital' — extrae renta del acceso obligatorio. Salazar: la 'acumulación aberrante' transferida al capital financiero. Dussel: la 'lógica vampírica'. Gramsci: la hegemonía cultural naturaliza todo esto
                     como 'innovación financiera'.</p>
                 <p class="sec-p">Mientras tanto, el sistema opera con nginx 1.13.3 (2017), sin protección contra XSS, sin HSTS, con CVEs sin parchear por 2+ años — fragilidad técnica que refleja fragilidad de gobernanza. Tres reguladores en silos (CMF, SPP, Agencia de
                     Datos) — y SURA opera en el vacío entre ellos.</p>
-                <figure class="ev-fig ">
+                <figure class="ev-fig">
                     <img src="img/captura-de-evidencia-bases-de-datos-de-sura-inves.jpg" alt="Captura de evidencia: bases de datos de SURA Investments — estructura de integración vertical" loading="lazy" onerror="this.style.background='#1a1a2e';this.style.minHeight='200px';this.alt='Imagen no disponible'">
                     <figcaption>Captura de evidencia: bases de datos de SURA Investments — estructura de integración vertical</figcaption>
                 </figure>
@@ -1409,13 +1430,12 @@
                     que nunca eligieron ser clientes).</p>
 
                 <div class="ev-grid">
-                    <figure class="ev-fig ">
+                    <figure class="ev-fig">
                         <img src="img/bases-de-datos-sura-investments-integraci-n-vert.jpg" alt="Bases de datos SURA Investments — integración vertical de líneas de negocio" loading="lazy" onerror="this.style.background='#1a1a2e';this.style.minHeight='200px';this.alt='Imagen no disponible'">
                         <figcaption>Bases de datos SURA Investments — integración vertical de líneas de negocio</figcaption>
                     </figure>
-                    <figure class="ev-fig ">
-                        <img src="img/replicaci-n-multipa-s-cuentas-chile-per-colo.jpg" alt="Replicación multipaís: cuentas Chile → Perú → Colombia" loading="lazy" onerror="this.style.background='#1a1a2e';this.style.minHeight='200px';this.alt='Imagen no disponible'">
-                        <figcaption>Replicación multipaís: cuentas Chile → Perú → Colombia</figcaption>
+                    <figure class="ev-fig ev-fig--placeholder">
+                        <figcaption>Replicación multipaís — datos de cuentas protegidos</figcaption>
                     </figure>
                 </div>
 
@@ -1424,9 +1444,8 @@
                     <div class="inner">
                         <p>La tabla maestra "Persona Natural" vincula todas las líneas de negocio: AFP (línea 14), Corredora/Inversiones (línea 13), Seguros (línea 2). Un flag binario DIR_Principal controla la dirección prioritaria. El sistema de herencia
                             automática de prioridades entre líneas hace que la "separación AFP-SURA" mandatada por la reforma 2022 sea formalmente legal pero operativamente ficticia. 74.420 registros de email documentados en la subtabla.</p>
-                        <figure class="ev-fig ">
-                            <img src="img/evidencia-datos-de-ficha-previsional-integrados-c.jpg" alt="Evidencia: datos de ficha previsional integrados con mandato AFP en plataforma SURA" loading="lazy" onerror="this.style.background='#1a1a2e';this.style.minHeight='200px';this.alt='Imagen no disponible'">
-                            <figcaption>Evidencia: datos de ficha previsional integrados con mandato AFP en plataforma SURA</figcaption>
+                        <figure class="ev-fig ev-fig--placeholder">
+                            <figcaption>Captura documental — datos previsionales personales protegidos</figcaption>
                         </figure>
                     </div>
                 </details>
@@ -1437,13 +1456,12 @@
                         <p>El Documento de Especificación de Iniciativas (DEI) fue mantenido deliberadamente desactualizado, omitiendo los nuevos flujos de datos que el equipo UX estaba diseñando. La investigadora lo señaló formalmente. Los procesos críticos
                             de protección de datos — consentimiento, revocación de mandatos, portabilidad — fueron implementados de forma incompleta.</p>
                         <div class="ev-grid">
-                            <figure class="ev-fig ">
+                            <figure class="ev-fig">
                                 <img src="img/evidencia-as-is-desactualizado-del-dei-document.jpg" alt="Evidencia: AS IS desactualizado del DEI — documentación mantenida intencionalmente incompleta" loading="lazy" onerror="this.style.background='#1a1a2e';this.style.minHeight='200px';this.alt='Imagen no disponible'">
                                 <figcaption>Evidencia: AS IS desactualizado del DEI — documentación mantenida intencionalmente incompleta</figcaption>
                             </figure>
-                            <figure class="ev-fig ">
-                                <img src="img/evidencia-correo-documentando-as-is-to-be-mal-i.jpg" alt="Evidencia: correo documentando AS IS / TO BE mal implementado" loading="lazy" onerror="this.style.background='#1a1a2e';this.style.minHeight='200px';this.alt='Imagen no disponible'">
-                                <figcaption>Evidencia: correo documentando AS IS / TO BE mal implementado</figcaption>
+                            <figure class="ev-fig ev-fig--placeholder">
+                                <figcaption>Correo interno — remitente y destinatarios protegidos</figcaption>
                             </figure>
                         </div>
                     </div>
@@ -1454,9 +1472,8 @@
                     <div class="inner">
                         <p>La investigadora dirigió una pregunta formal al equipo de "Arquitectura SURA y Evolutivo TI, y Experiencia Digital": ¿Por qué los datos de ficha previsional siguen siendo obligatorios si se supone que están separados de AFP? La
                             respuesta nunca fue documentada.</p>
-                        <figure class="ev-fig ">
-                            <img src="img/captura-pregunta-dirigida-a-arquitectura-sura-y-e.jpg" alt="Captura: pregunta dirigida a Arquitectura SURA y Evolutivo TI — sin respuesta registrada" loading="lazy" onerror="this.style.background='#1a1a2e';this.style.minHeight='200px';this.alt='Imagen no disponible'">
-                            <figcaption>Captura: pregunta dirigida a Arquitectura SURA y Evolutivo TI — sin respuesta registrada</figcaption>
+                        <figure class="ev-fig ev-fig--placeholder">
+                            <figcaption>Comunicación interna — participantes protegidos</figcaption>
                         </figure>
                     </div>
                 </details>
@@ -1466,7 +1483,7 @@
                     <div class="inner">
                         <p>FONDO DE INVERSIÓN SARTOR TÁCTICO (Sartor AGF S.A., RUT 76.576.607-9) — ejemplo de la integración vertical entre AFP, fondos de inversión y la estructura SURA. CMF, SPP y Agencia de Protección de Datos operan en silos sin coordinación.
                             Cada regulador supervisa un aspecto, pero ninguno audita la arquitectura integral.</p>
-                        <figure class="ev-fig ">
+                        <figure class="ev-fig">
                             <img src="img/evidencia-fondo-de-inversi-n-sartor-t-ctico-ide.jpg" alt="Evidencia: Fondo de Inversión SARTOR Táctico — identificación CMF" loading="lazy" onerror="this.style.background='#1a1a2e';this.style.minHeight='200px';this.alt='Imagen no disponible'">
                             <figcaption>Evidencia: Fondo de Inversión SARTOR Táctico — identificación CMF</figcaption>
                         </figure>
@@ -1479,11 +1496,11 @@
                         <p>La investigadora produjo artefactos UX que funcionan simultáneamente como documentación técnica y como acto político: rediseño de flujos eliminando dependencias sin consentimiento, mini fichas previsionales con trazabilidad, matrices
                             de intervención normativa.</p>
                         <div class="ev-grid">
-                            <figure class="ev-fig ">
+                            <figure class="ev-fig">
                                 <img src="img/an-lisis-ux-ui-mapeo-de-vulnerabilidades-de-expe.jpg" alt="Análisis UX/UI — mapeo de vulnerabilidades de experiencia en plataforma SURA" loading="lazy" onerror="this.style.background='#1a1a2e';this.style.minHeight='200px';this.alt='Imagen no disponible'">
                                 <figcaption>Análisis UX/UI — mapeo de vulnerabilidades de experiencia en plataforma SURA</figcaption>
                             </figure>
-                            <figure class="ev-fig ">
+                            <figure class="ev-fig">
                                 <img src="img/cma-flujo-iterado-criterios-m-nimos-de-aceptaci.jpg" alt="CMA Flujo iterado — criterios mínimos de aceptación para protección de datos" loading="lazy" onerror="this.style.background='#1a1a2e';this.style.minHeight='200px';this.alt='Imagen no disponible'">
                                 <figcaption>CMA Flujo iterado — criterios mínimos de aceptación para protección de datos</figcaption>
                             </figure>
@@ -1507,23 +1524,23 @@
                     del DL 3.500 → AFP Capital → fondo de inversión → acciones CMPC/Arauco → monocultivo en Wallmapu. Salazar: 'acumulación por desposesión' operando como circuito financiero-territorial.</p>
                 <p class="sec-p">Mientras tanto, la Ley Antiterrorista (Eje I) criminaliza a quienes resisten. Tres ejes convergiendo: el capital despoja, la seguridad protege la desposesión, la ley criminaliza la resistencia. Mignolo: la modernidad es inseparable de
                     la colonialidad.</p>
-                <figure class="ev-fig ">
+                <figure class="ev-fig">
                     <img src="img/t-tulos-de-merced-distribuci-n-territorial-del-r.jpg" alt="Títulos de Merced — distribución territorial del reconocimiento/reducción mapuche" loading="lazy" onerror="this.style.background='#1a1a2e';this.style.minHeight='200px';this.alt='Imagen no disponible'">
                     <figcaption>Títulos de Merced — distribución territorial del reconocimiento/reducción mapuche</figcaption>
                 </figure>
 
                 <div class="ev-grid">
-                    <figure class="ev-fig ">
+                    <figure class="ev-fig">
                         <img src="img/t-tulos-de-merced-otorgados-entre-1884-y-1929-ma.jpg" alt="Títulos de Merced otorgados entre 1884 y 1929 — mapeo histórico" loading="lazy" onerror="this.style.background='#1a1a2e';this.style.minHeight='200px';this.alt='Imagen no disponible'">
                         <figcaption>Títulos de Merced otorgados entre 1884 y 1929 — mapeo histórico</figcaption>
                     </figure>
-                    <figure class="ev-fig ">
+                    <figure class="ev-fig">
                         <img src="img/t-tulos-de-merced-en-arauco-y-biob-o.jpg" alt="Títulos de Merced en Arauco y Biobío" loading="lazy" onerror="this.style.background='#1a1a2e';this.style.minHeight='200px';this.alt='Imagen no disponible'">
                         <figcaption>Títulos de Merced en Arauco y Biobío</figcaption>
                     </figure>
                 </div>
 
-                <figure class="ev-fig ">
+                <figure class="ev-fig">
                     <img src="img/hect-reas-forestales-expansi-n-de-la-industria-s.jpg" alt="Hectáreas forestales — expansión de la industria sobre territorio mapuche" loading="lazy" onerror="this.style.background='#1a1a2e';this.style.minHeight='200px';this.alt='Imagen no disponible'">
                     <figcaption>Hectáreas forestales — expansión de la industria sobre territorio mapuche</figcaption>
                 </figure>
@@ -1533,7 +1550,7 @@
                     <div class="inner">
                         <p>El Convenio 169 de la OIT (1989, ratificado por Chile en 2008) establece obligaciones de consulta previa y consentimiento libre e informado. Su aplicación ha sido sistemáticamente incompleta, especialmente en conflictos con la
                             industria forestal en Wallmapu.</p>
-                        <figure class="ev-fig ">
+                        <figure class="ev-fig">
                             <img src="img/desglose-de-derechos-consagrados-por-el-oit-169.jpg" alt="Desglose de derechos consagrados por el OIT 169 — VN" loading="lazy" onerror="this.style.background='#1a1a2e';this.style.minHeight='200px';this.alt='Imagen no disponible'">
                             <figcaption>Desglose de derechos consagrados por el OIT 169 — VN</figcaption>
                         </figure>
@@ -1563,8 +1580,7 @@
                     operando simultáneamente. <strong>Mignolo</strong>: la modernidad es inseparable de la colonialidad. <strong>Walsh</strong>: no incluir lo excluido sino cuestionar el sistema.</p>
                 <p class="sec-p"><strong>Fanon</strong>: la violencia del colonizado es respuesta a la violencia del colonizador — la resistencia mapuche es respuesta a 142 años de despojo. <strong>Freire</strong>: la consciencia crítica es la primera liberación — este
                     contra-archivo es herramienta pedagógica. <strong>Butler</strong>: ¿quién cuenta como vida digna de duelo? Catrillanca fue asesinado y su GoPro destruida — el Estado decidió que su vida no era 'llorable'.</p>
-                <p class="sec-p"><strong>Scott</strong>: la infrapolítica — resistencia bajo la superficie. La Estrategia VN es infrapolítica: documentos que parecen 'estrategia corporativa' pero contienen crítica radical. Negra Colorá es infrapolítica: periodismo anónimo
-                    que circula donde el nombre propio generaría represalias.</p>
+                <p class="sec-p"><strong>Scott</strong>: la infrapolítica — resistencia bajo la superficie. La Estrategia VN es infrapolítica: documentos que parecen 'estrategia corporativa' pero contienen crítica radical. El periodismo de investigación anónimo es infrapolítica: trabajo que circula donde el nombre propio generaría represalias.</p>
                 <p class="sec-p"><strong>Taussig</strong>: el Estado gobierna produciendo incertidumbre epistémica. <strong>Stoler</strong>: la etnografía del archivo lee al poder contra sí mismo. La Estrategia VN opera en la intersección: lee los archivos de SURA contra
                     SURA, y los de Carabineros contra Carabineros.</p>
                 <p class="sec-p">Las <strong>tres fases de la etnografía insurgente</strong>: Fase 1 — Infiltración documentada (sept 2023 – jun 2024). Fase 2 — Crítica desde adentro (jul – dic 2024). Fase 3 — Compilación de contraarquivo (ene 2025 – mar 2026): tesis
