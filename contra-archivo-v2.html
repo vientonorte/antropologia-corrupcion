@@ -1246,6 +1246,248 @@
             border-color: #b464c8;
             color: #b464c8;
         }
+        
+        /* ═══════════════════════════════════════════════════════════════════ */
+        /* ═══ ANIMATIONS & TRANSITIONS ═══ */
+        /* ═══════════════════════════════════════════════════════════════════ */
+        
+        /* Keyframe Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes fadeInRight {
+            from {
+                opacity: 0;
+                transform: translateX(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                box-shadow: 0 0 0 0 rgba(201, 32, 32, 0.7);
+            }
+            50% {
+                box-shadow: 0 0 0 10px rgba(201, 32, 32, 0);
+            }
+        }
+        
+        @keyframes glow {
+            from {
+                box-shadow: 0 0 5px rgba(201, 32, 32, 0.5);
+            }
+            to {
+                box-shadow: 0 0 20px rgba(201, 32, 32, 0.8), 0 0 30px rgba(201, 32, 32, 0.6);
+            }
+        }
+        
+        /* Animation Classes */
+        .animate-on-scroll {
+            opacity: 0;
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        
+        .animate-on-scroll.animated {
+            opacity: 1;
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+        
+        .fade-in-left {
+            animation: fadeInLeft 0.8s ease-out forwards;
+        }
+        
+        .fade-in-right {
+            animation: fadeInRight 0.8s ease-out forwards;
+        }
+        
+        .scale-in {
+            animation: scaleIn 0.6s ease-out forwards;
+        }
+        
+        .slide-down {
+            animation: slideDown 0.5s ease-out forwards;
+        }
+        
+        /* Staggered Animation Delays */
+        .stagger-1 { animation-delay: 0.1s; }
+        .stagger-2 { animation-delay: 0.2s; }
+        .stagger-3 { animation-delay: 0.3s; }
+        .stagger-4 { animation-delay: 0.4s; }
+        .stagger-5 { animation-delay: 0.5s; }
+        .stagger-6 { animation-delay: 0.6s; }
+        
+        /* Enhanced Hover States */
+        .doc-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+        
+        .doc-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+            border-color: var(--accent);
+        }
+        
+        .mode-btn,
+        .util-btn,
+        .eje-filter,
+        .retry-btn {
+            transform: translateZ(0);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .mode-btn:hover,
+        .util-btn:hover,
+        .eje-filter:hover {
+            transform: translateY(-2px);
+        }
+        
+        .mode-btn:active,
+        .util-btn:active,
+        .eje-filter:active {
+            transform: translateY(0);
+        }
+        
+        /* Image Lazy Load Animation */
+        .ev-fig img {
+            opacity: 0;
+            transition: opacity 0.6s ease-in-out;
+        }
+        
+        .ev-fig img.loaded {
+            opacity: 1;
+        }
+        
+        /* Section Headers with Parallax Effect */
+        .sec-h {
+            transition: transform 0.15s ease-out;
+        }
+        
+        /* Details Element Animation */
+        details[open] > summary {
+            transition: all 0.3s ease;
+        }
+        
+        details > .inner {
+            animation: slideDown 0.4s ease-out;
+        }
+        
+        /* Tag Animation */
+        .tag {
+            display: inline-block;
+            transition: transform 0.3s ease, background 0.3s ease;
+        }
+        
+        .tag:hover {
+            transform: scale(1.05);
+        }
+        
+        /* Smooth Scrolling Enhancement - respects prefers-reduced-motion */
+        @media (prefers-reduced-motion: no-preference) {
+            html {
+                scroll-behavior: smooth;
+            }
+        }
+        
+        /* Progress Bar Animation */
+        #reading-progress {
+            transition: width 0.15s linear, opacity 0.3s ease;
+        }
+        
+        /* Panel Slide Animation */
+        #panel-wrap {
+            transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        #panel-wrap.open {
+            animation: slideInRight 0.4s ease-out;
+        }
+        
+        @keyframes slideInRight {
+            from {
+                right: -100%;
+            }
+            to {
+                right: 0;
+            }
+        }
+        
+        /* Nav Links Mobile Animation */
+        .nav-links {
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+        
+        /* Return to Top Button */
+        #return-to-top {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        #return-to-top:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 6px 20px rgba(201, 32, 32, 0.4);
+            animation: glow 1.5s ease-in-out infinite alternate;
+        }
+        
+        #return-to-top:active {
+            transform: translateY(-2px);
+        }
+        
+        /* Retry Button Pulse */
+        .retry-btn:hover {
+            animation: pulse 2s infinite;
+        }
+        
+        /* Panel Close Button Enhancement */
+        .panel-close:hover {
+            transform: rotate(90deg);
+        }
+        
         /* Print styles */
         
         @media print {
@@ -3452,6 +3694,163 @@
                         progressBar.style.width = progress + '%';
                         progressBar.setAttribute('aria-valuenow', Math.round(progress));
                         progTicking = false;
+                    });
+                }
+            }, { passive: true });
+        }
+
+        // --- Content Animation System ---
+        // Respects prefers-reduced-motion
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        
+        if (!prefersReducedMotion) {
+            // Animate sections on scroll
+            const animateOnScroll = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('fade-in');
+                        entry.target.style.opacity = '1';
+                        // Unobserve after animation to improve performance
+                        animateOnScroll.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            });
+
+            // Observe narrative sections
+            document.querySelectorAll('.narr-section').forEach(section => {
+                section.style.opacity = '0';
+                animateOnScroll.observe(section);
+            });
+
+            // Staggered animation for doc-cards
+            const cardObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        const card = entry.target;
+                        const delay = parseInt(card.dataset.animDelay || '0', 10);
+                        setTimeout(() => {
+                            card.classList.add('scale-in');
+                        }, delay);
+                        observer.unobserve(card);
+                    }
+                });
+            }, {
+                threshold: 0.2,
+                rootMargin: '0px'
+            });
+
+            // Observe doc-cards (will be added dynamically)
+            const observeDocCards = () => {
+                document.querySelectorAll('.doc-card:not(.scale-in)').forEach((card, index) => {
+                    card.style.opacity = '0';
+                    // Set animation delay as data attribute based on position
+                    card.dataset.animDelay = String(Math.min(index * 100, 600));
+                    cardObserver.observe(card);
+                });
+            };
+            
+            // Initial observation
+            setTimeout(observeDocCards, 100);
+            
+            // Re-observe when filters change
+            const originalApplyFilters = window.applyFilters;
+            if (typeof originalApplyFilters === 'function') {
+                window.applyFilters = function() {
+                    originalApplyFilters();
+                    setTimeout(observeDocCards, 50);
+                };
+            }
+
+            // Image lazy loading with fade-in
+            const imageObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        if (img.complete) {
+                            img.classList.add('loaded');
+                        } else {
+                            img.addEventListener('load', () => {
+                                img.classList.add('loaded');
+                            }, { once: true });
+                        }
+                        observer.unobserve(img);
+                    }
+                });
+            }, {
+                threshold: 0,
+                rootMargin: '50px'
+            });
+
+            // Observe all images
+            document.querySelectorAll('.ev-fig img').forEach(img => {
+                imageObserver.observe(img);
+            });
+
+            // Animate figure elements
+            const figureObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('fade-in-left');
+                        figureObserver.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: '0px 0px -30px 0px'
+            });
+
+            document.querySelectorAll('.ev-fig').forEach(fig => {
+                fig.style.opacity = '0';
+                figureObserver.observe(fig);
+            });
+
+            // Animate blockquotes
+            const quoteObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('fade-in-right');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.2
+            });
+
+            document.querySelectorAll('.sec-blockquote').forEach(quote => {
+                quote.style.opacity = '0';
+                quoteObserver.observe(quote);
+            });
+
+            // Animate tags with stagger
+            document.querySelectorAll('.tag').forEach((tag, index) => {
+                // Apply stagger only if index is within range (0-5)
+                const staggerClass = index < 6 ? `stagger-${index + 1}` : 'stagger-6';
+                tag.classList.add('slide-down', staggerClass);
+            });
+
+            // Subtle parallax effect for section headers
+            const sectionHeaders = document.querySelectorAll('.sec-h');
+            let parallaxTicking = false;
+            
+            window.addEventListener('scroll', () => {
+                if (!parallaxTicking) {
+                    parallaxTicking = true;
+                    requestAnimationFrame(() => {
+                        sectionHeaders.forEach(header => {
+                            const rect = header.getBoundingClientRect();
+                            const viewportHeight = window.innerHeight;
+                            
+                            // Only apply parallax when header is in viewport
+                            if (rect.top < viewportHeight && rect.bottom > 0) {
+                                const scrollProgress = (viewportHeight - rect.top) / (viewportHeight + rect.height);
+                                const translateY = (scrollProgress - 0.5) * 20; // Subtle 20px range
+                                header.style.transform = `translateY(${translateY}px)`;
+                            }
+                        });
+                        parallaxTicking = false;
                     });
                 }
             }, { passive: true });
