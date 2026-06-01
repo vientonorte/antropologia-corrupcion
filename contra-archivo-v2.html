@@ -3726,7 +3726,7 @@
             });
 
             // Staggered animation for doc-cards
-            const cardObserver = new IntersectionObserver((entries) => {
+            const cardObserver = new IntersectionObserver((entries, observer) => {
                 entries.forEach((entry) => {
                     if (entry.isIntersecting) {
                         const card = entry.target;
@@ -3734,7 +3734,7 @@
                         setTimeout(() => {
                             card.classList.add('scale-in');
                         }, delay);
-                        cardObserver.unobserve(card);
+                        observer.unobserve(card);
                     }
                 });
             }, {
