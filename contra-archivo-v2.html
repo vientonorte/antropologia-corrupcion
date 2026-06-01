@@ -3790,11 +3790,11 @@
             });
 
             // Animate figure elements
-            const figureObserver = new IntersectionObserver((entries) => {
+            const figureObserver = new IntersectionObserver((entries, observer) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('fade-in-left');
-                        figureObserver.unobserve(entry.target);
+                        observer.unobserve(entry.target);
                     }
                 });
             }, {
