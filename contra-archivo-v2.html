@@ -3793,6 +3793,30 @@
             document.querySelectorAll('.tag').forEach((tag, index) => {
                 tag.classList.add('slide-down', `stagger-${Math.min(index + 1, 6)}`);
             });
+
+            // Subtle parallax effect for section headers
+            const sectionHeaders = document.querySelectorAll('.sec-h');
+            let parallaxTicking = false;
+            
+            window.addEventListener('scroll', () => {
+                if (!parallaxTicking) {
+                    parallaxTicking = true;
+                    requestAnimationFrame(() => {
+                        sectionHeaders.forEach(header => {
+                            const rect = header.getBoundingClientRect();
+                            const viewportHeight = window.innerHeight;
+                            
+                            // Only apply parallax when header is in viewport
+                            if (rect.top < viewportHeight && rect.bottom > 0) {
+                                const scrollProgress = (viewportHeight - rect.top) / (viewportHeight + rect.height);
+                                const translateY = (scrollProgress - 0.5) * 20; // Subtle 20px range
+                                header.style.transform = `translateY(${translateY}px)`;
+                            }
+                        });
+                        parallaxTicking = false;
+                    });
+                }
+            }, { passive: true });
         }
 
         // --- Narrative section scrollspy ---
