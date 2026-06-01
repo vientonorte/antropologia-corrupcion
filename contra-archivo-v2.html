@@ -1428,9 +1428,11 @@
             transform: scale(1.05);
         }
         
-        /* Smooth Scrolling Enhancement */
-        html {
-            scroll-behavior: smooth;
+        /* Smooth Scrolling Enhancement - respects prefers-reduced-motion */
+        @media (prefers-reduced-motion: no-preference) {
+            html {
+                scroll-behavior: smooth;
+            }
         }
         
         /* Progress Bar Animation */
@@ -3725,12 +3727,14 @@
 
             // Staggered animation for doc-cards
             const cardObserver = new IntersectionObserver((entries) => {
-                entries.forEach((entry, index) => {
+                entries.forEach((entry) => {
                     if (entry.isIntersecting) {
+                        const card = entry.target;
+                        const delay = parseInt(card.dataset.animDelay || '0', 10);
                         setTimeout(() => {
-                            entry.target.classList.add('scale-in');
-                        }, index * 100);
-                        cardObserver.unobserve(entry.target);
+                            card.classList.add('scale-in');
+                        }, delay);
+                        cardObserver.unobserve(card);
                     }
                 });
             }, {
@@ -3742,6 +3746,8 @@
             const observeDocCards = () => {
                 document.querySelectorAll('.doc-card:not(.scale-in)').forEach((card, index) => {
                     card.style.opacity = '0';
+                    // Set animation delay as data attribute based on position
+                    card.dataset.animDelay = String(Math.min(index * 100, 600));
                     cardObserver.observe(card);
                 });
             };
@@ -3820,7 +3826,9 @@
 
             // Animate tags with stagger
             document.querySelectorAll('.tag').forEach((tag, index) => {
-                tag.classList.add('slide-down', `stagger-${Math.min(index + 1, 6)}`);
+                // Apply stagger only if index is within range (0-5)
+                const staggerClass = index < 6 ? `stagger-${index + 1}` : 'stagger-6';
+                tag.classList.add('slide-down', staggerClass);
             });
 
             // Subtle parallax effect for section headers
