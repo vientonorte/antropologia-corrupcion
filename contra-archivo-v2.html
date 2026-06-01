@@ -3808,11 +3808,11 @@
             });
 
             // Animate blockquotes
-            const quoteObserver = new IntersectionObserver((entries) => {
+            const quoteObserver = new IntersectionObserver((entries, observer) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('fade-in-right');
-                        quoteObserver.unobserve(entry.target);
+                        observer.unobserve(entry.target);
                     }
                 });
             }, {
