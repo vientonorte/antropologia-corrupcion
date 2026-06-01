@@ -3705,13 +3705,13 @@
         
         if (!prefersReducedMotion) {
             // Animate sections on scroll
-            const animateOnScroll = new IntersectionObserver((entries) => {
+            const animateOnScroll = new IntersectionObserver((entries, observer) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('fade-in');
                         entry.target.style.opacity = '1';
                         // Unobserve after animation to improve performance
-                        animateOnScroll.unobserve(entry.target);
+                        observer.unobserve(entry.target);
                     }
                 });
             }, {
