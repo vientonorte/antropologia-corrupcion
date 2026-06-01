@@ -3765,7 +3765,7 @@
             }
 
             // Image lazy loading with fade-in
-            const imageObserver = new IntersectionObserver((entries) => {
+            const imageObserver = new IntersectionObserver((entries, observer) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         const img = entry.target;
@@ -3776,7 +3776,7 @@
                                 img.classList.add('loaded');
                             }, { once: true });
                         }
-                        imageObserver.unobserve(img);
+                        observer.unobserve(img);
                     }
                 });
             }, {
