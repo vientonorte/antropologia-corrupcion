@@ -1307,6 +1307,24 @@
             }
         }
         
+        @keyframes pulse {
+            0%, 100% {
+                box-shadow: 0 0 0 0 rgba(201, 32, 32, 0.7);
+            }
+            50% {
+                box-shadow: 0 0 0 10px rgba(201, 32, 32, 0);
+            }
+        }
+        
+        @keyframes glow {
+            from {
+                box-shadow: 0 0 5px rgba(201, 32, 32, 0.5);
+            }
+            to {
+                box-shadow: 0 0 20px rgba(201, 32, 32, 0.8), 0 0 30px rgba(201, 32, 32, 0.6);
+            }
+        }
+        
         /* Animation Classes */
         .animate-on-scroll {
             opacity: 0;
@@ -1451,10 +1469,21 @@
         #return-to-top:hover {
             transform: translateY(-4px);
             box-shadow: 0 6px 20px rgba(201, 32, 32, 0.4);
+            animation: glow 1.5s ease-in-out infinite alternate;
         }
         
         #return-to-top:active {
             transform: translateY(-2px);
+        }
+        
+        /* Retry Button Pulse */
+        .retry-btn:hover {
+            animation: pulse 2s infinite;
+        }
+        
+        /* Panel Close Button Enhancement */
+        .panel-close:hover {
+            transform: rotate(90deg);
         }
         
         /* Print styles */
