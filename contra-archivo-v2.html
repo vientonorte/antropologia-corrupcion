@@ -1653,7 +1653,7 @@
             <section id="eje-2" class="narr-section" data-eje="2" aria-label="Eje II">
                 <span class="tag">Eje II · Aparato Financiero</span>
                 <h2 class="sec-h">Etnografía del tecno-feudalismo previsional</h2>
-                <p class="sec-p">En septiembre de 2023, una investigadora fue contratada por SURA Investments como Associate en Estrategia Digital. Desde esa posición, realizó una etnografía crítica del sistema financiero chileno — lo que James Scott llamaría <strong>infrapolítica</strong>:
+                <p class="sec-p">En 2023, una investigadora fue contratada por un conglomerado financiero multinacional con operaciones previsionales en Chile. Desde esa posición, realizó una etnografía crítica del sistema financiero — lo que James Scott llamaría <strong>infrapolítica</strong>:
                     resistencia que opera bajo la superficie visible del poder.</p>
                 <p class="sec-p">Lo que documentó: la migración de datos previsionales de AFP Capital hacia SURA Investments se ejecutó sin consentimiento explícito de millones de cotizantes. La tabla maestra <strong>'Persona Natural'</strong> (ID, RUT, Nombre, subtablas
                     por línea de negocio: AFP=14, Inversiones=13, Seguros=2) hace ficticia la separación mandatada por la reforma previsional 2022. El arquitecto TI responsable de la arquitectura de datos (fuente interna, SURA) confirmó: <em>'El prioritario lo hereda de la tabla primaria'</em>                    — confesión técnica de que la separación es formal pero no operativa.</p>
@@ -1661,7 +1661,7 @@
                     técnica irreversible (portabilidad imposible) → Imposición de renta digital (comisiones sobre cliente cautivo). Marx: 'No es el obrero quien emplea los medios de producción, sino los medios de producción los que emplean al obrero.'</p>
                 <p class="sec-p">Varoufakis: SURA es un 'señor feudal digital' — extrae renta del acceso obligatorio. Salazar: la 'acumulación aberrante' transferida al capital financiero. Dussel: la 'lógica vampírica'. Gramsci: la hegemonía cultural naturaliza todo esto
                     como 'innovación financiera'.</p>
-                <p class="sec-p">Mientras tanto, el sistema opera con nginx 1.13.3 (2017), sin protección contra XSS, sin HSTS, con CVEs sin parchear por 2+ años — fragilidad técnica que refleja fragilidad de gobernanza. Tres reguladores en silos (CMF, SPP, Agencia de
+                <p class="sec-p">Mientras tanto, la infraestructura digital opera con software obsoleto (más de 7 años sin actualizar), sin protecciones básicas contra ataques web conocidos, con vulnerabilidades sin parchear por más de 2 años — fragilidad técnica que refleja fragilidad de gobernanza. Tres reguladores en silos (CMF, SPP, Agencia de
                     Datos) — y SURA opera en el vacío entre ellos.</p>
                 <figure class="ev-fig ev-fig--placeholder">
                     <figcaption>Captura de evidencia: bases de datos SURA — retirada por protocolo ético (datos personales identificables)</figcaption>
@@ -1682,8 +1682,7 @@
                 <details class="sec-detail">
                     <summary>Arquitectura de datos: la tabla "Persona Natural"</summary>
                     <div class="inner">
-                        <p>La tabla maestra "Persona Natural" vincula todas las líneas de negocio: AFP (línea 14), Corredora/Inversiones (línea 13), Seguros (línea 2). Un flag binario DIR_Principal controla la dirección prioritaria. El sistema de herencia
-                            automática de prioridades entre líneas hace que la "separación AFP-SURA" mandatada por la reforma 2022 sea formalmente legal pero operativamente ficticia. 74.420 registros de email documentados en la subtabla.</p>
+                        <p>La arquitectura de datos interna vincula todas las líneas de negocio mediante una tabla maestra unificada. Un campo de control binario determina la dirección prioritaria entre líneas. El sistema de herencia automática de prioridades hace que la separación mandatada por la reforma 2022 sea formalmente legal pero operativamente ficticia.</p>
                         <figure class="ev-fig ev-fig--placeholder">
                             <figcaption>Captura documental — datos previsionales personales protegidos</figcaption>
                         </figure>
@@ -1709,8 +1708,7 @@
                 <details class="sec-detail">
                     <summary>La pregunta sin respuesta: cuestionamiento a Arquitectura SURA</summary>
                     <div class="inner">
-                        <p>La investigadora dirigió una pregunta formal al equipo de "Arquitectura SURA y Evolutivo TI, y Experiencia Digital": ¿Por qué los datos de ficha previsional siguen siendo obligatorios si se supone que están separados de AFP? La
-                            respuesta nunca fue documentada.</p>
+                        <p>La investigadora dirigió una pregunta formal al equipo técnico responsable: ¿Por qué los datos de ficha previsional siguen siendo obligatorios si se supone que están separados? La respuesta nunca fue documentada.</p>
                         <figure class="ev-fig ev-fig--placeholder">
                             <figcaption>Comunicación interna — participantes protegidos</figcaption>
                         </figure>
@@ -2222,7 +2220,7 @@
             "label": "Estrategia VN: etnografía desde adentro",
             "connections": 10,
             "span": 3,
-            "body": "<p>Septiembre 2023: contratación como Associate en Digital Strategy, SURA Investments ($3.320.000 bruto/mes). Rol formal: diseñador UX. Rol real: etnógrafo crítico. Tres fases: <strong>Fase 1</strong> (sept 2023 – jun 2024): Infiltración documentada — acceso a sistemas, reuniones, arquitectura. <strong>Fase 2</strong> (jul – dic 2024): Crítica desde adentro — documentos que parecen 'estrategia' pero contienen crítica implícita. <strong>Fase 3</strong> (ene 2025 – mar 2026): Compilación de contraarquivo — tesis doctoral con Marx, Dussel, Salazar, Varoufakis, Gramsci.</p>",
+            "body": "<p>2023: contratación en área de estrategia digital de un conglomerado financiero multinacional con operaciones previsionales en Chile. Rol formal: diseñador UX. Rol real: etnógrafo crítico. Tres fases: <strong>Fase 1</strong>: Infiltración documentada — acceso a sistemas, reuniones, arquitectura. <strong>Fase 2</strong>: Crítica desde adentro — documentos que parecen 'estrategia' pero contienen crítica implícita. <strong>Fase 3</strong>: Compilación del contraarquivo — tesis doctoral con Marx, Dussel, Salazar, Varoufakis, Gramsci.</p>",
             "why": "<p>Scott (<em>Domination and the Arts of Resistance</em>): 'infrapolítica' — resistencia que opera bajo la superficie visible del poder. Dussel (<em>Filosofía de la Liberación</em>): la víctima del sistema se convierte en agente cuando produce conocimiento desde la exterioridad. Gramsci: el <strong>intelectual contraorgánico</strong> — inserto en estructura de poder pero produciendo conocimiento que revela sus contradicciones.</p>",
             "proves": "<p>La carta oferta documenta la contratación. Las transcripciones registran las preguntas incómodas del investigador. Los artefactos UX (AS IS/TO BE, Mini Ficha Previsional) son evidencia de resistencia. El Documento Estratégico UX es acto político camuflado como propuesta técnica.</p>"
         }, {
@@ -2232,19 +2230,19 @@
             "label": "Tabla \"Persona Natural\"",
             "connections": 7,
             "span": 2,
-            "body": "<p>La tabla maestra 'Persona Natural' hace ficticia la separación AFP-SURA. Un registro por cliente: ID, RUT, Nombre, DIR_Principal (flag 0/1). Subtablas: Línea 14 (AFP), Línea 13 (Inversiones), Línea 2 (Seguros). Email: 74.420 registros. El arquitecto TI responsable (fuente interna·SURA, 28 jul 2025) confirmó: 'El prioritario lo hereda de la tabla primaria.' Un cliente no puede tener datos separados entre AFP e Inversiones. La 'separación' es legalmente formal pero operativamente ficticia.</p>",
-            "why": "<p>Marx: la inversión sujeto-objeto. No es el cliente quien usa SURA; es SURA la que usa los datos del cliente como materia prima. La tabla 'Persona Natural' es la expresión material: el ciudadano reducido a registro donde su identidad sirve como clave primaria para extracción. Varoufakis: el 'cloud capital' se construye centralizando datos de usuarios cautivos en infraestructura privada.</p>",
-            "proves": "<p>Transcripción del 28 julio 2025 documenta la 'confesión técnica'. Capturas 'datos de ficha previsional.png' y 'bases de datos sura investments.png' muestran la estructura. Los 74.420 registros de email confirman la escala. El flag DIR_Principal demuestra herencia de prioridades.</p>"
+            "body": "<p>La arquitectura de datos interna hace ficticia la separación entre AFP e inversiones mandatada por la reforma 2022. Un registro unificado por cliente vincula todas las líneas de negocio. Una fuente técnica interna (2025) confirmó: 'El prioritario lo hereda de la tabla primaria.' Un cliente no puede tener datos separados entre AFP e inversiones. La 'separación' es legalmente formal pero operativamente ficticia.</p>",
+            "why": "<p>Marx: la inversión sujeto-objeto. No es el cliente quien usa el conglomerado; es el conglomerado el que usa los datos del cliente como materia prima. La tabla unificada es la expresión material: el ciudadano reducido a registro donde su identidad sirve como clave primaria para extracción. Varoufakis: el 'cloud capital' se construye centralizando datos de usuarios cautivos en infraestructura privada.</p>",
+            "proves": "<p>Una transcripción interna (2025) documenta la 'confesión técnica'. Capturas de evidencia muestran la estructura de integración vertical. El campo de control de prioridades demuestra la herencia entre líneas de negocio.</p>"
         }, {
             "id": "vulnerabilidades",
             "eje": 2,
             "year": 2023,
-            "label": "Vulnerabilidades: nginx, CVEs",
+            "label": "Vulnerabilidades: infraestructura obsoleta",
             "connections": 5,
             "span": 2,
-            "body": "<p>Hallazgo #3420: dev.contrato-digital.sura.net.pe sin X-XSS-Protection, CSP, X-Frame-Options, HSTS. CVSS 3.5-3.7. Sin parchear 07/2023–03/2025 (2 años). Hallazgo #40352: nginx 1.13.3 (2017) vs. requerida 1.17.7. CVEs: CVE-2018-16844 (buffer overflow HTTP/2), CVE-2019-20372 (information disclosure), CVE-2018-16843. CVSS 5.0-5.3. Hallazgos #32591 y #4569: software sin soporte. Sistema de pensiones de millones de chilenos: sin protección contra XSS, clickjacking, MITM.</p>",
+            "body": "<p>Múltiples hallazgos documentados: dominios de entornos de desarrollo sin cabeceras de seguridad básicas (X-XSS-Protection, CSP, X-Frame-Options, HSTS), sin parchear por más de 2 años. Servidor web con versión de 2017 (más de 7 años de obsolescencia) con vulnerabilidades conocidas de buffer overflow y divulgación de información. Software sin soporte activo. Sistema de pensiones de millones de chilenos: sin protección contra XSS, clickjacking, MITM.</p>",
             "why": "<p>La fragilidad técnica refleja fragilidad de gobernanza. ¿Cómo puede una institución con USD $145B tener vulnerabilidades sin parchear por 2+ años? Respuesta etnográfica: la CMF no audita arquitectura de seguridad — solo compliance financiero. La fragmentación regulatoria (CMF, SPP, Agencia Datos en silos) crea el vacío donde la negligencia prospera.</p>",
-            "proves": "<p>4 PDFs en carpeta Vulnerabilidades ANALIZAR con CVSS scores y fechas. El dominio dev.contrato-digital.sura.net.pe confirma exposición. El investigador apropió documentación como evidencia de negligencia — acto político de preservación archival.</p>"
+            "proves": "<p>Documentación interna con scores de severidad y fechas de detección. El investigador apropió los registros como evidencia de negligencia institucional — acto político de preservación archival (Stoler).</p>"
         }, {
             "id": "reforma2022",
             "eje": 2,
@@ -2262,9 +2260,9 @@
             "label": "Replicación Chile → Perú → Colombia",
             "connections": 4,
             "span": 2,
-            "body": "<p>Las capturas de pantalla 'cuentas peru y colimbia.png' y 'BDs sura investments.png' documentan que SURA replica datos de clientes chilenos hacia servidores en Colombia (sede corporativa) y Perú (dev.contrato-digital.sura.net.pe). La replicación incluye datos previsionales — información de cotizaciones, ahorros, perfiles de riesgo de ciudadanos chilenos procesados en infraestructura extranjera. Esto plantea un problema de soberanía de datos: ¿quién tiene jurisdicción sobre datos previsionales chilenos almacenados en Colombia? La Ley 19.628 y la Ley de Datos 2024 no tienen alcance extraterritorial efectivo.</p>",
-            "why": "<p>Varoufakis: el tecno-feudalismo no es nacional — es transnacional. SURA replica la lógica de las plataformas tech globales: centralizar datos de múltiples jurisdicciones en infraestructura que escapa al control de cualquier regulador nacional. Los datos de pensiones chilenas fluyendo a Colombia reproducen la lógica extractiva colonial: los recursos (ahora digitales) fluyen del sur (Chile) hacia el centro (Colombia/Grupo SURA matriz).</p>",
-            "proves": "<p>Las capturas de pantalla documentan la infraestructura multipaís. El dominio dev.contrato-digital.sura.net.pe confirma la presencia en Perú. La estructura corporativa de Grupo SURA (Suramericana S.A., Colombia) confirma la centralización en Colombia. Las vulnerabilidades detectadas en el dominio peruano (CVE-3420, nginx desactualizado) demuestran que la réplica también replica la fragilidad.</p>"
+            "body": "<p>Evidencia documental interna muestra que el conglomerado replica datos de clientes chilenos hacia servidores en Colombia (sede corporativa) y Perú (entornos de desarrollo regionales). La replicación incluye datos previsionales — información de cotizaciones, ahorros, perfiles de riesgo de ciudadanos chilenos procesados en infraestructura extranjera. Esto plantea un problema de soberanía de datos: ¿quién tiene jurisdicción sobre datos previsionales chilenos almacenados en el exterior? La Ley 19.628 y la Ley de Datos 2024 no tienen alcance extraterritorial efectivo.</p>",
+            "why": "<p>Varoufakis: el tecno-feudalismo no es nacional — es transnacional. El conglomerado replica la lógica de las plataformas tech globales: centralizar datos de múltiples jurisdicciones en infraestructura que escapa al control de cualquier regulador nacional. Los datos de pensiones chilenas fluyendo al exterior reproducen la lógica extractiva colonial: los recursos (ahora digitales) fluyen hacia el centro corporativo.</p>",
+            "proves": "<p>Capturas de evidencia documentan la infraestructura multipaís. La estructura corporativa del grupo (matriz colombiana) confirma la centralización. Las vulnerabilidades detectadas en entornos regionales demuestran que la réplica también replica la fragilidad de gobernanza.</p>"
         }, {
             "id": "tecno-feudalismo",
             "eje": 2,
@@ -2546,11 +2544,11 @@
             "relatedNodes": ["tecno-feudalismo", "dl3500", "sura-vertical"]
         }, {
             "eje": 2,
-            "title": "Vulnerabilidades SURA (CVE-2018-16844, CVE-2019-20372)",
+            "title": "Vulnerabilidades: infraestructura con software obsoleto y sin parchear",
             "type": "Reportes de seguridad",
             "analyticalRole": "Evidencia primaria",
             "depth": "Profundo",
-            "desc": "4 PDFs: sura-3420, sura-40352, sura-32591, sura-4569.",
+            "desc": "Documentación interna: múltiples hallazgos de vulnerabilidades sin parchear por más de 2 años en sistemas del conglomerado financiero.",
             "relatedNodes": ["vulnerabilidades"]
         }, {
             "eje": 2,
@@ -2558,7 +2556,7 @@
             "type": "Transcripciones",
             "analyticalRole": "Evidencia primaria",
             "depth": "Profundo",
-            "desc": "Hito Cero Contactabilidad (15 jul), Dudas Varias (28 jul 2025).",
+            "desc": "Transcripciones de reuniones técnicas internas (2025) sobre arquitectura de datos y separación de líneas de negocio.",
             "relatedNodes": ["persona-natural", "estrategia-gaona"]
         }, {
             "eje": 2,
@@ -2694,7 +2692,7 @@
             "type": "Transcripción",
             "analyticalRole": "Evidencia primaria",
             "depth": "Fundacional",
-            "desc": "Fuente interna ArqTI·SURA confirma: la herencia de prioridades impide separación real de datos (28 jul 2025).",
+            "desc": "Fuente técnica interna (2025) confirma: la herencia de prioridades impide separación real de datos entre líneas de negocio.",
             "relatedNodes": ["persona-natural", "ilegitimidad-3d"]
         }, {
             "eje": 2,
