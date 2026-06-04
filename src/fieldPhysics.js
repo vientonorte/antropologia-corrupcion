@@ -649,13 +649,6 @@ class FrictionField {
             ctx.arc(node.x, node.y, r, 0, PI2);
             ctx.fillStyle = `rgba(200, 169, 110, ${0.04 * energy})`;
             ctx.fill();
-
-            // Energy label
-            const E = (energy * energy * FIELD_CONFIG.CHARGE_MULTIPLIER / 2).toFixed(0);
-            ctx.font = '9px "SF Mono", "Fira Code", monospace';
-            ctx.textAlign = 'center';
-            ctx.fillStyle = `rgba(200, 169, 110, ${0.4 * energy})`;
-            ctx.fillText('E=' + E, node.x, node.y - radius - 8);
         }
 
         // Batch all force arrows in one path
