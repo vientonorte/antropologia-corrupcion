@@ -936,7 +936,7 @@
 
 <script>
   /* SCROLL REVEAL */
-  const obs = new IntersectionObserver(entries => {
+  const obs = new IntersectionObserver((entries, _observer) => {
     for (const e of entries) { if (e.isIntersecting) e.target.classList.add('visible'); }
   }, { threshold: 0.12 });
   document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
