@@ -1471,7 +1471,7 @@
                     
                     var tabs = Array.from($catTabs.querySelectorAll('.cat-tab'));
                     var currentIdx = tabs.indexOf(tab);
-                    var nextIdx;
+                    var nextIdx = -1;
 
                     if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
                         e.preventDefault();
