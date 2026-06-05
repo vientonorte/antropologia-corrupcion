@@ -60,10 +60,13 @@ jobs:
 
       - name: Preparar artefacto de sitio estático
         run: |
-          # Excluir directorios de desarrollo que no deben ser públicos.
-          # web/terraza: código fuente Next.js del admin privado
-          # web/: directorio fuente (los assets canonicales ya están en raíz)
-          # Estado del Arte/, Ensayo Traducción de Saberes/, docs/: material de investigación privado
+          # Promover web/ a raíz: copiar todo lo que esté en web/ (excluido terraza/)
+          # sin sobreescribir archivos que ya existen en raíz.
+          # Esto asegura que páginas como archivo.html, zuboff-archivo.html, etc.
+          # que solo viven en web/ queden disponibles en la raíz del sitio.
+          rsync -av --ignore-existing --exclude='terraza' web/ .
+
+          # Excluir directorios de desarrollo del artefacto público.
           rm -rf web "Estado del Arte" "Ensayo Traducción de Saberes" docs
 
       - name: Upload artifact
