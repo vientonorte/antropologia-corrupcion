@@ -957,7 +957,7 @@
 
   let done = false;
 
-  const secObs = new IntersectionObserver(entries => {
+  const secObs = new IntersectionObserver((entries, _observer) => {
     for (const e of entries) {
       if (e.isIntersecting) {
         document.getElementById('bpregunta').classList.add('vis');
