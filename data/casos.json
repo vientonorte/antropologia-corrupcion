@@ -752,6 +752,257 @@
         }
       ],
       "nota_cobertura": "Caso en fase inicial de documentación. Nodos mínimos mientras se consolida evidencia del registro SBIF. Ver HANDOFF.md para estado de avance."
+    },
+    {
+      "id": "michillanca-extractivismo-ley-anti",
+      "titulo": "Lof Michillanca: usurpación dictatorial, recuperación territorial y criminalización antiterrorista",
+      "anio": 2018,
+      "actores": [
+        "Familia Michillanca (Sofonías, Sara, Joel, José Rosamel)",
+        "José Luis Gómez (usurpador)",
+        "Estado chileno",
+        "Junta Militar / Regimiento de Valdivia",
+        "CONADI",
+        "Ministerio Público"
+      ],
+      "instituciones": [
+        "Juzgado de Letras de Valdivia",
+        "Ministerio del Interior (Ley Antiterrorista)",
+        "CONADI",
+        "Registro Civil / Conservador de Bienes Raíces"
+      ],
+      "etica": {
+        "titulo": "La tierra como memoria y como deuda",
+        "descripcion": "La familia Michillanca no experimenta la tierra como propiedad abstracta sino como continuidad generacional e identidad territorial. El testimonio de doña Sara Michillanca describe Los Molinos como nodo de intercambio y tránsito mapuche-lafkenche: carbón, chicha, rutas hacia Valdivia y Corral. El maremoto de 1960 y el golpe de 1973 se encadenan en la memoria como dos oleadas del mismo despojo. La recuperación de 2014 es un acto de restitución moral, no una toma ilegal.",
+        "voces": [
+          "Sofonías Michillanca: relato de la amenaza al padre bajo dictadura",
+          "Sara Michillanca: descripción del territorio como nodo de intercambio",
+          "José Rosamel Michillanca: firma del trato forzado y abandono a Santiago"
+        ],
+        "documentos_ref": [
+          "Estado del Arte Lof Michillanca (Producción Colaborativa, 2018)",
+          "Entrevistas de campo: MVI_2463.MOV, MVI_2464.MOV, MVI_2465.MOV, MVI_3140.MOV"
+        ],
+        "keywords": [
+          "memoria territorial",
+          "identidad lafkenche",
+          "transmisión generacional",
+          "trauma dictatorial"
+        ],
+        "color": "#c8a96e"
+      },
+      "institucional": {
+        "titulo": "El Título de Merced como documento inoperante",
+        "descripcion": "El Título de Merced N° 2340 (1912), otorgado a José del Carmen Pichun, hijuela N° 11 de 92,6 ha, es el documento jurídico que funda el derecho territorial de la familia Michillanca. Sin embargo, ese derecho es sistemáticamente neutralizado: primero por la informalidad del trato forzado de 1974, que no deja registro formal de la coerción; luego por el registro inscrito a nombre de Gómez en el Conservador; finalmente por la aplicación de la Ley Antiterrorista (Ley 18.314) ante la recuperación de 2014. El Estado produce y destruye su propio documento fundante.",
+        "documentos": [
+          "Título de Merced N° 2340 (1912)",
+          "Ley 18.314 — Ley Antiterrorista",
+          "Convenio OIT 169 (ratificado Chile 2009)",
+          "Registro Conservador de Bienes Raíces, inscripción Gómez",
+          "Causa penal ante juzgado de Valdivia"
+        ],
+        "clasificaciones": [
+          "usurpación",
+          "ocupación ilegal",
+          "actos terroristas (tipificación Ministerio Público)"
+        ],
+        "keywords": [
+          "Ley Antiterrorista",
+          "Título de Merced",
+          "CONADI",
+          "Convenio 169",
+          "criminalización"
+        ],
+        "color": "#4a7fa5"
+      },
+      "material": {
+        "titulo": "Territorio lafkenche: costa, maremoto, desposesión",
+        "descripcion": "El territorio de Los Molinos, en la costa de Valdivia, concentra capas materiales de despojo: usurpación española-colonial, radicación en Títulos de Merced (1912), pérdida costera por maremoto (1960), usurpación dictatorial (1974). La geografía no es fondo: es actor. El muelle de Los Molinos marca literalmente la frontera entre lo que el mar se llevó y lo que la dictadura quitó. La recuperación de 2014 es también una recuperación de suelo específico, con memoria inscrita en el terreno.",
+        "evidencias": [
+          "Hijuela N° 11, 92,6 ha, zona costera Valdivia-Niebla",
+          "Documentación Título de Merced N° 2340",
+          "Registro visual: MVI_2601.MOV, MVI_2603.MOV (inserts territoriales)",
+          "Sinopsis #NOALALEYANTITERRORISTA.avi"
+        ],
+        "keywords": [
+          "territorio lafkenche",
+          "costa Valdivia",
+          "Los Molinos",
+          "maremoto 1960",
+          "extractivismo"
+        ],
+        "color": "#7a9e6e"
+      },
+      "friccion": {
+        "tipo": "juridica",
+        "subtipo": "normativa",
+        "intensidad": 0.91,
+        "estado": "abierta",
+        "descripcion": "El Estado chileno produce el derecho territorial mapuche (Título de Merced 1912) y luego lo neutraliza por dos vías: la informalidad del despojo dictatorial (que el sistema legal no puede leer como coerción porque no fue registrada) y la Ley Antiterrorista (que convierte la restitución en delito). La fricción no es un error del sistema: es su modo de operación con el territorio mapuche.",
+        "tension_central": "¿Puede el mismo Estado que produjo el Título de Merced aplicar la Ley Antiterrorista a quienes intentan hacerlo valer?",
+        "sin_resolver": true
+      },
+      "conexiones": [
+        "la-negra-territorio-mapuche",
+        "oit169-consulta-previa"
+      ],
+      "tags": [
+        "extractivismo",
+        "territorio mapuche",
+        "Ley Antiterrorista",
+        "dictadura",
+        "despojo",
+        "lafkenche",
+        "Valdivia",
+        "corrupción estructural",
+        "etnografía audiovisual"
+      ],
+      "nodos": [
+        {
+          "id": "familia-michillanca",
+          "capa": "etica",
+          "tipo": "actor",
+          "peso_friccion": 0.91,
+          "fuente_id": "estado-arte-michillanca-2018",
+          "fecha_evidencia": "2018-01-01",
+          "descripcion": "Familia mapuche-lafkenche, adjudicataria Título de Merced N°2340, sujeto del despojo y de la recuperación territorial",
+          "_entropia_calor": 0.3,
+          "_masa_poder": 0.15
+        },
+        {
+          "id": "titulo-merced-2340",
+          "capa": "institucional",
+          "tipo": "norma",
+          "peso_friccion": 0.78,
+          "fuente_id": "titulo-merced-1912",
+          "fecha_evidencia": "1912-01-01",
+          "descripcion": "Documento estatal fundante del derecho territorial — producido por el Estado y luego ignorado por el mismo Estado",
+          "_entropia_calor": 0.2,
+          "_masa_poder": 0.4
+        },
+        {
+          "id": "gomez-usurpador",
+          "capa": "material",
+          "tipo": "actor",
+          "peso_friccion": 0.85,
+          "fuente_id": "estado-arte-michillanca-2018",
+          "fecha_evidencia": "1974-01-01",
+          "descripcion": "José Luis Gómez — se apropia del predio completo usando la detención del hermano Michillanca como amenaza bajo dictadura",
+          "_entropia_calor": 0.8,
+          "_masa_poder": 0.7
+        },
+        {
+          "id": "junta-militar-dictadura",
+          "capa": "institucional",
+          "tipo": "evento",
+          "peso_friccion": 0.95,
+          "fuente_id": "golpe-1973",
+          "fecha_evidencia": "1973-09-11",
+          "descripcion": "Golpe militar — habilita el despojo al convertir la detención política en palanca de coerción económica",
+          "_entropia_calor": 0.95,
+          "_masa_poder": 0.99
+        },
+        {
+          "id": "ley-antiterrorista-18314",
+          "capa": "institucional",
+          "tipo": "norma",
+          "peso_friccion": 0.88,
+          "fuente_id": "ley-18314-chile",
+          "fecha_evidencia": "2014-12-16",
+          "descripcion": "Ley 18.314 aplicada a la recuperación territorial de 2014 — convierte restitución en terrorismo",
+          "_entropia_calor": 0.85,
+          "_masa_poder": 0.9
+        },
+        {
+          "id": "recuperacion-territorial-2014",
+          "capa": "etica",
+          "tipo": "evento",
+          "peso_friccion": 0.82,
+          "fuente_id": "estado-arte-michillanca-2018",
+          "fecha_evidencia": "2014-12-16",
+          "descripcion": "16 diciembre 2014 — familia Michillanca recupera sus tierras ancestrales en Los Molinos",
+          "_entropia_calor": 0.45,
+          "_masa_poder": 0.2
+        },
+        {
+          "id": "territorio-los-molinos",
+          "capa": "material",
+          "tipo": "territorio",
+          "peso_friccion": 0.75,
+          "fuente_id": "estado-arte-michillanca-2018",
+          "fecha_evidencia": "1912-01-01",
+          "descripcion": "Hijuela N°11, costa valdiviana — territorio que concentra capas de despojo desde 1960",
+          "_entropia_calor": 0.55,
+          "_masa_poder": 0.1
+        }
+      ],
+      "_vault_estado": "en-proceso",
+      "_vault_fuentes_primarias": [
+        "Título de Merced N° 2340 (1912)",
+        "Ley 18.314 — Conductas Terroristas",
+        "Convenio OIT 169 (promulgado en Chile por DS N°236, 2009)",
+        "Entrevistas campo: MVI_2463, 2464, 2465, 3140 (Drive, enero–marzo 2018)",
+        "Sinopsis #NOALALEYANTITERRORISTA.avi"
+      ],
+      "_vault_fuentes_secundarias": [
+        "Correa, M. (2010). Historia y etnografía de la recuperación territorial mapuche.",
+        "Estado del Arte Lof Michillanca (Producción Colaborativa, 2018)",
+        "Harvey, D. (2003). The New Imperialism — acumulación por desposesión",
+        "Taussig, M. (1987). Shamanism, Colonialism, and the Wild Man — terror y Estado",
+        "Das, V. & Poole, D. (2004). Anthropology in the Margins of the State"
+      ],
+      "_vault_hash": "22973744df4c",
+      "_vault_exportado": "2026-05-31T22:00:01.663879",
+      "_relaciones": [
+        {
+          "source": "junta-militar-dictadura",
+          "target": "gomez-usurpador",
+          "tipo": "habilitó",
+          "peso": 0.95,
+          "friccion": 0.93,
+          "descripcion": "La detención política del hermano Joel fue usada por Gómez como palanca de presión sobre el padre"
+        },
+        {
+          "source": "gomez-usurpador",
+          "target": "familia-michillanca",
+          "tipo": "usurpó",
+          "peso": 0.9,
+          "friccion": 0.91,
+          "descripcion": "Amenaza directa: 'si quieres escapar con vida tienes que abandonar acá'"
+        },
+        {
+          "source": "gomez-usurpador",
+          "target": "titulo-merced-2340",
+          "tipo": "neutralizó",
+          "peso": 0.85,
+          "friccion": 0.88,
+          "descripcion": "Inscribió el predio a su nombre en el Conservador, volviendo inoperante el Título de Merced"
+        },
+        {
+          "source": "familia-michillanca",
+          "target": "territorio-los-molinos",
+          "tipo": "recuperó",
+          "peso": 0.82,
+          "friccion": 0.4,
+          "descripcion": "Recuperación territorial 16 diciembre 2014"
+        },
+        {
+          "source": "ley-antiterrorista-18314",
+          "target": "recuperacion-territorial-2014",
+          "tipo": "criminalizó",
+          "peso": 0.88,
+          "friccion": 0.91,
+          "descripcion": "El Estado aplica Ley Antiterrorista a la recuperación — convierte restitución en delito de terrorismo"
+        },
+        {
+          "source": "titulo-merced-2340",
+          "target": "familia-michillanca",
+          "tipo": "fundó",
+          "peso": 0.78,
+          "friccion": 0.2,
+          "descripcion": "Documento estatal que establece el derecho — nunca ejecutado efectivamente por el Estado"
+        }
+      ]
     }
   ]
 }

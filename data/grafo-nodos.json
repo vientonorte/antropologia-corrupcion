@@ -1,0 +1,372 @@
+[
+  {
+    "id": "cotizante-dl3500",
+    "caso_id": "sura-gobernanza-datos",
+    "capa": "etica",
+    "tipo": "actor",
+    "carga": 0.91,
+    "calor": 0.5,
+    "masa_poder": 0.5,
+    "descripcion": "Afiliado obligatorio al sistema previsional; sin acceso interpretativo real a su cartera de inversión"
+  },
+  {
+    "id": "sura-afp-capital",
+    "caso_id": "sura-gobernanza-datos",
+    "capa": "institucional",
+    "tipo": "actor",
+    "carga": 0.82,
+    "calor": 0.5,
+    "masa_poder": 0.5,
+    "descripcion": "SURA Investments / AFP Capital: actor financiero que articula la cadena cotizante → AFP → cartera transnacional"
+  },
+  {
+    "id": "cmf-semaforo",
+    "caso_id": "sura-gobernanza-datos",
+    "capa": "institucional",
+    "tipo": "dispositivo",
+    "carga": 0.84,
+    "calor": 0.5,
+    "masa_poder": 0.5,
+    "descripcion": "Sistema de semáforos CMF que valida liquidez sin activar alertas ante volatilidad estructural (+279% índice de intermediación)"
+  },
+  {
+    "id": "fecu-liquidez",
+    "caso_id": "sura-gobernanza-datos",
+    "capa": "institucional",
+    "tipo": "dato",
+    "carga": 0.86,
+    "calor": 0.5,
+    "masa_poder": 0.5,
+    "descripcion": "FECU CMF Corredora SURA: instrumento regulatorio que opacifica la cadena de custodia transnacional mediante lenguaje técnico financiero"
+  },
+  {
+    "id": "jpmorgan-custodia",
+    "caso_id": "sura-gobernanza-datos",
+    "capa": "material",
+    "tipo": "actor",
+    "carga": 0.86,
+    "calor": 0.5,
+    "masa_poder": 0.5,
+    "descripcion": "JP Morgan como co-custodio de cartera: capital golondrina (Salazar) que materializa la acumulación aberrante en circuitos nor-occidentales"
+  },
+  {
+    "id": "fondos-mutuos-rescates",
+    "caso_id": "sura-gobernanza-datos",
+    "capa": "material",
+    "tipo": "dato",
+    "carga": 0.84,
+    "calor": 0.5,
+    "masa_poder": 0.5,
+    "descripcion": "Rescates masivos de fondos mutuos: evidencia material de la desconexión entre cumplimiento normativo y volatilidad real absorbida por cotizantes"
+  },
+  {
+    "id": "sura-gobernanza-datos",
+    "caso_id": "sura-gobernanza-datos",
+    "capa": "caso",
+    "tipo": "caso",
+    "carga": 0.82,
+    "calor": 0.656,
+    "masa_poder": 0.6,
+    "descripcion": "SURA Investments: Gobernanza de Datos y Separación AFP"
+  },
+  {
+    "id": "comunidad-lafkenche",
+    "caso_id": "la-negra-territorio-mapuche",
+    "capa": "etica",
+    "tipo": "territorio",
+    "carga": 0.94,
+    "calor": 0.5,
+    "masa_poder": 0.5,
+    "descripcion": "Comunidad Mapuche-Lafkenche de La Negra: testimonio situado sobre territorio como organismo vivo con historia irreductible a catastro"
+  },
+  {
+    "id": "conadi-tierras",
+    "caso_id": "la-negra-territorio-mapuche",
+    "capa": "institucional",
+    "tipo": "dispositivo",
+    "carga": 0.9,
+    "calor": 0.5,
+    "masa_poder": 0.5,
+    "descripcion": "CONADI como dispositivo de gestión de tierras: traduce soberanía territorial a proceso administrativo de adquisición parcelas"
+  },
+  {
+    "id": "dl701-subsidio-forestal",
+    "caso_id": "la-negra-territorio-mapuche",
+    "capa": "institucional",
+    "tipo": "norma",
+    "carga": 0.88,
+    "calor": 0.5,
+    "masa_poder": 0.5,
+    "descripcion": "DL 701 (1974): subsidio forestal que convierte territorio en 'uso productivo', negando la memoria territorial mapuche desde la dictadura"
+  },
+  {
+    "id": "predios-avaluos-sii",
+    "caso_id": "la-negra-territorio-mapuche",
+    "capa": "material",
+    "tipo": "dato",
+    "carga": 0.85,
+    "calor": 0.5,
+    "masa_poder": 0.5,
+    "descripcion": "Avalúo fiscal SII de predios en Los Ríos: tasación como acto de violencia epistemológica — el mercado asigna valor donde hay historia"
+  },
+  {
+    "id": "seia-central-osorno",
+    "caso_id": "la-negra-territorio-mapuche",
+    "capa": "institucional",
+    "tipo": "dispositivo",
+    "carga": 0.87,
+    "calor": 0.5,
+    "masa_poder": 0.5,
+    "descripcion": "EIA Central Osorno en SEIA: el sistema de evaluación ambiental como mecanismo de captura que convierte oposición en 'admisibilidad'"
+  },
+  {
+    "id": "forestal-losrios",
+    "caso_id": "la-negra-territorio-mapuche",
+    "capa": "material",
+    "tipo": "territorio",
+    "carga": 0.88,
+    "calor": 0.5,
+    "masa_poder": 0.5,
+    "descripcion": "Territorio forestal Los Ríos: evidencia material de la deforestación como uso productivo autorizado sobre territorio en disputa histórica"
+  },
+  {
+    "id": "la-negra-territorio-mapuche",
+    "caso_id": "la-negra-territorio-mapuche",
+    "capa": "caso",
+    "tipo": "caso",
+    "carga": 0.94,
+    "calor": 0.752,
+    "masa_poder": 0.6,
+    "descripcion": "La Negra — Memoria, Territorio y Resistencia Mapuche-Huilliche"
+  },
+  {
+    "id": "ciper-fuente",
+    "caso_id": "periodismo-datos-chile",
+    "capa": "etica",
+    "tipo": "actor",
+    "carga": 0.78,
+    "calor": 0.5,
+    "masa_poder": 0.5,
+    "descripcion": "Fuente/whistleblower CIPER Chile: testimonio situado que activa el campo de fricción entre proceso regular y denuncia pública"
+  },
+  {
+    "id": "municipio-trato-directo",
+    "caso_id": "periodismo-datos-chile",
+    "capa": "institucional",
+    "tipo": "dato",
+    "carga": 0.75,
+    "calor": 0.5,
+    "masa_poder": 0.5,
+    "descripcion": "Contratos municipales por trato directo en ChileCompra: dato institucional que registra la irregularidad sin nombrarla como corrupción"
+  },
+  {
+    "id": "transp-municipio-honorarios",
+    "caso_id": "periodismo-datos-chile",
+    "capa": "institucional",
+    "tipo": "dato",
+    "carga": 0.71,
+    "calor": 0.5,
+    "masa_poder": 0.5,
+    "descripcion": "Honorarios municipales en Portal de Transparencia: opacidad estructurada donde la visibilidad formal encubre la cadena real de pagos"
+  },
+  {
+    "id": "sii-proveedores",
+    "caso_id": "periodismo-datos-chile",
+    "capa": "material",
+    "tipo": "dato",
+    "carga": 0.7,
+    "calor": 0.5,
+    "masa_poder": 0.5,
+    "descripcion": "Registro SII de proveedores municipales: evidencia material cruzada con contratos que revela la estructura real de extracción local"
+  },
+  {
+    "id": "ley-20285-info-publica",
+    "caso_id": "periodismo-datos-chile",
+    "capa": "institucional",
+    "tipo": "norma",
+    "carga": 0.68,
+    "calor": 0.5,
+    "masa_poder": 0.5,
+    "descripcion": "Ley 20.285 de Transparencia: norma que garantiza acceso formal a documentos pero no el acceso interpretativo a la lógica del poder"
+  },
+  {
+    "id": "periodismo-datos-chile",
+    "caso_id": "periodismo-datos-chile",
+    "capa": "caso",
+    "tipo": "caso",
+    "carga": 0.71,
+    "calor": 0.568,
+    "masa_poder": 0.6,
+    "descripcion": "Periodismo de Datos — La Corrupción como Mistranslation Institucional"
+  },
+  {
+    "id": "convenio-oit169",
+    "caso_id": "oit169-consulta-previa",
+    "capa": "etica",
+    "tipo": "norma",
+    "carga": 0.89,
+    "calor": 0.5,
+    "masa_poder": 0.5,
+    "descripcion": "OIT 169: marco decolonial del consentimiento libre, previo e informado — define consulta como veto, no como diálogo"
+  },
+  {
+    "id": "ds66-consulta",
+    "caso_id": "oit169-consulta-previa",
+    "capa": "institucional",
+    "tipo": "dispositivo",
+    "carga": 0.85,
+    "calor": 0.5,
+    "masa_poder": 0.5,
+    "descripcion": "DS 66 Reglamento de Consulta Indígena: traduce el consentimiento OIT 169 en trámite administrativo sin capacidad real de veto"
+  },
+  {
+    "id": "ley19253-indigena",
+    "caso_id": "oit169-consulta-previa",
+    "capa": "institucional",
+    "tipo": "norma",
+    "carga": 0.82,
+    "calor": 0.5,
+    "masa_poder": 0.5,
+    "descripcion": "Ley 19.253 Indígena: ley chilena que reconoce pueblos originarios pero subordina autonomía territorial a regulación estatal"
+  },
+  {
+    "id": "seia-admisibilidad",
+    "caso_id": "oit169-consulta-previa",
+    "capa": "institucional",
+    "tipo": "dispositivo",
+    "carga": 0.85,
+    "calor": 0.5,
+    "masa_poder": 0.5,
+    "descripcion": "SEIA como filtro de admisibilidad: convierte resistencia en 'observaciones procesadas', absorbiendo el conflicto sin resolverlo"
+  },
+  {
+    "id": "diariooficial-consulta-2024",
+    "caso_id": "oit169-consulta-previa",
+    "capa": "institucional",
+    "tipo": "dato",
+    "carga": 0.87,
+    "calor": 0.5,
+    "masa_poder": 0.5,
+    "descripcion": "Último decreto de consulta indígena en Diario Oficial: formalización que consagra la soberanía estatal sobre CONADI frente a soberanía territorial"
+  },
+  {
+    "id": "oit169-consulta-previa",
+    "caso_id": "oit169-consulta-previa",
+    "capa": "caso",
+    "tipo": "caso",
+    "carga": 0.89,
+    "calor": 0.7120000000000001,
+    "masa_poder": 0.6,
+    "descripcion": "OIT 169 — La Consulta Previa como Dispositivo de Neutralización"
+  },
+  {
+    "id": "sbif-circular-roles",
+    "caso_id": "banca-roles-opacidad-digital",
+    "capa": "institucional",
+    "tipo": "norma",
+    "carga": 0.73,
+    "calor": 0.5,
+    "masa_poder": 0.5,
+    "descripcion": "Circular SBIF de roles banca digital: norma que asigna accesos por categoría pero deja sin nombrar el rol de máximo acceso sin accountability"
+  },
+  {
+    "id": "opacidad-plataforma",
+    "caso_id": "banca-roles-opacidad-digital",
+    "capa": "material",
+    "tipo": "dato",
+    "carga": 0.82,
+    "calor": 0.5,
+    "masa_poder": 0.5,
+    "descripcion": "Arquitectura de roles digitales: evidencia material de opacidad estructurada donde visibilidad y agencia están sistemáticamente desacopladas"
+  },
+  {
+    "id": "banca-roles-opacidad-digital",
+    "caso_id": "banca-roles-opacidad-digital",
+    "capa": "caso",
+    "tipo": "caso",
+    "carga": 0.73,
+    "calor": 0.584,
+    "masa_poder": 0.6,
+    "descripcion": "Banca Digital — Roles, Permisos y Opacidad Institucional"
+  },
+  {
+    "id": "familia-michillanca",
+    "caso_id": "michillanca-extractivismo-ley-anti",
+    "capa": "etica",
+    "tipo": "actor",
+    "carga": 0.91,
+    "calor": 0.3,
+    "masa_poder": 0.15,
+    "descripcion": "Familia mapuche-lafkenche, adjudicataria Título de Merced N°2340, sujeto del despojo y de la recuperación territorial"
+  },
+  {
+    "id": "titulo-merced-2340",
+    "caso_id": "michillanca-extractivismo-ley-anti",
+    "capa": "institucional",
+    "tipo": "norma",
+    "carga": 0.78,
+    "calor": 0.2,
+    "masa_poder": 0.4,
+    "descripcion": "Documento estatal fundante del derecho territorial — producido por el Estado y luego ignorado por el mismo Estado"
+  },
+  {
+    "id": "gomez-usurpador",
+    "caso_id": "michillanca-extractivismo-ley-anti",
+    "capa": "material",
+    "tipo": "actor",
+    "carga": 0.85,
+    "calor": 0.8,
+    "masa_poder": 0.7,
+    "descripcion": "José Luis Gómez — se apropia del predio completo usando la detención del hermano Michillanca como amenaza bajo dictadura"
+  },
+  {
+    "id": "junta-militar-dictadura",
+    "caso_id": "michillanca-extractivismo-ley-anti",
+    "capa": "institucional",
+    "tipo": "evento",
+    "carga": 0.95,
+    "calor": 0.95,
+    "masa_poder": 0.99,
+    "descripcion": "Golpe militar — habilita el despojo al convertir la detención política en palanca de coerción económica"
+  },
+  {
+    "id": "ley-antiterrorista-18314",
+    "caso_id": "michillanca-extractivismo-ley-anti",
+    "capa": "institucional",
+    "tipo": "norma",
+    "carga": 0.88,
+    "calor": 0.85,
+    "masa_poder": 0.9,
+    "descripcion": "Ley 18.314 aplicada a la recuperación territorial de 2014 — convierte restitución en terrorismo"
+  },
+  {
+    "id": "recuperacion-territorial-2014",
+    "caso_id": "michillanca-extractivismo-ley-anti",
+    "capa": "etica",
+    "tipo": "evento",
+    "carga": 0.82,
+    "calor": 0.45,
+    "masa_poder": 0.2,
+    "descripcion": "16 diciembre 2014 — familia Michillanca recupera sus tierras ancestrales en Los Molinos"
+  },
+  {
+    "id": "territorio-los-molinos",
+    "caso_id": "michillanca-extractivismo-ley-anti",
+    "capa": "material",
+    "tipo": "territorio",
+    "carga": 0.75,
+    "calor": 0.55,
+    "masa_poder": 0.1,
+    "descripcion": "Hijuela N°11, costa valdiviana — territorio que concentra capas de despojo desde 1960"
+  },
+  {
+    "id": "michillanca-extractivismo-ley-anti",
+    "caso_id": "michillanca-extractivismo-ley-anti",
+    "capa": "caso",
+    "tipo": "caso",
+    "carga": 0.91,
+    "calor": 0.7280000000000001,
+    "masa_poder": 0.6,
+    "descripcion": "Lof Michillanca: usurpación dictatorial, recuperación territorial y criminalización antiterrorista"
+  }
+]

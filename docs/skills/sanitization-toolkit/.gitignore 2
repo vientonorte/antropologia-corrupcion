@@ -1,0 +1,7 @@
+# NUNCA COMMITEAR contenido de esta carpeta
+# Toolkit de sanitización — uso local exclusivo
+# Excluye scripts, diccionarios, inventarios, outputs
+
+*
+!.gitignore
+!README.md

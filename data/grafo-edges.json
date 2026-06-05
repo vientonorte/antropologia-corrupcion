@@ -1,0 +1,461 @@
+[
+  {
+    "source": "cotizante-dl3500",
+    "target": "sura-gobernanza-datos",
+    "tipo": "pertenece",
+    "peso": 0.91,
+    "friccion": 0.91,
+    "descripcion": "",
+    "caso_id": "sura-gobernanza-datos"
+  },
+  {
+    "source": "sura-afp-capital",
+    "target": "sura-gobernanza-datos",
+    "tipo": "pertenece",
+    "peso": 0.82,
+    "friccion": 0.82,
+    "descripcion": "",
+    "caso_id": "sura-gobernanza-datos"
+  },
+  {
+    "source": "cmf-semaforo",
+    "target": "sura-gobernanza-datos",
+    "tipo": "pertenece",
+    "peso": 0.84,
+    "friccion": 0.84,
+    "descripcion": "",
+    "caso_id": "sura-gobernanza-datos"
+  },
+  {
+    "source": "fecu-liquidez",
+    "target": "sura-gobernanza-datos",
+    "tipo": "pertenece",
+    "peso": 0.86,
+    "friccion": 0.86,
+    "descripcion": "",
+    "caso_id": "sura-gobernanza-datos"
+  },
+  {
+    "source": "jpmorgan-custodia",
+    "target": "sura-gobernanza-datos",
+    "tipo": "pertenece",
+    "peso": 0.86,
+    "friccion": 0.86,
+    "descripcion": "",
+    "caso_id": "sura-gobernanza-datos"
+  },
+  {
+    "source": "fondos-mutuos-rescates",
+    "target": "sura-gobernanza-datos",
+    "tipo": "pertenece",
+    "peso": 0.84,
+    "friccion": 0.84,
+    "descripcion": "",
+    "caso_id": "sura-gobernanza-datos"
+  },
+  {
+    "source": "sura-gobernanza-datos",
+    "target": "la-negra-territorio-mapuche",
+    "tipo": "conecta",
+    "peso": 0.6,
+    "friccion": 0.82,
+    "descripcion": "",
+    "caso_id": "sura-gobernanza-datos"
+  },
+  {
+    "source": "sura-gobernanza-datos",
+    "target": "periodismo-datos-chile",
+    "tipo": "conecta",
+    "peso": 0.6,
+    "friccion": 0.82,
+    "descripcion": "",
+    "caso_id": "sura-gobernanza-datos"
+  },
+  {
+    "source": "sura-gobernanza-datos",
+    "target": "banca-roles-opacidad-digital",
+    "tipo": "conecta",
+    "peso": 0.6,
+    "friccion": 0.82,
+    "descripcion": "",
+    "caso_id": "sura-gobernanza-datos"
+  },
+  {
+    "source": "comunidad-lafkenche",
+    "target": "la-negra-territorio-mapuche",
+    "tipo": "pertenece",
+    "peso": 0.94,
+    "friccion": 0.94,
+    "descripcion": "",
+    "caso_id": "la-negra-territorio-mapuche"
+  },
+  {
+    "source": "conadi-tierras",
+    "target": "la-negra-territorio-mapuche",
+    "tipo": "pertenece",
+    "peso": 0.9,
+    "friccion": 0.9,
+    "descripcion": "",
+    "caso_id": "la-negra-territorio-mapuche"
+  },
+  {
+    "source": "dl701-subsidio-forestal",
+    "target": "la-negra-territorio-mapuche",
+    "tipo": "pertenece",
+    "peso": 0.88,
+    "friccion": 0.88,
+    "descripcion": "",
+    "caso_id": "la-negra-territorio-mapuche"
+  },
+  {
+    "source": "predios-avaluos-sii",
+    "target": "la-negra-territorio-mapuche",
+    "tipo": "pertenece",
+    "peso": 0.85,
+    "friccion": 0.85,
+    "descripcion": "",
+    "caso_id": "la-negra-territorio-mapuche"
+  },
+  {
+    "source": "seia-central-osorno",
+    "target": "la-negra-territorio-mapuche",
+    "tipo": "pertenece",
+    "peso": 0.87,
+    "friccion": 0.87,
+    "descripcion": "",
+    "caso_id": "la-negra-territorio-mapuche"
+  },
+  {
+    "source": "forestal-losrios",
+    "target": "la-negra-territorio-mapuche",
+    "tipo": "pertenece",
+    "peso": 0.88,
+    "friccion": 0.88,
+    "descripcion": "",
+    "caso_id": "la-negra-territorio-mapuche"
+  },
+  {
+    "source": "la-negra-territorio-mapuche",
+    "target": "sura-gobernanza-datos",
+    "tipo": "conecta",
+    "peso": 0.6,
+    "friccion": 0.94,
+    "descripcion": "",
+    "caso_id": "la-negra-territorio-mapuche"
+  },
+  {
+    "source": "la-negra-territorio-mapuche",
+    "target": "periodismo-datos-chile",
+    "tipo": "conecta",
+    "peso": 0.6,
+    "friccion": 0.94,
+    "descripcion": "",
+    "caso_id": "la-negra-territorio-mapuche"
+  },
+  {
+    "source": "ciper-fuente",
+    "target": "periodismo-datos-chile",
+    "tipo": "pertenece",
+    "peso": 0.78,
+    "friccion": 0.78,
+    "descripcion": "",
+    "caso_id": "periodismo-datos-chile"
+  },
+  {
+    "source": "municipio-trato-directo",
+    "target": "periodismo-datos-chile",
+    "tipo": "pertenece",
+    "peso": 0.75,
+    "friccion": 0.75,
+    "descripcion": "",
+    "caso_id": "periodismo-datos-chile"
+  },
+  {
+    "source": "transp-municipio-honorarios",
+    "target": "periodismo-datos-chile",
+    "tipo": "pertenece",
+    "peso": 0.71,
+    "friccion": 0.71,
+    "descripcion": "",
+    "caso_id": "periodismo-datos-chile"
+  },
+  {
+    "source": "sii-proveedores",
+    "target": "periodismo-datos-chile",
+    "tipo": "pertenece",
+    "peso": 0.7,
+    "friccion": 0.7,
+    "descripcion": "",
+    "caso_id": "periodismo-datos-chile"
+  },
+  {
+    "source": "ley-20285-info-publica",
+    "target": "periodismo-datos-chile",
+    "tipo": "pertenece",
+    "peso": 0.68,
+    "friccion": 0.68,
+    "descripcion": "",
+    "caso_id": "periodismo-datos-chile"
+  },
+  {
+    "source": "periodismo-datos-chile",
+    "target": "sura-gobernanza-datos",
+    "tipo": "conecta",
+    "peso": 0.6,
+    "friccion": 0.71,
+    "descripcion": "",
+    "caso_id": "periodismo-datos-chile"
+  },
+  {
+    "source": "periodismo-datos-chile",
+    "target": "la-negra-territorio-mapuche",
+    "tipo": "conecta",
+    "peso": 0.6,
+    "friccion": 0.71,
+    "descripcion": "",
+    "caso_id": "periodismo-datos-chile"
+  },
+  {
+    "source": "periodismo-datos-chile",
+    "target": "banca-roles-opacidad-digital",
+    "tipo": "conecta",
+    "peso": 0.6,
+    "friccion": 0.71,
+    "descripcion": "",
+    "caso_id": "periodismo-datos-chile"
+  },
+  {
+    "source": "convenio-oit169",
+    "target": "oit169-consulta-previa",
+    "tipo": "pertenece",
+    "peso": 0.89,
+    "friccion": 0.89,
+    "descripcion": "",
+    "caso_id": "oit169-consulta-previa"
+  },
+  {
+    "source": "ds66-consulta",
+    "target": "oit169-consulta-previa",
+    "tipo": "pertenece",
+    "peso": 0.85,
+    "friccion": 0.85,
+    "descripcion": "",
+    "caso_id": "oit169-consulta-previa"
+  },
+  {
+    "source": "ley19253-indigena",
+    "target": "oit169-consulta-previa",
+    "tipo": "pertenece",
+    "peso": 0.82,
+    "friccion": 0.82,
+    "descripcion": "",
+    "caso_id": "oit169-consulta-previa"
+  },
+  {
+    "source": "seia-admisibilidad",
+    "target": "oit169-consulta-previa",
+    "tipo": "pertenece",
+    "peso": 0.85,
+    "friccion": 0.85,
+    "descripcion": "",
+    "caso_id": "oit169-consulta-previa"
+  },
+  {
+    "source": "diariooficial-consulta-2024",
+    "target": "oit169-consulta-previa",
+    "tipo": "pertenece",
+    "peso": 0.87,
+    "friccion": 0.87,
+    "descripcion": "",
+    "caso_id": "oit169-consulta-previa"
+  },
+  {
+    "source": "oit169-consulta-previa",
+    "target": "la-negra-territorio-mapuche",
+    "tipo": "conecta",
+    "peso": 0.6,
+    "friccion": 0.89,
+    "descripcion": "",
+    "caso_id": "oit169-consulta-previa"
+  },
+  {
+    "source": "oit169-consulta-previa",
+    "target": "sura-gobernanza-datos",
+    "tipo": "conecta",
+    "peso": 0.6,
+    "friccion": 0.89,
+    "descripcion": "",
+    "caso_id": "oit169-consulta-previa"
+  },
+  {
+    "source": "sbif-circular-roles",
+    "target": "banca-roles-opacidad-digital",
+    "tipo": "pertenece",
+    "peso": 0.73,
+    "friccion": 0.73,
+    "descripcion": "",
+    "caso_id": "banca-roles-opacidad-digital"
+  },
+  {
+    "source": "opacidad-plataforma",
+    "target": "banca-roles-opacidad-digital",
+    "tipo": "pertenece",
+    "peso": 0.82,
+    "friccion": 0.82,
+    "descripcion": "",
+    "caso_id": "banca-roles-opacidad-digital"
+  },
+  {
+    "source": "banca-roles-opacidad-digital",
+    "target": "sura-gobernanza-datos",
+    "tipo": "conecta",
+    "peso": 0.6,
+    "friccion": 0.73,
+    "descripcion": "",
+    "caso_id": "banca-roles-opacidad-digital"
+  },
+  {
+    "source": "banca-roles-opacidad-digital",
+    "target": "periodismo-datos-chile",
+    "tipo": "conecta",
+    "peso": 0.6,
+    "friccion": 0.73,
+    "descripcion": "",
+    "caso_id": "banca-roles-opacidad-digital"
+  },
+  {
+    "source": "junta-militar-dictadura",
+    "target": "gomez-usurpador",
+    "tipo": "habilitó",
+    "peso": 0.95,
+    "friccion": 0.93,
+    "descripcion": "La detención política del hermano Joel fue usada por Gómez como palanca de presión sobre el padre",
+    "caso_id": "michillanca-extractivismo-ley-anti"
+  },
+  {
+    "source": "gomez-usurpador",
+    "target": "familia-michillanca",
+    "tipo": "usurpó",
+    "peso": 0.9,
+    "friccion": 0.91,
+    "descripcion": "Amenaza directa: 'si quieres escapar con vida tienes que abandonar acá'",
+    "caso_id": "michillanca-extractivismo-ley-anti"
+  },
+  {
+    "source": "gomez-usurpador",
+    "target": "titulo-merced-2340",
+    "tipo": "neutralizó",
+    "peso": 0.85,
+    "friccion": 0.88,
+    "descripcion": "Inscribió el predio a su nombre en el Conservador, volviendo inoperante el Título de Merced",
+    "caso_id": "michillanca-extractivismo-ley-anti"
+  },
+  {
+    "source": "familia-michillanca",
+    "target": "territorio-los-molinos",
+    "tipo": "recuperó",
+    "peso": 0.82,
+    "friccion": 0.4,
+    "descripcion": "Recuperación territorial 16 diciembre 2014",
+    "caso_id": "michillanca-extractivismo-ley-anti"
+  },
+  {
+    "source": "ley-antiterrorista-18314",
+    "target": "recuperacion-territorial-2014",
+    "tipo": "criminalizó",
+    "peso": 0.88,
+    "friccion": 0.91,
+    "descripcion": "El Estado aplica Ley Antiterrorista a la recuperación — convierte restitución en delito de terrorismo",
+    "caso_id": "michillanca-extractivismo-ley-anti"
+  },
+  {
+    "source": "titulo-merced-2340",
+    "target": "familia-michillanca",
+    "tipo": "fundó",
+    "peso": 0.78,
+    "friccion": 0.2,
+    "descripcion": "Documento estatal que establece el derecho — nunca ejecutado efectivamente por el Estado",
+    "caso_id": "michillanca-extractivismo-ley-anti"
+  },
+  {
+    "source": "familia-michillanca",
+    "target": "michillanca-extractivismo-ley-anti",
+    "tipo": "pertenece",
+    "peso": 0.91,
+    "friccion": 0.91,
+    "descripcion": "",
+    "caso_id": "michillanca-extractivismo-ley-anti"
+  },
+  {
+    "source": "titulo-merced-2340",
+    "target": "michillanca-extractivismo-ley-anti",
+    "tipo": "pertenece",
+    "peso": 0.78,
+    "friccion": 0.78,
+    "descripcion": "",
+    "caso_id": "michillanca-extractivismo-ley-anti"
+  },
+  {
+    "source": "gomez-usurpador",
+    "target": "michillanca-extractivismo-ley-anti",
+    "tipo": "pertenece",
+    "peso": 0.85,
+    "friccion": 0.85,
+    "descripcion": "",
+    "caso_id": "michillanca-extractivismo-ley-anti"
+  },
+  {
+    "source": "junta-militar-dictadura",
+    "target": "michillanca-extractivismo-ley-anti",
+    "tipo": "pertenece",
+    "peso": 0.95,
+    "friccion": 0.95,
+    "descripcion": "",
+    "caso_id": "michillanca-extractivismo-ley-anti"
+  },
+  {
+    "source": "ley-antiterrorista-18314",
+    "target": "michillanca-extractivismo-ley-anti",
+    "tipo": "pertenece",
+    "peso": 0.88,
+    "friccion": 0.88,
+    "descripcion": "",
+    "caso_id": "michillanca-extractivismo-ley-anti"
+  },
+  {
+    "source": "recuperacion-territorial-2014",
+    "target": "michillanca-extractivismo-ley-anti",
+    "tipo": "pertenece",
+    "peso": 0.82,
+    "friccion": 0.82,
+    "descripcion": "",
+    "caso_id": "michillanca-extractivismo-ley-anti"
+  },
+  {
+    "source": "territorio-los-molinos",
+    "target": "michillanca-extractivismo-ley-anti",
+    "tipo": "pertenece",
+    "peso": 0.75,
+    "friccion": 0.75,
+    "descripcion": "",
+    "caso_id": "michillanca-extractivismo-ley-anti"
+  },
+  {
+    "source": "michillanca-extractivismo-ley-anti",
+    "target": "la-negra-territorio-mapuche",
+    "tipo": "conecta",
+    "peso": 0.6,
+    "friccion": 0.91,
+    "descripcion": "",
+    "caso_id": "michillanca-extractivismo-ley-anti"
+  },
+  {
+    "source": "michillanca-extractivismo-ley-anti",
+    "target": "oit169-consulta-previa",
+    "tipo": "conecta",
+    "peso": 0.6,
+    "friccion": 0.91,
+    "descripcion": "",
+    "caso_id": "michillanca-extractivismo-ley-anti"
+  }
+]

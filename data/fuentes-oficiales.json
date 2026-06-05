@@ -933,5 +933,37 @@
       "artículo",
       "gobernanza"
     ]
+  },
+  {
+    "id": "michillanca-ley-antiterrorista-2014",
+    "fuente": "leychile",
+    "titulo": "Ley 18.314 (Ley Antiterrorista) aplicada a recuperación territorial Lof Michillanca, Valdivia, 2014",
+    "fecha": "2014-01-01",
+    "url": "https://www.leychile.cl/Navegar?idNorma=29731",
+    "institucion": "Ministerio del Interior / Ministerio Público",
+    "actores_lobby": [
+      "Familia Michillanca",
+      "Ministerio del Interior",
+      "Ministerio Público"
+    ],
+    "materia": "Aplicación de Ley Antiterrorista ante recuperación de predio usurpado bajo dictadura (Título de Merced N° 2340, 1912)",
+    "keywords": [
+      "ley antiterrorista",
+      "territorio mapuche",
+      "recuperación territorial",
+      "dictadura",
+      "criminalización",
+      "lafkenche"
+    ],
+    "capa_oficial": "El Estado aplica la Ley 18.314 ante la recuperación del predio Los Molinos, usurpado en 1974 bajo coacción militar. El documento jurídico fundante (Título de Merced N° 2340) es ignorado; la recuperación se tipifica como acto terrorista.",
+    "friccion_con": "michillanca-extractivismo-ley-anti",
+    "tipo_friccion": "politica",
+    "tags": [
+      "Ley Antiterrorista",
+      "pueblo mapuche",
+      "dictadura",
+      "usurpación",
+      "CONADI"
+    ]
   }
 ]
