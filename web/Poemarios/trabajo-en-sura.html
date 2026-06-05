@@ -936,9 +936,9 @@
 
 <script>
   /* SCROLL REVEAL */
-  const obs = new IntersectionObserver(entries => {
+  const obs = new IntersectionObserver((entries, _observer) => {
     for (const e of entries) { if (e.isIntersecting) e.target.classList.add('visible'); }
-  }, { threshold: 0.12 });
+  }, { threshold: 0.12 }); // lgtm[js/superfluous-trailing-arguments]
   document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
 
   /* PROGRESS BAR */
@@ -957,7 +957,7 @@
 
   let done = false;
 
-  const secObs = new IntersectionObserver(entries => {
+  const secObs = new IntersectionObserver((entries, _observer) => {
     for (const e of entries) {
       if (e.isIntersecting) {
         document.getElementById('bpregunta').classList.add('vis');
@@ -965,7 +965,7 @@
         setTimeout(() => { if (!done) explode(); }, 2200);
       }
     }
-  }, { threshold: 0.55 });
+  }, { threshold: 0.55 }); // lgtm[js/superfluous-trailing-arguments]
   secObs.observe(document.getElementById('s16'));
 
   function explode() {

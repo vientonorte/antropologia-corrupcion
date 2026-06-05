@@ -48,11 +48,26 @@ jobs:
         with:
           enablement: true
 
+      - name: Validar assets críticos
+        run: |
+          # Verificar que styles/ y src/ existen antes de empaquetar
+          test -d styles || { echo "❌ styles/ no encontrado en raíz — el sitio quedaría sin CSS"; exit 1; }
+          test -f styles/shared.css || { echo "❌ styles/shared.css faltante"; exit 1; }
+          test -f styles/graph.css || { echo "❌ styles/graph.css faltante"; exit 1; }
+          test -d src || { echo "❌ src/ no encontrado en raíz"; exit 1; }
+          test -f src/frictionEngine.js || { echo "❌ src/frictionEngine.js faltante"; exit 1; }
+          echo "✅ Assets críticos presentes"
+
       - name: Preparar artefacto de sitio estático
         run: |
-          # Excluir terraza/ (código fuente Next.js), Estado del Arte/ y otros
-          # directorios de desarrollo que no deben ser accesibles en producción.
-          rm -rf terraza "Estado del Arte" "Ensayo Traducción de Saberes" docs
+          # Promover web/ a raíz: copiar todo lo que esté en web/ (excluido terraza/)
+          # sin sobreescribir archivos que ya existen en raíz.
+          # Esto asegura que páginas como archivo.html, zuboff-archivo.html, etc.
+          # que solo viven en web/ queden disponibles en la raíz del sitio.
+          rsync -av --ignore-existing --exclude='terraza' web/ .
+
+          # Excluir directorios de desarrollo del artefacto público.
+          rm -rf web "Estado del Arte" "Ensayo Traducción de Saberes" docs
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

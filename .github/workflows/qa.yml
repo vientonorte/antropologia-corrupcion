@@ -96,8 +96,18 @@ jobs:
     steps:
       - name: Verificar que todos los gates pasaron
         run: |
-          if [ "${{ needs.tests.result }}" != "success" ]; then
+          # "cancelled" ocurre cuando un push nuevo cancela un run en progreso (concurrency).
+          # No es un fallo real — el run más reciente tiene el resultado definitivo.
+          if [ "${{ needs.tests.result }}" = "failure" ]; then
             echo "❌ QA Gate FAILED — tests fallaron"
+            exit 1
+          fi
+          if [ "${{ needs.tests.result }}" = "cancelled" ]; then
+            echo "⚠️ QA Gate — tests cancelados (run superseded), no es un fallo real"
+            exit 0
+          fi
+          if [ "${{ needs.tests.result }}" != "success" ]; then
+            echo "❌ QA Gate FAILED — tests en estado inesperado: ${{ needs.tests.result }}"
             exit 1
           fi
           if [ "${{ needs.lighthouse.result }}" = "failure" ]; then
