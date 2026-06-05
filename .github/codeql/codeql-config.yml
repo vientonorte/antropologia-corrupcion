@@ -1,0 +1,9 @@
+name: "Contra-Archivo CodeQL config"
+
+paths-ignore:
+  - web/
+  - "Estado del Arte"
+  - "Ensayo Traducción de Saberes"
+  - docs/
+  - scripts/
+  - tests/

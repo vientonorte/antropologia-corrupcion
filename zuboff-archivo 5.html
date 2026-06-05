@@ -836,7 +836,7 @@
             <div class="analyzer-body">
 
                 <div class="api-key-row">
-                    <input type="password" id="apiKeyInput" placeholder="sk-ant-… (solo en memoria, nunca sale del browser)" autocomplete="off">
+                    <input type="password" id="apiKeyInput" placeholder="sk-ant-… (se guarda en localStorage, nunca sale del browser)" autocomplete="off">
                     <button class="btn-secondary" onclick="saveApiKey()" style="flex-shrink:0;">Guardar key</button>
                     <span class="api-key-status" id="apiKeyStatus">Sin key</span>
                 </div>
@@ -1148,31 +1148,6 @@
 
         persistCitations();
 
-        // Seed ATTAC citations from data/attac-citas.json on first visit
-        (function() {
-            if (localStorage.getItem('attacSeedV1')) return;
-            fetch('data/attac-citas.json')
-                .then(function(r) { return r.ok ? r.json() : []; })
-                .then(function(attacData) {
-                    if (!Array.isArray(attacData) || !attacData.length) return;
-                    var ts = new Date().toISOString();
-                    var added = false;
-                    attacData.forEach(function(c) {
-                        if (!citations.some(function(e) { return e.id === c.id; })) {
-                            citations.push(Object.assign({}, c, { timestamp: c.timestamp || ts }));
-                            added = true;
-                        }
-                    });
-                    if (added) {
-                        persistCitations();
-                        renderCitations();
-                        updateStats();
-                    }
-                    localStorage.setItem('attacSeedV1', 'true');
-                })
-                .catch(function() {});
-        }());
-
         function openCaptureModal() {
             document.getElementById('captureModal').classList.add('open');
         }
@@ -1445,8 +1420,6 @@ Notas: Conexión directa con tu experiencia de expulsión a los 15. Lo que perdi
         let currentPhotoBase64 = null;
         let currentPhotoType = null;
         let pendingResults = [];
-        // API key se mantiene solo en memoria — no persiste entre sesiones
-        let _sessionApiKey = '';
 
         function toggleAnalyzer() {
             const section = document.getElementById('analyzerSection');
@@ -1461,9 +1434,9 @@ Notas: Conexión directa con tu experiencia de expulsión a los 15. Lo que perdi
                 setApiKeyStatus('Key inválida (debe empezar con sk-ant-)', false);
                 return;
             }
-            _sessionApiKey = key;
+            localStorage.setItem('anthropicApiKey', key);
             document.getElementById('apiKeyInput').value = '';
-            setApiKeyStatus('Lista para esta sesión ✓', true);
+            setApiKeyStatus('Guardada ✓', true);
             document.getElementById('analyzerSection').classList.add('has-key');
         }
 
@@ -1517,9 +1490,9 @@ Notas: Conexión directa con tu experiencia de expulsión a los 15. Lo que perdi
         }
 
         async function analyzePhoto() {
-            const apiKey = _sessionApiKey;
+            const apiKey = localStorage.getItem('anthropicApiKey');
             if (!apiKey) {
-                setAnalyzeStatus('Ingresa tu API key primero.', 'error');
+                setAnalyzeStatus('Guarda tu API key primero.', 'error');
                 return;
             }
             if (!currentPhotoBase64) {
@@ -1745,9 +1718,9 @@ Responde SOLO con un JSON array válido. Sin texto adicional, sin markdown, sin 
         }
 
         async function analyzeBujo() {
-            const apiKey = _sessionApiKey;
+            const apiKey = localStorage.getItem('anthropicApiKey');
             if (!apiKey) {
-                setBujoStatus('Ingresa tu API key primero.', 'error');
+                setBujoStatus('Guarda tu API key primero.', 'error');
                 return;
             }
             if (!bujoPhotoBase64) {
@@ -1868,7 +1841,11 @@ Responde con estructura Markdown:
             if (file && file.type.startsWith('image/')) loadPhoto(file);
         });
 
-        // No se restaura API key — no se persiste entre sesiones
+        // Restaurar estado de API key al cargar
+        if (localStorage.getItem('anthropicApiKey')) {
+            setApiKeyStatus('Key guardada ✓', true);
+            document.getElementById('analyzerSection').classList.add('has-key');
+        }
     </script>
     <script>
         (function() {
