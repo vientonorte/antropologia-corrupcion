@@ -836,7 +836,7 @@
             <div class="analyzer-body">
 
                 <div class="api-key-row">
-                    <input type="password" id="apiKeyInput" placeholder="sk-ant-… (se guarda en localStorage, nunca sale del browser)" autocomplete="off">
+                    <input type="password" id="apiKeyInput" placeholder="sk-ant-… (solo en memoria, nunca sale del browser)" autocomplete="off">
                     <button class="btn-secondary" onclick="saveApiKey()" style="flex-shrink:0;">Guardar key</button>
                     <span class="api-key-status" id="apiKeyStatus">Sin key</span>
                 </div>
@@ -1445,6 +1445,8 @@ Notas: Conexión directa con tu experiencia de expulsión a los 15. Lo que perdi
         let currentPhotoBase64 = null;
         let currentPhotoType = null;
         let pendingResults = [];
+        // API key se mantiene solo en memoria — no persiste entre sesiones
+        let _sessionApiKey = '';
 
         function toggleAnalyzer() {
             const section = document.getElementById('analyzerSection');
@@ -1459,9 +1461,9 @@ Notas: Conexión directa con tu experiencia de expulsión a los 15. Lo que perdi
                 setApiKeyStatus('Key inválida (debe empezar con sk-ant-)', false);
                 return;
             }
-            localStorage.setItem('anthropicApiKey', key);
+            _sessionApiKey = key;
             document.getElementById('apiKeyInput').value = '';
-            setApiKeyStatus('Guardada ✓', true);
+            setApiKeyStatus('Lista para esta sesión ✓', true);
             document.getElementById('analyzerSection').classList.add('has-key');
         }
 
@@ -1515,9 +1517,9 @@ Notas: Conexión directa con tu experiencia de expulsión a los 15. Lo que perdi
         }
 
         async function analyzePhoto() {
-            const apiKey = localStorage.getItem('anthropicApiKey');
+            const apiKey = _sessionApiKey;
             if (!apiKey) {
-                setAnalyzeStatus('Guarda tu API key primero.', 'error');
+                setAnalyzeStatus('Ingresa tu API key primero.', 'error');
                 return;
             }
             if (!currentPhotoBase64) {
@@ -1743,9 +1745,9 @@ Responde SOLO con un JSON array válido. Sin texto adicional, sin markdown, sin 
         }
 
         async function analyzeBujo() {
-            const apiKey = localStorage.getItem('anthropicApiKey');
+            const apiKey = _sessionApiKey;
             if (!apiKey) {
-                setBujoStatus('Guarda tu API key primero.', 'error');
+                setBujoStatus('Ingresa tu API key primero.', 'error');
                 return;
             }
             if (!bujoPhotoBase64) {
@@ -1866,11 +1868,7 @@ Responde con estructura Markdown:
             if (file && file.type.startsWith('image/')) loadPhoto(file);
         });
 
-        // Restaurar estado de API key al cargar
-        if (localStorage.getItem('anthropicApiKey')) {
-            setApiKeyStatus('Key guardada ✓', true);
-            document.getElementById('analyzerSection').classList.add('has-key');
-        }
+        // No se restaura API key — no se persiste entre sesiones
     </script>
     <script>
         (function() {
