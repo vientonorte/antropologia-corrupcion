@@ -1248,7 +1248,7 @@
                 });
                 var seen = {};
                 var out = [];
-                var maxKeywords = limit || 24;
+                var maxKeywords = limit;
                 for (var i = 0; i < tokens.length; i++) {
                     if (seen[tokens[i]]) continue;
                     seen[tokens[i]] = true;
@@ -1322,16 +1322,17 @@
             }
 
             /* ── Auth Gate ── */
-            function waitFor(check, cb, tries, onTimeout) {
-                tries = tries || 0;
-                if (tries > 60) {
-                    if (onTimeout) onTimeout();
-                    return;
+            function waitFor(check, cb, onTimeout) {
+                var tries = 0;
+                function attempt() {
+                    if (tries++ > 60) {
+                        if (onTimeout) onTimeout();
+                        return;
+                    }
+                    if (check()) return cb();
+                    setTimeout(attempt, 80);
                 }
-                if (check()) return cb();
-                setTimeout(function() {
-                    waitFor(check, cb, tries + 1, onTimeout);
-                }, 80);
+                attempt();
             }
 
             function boot() {
@@ -1803,7 +1804,7 @@
 
                         /* FrictionField ya se crea internamente en FrictionGraph._init()
                            Exponemos la referencia desde graphInstance.field */
-                        fieldInstance = graphInstance.field ? graphInstance.field : null;
+                        fieldInstance = graphInstance.field;
 
                         $('sim-restart').addEventListener('click', function() {
                             if (graphInstance) graphInstance.destroy();
@@ -1844,7 +1845,6 @@
 
                         simInited = true;
                     },
-                    null,
                     function() {
                         container.innerHTML = '<div style="color:var(--crit);padding:20px;text-align:center">Los módulos de simulación no cargaron. Recarga la página (Ctrl+Shift+R).</div>';
                     }
