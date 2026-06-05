@@ -1803,7 +1803,7 @@
 
                         /* FrictionField ya se crea internamente en FrictionGraph._init()
                            Exponemos la referencia desde graphInstance.field */
-                        fieldInstance = graphInstance && graphInstance.field ? graphInstance.field : null;
+                        fieldInstance = graphInstance.field ? graphInstance.field : null;
 
                         $('sim-restart').addEventListener('click', function() {
                             if (graphInstance) graphInstance.destroy();
