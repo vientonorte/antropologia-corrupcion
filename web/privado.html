@@ -1322,7 +1322,7 @@
             }
 
             /* ── Auth Gate ── */
-            function waitFor(check, cb, tries) {
+            function waitFor(check, cb, tries, onTimeout) {
                 tries = tries || 0;
                 if (tries > 60) {
                     if (onTimeout) onTimeout();
