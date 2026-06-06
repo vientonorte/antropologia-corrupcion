@@ -1,7 +1,7 @@
 {
   "ci": {
     "collect": {
-      "url": ["http://localhost:3000/contra-archivo-v2.html", "http://localhost:3000/buscador.html"],
+      "url": ["http://localhost:3000/contra-archivo-v2", "http://localhost:3000/buscador"],
       "numberOfRuns": 1,
       "settings": {
         "chromeFlags": "--headless --no-sandbox --disable-dev-shm-usage --disable-gpu --disable-software-rasterizer",
