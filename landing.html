@@ -10,7 +10,7 @@
     <meta property="og:description" content="Investigación doctoral sobre corrupción en Chile como práctica estructural mediada por mistraducción institucional.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://vientonorte.github.io/antropologia-corrupcion/landing.html">
-    <meta property="og:image" content="https://vientonorte.github.io/antropologia-corrupcion/img/t-tulos-de-merced-distribuci-n-territorial-del-r.jpg">
+    <meta property="og:image" content="https://vientonorte.github.io/antropologia-corrupcion/img/an-lisis-ux-ui-mapeo-de-vulnerabilidades-de-expe.jpg">
     <meta name="theme-color" content="#0c0c0c">
     <link rel="canonical" href="https://vientonorte.github.io/antropologia-corrupcion/landing.html">
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⊘</text></svg>">
@@ -47,22 +47,6 @@
             padding: 64px 24px 48px;
             text-align: center;
             min-height: 60vh;
-            position: relative;
-            overflow: hidden;
-        }
-
-        #hero-canvas {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            opacity: 0.38;
-        }
-
-        .hero > *:not(#hero-canvas) {
-            position: relative;
-            z-index: 1;
         }
 
         .hero-eyebrow {
@@ -442,7 +426,6 @@
     </header>
 
     <main class="hero" id="main-content">
-        <canvas id="hero-canvas" aria-hidden="true"></canvas>
         <p class="hero-eyebrow">Inicio público · Colectivo Viento Norte</p>
         <h1 class="hero-title">¿Quién es?</h1>
         <p class="hero-subtitle">Punto de entrada rápido del Contra-Archivo. Inicia aquí la búsqueda y luego profundiza en Búsqueda Avanzada o Instrumento.</p>
@@ -827,161 +810,6 @@
             s.defer = true;
             document.head.appendChild(s);
         }());
-    </script>
-    <script>
-    (function () {
-        'use strict';
-        var canvas = document.getElementById('hero-canvas');
-        if (!canvas) return;
-        var ctx = canvas.getContext('2d');
-
-        // Top 15 nodes by connections — one per eje for diversity
-        var EJE_COLORS = { 1: '#c92020', 2: '#c97a1a', 3: '#2e7d4f', 4: '#2e62a8' };
-        var NODES = [
-            { id: 'huracán',           eje: 1, c: 8 },
-            { id: 'catrillanca',       eje: 1, c: 7 },
-            { id: 'uioe',              eje: 1, c: 6 },
-            { id: 'estrategia-gaona',  eje: 2, c: 10 },
-            { id: 'tecno-feudalismo',  eje: 2, c: 9 },
-            { id: 'sura-vertical',     eje: 2, c: 8 },
-            { id: 'dl3500',            eje: 2, c: 7 },
-            { id: 'captura-regulatoria', eje: 2, c: 5 },
-            { id: 'titulos-merced',    eje: 3, c: 5 },
-            { id: 'forestales',        eje: 3, c: 6 },
-            { id: 'comunidad-lafkenche', eje: 3, c: 9 },
-            { id: 'convenio-oit169',   eje: 3, c: 9 },
-            { id: 'oit169',            eje: 3, c: 4 },
-            { id: 'colonialidad-poder', eje: 4, c: 5 },
-            { id: 'infrapolítica',     eje: 4, c: 4 }
-        ];
-        var LINKS = [
-            [0,1],[0,2],[1,2],[3,4],[3,5],[4,5],[4,6],[5,6],[6,7],
-            [8,9],[8,11],[9,11],[10,11],[11,12],[10,8],
-            [3,6],[0,3],[8,12],[10,12],[11,1],[4,7],[13,14],[13,3],[14,8]
-        ];
-
-        var W, H, nodes, animId;
-
-        function resize() {
-            W = canvas.offsetWidth;
-            H = canvas.offsetHeight;
-            canvas.width = W * devicePixelRatio;
-            canvas.height = H * devicePixelRatio;
-            ctx.scale(devicePixelRatio, devicePixelRatio);
-        }
-
-        function initNodes() {
-            nodes = NODES.map(function (n, i) {
-                var angle = (i / NODES.length) * Math.PI * 2;
-                var r = Math.min(W, H) * 0.32;
-                return {
-                    x: W / 2 + Math.cos(angle) * r * (0.5 + Math.random() * 0.5),
-                    y: H / 2 + Math.sin(angle) * r * (0.5 + Math.random() * 0.5),
-                    vx: (Math.random() - 0.5) * 0.3,
-                    vy: (Math.random() - 0.5) * 0.3,
-                    r: 3 + n.c * 0.6,
-                    color: EJE_COLORS[n.eje] || '#707070'
-                };
-            });
-        }
-
-        function tick() {
-            var i, j, dx, dy, d, f, ax, ay, na, nb;
-            // repulsion
-            for (i = 0; i < nodes.length; i++) {
-                ax = 0; ay = 0;
-                for (j = 0; j < nodes.length; j++) {
-                    if (i === j) continue;
-                    dx = nodes[i].x - nodes[j].x;
-                    dy = nodes[i].y - nodes[j].y;
-                    d = Math.sqrt(dx * dx + dy * dy) || 1;
-                    f = 800 / (d * d);
-                    ax += dx / d * f;
-                    ay += dy / d * f;
-                }
-                nodes[i].vx += ax * 0.016;
-                nodes[i].vy += ay * 0.016;
-            }
-            // link attraction
-            for (i = 0; i < LINKS.length; i++) {
-                na = nodes[LINKS[i][0]]; nb = nodes[LINKS[i][1]];
-                dx = nb.x - na.x; dy = nb.y - na.y;
-                d = Math.sqrt(dx * dx + dy * dy) || 1;
-                f = (d - 90) * 0.012;
-                na.vx += dx / d * f; na.vy += dy / d * f;
-                nb.vx -= dx / d * f; nb.vy -= dy / d * f;
-            }
-            // center gravity
-            for (i = 0; i < nodes.length; i++) {
-                nodes[i].vx += (W / 2 - nodes[i].x) * 0.0015;
-                nodes[i].vy += (H / 2 - nodes[i].y) * 0.0015;
-                nodes[i].vx *= 0.92;
-                nodes[i].vy *= 0.92;
-                nodes[i].x += nodes[i].vx;
-                nodes[i].y += nodes[i].vy;
-                // clamp to canvas
-                nodes[i].x = Math.max(nodes[i].r, Math.min(W - nodes[i].r, nodes[i].x));
-                nodes[i].y = Math.max(nodes[i].r, Math.min(H - nodes[i].r, nodes[i].y));
-            }
-        }
-
-        function draw() {
-            ctx.clearRect(0, 0, W, H);
-            var i, na, nb, dx, dy, d;
-            // links
-            for (i = 0; i < LINKS.length; i++) {
-                na = nodes[LINKS[i][0]]; nb = nodes[LINKS[i][1]];
-                dx = nb.x - na.x; dy = nb.y - na.y;
-                d = Math.sqrt(dx * dx + dy * dy) || 1;
-                var alpha = Math.max(0.04, 0.22 - d / 900);
-                ctx.beginPath();
-                ctx.moveTo(na.x, na.y);
-                ctx.lineTo(nb.x, nb.y);
-                ctx.strokeStyle = 'rgba(200,169,110,' + alpha + ')';
-                ctx.lineWidth = 0.8;
-                ctx.stroke();
-            }
-            // nodes
-            for (i = 0; i < nodes.length; i++) {
-                ctx.beginPath();
-                ctx.arc(nodes[i].x, nodes[i].y, nodes[i].r, 0, Math.PI * 2);
-                ctx.fillStyle = nodes[i].color;
-                ctx.globalAlpha = 0.75;
-                ctx.fill();
-                ctx.globalAlpha = 1;
-            }
-        }
-
-        function loop() {
-            tick();
-            draw();
-            animId = requestAnimationFrame(loop);
-        }
-
-        function start() {
-            resize();
-            initNodes();
-            if (animId) cancelAnimationFrame(animId);
-            loop();
-        }
-
-        var resizeTimer;
-        window.addEventListener('resize', function () {
-            clearTimeout(resizeTimer);
-            resizeTimer = setTimeout(start, 200);
-        });
-
-        // pause when hero is not visible to save CPU
-        if ('IntersectionObserver' in window) {
-            var obs = new IntersectionObserver(function (entries) {
-                if (entries[0].isIntersecting) { start(); }
-                else { if (animId) cancelAnimationFrame(animId); }
-            }, { threshold: 0.1 });
-            obs.observe(canvas);
-        } else {
-            start();
-        }
-    }());
     </script>
 </body>
 

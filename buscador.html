@@ -10,7 +10,7 @@
     <meta property="og:description" content="Búsqueda avanzada del Contra-Archivo con categorías, filtros y score de fricción para análisis trazable de fuentes oficiales chilenas.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://vientonorte.github.io/antropologia-corrupcion/buscador.html">
-    <meta property="og:image" content="https://vientonorte.github.io/antropologia-corrupcion/img/t-tulos-de-merced-distribuci-n-territorial-del-r.jpg">
+    <meta property="og:image" content="https://vientonorte.github.io/antropologia-corrupcion/img/an-lisis-ux-ui-mapeo-de-vulnerabilidades-de-expe.jpg">
     <meta name="theme-color" content="#0c0c0c">
     <link rel="canonical" href="https://vientonorte.github.io/antropologia-corrupcion/buscador.html">
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⊘</text></svg>">
@@ -772,17 +772,6 @@
                 white-space: normal;
             }
         }
-        .sr-only {
-            position: absolute;
-            width: 1px;
-            height: 1px;
-            padding: 0;
-            margin: -1px;
-            overflow: hidden;
-            clip: rect(0,0,0,0);
-            white-space: nowrap;
-            border: 0;
-        }
     </style>
 </head>
 
@@ -808,7 +797,6 @@
                 <p>Exploración profunda en 5 categorías de fuentes oficiales chilenas. El autosuggest se adapta a la categoría activa para acelerar la trazabilidad.</p>
                 <div class="search-box">
                     <span class="search-icon">⌕</span>
-                    <label for="searchInput" class="sr-only">Buscar en profundidad: registros, actores, instituciones</label>
                     <input type="text" class="search-input" id="searchInput" placeholder="Buscar en profundidad: registros, actores, instituciones…" autocomplete="off">
                     <div class="suggest-list" id="suggestList"></div>
                 </div>
@@ -878,8 +866,7 @@
             <div class="filter-section">
                 <div class="filter-label">Fricción mínima</div>
                 <div class="filter-range-wrap">
-                    <label for="filterFriction" class="sr-only">Fricción mínima</label>
-                    <input type="range" class="filter-range" id="filterFriction" min="0" max="100" value="0" step="1" aria-label="Fricción mínima (0 a 1)">
+                    <input type="range" class="filter-range" id="filterFriction" min="0" max="100" value="0" step="1">
                     <div class="filter-range-val" id="frictionVal">0.00</div>
                 </div>
             </div>
@@ -1484,7 +1471,7 @@
                     
                     var tabs = Array.from($catTabs.querySelectorAll('.cat-tab'));
                     var currentIdx = tabs.indexOf(tab);
-                    var nextIdx = currentIdx;
+                    var nextIdx = -1;
 
                     if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
                         e.preventDefault();
