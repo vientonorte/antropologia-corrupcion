@@ -573,7 +573,7 @@ class FrictionField {
             const alpha = 0.08 * weight;
 
             // Use flat color instead of gradient per-frame (major perf win)
-            ctx.strokeStyle = `rgba(200, 169, 110, ${alpha + 0.04})`;
+            ctx.strokeStyle = CA_TOKENS.rgba('warm', alpha + 0.04);
             ctx.lineWidth = weight * 3;
 
             const nx = -dy / dist;
@@ -611,7 +611,7 @@ class FrictionField {
             ctx.lineTo(mx + Math.cos(angle - 2.5) * arrowSize * 0.6, my + Math.sin(angle - 2.5) * arrowSize * 0.6);
             ctx.closePath();
         }
-        ctx.fillStyle = 'rgba(200, 169, 110, 0.15)';
+        ctx.fillStyle = CA_TOKENS.rgba('warm', 0.15);
         ctx.fill();
     }
 
@@ -656,13 +656,13 @@ class FrictionField {
             // Simple radial fill instead of gradient (no allocation)
             ctx.beginPath();
             ctx.arc(node.x, node.y, r, 0, PI2);
-            ctx.fillStyle = `rgba(200, 169, 110, ${0.04 * energy})`;
+            ctx.fillStyle = CA_TOKENS.rgba('warm', 0.04 * energy);
             ctx.fill();
         }
 
         // Batch all force arrows in one path
         ctx.beginPath();
-        ctx.strokeStyle = 'rgba(200, 169, 110, 0.12)';
+        ctx.strokeStyle = CA_TOKENS.rgba('warm', 0.12);
         ctx.lineWidth = 1;
         for (const node of this.nodes) {
             if (!node.x || !node.y) continue;
@@ -698,14 +698,10 @@ class FrictionField {
 
         // Color basado en tipo de fricción dominante
         switch (node.tipo) {
-            case 'politica':
-                return 'rgba(200, 169, 110, 1)';
-            case 'semantica':
-                return 'rgba(74, 127, 165, 1)';
-            case 'tecnica':
-                return 'rgba(122, 158, 110, 1)';
-            default:
-                return 'rgba(200, 169, 110, 1)';
+            case 'politica':  return CA_TOKENS.rgba('warm', 1);
+            case 'semantica': return CA_TOKENS.rgba('cold', 1);
+            case 'tecnica':   return 'rgba(122, 158, 110, 1)'; // verde territorio — sin token aún
+            default:          return CA_TOKENS.rgba('warm', 1);
         }
     }
 
