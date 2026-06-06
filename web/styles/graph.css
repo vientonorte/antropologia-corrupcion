@@ -1330,8 +1330,13 @@
     .ca-link {
         transition: none !important;
     }
-    .friction-field-canvas {
+    .friction-field-canvas,
+    .social-field-canvas {
         display: none !important;
+    }
+    .sf-status--collapse,
+    .sf-badge-chaos {
+        animation: none !important;
     }
 }
 
@@ -1647,4 +1652,156 @@
     letter-spacing: 0.03em;
     border-top: 1px solid var(--color-border);
     padding-top: 0.6rem;
+}
+
+
+/* ══════════════════════════════════════════════════════
+   CAMPO DE ENTROPÍA SOCIAL (SocialField) — canvas + HUD
+   Portado desde contra-archivo.css para el grafo v2.
+══════════════════════════════════════════════════════ */
+
+/* Canvas térmico sobre el SVG (decorativo, no captura eventos) */
+.social-field-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    pointer-events: none;
+}
+
+/* Panel de métricas termodinámicas (HUD) — esquina inferior izquierda */
+.sf-hud {
+    position: absolute;
+    left: 0.75rem;
+    bottom: 0.75rem;
+    z-index: 4;
+    max-width: min(90%, 560px);
+    padding: 0.6rem 0.85rem;
+    background: rgba(10, 12, 14, 0.78);
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(200, 169, 110, 0.18);
+    border-radius: 6px;
+    pointer-events: none;
+}
+
+.sf-hud:empty {
+    display: none;
+}
+
+.sf-metrics {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.sf-metrics--enhanced {
+    gap: 16px;
+    align-items: flex-start;
+}
+
+.sf-metric {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 90px;
+}
+
+.sf-metric--entropy {
+    flex: 1;
+    min-width: 160px;
+}
+
+.sf-label {
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: rgba(200, 169, 110, 0.5);
+}
+
+.sf-value {
+    font-family: var(--font-mono), "SF Mono", "Fira Code", monospace;
+    font-size: 18px;
+    color: rgba(200, 169, 110, 0.9);
+}
+
+.sf-sub {
+    font-size: 10px;
+    color: rgba(200, 169, 110, 0.35);
+}
+
+.sf-spark {
+    margin-top: 4px;
+}
+
+.sf-phase {
+    display: inline-block;
+    font-size: 8px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 2px 6px;
+    border-radius: 3px;
+    margin-top: 2px;
+    background: rgba(200, 169, 110, 0.08);
+    color: rgba(200, 169, 110, 0.6);
+    border: 1px solid rgba(200, 169, 110, 0.12);
+}
+
+.sf-bar {
+    width: 100%;
+    height: 4px;
+    background: rgba(200, 169, 110, 0.08);
+    border-radius: 2px;
+    overflow: hidden;
+    margin-top: 4px;
+}
+
+.sf-bar__fill {
+    height: 100%;
+    border-radius: 2px;
+    transition: width 0.6s ease, background 0.6s ease;
+}
+
+.sf-metric--logistic .sf-label {
+    font-size: 0.6rem;
+}
+
+.sf-status--stable {
+    color: rgba(120, 180, 200, 0.8);
+}
+
+.sf-status--degraded {
+    color: rgba(200, 169, 110, 0.9);
+}
+
+.sf-status--critical {
+    color: rgba(200, 100, 60, 0.9);
+}
+
+.sf-status--collapse {
+    color: rgba(180, 50, 40, 0.95);
+    animation: sf-pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes sf-pulse {
+    0%,
+    100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+
+@media (max-width: 768px) {
+    .sf-hud {
+        left: 0.5rem;
+        right: 0.5rem;
+        bottom: 0.5rem;
+        max-width: none;
+    }
+    .sf-metrics {
+        gap: 12px;
+    }
 }

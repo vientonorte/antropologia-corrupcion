@@ -18,6 +18,7 @@ const STATE = {
     activeFrictionType: 'all',
     graph: null,
     renderer: null,
+    socialField: null,
     data: null,
 };
 
@@ -40,6 +41,20 @@ async function loadCasos() {
     return resp.json();
 }
 
+// Carga opcional de fuentes-oficiales para pre-semillar la entropía con datos reales.
+// No bloquea el grafo: ante cualquier fallo devuelve [] y la entropía arranca en frío.
+async function loadFuentes() {
+    try {
+        const resp = await fetch(resolveDataPath('fuentes-oficiales.json'));
+        if (!resp.ok) return [];
+        const j = await resp.json();
+        if (Array.isArray(j)) return j;
+        return j.fuentes || j.registros || [];
+    } catch (_) {
+        return [];
+    }
+}
+
 /* ─── BOOTSTRAP ─── */
 
 async function init() {
@@ -56,6 +71,20 @@ async function init() {
         if (window.BlackScholes) {
             window.BlackScholes.enrichNodes(graphData.nodes, json.casos);
         }
+
+        // 2c. Snapshot del dataset para el campo de entropía.
+        //     SocialField hace su propio layout (muta x/y), así que se le pasan
+        //     COPIAS para no corromper el layout de fuerzas del grafo SVG.
+        const fieldNodes = graphData.nodes.map(n => ({
+            id: n.id,
+            tipo: n.tipo,
+            intensidad: n.intensidad,
+        }));
+        const fieldLinks = graphData.links.map(l => ({
+            source: (l.source && l.source.id) || l.source,
+            target: (l.target && l.target.id) || l.target,
+            tipo: l.tipo,
+        }));
 
         // 3. Inyectar estructura del modo grafo en el DOM
         setupGraphDOM();
@@ -87,6 +116,42 @@ async function init() {
                 STATE.graph ?.setActiveLayer(STATE.activeLayer);
             },
         });
+
+        // 5b. Instanciar campo de entropía social (capa térmica + HUD de métricas).
+        //     Enhancement opcional: si el módulo no cargó, el grafo sigue funcionando.
+        if (window.SocialField && container) {
+            const fuentes = await loadFuentes();
+            const hudEl = document.getElementById('ca-sf-hud');
+            const prefersReducedMotion =
+                window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+            STATE.socialField = new window.SocialField({
+                container,
+                nodes: fieldNodes,
+                links: fieldLinks,
+                metricsEl: hudEl,
+                fuentes,
+            });
+
+            // WCAG 2.2 — sin animación bajo prefers-reduced-motion:
+            // pintar las métricas una vez (estado pre-semillado) y pausar el loop.
+            if (prefersReducedMotion) {
+                STATE.socialField._updateMetrics();
+                STATE.socialField.setVisible(false);
+            }
+
+            // Mantener el canvas térmico dimensionado al redimensionar la ventana.
+            let _resizeRaf = null;
+            window.addEventListener('resize', () => {
+                if (_resizeRaf) cancelAnimationFrame(_resizeRaf);
+                _resizeRaf = requestAnimationFrame(() => {
+                    const sf = STATE.socialField;
+                    if (!sf || !container) return;
+                    const rect = container.getBoundingClientRect();
+                    if (rect.width && rect.height) sf.resize(rect.width, rect.height);
+                });
+            });
+        }
 
         // 6. Conectar controles
         setupControls();
@@ -174,6 +239,8 @@ function setupGraphDOM() {
             aria-pressed="true">∇ Líneas</button>
           <button class="ca-field-btn active" data-field="particles"
             aria-pressed="true">⚡ Energía</button>
+          <button class="ca-field-btn active" data-field="entropy"
+            aria-pressed="true">S Entropía</button>
         </div>
       </div>
     </div>
@@ -209,6 +276,11 @@ function setupGraphDOM() {
             <span>Conexión</span>
           </div>
         </aside>
+
+        <!-- HUD de métricas termodinámicas del campo de entropía social -->
+        <div class="sf-hud" id="ca-sf-hud" role="status" aria-live="polite"
+          aria-atomic="false"
+          aria-label="Métricas termodinámicas del campo de entropía social"></div>
       </div>
 
       <!-- Panel de detalle -->
@@ -264,10 +336,21 @@ function setupControls() {
     document.querySelectorAll('.ca-field-btn').forEach(btn => {
         btn.addEventListener('click', () => {
             const graph = STATE.graph;
-            if (!graph ?.field) return;
-
             const action = btn.dataset.field;
             const wasActive = btn.classList.contains('active');
+
+            // Toggle del campo de entropía (independiente del campo de fuerzas)
+            if (action === 'entropy') {
+                const next = !wasActive;
+                btn.classList.toggle('active', next);
+                btn.setAttribute('aria-pressed', next ? 'true' : 'false');
+                STATE.socialField ?.setVisible(next);
+                const hud = document.getElementById('ca-sf-hud');
+                if (hud) hud.style.display = next ? '' : 'none';
+                return;
+            }
+
+            if (!graph ?.field) return;
 
             if (action === 'all') {
                 // Toggle todo el campo
@@ -346,6 +429,17 @@ function activateGraphMode() {
     if (main) main.style.display = 'none';
     if (header) header.style.display = 'none';
     if (nav) nav.style.display = 'none';
+
+    // El contenedor estaba oculto al construir el campo de entropía (tamaño 0 →
+    // defaults). Ahora que es visible, ajustar el canvas térmico al tamaño real.
+    const sf = STATE.socialField;
+    const canvas = document.getElementById('ca-graph-canvas');
+    if (sf && canvas) {
+        requestAnimationFrame(() => {
+            const rect = canvas.getBoundingClientRect();
+            if (rect.width && rect.height) sf.resize(rect.width, rect.height);
+        });
+    }
 
     // Anunciar a lectores de pantalla
     announceToSR('Modo grafo activado. Navegue con Tab y Enter para explorar los casos.');
