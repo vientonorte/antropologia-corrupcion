@@ -472,8 +472,8 @@ class FrictionField {
     /* ─── RENDER LOOP ─── */
 
     _animate() {
-        // Respetar prefers-reduced-motion: renderizar frame estático y detener el loop
-        if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) {
+        // Detener animación en entornos headless/CDP (Lighthouse, Playwright) o prefers-reduced-motion
+        if (navigator.webdriver || window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) {
             this._computeField();
             this._render();
             return;

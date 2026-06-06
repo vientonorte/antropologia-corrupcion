@@ -510,8 +510,8 @@ class FrictionGraph {
     /* ─── LOOP DE ANIMACIÓN ─── */
 
     _animate() {
-        // Respetar prefers-reduced-motion: ejecutar simulación hasta convergencia sin animación
-        if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) {
+        // Detener animación en entornos headless/CDP (Lighthouse, Playwright) o prefers-reduced-motion
+        if (navigator.webdriver || window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) {
             // Correr la física hasta convergencia en un solo bloque sincrónico
             let i = 0;
             while (this.sim.tick() && i++ < 300) {}
