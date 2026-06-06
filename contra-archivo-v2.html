@@ -10,7 +10,7 @@
     <meta property="og:description" content="Etnografía del contra-archivo: represión, tecno-feudalismo, territorio mapuche y resistencia epistémica.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://vientonorte.github.io/antropologia-corrupcion/contra-archivo-v2.html">
-    <meta property="og:image" content="https://vientonorte.github.io/antropologia-corrupcion/img/t-tulos-de-merced-distribuci-n-territorial-del-r.jpg">
+    <meta property="og:image" content="https://vientonorte.github.io/antropologia-corrupcion/img/an-lisis-ux-ui-mapeo-de-vulnerabilidades-de-expe.jpg">
     <link rel="canonical" href="https://vientonorte.github.io/antropologia-corrupcion/contra-archivo-v2.html">
     <meta name="theme-color" content="#060608">
     <link rel="manifest" href="manifest.json">
@@ -40,10 +40,6 @@
             --text-muted: #8a8a8a;
             --border: #242424;
             --accent: var(--red);
-            /* aliases used in inline styles */
-            --paper: var(--surface-alt);
-            --line: var(--border);
-            --muted: var(--text-muted);
         }
         
         body {
@@ -1246,248 +1242,6 @@
             border-color: #b464c8;
             color: #b464c8;
         }
-        
-        /* ═══════════════════════════════════════════════════════════════════ */
-        /* ═══ ANIMATIONS & TRANSITIONS ═══ */
-        /* ═══════════════════════════════════════════════════════════════════ */
-        
-        /* Keyframe Animations */
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        @keyframes fadeInLeft {
-            from {
-                opacity: 0;
-                transform: translateX(-40px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-        
-        @keyframes fadeInRight {
-            from {
-                opacity: 0;
-                transform: translateX(40px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-        
-        @keyframes scaleIn {
-            from {
-                opacity: 0;
-                transform: scale(0.9);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-        
-        @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        @keyframes pulse {
-            0%, 100% {
-                box-shadow: 0 0 0 0 rgba(201, 32, 32, 0.7);
-            }
-            50% {
-                box-shadow: 0 0 0 10px rgba(201, 32, 32, 0);
-            }
-        }
-        
-        @keyframes glow {
-            from {
-                box-shadow: 0 0 5px rgba(201, 32, 32, 0.5);
-            }
-            to {
-                box-shadow: 0 0 20px rgba(201, 32, 32, 0.8), 0 0 30px rgba(201, 32, 32, 0.6);
-            }
-        }
-        
-        /* Animation Classes */
-        .animate-on-scroll {
-            opacity: 0;
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-        }
-        
-        .animate-on-scroll.animated {
-            opacity: 1;
-        }
-        
-        .fade-in {
-            animation: fadeIn 0.8s ease-out forwards;
-        }
-        
-        .fade-in-left {
-            animation: fadeInLeft 0.8s ease-out forwards;
-        }
-        
-        .fade-in-right {
-            animation: fadeInRight 0.8s ease-out forwards;
-        }
-        
-        .scale-in {
-            animation: scaleIn 0.6s ease-out forwards;
-        }
-        
-        .slide-down {
-            animation: slideDown 0.5s ease-out forwards;
-        }
-        
-        /* Staggered Animation Delays */
-        .stagger-1 { animation-delay: 0.1s; }
-        .stagger-2 { animation-delay: 0.2s; }
-        .stagger-3 { animation-delay: 0.3s; }
-        .stagger-4 { animation-delay: 0.4s; }
-        .stagger-5 { animation-delay: 0.5s; }
-        .stagger-6 { animation-delay: 0.6s; }
-        
-        /* Enhanced Hover States */
-        .doc-card {
-            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-        }
-        
-        .doc-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-            border-color: var(--accent);
-        }
-        
-        .mode-btn,
-        .util-btn,
-        .eje-filter,
-        .retry-btn {
-            transform: translateZ(0);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        
-        .mode-btn:hover,
-        .util-btn:hover,
-        .eje-filter:hover {
-            transform: translateY(-2px);
-        }
-        
-        .mode-btn:active,
-        .util-btn:active,
-        .eje-filter:active {
-            transform: translateY(0);
-        }
-        
-        /* Image Lazy Load Animation */
-        .ev-fig img {
-            opacity: 0;
-            transition: opacity 0.6s ease-in-out;
-        }
-        
-        .ev-fig img.loaded {
-            opacity: 1;
-        }
-        
-        /* Section Headers with Parallax Effect */
-        .sec-h {
-            transition: transform 0.15s ease-out;
-        }
-        
-        /* Details Element Animation */
-        details[open] > summary {
-            transition: all 0.3s ease;
-        }
-        
-        details > .inner {
-            animation: slideDown 0.4s ease-out;
-        }
-        
-        /* Tag Animation */
-        .tag {
-            display: inline-block;
-            transition: transform 0.3s ease, background 0.3s ease;
-        }
-        
-        .tag:hover {
-            transform: scale(1.05);
-        }
-        
-        /* Smooth Scrolling Enhancement - respects prefers-reduced-motion */
-        @media (prefers-reduced-motion: no-preference) {
-            html {
-                scroll-behavior: smooth;
-            }
-        }
-        
-        /* Progress Bar Animation */
-        #reading-progress {
-            transition: width 0.15s linear, opacity 0.3s ease;
-        }
-        
-        /* Panel Slide Animation */
-        #panel-wrap {
-            transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        
-        #panel-wrap.open {
-            animation: slideInRight 0.4s ease-out;
-        }
-        
-        @keyframes slideInRight {
-            from {
-                right: -100%;
-            }
-            to {
-                right: 0;
-            }
-        }
-        
-        /* Nav Links Mobile Animation */
-        .nav-links {
-            transition: transform 0.3s ease, opacity 0.3s ease;
-        }
-        
-        /* Return to Top Button */
-        #return-to-top {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        
-        #return-to-top:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 6px 20px rgba(201, 32, 32, 0.4);
-            animation: glow 1.5s ease-in-out infinite alternate;
-        }
-        
-        #return-to-top:active {
-            transform: translateY(-2px);
-        }
-        
-        /* Retry Button Pulse */
-        .retry-btn:hover {
-            animation: pulse 2s infinite;
-        }
-        
-        /* Panel Close Button Enhancement */
-        .panel-close:hover {
-            transform: rotate(90deg);
-        }
-        
         /* Print styles */
         
         @media print {
@@ -1517,23 +1271,6 @@
                 transition-duration: 0.01ms !important;
                 scroll-behavior: auto !important;
             }
-        }
-        /* Evidence figure placeholders — redacted documents */
-        .ev-fig--placeholder {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 160px;
-            background: var(--surface);
-            border: 1px dashed var(--border);
-            margin: 0;
-        }
-        .ev-fig--placeholder figcaption {
-            color: var(--text-muted);
-            font-size: 0.75rem;
-            font-style: italic;
-            text-align: center;
-            padding: 1rem;
         }
     </style>
     <!-- Graph system — progressive enhancement -->
@@ -1606,17 +1343,17 @@
                     destruida deliberadamente. Ann Laura Stoler (<em>Along the Archival Grain</em>) llama a esto 'destrucción archival': el Estado no solo produce terror sino que elimina los registros de su producción.</p>
                 <p class="sec-p">Wallmapu es el 'espacio de muerte' contemporáneo de Chile (Taussig): un territorio donde la Ley 18.314 (Ley Antiterrorista, heredada de la dictadura) suspende garantías constitucionales. Su aplicación es selectiva — casi exclusivamente
                     contra comunidades mapuche, nunca contra actores empresariales o forestales — revelando su función real: proteger la extracción, no combatir el terrorismo.</p>
-                <figure class="ev-fig">
-                    <img src="img/reconstrucci-n-de-los-hechos-infograf-a-de-inves.jpg" alt="Reconstrucción de los hechos — Infografía de investigación periodística, 2018" loading="lazy" onerror="this.style.background='#1a1a2e';this.style.minHeight='200px';this.alt='Imagen no disponible'">
-                    <figcaption>Reconstrucción de los hechos — Infografía de investigación periodística, 2018</figcaption>
+                <figure class="ev-fig ">
+                    <img src="img/reconstrucci-n-de-los-hechos-infograf-a-de-inves.jpg" alt="Reconstrucción de los hechos — Infografía de investigación, Negra Colorá 2018" loading="lazy" onerror="this.style.background='#1a1a2e';this.style.minHeight='200px';this.alt='Imagen no disponible'">
+                    <figcaption>Reconstrucción de los hechos — Infografía de investigación, Negra Colorá 2018</figcaption>
                 </figure>
 
                 <p class="sec-p">Este eje rastrea el aparato de seguridad del Estado chileno en su dimensión represiva: desde la estructura de inteligencia de Carabineros hasta el asesinato de Camilo Catrillanca en noviembre de 2018, pasando por el rol de la Agencia Nacional
                     de Inteligencia (ANI) y las operaciones de contrainsurgencia en Wallmapu.</p>
 
-                <figure class="ev-fig">
-                    <img src="img/caso-catrillanca-infograf-a-de-investigaci-n-ne.jpg" alt="Caso Catrillanca — Infografía de investigación periodística, 2018" loading="lazy" onerror="this.style.background='#1a1a2e';this.style.minHeight='200px';this.alt='Imagen no disponible'">
-                    <figcaption>Caso Catrillanca — Infografía de investigación periodística, 2018</figcaption>
+                <figure class="ev-fig ">
+                    <img src="img/caso-catrillanca-infograf-a-de-investigaci-n-ne.jpg" alt="Caso Catrillanca — Infografía de investigación, Negra Colorá 2018" loading="lazy" onerror="this.style.background='#1a1a2e';this.style.minHeight='200px';this.alt='Imagen no disponible'">
+                    <figcaption>Caso Catrillanca — Infografía de investigación, Negra Colorá 2018</figcaption>
                 </figure>
 
                 <details class="sec-detail">
@@ -1624,9 +1361,9 @@
                     <div class="inner">
                         <p>El Comando Jungla fue una unidad especial de Carabineros entrenada en Colombia para operaciones de contrainsurgencia. Fue desplegada en Wallmapu como parte de la estrategia de militarización del territorio. El 14 de noviembre de
                             2018, un miembro del Comando Jungla disparó contra Camilo Catrillanca en Temucuicui. Las cámaras GoPro corporales filmaron el operativo; los carabineros destruyeron la tarjeta de memoria.</p>
-                        <figure class="ev-fig">
-                            <img src="img/investigaci-n-sobre-comando-jungla-negra-color.jpg" alt="Investigación sobre Comando Jungla — Periodismo de investigación, diciembre 2018" loading="lazy" onerror="this.style.background='#1a1a2e';this.style.minHeight='200px';this.alt='Imagen no disponible'">
-                            <figcaption>Investigación sobre Comando Jungla — Periodismo de investigación, diciembre 2018</figcaption>
+                        <figure class="ev-fig ">
+                            <img src="img/investigaci-n-sobre-comando-jungla-negra-color.jpg" alt="Investigación sobre Comando Jungla — Negra Colorá, diciembre 2018" loading="lazy" onerror="this.style.background='#1a1a2e';this.style.minHeight='200px';this.alt='Imagen no disponible'">
+                            <figcaption>Investigación sobre Comando Jungla — Negra Colorá, diciembre 2018</figcaption>
                         </figure>
                     </div>
                 </details>
@@ -1636,9 +1373,9 @@
                     <div class="inner">
                         <p>El Lof Ñanco como caso de estudio de resistencia comunitaria frente a la expansión forestal y la militarización. Documentación de la articulación entre demandas territoriales basadas en Títulos de Merced y la defensa ante operativos
                             de seguridad.</p>
-                        <figure class="ev-fig">
-                            <img src="img/lof-anco-infograf-a-de-investigaci-n-negra-col.jpg" alt="Lof Ñanco — Infografía de investigación periodística" loading="lazy" onerror="this.style.background='#1a1a2e';this.style.minHeight='200px';this.alt='Imagen no disponible'">
-                            <figcaption>Lof Ñanco — Infografía de investigación periodística</figcaption>
+                        <figure class="ev-fig ">
+                            <img src="img/lof-anco-infograf-a-de-investigaci-n-negra-col.jpg" alt="Lof Ñanco — Infografía de investigación, Negra Colorá" loading="lazy" onerror="this.style.background='#1a1a2e';this.style.minHeight='200px';this.alt='Imagen no disponible'">
+                            <figcaption>Lof Ñanco — Infografía de investigación, Negra Colorá</figcaption>
                         </figure>
                     </div>
                 </details>
@@ -1655,26 +1392,28 @@
                 <h2 class="sec-h">Etnografía del tecno-feudalismo previsional</h2>
                 <p class="sec-p">En 2023, una investigadora fue contratada por un conglomerado financiero multinacional con operaciones previsionales en Chile. Desde esa posición, realizó una etnografía crítica del sistema financiero — lo que James Scott llamaría <strong>infrapolítica</strong>:
                     resistencia que opera bajo la superficie visible del poder.</p>
-                <p class="sec-p">Lo que documentó: la migración de datos previsionales entre líneas de negocio del conglomerado se ejecutó sin consentimiento explícito de millones de cotizantes. La arquitectura de datos interna — una tabla maestra unificada que vincula AFP, inversiones y seguros mediante un campo de control binario — hace ficticia la separación mandatada por la reforma previsional 2022. Una fuente técnica interna (2025) confirmó: <em>'El prioritario lo hereda de la tabla primaria'</em> — confesión técnica de que la separación es formal pero no operativa.</p>
-                <p class="sec-p">El mecanismo del tecno-feudalismo previsional opera en <strong>5 fases</strong>: Captura de la obligatoriedad (DL 3.500) → Integración de datos (arquitectura unificada) → Extracción de renta informacional (targeting, perfilamiento) → Dependencia
+                <p class="sec-p">Lo que documentó: la migración de datos previsionales se ejecutó sin consentimiento explícito de millones de cotizantes. La arquitectura de datos interna hace ficticia la separación entre líneas de negocio mandatada por la reforma previsional 2022. Una fuente técnica interna confirmó: <em>'El prioritario lo hereda de la tabla primaria'</em> — confesión técnica de que la separación es formal pero no operativa.</p>
+                <p class="sec-p">El mecanismo del tecno-feudalismo previsional opera en <strong>5 fases</strong>: Captura de la obligatoriedad (DL 3.500) → Integración de datos (tabla Persona Natural) → Extracción de renta informacional (targeting, perfilamiento) → Dependencia
                     técnica irreversible (portabilidad imposible) → Imposición de renta digital (comisiones sobre cliente cautivo). Marx: 'No es el obrero quien emplea los medios de producción, sino los medios de producción los que emplean al obrero.'</p>
-                <p class="sec-p">Varoufakis: el conglomerado opera como un 'señor feudal digital' — extrae renta del acceso obligatorio. Salazar: la 'acumulación aberrante' transferida al capital financiero. Dussel: la 'lógica vampírica'. Gramsci: la hegemonía cultural naturaliza todo esto
+                <p class="sec-p">Varoufakis: SURA es un 'señor feudal digital' — extrae renta del acceso obligatorio. Salazar: la 'acumulación aberrante' transferida al capital financiero. Dussel: la 'lógica vampírica'. Gramsci: la hegemonía cultural naturaliza todo esto
                     como 'innovación financiera'.</p>
-                <p class="sec-p">Mientras tanto, la infraestructura digital opera con software obsoleto (más de 7 años sin actualizar), sin protecciones básicas contra ataques web conocidos, con vulnerabilidades sin parchear por más de 2 años — fragilidad técnica que refleja fragilidad de gobernanza. Tres reguladores en silos (CMF, SPP, Agencia de
-                    Datos) — y el conglomerado opera en el vacío entre ellos.</p>
-                <figure class="ev-fig ev-fig--placeholder">
-                    <figcaption>Captura de evidencia: bases de datos SURA — retirada por protocolo ético (datos personales identificables)</figcaption>
+                <p class="sec-p">Mientras tanto, la infraestructura digital opera con software obsoleto (más de 7 años sin actualizar), sin protecciones básicas contra ataques web conocidos, con vulnerabilidades sin parchear por más de 2 años — fragilidad técnica que refleja fragilidad de gobernanza. Tres reguladores en silos (CMF, SPP, Agencia de Datos) — y el conglomerado opera en el vacío entre ellos.</p>
+                <figure class="ev-fig ">
+                    <img src="img/captura-de-evidencia-bases-de-datos-de-sura-inves.jpg" alt="Captura de evidencia: bases de datos de SURA Investments — estructura de integración vertical" loading="lazy" onerror="this.style.background='#1a1a2e';this.style.minHeight='200px';this.alt='Imagen no disponible'">
+                    <figcaption>Captura de evidencia: bases de datos de SURA Investments — estructura de integración vertical</figcaption>
                 </figure>
 
                 <p class="sec-p">Lo que encontró fue un mecanismo de tecno-feudalismo en cinco fases: <strong>Obligatoriedad</strong> (cotización forzada a AFP desde 1981) → <strong>Integración</strong> (datos de AFP migrados a SURA Investments sin consentimiento) → <strong>Extracción</strong>                    (análisis comportamental, targeting, monetización de datos) → <strong>Dependencia</strong> (portabilidad técnicamente imposible por entrelazamiento de subtablas) → <strong>Imposición de renta</strong> (comisiones cobradas a clientes
                     que nunca eligieron ser clientes).</p>
 
                 <div class="ev-grid">
-                    <figure class="ev-fig ev-fig--placeholder">
-                        <figcaption>Esquema de integración vertical — retirado por protocolo ético (documento interno confidencial)</figcaption>
+                    <figure class="ev-fig ">
+                        <img src="img/bases-de-datos-sura-investments-integraci-n-vert.jpg" alt="Bases de datos SURA Investments — integración vertical de líneas de negocio" loading="lazy" onerror="this.style.background='#1a1a2e';this.style.minHeight='200px';this.alt='Imagen no disponible'">
+                        <figcaption>Bases de datos SURA Investments — integración vertical de líneas de negocio</figcaption>
                     </figure>
-                    <figure class="ev-fig ev-fig--placeholder">
-                        <figcaption>Replicación multipaís — datos de cuentas protegidos</figcaption>
+                    <figure class="ev-fig ">
+                        <img src="img/replicaci-n-multipa-s-cuentas-chile-per-colo.jpg" alt="Replicación multipaís: cuentas Chile → Perú → Colombia" loading="lazy" onerror="this.style.background='#1a1a2e';this.style.minHeight='200px';this.alt='Imagen no disponible'">
+                        <figcaption>Replicación multipaís: cuentas Chile → Perú → Colombia</figcaption>
                     </figure>
                 </div>
 
@@ -1682,8 +1421,9 @@
                     <summary>Arquitectura de datos: la tabla "Persona Natural"</summary>
                     <div class="inner">
                         <p>La arquitectura de datos interna vincula todas las líneas de negocio mediante una tabla maestra unificada. Un campo de control binario determina la dirección prioritaria entre líneas. El sistema de herencia automática de prioridades hace que la separación mandatada por la reforma 2022 sea formalmente legal pero operativamente ficticia.</p>
-                        <figure class="ev-fig ev-fig--placeholder">
-                            <figcaption>Captura documental — datos previsionales personales protegidos</figcaption>
+                        <figure class="ev-fig ">
+                            <img src="img/evidencia-datos-de-ficha-previsional-integrados-c.jpg" alt="Evidencia: datos de ficha previsional integrados con mandato AFP en plataforma SURA" loading="lazy" onerror="this.style.background='#1a1a2e';this.style.minHeight='200px';this.alt='Imagen no disponible'">
+                            <figcaption>Evidencia: datos de ficha previsional integrados con mandato AFP en plataforma SURA</figcaption>
                         </figure>
                     </div>
                 </details>
@@ -1694,22 +1434,25 @@
                         <p>El Documento de Especificación de Iniciativas (DEI) fue mantenido deliberadamente desactualizado, omitiendo los nuevos flujos de datos que el equipo UX estaba diseñando. La investigadora lo señaló formalmente. Los procesos críticos
                             de protección de datos — consentimiento, revocación de mandatos, portabilidad — fueron implementados de forma incompleta.</p>
                         <div class="ev-grid">
-                            <figure class="ev-fig ev-fig--placeholder">
-                                <figcaption>Documento interno DEI — retirado por protocolo ético (documento corporativo confidencial)</figcaption>
+                            <figure class="ev-fig ">
+                                <img src="img/evidencia-as-is-desactualizado-del-dei-document.jpg" alt="Evidencia: AS IS desactualizado del DEI — documentación mantenida intencionalmente incompleta" loading="lazy" onerror="this.style.background='#1a1a2e';this.style.minHeight='200px';this.alt='Imagen no disponible'">
+                                <figcaption>Evidencia: AS IS desactualizado del DEI — documentación mantenida intencionalmente incompleta</figcaption>
                             </figure>
-                            <figure class="ev-fig ev-fig--placeholder">
-                                <figcaption>Correo interno — remitente y destinatarios protegidos</figcaption>
+                            <figure class="ev-fig ">
+                                <img src="img/evidencia-correo-documentando-as-is-to-be-mal-i.jpg" alt="Evidencia: correo documentando AS IS / TO BE mal implementado" loading="lazy" onerror="this.style.background='#1a1a2e';this.style.minHeight='200px';this.alt='Imagen no disponible'">
+                                <figcaption>Evidencia: correo documentando AS IS / TO BE mal implementado</figcaption>
                             </figure>
                         </div>
                     </div>
                 </details>
 
                 <details class="sec-detail">
-                    <summary>La pregunta sin respuesta: cuestionamiento al equipo técnico interno</summary>
+                    <summary>La pregunta sin respuesta: cuestionamiento a arquitectura de datos</summary>
                     <div class="inner">
                         <p>La investigadora dirigió una pregunta formal al equipo técnico responsable: ¿Por qué los datos de ficha previsional siguen siendo obligatorios si se supone que están separados? La respuesta nunca fue documentada.</p>
-                        <figure class="ev-fig ev-fig--placeholder">
-                            <figcaption>Comunicación interna — participantes protegidos</figcaption>
+                        <figure class="ev-fig ">
+                            <img src="img/captura-pregunta-dirigida-a-arquitectura-sura-y-e.jpg" alt="Captura: pregunta dirigida a equipo técnico interno — sin respuesta registrada" loading="lazy" onerror="this.style.background='#1a1a2e';this.style.minHeight='200px';this.alt='Imagen no disponible'">
+                            <figcaption>Captura: pregunta dirigida a equipo técnico interno — sin respuesta registrada</figcaption>
                         </figure>
                     </div>
                 </details>
@@ -1719,8 +1462,9 @@
                     <div class="inner">
                         <p>FONDO DE INVERSIÓN SARTOR TÁCTICO (Sartor AGF S.A., RUT 76.576.607-9) — ejemplo de la integración vertical entre AFP, fondos de inversión y la estructura SURA. CMF, SPP y Agencia de Protección de Datos operan en silos sin coordinación.
                             Cada regulador supervisa un aspecto, pero ninguno audita la arquitectura integral.</p>
-                        <figure class="ev-fig ev-fig--placeholder">
-                            <figcaption>Fondo SARTOR — captura retirada; dato estructural documentado en FECU CMF pública</figcaption>
+                        <figure class="ev-fig ">
+                            <img src="img/evidencia-fondo-de-inversi-n-sartor-t-ctico-ide.jpg" alt="Evidencia: Fondo de Inversión SARTOR Táctico — identificación CMF" loading="lazy" onerror="this.style.background='#1a1a2e';this.style.minHeight='200px';this.alt='Imagen no disponible'">
+                            <figcaption>Evidencia: Fondo de Inversión SARTOR Táctico — identificación CMF</figcaption>
                         </figure>
                     </div>
                 </details>
@@ -1731,11 +1475,13 @@
                         <p>La investigadora produjo artefactos UX que funcionan simultáneamente como documentación técnica y como acto político: rediseño de flujos eliminando dependencias sin consentimiento, mini fichas previsionales con trazabilidad, matrices
                             de intervención normativa.</p>
                         <div class="ev-grid">
-                            <figure class="ev-fig ev-fig--placeholder">
-                                <figcaption>Análisis UX/UI — retirado por protocolo ético (artefacto corporativo interno)</figcaption>
+                            <figure class="ev-fig ">
+                                <img src="img/an-lisis-ux-ui-mapeo-de-vulnerabilidades-de-expe.jpg" alt="Análisis UX/UI — mapeo de vulnerabilidades de experiencia en plataforma SURA" loading="lazy" onerror="this.style.background='#1a1a2e';this.style.minHeight='200px';this.alt='Imagen no disponible'">
+                                <figcaption>Análisis UX/UI — mapeo de vulnerabilidades de experiencia en plataforma SURA</figcaption>
                             </figure>
-                            <figure class="ev-fig ev-fig--placeholder">
-                                <figcaption>Flujo CMA — retirado por protocolo ético (artefacto corporativo interno)</figcaption>
+                            <figure class="ev-fig ">
+                                <img src="img/cma-flujo-iterado-criterios-m-nimos-de-aceptaci.jpg" alt="CMA Flujo iterado — criterios mínimos de aceptación para protección de datos" loading="lazy" onerror="this.style.background='#1a1a2e';this.style.minHeight='200px';this.alt='Imagen no disponible'">
+                                <figcaption>CMA Flujo iterado — criterios mínimos de aceptación para protección de datos</figcaption>
                             </figure>
                         </div>
                     </div>
@@ -1757,23 +1503,23 @@
                     del DL 3.500 → AFP Capital → fondo de inversión → acciones CMPC/Arauco → monocultivo en Wallmapu. Salazar: 'acumulación por desposesión' operando como circuito financiero-territorial.</p>
                 <p class="sec-p">Mientras tanto, la Ley Antiterrorista (Eje I) criminaliza a quienes resisten. Tres ejes convergiendo: el capital despoja, la seguridad protege la desposesión, la ley criminaliza la resistencia. Mignolo: la modernidad es inseparable de
                     la colonialidad.</p>
-                <figure class="ev-fig">
+                <figure class="ev-fig ">
                     <img src="img/t-tulos-de-merced-distribuci-n-territorial-del-r.jpg" alt="Títulos de Merced — distribución territorial del reconocimiento/reducción mapuche" loading="lazy" onerror="this.style.background='#1a1a2e';this.style.minHeight='200px';this.alt='Imagen no disponible'">
                     <figcaption>Títulos de Merced — distribución territorial del reconocimiento/reducción mapuche</figcaption>
                 </figure>
 
                 <div class="ev-grid">
-                    <figure class="ev-fig">
+                    <figure class="ev-fig ">
                         <img src="img/t-tulos-de-merced-otorgados-entre-1884-y-1929-ma.jpg" alt="Títulos de Merced otorgados entre 1884 y 1929 — mapeo histórico" loading="lazy" onerror="this.style.background='#1a1a2e';this.style.minHeight='200px';this.alt='Imagen no disponible'">
                         <figcaption>Títulos de Merced otorgados entre 1884 y 1929 — mapeo histórico</figcaption>
                     </figure>
-                    <figure class="ev-fig">
+                    <figure class="ev-fig ">
                         <img src="img/t-tulos-de-merced-en-arauco-y-biob-o.jpg" alt="Títulos de Merced en Arauco y Biobío" loading="lazy" onerror="this.style.background='#1a1a2e';this.style.minHeight='200px';this.alt='Imagen no disponible'">
                         <figcaption>Títulos de Merced en Arauco y Biobío</figcaption>
                     </figure>
                 </div>
 
-                <figure class="ev-fig">
+                <figure class="ev-fig ">
                     <img src="img/hect-reas-forestales-expansi-n-de-la-industria-s.jpg" alt="Hectáreas forestales — expansión de la industria sobre territorio mapuche" loading="lazy" onerror="this.style.background='#1a1a2e';this.style.minHeight='200px';this.alt='Imagen no disponible'">
                     <figcaption>Hectáreas forestales — expansión de la industria sobre territorio mapuche</figcaption>
                 </figure>
@@ -1783,7 +1529,7 @@
                     <div class="inner">
                         <p>El Convenio 169 de la OIT (1989, ratificado por Chile en 2008) establece obligaciones de consulta previa y consentimiento libre e informado. Su aplicación ha sido sistemáticamente incompleta, especialmente en conflictos con la
                             industria forestal en Wallmapu.</p>
-                        <figure class="ev-fig">
+                        <figure class="ev-fig ">
                             <img src="img/desglose-de-derechos-consagrados-por-el-oit-169.jpg" alt="Desglose de derechos consagrados por el OIT 169 — VN" loading="lazy" onerror="this.style.background='#1a1a2e';this.style.minHeight='200px';this.alt='Imagen no disponible'">
                             <figcaption>Desglose de derechos consagrados por el OIT 169 — VN</figcaption>
                         </figure>
@@ -1813,7 +1559,8 @@
                     operando simultáneamente. <strong>Mignolo</strong>: la modernidad es inseparable de la colonialidad. <strong>Walsh</strong>: no incluir lo excluido sino cuestionar el sistema.</p>
                 <p class="sec-p"><strong>Fanon</strong>: la violencia del colonizado es respuesta a la violencia del colonizador — la resistencia mapuche es respuesta a 142 años de despojo. <strong>Freire</strong>: la consciencia crítica es la primera liberación — este
                     contra-archivo es herramienta pedagógica. <strong>Butler</strong>: ¿quién cuenta como vida digna de duelo? Catrillanca fue asesinado y su GoPro destruida — el Estado decidió que su vida no era 'llorable'.</p>
-                <p class="sec-p"><strong>Scott</strong>: la infrapolítica — resistencia bajo la superficie. La Estrategia VN es infrapolítica: documentos que parecen 'estrategia corporativa' pero contienen crítica radical. El periodismo de investigación anónimo es infrapolítica: trabajo que circula donde el nombre propio generaría represalias.</p>
+                <p class="sec-p"><strong>Scott</strong>: la infrapolítica — resistencia bajo la superficie. La Estrategia VN es infrapolítica: documentos que parecen 'estrategia corporativa' pero contienen crítica radical. Negra Colorá es infrapolítica: periodismo anónimo
+                    que circula donde el nombre propio generaría represalias.</p>
                 <p class="sec-p"><strong>Taussig</strong>: el Estado gobierna produciendo incertidumbre epistémica. <strong>Stoler</strong>: la etnografía del archivo lee al poder contra sí mismo. La Estrategia VN opera en la intersección: lee los archivos de SURA contra
                     SURA, y los de Carabineros contra Carabineros.</p>
                 <p class="sec-p">Las <strong>tres fases de la etnografía insurgente</strong>: Fase 1 — Infiltración documentada (sept 2023 – jun 2024). Fase 2 — Crítica desde adentro (jul – dic 2024). Fase 3 — Compilación de contraarquivo (ene 2025 – mar 2026): tesis
@@ -1821,7 +1568,7 @@
                 <details class="sec-detail">
                     <summary>Tres fases de la etnografía insurgente</summary>
                     <div class="inner">
-                        <p><strong>Fase 1 — Infiltración documentada:</strong> Ingreso legítimo al conglomerado. Acceso a documentación interna, reuniones de arquitectura, sistemas de datos. Documentación sistemática.</p>
+                        <p><strong>Fase 1 — Infiltración documentada (sept 2023 – jun 2024):</strong> Ingreso legítimo a SURA. Acceso a documentación interna, reuniones de arquitectura, sistemas de datos. Documentación sistemática.</p>
                         <p><strong>Fase 2 — Crítica desde adentro (jul – dic 2024):</strong> Documentos institucionales que contienen crítica implícita. Cuestionamiento en reuniones técnicas. Trail de evidencia.</p>
                         <p><strong>Fase 3 — Compilación del contraarquivo (ene 2025 – mar 2026):</strong> Tesis con marco teórico crítico (Marx, Dussel, Salazar, Varoufakis, Gramsci). Dossiers que son simultáneamente documentación corporativa y acusación
                             política.
@@ -2210,7 +1957,7 @@
             "connections": 8,
             "span": 13,
             "body": "<p>Grupo SURA (Suramericana S.A., Colombia) controla integradamente: AFP Capital (renombrada AFP UNO post-reforma 2025), SURA Investments (wealth management), SURA Seguros, y Fondos de Inversión (ej. SARTOR Táctico, Sartor AGF S.A., RUT 76.576.607-9). En 2013: USD $145 mil millones en ahorros previsionales. La estructura vertical permite: capturar datos de millones de cotizantes obligatorios (AFP), canalizarlos hacia inversión privada, monetizar información, e imponer plataforma integral donde usuarios quedan capturados.</p>",
-            "why": "<p>Varoufakis: el conglomerado opera como un 'señor feudal digital' — extrae renta del acceso obligatorio como el señor medieval extraía diezmo. Gramsci: la hegemonía se mantiene no solo por coerción sino por consenso. El grupo naturaliza la integración como 'eficiencia' e 'innovación'. El equipo técnico funciona como <strong>intelectual orgánico</strong> que naturaliza la integración como 'inevitable'. El investigador funciona como <strong>intelectual contraorgánico</strong>.</p>",
+            "why": "<p>Varoufakis: SURA es un 'señor feudal digital' — extrae renta del acceso obligatorio como el señor medieval extraía diezmo. Gramsci: la hegemonía se mantiene no solo por coerción sino por consenso. SURA naturaliza la integración como 'eficiencia' e 'innovación'. Los arquitectos TI funcionan como <strong>intelectuales orgánicos</strong> que naturalizan la integración como 'inevitable'. El investigador funciona como <strong>intelectual contraorgánico</strong>.</p>",
             "proves": "<p>Evidencia visual: 'bases de datos sura investments.png' muestra la arquitectura. 'SARTOR.png' documenta la conexión con fondos. Las transcripciones de reuniones revelan integración operativa real. La carta oferta documenta la posición etnográfica.</p>"
         }, {
             "id": "estrategia-gaona",
@@ -2219,7 +1966,7 @@
             "label": "Estrategia VN: etnografía desde adentro",
             "connections": 10,
             "span": 3,
-            "body": "<p>2023: infiltración etnográfica en un conglomerado financiero multinacional con operaciones previsionales en Chile. Rol institucional como cobertura de una práctica investigativa crítica. Tres fases: <strong>Fase 1</strong>: Documentación sistemática desde adentro — acceso a arquitectura, procesos y decisiones internas. <strong>Fase 2</strong>: Producción de artefactos que contienen crítica implícita al sistema. <strong>Fase 3</strong>: Compilación del contraarquivo — tesis doctoral con Marx, Dussel, Salazar, Varoufakis, Gramsci.</p>",
+            "body": "<p>2023: contratación en área de estrategia digital de un conglomerado financiero multinacional con operaciones previsionales en Chile. Rol formal: diseñador UX. Rol real: etnógrafo crítico. Tres fases: <strong>Fase 1</strong>: Infiltración documentada — acceso a sistemas, reuniones, arquitectura. <strong>Fase 2</strong>: Crítica desde adentro — documentos que parecen 'estrategia' pero contienen crítica implícita. <strong>Fase 3</strong>: Compilación del contraarquivo — tesis doctoral con Marx, Dussel, Salazar, Varoufakis, Gramsci.</p>",
             "why": "<p>Scott (<em>Domination and the Arts of Resistance</em>): 'infrapolítica' — resistencia que opera bajo la superficie visible del poder. Dussel (<em>Filosofía de la Liberación</em>): la víctima del sistema se convierte en agente cuando produce conocimiento desde la exterioridad. Gramsci: el <strong>intelectual contraorgánico</strong> — inserto en estructura de poder pero produciendo conocimiento que revela sus contradicciones.</p>",
             "proves": "<p>La carta oferta documenta la contratación. Las transcripciones registran las preguntas incómodas del investigador. Los artefactos UX (AS IS/TO BE, Mini Ficha Previsional) son evidencia de resistencia. El Documento Estratégico UX es acto político camuflado como propuesta técnica.</p>"
         }, {
@@ -2281,7 +2028,7 @@
             "span": 2,
             "body": "<p>Tres reguladores operan en silos sin coordinación: la CMF (Comisión para el Mercado Financiero) supervisa inversiones pero no tiene jurisdicción sobre datos de pensiones; la SPP (Superintendencia de Pensiones) supervisa AFP pero no audita arquitectura digital; la Agencia de Protección de Datos (creada 2024) carece de recursos y experiencia. Cada regulador audita un fragmento — ninguno audita la arquitectura integral. SURA opera en los vacíos entre jurisdicciones: integra datos previsionales en su plataforma de inversiones, donde la CMF no puede auditar porque 'son datos de AFP', y la SPP no puede auditar porque 'están en plataforma de inversiones'.</p>",
             "why": "<p>La fragmentación regulatoria no es un defecto — es la condición de posibilidad del tecno-feudalismo. Gramsci: el Estado no es neutral; sus instituciones reflejan las relaciones de poder existentes. La fragmentación regulatoria refleja la fragmentación del poder que beneficia a los conglomerados. Si un regulador integral existiera, la integración vertical de SURA sería inmediatamente visible e ilegal.</p>",
-            "proves": "<p>La matriz de riesgos estratégicos (R1-R5) documenta los vacíos jurisdiccionales específicos. La evidencia de que la CMF no audita datos previsionales y la SPP no audita arquitectura digital está en las transcripciones de reuniones técnicas. La pregunta sin respuesta del investigador al equipo técnico interno ('¿por qué datos de ficha previsional siguen siendo obligatorios?') demuestra la opacidad.</p>"
+            "proves": "<p>La matriz de riesgos estratégicos (R1-R5) documenta los vacíos jurisdiccionales específicos. La evidencia de que la CMF no audita datos previsionales y la SPP no audita arquitectura digital está en las transcripciones de reuniones técnicas. La pregunta sin respuesta del investigador al equipo de Arquitectura SURA ('¿por qué datos de ficha previsional siguen siendo obligatorios?') demuestra la opacidad.</p>"
         }, {
             "id": "titulos-merced",
             "eje": 3,
@@ -2389,9 +2136,9 @@
             "label": "UX como resistencia institucional",
             "connections": 5,
             "span": 2,
-            "body": "<p>El investigador utilizó herramientas de diseño UX como vehículos de etnografía crítica y resistencia institucional: (1) Rediseño del flujo de incorporación de clientes eliminando dependencias con bases de datos previsionales sin consentimiento explícito, implementando validación ARCO. (2) Mini Ficha Previsional con trazabilidad que muestra al cliente exactamente qué datos de AFP se transfieren al conglomerado — creando visibilidad donde antes había opacidad. (3) Documentación AS IS vs. TO BE exponiendo la brecha entre sistema desactualizado y requerimientos de Ley de Datos 2024. (4) Matriz de intervención UX mapeando puntos donde UX puede insistir en cumplimiento normativo. (5) Propuesta de KPIs de gobernanza digital: reducción 50% errores normativos, +15 NPS transparencia, ROI USD $120K por ahorro en reprocesos.</p>",
+            "body": "<p>El investigador utilizó herramientas de diseño UX como vehículos de etnografía crítica y resistencia institucional: (1) Rediseño del flujo 'Hazte Cliente SURA' eliminando dependencias con bases de datos previsionales sin consentimiento explícito, implementando validación ARCO. (2) Mini Ficha Previsional con trazabilidad que muestra al cliente exactamente qué datos de AFP se usan en SURA Investments — creando visibilidad donde antes había opacidad. (3) Documentación AS IS vs. TO BE exponiendo la brecha entre sistema desactualizado y requerimientos de Ley de Datos 2024. (4) Matriz de intervención UX mapeando puntos donde UX puede insistir en cumplimiento normativo. (5) Propuesta de KPIs de gobernanza digital: reducción 50% errores normativos, +15 NPS transparencia, ROI USD $120K por ahorro en reprocesos.</p>",
             "why": "<p>Scott (infrapolítica): la resistencia más efectiva opera dentro del lenguaje y las herramientas del poder. El investigador no protestó públicamente — redesignó flujos. No denunció en medios — documentó en AS IS/TO BE. No renunció — produjo artefactos que, leídos por quienes entienden, revelan las contradicciones. El Documento Estratégico UX propone que UX sea 'unidad estratégica de gobernanza digital' — suena burocrático pero es una demanda de poder institucional para supervisar arquitectura de datos.</p>",
-            "proves": "<p>Los artefactos UX producidos son evidencia material de resistencia. El flujo de incorporación de clientes rediseñado documenta la intervención. La documentación AS IS/TO BE expone la brecha. La propuesta de KPIs transforma gobernanza de datos de 'costo de cumplimiento' a 'generador de valor'.</p>"
+            "proves": "<p>Los artefactos UX producidos son evidencia material de resistencia. El flujo 'Hazte Cliente SURA' rediseñado documenta la intervención. La documentación AS IS/TO BE expone la brecha. La propuesta de KPIs transforma gobernanza de datos de 'costo de cumplimiento' a 'generador de valor' — realineando incentivos para que SURA invierta en legitimidad.</p>"
         }, {
             "id": "ley-antiterrorista",
             "eje": 1,
@@ -2489,260 +2236,9 @@
             "label": "Tres fases de la etnografía insurgente",
             "connections": 3,
             "span": 2,
-            "body": "<p>Metodología de investigación decolonial en tres fases: (1) Infiltración documentada: documentación sistemática desde posición institucional interna. (2) Crítica desde adentro: producción de documentos institucionales que contienen crítica implícita (Estrategia VN, artefactos de resistencia, análisis de gobernanza). (3) Compilación de contraarquivo: tesis doctoral, dossiers, publicación del archivo como fuente primaria académica verificable. Las tres fases documentan cómo la etnografía puede ser práctica de resistencia política.</p>",
+            "body": "<p>Metodología de investigación decolonial en tres fases: (1) Infiltración documentada (sept 2023 – jun 2024): acceso a sistemas, reuniones, arquitectura de SURA Investments. (2) Crítica desde adentro (jul – dic 2024): producción de documentos institucionales que contienen crítica implícita (Estrategia VN, UX como resistencia, análisis de gobernanza). (3) Compilación de contraarquivo (ene 2025 – mar 2026): tesis doctoral, dossiers, publicación del archivo como fuente primaria académica verificable. Las tres fases documentan cómo la etnografía puede ser práctica de resistencia política.</p>",
             "why": "<p>Demuestra que la investigación decolonial es método viable que produce artefactos académicos verificables.</p>",
             "proves": "<p>El artículo etnográfico de 2026 utiliza el archivo producido en las tres fases como fuente primaria.</p>"
-        },
-        // === NODOS MIGRADOS DESDE casos.json ===
-        // Caso: sura-gobernanza-datos
-        {
-            "id": "cotizante-dl3500",
-            "eje": 2,
-            "year": 2024,
-            "label": "Cotizante DL 3.500",
-            "connections": 9,
-            "span": 1,
-            "body": "<p>Afiliado obligatorio al sistema previsional; sin acceso interpretativo real a su cartera de inversión. El cotizante es el sujeto capturado por el mecanismo del DL 3.500: no elige AFP, no decide dónde invierte, no comprende qué financian sus fondos. La tabla Persona Natural revela que cada cotizante es reducido a clave primaria en infraestructura de SURA — 74.420 registros de email documentados.</p>",
-            "why": "<p>Marx: inversión sujeto-objeto — el sistema usa al cotizante como materia prima. Varoufakis: el 'cloud capital' captura usuarios cautivos. El cotizante es la Fase 1 del tecno-feudalismo: la obligatoriedad produce la renta sin posibilidad de opt-out.</p>",
-            "proves": "<p>Fuente: Transparencia SP beneficiarios AFP 2024-03-08. La obligatoriedad del DL 3.500 produce al cotizante cautivo. La tabla Persona Natural documenta su existencia como clave primaria antes que como sujeto de derechos.</p>"
-        }, {
-            "id": "sura-afp-capital",
-            "eje": 2,
-            "year": 2024,
-            "label": "SURA / AFP Capital",
-            "connections": 8,
-            "span": 2,
-            "body": "<p>SURA Investments / AFP Capital: actor financiero que articula la cadena cotizante → AFP → cartera transnacional. En 2025 AFP Capital fue renombrada AFP UNO tras la reforma previsional — cambio nominal que no alteró la integración vertical. El mismo conglomerado gestiona pensiones obligatorias (AFP) y riqueza privada (SURA Investments), usando los datos de ambos para perfilamiento cruzado.</p>",
-            "why": "<p>Gramsci: la hegemonía se mantiene por consenso. SURA naturaliza la integración como 'eficiencia'. La reforma que renombra AFP Capital en AFP UNO es captura regulatoria clásica: el regulado diseña la regulación que lo regula. El cambio de nombre no toca la arquitectura de datos subyacente.</p>",
-            "proves": "<p>Fuente: lobby SURA CMF 2024-03-15. Transcripción 28 jul 2025 confirma que tabla Persona Natural persiste post-reforma. La carta oferta documenta la integración operativa real entre AFP e Inversiones.</p>"
-        }, {
-            "id": "cmf-semaforo",
-            "eje": 2,
-            "year": 2024,
-            "label": "CMF Semáforo",
-            "connections": 8,
-            "span": 2,
-            "body": "<p>Sistema de semáforos CMF que valida liquidez sin activar alertas ante volatilidad estructural: cuando los rescates de fondos mutuos SURA subieron +279% en el índice de intermediación, el semáforo permaneció en verde. El regulador audita el cumplimiento de formularios, no la coherencia sistémica. La fragmentación regulatoria (CMF/SPP/Agencia Datos) produce el vacío donde la negligencia prospera.</p>",
-            "why": "<p>El semáforo CMF es el dispositivo de legitimación del sistema: al validar sin activar alertas, transforma una estructura potencialmente frágil en 'cumplimiento normativo'. Gramsci: la hegemonía opera cuando el Estado valida lo que debería cuestionar. El semáforo verde no describe la realidad — la produce institucionalmente.</p>",
-            "proves": "<p>Fuente: Sanción CMF a SURA 2024-02-28. Índice +279% documentado en FECU CMF Corredora SURA. La sanción misma confirma que el sistema falló en detectar la volatilidad antes de que fuera evidente al mercado.</p>"
-        }, {
-            "id": "fecu-liquidez",
-            "eje": 2,
-            "year": 2024,
-            "label": "FECU Liquidez SURA",
-            "connections": 9,
-            "span": 1,
-            "body": "<p>FECU CMF Corredora SURA: instrumento regulatorio que opacifica la cadena de custodia transnacional mediante lenguaje técnico financiero. El documento registra +279% en índice de intermediación sin que ninguna alerta se activara. La FECU cumple con los requisitos de reporte — y al cumplirlos, hace invisible la volatilidad estructural subyacente.</p>",
-            "why": "<p>La FECU no describe la realidad financiera: la traduce a categorías que el regulador puede validar. Esta 'traducción' (mistranslation en términos del marco teórico) convierte volatilidad real en 'cumplimiento'. Stoler: el archivo no registra la verdad, sino las condiciones de su producción.</p>",
-            "proves": "<p>Fuente: Transparencia AFP carteras 2024-01-20. La FECU CMF Corredora SURA es evidencia primaria del mecanismo: disponible públicamente, legible solo para expertos, usada institucionalmente para validar lo que debería cuestionar.</p>"
-        }, {
-            "id": "jpmorgan-custodia",
-            "eje": 2,
-            "year": 2024,
-            "label": "JP Morgan Custodia",
-            "connections": 9,
-            "span": 2,
-            "body": "<p>JP Morgan actúa como co-custodio de la cartera de SURA: el capital chileno (cotizaciones obligatorias) fluye hacia infraestructura financiera nor-occidental. Las cotizaciones de trabajadores chilenos viajan a activos custodiados en Nueva York y Londres. Este flujo reproduce la lógica extractiva colonial en registro financiero contemporáneo: los recursos del sur fluyen al centro.</p>",
-            "why": "<p>Salazar ('acumulación aberrante'): el capital golondrina materializa la desposesión en circuitos transnacionales. Harvey ('acumulación por desposesión'): el circuito financiero extrae valor de territorios en disputa. El cotizante chileno financia estructuras de custodia global que escapan a cualquier regulador nacional.</p>",
-            "proves": "<p>Fuente: Transparencia AFP carteras 2024-01-20. Cadena documentada: cotizante → AFP Capital → cartera → JP Morgan (custodio). La estructura de custodia transnacional es pública; su implicación política no lo es.</p>"
-        }, {
-            "id": "fondos-mutuos-rescates",
-            "eje": 2,
-            "year": 2023,
-            "label": "Rescates fondos mutuos",
-            "connections": 8,
-            "span": 2,
-            "body": "<p>Rescates masivos de fondos mutuos SURA: evidencia material de la desconexión entre cumplimiento normativo y volatilidad real absorbida por cotizantes. Los retiros masivos (+279% índice CMF) ocurren dentro del sistema 'cumpliente' con todos los requisitos regulatorios. Los afectados son los cotizantes de menores ingresos, cuyos fondos son los más expuestos a volatilidad.</p>",
-            "why": "<p>La volatilidad de los fondos mutuos revela la fragilidad sistémica que el semáforo CMF no activa. Es evidencia material de que el cumplimiento regulatorio formal es insuficiente para proteger a los cotizantes reales. Mistranslation entre lo que el regulador mide y lo que los cotizantes experimentan.</p>",
-            "proves": "<p>Fuente: Norma CMF ESG 2023-11-20. El índice +279% documentado. Los rescates masivos son el síntoma observable de la fragilidad estructural que el archivo documenta desde adentro.</p>"
-        },
-        // Caso: la-negra-territorio-mapuche
-        {
-            "id": "comunidad-lafkenche",
-            "eje": 3,
-            "year": 2023,
-            "label": "Comunidad Lafkenche",
-            "connections": 9,
-            "span": 3,
-            "body": "<p>Comunidad Mapuche-Lafkenche de La Negra: testimonio situado sobre territorio como organismo vivo con historia irreductible a catastro. Los lonkos y machis mantienen memorias territoriales que preceden al Estado-nación. Sus límites vivos, sus prácticas de cuidado del agua y el bosque, no tienen equivalente en el sistema registral. El testimonio situado es la única evidencia de una soberanía que el derecho positivo no puede reconocer sin negar sus propios fundamentos.</p>",
-            "why": "<p>Taussig (El sistema nervioso): el territorio no es solo geografía — es forma de vida que el Estado traduce a catastro para administrar. Stoler: las memorias territoriales son archivos vivos que el archivo oficial no puede contener. Das y Poole (Márgenes del Estado): la comunidad existe en el margen donde el Estado no ha completado su traducción.</p>",
-            "proves": "<p>Fuente: etnografía directa 2023-08-22. Testimonios de lonkos sobre límites precoloniales. Memorias de usurpación durante la 'pacificación' (1860-1900): evidencia oral irreductible al registro escrito.</p>"
-        }, {
-            "id": "conadi-tierras",
-            "eje": 3,
-            "year": 2023,
-            "label": "CONADI Tierras",
-            "connections": 9,
-            "span": 3,
-            "body": "<p>CONADI como dispositivo de gestión de tierras: traduce soberanía territorial a proceso administrativo de adquisición de parcelas. La agencia que debería proteger territorios indígenas opera dentro de una lógica de propiedad privada incompatible con la concepción mapuche del territorio como organismo vivo. El catastro CONADI registra 'compras' de lo que las comunidades consideran recuperación.</p>",
-            "why": "<p>Das y Poole: el Estado existe en sus márgenes — CONADI es el margen donde la soberanía estatal sobre tierras mapuche se administra. La institución creada para proteger reproduce la lógica que debería cuestionar: el territorio como propiedad, no como forma de vida. Stoler: el archivo de CONADI no registra territorio — registra propiedad.</p>",
-            "proves": "<p>Fuente: Transparencia CONADI tierras 2023-05-14. El catastro CONADI documenta 'adquisiciones' donde las comunidades hablan de recuperación. El lenguaje del catastro es la evidencia de la mistranslation: lo que para uno es compra, para otro es regreso.</p>"
-        }, {
-            "id": "dl701-subsidio-forestal",
-            "eje": 3,
-            "year": 1974,
-            "label": "DL 701 Forestal",
-            "connections": 9,
-            "span": 50,
-            "body": "<p>DL 701 (1974): subsidio forestal de la dictadura que convirtió territorio mapuche en 'uso productivo'. El decreto subsidiaba plantaciones de pino y eucalipto — monocultivos exóticos — sobre terrenos que las comunidades reconocen como parte de su territorio. La Ley Forestal convirtió la usurpación en política de desarrollo: el Estado pagó a privados para destruir ecosistemas en territorio en disputa histórica.</p>",
-            "why": "<p>Mignolo: la modernidad es inseparable de la colonialidad. El DL 701 'moderniza' la economía forestal mientras coloniza territorios indígenas. Walsh: no se trata de incluir el territorio mapuche en el modelo forestal sino de cuestionar el modelo mismo. La producción de pino es la versión económica de la producción de verdad judicial en Operación Huracán: el Estado fabrica un uso legítimo donde había territorio.</p>",
-            "proves": "<p>Fuente: DL 701 Fomento Forestal 1974-10-28. Mapas de cambio de uso de suelo (1973-2023) documentan la transformación. Las hectáreas forestadas con subsidio estatal en Wallmapu son la evidencia material de la política.</p>"
-        }, {
-            "id": "predios-avaluos-sii",
-            "eje": 3,
-            "year": 2024,
-            "label": "Predios Avalúos SII",
-            "connections": 9,
-            "span": 1,
-            "body": "<p>Avalúo fiscal SII de predios en Los Ríos: tasación como acto de violencia epistemológica. El mercado asigna valor donde hay historia. El mismo territorio que las comunidades lafkenche describen como organismo vivo con límites ancestrales, el SII lo registra como superficie catastral con precio de mercado. La tasación fiscal es el acto final de la cadena que comenzó con los Títulos de Merced: primero delimitar, luego tasar, finalmente extraer.</p>",
-            "why": "<p>Quijano (patrón de la modernidad/colonialidad): la tasación fiscal reproduce la clasificación del territorio como mecanismo de extracción. El avalúo SII convierte historia en metro cuadrado — violencia epistémica que niega lo que no puede cuantificar. Stoler: el archivo catastral no describe el territorio, lo produce para el mercado.</p>",
-            "proves": "<p>Fuente: SII avalúos predios Los Ríos 2024-01-17. La discrepancia entre el catastro y la memoria oral es la mistranslation más concreta del archivo: misma superficie, dos ontologías incompatibles.</p>"
-        }, {
-            "id": "seia-central-osorno",
-            "eje": 3,
-            "year": 2023,
-            "label": "SEIA Central Osorno",
-            "connections": 9,
-            "span": 2,
-            "body": "<p>EIA Central Osorno en SEIA: el sistema de evaluación ambiental como mecanismo de captura que convierte oposición en 'admisibilidad'. El proceso SEIA para la Central Osorno requería consulta indígena según OIT 169. La evaluación convirtió las observaciones de las comunidades en 'participación procesada' — las observaciones se registran, se responden formalmente, y el proyecto avanza.</p>",
-            "why": "<p>Das y Poole: el SEIA es el dispositivo del margen del Estado donde la soberanía estatal sobre el territorio se legitima absorbiendo la resistencia. La 'admisibilidad' no es neutral: es la categoría que convierte el no de la comunidad en un trámite más del proceso. El Estado produce el consentimiento que no logra obtener.</p>",
-            "proves": "<p>Fuente: SEIA Central Osorno 2023-06-12. El expediente SEIA documenta las observaciones de las comunidades y las respuestas institucionales — la estructura formal de la absorción es el archivo. Las observaciones están en el expediente: el rechazo está fuera.</p>"
-        }, {
-            "id": "forestal-losrios",
-            "eje": 3,
-            "year": 2022,
-            "label": "Forestal Los Ríos",
-            "connections": 9,
-            "span": 4,
-            "body": "<p>Territorio forestal Los Ríos: evidencia material de la deforestación como uso productivo autorizado sobre territorio en disputa histórica. Las plantaciones de pino reemplazaron ecosistemas que tardaron milenios en formarse. Las napas freáticas han descendido. Esta densidad material es la prueba más contundente de la corrupción institucional — y la menos admisible como evidencia judicial.</p>",
-            "why": "<p>Marx: la acumulación originaria requiere separar al productor de sus medios. La forestal Los Ríos es la fase actual de una acumulación que comenzó en la 'pacificación'. El lazo AFP Capital → fondos → acciones CMPC/Arauco materializa el circuito: los ahorros del cotizante financian la deforestación de territorios en disputa.</p>",
-            "proves": "<p>Fuente: SEIA Forestal Los Ríos 2022-04-18. Registros de caudal antes/después de plantaciones. Fotografías aéreas de deforestación. La densidad de evidencia material contrasta con la ausencia de evidencia 'admisible' en los registros formales.</p>"
-        },
-        // Caso: periodismo-datos-chile
-        {
-            "id": "ciper-fuente",
-            "eje": 4,
-            "year": 2023,
-            "label": "CIPER Fuente",
-            "connections": 8,
-            "span": 3,
-            "body": "<p>Fuente/whistleblower CIPER Chile: testimonio situado que activa el campo de fricción entre proceso regular y denuncia pública. El periodismo de datos chileno opera en un campo minado: las fuentes que revelan corrupción enfrentan represalias laborales, judiciales y sociales. La 'objetividad' periodística exige despersonalizar la fuente — pero al despersonalizarla, el relato pierde su densidad ética.</p>",
-            "why": "<p>La fuente es el sujeto que convierte el dato institucional en evidencia de corrupción. Sin fuente, el dato permanece invisible dentro del archivo institucional que lo produjo. Stoler: las fuentes son las grietas en el archivo del poder. Scott (infrapolítica): la fuente que filtra información ejerce resistencia que opera bajo la superficie visible del poder.</p>",
-            "proves": "<p>Fuente: etnografía directa 2023-09-03. Funcionarios desvinculados tras filtrar irregularidades. Periodistas amenazados tras publicaciones. La represalia es la evidencia inversa: confirma que la filtración tocó algo real.</p>"
-        }, {
-            "id": "municipio-trato-directo",
-            "eje": 3,
-            "year": 2023,
-            "label": "Municipio Trato Directo",
-            "connections": 8,
-            "span": 2,
-            "body": "<p>Contratos municipales por trato directo en ChileCompra: dato institucional que registra la irregularidad sin nombrarla como corrupción. El sistema de compras públicas documenta cada contrato — incluyendo los fraudulentos. Una licitación evitada aparece como 'trato directo por urgencia'. El dato está disponible, públicamente accesible, perfectamente opaco.</p>",
-            "why": "<p>La corrupción en ChileCompra no se oculta del sistema — se camufla dentro de su lenguaje. El 'trato directo por urgencia' es un código que los funcionarios comprenden y el sistema valida. Mistranslation: la urgencia real (beneficio privado) se traduce en urgencia formal (causal legal admisible).</p>",
-            "proves": "<p>Fuente: ChileCompra municipio trato directo 2023-10-05. Los contratos están en el Portal de Compras Públicas — disponibles pero ilegibles sin contexto. El cruce con datos SII de proveedores revela la estructura que el registro individual oculta.</p>"
-        }, {
-            "id": "transp-municipio-honorarios",
-            "eje": 3,
-            "year": 2024,
-            "label": "Transp. Honorarios",
-            "connections": 7,
-            "span": 1,
-            "body": "<p>Honorarios municipales en Portal de Transparencia: opacidad estructurada donde la visibilidad formal encubre la cadena real de pagos. El portal muestra cada honorario pagado — nombre, RUT, monto. Pero no muestra la relación entre el contratado y los actores políticos que lo contrataron. La visibilidad formal produce opacidad estructural: al mostrar todo el árbol, oculta el bosque.</p>",
-            "why": "<p>La Ley 20.285 garantiza acceso a la información formal. El acceso formal no equivale al acceso interpretativo. Los honorarios son visibles; la red de favores que los organiza es invisible. Transparencia como procedimiento que no produce transparencia real: la mistranslation más básica del archivo.</p>",
-            "proves": "<p>Fuente: Transparencia municipio honorarios 2024-01-29. El portal mismo es la evidencia: nominativamente visible, estructuralmente opaco. El cruce con contratos ChileCompra y datos SII proveedores revela lo que el portal individual no puede mostrar.</p>"
-        }, {
-            "id": "sii-proveedores",
-            "eje": 3,
-            "year": 2023,
-            "label": "SII Proveedores",
-            "connections": 7,
-            "span": 2,
-            "body": "<p>Registro SII de proveedores municipales: evidencia material cruzada con contratos que revela la estructura real de extracción local. Cruzado con ChileCompra, permite reconstruir la red de empresas relacionadas que reciben contratos de trato directo. La corrupción municipal opera en los intersticios de tres sistemas de datos que nunca dialogan entre sí: ChileCompra, Portal de Transparencia, SII.</p>",
-            "why": "<p>El dato tiene poder cuando se cruza. La fragmentación de los registros no es accidental — reproduce la fragmentación regulatoria del sistema previsional. El Estado produce datos suficientes para rendir cuentas formalmente, insuficientes para detectar patrones. El periodismo de datos produce el cruce que el Estado evita hacer.</p>",
-            "proves": "<p>Fuente: SII proveedores municipales 2023-11-09. El cruce SII-ChileCompra-Transparencia reconstruye redes que ningún registro individual muestra. La metodología del periodismo de datos es la prueba de concepto: los datos existen, la voluntad de cruzarlos no.</p>"
-        }, {
-            "id": "ley-20285-info-publica",
-            "eje": 3,
-            "year": 2008,
-            "label": "Ley 20.285",
-            "connections": 7,
-            "span": 18,
-            "body": "<p>Ley 20.285 de Transparencia: norma que garantiza acceso formal a documentos pero no el acceso interpretativo a la lógica del poder. La ley crea el Consejo para la Transparencia y obliga a publicar información. La ley funciona: los documentos están disponibles. Lo que no funciona es la promesa implícita de que la disponibilidad produce accountability. La transparencia formal es la forma más sofisticada de opacidad: al saturar con información, hace invisible el patrón.</p>",
-            "why": "<p>La Ley 20.285 es el equivalente legislativo del semáforo CMF: crea el dispositivo de validación que legitima el sistema sin cuestionarlo. El Consejo para la Transparencia valida que los documentos están disponibles — no que el poder es legible. Abrams: el Estado como máscara produce visibilidad selectiva que confirma su legitimidad.</p>",
-            "proves": "<p>Fuente: Ley 20.285 2008-08-20. El texto de la ley y Transparencia.cl son evidencia primaria. La distancia entre disponibilidad formal y accountability real es el índice de la mistranslation que el sistema produce.</p>"
-        },
-        // Caso: oit169-consulta-previa
-        {
-            "id": "convenio-oit169",
-            "eje": 3,
-            "year": 1993,
-            "label": "OIT 169 Aplicación",
-            "connections": 9,
-            "span": 33,
-            "body": "<p>OIT 169 en aplicación chilena: el marco decolonial del consentimiento libre, previo e informado enfrenta la traducción institucional que convierte veto en diálogo. Chile ratificó el Convenio en 2008. Desde entonces, su aplicación convierte sistemáticamente el derecho al consentimiento en proceso burocrático de 'participación'. Las comunidades que participaron en consultas cuyo resultado fue ignorado describen el proceso como 'teatro institucional'.</p>",
-            "why": "<p>Walsh (Interculturalidad crítica): la 'inclusión' de derechos indígenas en el marco legal occidental es una forma de neutralización. El Convenio 169 define consulta como veto — el DS 66 la traduce como trámite. Esta mistranslation convierte un derecho político en un procedimiento administrativo, y el procedimiento en evidencia de cumplimiento.</p>",
-            "proves": "<p>Fuente: Ley 19.253 Indígena 1993-10-05. El texto del Convenio 169 define CPLI. El DS 66 define su implementación. La distancia entre ambos textos documenta la mistranslation institucional de forma medible.</p>"
-        }, {
-            "id": "ds66-consulta",
-            "eje": 3,
-            "year": 2014,
-            "label": "DS 66 Consulta",
-            "connections": 9,
-            "span": 12,
-            "body": "<p>DS N°66 Reglamento de Consulta Indígena: traduce el consentimiento OIT 169 en trámite administrativo sin capacidad real de veto. El decreto establece etapas, plazos y representantes reconocidos. La consulta tiene plazos que las comunidades deben cumplir, formatos que deben usar, y representantes que el Estado reconoce como válidos. El resultado puede ser ignorado sin violar el decreto.</p>",
-            "why": "<p>Abrams (El Estado como máscara): el DS 66 es la máscara del cumplimiento. Produce el teatro de la consulta que legitima decisiones ya tomadas. El Estado puede decir que consultó — y técnicamente es verdad. Lo que omite es que consultar sin veto real no es consultar: es documentar el rechazo para archivarlo.</p>",
-            "proves": "<p>Fuente: DS 66 Consulta Indígena 2014-03-15. Compárese el Art. 6 OIT 169 (consentimiento) con las etapas del DS 66 (proceso). La diferencia entre 'consentir' y 'participar' es el núcleo de la mistranslation.</p>"
-        }, {
-            "id": "ley19253-indigena",
-            "eje": 3,
-            "year": 1993,
-            "label": "Ley 19.253",
-            "connections": 8,
-            "span": 33,
-            "body": "<p>Ley 19.253 Indígena: ley chilena que reconoce pueblos originarios pero subordina autonomía territorial a regulación estatal. La ley crea CONADI, define 'tierras indígenas', establece mecanismos de protección. Pero los define dentro del sistema de propiedad privada chileno — lo que produce una contradicción estructural: reconoce derechos de pueblos cuya concepción del territorio es incompatible con la propiedad individual que la ley usa para protegerlos.</p>",
-            "why": "<p>Quijano: el patrón colonial/moderno produce reconocimiento que reproduce la subordinación. La Ley 19.253 reconoce al mapuche como sujeto de derechos dentro de un sistema diseñado sin él. Mignolo: el 'paradigma otro' requiere no derechos dentro del sistema sino cuestionamiento del sistema mismo.</p>",
-            "proves": "<p>Fuente: Ley 19.253 Indígena 1993-10-05. Los 510.386 hectáreas de Títulos de Merced vs. el Wallmapu ancestral (~8M ha) son la medida de la contradicción entre el derecho reconocido y el territorio efectivo.</p>"
-        }, {
-            "id": "seia-admisibilidad",
-            "eje": 3,
-            "year": 2022,
-            "label": "SEIA Admisibilidad",
-            "connections": 9,
-            "span": 4,
-            "body": "<p>SEIA como filtro de admisibilidad: el sistema de evaluación ambiental convierte resistencia en 'observaciones procesadas', absorbiendo el conflicto sin resolverlo. El SEIA incorpora la 'participación indígena' como fase del proceso, no como condición para él. Las comunidades pueden participar — pero el proyecto avanza aunque participen en contra. La admisibilidad es la categoría que convierte el no en insumo.</p>",
-            "why": "<p>Das y Poole: el SEIA es el dispositivo del margen donde el Estado procesa la resistencia. El sistema absorbe la oposición: la hace parte del proceso, la registra formalmente, y la descarta institucionalmente. La resistencia que entra al SEIA sale convertida en 'observación respondida'.</p>",
-            "proves": "<p>Fuente: SEIA Forestal Los Ríos 2022-04-18. Los expedientes SEIA documentan las observaciones indígenas y las respuestas institucionales. El número de proyectos que avanzaron pese a oposición documentada en el SEIA es el índice del mecanismo.</p>"
-        }, {
-            "id": "diariooficial-consulta-2024",
-            "eje": 3,
-            "year": 2024,
-            "label": "D.O. Consulta 2024",
-            "connections": 9,
-            "span": 1,
-            "body": "<p>Último decreto de consulta indígena en Diario Oficial: formalización que consagra la soberanía estatal sobre CONADI frente a soberanía territorial mapuche. El decreto es el punto final de la cadena: OIT 169 (marco) → DS 66 (reglamento) → Ley 19.253 (ley nacional) → SEIA (implementación) → Diario Oficial (consumación). Cada etapa traduce el derecho original a un formato más manejable, hasta que el decreto final consagra lo que el proceso ya decidió.</p>",
-            "why": "<p>Stoler: el archivo del Estado consagra el poder al registrarlo. El Diario Oficial no informa — produce jurídicamente. El decreto que termina el proceso de consulta convierte el teatro institucional en norma. La publicación es el acto performativo que cierra la mistranslation.</p>",
-            "proves": "<p>Fuente: Diario Oficial Consulta Indígena 2024-08-22. El decreto es evidencia primaria de la cadena completa. Su publicación confirma que el proceso se completó — y que la resistencia fue procesada, archivada y descartada institucionalmente.</p>"
-        },
-        // Caso: banca-roles-opacidad-digital
-        {
-            "id": "sbif-circular-roles",
-            "eje": 2,
-            "year": 2021,
-            "label": "SBIF Circular Roles",
-            "connections": 7,
-            "span": 5,
-            "body": "<p>Circular SBIF de roles banca digital: norma que asigna accesos por categoría pero deja sin nombrar el rol de máximo acceso sin accountability. El documento codifica cuatro roles: Aprobador, Operador/Digitador, Consultor, y un cuarto rol sin nombre con acceso irrestricto. 'No puede ver módulo de roles' aparece en tres de cuatro roles — la arquitectura de permisos se oculta a quienes la habitan. El número de personas por rol aparece como 'S/N' (sin especificar).</p>",
-            "why": "<p>Abrams: el Estado produce visibilidad selectiva. La circular SBIF produce la arquitectura de opacidad: normaliza que quienes tienen menos poder no puedan ver quién tiene más. El rol sin nombre no es un error — es el diseño. La accountability requiere saber quién puede qué; la circular garantiza que no se sepa.</p>",
-            "proves": "<p>Fuente: SBIF Circular Roles Banca Digital 2021-07-14. El CSV de reglas de negocio rescatado es evidencia primaria. La columna 'N° Personas: S/N' en todos los roles documenta que la distribución real del poder no está en el registro institucional.</p>"
-        }, {
-            "id": "opacidad-plataforma",
-            "eje": 2,
-            "year": 2021,
-            "label": "Opacidad Plataforma",
-            "connections": 8,
-            "span": 5,
-            "body": "<p>Arquitectura de roles digitales de la banca: evidencia material de opacidad estructurada donde visibilidad y agencia están sistemáticamente desacopladas. El Consultor accede a toda la información material pero no puede actuar. El Aprobador actúa sin ver el mapa completo de poder. Solo el rol sin nombre puede ver a quién pertenece cada nivel de acceso. La información se desacopla completamente de la capacidad de acción.</p>",
-            "why": "<p>El sistema de roles no es una falla de diseño — es el diseño. Produce sujetos institucionales asimétricos: quien puede ver más no puede hacer más, y quien puede hacer más no puede ver el mapa completo. Esta asimetría es estructuralmente equivalente al sistema AFP: el cotizante puede ver su saldo pero no puede decidir su inversión. La opacidad como diseño es un patrón transversal del archivo.</p>",
-            "proves": "<p>Fuente: SBIF Circular Roles Banca Digital 2021-07-14. CSV con 4 roles y permisos asimétricos. El 'módulo de roles' visible solo para el rol sin nombre — único que puede ver el mapa completo — es la evidencia más concreta de la opacidad estructurada.</p>"
         }];
         const documentsData = [{
             "eje": 1,
@@ -2798,7 +2294,7 @@
             "type": "Reportes de seguridad",
             "analyticalRole": "Evidencia primaria",
             "depth": "Profundo",
-            "desc": "Documentación interna: múltiples hallazgos de vulnerabilidades sin parchear por más de 2 años en sistemas del conglomerado financiero.",
+            "desc": "Documentación interna: múltiples hallazgos de vulnerabilidades sin parchear por más de 2 años en sistemas asociados al conglomerado financiero.",
             "relatedNodes": ["vulnerabilidades"]
         }, {
             "eje": 2,
@@ -2814,7 +2310,7 @@
             "type": "Evidencia visual",
             "analyticalRole": "Evidencia primaria",
             "depth": "Profundo",
-            "desc": "Capturas de evidencia: arquitectura de integración vertical y replicación multipaís — retiradas por protocolo ético.",
+            "desc": "Screenshots de tabla Persona Natural, BDs SURA, replicación multipaís.",
             "relatedNodes": ["persona-natural", "replicacion", "sura-vertical"]
         }, {
             "eje": 2,
@@ -2826,7 +2322,7 @@
             "relatedNodes": ["estrategia-gaona", "captura-regulatoria"]
         }, {
             "eje": 2,
-            "title": "Documento Estratégico UX",
+            "title": "Documento Estratégico UX SURA",
             "type": "Propuesta institucional",
             "analyticalRole": "Artefacto institucional",
             "depth": "Profundo",
@@ -2834,7 +2330,7 @@
             "relatedNodes": ["resistencia-ux", "estrategia-gaona"]
         }, {
             "eje": 2,
-            "title": "Procesos Estrategia VN (etnografía crítica)",
+            "title": "Procesos Estrategia VN para SURA Investments",
             "type": "PDF compilado",
             "analyticalRole": "Análisis crítico",
             "depth": "Fundacional",
@@ -3270,55 +2766,7 @@
             source: 'tres-fases-etnografia',
             target: 'negra-colora',
             type: 'gravitacional'
-        },
-        // === ENLACES MIGRADOS DESDE casos.json ===
-        // sura-gobernanza-datos — cadena interna
-        { source: 'cotizante-dl3500', target: 'sura-afp-capital', type: 'gravitacional' },
-        { source: 'sura-afp-capital', target: 'cmf-semaforo', type: 'gravitacional' },
-        { source: 'cmf-semaforo', target: 'fecu-liquidez', type: 'gravitacional' },
-        { source: 'fecu-liquidez', target: 'jpmorgan-custodia', type: 'gravitacional' },
-        { source: 'jpmorgan-custodia', target: 'fondos-mutuos-rescates', type: 'electromagnético' },
-        // sura — puentes a nodos existentes
-        { source: 'cotizante-dl3500', target: 'dl3500', type: 'electromagnético' },
-        { source: 'sura-afp-capital', target: 'sura-vertical', type: 'electromagnético' },
-        { source: 'cmf-semaforo', target: 'captura-regulatoria', type: 'gravitacional' },
-        { source: 'fondos-mutuos-rescates', target: 'tecno-feudalismo', type: 'electromagnético' },
-        // la-negra — cadena interna
-        { source: 'comunidad-lafkenche', target: 'conadi-tierras', type: 'gravitacional' },
-        { source: 'conadi-tierras', target: 'dl701-subsidio-forestal', type: 'gravitacional' },
-        { source: 'predios-avaluos-sii', target: 'forestal-losrios', type: 'gravitacional' },
-        { source: 'seia-central-osorno', target: 'seia-admisibilidad', type: 'electromagnético' },
-        // la-negra — puentes a nodos existentes
-        { source: 'comunidad-lafkenche', target: 'titulos-merced', type: 'electromagnético' },
-        { source: 'dl701-subsidio-forestal', target: 'forestales', type: 'gravitacional' },
-        { source: 'forestal-losrios', target: 'forestales', type: 'electromagnético' },
-        // periodismo — cadena interna
-        { source: 'ciper-fuente', target: 'municipio-trato-directo', type: 'gravitacional' },
-        { source: 'municipio-trato-directo', target: 'transp-municipio-honorarios', type: 'gravitacional' },
-        { source: 'transp-municipio-honorarios', target: 'sii-proveedores', type: 'gravitacional' },
-        { source: 'sii-proveedores', target: 'ley-20285-info-publica', type: 'electromagnético' },
-        // periodismo — puentes a nodos existentes
-        { source: 'ciper-fuente', target: 'etnografia-av', type: 'electromagnético' },
-        { source: 'ley-20285-info-publica', target: 'captura-regulatoria', type: 'electromagnético' },
-        // oit169 — cadena interna
-        { source: 'convenio-oit169', target: 'ds66-consulta', type: 'gravitacional' },
-        { source: 'ds66-consulta', target: 'ley19253-indigena', type: 'gravitacional' },
-        { source: 'seia-admisibilidad', target: 'diariooficial-consulta-2024', type: 'gravitacional' },
-        { source: 'convenio-oit169', target: 'seia-admisibilidad', type: 'electromagnético' },
-        // oit169 — puentes a nodos existentes
-        { source: 'convenio-oit169', target: 'oit169', type: 'gravitacional' },
-        { source: 'ley19253-indigena', target: 'titulos-merced', type: 'electromagnético' },
-        // banca — cadena interna
-        { source: 'sbif-circular-roles', target: 'opacidad-plataforma', type: 'gravitacional' },
-        // banca — puentes a nodos existentes
-        { source: 'sbif-circular-roles', target: 'captura-regulatoria', type: 'electromagnético' },
-        { source: 'opacidad-plataforma', target: 'tecno-feudalismo', type: 'electromagnético' },
-        // enlaces transversales (_meta.enlaces_transversales)
-        { source: 'jpmorgan-custodia', target: 'comunidad-lafkenche', type: 'gravitacional' },
-        { source: 'cmf-semaforo', target: 'convenio-oit169', type: 'electromagnético' },
-        { source: 'fecu-liquidez', target: 'comunidad-lafkenche', type: 'electromagnético' },
-        { source: 'ds66-consulta', target: 'cotizante-dl3500', type: 'electromagnético' }
-        ];
+        }];
 
         /* ═══════════════════════════════════════════════════════════════════ */
         /* ═══ STATE ═══ */
@@ -3539,10 +2987,7 @@
                 // Store reference
                 state.svg = svg;
 
-                // Friction proxy: connections count normalized to [0,1]
-                const maxConnections = d3.max(nodes, d => d.connections || 0) || 1;
-
-                // Create forces with quadrant distribution per eje
+                // Create forces
                 const simulation = d3.forceSimulation(nodes)
                     .force('link', d3.forceLink(links)
                         .id(d => d.id)
@@ -3550,15 +2995,7 @@
                         .strength(0.1))
                     .force('charge', d3.forceManyBody().strength(-300))
                     .force('center', d3.forceCenter(width / 2, height / 2))
-                    .force('collide', d3.forceCollide(30))
-                    .force('x', d3.forceX(d => {
-                        const qx = {1: width * 0.25, 2: width * 0.75, 3: width * 0.25, 4: width * 0.75};
-                        return qx[d.eje] || width / 2;
-                    }).strength(0.05))
-                    .force('y', d3.forceY(d => {
-                        const qy = {1: height * 0.25, 2: height * 0.25, 3: height * 0.75, 4: height * 0.75};
-                        return qy[d.eje] || height / 2;
-                    }).strength(0.05));
+                    .force('collide', d3.forceCollide(30));
 
                 state.simulation = simulation;
 
@@ -3580,11 +3017,7 @@
 
                 node.append('circle')
                     .attr('r', d => 5 + (d.connections || 0) * 0.8)
-                    .attr('fill', d => {
-                        const base = d3.color(getEjeColor(d.eje));
-                        const fs = (d.connections || 0) / maxConnections;
-                        return d3.interpolateRgb(base.darker(1.5), base)(fs);
-                    })
+                    .attr('fill', d => getEjeColor(d.eje))
                     .on('click', (e, d) => showNodePanel(d));
 
                 node.append('text')
@@ -3999,163 +3432,6 @@
                         progressBar.style.width = progress + '%';
                         progressBar.setAttribute('aria-valuenow', Math.round(progress));
                         progTicking = false;
-                    });
-                }
-            }, { passive: true });
-        }
-
-        // --- Content Animation System ---
-        // Respects prefers-reduced-motion
-        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        
-        if (!prefersReducedMotion) {
-            // Animate sections on scroll
-            const animateOnScroll = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('fade-in');
-                        entry.target.style.opacity = '1';
-                        // Unobserve after animation to improve performance
-                        animateOnScroll.unobserve(entry.target);
-                    }
-                });
-            }, {
-                threshold: 0.1,
-                rootMargin: '0px 0px -50px 0px'
-            });
-
-            // Observe narrative sections
-            document.querySelectorAll('.narr-section').forEach(section => {
-                section.style.opacity = '0';
-                animateOnScroll.observe(section);
-            });
-
-            // Staggered animation for doc-cards
-            const cardObserver = new IntersectionObserver((entries, observer) => {
-                entries.forEach((entry) => {
-                    if (entry.isIntersecting) {
-                        const card = entry.target;
-                        const delay = parseInt(card.dataset.animDelay || '0', 10);
-                        setTimeout(() => {
-                            card.classList.add('scale-in');
-                        }, delay);
-                        observer.unobserve(card);
-                    }
-                });
-            }, {
-                threshold: 0.2,
-                rootMargin: '0px'
-            });
-
-            // Observe doc-cards (will be added dynamically)
-            const observeDocCards = () => {
-                document.querySelectorAll('.doc-card:not(.scale-in)').forEach((card, index) => {
-                    card.style.opacity = '0';
-                    // Set animation delay as data attribute based on position
-                    card.dataset.animDelay = String(Math.min(index * 100, 600));
-                    cardObserver.observe(card);
-                });
-            };
-            
-            // Initial observation
-            setTimeout(observeDocCards, 100);
-            
-            // Re-observe when filters change
-            const originalApplyFilters = window.applyFilters;
-            if (typeof originalApplyFilters === 'function') {
-                window.applyFilters = function() {
-                    originalApplyFilters();
-                    setTimeout(observeDocCards, 50);
-                };
-            }
-
-            // Image lazy loading with fade-in
-            const imageObserver = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const img = entry.target;
-                        if (img.complete) {
-                            img.classList.add('loaded');
-                        } else {
-                            img.addEventListener('load', () => {
-                                img.classList.add('loaded');
-                            }, { once: true });
-                        }
-                        observer.unobserve(img);
-                    }
-                });
-            }, {
-                threshold: 0,
-                rootMargin: '50px'
-            });
-
-            // Observe all images
-            document.querySelectorAll('.ev-fig img').forEach(img => {
-                imageObserver.observe(img);
-            });
-
-            // Animate figure elements
-            const figureObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('fade-in-left');
-                        figureObserver.unobserve(entry.target);
-                    }
-                });
-            }, {
-                threshold: 0.1,
-                rootMargin: '0px 0px -30px 0px'
-            });
-
-            document.querySelectorAll('.ev-fig').forEach(fig => {
-                fig.style.opacity = '0';
-                figureObserver.observe(fig);
-            });
-
-            // Animate blockquotes
-            const quoteObserver = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('fade-in-right');
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, {
-                threshold: 0.2
-            });
-
-            document.querySelectorAll('.sec-blockquote').forEach(quote => {
-                quote.style.opacity = '0';
-                quoteObserver.observe(quote);
-            });
-
-            // Animate tags with stagger
-            document.querySelectorAll('.tag').forEach((tag, index) => {
-                // Apply stagger only if index is within range (0-5)
-                const staggerClass = index < 6 ? `stagger-${index + 1}` : 'stagger-6';
-                tag.classList.add('slide-down', staggerClass);
-            });
-
-            // Subtle parallax effect for section headers
-            const sectionHeaders = document.querySelectorAll('.sec-h');
-            let parallaxTicking = false;
-            
-            window.addEventListener('scroll', () => {
-                if (!parallaxTicking) {
-                    parallaxTicking = true;
-                    requestAnimationFrame(() => {
-                        sectionHeaders.forEach(header => {
-                            const rect = header.getBoundingClientRect();
-                            const viewportHeight = window.innerHeight;
-                            
-                            // Only apply parallax when header is in viewport
-                            if (rect.top < viewportHeight && rect.bottom > 0) {
-                                const scrollProgress = (viewportHeight - rect.top) / (viewportHeight + rect.height);
-                                const translateY = (scrollProgress - 0.5) * 20; // Subtle 20px range
-                                header.style.transform = `translateY(${translateY}px)`;
-                            }
-                        });
-                        parallaxTicking = false;
                     });
                 }
             }, { passive: true });

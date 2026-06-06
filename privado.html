@@ -9,7 +9,7 @@
     <meta property="og:title" content="Espacio Privado — Contra-Archivo">
     <meta property="og:description" content="Área privada para investigadores — Contra-Archivo: Antropología y Corrupción">
     <meta property="og:type" content="website">
-    <meta property="og:image" content="https://vientonorte.github.io/antropologia-corrupcion/img/t-tulos-de-merced-distribuci-n-territorial-del-r.jpg">
+    <meta property="og:image" content="https://vientonorte.github.io/antropologia-corrupcion/img/an-lisis-ux-ui-mapeo-de-vulnerabilidades-de-expe.jpg">
     <meta name="theme-color" content="#0c0c0c">
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⊘</text></svg>">
     <link rel="manifest" href="manifest.json">
@@ -1248,11 +1248,12 @@
                 });
                 var seen = {};
                 var out = [];
+                var maxKeywords = limit;
                 for (var i = 0; i < tokens.length; i++) {
                     if (seen[tokens[i]]) continue;
                     seen[tokens[i]] = true;
                     out.push(tokens[i]);
-                    if (out.length >= (limit || 24)) break;
+                    if (out.length >= maxKeywords) break;
                 }
                 return out;
             }
@@ -1321,16 +1322,17 @@
             }
 
             /* ── Auth Gate ── */
-            function waitFor(check, cb, tries) {
-                tries = tries || 0;
-                if (tries > 60) {
-                    if (onTimeout) onTimeout();
-                    return;
+            function waitFor(check, cb, onTimeout) {
+                var tries = 0;
+                function attempt() {
+                    if (tries++ > 60) {
+                        if (onTimeout) onTimeout();
+                        return;
+                    }
+                    if (check()) return cb();
+                    setTimeout(attempt, 80);
                 }
-                if (check()) return cb();
-                setTimeout(function() {
-                    waitFor(check, cb, tries + 1, onTimeout);
-                }, 80);
+                attempt();
             }
 
             function boot() {
@@ -1802,7 +1804,7 @@
 
                         /* FrictionField ya se crea internamente en FrictionGraph._init()
                            Exponemos la referencia desde graphInstance.field */
-                        fieldInstance = graphInstance && graphInstance.field ? graphInstance.field : null;
+                        fieldInstance = graphInstance.field;
 
                         $('sim-restart').addEventListener('click', function() {
                             if (graphInstance) graphInstance.destroy();
@@ -1843,7 +1845,6 @@
 
                         simInited = true;
                     },
-                    null,
                     function() {
                         container.innerHTML = '<div style="color:var(--crit);padding:20px;text-align:center">Los módulos de simulación no cargaron. Recarga la página (Ctrl+Shift+R).</div>';
                     }
