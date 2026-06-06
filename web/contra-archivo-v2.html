@@ -1793,7 +1793,11 @@
         <section id="consultar" class="mode-section">
             <div class="mode-section-header">
                 <h2>Biblioteca</h2>
-                <p>Corpus clasificado por eje, actor, rol analítico y profundidad. Filtrable por tipo de actor: Estado, Capital, Resistencia, Metodología, Teoría.</p>
+                <p>Corpus público clasificado por eje, rol analítico y profundidad — fuentes académicas, legales y documentales de acceso abierto.</p>
+                <p style="margin-top:0.5rem;padding:0.6rem 0.9rem;background:var(--surface-2,rgba(255,255,255,0.05));border-left:3px solid var(--accent,#c8a96e);border-radius:0 4px 4px 0;font-size:0.85rem;color:var(--text-muted);">
+                    <strong>Corpus clasificado completo</strong> — transcripciones, capturas de campo y material sensible disponibles solo en el
+                    <a href="/terraza" style="color:var(--accent,#c8a96e);text-decoration:underline;" aria-label="Acceso privado a la Terraza — corpus completo">módulo privado (Terraza)</a>.
+                </p>
             </div>
 
             <div class="doc-library-controls">
@@ -2240,249 +2244,149 @@
             "why": "<p>Demuestra que la investigación decolonial es método viable que produce artefactos académicos verificables.</p>",
             "proves": "<p>El artículo etnográfico de 2026 utiliza el archivo producido en las tres fases como fuente primaria.</p>"
         }];
-        const documentsData = [{
+        const documentsData = [
+        {
             "eje": 1,
             "title": "Cronología Operación Huracán (2017–2026)",
             "type": "Cronología",
             "analyticalRole": "Evidencia primaria",
             "depth": "Fundacional",
             "desc": "Detenciones, peritajes, colapso, veredicto condenatorio.",
-            "relatedNodes": ["huracán", "veredicto", "uioe"]
-        }, {
-            "eje": 1,
+            "relatedNodes": ["huracán", "veredicto", "uioe"]},
+        {"eje": 1,
             "title": "Infografías: Catrillanca, Comando Jungla, Lof Ñanco",
             "type": "Infografías",
             "analyticalRole": "Evidencia primaria",
             "depth": "Profundo",
             "desc": "Piezas visuales de investigación producidas por Negra Colorá 2018.",
-            "relatedNodes": ["catrillanca", "wallmapu-seg", "lof-nanco"]
-        }, {
-            "eje": 1,
+            "relatedNodes": ["catrillanca", "wallmapu-seg", "lof-nanco"]},
+        {"eje": 1,
             "title": "Reconstrucción de los hechos",
             "type": "Infografía",
             "analyticalRole": "Evidencia primaria",
             "depth": "Profundo",
             "desc": "Pieza de investigación visual: secuencia de eventos documentada.",
-            "relatedNodes": ["catrillanca"]
-        }, {
-            "eje": 1,
-            "title": "Documentos ACAB: órdenes, reglamentos, declaraciones",
-            "type": "Documentación legal",
-            "analyticalRole": "Artefacto institucional",
-            "depth": "Fundacional",
-            "desc": "Orden Crea Sub Dir. Grl., Orden Grl. 2371, LEY-18961, LEY-19974.",
-            "relatedNodes": ["uioe", "ani"]
-        }, {
-            "eje": 2,
-            "title": "Dossier: Separación de Bases de Datos AFP-SURA",
-            "type": "Dossier institucional",
-            "analyticalRole": "Análisis crítico",
-            "depth": "Fundacional",
-            "desc": "Migración sin consentimiento, arquitectura de tablas, herencia de prioridades.",
-            "relatedNodes": ["estrategia-gaona", "persona-natural", "reforma2022"]
-        }, {
-            "eje": 2,
+            "relatedNodes": ["catrillanca"]},
+        {"eje": 2,
             "title": "Tesis: Antropología financiera y tecno-feudalismo",
             "type": "Borrador académico",
             "analyticalRole": "Marco teórico",
             "depth": "Fundacional",
             "desc": "Marx, Varoufakis, Gramsci, Salazar, Dussel. Mecanismo de 5 fases.",
-            "relatedNodes": ["tecno-feudalismo", "dl3500", "sura-vertical"]
-        }, {
-            "eje": 2,
-            "title": "Vulnerabilidades: infraestructura con software obsoleto y sin parchear",
-            "type": "Reportes de seguridad",
-            "analyticalRole": "Evidencia primaria",
-            "depth": "Profundo",
-            "desc": "Documentación interna: múltiples hallazgos de vulnerabilidades sin parchear por más de 2 años en sistemas asociados al conglomerado financiero.",
-            "relatedNodes": ["vulnerabilidades"]
-        }, {
-            "eje": 2,
-            "title": "Transcripciones: reuniones técnicas separación AFP",
-            "type": "Transcripciones",
-            "analyticalRole": "Evidencia primaria",
-            "depth": "Profundo",
-            "desc": "Transcripciones de reuniones técnicas internas (2025) sobre arquitectura de datos y separación de líneas de negocio.",
-            "relatedNodes": ["persona-natural", "estrategia-gaona"]
-        }, {
-            "eje": 2,
-            "title": "Capturas: bases de datos, cuentas Perú-Colombia",
-            "type": "Evidencia visual",
-            "analyticalRole": "Evidencia primaria",
-            "depth": "Profundo",
-            "desc": "Screenshots de tabla Persona Natural, BDs SURA, replicación multipaís.",
-            "relatedNodes": ["persona-natural", "replicacion", "sura-vertical"]
-        }, {
-            "eje": 2,
-            "title": "Matriz de riesgos estratégicos (R1–R5)",
-            "type": "CSV",
-            "analyticalRole": "Artefacto institucional",
-            "depth": "Profundo",
-            "desc": "Duplicación sin consentimiento, dependencia tecnológica, portabilidad.",
-            "relatedNodes": ["estrategia-gaona", "captura-regulatoria"]
-        }, {
-            "eje": 2,
-            "title": "Documento Estratégico UX SURA",
-            "type": "Propuesta institucional",
-            "analyticalRole": "Artefacto institucional",
-            "depth": "Profundo",
-            "desc": "UX como unidad estratégica de gobernanza digital.",
-            "relatedNodes": ["resistencia-ux", "estrategia-gaona"]
-        }, {
-            "eje": 2,
-            "title": "Procesos Estrategia VN para SURA Investments",
-            "type": "PDF compilado",
-            "analyticalRole": "Análisis crítico",
-            "depth": "Fundacional",
-            "desc": "Compilación completa de procesos documentados durante la etnografía.",
-            "relatedNodes": ["estrategia-gaona"]
-        }, {
-            "eje": 3,
+            "relatedNodes": ["tecno-feudalismo", "dl3500", "sura-vertical"]},
+        {"eje": 3,
             "title": "Mapas: Títulos de Merced por región",
             "type": "Cartografía",
             "analyticalRole": "Evidencia primaria",
             "depth": "Fundacional",
             "desc": "Distribución en Araucanía, Ríos, Lagos, Arauco y Biobío. 1884-1929.",
-            "relatedNodes": ["titulos-merced"]
-        }, {
-            "eje": 3,
+            "relatedNodes": ["titulos-merced"]},
+        {"eje": 3,
             "title": "Hectáreas forestales en Wallmapu",
             "type": "Datos territoriales",
             "analyticalRole": "Evidencia primaria",
             "depth": "Profundo",
             "desc": "Expansión de industria forestal sobre territorio mapuche.",
-            "relatedNodes": ["forestales"]
-        }, {
-            "eje": 3,
+            "relatedNodes": ["forestales"]},
+        {"eje": 3,
             "title": "OIT 169 + normativa indígena",
             "type": "Análisis legal",
             "analyticalRole": "Marco teórico",
             "depth": "Fundacional",
             "desc": "Convenio completo, informe de normas constitucionales, legislación.",
-            "relatedNodes": ["oit169"]
-        }, {
-            "eje": 3,
+            "relatedNodes": ["oit169"]},
+        {"eje": 3,
             "title": "Catastro de Tierras y Aguas Indígenas – Zona Sur",
             "type": "Catastro",
             "analyticalRole": "Evidencia primaria",
             "depth": "Fundacional",
             "desc": "Registro territorial de la zona sur de Chile.",
-            "relatedNodes": ["titulos-merced", "forestales"]
-        }, {
-            "eje": 3,
+            "relatedNodes": ["titulos-merced", "forestales"]},
+        {"eje": 3,
             "title": "Estado del arte Lof Michillanca",
             "type": "Investigación",
             "analyticalRole": "Análisis crítico",
             "depth": "Contextual",
             "desc": "Documentación de comunidad y territorio.",
-            "relatedNodes": ["lof-nanco"]
-        }, {
-            "eje": 4,
+            "relatedNodes": ["lof-nanco"]},
+        {"eje": 4,
             "title": "Bibliografía decolonial: 50+ textos",
             "type": "Marco teórico",
             "analyticalRole": "Marco teórico",
             "depth": "Fundacional",
             "desc": "Quijano, Mignolo, Dussel, Walsh, Fanon, Freire, Scott, Butler, Taussig, Stoler.",
-            "relatedNodes": ["marco-teorico", "etnografia-av"]
-        }, {
-            "eje": 4,
+            "relatedNodes": ["marco-teorico", "etnografia-av"]},
+        {"eje": 4,
             "title": "Traduciendo Saberes — Documental",
             "type": "Producción audiovisual",
             "analyticalRole": "Artefacto institucional",
             "depth": "Profundo",
             "desc": "#noalaleyantiterrorista. Producción colaborativa con comunidades.",
-            "relatedNodes": ["traduciendo"]
-        }, {
-            "eje": 4,
+            "relatedNodes": ["traduciendo"]},
+        {"eje": 4,
             "title": "Resistencia cultural: Scott, Hall, Jefferson",
             "type": "Bibliografía",
             "analyticalRole": "Marco teórico",
             "depth": "Contextual",
             "desc": "Los dominados y el arte de la resistencia. Rituales de resistencia.",
-            "relatedNodes": ["marco-teorico"]
-        }, {
-            "eje": 4,
+            "relatedNodes": ["marco-teorico"]},
+        {"eje": 4,
             "title": "Pensamiento decolonial: 25 PDFs",
             "type": "Corpus teórico",
             "analyticalRole": "Marco teórico",
             "depth": "Fundacional",
             "desc": "Paradigma otro (Mignolo), ciencias sociales otras (Walsh), crítica poscolonial (Curiel).",
-            "relatedNodes": ["marco-teorico"]
-        }, {
-            "eje": 4,
+            "relatedNodes": ["marco-teorico"]},
+        {"eje": 4,
             "title": "Wïñoy Tripantu: filosofía mapuche",
             "type": "Documento cultural",
             "analyticalRole": "Marco teórico",
             "depth": "Contextual",
             "desc": "Marco conceptual del año nuevo mapuche.",
-            "relatedNodes": ["etnografia-av"]
-        }, {
-            "eje": 1,
+            "relatedNodes": ["etnografia-av"]},
+        {"eje": 1,
             "title": "Ley 18.314: Ley Antiterrorista (texto legal + reformas)",
             "type": "Legislación",
             "analyticalRole": "Artefacto institucional",
             "depth": "Fundacional",
             "desc": "Ley heredada de dictadura, reformada 2010. Testigos sin rostro, prisión preventiva extendida, tipificación selectiva.",
-            "relatedNodes": ["ley-antiterrorista", "wallmapu-seg"]
-        }, {
-            "eje": 1,
-            "title": "Reglamento Comando Jungla y órdenes operativas",
-            "type": "Documentación militar",
-            "analyticalRole": "Evidencia primaria",
-            "depth": "Profundo",
-            "desc": "Creación de unidad especial contrainsurgente bajo gobierno Piñera. Entrenamiento en Colombia.",
-            "relatedNodes": ["comando-jungla", "catrillanca"]
-        }, {
-            "eje": 2,
-            "title": "Transcripción reunión 28 julio 2025: herencia de prioridades",
-            "type": "Transcripción",
-            "analyticalRole": "Evidencia primaria",
-            "depth": "Fundacional",
-            "desc": "Fuente técnica interna (2025) confirma: la herencia de prioridades impide separación real de datos entre líneas de negocio.",
-            "relatedNodes": ["persona-natural", "ilegitimidad-3d"]
-        }, {
-            "eje": 2,
+            "relatedNodes": ["ley-antiterrorista", "wallmapu-seg"]},
+        {"eje": 2,
             "title": "Tres dimensiones de ilegitimidad: Salazar + Dussel",
             "type": "Análisis teórico",
             "analyticalRole": "Marco teórico",
             "depth": "Fundacional",
             "desc": "Ilegitimidad democrática, jurídica y ética de la migración de datos previsionales.",
-            "relatedNodes": ["ilegitimidad-3d", "tecno-feudalismo"]
-        }, {
-            "eje": 3,
+            "relatedNodes": ["ilegitimidad-3d", "tecno-feudalismo"]},
+        {"eje": 3,
             "title": "Tratado de Tapihue (1825): texto y análisis",
             "type": "Documento histórico",
             "analyticalRole": "Evidencia primaria",
             "depth": "Fundacional",
             "desc": "Tratado que reconoció soberanía mapuche al sur del Biobío, violado sistemáticamente.",
-            "relatedNodes": ["tapihue"]
-        }, {
-            "eje": 3,
+            "relatedNodes": ["tapihue"]},
+        {"eje": 3,
             "title": "Flujo de capital: AFP → Fondos → Forestales",
             "type": "Análisis financiero-territorial",
             "analyticalRole": "Análisis crítico",
             "depth": "Profundo",
             "desc": "Circuito: cotización obligatoria → AFP Capital → fondos → acciones CMPC/Arauco → monocultivo en Wallmapu.",
-            "relatedNodes": ["flujo-afp-forestales", "forestales", "dl3500"]
-        }, {
-            "eje": 4,
+            "relatedNodes": ["flujo-afp-forestales", "forestales", "dl3500"]},
+        {"eje": 4,
             "title": "Scott: Los dominados y el arte de la resistencia",
             "type": "Bibliografía",
             "analyticalRole": "Marco teórico",
             "depth": "Fundacional",
             "desc": "Infrapolítica, transcripciones ocultas, resistencia bajo la superficie del poder.",
-            "relatedNodes": ["infrapolítica", "marco-teorico"]
-        }, {
-            "eje": 4,
+            "relatedNodes": ["infrapolítica", "marco-teorico"]},
+        {"eje": 4,
             "title": "Quijano: Colonialidad del poder",
             "type": "Bibliografía",
             "analyticalRole": "Marco teórico",
             "depth": "Fundacional",
             "desc": "Meta-marco: clasificación de cuerpos, territorios, conocimientos como mecanismo de extracción.",
-            "relatedNodes": ["colonialidad-poder", "marco-teorico"]
-        },
-        {
-            "id": "michillanca-caso",
+            "relatedNodes": ["colonialidad-poder", "marco-teorico"]},
+        {"id": "michillanca-caso",
             "eje": 3,
             "year": 2014,
             "label": "Lof Michillanca",
@@ -2496,10 +2400,8 @@
             "analyticalRole": "Caso etnográfico",
             "depth": "Empírico-teórico",
             "desc": "Usurpación dictatorial (1974) + criminalización antiterrorista de la recuperación (2014) — el Estado produce y destruye su propio documento fundante.",
-            "relatedNodes": ["ley-antiterrorista", "titulos-merced", "lof-nanco", "oit169", "michillanca-gomez", "michillanca-recuperacion"]
-        },
-        {
-            "id": "michillanca-gomez",
+            "relatedNodes": ["ley-antiterrorista", "titulos-merced", "lof-nanco", "oit169", "michillanca-gomez", "michillanca-recuperacion"]},
+        {"id": "michillanca-gomez",
             "eje": 3,
             "year": 1974,
             "label": "Usurpación Gómez",
@@ -2513,10 +2415,8 @@
             "analyticalRole": "Mecanismo de fricción",
             "depth": "Empírico",
             "desc": "Despojo bajo coerción dictatorial — la informalidad de la amenaza como técnica de opacidad institucional.",
-            "relatedNodes": ["michillanca-caso", "titulos-merced"]
-        },
-        {
-            "id": "michillanca-recuperacion",
+            "relatedNodes": ["michillanca-caso", "titulos-merced"]},
+        {"id": "michillanca-recuperacion",
             "eje": 3,
             "year": 2014,
             "label": "Recuperación 2014",
@@ -2531,7 +2431,8 @@
             "depth": "Empírico",
             "desc": "Recuperación territorial como acto de restitución — criminalizadopor el mismo Estado que generó el derecho originario.",
             "relatedNodes": ["michillanca-caso", "ley-antiterrorista", "oit169"]
-        }];
+        }]}
+        ];
 
         const linksData = [{
             source: 'huracán',
