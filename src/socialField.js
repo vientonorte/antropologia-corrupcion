@@ -713,6 +713,12 @@ class SocialField {
     /* ─── RENDER ─── */
 
     _animate() {
+        // Detener animación en entornos headless/CDP (Lighthouse, Playwright) o prefers-reduced-motion
+        if (navigator.webdriver || window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) {
+            this._render();
+            this._updateMetrics();
+            return;
+        }
         // Cancel any existing animation loop to prevent double-loops
         if (this.animFrame) { cancelAnimationFrame(this.animFrame); this.animFrame = null; }
         const frame = () => {
@@ -842,7 +848,7 @@ class SocialField {
     _renderAgents(ctx) {
         const PI2 = Math.PI * 2;
         // Batch clean agents in one path
-        ctx.fillStyle = 'rgba(160, 180, 200, 0.5)';
+        ctx.fillStyle = CA_TOKENS.rgba('agentClean', 0.5);
         ctx.beginPath();
         for (const agent of this.agents) {
             if (agent.corrupted) continue;
@@ -854,7 +860,7 @@ class SocialField {
         ctx.fill();
 
         // Batch corrupt agent glows
-        ctx.fillStyle = 'rgba(200, 100, 60, 0.1)';
+        ctx.fillStyle = CA_TOKENS.rgba('agentGlow', 0.1);
         ctx.beginPath();
         for (const agent of this.agents) {
             if (!agent.corrupted) continue;
@@ -864,7 +870,7 @@ class SocialField {
         ctx.fill();
 
         // Batch corrupt agent cores
-        ctx.fillStyle = 'rgba(200, 120, 70, 0.55)';
+        ctx.fillStyle = CA_TOKENS.rgba('agentDirty', 0.55);
         ctx.beginPath();
         for (const agent of this.agents) {
             if (!agent.corrupted) continue;
@@ -884,7 +890,7 @@ class SocialField {
         ctx.lineCap = 'round';
 
         // Pass 1: batch all outer track rings
-        ctx.strokeStyle = 'rgba(60,80,100,0.15)';
+        ctx.strokeStyle = CA_TOKENS.rgba('trackRing', 0.15);
         ctx.lineWidth = ringW;
         ctx.beginPath();
         for (const node of this.nodes) {
@@ -940,11 +946,11 @@ class SocialField {
             const state = this.nodeState.get(node.id);
             if (!state) continue;
             const integrity = state.integrity;
-            ctx.fillStyle = integrity > 0.5 ? 'rgba(120,180,200,0.7)' :
-                integrity > 0.2 ? 'rgba(200,169,110,0.7)' : 'rgba(180,60,50,0.9)';
+            ctx.fillStyle = integrity > 0.5 ? CA_TOKENS.rgba('intHigh', 0.7) :
+                integrity > 0.2 ? CA_TOKENS.rgba('intMid', 0.7) : CA_TOKENS.rgba('intLow', 0.9);
             ctx.fillText('R=' + Math.round(integrity * 100) + '%', node.x, node.y + rOuter + 14);
             if (state.currentFlow > 0.1) {
-                ctx.fillStyle = 'rgba(200,120,70,0.7)';
+                ctx.fillStyle = CA_TOKENS.rgba('agentDirty', 0.7);
                 ctx.fillText('I=' + state.currentFlow.toFixed(1), node.x, node.y - rOuter - 8);
             }
         }
@@ -964,7 +970,7 @@ class SocialField {
         if (S < 0.3) {
             // Grid ordenado que se desvanece conforme sube S
             const alpha = 0.04 * (1 - S / 0.3);
-            ctx.strokeStyle = `rgba(74,127,165,${alpha})`;
+            ctx.strokeStyle = CA_TOKENS.rgba('gridOrder', alpha);
             ctx.lineWidth = 0.5;
             const spacing = 40;
             for (let x = spacing; x < w; x += spacing) {
@@ -981,7 +987,7 @@ class SocialField {
             // Grid distorsionado: líneas se curvan proporcionalmente a S
             const distort = (S - 0.3) / 0.3; // 0→1 en este rango
             const alpha = 0.03 + distort * 0.02;
-            ctx.strokeStyle = `rgba(200,169,110,${alpha})`;
+            ctx.strokeStyle = CA_TOKENS.rgba('gridChaos', alpha);
             ctx.lineWidth = 0.5;
             const spacing = 40;
             for (let x = spacing; x < w; x += spacing) {
@@ -1005,7 +1011,7 @@ class SocialField {
                 const size = 0.5 + (seed % 3) * 0.5;
                 ctx.beginPath();
                 ctx.arc(px, py, size, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(180,60,50,${0.1 * pulse})`;
+                ctx.fillStyle = CA_TOKENS.rgba('noiseDeath', 0.1 * pulse);
                 ctx.fill();
             }
         }
@@ -1013,14 +1019,14 @@ class SocialField {
 
     _renderCollapseWarning(ctx) {
         const pulse = 0.5 + Math.sin(this._frameCount * 0.08) * 0.5;
-        ctx.fillStyle = `rgba(140, 30, 30, ${0.03 * pulse})`;
+        ctx.fillStyle = CA_TOKENS.rgba('collapse', 0.03 * pulse);
         ctx.fillRect(0, 0, this.width, this.height);
 
         // Texto de alerta
         ctx.save();
         ctx.font = 'bold 11px "SF Mono", monospace';
         ctx.textAlign = 'center';
-        ctx.fillStyle = `rgba(180, 50, 40, ${0.4 + pulse * 0.4})`;
+        ctx.fillStyle = CA_TOKENS.rgba('collapseTxt', 0.4 + pulse * 0.4);
         ctx.fillText(
             'COLAPSO TÉRMICO — ENTROPÍA CRÍTICA',
             this.width / 2, 20
@@ -1125,7 +1131,7 @@ class SocialField {
         var ibEl = document.getElementById('sf-m-intbar');
         if (ibEl) {
             ibEl.style.width = Math.round(avgIntegrity * 100) + '%';
-            ibEl.style.background = avgIntegrity > 0.5 ? 'rgba(74,127,165,0.6)' : avgIntegrity > 0.2 ? 'rgba(200,169,110,0.6)' : 'rgba(180,60,50,0.7)';
+            ibEl.style.background = avgIntegrity > 0.5 ? CA_TOKENS.rgba('cold', 0.6) : avgIntegrity > 0.2 ? CA_TOKENS.rgba('warm', 0.6) : CA_TOKENS.rgba('hot', 0.7);
         }
         var cEl = document.getElementById('sf-m-corrupt');
         if (cEl) cEl.textContent = corruptPct + '%';

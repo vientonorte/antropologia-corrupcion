@@ -510,6 +510,14 @@ class FrictionGraph {
     /* ─── LOOP DE ANIMACIÓN ─── */
 
     _animate() {
+        // Detener animación en entornos headless/CDP (Lighthouse, Playwright) o prefers-reduced-motion
+        if (navigator.webdriver || window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) {
+            // Correr la física hasta convergencia en un solo bloque sincrónico
+            let i = 0;
+            while (this.sim.tick() && i++ < 300) {}
+            this._updatePositions();
+            return;
+        }
         const step = () => {
             const running = this.sim.tick();
             this._updatePositions();

@@ -433,9 +433,11 @@
             padding: var(--sp-4, 16px);
             flex: 1
         }
-        
+
         .pv-panel.active {
-            display: block
+            display: block;
+            /* Aislar cálculo de layout del panel activo del resto del DOM */
+            contain: layout style
         }
         /* ═══ SIMULACIÓN ═══ */
         
@@ -490,7 +492,9 @@
             border-radius: var(--r);
             background: var(--s1);
             position: relative;
-            overflow: hidden
+            overflow: hidden;
+            /* Aislar repaints del grafo del resto del layout de página */
+            contain: strict
         }
         
         .sim-canvas-wrap canvas,
@@ -503,17 +507,37 @@
         .sim-canvas-wrap .friction-graph-svg {
             position: relative;
             z-index: 1;
-            cursor: grab
+            cursor: grab;
+            /* Capa de compositing propia: evita repaint al mover nodos */
+            will-change: transform
         }
-        
+
         .sim-canvas-wrap .friction-field-canvas {
             position: absolute;
             top: 0;
             left: 0;
             pointer-events: none;
-            z-index: 0
+            z-index: 0;
+            /* Capa propia para canvas animado: GPU compositing independiente del SVG */
+            will-change: contents
         }
         
+        /* Skeleton spinner para loading state de simulación */
+        @keyframes sim-spin {
+            to { transform: rotate(360deg) }
+        }
+        .sim-skeleton-spinner {
+            width: 36px;
+            height: 36px;
+            border: 3px solid var(--border);
+            border-top-color: var(--accent, #c8a96e);
+            border-radius: 50%;
+            animation: sim-spin 0.9s linear infinite
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .sim-skeleton-spinner { animation: none; opacity: 0.5 }
+        }
+
         .sim-legend {
             display: flex;
             gap: var(--sp-4, 16px);
@@ -1110,7 +1134,17 @@
                     <button class="sim-btn" id="sim-restart">↻ Reiniciar</button>
                     <button class="sim-btn" id="sim-pause">⏸ Pausar</button>
                 </div>
-                <div class="sim-canvas-wrap" id="sim-graph-container"></div>
+                <div style="position:relative">
+                    <div class="sim-canvas-wrap" id="sim-graph-container"></div>
+                    <!-- Overlay de resultados: no destruye el grafo -->
+                    <div id="sim-search-overlay" role="region" aria-label="Resultados de búsqueda" aria-live="polite" style="display:none;position:absolute;inset:0;background:var(--bg,#0c0c0c);overflow-y:auto;z-index:10;border:1px solid var(--border);border-radius:var(--r)">
+                        <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--bg,#0c0c0c);z-index:1">
+                            <span id="sim-search-overlay-title" style="font-size:.9rem;font-weight:600"></span>
+                            <button id="sim-search-overlay-close" class="sim-btn" aria-label="Cerrar resultados y volver al grafo" style="min-height:36px;font-size:.8rem;padding:4px 10px">× Cerrar</button>
+                        </div>
+                        <div id="sim-search-overlay-body" style="padding:16px"></div>
+                    </div>
+                </div>
                 <div class="sim-legend">
                     <span class="l-etica">Ética</span>
                     <span class="l-inst">Institucional</span>
@@ -1165,6 +1199,7 @@
     <script defer src="src/memoria.js?v=20260419c"></script>
     <script defer src="src/seguimientos.js?v=20260419c"></script>
     <script defer src="src/ciperFeed.js?v=20260419c"></script>
+    <script src="src/tokens.js?v=20260606"></script>
     <script defer src="src/graph.js?v=20260419c"></script>
     <script defer src="src/fieldPhysics.js?v=20260419c"></script>
     <script>
@@ -1423,6 +1458,19 @@
                 initLogout();
                 initHamburger();
                 initSimulacion();
+                // Cerrar overlay de búsqueda
+                var overlayCloseBtn = $('sim-search-overlay-close');
+                if (overlayCloseBtn) overlayCloseBtn.addEventListener('click', closeSearchOverlay);
+                // Escape cierra el overlay (WCAG 2.2 — dismiss dialogs with Escape)
+                document.addEventListener('keydown', function(e) {
+                    if (e.key === 'Escape') {
+                        var overlay = $('sim-search-overlay');
+                        if (overlay && overlay.style.display !== 'none') {
+                            closeSearchOverlay();
+                            $('sb-search-input').focus();
+                        }
+                    }
+                });
 
                 waitFor(
                     function() {
@@ -1590,48 +1638,63 @@
             function runSearch(q) {
                 if (!q) return;
                 if (!searchEngine) return;
-                var results = searchEngine.search({
-                    query: q
-                });
 
-                if (window.MemoriaSearch) {
-                    window.MemoriaSearch.guardar({
-                        query: q,
-                        category: 'busqueda',
-                        resultCount: results.length,
-                        results: results.slice(0, 5)
-                    });
-                    searchCount++;
-                    if (searchCount % 5 === 0) refreshPatterns();
-                    refreshHistory();
+                // Diferir la búsqueda al idle del browser para no competir con el RAF del grafo
+                var doSearch = function() {
+                    var results = searchEngine.search({ query: q });
+
+                    if (window.MemoriaSearch) {
+                        window.MemoriaSearch.guardar({
+                            query: q,
+                            category: 'busqueda',
+                            resultCount: results.length,
+                            results: results.slice(0, 5)
+                        });
+                        searchCount++;
+                        if (searchCount % 5 === 0) refreshPatterns();
+                        refreshHistory();
+                    }
+
+                    displaySearchResults(q, results);
+                };
+
+                if (typeof requestIdleCallback !== 'undefined') {
+                    requestIdleCallback(doSearch, { timeout: 500 });
+                } else {
+                    setTimeout(doSearch, 0);
                 }
-
-                displaySearchResults(q, results);
             }
 
             function displaySearchResults(q, results) {
+                // Activar tab de simulación si no está activo
                 var tabs = document.querySelectorAll('.pv-tab');
-                tabs.forEach(function(t) {
-                    t.classList.remove('active');
-                    t.setAttribute('aria-selected', 'false');
-                    t.setAttribute('tabindex', '-1');
-                });
-                document.querySelectorAll('.pv-panel').forEach(function(p) {
-                    p.classList.remove('active');
-                });
-
-                var panel = $('panel-simulacion');
                 var simTab = document.querySelector('[data-tab="simulacion"]');
-                simTab.classList.add('active');
-                simTab.setAttribute('aria-selected', 'true');
-                simTab.setAttribute('tabindex', '0');
-                panel.classList.add('active');
+                if (!simTab.classList.contains('active')) {
+                    tabs.forEach(function(t) {
+                        t.classList.remove('active');
+                        t.setAttribute('aria-selected', 'false');
+                        t.setAttribute('tabindex', '-1');
+                    });
+                    document.querySelectorAll('.pv-panel').forEach(function(p) {
+                        p.classList.remove('active');
+                    });
+                    simTab.classList.add('active');
+                    simTab.setAttribute('aria-selected', 'true');
+                    simTab.setAttribute('tabindex', '0');
+                    $('panel-simulacion').classList.add('active');
+                    if (!simInited) initSimulacion();
+                }
 
-                var wrap = $('sim-graph-container');
-                var html = '<div style="padding:16px">';
-                html += '<h3 style="font-size:1rem;margin-bottom:12px">Resultados para «' + esc(q) + '» — ' + results.length + ' encontrados</h3>';
+                // Mostrar resultados en overlay sin destruir el grafo
+                var overlay = $('sim-search-overlay');
+                var overlayTitle = $('sim-search-overlay-title');
+                var overlayBody = $('sim-search-overlay-body');
+
+                overlayTitle.textContent = 'Resultados para «' + q + '» — ' + results.length + ' encontrados';
+
+                var html = '';
                 if (results.length === 0) {
-                    html += '<p style="color:var(--dim)">Sin resultados. Intenta con otros términos.</p>';
+                    html = '<p style="color:var(--dim)">Sin resultados. Intenta con otros términos.</p>';
                 } else {
                     results.slice(0, 20).forEach(function(r) {
                         var reg = r.registro || r;
@@ -1645,9 +1708,16 @@
                         html += '</div>';
                     });
                 }
-                html += '</div>';
-                wrap.innerHTML = html;
-                simInited = false;
+                overlayBody.innerHTML = html;
+                overlay.style.display = 'block';
+                // Focus en el título del overlay para comunicar resultado a lectores de pantalla
+                overlayTitle.setAttribute('tabindex', '-1');
+                overlayTitle.focus();
+            }
+
+            function closeSearchOverlay() {
+                var overlay = $('sim-search-overlay');
+                if (overlay) overlay.style.display = 'none';
             }
 
             function refreshHistory() {
@@ -1769,7 +1839,7 @@
             function initSimulacion() {
                 if (simInited) return;
                 var container = $('sim-graph-container');
-                container.innerHTML = '<div style="color:var(--dim);padding:20px;text-align:center">Cargando simulación…</div>';
+                container.innerHTML = '<div role="status" aria-live="polite" aria-label="Cargando simulación de fricción epistemológica" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:40px;min-height:280px"><div class="sim-skeleton-spinner" aria-hidden="true"></div><span style="color:var(--dim);font-size:.85rem">Cargando simulación…</span></div>';
                 waitFor(
                     function() {
                         return typeof window.frictionEngine !== 'undefined' && typeof window.FrictionGraph !== 'undefined';

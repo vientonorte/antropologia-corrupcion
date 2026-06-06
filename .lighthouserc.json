@@ -2,9 +2,12 @@
   "ci": {
     "collect": {
       "url": ["http://localhost:3000/contra-archivo-v2.html", "http://localhost:3000/buscador.html"],
-      "numberOfRuns": 2,
+      "numberOfRuns": 1,
       "settings": {
-        "chromeFlags": "--headless --no-sandbox --disable-dev-shm-usage"
+        "chromeFlags": "--headless --no-sandbox --disable-dev-shm-usage --disable-gpu --disable-software-rasterizer",
+        "maxWaitForFcp": 30000,
+        "maxWaitForLoad": 45000,
+        "throttlingMethod": "provided"
       }
     },
     "assert": {

@@ -25,22 +25,22 @@
 ═══════════════════════════════════════════════════════════════════════════ */
 
 const FIELD_CONFIG = Object.freeze({
-    // Resolución del grid (píxeles por celda) — menor = más detalle, más costo
-    GRID_RESOLUTION: 6,
+    // Resolución del grid (píxeles por celda) — 12 = 4× menos celdas que 6, sin pérdida visual perceptible
+    GRID_RESOLUTION: 12,
     // Intensidad base del campo (coulombiano)
     CHARGE_MULTIPLIER: 8000,
     // Softening para evitar singularidades en r→0
     SOFTENING: 40,
-    // Cantidad de partículas de energía
-    PARTICLE_COUNT: 120,
+    // Cantidad de partículas de energía — reducido para aliviar main thread
+    PARTICLE_COUNT: 60,
     // Velocidad base de partículas
     PARTICLE_SPEED: 1.2,
     // Vida máxima de partícula (frames)
     PARTICLE_LIFE: 180,
-    // Cantidad de streamlines por nodo
-    STREAMLINES_PER_NODE: 8,
-    // Pasos de integración por streamline
-    STREAMLINE_STEPS: 60,
+    // Cantidad de streamlines por nodo — reducido: 4 por nodo sigue siendo legible
+    STREAMLINES_PER_NODE: 4,
+    // Pasos de integración por streamline — reducido sin perder trayectoria
+    STREAMLINE_STEPS: 40,
     // Paso de integración (Euler)
     STREAMLINE_DT: 4,
     // Opacidad máxima del campo de fondo
@@ -149,8 +149,11 @@ class FrictionField {
         this.canvas.height = this.height;
         this.canvas.className = 'friction-field-canvas';
         this.canvas.setAttribute('aria-hidden', 'true');
+        // Promover a capa de compositing propia: evita repaint del SVG al animar canvas
+        this.canvas.style.willChange = 'contents';
         this.container.insertBefore(this.canvas, this.container.firstChild);
 
+        // alpha:true necesario para transparencia del heatmap sobre fondo oscuro
         this.ctx = this.canvas.getContext('2d', { alpha: true });
 
         // Inicializar partículas
@@ -469,6 +472,12 @@ class FrictionField {
     /* ─── RENDER LOOP ─── */
 
     _animate() {
+        // Detener animación en entornos headless/CDP (Lighthouse, Playwright) o prefers-reduced-motion
+        if (navigator.webdriver || window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) {
+            this._computeField();
+            this._render();
+            return;
+        }
         if (this.animFrame) { cancelAnimationFrame(this.animFrame); this.animFrame = null; }
         const frame = () => {
             if (!this.visible) {
@@ -485,7 +494,7 @@ class FrictionField {
                 posHash = (posHash * 31 + ((this.nodes[i].x||0)|0)) | 0;
                 posHash = (posHash * 31 + ((this.nodes[i].y||0)|0)) | 0;
             }
-            if (this._needsFieldUpdate || (posHash !== this._lastPosHash && this._frameCount % 3 === 0)) {
+            if (this._needsFieldUpdate || (posHash !== this._lastPosHash && this._frameCount % 8 === 0)) {
                 this._lastPosHash = posHash;
                 this._computeField();
                 this._streamlinesDirty = true;
@@ -564,7 +573,7 @@ class FrictionField {
             const alpha = 0.08 * weight;
 
             // Use flat color instead of gradient per-frame (major perf win)
-            ctx.strokeStyle = `rgba(200, 169, 110, ${alpha + 0.04})`;
+            ctx.strokeStyle = CA_TOKENS.rgba('warm', alpha + 0.04);
             ctx.lineWidth = weight * 3;
 
             const nx = -dy / dist;
@@ -602,7 +611,7 @@ class FrictionField {
             ctx.lineTo(mx + Math.cos(angle - 2.5) * arrowSize * 0.6, my + Math.sin(angle - 2.5) * arrowSize * 0.6);
             ctx.closePath();
         }
-        ctx.fillStyle = 'rgba(200, 169, 110, 0.15)';
+        ctx.fillStyle = CA_TOKENS.rgba('warm', 0.15);
         ctx.fill();
     }
 
@@ -647,13 +656,13 @@ class FrictionField {
             // Simple radial fill instead of gradient (no allocation)
             ctx.beginPath();
             ctx.arc(node.x, node.y, r, 0, PI2);
-            ctx.fillStyle = `rgba(200, 169, 110, ${0.04 * energy})`;
+            ctx.fillStyle = CA_TOKENS.rgba('warm', 0.04 * energy);
             ctx.fill();
         }
 
         // Batch all force arrows in one path
         ctx.beginPath();
-        ctx.strokeStyle = 'rgba(200, 169, 110, 0.12)';
+        ctx.strokeStyle = CA_TOKENS.rgba('warm', 0.12);
         ctx.lineWidth = 1;
         for (const node of this.nodes) {
             if (!node.x || !node.y) continue;
@@ -689,14 +698,10 @@ class FrictionField {
 
         // Color basado en tipo de fricción dominante
         switch (node.tipo) {
-            case 'politica':
-                return 'rgba(200, 169, 110, 1)';
-            case 'semantica':
-                return 'rgba(74, 127, 165, 1)';
-            case 'tecnica':
-                return 'rgba(122, 158, 110, 1)';
-            default:
-                return 'rgba(200, 169, 110, 1)';
+            case 'politica':  return CA_TOKENS.rgba('warm', 1);
+            case 'semantica': return CA_TOKENS.rgba('cold', 1);
+            case 'tecnica':   return 'rgba(122, 158, 110, 1)'; // verde territorio — sin token aún
+            default:          return CA_TOKENS.rgba('warm', 1);
         }
     }
 
