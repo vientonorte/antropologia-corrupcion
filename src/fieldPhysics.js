@@ -25,22 +25,22 @@
 ═══════════════════════════════════════════════════════════════════════════ */
 
 const FIELD_CONFIG = Object.freeze({
-    // Resolución del grid (píxeles por celda) — menor = más detalle, más costo
-    GRID_RESOLUTION: 6,
+    // Resolución del grid (píxeles por celda) — 12 = 4× menos celdas que 6, sin pérdida visual perceptible
+    GRID_RESOLUTION: 12,
     // Intensidad base del campo (coulombiano)
     CHARGE_MULTIPLIER: 8000,
     // Softening para evitar singularidades en r→0
     SOFTENING: 40,
-    // Cantidad de partículas de energía
-    PARTICLE_COUNT: 120,
+    // Cantidad de partículas de energía — reducido para aliviar main thread
+    PARTICLE_COUNT: 60,
     // Velocidad base de partículas
     PARTICLE_SPEED: 1.2,
     // Vida máxima de partícula (frames)
     PARTICLE_LIFE: 180,
-    // Cantidad de streamlines por nodo
-    STREAMLINES_PER_NODE: 8,
-    // Pasos de integración por streamline
-    STREAMLINE_STEPS: 60,
+    // Cantidad de streamlines por nodo — reducido: 4 por nodo sigue siendo legible
+    STREAMLINES_PER_NODE: 4,
+    // Pasos de integración por streamline — reducido sin perder trayectoria
+    STREAMLINE_STEPS: 40,
     // Paso de integración (Euler)
     STREAMLINE_DT: 4,
     // Opacidad máxima del campo de fondo
@@ -149,8 +149,11 @@ class FrictionField {
         this.canvas.height = this.height;
         this.canvas.className = 'friction-field-canvas';
         this.canvas.setAttribute('aria-hidden', 'true');
+        // Promover a capa de compositing propia: evita repaint del SVG al animar canvas
+        this.canvas.style.willChange = 'contents';
         this.container.insertBefore(this.canvas, this.container.firstChild);
 
+        // alpha:true necesario para transparencia del heatmap sobre fondo oscuro
         this.ctx = this.canvas.getContext('2d', { alpha: true });
 
         // Inicializar partículas
@@ -485,7 +488,7 @@ class FrictionField {
                 posHash = (posHash * 31 + ((this.nodes[i].x||0)|0)) | 0;
                 posHash = (posHash * 31 + ((this.nodes[i].y||0)|0)) | 0;
             }
-            if (this._needsFieldUpdate || (posHash !== this._lastPosHash && this._frameCount % 3 === 0)) {
+            if (this._needsFieldUpdate || (posHash !== this._lastPosHash && this._frameCount % 8 === 0)) {
                 this._lastPosHash = posHash;
                 this._computeField();
                 this._streamlinesDirty = true;
