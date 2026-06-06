@@ -2480,6 +2480,57 @@
             "depth": "Fundacional",
             "desc": "Meta-marco: clasificación de cuerpos, territorios, conocimientos como mecanismo de extracción.",
             "relatedNodes": ["colonialidad-poder", "marco-teorico"]
+        },
+        {
+            "id": "michillanca-caso",
+            "eje": 3,
+            "year": 2014,
+            "label": "Lof Michillanca",
+            "connections": 6,
+            "span": 106,
+            "calor": 0.73,
+            "friccion": 0.91,
+            "body": "<p>16 diciembre 2014: la familia Michillanca, mapuche-lafkenche de la costa de Valdivia, recupera el predio de Los Molinos — 92,6 ha adjudicadas por el Título de Merced N°2340 (1912) y usurpadas bajo dictadura en 1974. El Estado responde con la Ley 18.314. El mismo Estado que produjo el documento fundante del derecho convierte en terrorismo el acto de hacerlo valer. Fricción no como error: como modo de operación estructural frente al sujeto mapuche.</p>",
+            "why": "<p>Harvey (<em>The New Imperialism</em>, 2003): acumulación por desposesión — el capital requiere nuevos ciclos de expropiación; la dictadura y la Ley Antiterrorista son instrumentos consecutivos del mismo proceso. Das & Poole (<em>Anthropology in the Margins of the State</em>, 2004): el 'margen' mapuche no es periferia sino sitio constitutivo donde el Estado muestra su lógica sin mediación. Abrams (<em>Notes on the Difficulty of Studying the State</em>, 1988): el Estado como máscara — el Título de Merced produce el efecto de legitimidad; la Ley Antiterrorista revela la violencia que la máscara oculta.</p>",
+            "proves": "<p>Título de Merced N°2340 (1912). Ley 18.314 — Conductas Terroristas. Convenio OIT 169 (DS N°236, 2009). Entrevistas de campo: MVI_2463, 2464, 2465, 3140 (archivo privado, enero–marzo 2018). Sinopsis #NOALALEYANTITERRORISTA.avi. Estado del Arte Lof Michillanca (Producción Colaborativa, 2018).</p>",
+            "analyticalRole": "Caso etnográfico",
+            "depth": "Empírico-teórico",
+            "desc": "Usurpación dictatorial (1974) + criminalización antiterrorista de la recuperación (2014) — el Estado produce y destruye su propio documento fundante.",
+            "relatedNodes": ["ley-antiterrorista", "titulos-merced", "lof-nanco", "oit169", "michillanca-gomez", "michillanca-recuperacion"]
+        },
+        {
+            "id": "michillanca-gomez",
+            "eje": 3,
+            "year": 1974,
+            "label": "Usurpación Gómez",
+            "connections": 3,
+            "span": 40,
+            "calor": 0.80,
+            "friccion": 0.91,
+            "body": "<p>1974: José Luis Gómez se apropia de las 92,6 ha del predio Michillanca usando como palanca la detención política del hijo mayor, Joel, en el Regimiento de Valdivia. José Rosamel Michillanca firma el abandono del predio bajo la amenaza directa: 'Si quieres escapar con vida tienes que abandonar acá.' El Conservador de Bienes Raíces inscribe el predio a nombre de Gómez. No hay registro formal de la coerción — el sistema legal solo ve una transacción, no un despojo.</p>",
+            "why": "<p>Taussig (<em>Shamanism, Colonialism, and the Wild Man</em>, 1987): el terror dictatorial opera como mecanismo de gobierno — la detención no necesita ejecutarse, basta la amenaza. La informalidad del despojo es deliberada: produce una opacidad que el sistema legal no puede leer como coerción.</p>",
+            "proves": "<p>Testimonio Sofonías Michillanca (en Correa, 2010 [cita pendiente de referencia completa]). Testimonio Sara Michillanca (MVI_2464, archivo privado). Registro Conservador de Bienes Raíces — inscripción a nombre de Gómez.</p>",
+            "analyticalRole": "Mecanismo de fricción",
+            "depth": "Empírico",
+            "desc": "Despojo bajo coerción dictatorial — la informalidad de la amenaza como técnica de opacidad institucional.",
+            "relatedNodes": ["michillanca-caso", "titulos-merced"]
+        },
+        {
+            "id": "michillanca-recuperacion",
+            "eje": 3,
+            "year": 2014,
+            "label": "Recuperación 2014",
+            "connections": 3,
+            "span": 0,
+            "calor": 0.45,
+            "friccion": 0.82,
+            "body": "<p>16 diciembre 2014: integrantes de la familia Michillanca recuperan físicamente el predio de Los Molinos. El acto no es toma sino continuidad: el sujeto que camina hacia Los Molinos en 2014 lleva encima el Título de Merced de 1912, la memoria del maremoto de 1960 y el terror dictatorial de 1974. El Estado responde activando la Ley 18.314: la restitución de un derecho propio se convierte en delito de terrorismo.</p>",
+            "why": "<p>La inversión categorial es el sitio de la fricción: el sujeto del derecho (adjudicatario del Título de Merced) se convierte en sujeto del delito (imputado Ley Antiterrorista). El Convenio OIT 169, ratificado por Chile en 2009, establece consulta previa y protección de territorios ancestrales — su inoperancia en este caso demuestra que opera en un régimen de verdad distinto al de la Ley de Seguridad Interior.</p>",
+            "proves": "<p>Sinopsis documental #NOALALEYANTITERRORISTA.avi (archivo privado). Causa penal ante Juzgado de Letras de Valdivia [número de rol pendiente de verificación]. Ley 18.314, Convenio OIT 169 (DS N°236, 2009).</p>",
+            "analyticalRole": "Evento crítico",
+            "depth": "Empírico",
+            "desc": "Recuperación territorial como acto de restitución — criminalizadopor el mismo Estado que generó el derecho originario.",
+            "relatedNodes": ["michillanca-caso", "ley-antiterrorista", "oit169"]
         }];
 
         const linksData = [{
@@ -2766,6 +2817,34 @@
             source: 'tres-fases-etnografia',
             target: 'negra-colora',
             type: 'gravitacional'
+        }, {
+            source: 'michillanca-caso',
+            target: 'michillanca-gomez',
+            type: 'gravitacional'
+        }, {
+            source: 'michillanca-caso',
+            target: 'michillanca-recuperacion',
+            type: 'gravitacional'
+        }, {
+            source: 'michillanca-gomez',
+            target: 'titulos-merced',
+            type: 'gravitacional'
+        }, {
+            source: 'michillanca-recuperacion',
+            target: 'ley-antiterrorista',
+            type: 'gravitacional'
+        }, {
+            source: 'michillanca-recuperacion',
+            target: 'oit169',
+            type: 'electromagnético'
+        }, {
+            source: 'michillanca-caso',
+            target: 'lof-nanco',
+            type: 'electromagnético'
+        }, {
+            source: 'michillanca-caso',
+            target: 'titulos-merced',
+            type: 'gravitacional'
         }];
 
         /* ═══════════════════════════════════════════════════════════════════ */
@@ -2961,7 +3040,9 @@
                     eje: d.eje,
                     year: d.year,
                     label: d.label,
-                    connections: d.connections
+                    connections: d.connections,
+                    calor: d.calor || 0,
+                    friccion: d.friccion || 0
                 }));
 
                 // Map links to use node objects
@@ -3015,9 +3096,24 @@
                     .attr('class', 'node')
                     .call(drag(simulation));
 
+                // Anillo exterior de entropía (calor) — visible solo si calor > 0
+                node.append('circle')
+                    .attr('r', d => d.calor > 0 ? 5 + (d.connections || 0) * 0.8 + 4 : 0)
+                    .attr('fill', 'none')
+                    .attr('stroke', d => {
+                        const c = d.calor || 0;
+                        const r = Math.round(180 + c * 75);
+                        const g = Math.round(60 - c * 60);
+                        return `rgb(${r},${g},20)`;
+                    })
+                    .attr('stroke-width', d => (d.calor || 0) * 2.5)
+                    .attr('opacity', d => (d.calor || 0) * 0.7);
+
                 node.append('circle')
                     .attr('r', d => 5 + (d.connections || 0) * 0.8)
                     .attr('fill', d => getEjeColor(d.eje))
+                    .attr('stroke', d => d.friccion > 0.85 ? 'rgba(255,80,80,0.6)' : 'none')
+                    .attr('stroke-width', d => d.friccion > 0.85 ? 1.5 : 0)
                     .on('click', (e, d) => showNodePanel(d));
 
                 node.append('text')
