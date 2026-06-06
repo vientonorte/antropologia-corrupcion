@@ -472,6 +472,12 @@ class FrictionField {
     /* ─── RENDER LOOP ─── */
 
     _animate() {
+        // Respetar prefers-reduced-motion: renderizar frame estático y detener el loop
+        if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) {
+            this._computeField();
+            this._render();
+            return;
+        }
         if (this.animFrame) { cancelAnimationFrame(this.animFrame); this.animFrame = null; }
         const frame = () => {
             if (!this.visible) {

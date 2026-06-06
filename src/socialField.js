@@ -713,6 +713,12 @@ class SocialField {
     /* ─── RENDER ─── */
 
     _animate() {
+        // Respetar prefers-reduced-motion: renderizar frame estático y detener el loop
+        if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) {
+            this._render();
+            this._updateMetrics();
+            return;
+        }
         // Cancel any existing animation loop to prevent double-loops
         if (this.animFrame) { cancelAnimationFrame(this.animFrame); this.animFrame = null; }
         const frame = () => {
