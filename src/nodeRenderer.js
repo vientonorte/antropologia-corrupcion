@@ -328,7 +328,6 @@ class NodeRenderer {
     const { params, callValue, putValue, riskNeutralProb, moneyness, intrinsicValue, timeValue, greeks } = bs;
 
     const probPct = Math.round(riskNeutralProb * 100);
-    const callPct = Math.min(100, Math.round((callValue / (params.K || 1)) * 100));
     const moneynessClass = moneyness >= 1 ? 'itm' : 'otm';
     const moneynessLabel = moneyness >= 1.1
         ? 'en el umbral ↑'
