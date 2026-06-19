@@ -343,6 +343,63 @@
             color: var(--accent-gold);
         }
         
+        .investigador-strip {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+            background: var(--zuboff-soft);
+            border: 1px solid var(--zuboff-mid);
+            border-radius: 4px;
+            padding: 10px 14px;
+            margin-bottom: 20px;
+            font-size: 11px;
+        }
+
+        .investigador-strip a {
+            color: var(--zuboff);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .investigador-strip a:hover {
+            text-decoration: underline;
+        }
+
+        .investigador-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 20px;
+            background: var(--accent-green);
+            color: #fff;
+            font-size: 10px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .citation-incomplete {
+            border-left-color: var(--accent-gold) !important;
+            background: rgba(196, 150, 42, 0.08);
+        }
+
+        .citation-incomplete-tag {
+            font-size: 9px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--accent-gold);
+            border: 1px solid rgba(196, 150, 42, 0.45);
+            border-radius: 20px;
+            padding: 1px 6px;
+        }
+
+        .corpus-loading {
+            text-align: center;
+            padding: 28px 16px;
+            color: var(--neutral);
+            font-size: 11px;
+        }
+
         .citation-category {
             font-size: 9px;
             letter-spacing: 0.12em;
@@ -811,17 +868,24 @@
 <body>
 
     <div class="header">
-        <a href="contra-archivo.html" class="header-back">← Contra-Archivo</a>
-        <div class="header-label">Módulo ⑤ · Archivo de Citas · Mayo 2026</div>
+        <a href="contra-archivo-v2.html" class="header-back">← Contra-Archivo</a>
+        <div class="header-label">Módulo ⑤ · Archivo de Citas · Junio 2026</div>
         <h1>Citas <em>del corpus físico</em></h1>
         <div class="header-sub">Clave B · Libros impresos · Trazabilidad para tesis de mistranslation institucional</div>
     </div>
 
     <div class="panel">
+        <div class="investigador-strip" id="investigadorStrip">
+            <span id="investigadorStatus">Corpus editorial cargado desde servidor. Tus ediciones se guardan en este navegador.</span>
+            <span>
+                <a href="privado-login.html" id="investigadorLoginLink">Acceso investigadoras →</a>
+                <span id="investigadorBadge" class="investigador-badge" style="display:none;">Sesión privada</span>
+            </span>
+        </div>
         <div class="archive-intro">
             <p><strong>Historial de citas codificadas</strong> — Captura extractos de libros físicos del corpus (no solo Zuboff) con tu sistema de marcadores (rojo/amarillo/rosa/verde/azul/naranja). Cada cita se archiva con libro, autor, página, categoría
                 temática y notas de alineación con tu tesis sobre "mistranslation" institucional y contra-archivo.</p>
-            <p style="margin-top:12px; font-size:11px; color:var(--neutral);">Base metodológica alineada a BJ_analisis_consolidado_D17_Intro. Exporta JSON/CSV para análisis cruzado por libro, categoría y fricción epistemológica. Las citas se guardan localmente en tu navegador (localStorage).</p>
+            <p style="margin-top:12px; font-size:11px; color:var(--neutral);">Base metodológica alineada a BJ_analisis_consolidado_D17_Intro. El corpus Zuboff + ATTAC se sincroniza desde <code>data/</code>; tus capturas y ediciones persisten en localStorage. Investigadoras del contra-archivo: inicia sesión en el <a href="privado-login.html" style="color:var(--zuboff);">espacio privado</a> para acceso integrado.</p>
         </div>
 
         <!-- ANALIZADOR CLAVE B -->
@@ -919,19 +983,16 @@
                 <span class="filter-label">Categoría:</span>
                 <select class="filter-select" id="filterCategory" onchange="filterCitations()">
         <option value="">— Todas las categorías</option>
-        <option value="hogar">Hogar / Nostos</option>
-        <option value="vigilancia_inst">Vigilancia Institucional</option>
-        <option value="poder_epistemico">Poder Epistémico</option>
-        <option value="regimenes_verdad">Regímenes de Verdad</option>
-        <option value="extraccion_datos">Extracción de Datos</option>
-        <option value="democracia">Democracia</option>
-        <option value="metodologia">Metodología</option>
       </select>
             </div>
             <div class="filter-group">
                 <span class="filter-label">Libro:</span>
                 <input class="filter-select" id="filterBook" type="text" placeholder="Filtrar por título" oninput="filterCitations()" style="min-width:180px;">
             </div>
+        </div>
+
+        <div id="citationList" class="citation-list">
+            <p class="corpus-loading" id="corpusLoading">Cargando corpus editorial…</p>
         </div>
 
         <div class="archive-stats">
@@ -953,11 +1014,8 @@
             <button class="btn-secondary" onclick="exportArchive('json')">📥 Exportar JSON</button>
             <button class="btn-secondary" onclick="exportArchive('csv')">📥 Exportar CSV</button>
             <button class="btn-secondary" onclick="downloadTemplate()">📋 Descargar template</button>
+            <button class="btn-secondary" onclick="resyncCorpusFromServer()">↻ Resincronizar corpus</button>
             <button class="btn-secondary" onclick="clearArchive()" style="color:var(--ro);">🗑 Limpiar historial</button>
-        </div>
-
-        <div class="citation-list" id="citationList">
-            <!-- Citations will be populated here -->
         </div>
     </div>
 
@@ -1027,151 +1085,215 @@
         </div>
     </div>
 
+    <script src="src/passkey.js?v=20260619"></script>
     <script>
         // Citation Archive Management
         const STORAGE_KEY = 'corpusBookCitations';
         const LEGACY_STORAGE_KEY = 'zuboffCitations';
+        const CORPUS_SYNC_KEY = 'corpusSeedV2';
         const DEFAULT_BOOK_TITLE = 'Zuboff — La era del capitalismo de la vigilancia';
         const DEFAULT_AUTHOR = 'Shoshana Zuboff';
 
-        let citations = JSON.parse(localStorage.getItem(STORAGE_KEY) || localStorage.getItem(LEGACY_STORAGE_KEY)) || [{
-            id: 1001,
-            bookTitle: 'Zuboff — La era del capitalismo de la vigilancia',
-            author: 'Shoshana Zuboff',
-            pageNo: 17,
-            text: "No hay un fin de la historia: cada generación debe afirmar su voluntad y su imaginación ante nuevas amenazas que nos obligan a juzgar de nuevo la misma causa en cada época sucesiva.",
-            color: "yellow",
-            category: "metodologia",
-            notes: "Marco genealógico para tu tesis: la corrupción no es anomalía sino estructura que cada generación debe nombrar de nuevo. Conecta con contra-archivo como práctica recursiva.",
-            timestamp: new Date().toISOString()
-        }, {
-            id: 1002,
-            bookTitle: 'Zuboff — La era del capitalismo de la vigilancia',
-            author: 'Shoshana Zuboff',
-            pageNo: 17,
-            text: "sin nuestra orientación, estamos perdidos.",
-            color: "red",
-            category: "democracia",
-            notes: "Pérdida de agencia colectiva. Zuboff lo dice sobre desorientación digital; tú lo aplicas a mistranslation institucional (AFP/Carabineros pierden legitimidad porque no pueden nombrar lo que hacen).",
-            timestamp: new Date().toISOString()
-        }, {
-            id: 1003,
-            bookTitle: 'Zuboff — La era del capitalismo de la vigilancia',
-            author: 'Shoshana Zuboff',
-            pageNo: 17,
-            text: "el nostos, el hallar un hogar, es una de nuestras necesidades más profundas se hace evidente en el precio que estamos dispuestos a pagar por él.",
-            color: "pink",
-            category: "hogar",
-            notes: "Toque directo a tu herida. Expulsión a los 15. El contra-archivo como búsqueda del hogar epistémico perdido.",
-            timestamp: new Date().toISOString()
-        }, {
-            id: 1004,
-            bookTitle: 'Zuboff — La era del capitalismo de la vigilancia',
-            author: 'Shoshana Zuboff',
-            pageNo: 17,
-            text: "El hogar es donde conocemos y somos conocidos, donde amamos y somos amados. El hogar es dominio de nuestros actos, es voz, es relación y es asilo: tiene parte de libertad, parte de florecimiento..., parte de refugio, parte de perspectiva de futuro.",
-            color: "red",
-            category: "hogar",
-            notes: "Definición que Zuboff recupera de Homero. Tu construcción de familia elegida es respuesta activa a esta deprivación. Conecta con polysecure como hogar epistémico.",
-            timestamp: new Date().toISOString()
-        }, {
-            id: 1005,
-            bookTitle: 'Zuboff — La era del capitalismo de la vigilancia',
-            author: 'Shoshana Zuboff',
-            pageNo: 18,
-            text: "saudade, un término que, al parecer, capta la nostalgia y el anhelo que, desde hace siglos, produce en los emigrantes separarse de su patria.",
-            color: "yellow",
-            category: "hogar",
-            notes: "Genealogía afectiva de la migración. Tu experiencia como exiliado del hogar materno. La diáspora como condición política de la cognición.",
-            timestamp: new Date().toISOString()
-        }, {
-            id: 1006,
-            bookTitle: 'Zuboff — La era del capitalismo de la vigilancia',
-            author: 'Shoshana Zuboff',
-            pageNo: 21,
-            text: "medios de modificación de la conducta y de creciente fortalecimiento del poder instrumentario.",
-            color: "red",
-            category: "poder_epistemico",
-            notes: "Núcleo: poder instrumentario = capacidad de moldear comportamiento sin consentimiento. Aplica directamente a AFP (moldea ahorros futuros) y Carabineros (moldea protesta).",
-            timestamp: new Date().toISOString()
-        }, {
-            id: 1007,
-            bookTitle: 'Zuboff — La era del capitalismo de la vigilancia',
-            author: 'Shoshana Zuboff',
-            pageNo: 23,
-            text: "Google inventó y perfeccionó el capitalismo de la vigilancia en un sentido muy similar a como General Motors inventó y perfeccionó el capitalismo gerencial hace un siglo.",
-            color: "yellow",
-            category: "extraccion_datos",
-            notes: "Genealogía de acumulación. Zuboff establece que vigilancia = modelo económico nuevo. Tu pregunta: ¿cómo AFP/SURA reproducen este modelo? ¿cuál es la mistranslation?",
-            timestamp: new Date().toISOString()
-        }, {
-            id: 1008,
-            bookTitle: 'Zuboff — La era del capitalismo de la vigilancia',
-            author: 'Shoshana Zuboff',
-            pageNo: 23,
-            text: "La conexión digital es hoy un medio para satisfacer los fines comerciales de otros. En su fundamento mismo, el capitalismo de la vigilancia es parasítico y autorreferencial.",
-            color: "red",
-            category: "extraccion_datos",
-            notes: "Síntesis del modelo extractivo. Zuboff lo dice de Google/Meta. Tú: ¿SURA/AFP operan con lógica similar? ¿cómo diferenciarlo?",
-            timestamp: new Date().toISOString()
-        }, {
-            id: 1009,
-            bookTitle: 'Zuboff — La era del capitalismo de la vigilancia',
-            author: 'Shoshana Zuboff',
-            pageNo: 23,
-            text: "Karl Marx retrato el capitalismo como un vampiro que se alimenta del trabajador, pero le da un giro inesperado: en lugar de los trabajadores, la fuente de alimento del capitalismo de la vigilancia es cualquier aspecto de la experiencia de cualquier ser humano.",
-            color: "blue",
-            category: "regimenes_verdad",
-            notes: "Reflexión: Zuboff usa Marx para desplazar la fuente extractiva. Tú: ¿quién es el vampiro en AFP? ¿el estado, el mercado, la corrupción?",
-            timestamp: new Date().toISOString()
-        }, {
-            id: 1010,
-            bookTitle: 'Zuboff — La era del capitalismo de la vigilancia',
-            author: 'Shoshana Zuboff',
-            pageNo: 24,
-            text: "Actualmente protegidos por la ilegibilidad intrínseca de los procesos automatizados que están bajo su dominio, por la ignorancia a propósito de lo que tales procesos podrían lograr.",
-            color: "yellow",
-            category: "metodologia",
-            notes: "Clave metodológica: la opacidad operacional como táctica política. Tu contra-archivo intenta hacerlo legible. D3-force para visualizar poder oculto.",
-            timestamp: new Date().toISOString()
-        }];
+        let citations = [];
+        let categoryLabels = {};
+        let categoryGroups = {};
+        let corpusReady = false;
 
-        citations = citations.map(c => ({
-            ...c,
-            bookTitle: c.bookTitle || DEFAULT_BOOK_TITLE,
-            author: c.author || DEFAULT_AUTHOR
-        }));
+        const FALLBACK_CATEGORY_LABELS = {
+            hogar: 'Hogar / Nostos',
+            vigilancia_inst: 'Vigilancia Institucional',
+            poder_epistemico: 'Poder Epistémico',
+            regimenes_verdad: 'Regímenes de Verdad',
+            extraccion_datos: 'Extracción de Datos',
+            democracia: 'Democracia / Poder Instrumentario',
+            metodologia: 'Metodología / Mistranslation',
+            movimiento_social: 'Movimiento social / ATTAC',
+            tasa_tobin: 'Tasa Tobin',
+            chile_neoliberal: 'Chile neoliberal',
+            privatizacion_afp: 'Privatización AFP',
+            genealogia_attac: 'Genealogía ATTAC',
+            dispositivo_friccion: 'Dispositivo de fricción',
+            neoliberalismo: 'Neoliberalismo',
+            genealogia_tasa_tobin: 'Genealogía Tasa Tobin',
+            fiscalidad_capital: 'Fiscalidad del capital',
+            especulador_institucional: 'Especulador institucional',
+            corrupcion_sistemica: 'Corrupción sistémica',
+            corrupcion_democracia: 'Corrupción y democracia',
+            estado_supranacional: 'Estado supranacional',
+            mundializacion_financiera: 'Mundialización financiera',
+            concepto_clave: 'Clave B · Concepto clave',
+            referencia: 'Clave B · Referencia',
+            persona_interes: 'Clave B · Persona de interés',
+            reflexion: 'Clave B · Reflexión',
+            compartir: 'Clave B · Compartir',
+            investigar: 'Clave B · Investigar'
+        };
 
         function persistCitations() {
             localStorage.setItem(STORAGE_KEY, JSON.stringify(citations));
         }
 
-        persistCitations();
+        function readLocalCitations() {
+            try {
+                const raw = localStorage.getItem(STORAGE_KEY) || localStorage.getItem(LEGACY_STORAGE_KEY);
+                const parsed = raw ? JSON.parse(raw) : [];
+                return Array.isArray(parsed) ? parsed : [];
+            } catch (e) {
+                return [];
+            }
+        }
 
-        // Seed ATTAC citations from data/attac-citas.json on first visit
-        (function() {
-            if (localStorage.getItem('attacSeedV1')) return;
-            fetch('data/attac-citas.json')
-                .then(function(r) { return r.ok ? r.json() : []; })
-                .then(function(attacData) {
-                    if (!Array.isArray(attacData) || !attacData.length) return;
-                    var ts = new Date().toISOString();
-                    var added = false;
-                    attacData.forEach(function(c) {
-                        if (!citations.some(function(e) { return e.id === c.id; })) {
-                            citations.push(Object.assign({}, c, { timestamp: c.timestamp || ts }));
-                            added = true;
-                        }
-                    });
-                    if (added) {
-                        persistCitations();
-                        renderCitations();
-                        updateStats();
-                    }
-                    localStorage.setItem('attacSeedV1', 'true');
-                })
-                .catch(function() {});
-        }());
+        function citationCompleteness(c) {
+            const fields = ['bookTitle', 'author', 'text', 'color', 'category'];
+            const missing = fields.filter((k) => !String(c?.[k] ?? '').trim());
+            if (c?.pageNo === undefined || c?.pageNo === null || c?.pageNo === '') missing.push('pageNo');
+            return { complete: missing.length === 0, missing };
+        }
+
+        function normalizeCitation(c) {
+            const out = { ...c };
+            out.bookTitle = String(out.bookTitle || DEFAULT_BOOK_TITLE).trim();
+            out.author = String(out.author || DEFAULT_AUTHOR).trim();
+            out.text = String(out.text || '').trim();
+            out.notes = String(out.notes || '').trim();
+            out.color = String(out.color || '').trim() || 'yellow';
+            out.category = String(out.category || '').trim() || 'metodologia';
+            out.pageNo = Number.isFinite(Number(out.pageNo)) ? Number(out.pageNo) : '';
+            out.timestamp = out.timestamp || new Date().toISOString();
+            return out;
+        }
+
+        function isCitationComplete(c) {
+            return citationCompleteness(c).complete;
+        }
+
+        function mergeCorpus(serverList, localList, preferServerForIncomplete) {
+            const byId = new Map();
+            serverList.forEach((c) => byId.set(c.id, normalizeCitation(c)));
+            localList.forEach((c) => {
+                const norm = normalizeCitation(c);
+                const existing = byId.get(norm.id);
+                if (!existing) {
+                    byId.set(norm.id, norm);
+                    return;
+                }
+                const localComplete = isCitationComplete(norm);
+                const existingComplete = isCitationComplete(existing);
+                if (preferServerForIncomplete && localComplete && !existingComplete) {
+                    byId.set(norm.id, norm);
+                } else if (!preferServerForIncomplete && localComplete && !existingComplete) {
+                    byId.set(norm.id, norm);
+                } else if (localComplete && existingComplete && String(norm.timestamp) > String(existing.timestamp)) {
+                    byId.set(norm.id, norm);
+                }
+            });
+            return [...byId.values()].sort((a, b) => (a.id || 0) - (b.id || 0));
+        }
+
+        async function fetchJson(path) {
+            const res = await fetch(path);
+            if (!res.ok) return [];
+            const data = await res.json();
+            return Array.isArray(data) ? data : [];
+        }
+
+        async function loadCategoryTaxonomy() {
+            try {
+                const res = await fetch('data/corpus-categorias.json');
+                if (!res.ok) throw new Error('taxonomy');
+                const data = await res.json();
+                categoryLabels = { ...FALLBACK_CATEGORY_LABELS, ...(data.labels || {}) };
+                categoryGroups = data.groups || {};
+            } catch (e) {
+                categoryLabels = { ...FALLBACK_CATEGORY_LABELS };
+                categoryGroups = {};
+            }
+        }
+
+        async function loadServerCorpus() {
+            const [zuboff, attac] = await Promise.all([
+                fetchJson('data/zuboff-citas.json'),
+                fetchJson('data/attac-citas.json')
+            ]);
+            return [...zuboff, ...attac].map(normalizeCitation);
+        }
+
+        function populateCategorySelects() {
+            const used = new Set(citations.map((c) => c.category).filter(Boolean));
+            Object.keys(categoryLabels).forEach((k) => used.add(k));
+            const sorted = [...used].sort((a, b) => getCategoryLabel(a).localeCompare(getCategoryLabel(b), 'es'));
+
+            const filterSel = document.getElementById('filterCategory');
+            const captureSel = document.getElementById('captureCategory');
+            if (filterSel) {
+                const current = filterSel.value;
+                filterSel.innerHTML = '<option value="">— Todas las categorías</option>' +
+                    sorted.map((k) => `<option value="${k}">${escapeHtml(getCategoryLabel(k))}</option>`).join('');
+                filterSel.value = current;
+            }
+            if (captureSel) {
+                const current = captureSel.value;
+                const zuboffKeys = categoryGroups.zuboff || Object.keys(FALLBACK_CATEGORY_LABELS).slice(0, 7);
+                const attacKeys = (categoryGroups.attac || []).filter((k) => !zuboffKeys.includes(k));
+                captureSel.innerHTML = '<option value="">— Selecciona categoría</option>' +
+                    '<optgroup label="Zuboff / tesis">' +
+                    zuboffKeys.map((k) => `<option value="${k}">${escapeHtml(getCategoryLabel(k))}</option>`).join('') +
+                    '</optgroup>' +
+                    (attacKeys.length ? '<optgroup label="ATTAC / circuito financiero">' +
+                        attacKeys.map((k) => `<option value="${k}">${escapeHtml(getCategoryLabel(k))}</option>`).join('') +
+                        '</optgroup>' : '');
+                captureSel.value = current;
+            }
+        }
+
+        function updateInvestigadorStrip() {
+            const badge = document.getElementById('investigadorBadge');
+            const link = document.getElementById('investigadorLoginLink');
+            const status = document.getElementById('investigadorStatus');
+            const authed = window.PasskeyAuth && PasskeyAuth.isAuthenticated();
+            if (authed) {
+                if (badge) badge.style.display = 'inline-block';
+                if (link) {
+                    link.textContent = 'Espacio privado →';
+                    link.href = 'privado.html';
+                }
+                if (status) status.textContent = 'Sesión investigadora activa. Corpus editorial + tus ediciones locales sincronizados.';
+            } else if (status) {
+                status.textContent = 'Corpus editorial (Zuboff + ATTAC) cargado desde servidor. Inicia sesión para acceso integrado al espacio privado.';
+            }
+        }
+
+        async function initCorpus(options = {}) {
+            const { forceResync = false } = options;
+            const loading = document.getElementById('corpusLoading');
+            if (loading) loading.textContent = 'Cargando corpus editorial…';
+
+            await loadCategoryTaxonomy();
+            const server = await loadServerCorpus();
+            const local = readLocalCitations();
+            const shouldMerge = forceResync || !local.length || localStorage.getItem(CORPUS_SYNC_KEY) !== 'v2';
+            citations = shouldMerge ? mergeCorpus(server, local, false) : mergeCorpus(server, local, true);
+            persistCitations();
+            localStorage.setItem(CORPUS_SYNC_KEY, 'v2');
+            corpusReady = true;
+
+            populateCategorySelects();
+            renderCitations();
+            updateStats();
+            updateInvestigadorStrip();
+            if (loading) loading.remove();
+        }
+
+        async function resyncCorpusFromServer() {
+            if (!confirm('¿Resincronizar con el corpus editorial del servidor? Se conservan tus citas locales completas; las incompletas pueden reemplazarse por la versión del servidor.')) return;
+            const server = await loadServerCorpus();
+            const local = readLocalCitations();
+            citations = mergeCorpus(server, local, false);
+            persistCitations();
+            populateCategorySelects();
+            renderCitations();
+            updateStats();
+        }
 
         function openCaptureModal() {
             document.getElementById('captureModal').classList.add('open');
@@ -1215,8 +1337,9 @@
                 timestamp: new Date().toISOString()
             };
 
-            citations.push(citation);
+            citations.push(normalizeCitation(citation));
             persistCitations();
+            populateCategorySelects();
             renderCitations();
             updateStats();
             closeCaptureModal();
@@ -1224,34 +1347,48 @@
 
         function renderCitations(filtered = null) {
             const list = document.getElementById('citationList');
-            const toRender = filtered || citations;
+            const toRender = (filtered || citations).map(normalizeCitation);
 
-            if (toRender.length === 0) {
-                list.innerHTML = '<p style="color:var(--neutral); text-align:center; padding:40px 20px;">No hay citas archivadas aún. Comienza capturando extractos mientras lees.</p>';
+            if (!corpusReady) {
+                list.innerHTML = '<p class="corpus-loading" id="corpusLoading">Cargando corpus editorial…</p>';
                 return;
             }
 
-            list.innerHTML = toRender.map(c => `
-      <div class="citation-item mark-${c.color}" onclick="toggleCitationExpand(this)">
+            if (toRender.length === 0) {
+                list.innerHTML = '<p style="color:var(--neutral); text-align:center; padding:40px 20px;">No hay citas archivadas. Usa <strong>↻ Resincronizar corpus</strong> o captura nuevas citas.</p>';
+                return;
+            }
+
+            list.innerHTML = toRender.map(c => {
+                const meta = citationCompleteness(c);
+                const incompleteClass = meta.complete ? '' : ' citation-incomplete';
+                const displayText = c.text || '(Texto no registrado — edita o resincroniza)';
+                const displayBook = c.bookTitle || DEFAULT_BOOK_TITLE;
+                const displayAuthor = c.author || DEFAULT_AUTHOR;
+                const displayPage = c.pageNo !== '' && c.pageNo != null ? `p. ${c.pageNo}` : 'p. ?';
+                const incompleteTag = meta.complete ? '' : `<span class="citation-incomplete-tag" title="Faltan: ${meta.missing.join(', ')}">Incompleta</span>`;
+                return `
+      <div class="citation-item mark-${c.color}${incompleteClass}" onclick="toggleCitationExpand(this)">
         <div class="citation-header">
           <div style="flex:1;">
-            <div class="citation-text">"${escapeHtml(c.text)}"</div>
+            <div class="citation-text">"${escapeHtml(displayText)}"</div>
             <div class="citation-meta">
-                            <span class="citation-page">${escapeHtml(c.bookTitle)} · ${escapeHtml(c.author)}</span>
-                            <span>•</span>
-              <span class="citation-page">p. ${c.pageNo}</span>
+              <span class="citation-page">${escapeHtml(displayBook)} · ${escapeHtml(displayAuthor)}</span>
+              <span>•</span>
+              <span class="citation-page">${displayPage}</span>
               <span class="citation-color-label ${c.color}">${getColorLabel(c.color)}</span>
               <span class="citation-category">${getCategoryLabel(c.category)}</span>
+              ${incompleteTag}
             </div>
           </div>
           <button onclick="event.stopPropagation(); deleteCitation(${c.id})" style="background:none; border:none; cursor:pointer; font-size:16px; color:var(--neutral);" title="Eliminar">✕</button>
         </div>
         <div class="citation-note">
           <span class="citation-note-label">→ Alineación con tesis</span>
-          <p style="font-size:11px; line-height:1.6; color:var(--ink);">${escapeHtml(c.notes) || '(Sin notas)'}</p>
+          <p style="font-size:11px; line-height:1.6; color:var(--ink);">${escapeHtml(c.notes) || '(Sin notas de alineación)'}</p>
         </div>
-      </div>
-    `).join('');
+      </div>`;
+            }).join('');
         }
 
         function escapeHtml(str) {
@@ -1298,33 +1435,29 @@
             document.getElementById('statTotal').textContent = citations.length;
             const books = new Set(citations.map(c => c.bookTitle || DEFAULT_BOOK_TITLE)).size;
             document.getElementById('statBooks').textContent = books;
-            const categories = new Set(citations.map(c => c.category)).size;
+            const categories = new Set(citations.map(c => c.category).filter(Boolean)).size;
             document.getElementById('statCategories').textContent = categories;
         }
 
         function getColorLabel(color) {
             const labels = {
                 red: 'Concepto clave',
+                gray: 'Investigar',
                 yellow: 'Referencia',
                 pink: 'Interesa/Recurso',
-                green: 'Reflexión',
-                blue: 'Investigación',
-                orange: 'Comparación'
+                green: 'Persona de interés',
+                blue: 'Reflexión',
+                orange: 'Compartir'
             };
-            return labels[color] || color;
+            return labels[color] || (color ? String(color) : 'Sin color');
         }
 
         function getCategoryLabel(cat) {
-            const labels = {
-                hogar: 'Hogar/Nostos',
-                vigilancia_inst: 'Vigilancia Inst.',
-                poder_epistemico: 'Poder Epistémico',
-                regimenes_verdad: 'Regímenes Verdad',
-                extraccion_datos: 'Extracción Datos',
-                democracia: 'Democracia',
-                metodologia: 'Metodología'
-            };
-            return labels[cat] || cat;
+            if (!cat) return 'Sin categoría';
+            const key = String(cat).trim();
+            if (categoryLabels[key]) return categoryLabels[key];
+            if (FALLBACK_CATEGORY_LABELS[key]) return FALLBACK_CATEGORY_LABELS[key];
+            return key.replace(/_/g, ' ').replace(/\b\w/g, (m) => m.toUpperCase());
         }
 
         function exportArchive(format) {
@@ -1418,11 +1551,11 @@ Notas: Conexión directa con tu experiencia de expulsión a los 15. Lo que perdi
         }
 
         function clearArchive() {
-            if (confirm('¿Eliminar todo el historial de citas? Esta acción no se puede deshacer.')) {
-                citations = [];
-                persistCitations();
-                renderCitations();
-                updateStats();
+            if (confirm('¿Eliminar citas locales y restaurar solo el corpus editorial del servidor (Zuboff + ATTAC)?')) {
+                localStorage.removeItem(STORAGE_KEY);
+                localStorage.removeItem(LEGACY_STORAGE_KEY);
+                localStorage.removeItem(CORPUS_SYNC_KEY);
+                initCorpus({ forceResync: true });
             }
         }
 
@@ -1437,8 +1570,12 @@ Notas: Conexión directa con tu experiencia de expulsión a los 15. Lo que perdi
         });
 
         // Initialize
-        renderCitations();
-        updateStats();
+        initCorpus().catch(function() {
+            corpusReady = true;
+            citations = readLocalCitations().map(normalizeCitation);
+            renderCitations();
+            updateStats();
+        });
 
         // ── ANALIZADOR CLAVE B ──────────────────────────────────────────────────────
 

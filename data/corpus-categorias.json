@@ -1,0 +1,40 @@
+{
+  "_meta": {
+    "version": "2026-06-19",
+    "description": "Taxonomía unificada de categorías temáticas — corpus Zuboff + ATTAC + Clave B"
+  },
+  "labels": {
+    "hogar": "Hogar / Nostos",
+    "vigilancia_inst": "Vigilancia Institucional",
+    "poder_epistemico": "Poder Epistémico",
+    "regimenes_verdad": "Regímenes de Verdad",
+    "extraccion_datos": "Extracción de Datos",
+    "democracia": "Democracia / Poder Instrumentario",
+    "metodologia": "Metodología / Mistranslation",
+    "movimiento_social": "Movimiento social / ATTAC",
+    "tasa_tobin": "Tasa Tobin",
+    "chile_neoliberal": "Chile neoliberal",
+    "privatizacion_afp": "Privatización AFP",
+    "genealogia_attac": "Genealogía ATTAC",
+    "dispositivo_friccion": "Dispositivo de fricción",
+    "neoliberalismo": "Neoliberalismo",
+    "genealogia_tasa_tobin": "Genealogía Tasa Tobin",
+    "fiscalidad_capital": "Fiscalidad del capital",
+    "especulador_institucional": "Especulador institucional",
+    "corrupcion_sistemica": "Corrupción sistémica",
+    "corrupcion_democracia": "Corrupción y democracia",
+    "estado_supranacional": "Estado supranacional",
+    "mundializacion_financiera": "Mundialización financiera",
+    "concepto_clave": "Clave B · Concepto clave",
+    "referencia": "Clave B · Referencia",
+    "persona_interes": "Clave B · Persona de interés",
+    "reflexion": "Clave B · Reflexión",
+    "compartir": "Clave B · Compartir",
+    "investigar": "Clave B · Investigar"
+  },
+  "groups": {
+    "zuboff": ["hogar", "vigilancia_inst", "poder_epistemico", "regimenes_verdad", "extraccion_datos", "democracia", "metodologia"],
+    "attac": ["movimiento_social", "tasa_tobin", "chile_neoliberal", "privatizacion_afp", "genealogia_attac", "dispositivo_friccion", "neoliberalismo", "genealogia_tasa_tobin", "fiscalidad_capital", "especulador_institucional", "corrupcion_sistemica", "corrupcion_democracia", "estado_supranacional", "mundializacion_financiera"],
+    "clave_b": ["concepto_clave", "referencia", "persona_interes", "reflexion", "compartir", "investigar"]
+  }
+}

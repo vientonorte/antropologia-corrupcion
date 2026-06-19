@@ -1,0 +1,122 @@
+[
+  {
+    "id": 1001,
+    "bookTitle": "Zuboff — La era del capitalismo de la vigilancia",
+    "author": "Shoshana Zuboff",
+    "pageNo": 17,
+    "text": "No hay un fin de la historia: cada generación debe afirmar su voluntad y su imaginación ante nuevas amenazas que nos obligan a juzgar de nuevo la misma causa en cada época sucesiva.",
+    "color": "yellow",
+    "category": "metodologia",
+    "notes": "Marco genealógico para tu tesis: la corrupción no es anomalía sino estructura que cada generación debe nombrar de nuevo. Conecta con contra-archivo como práctica recursiva.",
+    "source_type": "libro",
+    "timestamp": "2026-05-18T12:00:00.000Z"
+  },
+  {
+    "id": 1002,
+    "bookTitle": "Zuboff — La era del capitalismo de la vigilancia",
+    "author": "Shoshana Zuboff",
+    "pageNo": 17,
+    "text": "sin nuestra orientación, estamos perdidos.",
+    "color": "red",
+    "category": "democracia",
+    "notes": "Pérdida de agencia colectiva. Zuboff lo dice sobre desorientación digital; tú lo aplicas a mistranslation institucional (AFP/Carabineros pierden legitimidad porque no pueden nombrar lo que hacen).",
+    "source_type": "libro",
+    "timestamp": "2026-05-18T12:00:00.000Z"
+  },
+  {
+    "id": 1003,
+    "bookTitle": "Zuboff — La era del capitalismo de la vigilancia",
+    "author": "Shoshana Zuboff",
+    "pageNo": 17,
+    "text": "el nostos, el hallar un hogar, es una de nuestras necesidades más profundas se hace evidente en el precio que estamos dispuestos a pagar por él.",
+    "color": "pink",
+    "category": "hogar",
+    "notes": "Toque directo a tu herida. Expulsión a los 15. El contra-archivo como búsqueda del hogar epistémico perdido.",
+    "source_type": "libro",
+    "timestamp": "2026-05-18T12:00:00.000Z"
+  },
+  {
+    "id": 1004,
+    "bookTitle": "Zuboff — La era del capitalismo de la vigilancia",
+    "author": "Shoshana Zuboff",
+    "pageNo": 17,
+    "text": "El hogar es donde conocemos y somos conocidos, donde amamos y somos amados. El hogar es dominio de nuestros actos, es voz, es relación y es asilo: tiene parte de libertad, parte de florecimiento..., parte de refugio, parte de perspectiva de futuro.",
+    "color": "red",
+    "category": "hogar",
+    "notes": "Definición que Zuboff recupera de Homero. Tu construcción de familia elegida es respuesta activa a esta deprivación. Conecta con polysecure como hogar epistémico.",
+    "source_type": "libro",
+    "timestamp": "2026-05-18T12:00:00.000Z"
+  },
+  {
+    "id": 1005,
+    "bookTitle": "Zuboff — La era del capitalismo de la vigilancia",
+    "author": "Shoshana Zuboff",
+    "pageNo": 18,
+    "text": "saudade, un término que, al parecer, capta la nostalgia y el anhelo que, desde hace siglos, produce en los emigrantes separarse de su patria.",
+    "color": "yellow",
+    "category": "hogar",
+    "notes": "Genealogía afectiva de la migración. Tu experiencia como exiliado del hogar materno. La diáspora como condición política de la cognición.",
+    "source_type": "libro",
+    "timestamp": "2026-05-18T12:00:00.000Z"
+  },
+  {
+    "id": 1006,
+    "bookTitle": "Zuboff — La era del capitalismo de la vigilancia",
+    "author": "Shoshana Zuboff",
+    "pageNo": 21,
+    "text": "medios de modificación de la conducta y de creciente fortalecimiento del poder instrumentario.",
+    "color": "red",
+    "category": "poder_epistemico",
+    "notes": "Núcleo: poder instrumentario = capacidad de moldear comportamiento sin consentimiento. Aplica directamente a AFP (moldea ahorros futuros) y Carabineros (moldea protesta).",
+    "source_type": "libro",
+    "timestamp": "2026-05-18T12:00:00.000Z"
+  },
+  {
+    "id": 1007,
+    "bookTitle": "Zuboff — La era del capitalismo de la vigilancia",
+    "author": "Shoshana Zuboff",
+    "pageNo": 23,
+    "text": "Google inventó y perfeccionó el capitalismo de la vigilancia en un sentido muy similar a como General Motors inventó y perfeccionó el capitalismo gerencial hace un siglo.",
+    "color": "yellow",
+    "category": "extraccion_datos",
+    "notes": "Genealogía de acumulación. Zuboff establece que vigilancia = modelo económico nuevo. Tu pregunta: ¿cómo AFP/SURA reproducen este modelo? ¿cuál es la mistranslation?",
+    "source_type": "libro",
+    "timestamp": "2026-05-18T12:00:00.000Z"
+  },
+  {
+    "id": 1008,
+    "bookTitle": "Zuboff — La era del capitalismo de la vigilancia",
+    "author": "Shoshana Zuboff",
+    "pageNo": 23,
+    "text": "La conexión digital es hoy un medio para satisfacer los fines comerciales de otros. En su fundamento mismo, el capitalismo de la vigilancia es parasítico y autorreferencial.",
+    "color": "red",
+    "category": "extraccion_datos",
+    "notes": "Síntesis del modelo extractivo. Zuboff lo dice de Google/Meta. Tú: ¿SURA/AFP operan con lógica similar? ¿cómo diferenciarlo?",
+    "source_type": "libro",
+    "timestamp": "2026-05-18T12:00:00.000Z"
+  },
+  {
+    "id": 1009,
+    "bookTitle": "Zuboff — La era del capitalismo de la vigilancia",
+    "author": "Shoshana Zuboff",
+    "pageNo": 23,
+    "text": "Karl Marx retrato el capitalismo como un vampiro que se alimenta del trabajador, pero le da un giro inesperado: en lugar de los trabajadores, la fuente de alimento del capitalismo de la vigilancia es cualquier aspecto de la experiencia de cualquier ser humano.",
+    "color": "blue",
+    "category": "regimenes_verdad",
+    "notes": "Reflexión: Zuboff usa Marx para desplazar la fuente extractiva. Tú: ¿quién es el vampiro en AFP? ¿el estado, el mercado, la corrupción?",
+    "source_type": "libro",
+    "timestamp": "2026-05-18T12:00:00.000Z"
+  },
+  {
+    "id": 1010,
+    "bookTitle": "Zuboff — La era del capitalismo de la vigilancia",
+    "author": "Shoshana Zuboff",
+    "pageNo": 24,
+    "text": "Actualmente protegidos por la ilegibilidad intrínseca de los procesos automatizados que están bajo su dominio, por la ignorancia a propósito de lo que tales procesos podrían lograr.",
+    "color": "yellow",
+    "category": "metodologia",
+    "notes": "Clave metodológica: la opacidad operacional como táctica política. Tu contra-archivo intenta hacerlo legible. D3-force para visualizar poder oculto.",
+    "source_type": "libro",
+    "timestamp": "2026-05-18T12:00:00.000Z"
+  }
+]

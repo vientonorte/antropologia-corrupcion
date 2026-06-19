@@ -36,7 +36,7 @@
       "tipo": "dossier",
       "seccion": "citas",
       "titulo": "Citas ATTAC — dossier documental",
-      "descripcion": "Archivo de citas y capturas para etnografía digital del circuito financiero transnacional (ATTAC, Tasa Tobin, custodios globales). Interfaz en zuboff-archivo.",
+      "descripcion": "Archivo unificado Zuboff + ATTAC con corpus editorial en data/ y taxonomía de categorías. Interfaz en zuboff-archivo.html; acceso integrado desde espacio privado.",
       "url": "zuboff-archivo.html",
       "estado": "publicable"
     },
