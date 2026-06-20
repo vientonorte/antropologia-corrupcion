@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="480" viewBox="0 0 800 480" role="img" aria-label="Evidencia reservada">
+  <rect width="800" height="480" fill="#1a1a2e"/>
+  <rect x="40" y="40" width="720" height="400" fill="none" stroke="#3d3d5c" stroke-width="2" stroke-dasharray="8 6"/>
+  <text x="400" y="220" fill="#8b8ba8" font-family="ui-monospace, monospace" font-size="18" text-anchor="middle">EVIDENCIA RESERVADA</text>
+  <text x="400" y="260" fill="#6b6b88" font-family="ui-monospace, monospace" font-size="13" text-anchor="middle">Archivo privado · Contra-Archivo</text>
+</svg>

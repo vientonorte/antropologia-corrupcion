@@ -32,6 +32,9 @@ jobs:
       - name: Run test suite
         run: node tests/runner.js
 
+      - name: QA enlaces locales (web + data + img)
+        run: node scripts/qa-links.mjs --local
+
   deploy:
     name: Deploy
     needs: test
@@ -64,6 +67,9 @@ jobs:
           test -f styles/graph.css || { echo "❌ styles/graph.css faltante"; exit 1; }
           test -d src || { echo "❌ src/ no encontrado en raíz"; exit 1; }
           test -f src/frictionEngine.js || { echo "❌ src/frictionEngine.js faltante"; exit 1; }
+          test -f img/evidencia-reservada.svg || { echo "❌ img/evidencia-reservada.svg faltante"; exit 1; }
+          test -f data/archivo-index.json || { echo "❌ data/archivo-index.json faltante"; exit 1; }
+          node scripts/qa-links.mjs --local
           echo "✅ Assets críticos presentes"
 
       - name: Upload artifact
