@@ -11,7 +11,7 @@
 <style>
 :root{--surface:#131313;--accent:#c8a96e}
 body{display:flex;flex-direction:column;min-height:100vh;padding:0 24px 48px}
-.gateway{max-width:640px;margin:48px auto 0;width:100%}
+.gateway{max-width:720px;margin:48px auto 0;width:100%}
 .gateway-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:40px 32px}
 .gateway h1{font-family:Georgia,serif;font-size:28px;font-weight:400;margin-bottom:8px}
 .gateway .lead{color:var(--muted);font-size:14px;line-height:1.7;margin-bottom:28px}
@@ -20,12 +20,27 @@ body{display:flex;flex-direction:column;min-height:100vh;padding:0 24px 48px}
 .gateway-item strong{display:block;font-size:13px;margin-bottom:4px}
 .gateway-item span{font-size:12px;color:var(--muted);line-height:1.5}
 .gateway-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
-.btn{display:inline-block;padding:14px 24px;border-radius:8px;font-size:14px;font-weight:600;text-decoration:none;letter-spacing:.04em}
+.btn{display:inline-block;padding:14px 24px;border-radius:8px;font-size:14px;font-weight:600;text-decoration:none;letter-spacing:.04em;min-height:44px;line-height:1.2}
 .btn-primary{background:var(--accent);color:#0c0c0c}
 .btn-secondary{border:1px solid rgba(255,255,255,.15);color:var(--text)}
+.investigator-grid{display:grid;gap:12px;margin:20px 0}
+@media(min-width:560px){.investigator-grid{grid-template-columns:1fr 1fr}}
+.investigator-card{padding:16px;border:1px solid var(--border);border-radius:8px;background:rgba(200,169,110,.04)}
+.investigator-card h3{font-size:14px;margin-bottom:6px}
+.investigator-card p{font-size:12px;color:var(--muted);line-height:1.55;margin:0}
+.investigator-card .badge{display:inline-block;margin-top:8px;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);border:1px solid rgba(200,169,110,.35);padding:2px 8px;border-radius:99px}
 .dev-note{margin-top:32px;padding:16px;border-left:3px solid var(--accent);font-size:12px;color:var(--muted);line-height:1.6}
+.local-form{margin-top:20px;padding:16px;border:1px dashed var(--border);border-radius:8px}
+.local-form label{display:block;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--dim);margin-bottom:8px}
+.local-form input,.local-form textarea{width:100%;padding:10px 12px;background:#111;border:1px solid #2e2e2e;border-radius:6px;color:var(--text);font-family:var(--font-mono);font-size:12px}
+.local-form textarea{min-height:72px;resize:vertical}
+.local-form button{margin-top:10px;padding:10px 18px;background:transparent;border:1px solid rgba(255,255,255,.15);border-radius:6px;color:var(--text);font-size:12px;cursor:pointer;min-height:44px}
+.local-form button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 code{font-family:var(--font-mono);font-size:11px;color:var(--accent)}
-@media (max-width:480px){.gateway-card{padding:28px 20px}.gateway h1{font-size:22px}}
+.public-links{display:flex;flex-wrap:wrap;gap:10px;margin:16px 0 8px}
+.public-links a{font-size:12px;color:var(--muted);text-decoration:none;border-bottom:1px solid transparent}
+.public-links a:hover{color:var(--text);border-bottom-color:var(--accent)}
+@media (max-width:480px){.gateway-card{padding:28px 20px}.gateway h1{font-size:22px}.gateway-actions{flex-direction:column}.btn{text-align:center}}
 </style>
 </head>
 <body>
@@ -43,6 +58,27 @@ code{font-family:var(--font-mono);font-size:11px;color:var(--accent)}
     <p class="eyebrow" style="font-family:var(--font-mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin-bottom:16px">Terraza · Admin</p>
     <h1>Panel de investigación</h1>
     <p class="lead">Terraza es la aplicación Next.js para captura, codificación GT, grafo y cola de commits del corpus. Por seguridad <strong>no se despliega</strong> en GitHub Pages — solo corre en entorno local o servidor privado.</p>
+
+    <nav class="public-links" aria-label="Accesos públicos relacionados">
+      <a href="buscador.html">Buscador público</a>
+      <a href="landing.html#quien-es">¿Quién es Viento Norte?</a>
+      <a href="privado.html">Panel privado (con sesión)</a>
+      <a href="contra-archivo-v2.html#explorar">Grafo público</a>
+    </nav>
+
+    <h2 style="font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);margin:24px 0 12px">Investigadoras</h2>
+    <div class="investigator-grid" role="list" aria-label="Perfiles de investigación">
+      <article class="investigator-card" role="listitem">
+        <h3>Viento Norte</h3>
+        <p>Colectivo anfitrión del Contra-Archivo. Acceso completo a Terraza, privado.html y corpus clasificado.</p>
+        <span class="badge">Sesión activa requerida</span>
+      </article>
+      <article class="investigator-card" role="listitem">
+        <h3>Otras investigadoras</h3>
+        <p>Pueden alinear su propio repositorio y web localmente: clona el repo, configura passkey y despliega Terraza en <code>localhost:3000</code>.</p>
+        <span class="badge">Fork local</span>
+      </article>
+    </div>
 
     <div class="gateway-grid" role="list" aria-label="Módulos de Terraza">
       <div class="gateway-item" role="listitem">
@@ -72,10 +108,31 @@ code{font-family:var(--font-mono);font-size:11px;color:var(--accent)}
       <a class="btn btn-secondary" href="landing.html">Volver al sitio público</a>
     </div>
 
+    <form class="local-form" id="local-align-form" aria-labelledby="local-align-title">
+      <p id="local-align-title" style="font-size:13px;color:var(--text);margin-bottom:12px"><strong>Alinear repositorio local</strong> — nota para tu fork (no se envía a servidor)</p>
+      <label for="investigator-id">Identificador de investigadora / colectivo</label>
+      <input id="investigator-id" name="investigator" type="text" placeholder="ej. colectivo-andino" autocomplete="organization">
+      <label for="repo-note" style="margin-top:12px">Notas de configuración</label>
+      <textarea id="repo-note" name="notes" placeholder="cd web/terraza && npm run dev — passkey → /corpus"></textarea>
+      <button type="button" id="copy-local-note">Copiar plantilla al portapapeles</button>
+    </form>
+
     <p class="dev-note">
-      <strong>Desarrollo local:</strong> clona el repositorio, instala dependencias en <code>web/terraza/</code> y ejecuta <code>npm run dev</code>. Requiere passkey o sesión de investigadora. La URL <code>/terraza/</code> en GitHub Pages muestra esta página informativa, no la app.
+      <strong>Desarrollo local:</strong> clona el repositorio, instala dependencias en <code>web/terraza/</code> y ejecuta <code>npm run dev</code>. Login passkey → redirect <code>/corpus</code>. La URL <code>/terraza/</code> en GitHub Pages muestra esta página informativa, no la app.
     </p>
   </article>
 </main>
+<script>
+(function(){
+  var btn=document.getElementById('copy-local-note');
+  if(!btn)return;
+  btn.addEventListener('click',function(){
+    var id=(document.getElementById('investigator-id')||{}).value||'investigadora';
+    var notes=(document.getElementById('repo-note')||{}).value||'';
+    var text='Terraza local — '+id+'\n1. git clone …/antropologia-corrupcion\n2. cd web/terraza && npm install && npm run dev\n3. privado-login.html → passkey → localhost:3000/corpus\n'+notes;
+    navigator.clipboard.writeText(text).then(function(){btn.textContent='Copiado ✓';setTimeout(function(){btn.textContent='Copiar plantilla al portapapeles';},2000);}).catch(function(){window.prompt('Copia manual:',text);});
+  });
+})();
+</script>
 </body>
 </html>

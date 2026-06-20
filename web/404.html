@@ -54,6 +54,33 @@
             background: #c8a96e;
             color: #0c0c0c;
         }
+
+        a:focus-visible {
+            outline: 2px solid #c8a96e;
+            outline-offset: 3px;
+        }
+
+        .links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: .75rem;
+            justify-content: center;
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            body {
+                padding: 1.25rem;
+            }
+
+            a {
+                display: block;
+                width: 100%;
+            }
+        }
     </style>
 </head>
 
@@ -61,7 +88,11 @@
     <div class="wrap">
         <h1>⊘ 404</h1>
         <p>La página que buscas no existe — o fue destruida por el aparato archival del Estado.</p>
-        <a href="/antropologia-corrupcion/">Volver al contra-archivo</a>
+        <div class="links">
+            <a href="landing.html">Sitio público</a>
+            <a href="buscador.html">Buscador</a>
+            <a href="privado-login.html">Acceso privado</a>
+        </div>
     </div>
 <script>(function(){if(window.__CA_UNIFIED_SHELL_LOADER__){return;}window.__CA_UNIFIED_SHELL_LOADER__=true;var s=document.createElement('script');var b=location.pathname.indexOf('/antropologia-corrupcion/')===0?'/antropologia-corrupcion/':'/';s.src=b+'shared-shell.js';s.defer=true;document.head.appendChild(s);}());</script>
 </body>

@@ -152,6 +152,11 @@
             transform: translateX(0);
             opacity: 1
         }
+
+        .pv-sidebar:not(.open) {
+            pointer-events: none;
+            visibility: hidden
+        }
         /* Overlay for mobile drawer */
         
         .pv-overlay {
@@ -957,6 +962,8 @@
                 transform: none;
                 box-shadow: none;
                 opacity: 1;
+                pointer-events: auto;
+                visibility: visible;
                 border-right: 1px solid var(--border);
                 z-index: auto;
                 will-change: auto
@@ -1016,7 +1023,7 @@
 
     <!-- NAV -->
     <nav class="pv-nav">
-        <button class="pv-hamburger" id="hamburger-btn" aria-label="Menú">☰</button>
+        <button class="pv-hamburger" id="hamburger-btn" type="button" aria-label="Abrir panel de búsqueda" aria-expanded="false" aria-controls="sidebar">☰</button>
         <div class="pv-nav-logo"><span>⊘</span> Contra-Archivo <span class="pv-nav-badge">privado</span></div>
         <div class="pv-nav-links">
             <a href="#" id="nav-seg-btn">Panel</a>
@@ -1034,7 +1041,7 @@
         <div class="pv-overlay" id="sidebar-overlay"></div>
 
         <!-- SIDEBAR -->
-        <aside class="pv-sidebar" id="sidebar" aria-label="Panel de búsqueda y seguimientos">
+        <aside class="pv-sidebar" id="sidebar" aria-label="Panel de búsqueda y seguimientos" aria-hidden="true">
 
             <!-- A. Buscador con Memoria -->
             <div class="sb-section">
@@ -1463,6 +1470,8 @@
                     var isOpen = sidebar.classList.toggle('open');
                     overlay.classList.toggle('open', isOpen);
                     document.body.style.overflow = isOpen ? 'hidden' : '';
+                    btn.setAttribute('aria-expanded', String(isOpen));
+                    btn.setAttribute('aria-label', isOpen ? 'Cerrar panel de búsqueda' : 'Abrir panel de búsqueda');
                     if (isMobile()) {
                         sidebar.setAttribute('aria-hidden', String(!isOpen));
                         if (main) main.setAttribute('aria-hidden', String(isOpen));
@@ -1477,6 +1486,8 @@
                     sidebar.classList.remove('open');
                     overlay.classList.remove('open');
                     document.body.style.overflow = '';
+                    btn.setAttribute('aria-expanded', 'false');
+                    btn.setAttribute('aria-label', 'Abrir panel de búsqueda');
                     if (isMobile()) {
                         sidebar.setAttribute('aria-hidden', 'true');
                         if (main) main.removeAttribute('aria-hidden');

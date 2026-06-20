@@ -19,7 +19,13 @@
 :root{--surface:#131313;--accent:#c8a96e;--accent-hover:#b8966a;--success:#7a9e6e;--error:#c85f4a}
 html,body{height:100%}
 body{display:flex;flex-direction:column;align-items:center;padding:0 24px;min-height:100vh}
-.login-card{width:100%;max-width:440px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:46px 32px;text-align:center;position:relative;margin:auto}
+.login-card{width:100%;max-width:480px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:46px 32px;text-align:center;position:relative;margin:auto}
+.btn-primary:focus-visible,.btn-secondary:focus-visible,.btn-retry:focus-visible,.master-input:focus-visible,.fallback-input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.heuristics summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+.feature-copy span{color:#b0b0b0}
+.heuristics-list code{color:var(--accent);background:rgba(0,0,0,.25);padding:1px 4px;border-radius:3px;font-size:10px}
+.master-area{border-top:1px solid var(--border);margin-top:22px;padding-top:16px}
+.admin-details summary{font-size:11px;letter-spacing:.06em;color:var(--dim);cursor:pointer;text-transform:uppercase}
 .eyebrow{font-family:var(--font-mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin-bottom:20px}
 .logo-symbol{font-size:36px;line-height:1;color:var(--accent);margin-bottom:12px;user-select:none}
 .card-title{font-family:Georgia,serif;font-size:28px;font-weight:400;color:var(--text);letter-spacing:.04em;margin-bottom:6px}
@@ -96,54 +102,7 @@ body{display:flex;flex-direction:column;align-items:center;padding:0 24px;min-he
   <h1 id="login-title" class="card-title">Acceso investigadoras</h1>
   <p class="card-subtitle">Ingreso privado para seguimientos, CIPER feed y herramientas de análisis.</p>
 
-  <section class="features-preview" aria-labelledby="features-heading">
-    <p id="features-heading" class="features-title">Tras el acceso</p>
-    <div class="features-grid" role="list">
-      <div class="feature-item" role="listitem">
-        <span class="feature-icon" aria-hidden="true">🔍</span>
-        <div class="feature-copy"><strong>Buscador con memoria</strong><span>Historial de consultas, patrones y export CSV.</span></div>
-      </div>
-      <div class="feature-item" role="listitem">
-        <span class="feature-icon" aria-hidden="true">📌</span>
-        <div class="feature-copy"><strong>Seguimientos</strong><span>Casos marcados y notas de investigación en el panel lateral.</span></div>
-      </div>
-      <div class="feature-item" role="listitem">
-        <span class="feature-icon" aria-hidden="true">🕸️</span>
-        <div class="feature-copy"><strong>Simulación y grafo</strong><span>Explora vínculos entre actores y escenarios hipotéticos.</span></div>
-      </div>
-      <div class="feature-item" role="listitem">
-        <span class="feature-icon" aria-hidden="true">💬</span>
-        <div class="feature-copy"><strong>Chat / síntesis</strong><span>Asistente para cruzar evidencia y redactar hallazgos.</span></div>
-      </div>
-      <div class="feature-item" role="listitem">
-        <span class="feature-icon" aria-hidden="true">📰</span>
-        <div class="feature-copy"><strong>Feed CIPER</strong><span>Noticias y cruces con el corpus en tiempo casi real.</span></div>
-      </div>
-      <div class="feature-item" role="listitem">
-        <span class="feature-icon" aria-hidden="true">📄</span>
-        <div class="feature-copy"><strong>Tesis y documentos</strong><span>Biblioteca privada vinculada al instrumento público.</span></div>
-      </div>
-      <div class="feature-item" role="listitem">
-        <span class="feature-icon" aria-hidden="true">👣</span>
-        <div class="feature-copy"><strong>Huella digital</strong><span>Trazabilidad de interacciones y sesiones de análisis.</span></div>
-      </div>
-    </div>
-
-    <details class="heuristics">
-      <summary>Heurísticas UX aplicadas a este acceso</summary>
-      <ul class="heuristics-list">
-        <li><strong>Visibilidad del estado:</strong> estados de passkey, registro y error con <code>aria-live</code> y spinners diferenciados.</li>
-        <li><strong>Control y libertad:</strong> reintentar, volver al acceso público y alternar a contraseña sin perder contexto.</li>
-        <li><strong>Prevención de errores:</strong> passkey primero; clave maestra solo para habilitar registro de dispositivo.</li>
-        <li><strong>Reconocimiento &gt; recuerdo:</strong> vista previa de herramientas antes de autenticar; etiquetas explícitas en formularios.</li>
-        <li><strong>Flexibilidad:</strong> passkey en navegadores compatibles; fallback con clave de investigación.</li>
-        <li><strong>Diseño minimalista:</strong> una acción principal por pantalla; registro oculto hasta desbloqueo.</li>
-        <li><strong>Accesibilidad:</strong> skip link, foco gestionado, contraste y <code>prefers-reduced-motion</code>.</li>
-      </ul>
-    </details>
-  </section>
-
-  <div class="status-area" aria-live="polite">
+  <div class="status-area" aria-live="polite" aria-atomic="true">
     <div id="state-initial" class="state-view active">
       <span class="state-icon" aria-hidden="true">🔐</span>
       <span class="state-text">Accede con tu passkey registrada</span>
@@ -172,14 +131,14 @@ body{display:flex;flex-direction:column;align-items:center;padding:0 24px;min-he
     <button id="btn-register" class="btn-secondary hidden" type="button">Registrar nuevo dispositivo</button>
   </div>
 
-  <div class="master-area">
-    <p class="master-title">Habilitar registro de dispositivo</p>
-    <form id="master-form" class="master-form" autocomplete="off">
+  <details class="master-area admin-details">
+    <summary>Registro de dispositivo (solo admin)</summary>
+    <form id="master-form" class="master-form" autocomplete="off" style="margin-top:12px">
       <input id="master-input" class="master-input" type="password" placeholder="Clave maestra" aria-label="Clave maestra para habilitar registro">
       <button class="btn-secondary" type="submit">Habilitar</button>
     </form>
     <div id="master-error" class="master-error" role="alert" aria-live="assertive">Clave maestra incorrecta.</div>
-  </div>
+  </details>
 
   <div id="fallback-area" class="fallback-area hidden">
     <p class="fallback-msg" id="fallback-msg"></p>
@@ -191,9 +150,53 @@ body{display:flex;flex-direction:column;align-items:center;padding:0 24px;min-he
   </div>
 
   <div class="login-footer">
-    <a href="login.html">← Volver al acceso público</a>
-    <button type="button" id="btn-show-fallback" class="hidden" style="background:none;border:none;padding:0;font-size:12px;color:var(--muted);cursor:pointer;font-family:inherit;transition:color .2s;">Usar contraseña</button>
+    <a href="landing.html">← Sitio público</a>
+    <a href="terraza/">Terraza</a>
+    <button type="button" id="btn-show-fallback" class="hidden" style="background:none;border:none;padding:0;font-size:12px;color:var(--muted);cursor:pointer;font-family:inherit;transition:color .2s;min-height:44px">Usar contraseña</button>
   </div>
+
+  <details class="features-preview" style="margin-top:24px;text-align:left">
+    <summary id="features-heading" class="features-title" style="cursor:pointer;list-style:none">Qué incluye el espacio privado (7 módulos)</summary>
+    <div class="features-grid" role="list" style="margin-top:12px">
+      <div class="feature-item" role="listitem">
+        <span class="feature-icon" aria-hidden="true">🔍</span>
+        <div class="feature-copy"><strong>Buscador con memoria</strong><span>Historial, patrones y export CSV.</span></div>
+      </div>
+      <div class="feature-item" role="listitem">
+        <span class="feature-icon" aria-hidden="true">📌</span>
+        <div class="feature-copy"><strong>Seguimientos</strong><span>Casos marcados en panel lateral.</span></div>
+      </div>
+      <div class="feature-item" role="listitem">
+        <span class="feature-icon" aria-hidden="true">🕸️</span>
+        <div class="feature-copy"><strong>Simulación y grafo</strong><span>Vínculos entre actores.</span></div>
+      </div>
+      <div class="feature-item" role="listitem">
+        <span class="feature-icon" aria-hidden="true">💬</span>
+        <div class="feature-copy"><strong>Chat / síntesis</strong><span>Cruce de evidencia asistido.</span></div>
+      </div>
+      <div class="feature-item" role="listitem">
+        <span class="feature-icon" aria-hidden="true">📰</span>
+        <div class="feature-copy"><strong>Feed CIPER</strong><span>Noticias y cruces con corpus.</span></div>
+      </div>
+      <div class="feature-item" role="listitem">
+        <span class="feature-icon" aria-hidden="true">📄</span>
+        <div class="feature-copy"><strong>Tesis y documentos</strong><span>Biblioteca privada.</span></div>
+      </div>
+      <div class="feature-item" role="listitem">
+        <span class="feature-icon" aria-hidden="true">👣</span>
+        <div class="feature-copy"><strong>Huella digital</strong><span>Trazabilidad de sesión.</span></div>
+      </div>
+    </div>
+    <details class="heuristics" style="margin-top:16px">
+      <summary>Heurísticas UX de este acceso</summary>
+      <ul class="heuristics-list">
+        <li><strong>Visibilidad del estado:</strong> passkey con <code>aria-live</code>.</li>
+        <li><strong>Control:</strong> reintentar, contraseña alternativa, volver al sitio público.</li>
+        <li><strong>Seguridad:</strong> registro de dispositivo oculto tras clave admin.</li>
+        <li><strong>Accesibilidad:</strong> skip link, foco visible, reduced-motion.</li>
+      </ul>
+    </details>
+  </details>
 </main>
 
 <script defer src="src/passkey.js?v=20260507"></script>

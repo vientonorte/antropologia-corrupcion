@@ -165,6 +165,47 @@
         .dot-err {
             background: var(--err);
         }
+
+        @media (max-width: 767px) {
+            .topbar {
+                flex-wrap: wrap;
+                padding: 10px 14px;
+            }
+
+            .topbar-stats {
+                width: 100%;
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+
+            .layout {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                position: static;
+                height: auto;
+                border-right: none;
+                border-bottom: 1px solid var(--border);
+                display: flex;
+                flex-wrap: wrap;
+                gap: 4px;
+                padding: 12px 8px;
+            }
+
+            .sidebar-label {
+                width: 100%;
+            }
+
+            .nav-item {
+                border-left: none;
+                border-radius: var(--r);
+            }
+
+            .main {
+                padding: 16px 14px;
+            }
+        }
         /* ─── LAYOUT ─── */
         
         .layout {

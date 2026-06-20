@@ -88,10 +88,23 @@ La superficie privada de `terraza/` se describe operativamente en [`CLAUDE.md`](
 - si cambias seguridad, actualiza este documento antes que cualquier resumen auxiliar
 - si cambias `terraza/`, revisa también [`CLAUDE.md`](CLAUDE.md)
 
+## OPSEC — accesos y superficies (2026-06)
+
+| Ruta | Comportamiento | Notas |
+|---|---|---|
+| `privado-login.html` | **Canónico** — passkey + fallback contraseña | `login.html` redirige aquí (sin formularios duplicados) |
+| `privado.html` | Panel con sesión; `noindex` en producción | Sidebar móvil con `aria-expanded`, overlay y foco atrapado |
+| `terraza/` (Pages) | Gateway estático informativo | La app Next.js **no** se publica; solo `npm run dev` local |
+| `admin.html` | Bloqueado en `*.github.io` | Redirige a `index.html` en hosts públicos |
+| `contra-archivo-v2.html` | Grafo público + módulos `src/` | `socialField.js` requerido para HUD de entropía |
+
+**Regla:** un solo punto de login (`privado-login.html`). No duplicar formularios de passkey en otras rutas.
+
 ## Historial resumido
 
 - **2026-05-04**: auditoría integral previa a la apertura pública del repositorio
 - **2026-05-05**: hardening adicional en CSP, `robots.txt`, `sitemap.xml`, CodeQL, Dependabot y seguridad de `terraza/`
+- **2026-06-20**: consolidación login, gateway Terraza, carga `socialField.js`, OPSEC documentado
 
 ## Referencias relacionadas
 
