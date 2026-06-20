@@ -108,14 +108,74 @@
             '  outline: 2px solid #0d0d0d;',
             '  text-decoration: none;',
             '}',
-            '@media (max-width: 760px) {',
+            '.ca-unified-nav__row {',
+            '  display: flex;',
+            '  align-items: center;',
+            '  justify-content: space-between;',
+            '  width: 100%;',
+            '  gap: 12px;',
+            '}',
+            '.ca-unified-nav__toggle {',
+            '  display: none;',
+            '  flex-direction: column;',
+            '  justify-content: center;',
+            '  align-items: center;',
+            '  gap: 5px;',
+            '  width: 44px;',
+            '  height: 44px;',
+            '  border: 1px solid rgba(255,255,255,0.2);',
+            '  border-radius: 6px;',
+            '  background: transparent;',
+            '  color: #e8e0d0;',
+            '  cursor: pointer;',
+            '  flex-shrink: 0;',
+            '}',
+            '.ca-unified-nav__toggle:focus-visible {',
+            '  outline: 2px solid #c8a96e;',
+            '  outline-offset: 2px;',
+            '}',
+            '.ca-unified-nav__toggle-bar {',
+            '  display: block;',
+            '  width: 20px;',
+            '  height: 2px;',
+            '  background: currentColor;',
+            '  border-radius: 2px;',
+            '  transition: transform .2s ease, opacity .2s ease;',
+            '}',
+            '.ca-unified-nav.is-open .ca-unified-nav__toggle-bar:nth-child(1) {',
+            '  transform: translateY(7px) rotate(45deg);',
+            '}',
+            '.ca-unified-nav.is-open .ca-unified-nav__toggle-bar:nth-child(2) {',
+            '  opacity: 0;',
+            '}',
+            '.ca-unified-nav.is-open .ca-unified-nav__toggle-bar:nth-child(3) {',
+            '  transform: translateY(-7px) rotate(-45deg);',
+            '}',
+            '@media (max-width: 640px) {',
             '  .ca-unified-nav {',
             '    flex-direction: column;',
-            '    align-items: flex-start;',
+            '    align-items: stretch;',
+            '  }',
+            '  .ca-unified-nav__toggle {',
+            '    display: flex;',
             '  }',
             '  .ca-unified-nav__links {',
+            '    display: none;',
             '    width: 100%;',
-            '    justify-content: flex-start;',
+            '    flex-direction: column;',
+            '    align-items: stretch;',
+            '    gap: 0;',
+            '    border-top: 1px solid rgba(255,255,255,0.14);',
+            '    padding-top: 8px;',
+            '  }',
+            '  .ca-unified-nav.is-open .ca-unified-nav__links {',
+            '    display: flex;',
+            '  }',
+            '  .ca-unified-nav__link {',
+            '    display: block;',
+            '    width: 100%;',
+            '    padding: 10px 4px;',
+            '    border-bottom: 1px solid rgba(255,255,255,0.08);',
             '  }',
             '  .ca-unified-footer {',
             '    flex-direction: column;',
@@ -135,7 +195,7 @@
             { href: basePath + 'archivo.html', label: 'Archivo' },
             { href: basePath + 'poemas.html', label: 'Poemas' },
             { href: basePath + 'buscador.html', label: 'Búsqueda' },
-            { href: basePath + 'login.html', label: 'Acceso privado' }
+            { href: basePath + 'privado-login.html', label: 'Acceso privado' }
         ];
 
         var nav = document.createElement('nav');
@@ -143,13 +203,28 @@
         nav.setAttribute('aria-label', 'Navegación unificada del sitio');
         nav.setAttribute('data-ca-unified-nav', 'true');
 
+        var row = document.createElement('div');
+        row.className = 'ca-unified-nav__row';
+
         var brand = document.createElement('a');
         brand.className = 'ca-unified-nav__brand';
         brand.href = basePath + 'landing.html';
         brand.textContent = 'Contra-Archivo';
 
+        var toggle = document.createElement('button');
+        toggle.type = 'button';
+        toggle.className = 'ca-unified-nav__toggle';
+        toggle.setAttribute('aria-expanded', 'false');
+        toggle.setAttribute('aria-label', 'Abrir menú de navegación');
+        toggle.innerHTML =
+            '<span class="ca-unified-nav__toggle-bar"></span>' +
+            '<span class="ca-unified-nav__toggle-bar"></span>' +
+            '<span class="ca-unified-nav__toggle-bar"></span>';
+
         var linksWrap = document.createElement('div');
         linksWrap.className = 'ca-unified-nav__links';
+        linksWrap.id = 'ca-unified-nav-links';
+        toggle.setAttribute('aria-controls', 'ca-unified-nav-links');
 
         links.forEach(function(item) {
             var a = document.createElement('a');
@@ -163,8 +238,39 @@
             linksWrap.appendChild(a);
         });
 
-        nav.appendChild(brand);
+        row.appendChild(brand);
+        row.appendChild(toggle);
+        nav.appendChild(row);
         nav.appendChild(linksWrap);
+
+        toggle.addEventListener('click', function() {
+            var open = nav.classList.toggle('is-open');
+            toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+            toggle.setAttribute('aria-label', open ? 'Cerrar menú de navegación' : 'Abrir menú de navegación');
+            if (open) {
+                var first = linksWrap.querySelector('a');
+                if (first) first.focus();
+            }
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && nav.classList.contains('is-open')) {
+                nav.classList.remove('is-open');
+                toggle.setAttribute('aria-expanded', 'false');
+                toggle.setAttribute('aria-label', 'Abrir menú de navegación');
+                toggle.focus();
+            }
+        });
+
+        linksWrap.querySelectorAll('a').forEach(function(link) {
+            link.addEventListener('click', function() {
+                if (window.innerWidth < 640) {
+                    nav.classList.remove('is-open');
+                    toggle.setAttribute('aria-expanded', 'false');
+                    toggle.setAttribute('aria-label', 'Abrir menú de navegación');
+                }
+            });
+        });
 
         return nav;
     }
@@ -183,7 +289,7 @@
             '<a href="' + basePath + 'contra-archivo-v2.html">Instrumento</a> · ' +
             '<a href="' + basePath + 'archivo.html">Archivo</a> · ' +
             '<a href="' + basePath + 'poemas.html">Poemas</a> · ' +
-            '<a href="' + basePath + 'login.html">Acceso privado</a>';
+            '<a href="' + basePath + 'privado-login.html">Acceso privado</a>';
 
         footer.appendChild(left);
         footer.appendChild(right);

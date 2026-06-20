@@ -1155,6 +1155,48 @@
             font-size: 0.7rem;
             font-family: monospace;
         }
+
+        @media (max-width: 640px) {
+            .graph-toolbar {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0.75rem;
+                padding: 0.75rem;
+            }
+
+            .toolbar-section {
+                flex-wrap: wrap;
+                gap: 0.5rem;
+            }
+
+            .graph-util-bar {
+                margin-left: 0;
+                width: 100%;
+                flex-wrap: wrap;
+            }
+
+            .mode-btn,
+            .eje-filter,
+            .util-btn,
+            .view-toggle-btn,
+            .actor-chip {
+                min-height: 44px;
+                min-width: 44px;
+            }
+
+            .graph-kbd-hint {
+                gap: 0.5rem;
+                font-size: 0.7rem;
+            }
+
+            .legend-expanded {
+                padding: 0.75rem 1rem;
+            }
+
+            .actor-filter-group {
+                padding: 0.5rem 0.75rem;
+            }
+        }
         /* Panel ARIA improvements */
         
         #panel-wrap[aria-hidden="true"] {
