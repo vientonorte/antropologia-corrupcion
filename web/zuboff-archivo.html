@@ -835,6 +835,161 @@
         .btn-import-all:hover {
             background: #2d6639;
         }
+
+        /* ── LECTURA CLAVE B LOCAL ── */
+        .analyzer-badge.local {
+            background: var(--accent-green);
+        }
+
+        .clave-b-workspace {
+            display: none;
+            margin-top: 16px;
+            border: 1px solid var(--line);
+            border-radius: 4px;
+            padding: 16px;
+            background: var(--paper);
+        }
+
+        .clave-b-legend {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 6px;
+            margin-bottom: 14px;
+            font-size: 10px;
+            color: var(--neutral);
+        }
+
+        .clave-b-legend span {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .clave-b-toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .clave-b-swatch {
+            width: 44px;
+            height: 44px;
+            border: 2px solid var(--line);
+            border-radius: 4px;
+            background: var(--paper);
+            cursor: pointer;
+            font-size: 18px;
+            transition: border-color 0.15s, transform 0.15s;
+        }
+
+        .clave-b-swatch.active {
+            border-color: var(--swatch, var(--ink));
+            transform: scale(1.05);
+            box-shadow: 0 0 0 2px var(--paper), 0 0 0 4px var(--swatch, var(--ink));
+        }
+
+        .clave-b-tools {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 10px 0 14px;
+            align-items: center;
+        }
+
+        .clave-b-tools button.active {
+            background: var(--ink);
+            color: var(--paper);
+        }
+
+        .clave-b-canvas-wrap {
+            width: 100%;
+            overflow: auto;
+            border: 1px solid var(--line);
+            border-radius: 4px;
+            background: #fff;
+        }
+
+        #claveBCanvas {
+            display: block;
+            max-width: 100%;
+            touch-action: none;
+        }
+
+        .clave-b-form {
+            display: grid;
+            gap: 10px;
+            margin-top: 16px;
+        }
+
+        .clave-b-form label {
+            display: grid;
+            gap: 4px;
+            font-size: 10px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+
+        .clave-b-form input,
+        .clave-b-form textarea {
+            padding: 8px 10px;
+            border: 1px solid var(--line);
+            border-radius: 2px;
+            font-family: 'DM Mono', monospace;
+            font-size: 12px;
+            background: var(--paper);
+        }
+
+        .clave-b-form textarea {
+            min-height: 72px;
+            resize: vertical;
+        }
+
+        .clave-b-color-hint {
+            font-size: 11px;
+            color: var(--zuboff);
+            letter-spacing: 0.05em;
+        }
+
+        .clave-b-queue {
+            margin-top: 16px;
+            border: 1px solid var(--line);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .clave-b-queue-empty {
+            padding: 14px;
+            font-size: 11px;
+            color: var(--neutral);
+            margin: 0;
+        }
+
+        .clave-b-queue-remove {
+            background: none;
+            border: 1px solid var(--line);
+            border-radius: 2px;
+            padding: 4px 8px;
+            cursor: pointer;
+            font-size: 10px;
+        }
+
+        .ai-fallback {
+            margin-top: 20px;
+            padding-top: 16px;
+            border-top: 1px dashed var(--line);
+        }
+
+        .ai-fallback summary {
+            cursor: pointer;
+            font-size: 10px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--neutral);
+            user-select: none;
+        }
+
         /* Responsive */
         
         @media (max-width: 768px) {
@@ -883,29 +1038,34 @@
             </span>
         </div>
         <div class="archive-intro">
-            <p><strong>Historial de citas codificadas</strong> — Captura extractos de libros físicos del corpus (no solo Zuboff) con tu sistema de marcadores (rojo/amarillo/rosa/verde/azul/naranja). Cada cita se archiva con libro, autor, página, categoría
+            <p><strong>Historial de citas codificadas</strong> — Captura extractos de libros físicos del corpus (no solo Zuboff) con <strong>Clave B</strong> en el navegador (sin Claude): sube la foto, detecta color, transcribe y archiva. Marcadores: rojo/amarillo/rosa/verde/azul/naranja. Cada cita se archiva con libro, autor, página, categoría
                 temática y notas de alineación con tu tesis sobre "mistranslation" institucional y contra-archivo.</p>
             <p style="margin-top:12px; font-size:11px; color:var(--neutral);">Base metodológica alineada a BJ_analisis_consolidado_D17_Intro. El corpus Zuboff + ATTAC se sincroniza desde <code>data/</code>; tus capturas y ediciones persisten en localStorage. Investigadoras del contra-archivo: inicia sesión en el <a href="privado-login.html" style="color:var(--zuboff);">espacio privado</a> para acceso integrado.</p>
         </div>
 
-        <!-- ANALIZADOR CLAVE B -->
-        <div class="analyzer-section" id="analyzerSection">
+        <!-- LECTURA CROMÁTICA CLAVE B (local, sin Claude) -->
+        <div class="analyzer-section open" id="analyzerSection">
             <div class="analyzer-header" onclick="toggleAnalyzer()">
                 <div class="analyzer-header-left">
-                    <span class="analyzer-title">📷 Analizar foto con Clave B</span>
-                    <span class="analyzer-badge">Claude API</span>
+                    <span class="analyzer-title">📷 Lectura cromática Clave B</span>
+                    <span class="analyzer-badge local">Local · sin IA</span>
                 </div>
-                <span class="analyzer-toggle" id="analyzerToggleLabel">Abrir</span>
+                <span class="analyzer-toggle" id="analyzerToggleLabel">Cerrar</span>
             </div>
             <div class="analyzer-body">
+                <p style="font-size:11px;color:var(--neutral);margin:0 0 14px;line-height:1.6;">
+                    Sube una foto de tu libro subrayado, aplica la <strong>Clave B</strong> (protocolo bujo-ro v1.2),
+                    transcribe cada fragmento y archívalo en el corpus. Todo corre en tu navegador — OCR opcional con Tesseract.
+                </p>
 
-                <p class="api-key-status saved" id="proxyStatus" style="display:none;margin-bottom:10px;"></p>
-                <div class="api-key-row" id="apiKeyRow">
-                    <input type="password" id="apiKeyInput" placeholder="sk-ant-… (solo si no hay proxy viento norte)" autocomplete="off">
-                    <button class="btn-secondary" onclick="saveApiKey()" style="flex-shrink:0;">Guardar key</button>
-                    <span class="api-key-status" id="apiKeyStatus">Sin key — o espera proxy IA</span>
+                <div class="clave-b-legend" aria-label="Clave B — libros impresos">
+                    <span>🟥 Concepto clave</span>
+                    <span>⬛ Investigar</span>
+                    <span>🟨 Referencia</span>
+                    <span>🟩 Persona de interés</span>
+                    <span>🟦 Reflexión</span>
+                    <span>🟧 Compartir</span>
                 </div>
-                <p style="font-size:10px;color:var(--neutral);margin:0 0 12px;">El skill Clave B está en el repo; la inferencia va por <a href="https://github.com/vientonorte/table-ro/blob/main/WORKER-DEPLOY.md" target="_blank" rel="noopener">Cloudflare Worker</a> (sin key en browser). Ver <code>DESIGN-SPRINT-PROXY-IA.md</code>.</p>
 
                 <div class="drop-zone" id="dropZone">
                     <input type="file" id="photoInput" accept="image/*" onchange="handlePhotoSelect(event)">
@@ -913,22 +1073,76 @@
                     <div class="drop-zone-label">Arrastra o selecciona foto del libro</div>
                     <div class="drop-zone-sub">JPG · PNG · HEIC · hasta 20MB</div>
                 </div>
-                <img id="previewImg" class="preview-img" alt="Vista previa">
 
-                <div class="analyzer-actions">
-                    <button class="btn-primary" id="analyzeBtn" onclick="analyzePhoto()" disabled>Analizar con Clave B</button>
-                    <button class="btn-secondary" id="clearPhotoBtn" onclick="clearPhoto()" style="display:none;">Limpiar</button>
-                    <span class="analyze-status" id="analyzeStatus"></span>
-                </div>
-
-                <div class="results-preview" id="resultsPreview">
-                    <div class="results-preview-header">
-                        <span id="resultsCount">0 citas detectadas</span>
-                        <button class="btn-import-all" onclick="importAllResults()">Importar todas →</button>
+                <div class="clave-b-workspace" id="claveBWorkspace">
+                    <p class="clave-b-color-hint" id="claveBColorLabel">🟨 Referencia · referencia</p>
+                    <div class="clave-b-toolbar" id="claveBToolbar" role="toolbar" aria-label="Colores Clave B"></div>
+                    <div class="clave-b-tools">
+                        <button type="button" class="btn-secondary active" data-clave-mode="eyedropper" aria-pressed="true">Cuentagotas</button>
+                        <button type="button" class="btn-secondary" data-clave-mode="region" aria-pressed="false">Seleccionar región</button>
+                        <button type="button" class="btn-secondary" id="claveBOcrRegion">OCR en región</button>
                     </div>
-                    <div id="resultsList"></div>
+                    <div class="clave-b-canvas-wrap" id="claveBCanvasWrap">
+                        <canvas id="claveBCanvas" aria-label="Foto del libro para lectura cromática"></canvas>
+                    </div>
+
+                    <div class="clave-b-form">
+                        <label>Libro
+                            <input type="text" id="claveBLibro" placeholder="La era del capitalismo de la vigilancia">
+                        </label>
+                        <label>Autor
+                            <input type="text" id="claveBAutor" placeholder="Shoshana Zuboff">
+                        </label>
+                        <label>Página
+                            <input type="number" id="claveBPagina" min="1" placeholder="23">
+                        </label>
+                        <label>Texto del fragmento (transcripción fiel)
+                            <textarea id="claveBTexto" placeholder="Transcribe el pasaje marcado…"></textarea>
+                        </label>
+                        <label>Notas Clave B (conexión con contra-archivo)
+                            <textarea id="claveBNotas" placeholder="Por qué importa este fragmento…"></textarea>
+                        </label>
+                    </div>
+
+                    <div class="analyzer-actions">
+                        <button type="button" class="btn-primary" id="claveBAddFragment">+ Añadir fragmento</button>
+                        <button type="button" class="btn-secondary" id="clearPhotoBtn" onclick="clearPhoto()">Limpiar foto</button>
+                        <span class="analyze-status" id="claveBStatus"></span>
+                    </div>
+
+                    <div class="clave-b-queue">
+                        <div class="results-preview-header">
+                            <span id="claveBQueueCount">0 fragmentos</span>
+                            <div style="display:flex;gap:8px;">
+                                <button type="button" class="btn-import-all" id="claveBImportQueue">Importar al archivo →</button>
+                                <button type="button" class="btn-secondary" id="claveBClearQueue" style="padding:6px 10px;font-size:10px;">Vaciar</button>
+                            </div>
+                        </div>
+                        <div id="claveBQueue"></div>
+                    </div>
                 </div>
 
+                <details class="ai-fallback">
+                    <summary>Modo IA opcional (Claude / proxy viento norte)</summary>
+                    <p class="api-key-status saved" id="proxyStatus" style="display:none;margin:12px 0 10px;"></p>
+                    <div class="api-key-row" id="apiKeyRow">
+                        <input type="password" id="apiKeyInput" placeholder="sk-ant-… (solo si no hay proxy)" autocomplete="off">
+                        <button class="btn-secondary" onclick="saveApiKey()" style="flex-shrink:0;">Guardar key</button>
+                        <span class="api-key-status" id="apiKeyStatus">Sin key — opcional</span>
+                    </div>
+                    <p style="font-size:10px;color:var(--neutral);margin:0 0 12px;">Inferencia automática vía <a href="https://github.com/vientonorte/table-ro/blob/main/WORKER-DEPLOY.md" target="_blank" rel="noopener">Cloudflare Worker</a> o API key en sesión.</p>
+                    <div class="analyzer-actions">
+                        <button class="btn-secondary" id="analyzeBtn" onclick="analyzePhoto()" disabled>Analizar con Claude</button>
+                        <span class="analyze-status" id="analyzeStatus"></span>
+                    </div>
+                    <div class="results-preview" id="resultsPreview">
+                        <div class="results-preview-header">
+                            <span id="resultsCount">0 citas detectadas</span>
+                            <button class="btn-import-all" onclick="importAllResults()">Importar todas →</button>
+                        </div>
+                        <div id="resultsList"></div>
+                    </div>
+                </details>
             </div>
         </div>
 
@@ -1584,6 +1798,7 @@ Notas: Conexión directa con tu experiencia de expulsión a los 15. Lo que perdi
         let currentPhotoBase64 = null;
         let currentPhotoType = null;
         let pendingResults = [];
+        let claveBReader = null;
         // API key solo en memoria — fallback si no hay proxy Worker
         let _sessionApiKey = '';
         const AI_PROXY_STORAGE = 'contra_archivo_proxy_url';
@@ -1614,15 +1829,19 @@ Notas: Conexión directa con tu experiencia de expulsión a los 15. Lo que perdi
         function updateAiAccessUi() {
             const row = document.getElementById('apiKeyRow');
             const status = document.getElementById('proxyStatus');
+            const analyzeBtn = document.getElementById('analyzeBtn');
             if (AI_CFG.proxyUrl) {
                 if (row) row.style.display = 'none';
                 if (status) {
                     status.style.display = 'block';
-                    status.textContent = 'Proxy IA viento norte activo — no necesitas API key.';
+                    status.textContent = 'Proxy IA disponible (modo opcional).';
                 }
             } else {
                 if (row) row.style.display = '';
                 if (status) status.style.display = 'none';
+            }
+            if (analyzeBtn && currentPhotoBase64) {
+                analyzeBtn.disabled = !hasAiAccess();
             }
         }
 
@@ -1700,13 +1919,10 @@ Notas: Conexión directa con tu experiencia de expulsión a los 15. Lo que perdi
                 const dataUrl = e.target.result;
                 currentPhotoBase64 = dataUrl.split(',')[1];
                 currentPhotoType = file.type || 'image/jpeg';
-                const preview = document.getElementById('previewImg');
-                preview.src = dataUrl;
-                preview.classList.add('visible');
-                document.getElementById('analyzeBtn').disabled = false;
-                document.getElementById('clearPhotoBtn').style.display = '';
+                document.getElementById('analyzeBtn').disabled = !hasAiAccess();
                 document.getElementById('resultsPreview').classList.remove('visible');
                 setAnalyzeStatus('');
+                if (claveBReader) claveBReader.loadImage(dataUrl);
             };
             reader.readAsDataURL(file);
         }
@@ -1716,13 +1932,10 @@ Notas: Conexión directa con tu experiencia de expulsión a los 15. Lo que perdi
             currentPhotoType = null;
             pendingResults = [];
             document.getElementById('photoInput').value = '';
-            const preview = document.getElementById('previewImg');
-            preview.src = '';
-            preview.classList.remove('visible');
             document.getElementById('analyzeBtn').disabled = true;
-            document.getElementById('clearPhotoBtn').style.display = 'none';
             document.getElementById('resultsPreview').classList.remove('visible');
             setAnalyzeStatus('');
+            if (claveBReader) claveBReader.clear();
         }
 
         function setAnalyzeStatus(msg, type = '') {
@@ -1733,7 +1946,7 @@ Notas: Conexión directa con tu experiencia de expulsión a los 15. Lo que perdi
 
         async function analyzePhoto() {
             if (!hasAiAccess()) {
-                setAnalyzeStatus('Sin proxy IA ni API key. Despliega el Worker (table-ro) o ingresa sk-ant-…', 'error');
+                setAnalyzeStatus('Modo IA opcional: despliega el Worker (table-ro) o ingresa sk-ant-…', 'error');
                 return;
             }
             if (!currentPhotoBase64) {
@@ -2048,8 +2261,32 @@ Responde con estructura Markdown:
             if (file && file.type.startsWith('image/')) loadPhoto(file);
         });
 
+        // ── Lectura Clave B local (sin Claude) ──
+        (function bootClaveB() {
+            function startClaveB() {
+                if (!window.LecturaClaveB || claveBReader) return;
+                claveBReader = LecturaClaveB.init({
+                    defaultLibro: DEFAULT_BOOK_TITLE,
+                    defaultAutor: DEFAULT_AUTHOR,
+                    onImportAll: function(results) {
+                        results.forEach(function(r) { addResultToCitations(r); });
+                        renderCitations();
+                        updateStats();
+                    }
+                });
+            }
+            if (window.LecturaClaveB) {
+                startClaveB();
+            } else {
+                var scriptEl = document.querySelector('script[src*="lectura-clave-b"]');
+                if (scriptEl) scriptEl.addEventListener('load', startClaveB);
+                setTimeout(bootClaveB, 40);
+            }
+        })();
+
         // No se restaura API key — no se persiste entre sesiones
     </script>
+    <script src="js/lectura-clave-b.js?v=20260619" defer></script>
     <script>
         (function() {
             if (window.__CA_UNIFIED_SHELL_LOADER__) {
