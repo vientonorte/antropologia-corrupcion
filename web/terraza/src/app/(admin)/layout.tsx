@@ -16,7 +16,7 @@ function SidebarNav() {
   const pathname = usePathname();
 
   return (
-    <nav aria-label="Navegación lateral">
+    <nav aria-label="Navegación del panel Terraza">
       <ul className="space-y-1" role="list">
         {NAV_LINKS.map(({ href, label }) => {
           const isActive = pathname === href || pathname.startsWith(href + '/');

@@ -52,6 +52,22 @@ body{display:flex;flex-direction:column;align-items:center;padding:0 24px;min-he
 .fallback-input{width:100%;padding:12px 16px;background:#111;border:1px solid #2e2e2e;border-radius:6px;color:var(--text);font-family:var(--font-mono);font-size:14px;letter-spacing:.08em}
 .fallback-input:focus{border-color:var(--accent);outline:none}
 .fallback-error{font-size:11px;color:var(--error);display:none}
+.features-preview{margin-top:28px;padding-top:24px;border-top:1px solid var(--border);text-align:left}
+.features-title{font-size:11px;letter-spacing:.08em;color:var(--dim);text-transform:uppercase;margin-bottom:12px}
+.features-grid{display:grid;gap:8px}
+.feature-item{display:flex;gap:10px;padding:10px 12px;border:1px solid var(--border);border-radius:8px;background:rgba(255,255,255,.02)}
+.feature-icon{flex-shrink:0;font-size:16px;line-height:1.2}
+.feature-copy strong{display:block;font-size:12px;color:var(--text);margin-bottom:2px}
+.feature-copy span{font-size:11px;color:var(--muted);line-height:1.45}
+.heuristics{margin-top:20px;padding:14px 16px;border-radius:8px;background:rgba(200,169,110,.06);border:1px solid rgba(200,169,110,.18)}
+.heuristics summary{cursor:pointer;font-size:12px;font-weight:600;color:var(--accent);letter-spacing:.03em;list-style:none}
+.heuristics summary::-webkit-details-marker{display:none}
+.heuristics summary::after{content:' +';float:right;font-weight:400;color:var(--muted)}
+.heuristics[open] summary::after{content:' −'}
+.heuristics-list{margin:12px 0 0;padding:0;list-style:none;display:grid;gap:8px}
+.heuristics-list li{font-size:11px;color:var(--muted);line-height:1.5;padding-left:14px;position:relative}
+.heuristics-list li::before{content:'';position:absolute;left:0;top:.55em;width:5px;height:5px;border-radius:50%;background:var(--accent)}
+.heuristics-list strong{color:var(--text);font-weight:600}
 .login-footer{margin-top:28px;display:flex;justify-content:space-between;font-size:12px}
 .login-footer a{color:var(--muted);text-decoration:none;transition:color .2s}
 .login-footer a:hover{color:var(--text)}
@@ -79,6 +95,53 @@ body{display:flex;flex-direction:column;align-items:center;padding:0 24px;min-he
   <div class="logo-symbol" aria-hidden="true">⊘</div>
   <h1 id="login-title" class="card-title">Acceso investigadoras</h1>
   <p class="card-subtitle">Ingreso privado para seguimientos, CIPER feed y herramientas de análisis.</p>
+
+  <section class="features-preview" aria-labelledby="features-heading">
+    <p id="features-heading" class="features-title">Tras el acceso</p>
+    <div class="features-grid" role="list">
+      <div class="feature-item" role="listitem">
+        <span class="feature-icon" aria-hidden="true">🔍</span>
+        <div class="feature-copy"><strong>Buscador con memoria</strong><span>Historial de consultas, patrones y export CSV.</span></div>
+      </div>
+      <div class="feature-item" role="listitem">
+        <span class="feature-icon" aria-hidden="true">📌</span>
+        <div class="feature-copy"><strong>Seguimientos</strong><span>Casos marcados y notas de investigación en el panel lateral.</span></div>
+      </div>
+      <div class="feature-item" role="listitem">
+        <span class="feature-icon" aria-hidden="true">🕸️</span>
+        <div class="feature-copy"><strong>Simulación y grafo</strong><span>Explora vínculos entre actores y escenarios hipotéticos.</span></div>
+      </div>
+      <div class="feature-item" role="listitem">
+        <span class="feature-icon" aria-hidden="true">💬</span>
+        <div class="feature-copy"><strong>Chat / síntesis</strong><span>Asistente para cruzar evidencia y redactar hallazgos.</span></div>
+      </div>
+      <div class="feature-item" role="listitem">
+        <span class="feature-icon" aria-hidden="true">📰</span>
+        <div class="feature-copy"><strong>Feed CIPER</strong><span>Noticias y cruces con el corpus en tiempo casi real.</span></div>
+      </div>
+      <div class="feature-item" role="listitem">
+        <span class="feature-icon" aria-hidden="true">📄</span>
+        <div class="feature-copy"><strong>Tesis y documentos</strong><span>Biblioteca privada vinculada al instrumento público.</span></div>
+      </div>
+      <div class="feature-item" role="listitem">
+        <span class="feature-icon" aria-hidden="true">👣</span>
+        <div class="feature-copy"><strong>Huella digital</strong><span>Trazabilidad de interacciones y sesiones de análisis.</span></div>
+      </div>
+    </div>
+
+    <details class="heuristics">
+      <summary>Heurísticas UX aplicadas a este acceso</summary>
+      <ul class="heuristics-list">
+        <li><strong>Visibilidad del estado:</strong> estados de passkey, registro y error con <code>aria-live</code> y spinners diferenciados.</li>
+        <li><strong>Control y libertad:</strong> reintentar, volver al acceso público y alternar a contraseña sin perder contexto.</li>
+        <li><strong>Prevención de errores:</strong> passkey primero; clave maestra solo para habilitar registro de dispositivo.</li>
+        <li><strong>Reconocimiento &gt; recuerdo:</strong> vista previa de herramientas antes de autenticar; etiquetas explícitas en formularios.</li>
+        <li><strong>Flexibilidad:</strong> passkey en navegadores compatibles; fallback con clave de investigación.</li>
+        <li><strong>Diseño minimalista:</strong> una acción principal por pantalla; registro oculto hasta desbloqueo.</li>
+        <li><strong>Accesibilidad:</strong> skip link, foco gestionado, contraste y <code>prefers-reduced-motion</code>.</li>
+      </ul>
+    </details>
+  </section>
 
   <div class="status-area" aria-live="polite">
     <div id="state-initial" class="state-view active">

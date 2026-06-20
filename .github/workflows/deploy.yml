@@ -56,6 +56,10 @@ jobs:
           # Promover web/ a raíz: web/ es la fuente de verdad y siempre sobreescribe raíz.
           rsync -av --exclude='terraza' web/ .
 
+          # Gateway estático para /terraza/ (la app Next.js no se publica en Pages).
+          mkdir -p terraza
+          cp terraza-gateway.html terraza/index.html
+
           # Excluir directorios de desarrollo del artefacto público.
           rm -rf web "Estado del Arte" "Ensayo Traducción de Saberes" docs
 

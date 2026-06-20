@@ -67,7 +67,7 @@ export function BottomNav() {
 
   return (
     <nav
-      aria-label="Navegación principal"
+      aria-label="Navegación móvil del panel Terraza"
       className="fixed bottom-0 inset-x-0 z-40 border-t border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-950 safe-area-bottom"
     >
       <ul role="list" className="flex h-16">
