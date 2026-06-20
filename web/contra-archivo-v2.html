@@ -1790,10 +1790,11 @@
             <div class="mode-section-header">
                 <h2>Biblioteca</h2>
                 <p>Corpus público clasificado por eje, rol analítico y profundidad — fuentes académicas, legales y documentales de acceso abierto.</p>
-                <p style="margin-top:0.5rem;padding:0.6rem 0.9rem;background:var(--surface-2,rgba(255,255,255,0.05));border-left:3px solid var(--accent,#c8a96e);border-radius:0 4px 4px 0;font-size:0.85rem;color:var(--text-muted);">
-                    <strong>Corpus clasificado completo</strong> — transcripciones, capturas de campo y material sensible disponibles solo en el
-                    <a href="/terraza" style="color:var(--accent,#c8a96e);text-decoration:underline;" aria-label="Acceso privado a la Terraza — corpus completo">módulo privado (Terraza)</a>.
-                </p>
+                <details id="terraza-acceso" style="margin-top:0.5rem;padding:0.6rem 0.9rem;background:var(--surface-2,rgba(255,255,255,0.05));border-left:3px solid var(--accent,#c8a96e);border-radius:0 4px 4px 0;font-size:0.85rem;color:var(--text-muted);">
+                    <summary style="cursor:pointer;color:var(--accent,#c8a96e);font-weight:600;">Corpus clasificado completo — módulo privado (Terraza)</summary>
+                    <p style="margin:0.5rem 0 0;">Transcripciones, capturas de campo y material sensible viven en la app admin <strong>Terraza</strong> (<code>web/terraza/</code>, Next.js). No se publica en GitHub Pages: requiere servidor Node, SQLite y APIs de autenticación passkey.</p>
+                    <p style="margin:0.35rem 0 0;">Acceso local: <code>cd web/terraza &amp;&amp; npm run dev</code> → <code>http://localhost:3000</code>. Despliegue remoto pendiente (Vercel / Cloudflare / VPS).</p>
+                </details>
             </div>
 
             <div class="doc-library-controls">

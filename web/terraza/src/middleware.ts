@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
 const SESSION_COOKIE_NAME = 'auth-session';
-const PUBLIC_ROUTES = ['/login', '/api/auth'];
+const PUBLIC_ROUTES = ['/login', '/register', '/api/auth'];
 const PROTECTED_ROUTES = ['/corpus', '/codificacion', '/upload', '/grafo', '/sistema'];
 
 // ─── Rate limiter ─────────────────────────────────────────────────────────────

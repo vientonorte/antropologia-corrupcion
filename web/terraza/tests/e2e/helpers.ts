@@ -7,13 +7,17 @@ import type { Page } from '@playwright/test';
 
 /**
  * Adds a session cookie to bypass the auth middleware in tests.
- * The middleware checks for a 'session' cookie; this simulates a logged-in state.
- * NOTE: The cookie is not HttpOnly so it can be set from client context in tests.
+ * Middleware expects `auth-session` with signed `payload.signature` format
+ * (see src/lib/auth/session.ts). Full HMAC is verified server-side in getSession();
+ * middleware only checks dot-separated shape.
  */
 export async function mockSession(page: Page): Promise<void> {
+  const payload = Buffer.from(
+    JSON.stringify({ userId: 'test-user', userName: 'Test', createdAt: Date.now() }),
+  ).toString('base64url');
   await page.context().addCookies([{
-    name: 'session',
-    value: 'test-session-token',
+    name: 'auth-session',
+    value: `${payload}.test-signature`,
     domain: 'localhost',
     path: '/',
     httpOnly: false,

@@ -101,6 +101,7 @@ test.describe('Journey 6 — Navegación y accesibilidad transversal', () => {
     await expect(nav.getByRole('link', { name: /subir captura/i })).toBeAttached();
     await expect(nav.getByRole('link', { name: /codificación/i })).toBeAttached();
     await expect(nav.getByRole('link', { name: /grafo/i })).toBeAttached();
+    await expect(nav.getByRole('link', { name: /sistema/i })).toBeAttached();
   });
 
   // ── Bottom navigation (mobile) ────────────────────────────────────────────
@@ -115,7 +116,7 @@ test.describe('Journey 6 — Navegación y accesibilidad transversal', () => {
     await expect(nav).toBeAttached({ timeout: 5000 });
   });
 
-  test('J6-10 · bottom nav tiene los 4 links con etiquetas', async ({ page }) => {
+  test('J6-10 · bottom nav tiene los 5 links con etiquetas', async ({ page }) => {
     await mockSession(page);
     await mockEmptyCorpus(page);
     await page.goto('/corpus');
@@ -126,6 +127,7 @@ test.describe('Journey 6 — Navegación y accesibilidad transversal', () => {
     await expect(nav.getByText('Subir')).toBeVisible();
     await expect(nav.getByText('Codificación')).toBeVisible();
     await expect(nav.getByText('Grafo')).toBeVisible();
+    await expect(nav.getByText('Sistema')).toBeVisible();
   });
 
   // ── Headings ──────────────────────────────────────────────────────────────

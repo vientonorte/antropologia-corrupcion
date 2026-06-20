@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "eslint src tests --max-warnings 0",
     "typecheck": "tsc --noEmit",
-    "test": "vitest",
+    "test": "vitest run",
     "test:auth": "vitest run tests/lib/auth",
     "a11y": "tsx scripts/check-contrast.ts",
     "ci:local": "npm run lint && npm run typecheck && npm run test && npm run a11y && npm run build",

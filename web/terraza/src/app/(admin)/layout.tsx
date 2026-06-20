@@ -53,6 +53,7 @@ export default function AdminLayout({
     <div className="flex min-h-screen bg-white dark:bg-gray-950">
       {/* Sidebar — visible solo en md+ */}
       <aside
+        role="complementary"
         className="hidden md:flex w-64 shrink-0 border-r border-gray-200 dark:border-gray-800 p-4 flex-col"
         aria-label="Barra lateral"
       >
