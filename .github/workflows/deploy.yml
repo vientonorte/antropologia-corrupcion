@@ -69,7 +69,7 @@ jobs:
           test -f src/frictionEngine.js || { echo "❌ src/frictionEngine.js faltante"; exit 1; }
           test -f img/evidencia-reservada.svg || { echo "❌ img/evidencia-reservada.svg faltante"; exit 1; }
           test -f data/archivo-index.json || { echo "❌ data/archivo-index.json faltante"; exit 1; }
-          node scripts/qa-links.mjs --local
+          node scripts/qa-links.mjs --deployed
           echo "✅ Assets críticos presentes"
 
       - name: Upload artifact

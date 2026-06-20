@@ -10,10 +10,11 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const LOCAL = process.argv.includes('--local');
+const DEPLOYED = process.argv.includes('--deployed');
 const BASE = process.argv.find((a) => a.startsWith('--base='))?.split('=')[1]
   || 'https://vientonorte.github.io/antropologia-corrupcion';
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const WEB = path.join(ROOT, 'web');
+const WEB = DEPLOYED ? ROOT : path.join(ROOT, 'web');
 
 const SEED_PATHS = [
   '/',
@@ -63,15 +64,16 @@ function urlToLocalPath(url) {
   let rel = url.replace(BASE, '').replace(/^\//, '');
   if (!rel) rel = 'index.html';
   if (rel.endsWith('/')) rel += 'index.html';
-  const rootPaths = ['data/', 'img/', 'xml/', 'src/', 'manifest.json', 'shared-shell.js'];
-  if (rootPaths.some((p) => rel === p || rel.startsWith(p))) {
+  const htmlRoot = DEPLOYED ? ROOT : path.join(ROOT, 'web');
+  const alwaysRoot = ['data/', 'img/', 'xml/', 'src/', 'manifest.json', 'shared-shell.js'];
+  if (alwaysRoot.some((p) => rel === p || rel.startsWith(p))) {
     return path.join(ROOT, rel);
   }
-  const webPath = path.join(WEB, rel);
+  const deployedPath = path.join(ROOT, rel);
+  const webPath = path.join(htmlRoot, rel);
   if (fs.existsSync(webPath)) return webPath;
-  const rootPath = path.join(ROOT, rel);
-  if (fs.existsSync(rootPath)) return rootPath;
-  return webPath;
+  if (fs.existsSync(deployedPath)) return deployedPath;
+  return DEPLOYED ? deployedPath : webPath;
 }
 
 function collectLocalHtmlPaths() {
@@ -171,7 +173,7 @@ async function main() {
   let checked = 0;
   let ok = 0;
 
-  const load = LOCAL ? readLocal : fetchWithStatus;
+  const load = LOCAL || DEPLOYED ? readLocal : fetchWithStatus;
 
   while (queue.length) {
     const url = queue.shift();
@@ -197,7 +199,7 @@ async function main() {
 
   const localStale = scanLocalStale();
   const report = {
-    mode: LOCAL ? 'local' : 'live',
+    mode: DEPLOYED ? 'deployed' : LOCAL ? 'local' : 'live',
     base: BASE,
     checked,
     ok,
