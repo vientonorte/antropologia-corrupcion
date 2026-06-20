@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": "2026-06-19",
+    "version": "2026-06-20",
     "description": "Índice editorial del archivo público con estados de publicación para fichas y dossier documental."
   },
   "entries": [
@@ -36,7 +36,7 @@
       "tipo": "dossier",
       "seccion": "citas",
       "titulo": "Corpus de citas — Zuboff, ATTAC y libros físicos",
-      "descripcion": "Archivo canónico de citas del contra-archivo: corpus editorial Zuboff + ATTAC en data/, captura Clave B de libros impresos, export JSON/CSV y taxonomía de categorías. URL canónica: zuboff-archivo.html (zuboff-citas.html redirige aquí).",
+      "descripcion": "Archivo canónico de citas del contra-archivo: corpus editorial Zuboff + ATTAC en data/, captura Clave B de libros impresos, export JSON/CSV y taxonomía de categorías. URL canónica: zuboff-archivo.html (zuboff-citas.html y citas-attac.html redirigen aquí).",
       "url": "zuboff-archivo.html",
       "estado": "publicable"
     },

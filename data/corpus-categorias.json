@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": "2026-06-19",
+    "version": "2026-06-20",
     "description": "Taxonomía unificada de categorías temáticas — corpus Zuboff + ATTAC + Clave B"
   },
   "labels": {
@@ -30,10 +30,17 @@
     "persona_interes": "Clave B · Persona de interés",
     "reflexion": "Clave B · Reflexión",
     "compartir": "Clave B · Compartir",
-    "investigar": "Clave B · Investigar"
+    "investigar": "Clave B · Investigar",
+    "capitalismo-vigilancia": "Capitalismo de Vigilancia",
+    "datos-comportamiento": "Datos de Comportamiento",
+    "prediccion-modificacion": "Predicción y Modificación",
+    "mercados-futuros": "Mercados de Futuros Conductuales",
+    "poder-instrumental": "Poder Instrumental",
+    "resistencia-autonomia": "Resistencia y Autonomía",
+    "instituciones-estado": "Instituciones y Estado"
   },
   "groups": {
-    "zuboff": ["hogar", "vigilancia_inst", "poder_epistemico", "regimenes_verdad", "extraccion_datos", "democracia", "metodologia"],
+    "zuboff": ["hogar", "vigilancia_inst", "poder_epistemico", "regimenes_verdad", "extraccion_datos", "democracia", "metodologia", "capitalismo-vigilancia", "datos-comportamiento", "prediccion-modificacion", "mercados-futuros", "poder-instrumental", "resistencia-autonomia", "instituciones-estado"],
     "attac": ["movimiento_social", "tasa_tobin", "chile_neoliberal", "privatizacion_afp", "genealogia_attac", "dispositivo_friccion", "neoliberalismo", "genealogia_tasa_tobin", "fiscalidad_capital", "especulador_institucional", "corrupcion_sistemica", "corrupcion_democracia", "estado_supranacional", "mundializacion_financiera"],
     "clave_b": ["concepto_clave", "referencia", "persona_interes", "reflexion", "compartir", "investigar"]
   }
