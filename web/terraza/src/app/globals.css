@@ -1,8 +1,6 @@
 @import url('https://fonts.bunny.net/css?family=newsreader:400,700|inter:400,500,600,700|jetbrains-mono:400,600');
-
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@config "../../tailwind.config.ts";
 
 :root {
   color-scheme: light;
@@ -60,7 +58,7 @@ body {
 
 @media (prefers-reduced-motion: reduce) {
   * {
-    @apply transition-none !important;
+    transition: none !important;
     animation-duration: 0.01ms !important;
   }
 }
