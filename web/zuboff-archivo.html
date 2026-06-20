@@ -899,11 +899,13 @@
             </div>
             <div class="analyzer-body">
 
-                <div class="api-key-row">
-                    <input type="password" id="apiKeyInput" placeholder="sk-ant-… (solo en memoria, nunca sale del browser)" autocomplete="off">
+                <p class="api-key-status saved" id="proxyStatus" style="display:none;margin-bottom:10px;"></p>
+                <div class="api-key-row" id="apiKeyRow">
+                    <input type="password" id="apiKeyInput" placeholder="sk-ant-… (solo si no hay proxy viento norte)" autocomplete="off">
                     <button class="btn-secondary" onclick="saveApiKey()" style="flex-shrink:0;">Guardar key</button>
-                    <span class="api-key-status" id="apiKeyStatus">Sin key</span>
+                    <span class="api-key-status" id="apiKeyStatus">Sin key — o espera proxy IA</span>
                 </div>
+                <p style="font-size:10px;color:var(--neutral);margin:0 0 12px;">El skill Clave B está en el repo; la inferencia va por <a href="https://github.com/vientonorte/table-ro/blob/main/WORKER-DEPLOY.md" target="_blank" rel="noopener">Cloudflare Worker</a> (sin key en browser). Ver <code>DESIGN-SPRINT-PROXY-IA.md</code>.</p>
 
                 <div class="drop-zone" id="dropZone">
                     <input type="file" id="photoInput" accept="image/*" onchange="handlePhotoSelect(event)">
@@ -1582,8 +1584,84 @@ Notas: Conexión directa con tu experiencia de expulsión a los 15. Lo que perdi
         let currentPhotoBase64 = null;
         let currentPhotoType = null;
         let pendingResults = [];
-        // API key se mantiene solo en memoria — no persiste entre sesiones
+        // API key solo en memoria — fallback si no hay proxy Worker
         let _sessionApiKey = '';
+        const AI_PROXY_STORAGE = 'contra_archivo_proxy_url';
+        let AI_CFG = { proxyUrl: '', model: 'claude-sonnet-4-6' };
+
+        function getBasePath() {
+            return location.pathname.indexOf('/antropologia-corrupcion/') === 0 ? '/antropologia-corrupcion/' : '/';
+        }
+
+        async function loadAiProxyConfig() {
+            try {
+                const res = await fetch(getBasePath() + 'data/ai-proxy-config.json', { cache: 'no-cache' });
+                if (res.ok) {
+                    const cfg = await res.json();
+                    AI_CFG.proxyUrl = (cfg.proxyUrl || '').trim().replace(/\/+$/, '');
+                    if (cfg.model) AI_CFG.model = cfg.model;
+                }
+            } catch (_) { /* config opcional */ }
+            const localOverride = (localStorage.getItem(AI_PROXY_STORAGE) || '').trim().replace(/\/+$/, '');
+            if (localOverride) AI_CFG.proxyUrl = localOverride;
+            updateAiAccessUi();
+        }
+
+        function hasAiAccess() {
+            return !!AI_CFG.proxyUrl || !!_sessionApiKey;
+        }
+
+        function updateAiAccessUi() {
+            const row = document.getElementById('apiKeyRow');
+            const status = document.getElementById('proxyStatus');
+            if (AI_CFG.proxyUrl) {
+                if (row) row.style.display = 'none';
+                if (status) {
+                    status.style.display = 'block';
+                    status.textContent = 'Proxy IA viento norte activo — no necesitas API key.';
+                }
+            } else {
+                if (row) row.style.display = '';
+                if (status) status.style.display = 'none';
+            }
+        }
+
+        async function callClaudeMessages(payload) {
+            const proxy = AI_CFG.proxyUrl;
+            if (proxy) {
+                const res = await fetch(proxy + '/api/claude', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                if (!res.ok) {
+                    const err = await res.json().catch(() => ({}));
+                    throw new Error((err && err.error && err.error.message) ? err.error.message : ('Proxy ' + res.status));
+                }
+                return res.json();
+            }
+            const apiKey = _sessionApiKey;
+            if (!apiKey) {
+                throw new Error('Sin proxy IA ni API key. Despliega table-ro/worker (WORKER-DEPLOY.md) o ingresa sk-ant-… en esta sesión.');
+            }
+            const res = await fetch('https://api.anthropic.com/v1/messages', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-api-key': apiKey,
+                    'anthropic-version': '2023-06-01',
+                    'anthropic-dangerous-direct-browser-access': 'true'
+                },
+                body: JSON.stringify(payload)
+            });
+            if (!res.ok) {
+                const err = await res.json().catch(() => ({}));
+                throw new Error((err && err.error && err.error.message) ? err.error.message : ('HTTP ' + res.status));
+            }
+            return res.json();
+        }
+
+        loadAiProxyConfig();
 
         function toggleAnalyzer() {
             const section = document.getElementById('analyzerSection');
@@ -1654,9 +1732,8 @@ Notas: Conexión directa con tu experiencia de expulsión a los 15. Lo que perdi
         }
 
         async function analyzePhoto() {
-            const apiKey = _sessionApiKey;
-            if (!apiKey) {
-                setAnalyzeStatus('Ingresa tu API key primero.', 'error');
+            if (!hasAiAccess()) {
+                setAnalyzeStatus('Sin proxy IA ni API key. Despliega el Worker (table-ro) o ingresa sk-ant-…', 'error');
                 return;
             }
             if (!currentPhotoBase64) {
@@ -1692,42 +1769,25 @@ Para cada uno devuelve un objeto JSON con estos campos exactos:
 Responde SOLO con un JSON array válido. Sin texto adicional, sin markdown, sin explicaciones.`;
 
             try {
-                const response = await fetch('https://api.anthropic.com/v1/messages', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'x-api-key': apiKey,
-                        'anthropic-version': '2023-06-01',
-                        'anthropic-dangerous-direct-browser-access': 'true'
-                    },
-                    body: JSON.stringify({
-                        model: 'claude-sonnet-4-6',
-                        max_tokens: 2048,
-                        system: systemPrompt,
-                        messages: [{
-                            role: 'user',
-                            content: [{
-                                type: 'image',
-                                source: {
-                                    type: 'base64',
-                                    media_type: currentPhotoType,
-                                    data: currentPhotoBase64
-                                }
-                            }, {
-                                type: 'text',
-                                text: 'Extrae todas las citas marcadas con Clave B de esta página.'
-                            }]
+                const data = await callClaudeMessages({
+                    model: AI_CFG.model,
+                    max_tokens: 2048,
+                    system: systemPrompt,
+                    messages: [{
+                        role: 'user',
+                        content: [{
+                            type: 'image',
+                            source: {
+                                type: 'base64',
+                                media_type: currentPhotoType,
+                                data: currentPhotoBase64
+                            }
+                        }, {
+                            type: 'text',
+                            text: 'Extrae todas las citas marcadas con Clave B de esta página.'
                         }]
-                    })
+                    }]
                 });
-
-                if (!response.ok) {
-                    const err = await response.json().catch(() => ({}));
-                    const errorMessage = err && err.error && err.error.message ? err.error.message : `HTTP ${response.status}`;
-                    throw new Error(errorMessage);
-                }
-
-                const data = await response.json();
                 const raw = data && data.content && data.content[0] && data.content[0].text ? data.content[0].text : '[]';
                 const cleaned = raw.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
                 pendingResults = JSON.parse(cleaned);
@@ -1882,9 +1942,8 @@ Responde SOLO con un JSON array válido. Sin texto adicional, sin markdown, sin 
         }
 
         async function analyzeBujo() {
-            const apiKey = _sessionApiKey;
-            if (!apiKey) {
-                setBujoStatus('Ingresa tu API key primero.', 'error');
+            if (!hasAiAccess()) {
+                setBujoStatus('Sin proxy IA ni API key. Despliega el Worker (table-ro) o ingresa sk-ant-…', 'error');
                 return;
             }
             if (!bujoPhotoBase64) {
@@ -1930,41 +1989,25 @@ Responde con estructura Markdown:
 ## Síntesis`;
 
             try {
-                const response = await fetch('https://api.anthropic.com/v1/messages', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'x-api-key': apiKey,
-                        'anthropic-version': '2023-06-01',
-                        'anthropic-dangerous-direct-browser-access': 'true'
-                    },
-                    body: JSON.stringify({
-                        model: 'claude-sonnet-4-6',
-                        max_tokens: 2048,
-                        system: systemPrompt,
-                        messages: [{
-                            role: 'user',
-                            content: [{
-                                type: 'image',
-                                source: {
-                                    type: 'base64',
-                                    media_type: bujoPhotoType,
-                                    data: bujoPhotoBase64
-                                }
-                            }, {
-                                type: 'text',
-                                text: 'Analiza esta página del cuaderno Bullet Ro según el protocolo bujo-ro v1.2.'
-                            }]
+                const data = await callClaudeMessages({
+                    model: AI_CFG.model,
+                    max_tokens: 2048,
+                    system: systemPrompt,
+                    messages: [{
+                        role: 'user',
+                        content: [{
+                            type: 'image',
+                            source: {
+                                type: 'base64',
+                                media_type: bujoPhotoType,
+                                data: bujoPhotoBase64
+                            }
+                        }, {
+                            type: 'text',
+                            text: 'Analiza esta página del cuaderno Bullet Ro según el protocolo bujo-ro v1.2.'
                         }]
-                    })
+                    }]
                 });
-
-                if (!response.ok) {
-                    const err = await response.json().catch(() => ({}));
-                    throw new Error(err && err.error && err.error.message ? err.error.message : `HTTP ${response.status}`);
-                }
-
-                const data = await response.json();
                 const text = data && data.content && data.content[0] && data.content[0].text ? data.content[0].text : '';
                 document.getElementById('bujoResultsList').textContent = text;
                 document.getElementById('bujoResultsCount').textContent = 'Análisis completo';

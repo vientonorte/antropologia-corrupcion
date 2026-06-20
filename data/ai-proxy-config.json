@@ -1,0 +1,15 @@
+{
+  "_meta": {
+    "schema": "contra-archivo/ai-proxy",
+    "version": 1,
+    "updated_at": "2026-06-20",
+    "doc": "DESIGN-SPRINT-PROXY-IA.md"
+  },
+  "proxyUrl": "",
+  "model": "claude-sonnet-4-6",
+  "skills": {
+    "clave_b": "docs/skills/lectura-clave-b.md",
+    "bujo_ro": "docs/skills/bujo-ro.md"
+  },
+  "notes": "Tras desplegar table-ro/worker, pegar URL sin barra final. Override local: localStorage.contra_archivo_proxy_url"
+}
