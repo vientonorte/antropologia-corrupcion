@@ -198,6 +198,17 @@ async function main() {
   }
 
   const localStale = scanLocalStale();
+  const redirectStubs = [];
+  for (const stub of ['zuboff-citas.html', 'citas-attac.html']) {
+    const url = `${BASE}/${stub}`;
+    const r = await load(url);
+    const ok = r.status === 200 && /url=zuboff-archivo\.html/i.test(r.body || '');
+    redirectStubs.push({ file: stub, status: r.status, ok });
+    if (!ok && !internalBroken.some((b) => b.url === url)) {
+      internalBroken.push({ url, status: r.status, issue: 'redirect stub inválido' });
+    }
+  }
+
   const report = {
     mode: DEPLOYED ? 'deployed' : LOCAL ? 'local' : 'live',
     base: BASE,
@@ -206,6 +217,7 @@ async function main() {
     internalBroken,
     staleLiveLinks: staleRefs,
     localStalePatterns: localStale,
+    redirectStubs,
   };
 
   console.log(JSON.stringify(report, null, 2));

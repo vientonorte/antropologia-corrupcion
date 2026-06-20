@@ -273,6 +273,7 @@ require('./ciperFeed.test.js')(describe, it, assert, assertEqual, assertDeepEqua
 require('./seguimientos.test.js')(describe, it, assert, assertEqual, assertDeepEqual, assertApprox, assertGreaterThan, assertLessThan, assertArrayIncludes);
 require('./passkey.test.js')(describe, it, assert, assertEqual, assertDeepEqual, assertApprox, assertGreaterThan, assertLessThan, assertArrayIncludes);
 require('./htmlLint.test.js')(describe, it, assert, assertEqual);
+require('./redirectStubs.test.js')(describe, it, assert, assertEqual);
 require('./privadoChat.test.js')(describe, it, assert, assertEqual);
 require('./privadoChatValidation.test.js')(describe, it, assert, assertEqual);
 require('./blackScholes.test.js')(describe, it, assert, assertEqual, assertDeepEqual, assertApprox, assertGreaterThan, assertLessThan, assertArrayIncludes, casosData);
