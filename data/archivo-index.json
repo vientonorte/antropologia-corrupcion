@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": "2026-05-21",
+    "version": "2026-06-19",
     "description": "Índice editorial del archivo público con estados de publicación para fichas y dossier documental."
   },
   "entries": [
@@ -32,21 +32,12 @@
       "estado": "investigador"
     },
     {
-      "id": "attac-dossier-citas",
+      "id": "corpus-citas-archivo",
       "tipo": "dossier",
       "seccion": "citas",
-      "titulo": "Citas ATTAC — dossier documental",
-      "descripcion": "Archivo unificado Zuboff + ATTAC con corpus editorial en data/ y taxonomía de categorías. Interfaz en zuboff-archivo.html; acceso integrado desde espacio privado.",
+      "titulo": "Corpus de citas — Zuboff, ATTAC y libros físicos",
+      "descripcion": "Archivo canónico de citas del contra-archivo: corpus editorial Zuboff + ATTAC en data/, captura Clave B de libros impresos, export JSON/CSV y taxonomía de categorías. URL canónica: zuboff-archivo.html (zuboff-citas.html redirige aquí).",
       "url": "zuboff-archivo.html",
-      "estado": "publicable"
-    },
-    {
-      "id": "zuboff-citas-archivo",
-      "tipo": "dossier",
-      "seccion": "citas",
-      "titulo": "Citas Zuboff — Capitalismo de vigilancia",
-      "descripcion": "Archivo de citas de Shoshana Zuboff: capitalismo de vigilancia, datos de comportamiento, mercados de futuros conductuales y poder instrumental. Eje teórico central del caso SURA y Banca Digital.",
-      "url": "zuboff-citas.html",
       "estado": "publicable"
     },
     {

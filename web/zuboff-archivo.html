@@ -1368,6 +1368,10 @@
 
         function normalizeCitation(c) {
             const out = { ...c };
+            if (!out.text && out.texto) out.text = out.texto;
+            if ((out.pageNo === undefined || out.pageNo === '') && out.pagina != null) out.pageNo = out.pagina;
+            if (!out.category && out.categoria) out.category = out.categoria;
+            if (!out.notes && out.notas) out.notes = out.notas;
             out.bookTitle = String(out.bookTitle || DEFAULT_BOOK_TITLE).trim();
             out.author = String(out.author || DEFAULT_AUTHOR).trim();
             out.text = String(out.text || '').trim();
