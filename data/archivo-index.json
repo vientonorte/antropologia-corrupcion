@@ -61,7 +61,7 @@
       "titulo": "M01 — Corpus ATTAC (documentación)",
       "descripcion": "Protocolo y dossier documental ATTAC: Tasa Tobin, circuitos financieros transnacionales y citas en data/attac-citas.json. Vinculado al caso SURA.",
       "url": "https://github.com/vientonorte/antropologia-corrupcion/blob/main/docs/fichas/M01-corpus-attac-documentacion.md",
-      "corpus_url": "zuboff-archivo.html",
+      "corpus_url": "corpus-citas.html",
       "estado": "publicable",
       "anio": 2024
     },
@@ -70,9 +70,9 @@
       "tipo": "ficha",
       "seccion": "fichas",
       "titulo": "M02 — Corpus Zuboff (documentación)",
-      "descripcion": "Archivo de citas Clave B — capitalismo de vigilancia (Zuboff 2019). Corpus en data/zuboff-citas.json e interfaz zuboff-archivo.html.",
+      "descripcion": "Archivo de citas Clave B — capitalismo de vigilancia (Zuboff 2019). Corpus en data/zuboff-citas.json e interfaz corpus-citas.html.",
       "url": "https://github.com/vientonorte/antropologia-corrupcion/blob/main/docs/fichas/M02-corpus-zuboff-documentacion.md",
-      "corpus_url": "zuboff-archivo.html",
+      "corpus_url": "corpus-citas.html",
       "estado": "publicable",
       "anio": 2019
     },
@@ -90,8 +90,8 @@
       "tipo": "dossier",
       "seccion": "citas",
       "titulo": "Corpus de citas — Zuboff, ATTAC y libros físicos",
-      "descripcion": "Archivo canónico de citas del contra-archivo: corpus editorial Zuboff + ATTAC en data/, captura Clave B de libros impresos, export JSON/CSV y taxonomía de categorías. URL canónica: zuboff-archivo.html (zuboff-citas.html y citas-attac.html redirigen aquí).",
-      "url": "zuboff-archivo.html",
+      "descripcion": "Archivo canónico de citas del contra-archivo: corpus editorial Zuboff + ATTAC en data/, captura Clave A/B de libros impresos, OCR local, export JSON/CSV. URL canónica: corpus-citas.html (zuboff-archivo.html, archivo-lecturas.html, zuboff-citas.html y citas-attac.html redirigen aquí).",
+      "url": "corpus-citas.html",
       "estado": "publicable"
     },
     {

@@ -79,6 +79,8 @@ jobs:
           test -f img/evidencia-reservada.svg || { echo "❌ img/evidencia-reservada.svg faltante"; exit 1; }
           test -f data/archivo-index.json || { echo "❌ data/archivo-index.json faltante"; exit 1; }
           test -f data/libros-clave-b.json || { echo "❌ data/libros-clave-b.json faltante"; exit 1; }
+          test -f corpus-citas.html || { echo "❌ corpus-citas.html faltante"; exit 1; }
+          test -f lib/corpusCitasStore.js || { echo "❌ lib/corpusCitasStore.js faltante"; exit 1; }
           node scripts/qa-links.mjs --deployed
           echo "✅ Assets críticos presentes"
 

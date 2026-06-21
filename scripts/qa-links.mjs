@@ -25,6 +25,7 @@ const SEED_PATHS = [
   '/contra-archivo.html',
   '/contra-archivo-v2.html',
   '/leer.html',
+  '/corpus-citas.html',
   '/zuboff-archivo.html',
   '/zuboff-citas.html',
   '/citas-attac.html',
@@ -156,15 +157,23 @@ function scanLocalStale() {
   function scanFile(filePath, content) {
     const rel = filePath.replace(WEB, '').replace(/\\/g, '/');
     const allowRedirect = rel.includes('zuboff-citas.html') || rel.includes('citas-attac.html')
-      || rel.includes('archivo-index.json') || rel.includes('ia-inventario.json');
+      || rel.includes('zuboff-archivo.html') || rel.includes('archivo-lecturas.html')
+      || rel.includes('archivo-index.json') || rel.includes('ia-inventario.json')
+      || rel.includes('corpus-citas.html');
     if (/zuboff-citas\.html/i.test(content) && !allowRedirect && !rel.includes('zuboff-citas')) {
-      localStale.push({ file: rel || '/', issue: 'zuboff-citas.html (usar zuboff-archivo.html)' });
+      localStale.push({ file: rel || '/', issue: 'zuboff-citas.html (usar corpus-citas.html)' });
     }
     if (/citas-attac\.html/i.test(content) && !allowRedirect && !rel.includes('citas-attac')) {
-      localStale.push({ file: rel || '/', issue: 'citas-attac.html (usar zuboff-archivo.html)' });
+      localStale.push({ file: rel || '/', issue: 'citas-attac.html (usar corpus-citas.html)' });
+    }
+    if (/zuboff-archivo\.html/i.test(content) && !allowRedirect && !rel.includes('zuboff-archivo')) {
+      localStale.push({ file: rel || '/', issue: 'zuboff-archivo.html (usar corpus-citas.html)' });
+    }
+    if (/archivo-lecturas\.html/i.test(content) && !allowRedirect && !rel.includes('archivo-lecturas')) {
+      localStale.push({ file: rel || '/', issue: 'archivo-lecturas.html (usar corpus-citas.html)' });
     }
     if (/Estado%20del%20Arte\/Citas%20Attac/i.test(content)) {
-      localStale.push({ file: rel || '/', issue: 'enlace legacy ATTAC en GitHub (usar zuboff-archivo.html)' });
+      localStale.push({ file: rel || '/', issue: 'enlace legacy ATTAC en GitHub (usar corpus-citas.html)' });
     }
   }
   function walkScan(dir) {
@@ -217,10 +226,10 @@ async function main() {
 
   const localStale = DEPLOYED ? [] : scanLocalStale();
   const redirectStubs = [];
-  for (const stub of ['zuboff-citas.html', 'citas-attac.html']) {
+  for (const stub of ['zuboff-citas.html', 'citas-attac.html', 'zuboff-archivo.html', 'archivo-lecturas.html']) {
     const url = `${BASE}/${stub}`;
     const r = await load(url);
-    const ok = r.status === 200 && /url=zuboff-archivo\.html/i.test(r.body || '');
+    const ok = r.status === 200 && /url=corpus-citas\.html/i.test(r.body || '');
     redirectStubs.push({ file: stub, status: r.status, ok });
     if (!ok && !internalBroken.some((b) => b.url === url)) {
       internalBroken.push({ url, status: r.status, issue: 'redirect stub inválido' });

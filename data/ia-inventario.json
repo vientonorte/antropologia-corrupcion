@@ -76,16 +76,16 @@
     },
     {
       "id": "P06",
-      "file": "web/zuboff-archivo.html",
-      "path": "zuboff-archivo.html",
-      "title": "⑤ Archivo de Citas",
+      "file": "web/corpus-citas.html",
+      "path": "corpus-citas.html",
+      "title": "Corpus de Citas",
       "taxonomy": "corpus",
       "audience": "metodologico",
       "nav_label": "Corpus citas",
       "nav_primary": true,
       "sitemap": true,
       "priority": 0.85,
-      "data": ["zuboff-citas.json", "attac-citas.json", "corpus-categorias.json", "ai-proxy-config.json"]
+      "data": ["zuboff-citas.json", "attac-citas.json", "corpus-categorias.json", "ai-proxy-config.json", "libros-clave-b.json"]
     },
     {
       "id": "P07",
@@ -175,13 +175,14 @@
       "id": "R03",
       "file": "web/archivo-lecturas.html",
       "path": "archivo-lecturas.html",
-      "title": "Archivo de Lecturas",
+      "title": "Archivo de Lecturas (redirect)",
       "taxonomy": "investigador",
       "audience": "investigador",
       "nav_primary": false,
       "sitemap": false,
       "robots": "noindex",
-      "ia_debt": "B3-huerfana"
+      "redirect_to": "corpus-citas.html",
+      "ia_debt": "consolidado-2026-06-21"
     },
     {
       "id": "R04",
@@ -209,8 +210,10 @@
   ],
   "redirects": [
     { "from": "login.html", "to": "privado-login.html" },
-    { "from": "citas-attac.html", "to": "zuboff-archivo.html" },
-    { "from": "zuboff-citas.html", "to": "zuboff-archivo.html" },
+    { "from": "citas-attac.html", "to": "corpus-citas.html" },
+    { "from": "zuboff-citas.html", "to": "corpus-citas.html" },
+    { "from": "zuboff-archivo.html", "to": "corpus-citas.html" },
+    { "from": "archivo-lecturas.html", "to": "corpus-citas.html" },
     { "from": "Poemarios/index.html", "to": "Poemarios/poemas.html" }
   ],
   "hubs": [
@@ -314,7 +317,7 @@
     { "label": "Leer", "path": "leer.html", "surface": "P05" },
     { "label": "Explorar datos", "path": "buscador.html", "surface": "P03" },
     { "label": "Archivo", "path": "archivo.html", "surface": "P04" },
-    { "label": "Corpus citas", "path": "zuboff-archivo.html", "surface": "P06" },
+    { "label": "Corpus citas", "path": "corpus-citas.html", "surface": "P06" },
     { "label": "Biblioteca", "path": "tesis.html", "surface": "P07" },
     { "label": "Acceder", "path": "privado-login.html", "surface": "R01" }
   ]

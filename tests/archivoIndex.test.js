@@ -33,7 +33,7 @@ module.exports = function (describe, it, assert, assertEqual) {
       var m01 = find('ficha-m01-corpus-attac');
       var m02 = find('ficha-m02-corpus-zuboff');
       assert(m01 && m02, 'faltan fichas M01/M02');
-      assert(m01.corpus_url === 'zuboff-archivo.html');
+      assert(m01.corpus_url === 'corpus-citas.html');
       assert(fichaExists('docs/fichas/M01-corpus-attac-documentacion.md'));
       assert(fichaExists('docs/fichas/M02-corpus-zuboff-documentacion.md'));
     });

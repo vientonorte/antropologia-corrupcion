@@ -279,7 +279,7 @@
             { href: basePath + 'leer.html', label: 'Leer' },
             { href: basePath + 'buscador.html', label: 'Búsqueda' },
             { href: basePath + 'archivo.html', label: 'Archivo' },
-            { href: basePath + 'archivo-lecturas.html', label: 'Lecturas' },
+            { href: basePath + 'corpus-citas.html', label: 'Lecturas' },
             { href: basePath + 'tesis.html', label: 'Biblioteca' },
             { href: basePath + 'privado-login.html', label: 'Acceso privado' }
         ];
@@ -393,7 +393,7 @@
             { href: basePath + 'buscador.html', label: 'Buscar', icon: '⌕' },
             { href: basePath + 'leer.html', label: 'Leer', icon: '¶' },
             { href: basePath + 'archivo.html', label: 'Archivo', icon: '▣' },
-            { href: basePath + 'archivo-lecturas.html', label: 'Lecturas', icon: '◫' },
+            { href: basePath + 'corpus-citas.html', label: 'Lecturas', icon: '◫' },
         ];
 
         var nav = document.createElement('nav');

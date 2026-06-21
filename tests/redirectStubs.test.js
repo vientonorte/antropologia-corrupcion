@@ -12,13 +12,25 @@ module.exports = function (describe, it, assert, assertEqual) {
   var stubs = [
     {
       file: 'zuboff-citas.html',
-      target: 'zuboff-archivo.html',
-      canonical: 'zuboff-archivo.html',
+      target: 'corpus-citas.html',
+      canonical: 'corpus-citas.html',
     },
     {
       file: 'citas-attac.html',
-      target: 'zuboff-archivo.html',
-      canonical: 'zuboff-archivo.html',
+      target: 'corpus-citas.html',
+      canonical: 'corpus-citas.html',
+    },
+    {
+      file: 'zuboff-archivo.html',
+      target: 'corpus-citas.html',
+      canonical: 'corpus-citas.html',
+      migrates: true,
+    },
+    {
+      file: 'archivo-lecturas.html',
+      target: 'corpus-citas.html',
+      canonical: 'corpus-citas.html',
+      migrates: true,
     },
   ];
 
@@ -30,8 +42,20 @@ module.exports = function (describe, it, assert, assertEqual) {
         assert(html.includes('rel="canonical" href="' + stub.canonical + '"'), 'canonical debe ser ' + stub.canonical);
         assert(html.includes('noindex'), 'debe ser noindex para evitar duplicado SEO');
         assert(!html.includes('<form'), 'no debe tener UI duplicada');
-        assert(html.length < 2000, 'debe ser stub liviano, no página completa');
+        if (stub.migrates) {
+          assert(html.includes('corpusCitasStore.js'), 'debe cargar store de migración');
+          assert(html.includes('migrateLegacy'), 'debe migrar storages legacy');
+        }
+        assert(html.length < 2500, 'debe ser stub liviano, no página completa');
       });
+    });
+
+    it('corpus-citas.html es superficie canónica con captura local', function () {
+      var html = fs.readFileSync(path.join(web, 'corpus-citas.html'), 'utf8');
+      assert(html.indexOf('http-equiv="refresh"') === -1, 'no debe redirigir');
+      assert(html.indexOf('LecturaClaveB') !== -1 || html.indexOf('lectura-clave-b.js') !== -1, 'captura Clave B local');
+      assert(html.indexOf('corpusCitasStore.js') !== -1, 'almacén unificado');
+      assert(html.indexOf('librosClaveB.js') !== -1, 'registro libros físicos');
     });
 
     it('index.html es home canónica, no redirect', function () {
@@ -56,11 +80,11 @@ module.exports = function (describe, it, assert, assertEqual) {
       assert(html.indexOf('narrative-root') !== -1, 'mount narrativa');
     });
 
-    it('archivo-index.json apunta al canónico zuboff-archivo.html', function () {
+    it('archivo-index.json apunta al canónico corpus-citas.html', function () {
       var index = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data', 'archivo-index.json'), 'utf8'));
       var corpus = (index.entries || []).find(function (e) { return e.id === 'corpus-citas-archivo'; });
       assert(corpus, 'entrada corpus-citas-archivo debe existir');
-      assertEqual(corpus.url, 'zuboff-archivo.html');
+      assertEqual(corpus.url, 'corpus-citas.html');
       assert(!/(^|;)zuboff-citas\.html(;|$)/.test(corpus.url), 'url no debe ser zuboff-citas.html');
     });
   });
