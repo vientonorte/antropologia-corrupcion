@@ -23,6 +23,7 @@ const SEED_PATHS = [
   '/archivo.html',
   '/tesis.html',
   '/contra-archivo.html',
+  '/contra-archivo-v2.html',
   '/leer.html',
   '/zuboff-archivo.html',
   '/zuboff-citas.html',
