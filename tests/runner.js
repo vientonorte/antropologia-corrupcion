@@ -295,6 +295,7 @@ require('./circuitDeepLink.test.js')(describe, it, assert, assertEqual);
 require('./qaLiveHeuristics.test.js')(describe, it, assert, assertEqual);
 require('./atomicDesign.test.js')(describe, it, assert, assertEqual);
 require('./archivoIndex.test.js')(describe, it, assert, assertEqual);
+require('./casoPublico.test.js')(describe, it, assert, assertEqual);
 
 /* ─── SUMMARY ─── */
 

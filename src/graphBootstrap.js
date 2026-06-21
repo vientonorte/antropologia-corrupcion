@@ -326,7 +326,10 @@ const GraphBootstrap = (function () {
             STATE.data = json;
 
             const { buildGraph } = window.frictionEngine;
-            const graphData = buildGraph(json.casos);
+            const casosForGraph = window.CACasoPublico?.prepareCasos
+                ? window.CACasoPublico.prepareCasos(json.casos)
+                : json.casos;
+            const graphData = buildGraph(casosForGraph);
 
             if (window.BlackScholes) {
                 window.BlackScholes.enrichNodes(graphData.nodes, json.casos);

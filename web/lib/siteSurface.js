@@ -147,13 +147,16 @@
 
         var cards = list.slice(0, 4).map(function (caso) {
             var href = 'index.html?caso=' + encodeURIComponent(caso.id);
-            var actors = (caso.actores || []).slice(0, 3).join(' · ');
+            var label = window.CACasoPublico
+                ? window.CACasoPublico.getPublicLabel(caso)
+                : { titulo: caso.titulo || caso.id, actores: caso.actores || [] };
+            var actors = (label.actores || []).slice(0, 3).join(' · ');
             return (
                 '<a class="caso-chip" href="' +
                 esc(href) +
                 '">' +
                 '<span class="caso-chip__title">' +
-                esc(caso.titulo || caso.id) +
+                esc(label.titulo || caso.id) +
                 '</span>' +
                 '<span class="caso-chip__meta">' +
                 esc(String(caso.anio || '')) +
