@@ -49,6 +49,7 @@ const SEED_PATHS = [
   '/shared-shell.js',
   '/js/lectura-clave-b.js',
   '/js/lectura-clave-a.js',
+  '/lib/imagePrepare.js',
   '/js/lectura-clave-a.js',
 ];
 

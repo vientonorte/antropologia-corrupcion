@@ -217,6 +217,12 @@
       if (self.els.workspace) self.els.workspace.style.display = 'block';
       self.status('Foto cargada. Elige color Clave A y marca fragmentos.', 'success');
     };
+    img.onerror = function () {
+      self.status(
+        'No se pudo mostrar la imagen. Si es HEIC, espera la conversión o exporta como JPEG desde Fotos.',
+        'error',
+      );
+    };
     img.src = dataUrl;
   };
 

@@ -1067,7 +1067,7 @@
                 </div>
 
                 <div class="drop-zone" id="dropZone">
-                    <input type="file" id="photoInput" accept="image/*" onchange="handlePhotoSelect(event)">
+                    <input type="file" id="photoInput" accept="image/jpeg,image/png,image/webp,image/gif,image/heic,image/heif,.heic,.heif" onchange="handlePhotoSelect(event)">
                     <div class="drop-zone-icon">📖</div>
                     <div class="drop-zone-label">Arrastra o selecciona foto del libro</div>
                     <div class="drop-zone-sub">JPG · PNG · HEIC · hasta 20MB</div>
@@ -1148,7 +1148,7 @@
                 </div>
 
                 <div class="drop-zone" id="claveADropZone">
-                    <input type="file" id="claveAPhotoInput" accept="image/*" onchange="handleClaveAPhotoSelect(event)">
+                    <input type="file" id="claveAPhotoInput" accept="image/jpeg,image/png,image/webp,image/gif,image/heic,image/heif,.heic,.heif" onchange="handleClaveAPhotoSelect(event)">
                     <div class="drop-zone-icon">📓</div>
                     <div class="drop-zone-label">Arrastra o selecciona foto del cuaderno</div>
                     <div class="drop-zone-sub">JPG · PNG · HEIC · hasta 20MB</div>
@@ -1900,12 +1900,25 @@ Notas: Conexión directa con tu experiencia de expulsión a los 15. Lo que perdi
             loadPhoto(file);
         }
 
+        function loadImageFile(file, reader) {
+            if (!window.CAImagePrepare) {
+                if (reader) reader.status('Módulo de imagen no cargado. Recarga la página.', 'error');
+                return;
+            }
+            if (reader) reader.status('Preparando imagen…');
+            CAImagePrepare.prepareImageFile(file, {
+                onProgress: function (msg) {
+                    if (reader) reader.status(msg);
+                }
+            }).then(function (dataUrl) {
+                if (reader) reader.loadImage(dataUrl);
+            }).catch(function (err) {
+                if (reader) reader.status(err.message, 'error');
+            });
+        }
+
         function loadPhoto(file) {
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                if (claveBReader) claveBReader.loadImage(e.target.result);
-            };
-            reader.readAsDataURL(file);
+            loadImageFile(file, claveBReader);
         }
 
         function clearPhoto() {
@@ -1920,11 +1933,7 @@ Notas: Conexión directa con tu experiencia de expulsión a los 15. Lo que perdi
         }
 
         function loadClaveAPhoto(file) {
-            const reader = new FileReader();
-            reader.onload = (ev) => {
-                if (claveAReader) claveAReader.loadImage(ev.target.result);
-            };
-            reader.readAsDataURL(file);
+            loadImageFile(file, claveAReader);
         }
 
         function clearClaveAPhoto() {
@@ -1985,7 +1994,7 @@ Notas: Conexión directa con tu experiencia de expulsión a los 15. Lo que perdi
             e.preventDefault();
             dropZone.classList.remove('drag-over');
             const file = e.dataTransfer.files[0];
-            if (file && file.type.startsWith('image/')) loadPhoto(file);
+            if (file && window.CAImagePrepare && CAImagePrepare.isSupportedImage(file)) loadPhoto(file);
         });
 
         // ── Lectura Clave B + A (motor local) ──
@@ -2036,10 +2045,11 @@ Notas: Conexión directa con tu experiencia de expulsión a los 15. Lo que perdi
                 e.preventDefault();
                 claveADropZone.classList.remove('drag-over');
                 const file = e.dataTransfer.files[0];
-                if (file && file.type.startsWith('image/')) loadClaveAPhoto(file);
+                if (file && window.CAImagePrepare && CAImagePrepare.isSupportedImage(file)) loadClaveAPhoto(file);
             });
         }
     </script>
+    <script src="lib/imagePrepare.js?v=20260621"></script>
     <script src="js/lectura-clave-b.js?v=20260621" defer></script>
     <script src="js/lectura-clave-a.js?v=20260621" defer></script>
     <script>
