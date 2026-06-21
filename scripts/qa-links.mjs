@@ -74,6 +74,12 @@ function urlToLocalPath(url) {
     if (!DEPLOYED && fs.existsSync(webShell)) return webShell;
     return path.join(ROOT, rel);
   }
+  if (rel === 'terraza/index.html') {
+    const gateway = path.join(ROOT, 'web', 'terraza-gateway.html');
+    if (!DEPLOYED && fs.existsSync(gateway)) return gateway;
+    const deployedTerraza = path.join(ROOT, 'terraza', 'index.html');
+    if (fs.existsSync(deployedTerraza)) return deployedTerraza;
+  }
   const deployedPath = path.join(ROOT, rel);
   const webPath = path.join(htmlRoot, rel);
   if (fs.existsSync(webPath)) return webPath;
@@ -143,7 +149,8 @@ function scanLocalStale() {
   const localStale = [];
   function scanFile(filePath, content) {
     const rel = filePath.replace(WEB, '').replace(/\\/g, '/');
-    const allowRedirect = rel.includes('zuboff-citas.html') || rel.includes('citas-attac.html') || rel.includes('archivo-index.json');
+    const allowRedirect = rel.includes('zuboff-citas.html') || rel.includes('citas-attac.html')
+      || rel.includes('archivo-index.json') || rel.includes('ia-inventario.json');
     if (/zuboff-citas\.html/i.test(content) && !allowRedirect && !rel.includes('zuboff-citas')) {
       localStale.push({ file: rel || '/', issue: 'zuboff-citas.html (usar zuboff-archivo.html)' });
     }
