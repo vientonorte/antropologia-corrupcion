@@ -114,6 +114,8 @@
 
   function detectMarkedRegions(ctx, width, height, stride) {
     const step = stride || 6;
+    const maxW = width * 0.68;
+    const maxH = height * 0.13;
     const byColor = {};
     const data = ctx.getImageData(0, 0, width, height).data;
     for (let y = 0; y < height; y += step) {
@@ -127,18 +129,15 @@
     }
     const boxes = [];
     Object.entries(byColor).forEach(([color, points]) => {
-      if (points.length < 8) return;
-      clusterPoints(points, 36).forEach((cluster) => {
-        const box = boundingBox(cluster, 10);
-        if (box.w >= 28 && box.h >= 10) {
-          boxes.push({
-            x: box.x,
-            y: box.y,
-            w: Math.min(width - box.x, box.w),
-            h: Math.min(height - box.y, box.h),
-            color,
-          });
-        }
+      if (points.length < 12) return;
+      clusterPoints(points, 22).forEach((cluster) => {
+        const box = boundingBox(cluster, 6);
+        if (box.w < 28 || box.h < 10) return;
+        if (box.w > maxW || box.h > maxH) return;
+        const w = Math.min(box.w, width - box.x);
+        const h = Math.min(box.h, height - box.y);
+        if (w < 28 || h < 10) return;
+        boxes.push({ x: box.x, y: box.y, w, h, color });
       });
     });
     return boxes.sort((a, b) => a.y - b.y || a.x - b.x);
@@ -193,10 +192,12 @@
     return worker;
   }
 
-  const OCR_MIN_CONFIDENCE = 58;
-  const OCR_MIN_WORD_CONFIDENCE = 42;
+  const OCR_MIN_CONFIDENCE = 62;
+  const OCR_MIN_WORD_CONFIDENCE = 48;
   const OCR_MIN_CHARS = 14;
   const OCR_MIN_WORDS = 3;
+  const OCR_AUTO_MAX_CHARS = 320;
+  const OCR_AUTO_MAX_WORDS = 48;
 
   const SPANISH_HINTS = new Set([
     'de', 'la', 'el', 'en', 'los', 'las', 'un', 'una', 'que', 'del', 'por', 'con', 'para', 'al',
@@ -237,6 +238,45 @@
       score: (spanishHits + morphHits * 0.6) / words.length,
       englishRatio: englishHits / words.length,
     };
+  }
+
+  function isGarbledWord(raw) {
+    const w = normalizeWord(raw);
+    if (!w || w.length < 2) return true;
+    if (!/[aeiouáéíóúü]/i.test(w)) return true;
+    if (/[bcdfghjklmnpqrstvwxyz]{4,}/i.test(w)) return true;
+    if (/\d/.test(raw) && /[a-záéíóúü]/i.test(raw)) return true;
+    if (raw.length <= 5 && /[A-ZÁÉÍÓÚÜ]{2,}/.test(raw) && !/[a-záéíóúü]{2,}/.test(raw)) return true;
+    return false;
+  }
+
+  function normalizeForDedup(text) {
+    return String(text)
+      .toLowerCase()
+      .replace(/[^\wáéíóúü\s]/g, '')
+      .replace(/\s+/g, ' ')
+      .trim();
+  }
+
+  function isDuplicateText(a, b) {
+    const na = normalizeForDedup(a);
+    const nb = normalizeForDedup(b);
+    if (!na || !nb) return false;
+    if (na === nb) return true;
+    if (na.length >= 40 && nb.length >= 40) {
+      if (na.includes(nb) || nb.includes(na)) {
+        const ratio = Math.min(na.length, nb.length) / Math.max(na.length, nb.length);
+        if (ratio > 0.5) return true;
+      }
+      const wa = na.split(' ').filter((w) => w.length >= 3);
+      const wb = new Set(nb.split(' ').filter((w) => w.length >= 3));
+      let shared = 0;
+      wa.forEach((w) => {
+        if (wb.has(w)) shared += 1;
+      });
+      if (wa.length && shared / wa.length > 0.62) return true;
+    }
+    return false;
   }
 
   /**
@@ -292,6 +332,52 @@
       if (avg < OCR_MIN_CONFIDENCE) {
         return { ok: false, reason: 'baja_confianza' };
       }
+    }
+    return { ok: true };
+  }
+
+  /** Validación estricta para salida OCR automática (fragmentos de marcador, no páginas enteras). */
+  function assessOcrTranscription(text, confidence, wordConfs) {
+    const base = assessTranscription(text, confidence, wordConfs);
+    if (!base.ok) return base;
+    const t = text.replace(/\s+/g, ' ').trim();
+    if (t.length > OCR_AUTO_MAX_CHARS) {
+      return { ok: false, reason: 'demasiado_largo' };
+    }
+    const words = t.split(/\s+/).filter((w) => w.length >= 1);
+    if (words.length > OCR_AUTO_MAX_WORDS) {
+      return { ok: false, reason: 'demasiado_largo' };
+    }
+    if ((t.match(/\|/g) || []).length >= 1) {
+      return { ok: false, reason: 'ruido' };
+    }
+    if ((t.match(/[«»]/g) || []).length >= 2) {
+      return { ok: false, reason: 'ruido' };
+    }
+    if (/[.:;!?]{2,}/.test(t)) {
+      return { ok: false, reason: 'incoherente' };
+    }
+    const letters = (t.match(/[A-Za-zÀ-ÿ]/g) || []).length;
+    const upper = (t.match(/[A-ZÁÉÍÓÚÜ]/g) || []).length;
+    if (letters > 16 && upper / letters > 0.17) {
+      return { ok: false, reason: 'mayusculas_ocr' };
+    }
+    const digits = (t.match(/\d/g) || []).length;
+    if (digits / t.length > 0.04) {
+      return { ok: false, reason: 'ruido' };
+    }
+    const garbled = words.filter(isGarbledWord).length;
+    if (words.length >= 4 && garbled / words.length > 0.18) {
+      return { ok: false, reason: 'palabras_corruptas' };
+    }
+    const longWords = words.filter((w) => normalizeWord(w).length >= 2);
+    const plaus = spanishPlausibility(longWords);
+    if (longWords.length >= 5 && plaus.score < 0.2) {
+      return { ok: false, reason: 'no_parece_espanol' };
+    }
+    const noise = (t.match(/[^\wÀ-ÿ\s.,;:!?¿¡'"()\-—«»]/g) || []).length;
+    if (noise / t.length > 0.1) {
+      return { ok: false, reason: 'ruido' };
     }
     return { ok: true };
   }
@@ -369,14 +455,18 @@
     return out;
   }
 
-  /** Amplía la caja del marcador para incluir líneas de texto completas. */
+  /** Margen mínimo alrededor del marcador; rechaza regiones tamaño página. */
   function expandRegionForOcr(region, canvasW, canvasH) {
-    const padX = Math.max(6, Math.round(region.w * 0.06));
-    const padY = Math.max(14, Math.round(region.h * 0.75));
+    const maxW = canvasW * 0.68;
+    const maxH = canvasH * 0.13;
+    if (region.w > maxW || region.h > maxH) return null;
+    const padX = Math.max(4, Math.round(region.w * 0.03));
+    const padY = Math.max(6, Math.round(region.h * 0.2));
     const x = Math.max(0, region.x - padX);
     const y = Math.max(0, region.y - padY);
     const w = Math.min(canvasW - x, region.w + padX * 2);
     const h = Math.min(canvasH - y, region.h + padY * 2);
+    if (w > maxW || h > maxH) return null;
     return { x, y, w, h, color: region.color };
   }
 
@@ -395,6 +485,10 @@
       texto_en_ingles: 'parece inglés (foto ilegible)',
       no_parece_espanol: 'no parece español',
       foto_baja_calidad: 'foto con poca resolución',
+      demasiado_largo: 'región demasiado grande (página, no fragmento)',
+      mayusculas_ocr: 'mayúsculas OCR corruptas',
+      palabras_corruptas: 'palabras corruptas',
+      duplicado: 'duplicado de otro fragmento',
     };
     return labels[reason] || reason;
   }
@@ -787,20 +881,38 @@
     return crop;
   };
 
-  LecturaClaveB.prototype.ocrRegion = async function (region, worker) {
+  LecturaClaveB.prototype.ocrRegion = async function (region, worker, opts) {
+    const options = opts || {};
+    const strict = options.strict !== false;
     const w = worker || (await ensureTesseractWorker());
     const crop = this.cropRegionToCanvas(region);
+    const inv = 1 / this.scale;
+    const fullW = region.w * inv;
+    const fullH = region.h * inv;
+    const imgW = this.image.naturalWidth || this.image.width;
+    const imgH = this.image.naturalHeight || this.image.height;
+    if (fullW > imgW * 0.72 || fullH > imgH * 0.14) {
+      return { text: '', confidence: 0, ok: false, reason: 'demasiado_largo' };
+    }
     if (crop.width < 80 || crop.height < 24) {
       return { text: '', confidence: 0, ok: false, reason: 'foto_baja_calidad' };
     }
     const enhanced = enhanceCropForOcr(crop);
+    const Tesseract = await ensureTesseract();
+    const psm = fullH < 120 && Tesseract.PSM && Tesseract.PSM.SINGLE_LINE
+      ? Tesseract.PSM.SINGLE_LINE
+      : Tesseract.PSM && Tesseract.PSM.SINGLE_BLOCK
+        ? Tesseract.PSM.SINGLE_BLOCK
+        : '6';
+    await w.setParameters({ tessedit_pageseg_mode: psm });
     const result = await w.recognize(enhanced);
     const text = (result.data.text || '').replace(/\s+/g, ' ').trim();
     const confidence = result.data.confidence;
     const wordConfs = (result.data.words || [])
       .map((item) => item.confidence)
       .filter((c) => typeof c === 'number' && c >= 0);
-    const assessment = assessTranscription(text, confidence, wordConfs);
+    const assess = strict ? assessOcrTranscription : assessTranscription;
+    const assessment = assess(text, confidence, wordConfs);
     return {
       text,
       confidence,
@@ -816,7 +928,7 @@
     }
     this.status('OCR local en progreso…');
     try {
-      const ocr = await this.ocrRegion(this.selection);
+      const ocr = await this.ocrRegion(this.selection, null, { strict: true });
       if (this.els.texto) {
         this.els.texto.value = ocr.ok ? ocr.text : '';
       }
@@ -865,14 +977,24 @@
       const photoHint = photoQualityHint(this.imageMeta);
       let added = 0;
       let skipped = 0;
+      const acceptedTexts = [];
       for (let i = 0; i < regions.length; i++) {
         const region = expandRegionForOcr(regions[i], canvasW, canvasH);
+        if (!region) {
+          skipped += 1;
+          continue;
+        }
         this.status(`OCR fragmento ${i + 1}/${regions.length} · ${getClaveById(region.color).label}…`);
-        const ocr = await this.ocrRegion(region, worker);
+        const ocr = await this.ocrRegion(region, worker, { strict: true });
         if (!ocr.ok) {
           skipped += 1;
           continue;
         }
+        if (acceptedTexts.some((prev) => isDuplicateText(prev, ocr.text))) {
+          skipped += 1;
+          continue;
+        }
+        acceptedTexts.push(ocr.text);
         const clave = getClaveById(region.color);
         this.queue.push({
           libro,
@@ -1003,7 +1125,10 @@
       this.status('No hay fragmentos para importar.', 'error');
       return;
     }
-    const valid = this.queue.filter((f) => assessTranscription(f.texto).ok);
+    const valid = this.queue.filter((f) => {
+      const assess = f.auto ? assessOcrTranscription : assessTranscription;
+      return assess(f.texto).ok;
+    });
     const dropped = this.queue.length - valid.length;
     if (!valid.length) {
       this.status('Ningún fragmento en cola cumple criterios de legibilidad.', 'error');
@@ -1033,6 +1158,9 @@
     classifyPixel,
     detectMarkedRegions,
     assessTranscription,
+    assessOcrTranscription,
+    isGarbledWord,
+    isDuplicateText,
     enhanceCropForOcr,
     expandRegionForOcr,
     spanishPlausibility,

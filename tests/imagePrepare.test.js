@@ -141,6 +141,28 @@ module.exports = function (describe, it, assert, assertEqual) {
         assess('La vigilancia como forma de poder extractivo en la sociedad digital', 72).ok,
         'español con confianza',
       );
+      var assessOcr = sandbox.LecturaClaveB.assessOcrTranscription;
+      assert(
+        !assessOcr(
+          'INTR(1)1« CIÓN Anton: y DANMUCCI En los últi | | | Os Últimos veinte 4NOS —a partir de la ublicació',
+          65,
+        ).ok,
+        'rechaza basura Gramsci OCR',
+      );
+      assert(
+        !assessOcr(
+          'TRODUCCIÓN:: nton: A Sahtucci le la edi l enovac que han esclarecido los diciones de sus obras más iores a la reconstrucción Cesariamente a mirar con ador político italiano del 1 incidido profundamente en el partido comunista italiano y en la crisis del marxismo contemporáneo con muchas palabras más para superar el límite de caracteres del fragmento automático',
+          70,
+        ).ok,
+        'rechaza fragmento largo corrupto',
+      );
+      assert(
+        assessOcr(
+          'Antes que intelectual, estudioso o escritor, Gramsci fue y sigue siendo un hombre de partido.',
+          75,
+        ).ok,
+        'acepta frase española legible',
+      );
     });
   });
 };
