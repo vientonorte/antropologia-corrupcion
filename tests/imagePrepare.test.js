@@ -89,11 +89,19 @@ module.exports = function (describe, it, assert, assertEqual) {
       assert(!CA.isSupportedImage(file));
     });
 
-    it('heic2any está vendoreado localmente', function () {
-      var vendor = path.join(web, 'vendor', 'heic2any.min.js');
-      assert(fs.existsSync(vendor), 'vendor/heic2any.min.js existe');
-      var stat = fs.statSync(vendor);
-      assert(stat.size > 100000, 'heic2any no está vacío');
+    it('convertidores HEIC vendoreados localmente', function () {
+      var heic2any = path.join(web, 'vendor', 'heic2any.min.js');
+      var heicTo = path.join(web, 'vendor', 'heic-to.js');
+      assert(fs.existsSync(heic2any), 'vendor/heic2any.min.js existe');
+      assert(fs.existsSync(heicTo), 'vendor/heic-to.js existe');
+      assert(fs.statSync(heic2any).size > 100000, 'heic2any no está vacío');
+      assert(fs.statSync(heicTo).size > 1000000, 'heic-to no está vacío');
+    });
+
+    it('imagePrepare usa heic-to como convertidor principal', function () {
+      var code = fs.readFileSync(path.join(web, 'lib', 'imagePrepare.js'), 'utf8');
+      assert(code.indexOf('heic-to') !== -1, 'referencia heic-to');
+      assert(code.indexOf('ensureHeicTo') !== -1, 'carga heic-to');
     });
 
     it('lectura-clave-b expone escaneo automático', function () {

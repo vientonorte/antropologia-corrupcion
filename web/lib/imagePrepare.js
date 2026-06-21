@@ -1,14 +1,34 @@
 /**
  * lib/imagePrepare.js — Preparar fotos para canvas (JPG/PNG/HEIC iPhone)
- * Detecta HEIC aunque venga como IMG_xxxx.jpg (iPhone).
+ * HEIC iPhone (incluso IMG_xxxx.jpg) → heic-to (libheif 1.22) con fallback heic2any.
  */
 (function (global) {
     'use strict';
 
     var MAX_BYTES = 20 * 1024 * 1024;
-    var MAX_EDGE = 4096;
+    var MAX_EDGE = 2048;
+    var HEIC_TO_URL = 'vendor/heic-to.js';
     var HEIC2ANY_URL = 'vendor/heic2any.min.js';
     var HEIF_BRANDS = ['heic', 'heix', 'hevc', 'hevx', 'mif1', 'msf1', 'MiHE', 'MiHA', 'heis', 'heim', 'avif'];
+
+    function resolveBasePath() {
+        if (!global.location) return '/';
+        return global.location.pathname.indexOf('/antropologia-corrupcion/') === 0
+            ? '/antropologia-corrupcion/'
+            : '/';
+    }
+
+    function resolveAssetPath(rel) {
+        var base = resolveBasePath();
+        if (global.location && global.location.href) {
+            try {
+                return new URL(base + rel, global.location.href).href;
+            } catch (e) {
+                return base + rel;
+            }
+        }
+        return base + rel;
+    }
 
     function resolveMime(file) {
         var mime = (file && file.type) || '';
@@ -63,16 +83,29 @@
         return /\.(jpe?g|png|webp|gif|heic|heif)$/i.test(file.name || '');
     }
 
-    function loadScript(src) {
+    function loadClassicScript(src) {
         if (global.heic2any) return Promise.resolve();
         return new Promise(function (resolve, reject) {
             var s = document.createElement('script');
-            s.src = src;
+            s.src = resolveAssetPath(src.replace(/^\//, ''));
             s.onload = function () { resolve(); };
             s.onerror = function () {
-                reject(new Error('No se pudo cargar el convertidor HEIC. Recarga la página o exporta la foto como JPEG desde Fotos.'));
+                reject(new Error('No se pudo cargar convertidor HEIC alternativo.'));
             };
             document.head.appendChild(s);
+        });
+    }
+
+    function ensureHeicTo() {
+        if (global.__CA_HEIC_TO_FN__) return Promise.resolve(global.__CA_HEIC_TO_FN__);
+        var url = resolveAssetPath(HEIC_TO_URL);
+        return import(url).then(function (mod) {
+            var fn = mod.heicTo;
+            if (typeof fn !== 'function') {
+                throw new Error('Módulo heic-to no disponible');
+            }
+            global.__CA_HEIC_TO_FN__ = fn;
+            return fn;
         });
     }
 
@@ -117,10 +150,66 @@
         });
     }
 
-    function downscaleIfNeeded(url, progress) {
+    function optimizeBlob(blob, progress) {
+        if (!global.createImageBitmap) {
+            var url = blobToObjectUrl(blob);
+            return tryDecodeImage(url).then(function (ok) {
+                if (!ok) {
+                    URL.revokeObjectURL(url);
+                    throw new Error('No se pudo decodificar la imagen');
+                }
+                return downscaleUrl(url, progress);
+            });
+        }
+        return global.createImageBitmap(blob).then(function (bitmap) {
+            var w = bitmap.width;
+            var h = bitmap.height;
+            if (!w || !h) {
+                bitmap.close();
+                throw new Error('Imagen vacía o corrupta');
+            }
+            var maxEdge = Math.max(w, h);
+            if (maxEdge <= MAX_EDGE) {
+                var directUrl = blobToObjectUrl(blob);
+                bitmap.close();
+                return { url: directUrl, revoke: true, width: w, height: h };
+            }
+            var scale = MAX_EDGE / maxEdge;
+            var cw = Math.round(w * scale);
+            var ch = Math.round(h * scale);
+            if (progress) progress('Optimizando imagen (' + cw + '×' + ch + ')…');
+            return global.createImageBitmap(bitmap, {
+                resizeWidth: cw,
+                resizeHeight: ch,
+                resizeQuality: 'high',
+            }).then(function (resized) {
+                bitmap.close();
+                var canvas = document.createElement('canvas');
+                canvas.width = cw;
+                canvas.height = ch;
+                var ctx = canvas.getContext('2d', { alpha: false });
+                if (!ctx) {
+                    resized.close();
+                    var fallbackUrl = blobToObjectUrl(blob);
+                    return { url: fallbackUrl, revoke: true, width: w, height: h };
+                }
+                ctx.drawImage(resized, 0, 0);
+                resized.close();
+                return canvasToJpegBlob(canvas, 0.85).then(function (jpeg) {
+                    return { url: blobToObjectUrl(jpeg), revoke: true, width: cw, height: ch };
+                });
+            });
+        });
+    }
+
+    function downscaleUrl(url, progress) {
         return new Promise(function (resolve, reject) {
             var img = new Image();
+            var timer = setTimeout(function () {
+                reject(new Error('Tiempo agotado procesando imagen grande — prueba una foto más pequeña.'));
+            }, 30000);
             img.onload = function () {
+                clearTimeout(timer);
                 var w = img.naturalWidth;
                 var h = img.naturalHeight;
                 if (!w || !h) {
@@ -129,59 +218,81 @@
                 }
                 var maxEdge = Math.max(w, h);
                 if (maxEdge <= MAX_EDGE) {
-                    resolve({ url: url, revoke: true });
+                    resolve({ url: url, revoke: true, width: w, height: h });
                     return;
                 }
-                if (progress) progress('Reduciendo tamaño para el navegador…');
+                if (progress) progress('Optimizando imagen…');
                 var scale = MAX_EDGE / maxEdge;
                 var cw = Math.round(w * scale);
                 var ch = Math.round(h * scale);
                 var canvas = document.createElement('canvas');
                 canvas.width = cw;
                 canvas.height = ch;
-                var ctx = canvas.getContext('2d');
+                var ctx = canvas.getContext('2d', { alpha: false });
                 if (!ctx) {
-                    resolve({ url: url, revoke: true });
+                    resolve({ url: url, revoke: true, width: w, height: h });
                     return;
                 }
                 ctx.drawImage(img, 0, 0, cw, ch);
-                canvasToJpegBlob(canvas, 0.88).then(function (blob) {
+                canvasToJpegBlob(canvas, 0.85).then(function (jpeg) {
                     URL.revokeObjectURL(url);
-                    resolve({ url: blobToObjectUrl(blob), revoke: true });
+                    resolve({ url: blobToObjectUrl(jpeg), revoke: true, width: cw, height: ch });
                 }).catch(function () {
-                    resolve({ url: url, revoke: true });
+                    resolve({ url: url, revoke: true, width: w, height: h });
                 });
             };
             img.onerror = function () {
+                clearTimeout(timer);
                 reject(new Error('No se pudo decodificar la imagen'));
             };
             img.src = url;
         });
     }
 
-    function convertHeic(file, progress) {
-        return loadScript(HEIC2ANY_URL).then(function () {
-            return global.heic2any({
-                blob: file,
-                toType: 'image/jpeg',
-                quality: 0.92,
-            });
+    function heicBlobToJpeg(file, progress) {
+        return ensureHeicTo().then(function (heicTo) {
+            if (progress) progress('Convirtiendo HEIC iPhone (heic-to)…');
+            return heicTo({ blob: file, type: 'image/jpeg', quality: 0.92 });
         }).then(function (result) {
             var blob = Array.isArray(result) ? result[0] : result;
-            if (!blob) throw new Error('Conversión HEIC vacía — exporta como JPEG desde Fotos (Compartir → Guardar imagen).');
-            var url = blobToObjectUrl(blob);
-            return downscaleIfNeeded(url, progress);
+            if (!blob) throw new Error('heic-to vacío');
+            return blob;
+        }).catch(function (primaryErr) {
+            return loadClassicScript(HEIC2ANY_URL).then(function () {
+                if (progress) progress('Reintentando conversión HEIC (heic2any)…');
+                return global.heic2any({
+                    blob: file,
+                    toType: 'image/jpeg',
+                    quality: 0.92,
+                });
+            }).then(function (result) {
+                var blob = Array.isArray(result) ? result[0] : result;
+                if (!blob) throw primaryErr;
+                return blob;
+            });
+        });
+    }
+
+    function convertHeic(file, progress) {
+        return heicBlobToJpeg(file, progress).then(function (jpegBlob) {
+            return optimizeBlob(jpegBlob, progress);
+        }).catch(function (err) {
+            var msg = (err && err.message) || String(err);
+            if (/ERR_LIBHEIF|format not supported|Could not parse HEIF/i.test(msg)) {
+                throw new Error(
+                    'HEIC iPhone no decodificable en este navegador. En Fotos: Compartir → Guardar imagen (JPEG) y sube ese archivo.',
+                );
+            }
+            throw err;
         });
     }
 
     function prepareRasterBlob(blob, progress) {
-        var url = blobToObjectUrl(blob);
-        return tryDecodeImage(url).then(function (ok) {
-            if (!ok) {
-                URL.revokeObjectURL(url);
+        return optimizeBlob(blob, progress).catch(function (err) {
+            if (err && err.message && err.message.indexOf('decodificar') !== -1) {
                 throw new Error('decode_failed');
             }
-            return downscaleIfNeeded(url, progress);
+            throw err;
         });
     }
 
@@ -190,10 +301,9 @@
         var nativeUrl = blobToObjectUrl(file);
         return tryDecodeImage(nativeUrl).then(function (nativeOk) {
             if (nativeOk) {
-                return downscaleIfNeeded(nativeUrl, progress);
+                return downscaleUrl(nativeUrl, progress);
             }
             URL.revokeObjectURL(nativeUrl);
-            if (progress) progress('Convirtiendo HEIC a JPEG en el navegador…');
             return convertHeic(file, progress);
         });
     }
@@ -201,7 +311,7 @@
     /**
      * @param {File|Blob} file
      * @param {{ onProgress?: (msg: string) => void }} [opts]
-     * @returns {Promise<{ url: string, revoke?: boolean, format?: string }>}
+     * @returns {Promise<{ url: string, revoke?: boolean, format?: string, width?: number, height?: number }>}
      */
     function prepareImageFile(file, opts) {
         opts = opts || {};
@@ -246,6 +356,7 @@
         resolveMime: resolveMime,
         sniffHeifBrand: sniffHeifBrand,
         sniffContainerFormat: sniffContainerFormat,
+        resolveAssetPath: resolveAssetPath,
         MAX_BYTES: MAX_BYTES,
         MAX_EDGE: MAX_EDGE,
     };

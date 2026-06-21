@@ -1338,7 +1338,7 @@
     <script src="src/passkey.js?v=20260619"></script>
     <script src="lib/corpusCitasStore.js?v=20260621"></script>
     <script src="lib/librosClaveB.js?v=20260621"></script>
-    <script src="lib/imagePrepare.js?v=20260621c"></script>
+    <script src="lib/imagePrepare.js?v=20260621e"></script>
     <script src="js/lectura-clave-b.js?v=20260621c"></script>
     <script src="js/lectura-clave-a.js?v=20260621c"></script>
     <script>
@@ -1995,6 +1995,7 @@ Notas: Conexión directa con tu experiencia de expulsión a los 15. Lo que perdi
                 }
             }).then(function (prepared) {
                 reader.loadImage(prepared);
+                notifyCapture(reader, dropStatusId, 'Foto cargada — usa Escanear marcadores Clave B.', 'success');
             }).catch(function (err) {
                 notifyCapture(reader, dropStatusId, err.message || 'Error al cargar la imagen', 'error');
             });
