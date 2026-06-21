@@ -294,6 +294,7 @@ require('./huellaDigitalLib.test.js')(describe, it, assert, assertEqual, assertD
 require('./circuitDeepLink.test.js')(describe, it, assert, assertEqual);
 require('./qaLiveHeuristics.test.js')(describe, it, assert, assertEqual);
 require('./atomicDesign.test.js')(describe, it, assert, assertEqual);
+require('./archivoIndex.test.js')(describe, it, assert, assertEqual);
 
 /* ─── SUMMARY ─── */
 

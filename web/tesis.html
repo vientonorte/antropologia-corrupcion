@@ -284,6 +284,8 @@
   <button class="tesis-filter-btn" data-type="poemario">Poemarios</button>
   <button class="tesis-filter-btn" data-type="investigacion">Investigación</button>
   <button class="tesis-filter-btn" data-type="ensayo">Ensayo</button>
+  <button class="tesis-filter-btn" data-type="ficha">Fichas</button>
+  <button class="tesis-filter-btn" data-type="corpus">Corpus</button>
 </div>
 
 <!-- ════════════════════ GRID ════════════════════ -->
@@ -302,92 +304,13 @@
 </footer>
 
 <!-- ════════════════════ SCRIPT ════════════════════ -->
+<script defer src="lib/bibliotecaLoader.js?v=20260621"></script>
 <script defer src="src/passkey.js?v=20260419"></script>
 <script>
 (function () {
   'use strict';
 
-  /* ── Catálogo de publicaciones ── */
-  var PUBS = [
-    {
-      id: 'tesis-doctoral',
-      titulo: 'Contra-Archivo: Antropología y Corrupción',
-      tipo: 'tesis',
-      anio: 2026,
-      desc: 'Tesis doctoral interactiva. Instrumento crítico para medir la mistranslation institucional entre tres regímenes de verdad: ética, institucional y material.',
-      href: 'index.html',
-      icono: '⊘',
-      nivel: 'publico',
-      disponible: true
-    },
-    {
-      id: 'poemarios',
-      titulo: 'Poemarios del Colectivo Viento Norte',
-      tipo: 'poemario',
-      anio: 2025,
-      desc: 'Colección de voces poéticas que emergen del proceso de investigación etnográfica. La poesía como otro régimen de verdad.',
-      href: 'Poemarios/',
-      icono: '◦',
-      nivel: 'miembro',
-      disponible: false
-    },
-    {
-      id: 'la-negra',
-      titulo: 'La Negra — Memoria, Territorio y Resistencia',
-      tipo: 'investigacion',
-      anio: 2025,
-      desc: 'Memoria territorial mapuche-huilliche. Documentación etnográfica del conflicto entre comunidad indígena y dispositivos institucionales de zonificación (SEIA, Ley Indígena).',
-      href: 'La Negra/',
-      icono: '⬡',
-      nivel: 'miembro',
-      disponible: false
-    },
-    {
-      id: 'etnografia-audiovisual',
-      titulo: 'Etnografía Audiovisual',
-      tipo: 'investigacion',
-      anio: 2025,
-      desc: 'Registro audiovisual del trabajo de campo. La imagen como evidencia de densidad territorial y memoria material. Chile, 2023–2025.',
-      href: 'Etnograf%C3%ADa%20Audiovisual/',
-      icono: '◈',
-      nivel: 'miembro',
-      disponible: false
-    },
-    {
-      id: 'estado-del-arte',
-      titulo: 'Estado del Arte — Marco Teórico',
-      tipo: 'investigacion',
-      anio: 2024,
-      desc: 'Revisión bibliográfica y mapeo del campo teórico: antropología de la corrupción, mistranslation institucional, decolonialidad y capital financiero.',
-      href: '#',
-      icono: '◻',
-      nivel: 'publico',
-      disponible: false
-    },
-    {
-      id: 'ensayo-traduccion',
-      titulo: 'Ensayo: Traducción de Saberes',
-      tipo: 'ensayo',
-      anio: 2024,
-      desc: 'Núcleo argumentativo D4: mistranslation institucionalizada, marcos normativos, epistemicidio. Resumen en README; manuscrito en docs/Ensayo…',
-      href: 'https://github.com/vientonorte/antropologia-corrupcion/blob/main/Estado%20del%20Arte/Ensayo%20Traducci%C3%B3n%20de%20Saberes/README.md',
-      icono: '◎',
-      nivel: 'publico',
-      disponible: true
-    },
-    {
-      id: 'articulo-etnografico-huracan',
-      titulo: 'La máquina de fabricar enemigos',
-      tipo: 'investigacion',
-      anio: 2026,
-      desc: 'Artículo etnográfico: vigilancia estatal, Operación Huracán, archivo La Negra 2018. 8 secciones · ~18k caracteres. Resumen en Contra-archivo.',
-      href: 'articulo-fabricar-enemigos.html',
-      icono: '◈',
-      nivel: 'publico',
-      disponible: true
-    }
-  ];
-
+  var PUBS = [];
   var activeFilter = 'all';
   var isAuthenticated = false;
 
@@ -404,6 +327,8 @@
       case 'poemario':      return 'Poemario';
       case 'investigacion': return 'Investigación';
       case 'ensayo':        return 'Ensayo';
+      case 'ficha':         return 'Ficha';
+      case 'corpus':        return 'Corpus';
       default:              return tipo;
     }
   }
@@ -429,8 +354,9 @@
         : unavail ? ' aria-label="' + esc(p.titulo) + ' — próximamente disponible"' : '';
       var cardStyle = unavail && !locked ? ' style="opacity:.6;cursor:default"' : '';
 
+      var target = p.external ? ' target="_blank" rel="noopener noreferrer"' : '';
       return '<a href="' + href + '" class="pub-card" data-type="' + esc(p.tipo) + '"' +
-        ariaLabel + cardStyle + (unavail && !locked ? ' onclick="return false"' : '') + '>' +
+        ariaLabel + cardStyle + target + (unavail && !locked ? ' onclick="return false"' : '') + '>' +
         '<span class="pub-type-badge type-' + esc(p.tipo) + '">' +
           p.icono + ' ' + typeLabel(p.tipo) +
         '</span>' +
@@ -493,15 +419,33 @@
     setTimeout(function () { waitForPasskey(tries + 1); }, 100);
   }
 
+  function bootCatalog() {
+    if (!window.CABiblioteca) {
+      var grid = document.getElementById('pub-grid');
+      if (grid) {
+        grid.innerHTML = '<p style="color:var(--crit);text-align:center;padding:48px 0">No se pudo cargar el catálogo editorial.</p>';
+      }
+      return;
+    }
+    window.CABiblioteca.loadCatalog()
+      .then(function (entries) {
+        PUBS = entries;
+        render();
+        waitForPasskey();
+      })
+      .catch(function () {
+        var grid = document.getElementById('pub-grid');
+        if (grid) {
+          grid.innerHTML = '<p style="color:var(--crit);text-align:center;padding:48px 0">Error al cargar archivo-index.json</p>';
+        }
+      });
+  }
+
   /* ── Init ── */
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', function () {
-      render();
-      waitForPasskey();
-    });
+    document.addEventListener('DOMContentLoaded', bootCatalog);
   } else {
-    render();
-    waitForPasskey();
+    bootCatalog();
   }
 
 })();

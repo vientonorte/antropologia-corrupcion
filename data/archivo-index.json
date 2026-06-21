@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": "2026-06-20",
+    "version": "2026-06-21",
     "description": "Índice editorial del archivo público con estados de publicación para fichas y dossier documental."
   },
   "entries": [
@@ -38,7 +38,43 @@
       "titulo": "C04 — Bomba (Colectivo Viento Norte)",
       "descripcion": "Dato etnográfico primario: poesía como método, dualidad laboral y vigilancia corporativa (AFP Capital).",
       "url": "https://github.com/vientonorte/antropologia-corrupcion/blob/main/docs/fichas/C04-bomba-viento-norte.md",
-      "estado": "borrador"
+      "estado": "en revisión",
+      "anio": 2026
+    },
+    {
+      "id": "ficha-c05-michillanca",
+      "tipo": "ficha",
+      "seccion": "fichas",
+      "titulo": "C05 — Lof Michillanca: ley antiterrorista y recuperación territorial",
+      "descripcion": "Caso etnográfico lafkenche (Los Molinos, Valdivia): Título de Merced N°2340, despojo dictatorial 1974 y criminalización por Ley 18.314 tras recuperación 2014.",
+      "url": "https://github.com/vientonorte/antropologia-corrupcion/blob/main/docs/fichas/C05-michillanca-extractivismo-ley-anti.md",
+      "grafo_url": "index.html?caso=michillanca-extractivismo-ley-anti#tesis",
+      "caso_id": "michillanca-extractivismo-ley-anti",
+      "estado": "publicable",
+      "anio": 2018,
+      "dimension": "D1"
+    },
+    {
+      "id": "ficha-m01-corpus-attac",
+      "tipo": "ficha",
+      "seccion": "fichas",
+      "titulo": "M01 — Corpus ATTAC (documentación)",
+      "descripcion": "Protocolo y dossier documental ATTAC: Tasa Tobin, circuitos financieros transnacionales y citas en data/attac-citas.json. Vinculado al caso SURA.",
+      "url": "https://github.com/vientonorte/antropologia-corrupcion/blob/main/docs/fichas/M01-corpus-attac-documentacion.md",
+      "corpus_url": "zuboff-archivo.html",
+      "estado": "publicable",
+      "anio": 2024
+    },
+    {
+      "id": "ficha-m02-corpus-zuboff",
+      "tipo": "ficha",
+      "seccion": "fichas",
+      "titulo": "M02 — Corpus Zuboff (documentación)",
+      "descripcion": "Archivo de citas Clave B — capitalismo de vigilancia (Zuboff 2019). Corpus en data/zuboff-citas.json e interfaz zuboff-archivo.html.",
+      "url": "https://github.com/vientonorte/antropologia-corrupcion/blob/main/docs/fichas/M02-corpus-zuboff-documentacion.md",
+      "corpus_url": "zuboff-archivo.html",
+      "estado": "publicable",
+      "anio": 2019
     },
     {
       "id": "fichas-readme-interno",
@@ -59,13 +95,14 @@
       "estado": "publicable"
     },
     {
-      "id": "tesis-lecturas-publicas",
+      "id": "tesis-doctoral-instrumento",
       "tipo": "biblioteca",
       "seccion": "biblioteca",
-      "titulo": "Tesis / lecturas públicas",
-      "descripcion": "Acceso curado a documentos y materiales de lectura abierta del proyecto.",
-      "url": "tesis.html",
-      "estado": "publicable"
+      "titulo": "Contra-Archivo: Antropología y Corrupción",
+      "descripcion": "Tesis doctoral interactiva — instrumento de fricción epistemológica (Grafo B) y tres regímenes de verdad.",
+      "url": "index.html#tesis",
+      "estado": "publicable",
+      "anio": 2026
     },
     {
       "id": "poema-bomba-viento-norte",
@@ -85,6 +122,17 @@
       "descripcion": "Performance poética: testimonio, etnografía del terror, dualidad laboral y filosofía de la liberación.",
       "url": "Poemarios/trabajo-en-sura.html",
       "estado": "publicable"
+    },
+    {
+      "id": "caso-la-negra-grafo",
+      "tipo": "articulo",
+      "seccion": "biblioteca",
+      "titulo": "La Negra — Territorio mapuche y zonificación",
+      "descripcion": "Caso etnográfico en el grafo: memoria territorial, SEIA y dispositivos institucionales sobre comunidad mapuche-huilliche. Resumen público; ficha analítica en producción.",
+      "grafo_url": "index.html?caso=la-negra-territorio-mapuche#tesis",
+      "caso_id": "la-negra-territorio-mapuche",
+      "estado": "publicable_resumen",
+      "anio": 2023
     },
     {
       "id": "articulo-etnografico-huracan",

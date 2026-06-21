@@ -57,11 +57,14 @@ module.exports = function (describe, it, assert, assertEqual) {
       }
     });
 
-    it('archivo-index incluye fichas C03 y C04', function () {
+    it('archivo-index incluye fichas C03–C05 y corpus M01/M02', function () {
       var index = JSON.parse(fs.readFileSync(path.join(root, 'data', 'archivo-index.json'), 'utf8'));
       var ids = (index.entries || []).map(function (e) { return e.id; });
       assert(ids.indexOf('ficha-c03-protocolo-documentacion') !== -1, 'falta C03');
       assert(ids.indexOf('ficha-c04-bomba-viento-norte') !== -1, 'falta C04');
+      assert(ids.indexOf('ficha-c05-michillanca') !== -1, 'falta C05');
+      assert(ids.indexOf('ficha-m01-corpus-attac') !== -1, 'falta M01 ATTAC');
+      assert(ids.indexOf('ficha-m02-corpus-zuboff') !== -1, 'falta M02 Zuboff');
       assert(ids.indexOf('poema-bomba-viento-norte') !== -1, 'falta poema bomba');
     });
 
