@@ -118,6 +118,8 @@ module.exports = function (describe, it, assert, assertEqual) {
       var html = fs.readFileSync(path.join(web, 'corpus-citas.html'), 'utf8');
       assert(html.indexOf('¿Qué es OCR y por qué es un botón?') !== -1, 'guía OCR visible');
       assert(html.indexOf('Transcribir región') !== -1, 'etiqueta clara del botón OCR');
+      assert(html.indexOf('claveBNextStep') !== -1, 'panel siguiente paso');
+      assert(html.indexOf('data-flow-step') !== -1, 'flujo con pasos activos');
     });
 
     it('assessTranscription filtra nulos e incoherentes', function () {

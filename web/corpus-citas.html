@@ -962,6 +962,26 @@
             display: flex;
             align-items: center;
             gap: 6px;
+            opacity: 0.45;
+            transition: opacity 0.2s;
+        }
+
+        .clave-b-flow li.active {
+            opacity: 1;
+            font-weight: 600;
+            color: var(--ink);
+        }
+
+        .clave-b-flow li.done {
+            opacity: 0.75;
+        }
+
+        .clave-b-flow li.done .clave-b-flow-n {
+            background: var(--accent-green);
+        }
+
+        .clave-b-flow li.active .clave-b-flow-n {
+            box-shadow: 0 0 0 2px var(--paper), 0 0 0 4px var(--zuboff);
         }
 
         .clave-b-flow-n {
@@ -975,6 +995,118 @@
             color: var(--paper);
             font-size: 9px;
             font-weight: 600;
+        }
+
+        .clave-b-photo-meta {
+            margin: 0 0 12px;
+            font-size: 10px;
+            letter-spacing: 0.06em;
+            color: var(--neutral);
+        }
+
+        .clave-b-photo-meta strong {
+            color: var(--ink);
+        }
+
+        .clave-b-photo-meta .meta-warn {
+            color: #9a5c00;
+        }
+
+        .clave-b-next-step {
+            margin: 0 0 14px;
+            padding: 12px 14px;
+            border-radius: 4px;
+            border: 1px solid var(--zuboff);
+            background: linear-gradient(180deg, #f5f8fc 0%, #fff 100%);
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .clave-b-next-step[hidden] {
+            display: none !important;
+        }
+
+        .clave-b-next-step p {
+            margin: 0;
+            flex: 1;
+            font-size: 11px;
+            line-height: 1.55;
+            color: var(--ink);
+            min-width: 200px;
+        }
+
+        .clave-b-next-step.is-error {
+            border-color: #c45a2c;
+            background: linear-gradient(180deg, #fff8f5 0%, #fff 100%);
+        }
+
+        .clave-b-canvas-hint {
+            margin: 0 0 8px;
+            font-size: 10px;
+            color: var(--zuboff);
+            letter-spacing: 0.04em;
+        }
+
+        .clave-b-canvas-wrap.has-selection {
+            outline: 2px solid var(--zuboff);
+            outline-offset: 2px;
+        }
+
+        .clave-b-form-hint {
+            font-size: 9px;
+            color: var(--neutral);
+            text-transform: none;
+            letter-spacing: 0;
+            font-weight: 400;
+        }
+
+        .clave-b-queue-badge {
+            display: inline-block;
+            font-size: 8px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 2px 6px;
+            border-radius: 2px;
+            margin-left: 6px;
+            vertical-align: middle;
+        }
+
+        .clave-b-queue-badge.auto {
+            background: #e8f4ea;
+            color: #2d6639;
+        }
+
+        .clave-b-queue-badge.manual {
+            background: #eef2f8;
+            color: var(--zuboff);
+        }
+
+        .clave-b-queue-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .clave-b-queue-edit,
+        .clave-b-queue-remove {
+            background: none;
+            border: 1px solid var(--line);
+            border-radius: 2px;
+            padding: 4px 8px;
+            cursor: pointer;
+            font-size: 10px;
+        }
+
+        .btn-import-all:disabled {
+            opacity: 0.45;
+            cursor: not-allowed;
+        }
+
+        #claveBAutoScan.is-busy {
+            opacity: 0.7;
+            cursor: wait;
         }
 
         .clave-b-tools-panel {
@@ -1277,12 +1409,19 @@
 
                     <nav class="clave-b-flow" aria-label="Flujo de captura Clave B">
                         <ol>
-                            <li><span class="clave-b-flow-n" aria-hidden="true">1</span> Foto</li>
-                            <li><span class="clave-b-flow-n" aria-hidden="true">2</span> Escaneo</li>
-                            <li><span class="clave-b-flow-n" aria-hidden="true">3</span> Revisión</li>
-                            <li><span class="clave-b-flow-n" aria-hidden="true">4</span> Importar</li>
+                            <li data-flow-step="1"><span class="clave-b-flow-n" aria-hidden="true">1</span> Foto</li>
+                            <li data-flow-step="2"><span class="clave-b-flow-n" aria-hidden="true">2</span> Escaneo</li>
+                            <li data-flow-step="3"><span class="clave-b-flow-n" aria-hidden="true">3</span> Revisión</li>
+                            <li data-flow-step="4"><span class="clave-b-flow-n" aria-hidden="true">4</span> Importar</li>
                         </ol>
                     </nav>
+
+                    <p class="clave-b-photo-meta" id="claveBPhotoMeta" hidden aria-live="polite"></p>
+
+                    <div class="clave-b-next-step" id="claveBNextStep" hidden>
+                        <p id="claveBNextStepText"></p>
+                        <button type="button" class="btn-secondary" id="claveBNextStepAction" hidden></button>
+                    </div>
 
                     <div class="clave-b-tools-panel">
                         <section class="clave-b-tools-group clave-b-tools-group--primary" aria-labelledby="claveBScanLabel">
@@ -1316,6 +1455,7 @@
                         </div>
                     </details>
 
+                    <p class="clave-b-canvas-hint" id="claveBCanvasHint" aria-live="polite">Modo cuentaagotas — clic en un marcador de color para detectar su categoría.</p>
                     <div class="clave-b-canvas-wrap" id="claveBCanvasWrap">
                         <canvas id="claveBCanvas" aria-label="Foto del libro para lectura cromática"></canvas>
                     </div>
@@ -1332,11 +1472,12 @@
                         <label>Autor
                             <input type="text" id="claveBAutor" placeholder="Shoshana Zuboff">
                         </label>
-                        <label>Página
-                            <input type="number" id="claveBPagina" min="1" placeholder="23">
+                        <label>Página <span class="clave-b-form-hint">(requerida antes de importar)</span>
+                            <input type="number" id="claveBPagina" min="1" placeholder="23" required>
                         </label>
                         <label>Texto del fragmento (transcripción fiel)
-                            <textarea id="claveBTexto" placeholder="Transcribe el pasaje marcado…"></textarea>
+                            <textarea id="claveBTexto" placeholder="Transcribe el pasaje marcado…" aria-describedby="claveBTextoCount"></textarea>
+                            <span class="clave-b-form-hint" id="claveBTextoCount">0 caracteres</span>
                         </label>
                         <label>Notas Clave B (conexión con contra-archivo)
                             <textarea id="claveBNotas" placeholder="Por qué importa este fragmento…"></textarea>
@@ -1572,7 +1713,7 @@
     <script src="lib/corpusCitasStore.js?v=20260621"></script>
     <script src="lib/librosClaveB.js?v=20260621"></script>
     <script src="lib/imagePrepare.js?v=20260621i"></script>
-    <script src="js/lectura-clave-b.js?v=20260621j"></script>
+    <script src="js/lectura-clave-b.js?v=20260621k"></script>
     <script src="js/lectura-clave-a.js?v=20260621h"></script>
     <script>
         // Citation Archive Management — almacén unificado corpusCitas

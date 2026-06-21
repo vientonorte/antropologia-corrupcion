@@ -540,6 +540,15 @@
       queueCount: document.getElementById('claveBQueueCount'),
       status: document.getElementById('claveBStatus'),
       ocrBtn: document.getElementById('claveBOcrRegion'),
+      scanBtn: document.getElementById('claveBAutoScan'),
+      importBtn: document.getElementById('claveBImportQueue'),
+      photoMeta: document.getElementById('claveBPhotoMeta'),
+      nextStep: document.getElementById('claveBNextStep'),
+      nextStepText: document.getElementById('claveBNextStepText'),
+      nextStepAction: document.getElementById('claveBNextStepAction'),
+      canvasHint: document.getElementById('claveBCanvasHint'),
+      textoCount: document.getElementById('claveBTextoCount'),
+      flow: document.querySelector('.clave-b-flow'),
     };
 
     if (!this.els.canvas) {
@@ -551,7 +560,125 @@
     this.renderToolbar();
     this.setDefaults();
     this.updateOcrButton();
+    this.updateFlowStep();
+    this.updateTextoCount();
+    this.renderQueue();
   }
+
+  function previewQueueText(text, max) {
+    const t = String(text || '').trim();
+    const limit = max || 200;
+    if (t.length <= limit) return t;
+    return t.slice(0, limit).trim() + '…';
+  }
+
+  LecturaClaveB.prototype.updateFlowStep = function () {
+    if (!this.els.flow) return;
+    let step = 1;
+    if (this.image) step = 2;
+    if (this.queue.length) step = 3;
+    this.els.flow.querySelectorAll('[data-flow-step]').forEach((li) => {
+      const n = Number(li.dataset.flowStep);
+      li.classList.toggle('done', n < step);
+      li.classList.toggle('active', n === step);
+    });
+  };
+
+  LecturaClaveB.prototype.showNextStep = function (text, actionLabel, actionFn, isError) {
+    const box = this.els.nextStep;
+    const txt = this.els.nextStepText;
+    const btn = this.els.nextStepAction;
+    if (!box || !txt) return;
+    if (!text) {
+      box.hidden = true;
+      box.classList.remove('is-error');
+      return;
+    }
+    box.hidden = false;
+    box.classList.toggle('is-error', !!isError);
+    txt.textContent = text;
+    if (btn && actionLabel && actionFn) {
+      btn.hidden = false;
+      btn.textContent = actionLabel;
+      btn.onclick = actionFn;
+    } else if (btn) {
+      btn.hidden = true;
+      btn.onclick = null;
+    }
+  };
+
+  LecturaClaveB.prototype.updatePhotoMeta = function () {
+    const el = this.els.photoMeta;
+    if (!el) return;
+    const meta = this.imageMeta;
+    if (!meta || !meta.width || !meta.height) {
+      el.hidden = true;
+      return;
+    }
+    el.hidden = false;
+    const warn = photoQualityHint(meta);
+    const warnHtml = warn
+      ? ' · <span class="meta-warn">' + warn.trim() + '</span>'
+      : ' · <strong>Resolución OK para OCR</strong>';
+    el.innerHTML =
+      'Foto preparada: <strong>' +
+      meta.width +
+      '×' +
+      meta.height +
+      ' px</strong>' +
+      (meta.format ? ' · ' + meta.format : '') +
+      warnHtml;
+  };
+
+  LecturaClaveB.prototype.updateCanvasHint = function () {
+    const hint = this.els.canvasHint;
+    const wrap = this.els.wrap;
+    if (!hint) return;
+    if (!this.image) {
+      hint.textContent = '';
+      if (wrap) wrap.classList.remove('has-selection');
+      return;
+    }
+    if (this._scanning) {
+      hint.textContent = 'Escaneo en progreso — espera antes de seleccionar región.';
+      return;
+    }
+    if (this.mode === 'region') {
+      hint.textContent = this.selection
+        ? 'Región seleccionada — pulsa Transcribir región o escribe manualmente abajo.'
+        : 'Arrastra un rectángulo sobre UNA línea o párrafo resaltado (no la página entera).';
+    } else {
+      hint.textContent =
+        'Clic en un marcador de color — o cambia a Seleccionar región para captura manual.';
+    }
+    if (wrap) {
+      wrap.classList.toggle('has-selection', !!(this.selection && this.selection.w > 8));
+    }
+  };
+
+  LecturaClaveB.prototype.updateTextoCount = function () {
+    if (!this.els.textoCount || !this.els.texto) return;
+    const n = (this.els.texto.value || '').length;
+    this.els.textoCount.textContent = n + ' caracteres' + (n > 320 ? ' · fragmento largo' : '');
+  };
+
+  LecturaClaveB.prototype.switchToRegionMode = function () {
+    const btn = document.querySelector('[data-clave-mode="region"]');
+    if (btn) btn.click();
+    if (this.els.wrap) {
+      this.els.wrap.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+    if (this.els.texto) this.els.texto.focus();
+    this.updateCanvasHint();
+  };
+
+  LecturaClaveB.prototype.setScanBusy = function (busy) {
+    const btn = this.els.scanBtn;
+    if (!btn) return;
+    btn.disabled = !!busy;
+    btn.classList.toggle('is-busy', !!busy);
+    btn.textContent = busy ? 'Escaneando marcadores…' : '⚡ Escanear marcadores Clave B';
+  };
 
   LecturaClaveB.prototype.updateOcrButton = function () {
     const btn = this.els.ocrBtn;
@@ -570,6 +697,7 @@
       : hasSelection
         ? 'Transcribir el texto dentro de la región seleccionada'
         : 'Primero selecciona una región (modo Seleccionar región)';
+    this.updateCanvasHint();
   };
 
   LecturaClaveB.prototype.setDefaults = function () {
@@ -623,8 +751,11 @@
         btn.setAttribute('aria-pressed', 'true');
         self.mode = btn.dataset.claveMode;
         canvas.style.cursor = self.mode === 'eyedropper' ? 'crosshair' : 'cell';
+        self.updateCanvasHint();
       });
     });
+
+    this.els.texto?.addEventListener('input', () => self.updateTextoCount());
 
     document.getElementById('claveBAddFragment')?.addEventListener('click', () =>
       self.addFragment(),
@@ -725,8 +856,17 @@
                 ? ` (${self.imageMeta.width}×${self.imageMeta.height})`
                 : '';
               const hint = photoQualityHint(self.imageMeta);
+              self.updatePhotoMeta();
+              self.updateFlowStep();
+              self.showNextStep(
+                'Paso 2: escanea marcadores automáticamente o usa Seleccionar región para captura manual.',
+                'Ir a captura manual',
+                function () {
+                  self.switchToRegionMode();
+                },
+              );
               self.status(
-                'Foto cargada' + dim + '. Escanea marcadores o selecciona región manual.' + hint,
+                'Foto cargada' + dim + '.' + hint,
                 hint ? '' : 'success',
               );
               self.updateOcrButton();
@@ -759,6 +899,9 @@
     if (this.els.workspace) this.els.workspace.style.display = 'none';
     this.status('');
     this.updateOcrButton();
+    this.updatePhotoMeta();
+    this.updateFlowStep();
+    this.showNextStep('');
   };
 
   LecturaClaveB.prototype.fitCanvas = function () {
@@ -860,6 +1003,7 @@
     this.drag = null;
     this.draw();
     this.updateOcrButton();
+    this.updateCanvasHint();
   };
 
   LecturaClaveB.prototype.cropRegionToCanvas = function (region) {
@@ -954,7 +1098,9 @@
       return;
     }
     this._scanning = true;
+    this.setScanBusy(true);
     this.updateOcrButton();
+    this.showNextStep('Escaneando marcadores — puede tardar unos segundos por fragmento.');
     this.status('Escaneando marcadores Clave B en la página…');
     try {
       const regions = detectMarkedRegions(
@@ -965,7 +1111,15 @@
       );
       if (!regions.length) {
         this.status('No se detectaron marcadores de color. Usa cuentaagotas o selección manual.', 'error');
+        this.showNextStep(
+          'No hay marcadores detectables. Prueba captura manual: selecciona una región pequeña sobre el texto resaltado.',
+          'Activar selección manual',
+          () => this.switchToRegionMode(),
+          true,
+        );
         this._scanning = false;
+        this.setScanBusy(false);
+        this.updateOcrButton();
         return;
       }
       const worker = await ensureTesseractWorker();
@@ -1012,28 +1166,47 @@
       this.renderQueue();
       if (!added) {
         const skipMsg = skipped
-          ? ` ${skipped} región${skipped !== 1 ? 'es' : ''} omitida${skipped !== 1 ? 's' : ''} por ilegibles o incoherentes.`
+          ? ` ${skipped} región${skipped !== 1 ? 'es' : ''} omitida${skipped !== 1 ? 's' : ''} (demasiado grandes, ilegibles o duplicadas).`
           : '';
         this.status(
-          'Marcadores detectados pero sin transcripciones válidas — transcribe manualmente.' +
-            skipMsg +
-            photoHint,
+          'Sin transcripciones automáticas válidas — usa captura manual.' + skipMsg + photoHint,
           'error',
+        );
+        this.showNextStep(
+          'Esta página necesita captura manual: selecciona UNA línea resaltada, transcribe y añade al fragmento.',
+          'Activar selección manual',
+          () => this.switchToRegionMode(),
+          true,
         );
       } else {
         const skipMsg = skipped
-          ? ` · ${skipped} omitido${skipped !== 1 ? 's' : ''} (ilegible/incoherente)`
+          ? ` · ${skipped} omitido${skipped !== 1 ? 's' : ''}`
           : '';
         this.status(
-          `${added} fragmento${added !== 1 ? 's' : ''} válido${added !== 1 ? 's' : ''} en cola${skipMsg}. Revisa e importa al archivo.${photoHint}`,
+          `${added} fragmento${added !== 1 ? 's' : ''} en cola${skipMsg}. Revisa, corrige si hace falta e importa.${photoHint}`,
           photoHint ? '' : 'success',
         );
+        this.showNextStep(
+          'Paso 3: revisa cada fragmento en la cola. Pulsa ✎ para corregir. Luego importa al archivo.',
+          'Ir a cola',
+          () => {
+            this.els.queue?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          },
+        );
+        this.updateFlowStep();
         if (this.opts.onQueueChange) this.opts.onQueueChange(this.queue);
       }
     } catch (err) {
       this.status('Error en escaneo automático: ' + err.message, 'error');
+      this.showNextStep(
+        'Error en escaneo — prueba captura manual por región.',
+        'Captura manual',
+        () => this.switchToRegionMode(),
+        true,
+      );
     }
     this._scanning = false;
+    this.setScanBusy(false);
     this.updateOcrButton();
   };
 
@@ -1073,8 +1246,30 @@
     this.draw();
     this.updateOcrButton();
     this.renderQueue();
+    this.updateFlowStep();
+    this.updateTextoCount();
+    this.showNextStep(
+      this.queue.length
+        ? 'Fragmento en cola. Añade más o importa al archivo cuando termines.'
+        : '',
+    );
     this.status(`Fragmento añadido (${this.queue.length} en cola).`, 'success');
     if (this.opts.onQueueChange) this.opts.onQueueChange(this.queue);
+  };
+
+  LecturaClaveB.prototype.loadFragmentToForm = function (idx) {
+    const r = this.queue[idx];
+    if (!r) return;
+    if (this.els.libro) this.els.libro.value = r.libro || '';
+    if (this.els.autor) this.els.autor.value = r.autor || '';
+    if (this.els.pagina) this.els.pagina.value = r.pagina != null ? String(r.pagina) : '';
+    if (this.els.texto) this.els.texto.value = r.texto || '';
+    if (this.els.notas) this.els.notas.value = r.notas_clave_b || '';
+    if (r.color) this.selectColor(r.color);
+    this.updateTextoCount();
+    if (this.els.texto) this.els.texto.focus();
+    this.status('Fragmento cargado en el formulario — corrige y pulsa + Añadir fragmento.', 'success');
+    document.getElementById('claveBTexto')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
   };
 
   LecturaClaveB.prototype.renderQueue = function () {
@@ -1085,44 +1280,77 @@
         .replace(/</g, '&lt;')
         .replace(/>/g, '&gt;')
         .replace(/"/g, '&quot;');
+    if (this.els.importBtn) {
+      this.els.importBtn.disabled = !this.queue.length;
+      this.els.importBtn.setAttribute('aria-disabled', this.queue.length ? 'false' : 'true');
+    }
     if (this.els.queueCount) {
-      this.els.queueCount.textContent = `${this.queue.length} fragmento${this.queue.length !== 1 ? 's' : ''}`;
+      const paginaWarn = this.queue.some((r) => !r.pagina);
+      this.els.queueCount.textContent =
+        `${this.queue.length} fragmento${this.queue.length !== 1 ? 's' : ''}` +
+        (paginaWarn && this.queue.length ? ' · falta página' : '');
     }
     if (!this.queue.length) {
       this.els.queue.innerHTML =
-        '<p class="clave-b-queue-empty">Sin fragmentos en cola — añade citas desde la foto.</p>';
+        '<p class="clave-b-queue-empty">Cola vacía — escanea marcadores o captura manual (Seleccionar región → transcribir → + Añadir fragmento).</p>';
+      this.updateFlowStep();
       return;
     }
     this.els.queue.innerHTML = this.queue
-      .map(
-        (r, i) => `
+      .map((r, i) => {
+        const badge = r.auto
+          ? '<span class="clave-b-queue-badge auto">OCR auto</span>'
+          : '<span class="clave-b-queue-badge manual">Manual</span>';
+        const preview = previewQueueText(r.texto);
+        const full = r.texto.length > preview.length;
+        return `
       <div class="result-item">
         <div class="result-color-dot" style="background:${getClaveById(r.color).color}"></div>
-        <div style="flex:1">
-          <div class="result-text">"${esc(r.texto)}"</div>
-          <div class="result-meta">p.${r.pagina || '?'} · ${esc(getClaveById(r.color).label)} · ${esc(r.notas_clave_b || '')}</div>
+        <div style="flex:1;min-width:0">
+          <div class="result-text">"${esc(preview)}"${full ? ' <span class="clave-b-form-hint">(vista previa)</span>' : ''}</div>
+          <div class="result-meta">p.${r.pagina || '?'} · ${esc(getClaveById(r.color).label)}${badge}</div>
         </div>
-        <button type="button" class="clave-b-queue-remove" data-idx="${i}" title="Quitar">✕</button>
-      </div>`,
-      )
+        <div class="clave-b-queue-actions">
+          <button type="button" class="clave-b-queue-edit" data-edit-idx="${i}" title="Editar en formulario">✎</button>
+          <button type="button" class="clave-b-queue-remove" data-idx="${i}" title="Quitar">✕</button>
+        </div>
+      </div>`;
+      })
       .join('');
     this.els.queue.querySelectorAll('.clave-b-queue-remove').forEach((btn) => {
       btn.addEventListener('click', () => {
         this.queue.splice(Number(btn.dataset.idx), 1);
         this.renderQueue();
+        this.updateFlowStep();
       });
     });
+    this.els.queue.querySelectorAll('.clave-b-queue-edit').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        this.loadFragmentToForm(Number(btn.dataset.editIdx));
+      });
+    });
+    this.updateFlowStep();
   };
 
   LecturaClaveB.prototype.clearQueue = function () {
     this.queue = [];
     this.renderQueue();
+    this.updateFlowStep();
     this.status('Cola vaciada.', '');
   };
 
   LecturaClaveB.prototype.importQueue = function () {
     if (!this.queue.length) {
       this.status('No hay fragmentos para importar.', 'error');
+      return;
+    }
+    const sinPagina = this.queue.filter((f) => !f.pagina).length;
+    if (sinPagina) {
+      this.status(
+        `Indica la página arriba antes de importar (${sinPagina} fragmento${sinPagina !== 1 ? 's' : ''} sin página).`,
+        'error',
+      );
+      this.els.pagina?.focus();
       return;
     }
     const valid = this.queue.filter((f) => {
@@ -1142,6 +1370,8 @@
       this.status(`${valid.length} cita${valid.length !== 1 ? 's' : ''} importada${valid.length !== 1 ? 's' : ''} al archivo${dropMsg}.`, 'success');
       this.queue = [];
       this.renderQueue();
+      this.updateFlowStep();
+      this.showNextStep('Citas importadas. Sube otra foto o continúa con el archivo abajo.');
     }
   };
 
