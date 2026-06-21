@@ -304,7 +304,30 @@ Esta es la **nav objetivo** derivada del inventario (no necesariamente implement
 
 ---
 
-## 12. Mantenimiento
+## 12. Excluidos — `_papelera_duplicados/` (solo local)
+
+> **Ruta:** `_papelera_duplicados/` · **Git:** en `.gitignore` (no está en GitHub ni en Pages)  
+> **Prefijo `EA_`:** copias sacadas del árbol activo durante limpieza de duplicados (*Estado del Arte* / raíz pre-`web/`).  
+> **Decisión documentada:** `skills/QUICK_WINS_PRODUCCION.md` → eliminar cuando no hagan falta como referencia.
+
+| Archivo papelera | Canónico actual | Fecha snapshot | Estado vs canónico |
+|---|---|---|---|
+| `EA_admin.html` | `web/admin.html` (R04) | 2026-05-18 | **Obsoleto** — sin `noindex`, sin bloqueo `*.github.io`, sin CSS responsive móvil |
+| `EA_index.html` | `web/index.html` (P02) | 2026-05-18 | **Obsoleto** — sin `canonical` → landing, nav/OG desactualizados |
+| `EA_contra-archivo-v2.html` | `web/contra-archivo-v2.html` (P05) | 2026-05-18 | **Obsoleto** — ~1.5 MB vs ~3.7k líneas actuales; sin `socialField.js`, sin fixes grafo móvil |
+| `EA_contra-archivo-v1-DEPRECATED.html` | `web/contra-archivo.html` → redirect `index.html` | 2026-05-18 | **Deprecado** — narrativa v1 (~1.6k líneas); reemplazada por v2 |
+
+### Regla IA
+
+- **No indexar** en sitemap, `ia-inventario.json` ni nav.
+- **No restaurar** a `web/` sin diff explícito contra el canónico.
+- **Seguro borrar** en disco local si ya no necesitas comparar historial (el historial git del canónico vive en `web/`).
+
+Si reaparecen duplicados en raíz post-rsync, mover aquí o eliminar — la fuente de verdad del deploy es siempre `web/`.
+
+---
+
+## 13. Mantenimiento del inventario
 
 Al agregar contenido:
 

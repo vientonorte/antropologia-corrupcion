@@ -217,6 +217,20 @@
     { "id": "archivo-hub", "surface": "P04", "role": "catalogo-editorial" },
     { "id": "instrumento", "surface": "P05", "role": "narrativa-grafo-biblioteca" }
   ],
+  "excluded_local": [
+    {
+      "path": "_papelera_duplicados/",
+      "git": "gitignored",
+      "deploy": false,
+      "note": "Copias EA_* obsoletas; no forman parte de la IA publicada",
+      "files": [
+        { "file": "EA_admin.html", "superseded_by": "web/admin.html", "status": "obsolete" },
+        { "file": "EA_index.html", "superseded_by": "web/index.html", "status": "obsolete" },
+        { "file": "EA_contra-archivo-v2.html", "superseded_by": "web/contra-archivo-v2.html", "status": "obsolete" },
+        { "file": "EA_contra-archivo-v1-DEPRECATED.html", "superseded_by": "web/contra-archivo.html", "status": "deprecated" }
+      ]
+    }
+  ],
   "ia_debt": [
     { "id": "B1", "title": "index ≠ instrumento", "priority": "alta" },
     { "id": "B2", "title": "Dos navs paralelas", "priority": "media" },
