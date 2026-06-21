@@ -23,6 +23,24 @@
       "estado": "publicable"
     },
     {
+      "id": "ficha-c03-protocolo-documentacion",
+      "tipo": "ficha",
+      "seccion": "fichas",
+      "titulo": "C03 — Protocolo de buenas prácticas de documentación",
+      "descripcion": "Gate de pre-publicación P/R/C: clasificación preventiva, anonimización y responsabilidad editorial del contra-archivo.",
+      "url": "https://github.com/vientonorte/antropologia-corrupcion/blob/main/docs/fichas/C03-protocolo-documentacion.md",
+      "estado": "investigador"
+    },
+    {
+      "id": "ficha-c04-bomba-viento-norte",
+      "tipo": "ficha",
+      "seccion": "fichas",
+      "titulo": "C04 — Bomba (Colectivo Viento Norte)",
+      "descripcion": "Dato etnográfico primario: poesía como método, dualidad laboral y vigilancia corporativa (AFP Capital).",
+      "url": "https://github.com/vientonorte/antropologia-corrupcion/blob/main/docs/fichas/C04-bomba-viento-norte.md",
+      "estado": "borrador"
+    },
+    {
       "id": "fichas-readme-interno",
       "tipo": "ficha",
       "seccion": "fichas",
@@ -50,6 +68,16 @@
       "estado": "publicable"
     },
     {
+      "id": "poema-bomba-viento-norte",
+      "tipo": "poemario",
+      "seccion": "poemarios",
+      "titulo": "Bomba",
+      "descripcion": "Performance poética, 18 nov 2026: vigilancia corporativa, Comité DDHH Valparaíso, capitalismo de vigilancia. Ficha C04.",
+      "url": "Poemarios/bomba.html",
+      "estado": "publicable",
+      "ficha": "C04"
+    },
+    {
       "id": "poema-trabajo-en-sura",
       "tipo": "poemario",
       "seccion": "poemarios",
@@ -73,7 +101,7 @@
       "tipo": "ensayo",
       "seccion": "biblioteca",
       "titulo": "Ensayo: Traducción de Saberes",
-      "descripcion": "Núcleo argumentativo: mistranslation institucionalizada, marcos normativos, epistemicidio. README en Estado del Arte + rescate papelera §03 pendiente.",
+      "descripcion": "Núcleo argumentativo: mistranslation institucionalizada, marcos normativos, epistemicidio. Resumen en contra-archivo-v2.html#eje-4; JSON en narrativa-rescatada.json.",
       "url": "https://github.com/vientonorte/antropologia-corrupcion/blob/main/Estado%20del%20Arte/Ensayo%20Traducci%C3%B3n%20de%20Saberes/README.md",
       "estado": "publicable_resumen",
       "dimension": "D4"

@@ -49,5 +49,47 @@
     "epistemicidio": "Rivera Cusicanqui (2010): la radicación mapuche invalidó sistemas de conocimiento territorial al imponer catastro y escritura como únicos registros válidos.",
     "html": "<div class=\"section-header\"><span class=\"section-number\">D4</span><h2>Ensayo: Traducción de Saberes</h2></div><p class=\"abstract\">La corrupción institucional opera como un régimen de <strong>mistranslation institucionalizada</strong>: falla sistemática en la traducción entre marcos normativos, arquitecturas técnicas y prácticas organizacionales.</p><ol class=\"key-args\"><li><strong>Corrupción como traducción</strong> — Riles: documentos normativos como artefactos.</li><li><strong>Despojo como traducción forzada</strong> — Tsing: fricción violenta entre sistemas.</li><li><strong>Mistranslation como poder</strong> — opacidad como producto activo.</li><li><strong>Contra-archivo como re-traducción</strong> — Derrida: nuevas legibilidades.</li></ol>",
     "caracteres": 2840
+  },
+  "presentacion_00": {
+    "titulo": "Presentación del proyecto doctoral",
+    "tesis": "La corrupción institucional opera como un régimen de mistranslation institucionalizada: falla sistemática en la traducción entre marcos normativos, arquitecturas técnicas y prácticas organizacionales.",
+    "preguntas_investigacion": [
+      "¿De qué manera la corrupción institucional puede ser comprendida como un régimen de mistranslation?",
+      "¿Cómo operan los dispositivos de traducción fallida en la gobernanza de datos y en el incumplimiento del Convenio 169?",
+      "¿Qué papel desempeña el contra-archivo como práctica de re-traducción crítica?",
+      "¿En qué medida la poesía y la etnografía audiovisual desestabilizan los lenguajes de la corrupción?"
+    ],
+    "hipotesis": [
+      { "id": "H1", "texto": "La opacidad institucional no es falla de gobernanza sino producto activo de la arquitectura normativa y técnica." },
+      { "id": "H2", "texto": "Los intermediarios institucionales producen mistranslation deliberada entre registro normativo y práctica efectiva." },
+      { "id": "H3", "texto": "El contra-archivo produce legibilidad crítica sin restituir un original perdido." }
+    ],
+    "matriz_tensiones": [
+      { "eje": "Datos / gobernanza", "norma": 4, "infraestructura": 3, "territorio": 1, "archivo": 2 },
+      { "eje": "Territorio indígena", "norma": 3, "infraestructura": 2, "territorio": 4, "archivo": 3 },
+      { "eje": "Periodismo / evidencia", "norma": 2, "infraestructura": 2, "territorio": 2, "archivo": 4 }
+    ],
+    "rescate": "N1",
+    "fuente": "_papelera_duplicados/EA_contra-archivo-v1-DEPRECATED.html §00"
+  },
+  "protocolo_traduccion": {
+    "titulo": "Protocolo de buena traducción",
+    "epigrafe": "La institución traduce. La traducción falla. El fallo es el sistema.",
+    "output": "El contra-archivo produce legibilidad, no acuerdos.",
+    "umbrales": [
+      { "valor": 0.25, "lectura": "Fricción baja — traducción asimiladora" },
+      { "valor": 0.50, "lectura": "Fricción media — tensión visible" },
+      { "valor": 0.70, "lectura": "Fricción alta — mistranslation documentable" },
+      { "valor": 0.90, "lectura": "Fricción irreductible — registro obligatorio" }
+    ],
+    "codigos": [
+      { "codigo": "C.01", "dimension": "Fricción política", "condicion": "Participación del sujeto en el vocabulario de traducción" },
+      { "codigo": "C.02", "dimension": "Fricción semántica", "condicion": "Glosario multi-capa sin asimilación" },
+      { "codigo": "C.03", "dimension": "Fricción técnica", "condicion": "Indicadores de daño en capa material" },
+      { "codigo": "C.04", "dimension": "Fricción irreductible", "condicion": "Registro explícito de lo incompensable si fricción > 0.85" }
+    ],
+    "fichas_url": "docs/fichas/",
+    "rescate": "N2",
+    "fuente": "_papelera_duplicados/EA_index.html §05"
   }
 }

@@ -221,4 +221,4 @@ Das y Poole proponen los márgenes del Estado como sitio donde el poder se hace 
 - [ ] Verificar cita Dussel exacta: "lo que es sabido sobre el individuo y la libertad, siempre tenemos una mínima posibilidad de acción." [CITA PENDIENTE: ubicar en corpus Dussel]
 - [ ] Documentar trayectoria Movimiento Pingüino → FES Ñuñoa → ACES como dato etnográfico de continuidad del activismo.
 - [ ] Evaluar si corresponde ficha separada para AFP Capital (articulación C02↔C04).
-- [ ] Crear `Poemarios/bomba.html` (análogo a `trabajo-en-sura.html`).
+- [x] Crear `Poemarios/bomba.html` (análogo a `trabajo-en-sura.html`). Publicado en `web/Poemarios/bomba.html`.

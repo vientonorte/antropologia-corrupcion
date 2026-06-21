@@ -49,7 +49,7 @@
       "rutas_web": {
         "resumen": "contra-archivo-v2.html#eje-1",
         "grafo_nodo": "La máquina de fabricar enemigos",
-        "publicacion_pendiente": "articulo-fabricar-enemigos.html"
+        "publicacion": "articulo-fabricar-enemigos.html"
       },
       "estado": "publicable",
       "en_web": "articulo-fabricar-enemigos.html"
@@ -68,10 +68,10 @@
       "rutas_web": {
         "resumen": "Estado del Arte/Ensayo Traducción de Saberes/README.md",
         "destino": "contra-archivo-v2.html#eje-4",
-        "json_pendiente": "data/narrativa-rescatada.json#ensayo_argumentos"
+        "json": "data/narrativa-rescatada.json#ensayo_argumentos"
       },
       "estado": "publicable_resumen",
-      "en_web": "parcial"
+      "en_web": "contra-archivo-v2.html#eje-4"
     },
     {
       "id": "etnografia-audiovisual-traduciendo-saberes",

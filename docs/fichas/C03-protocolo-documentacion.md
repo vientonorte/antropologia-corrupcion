@@ -166,6 +166,6 @@ Esa contradicción no se resuelve en este protocolo. Se reconoce. Y se deja como
 - [x] Sitio de fricción identificado ✅
 - [ ] Apertura analítica (no conclusión cerrada) ✅
 - [x] Vínculos con otras fichas ✅
-- [ ] Integración al flujo de trabajo del repositorio ☐ pendiente
+- [x] Integración al flujo de trabajo del repositorio ✅ (`CONTRIBUTING.md`, `PIPELINE.md`, `tests/publishGate.test.js`)
 - [ ] Validación en práctica (aplicación a casos reales) ☐ pendiente
 

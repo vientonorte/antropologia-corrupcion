@@ -37,13 +37,12 @@
       "title": "Contra-Archivo (duplicado landing)",
       "taxonomy": "entrada",
       "audience": "publico",
-      "nav_label": "Instrumento",
-      "nav_primary": true,
-      "sitemap": true,
-      "priority": 0.9,
+      "nav_label": "Inicio (alias)",
+      "nav_primary": false,
+      "sitemap": false,
+      "priority": 0.5,
       "canonical": false,
-      "canonical_to": "landing.html",
-      "ia_debt": "B1-nav-instrumento-confuso"
+      "canonical_to": "landing.html"
     },
     {
       "id": "P03",
@@ -280,10 +279,10 @@
     }
   ],
   "ia_debt": [
-    { "id": "B1", "title": "index ≠ instrumento", "priority": "alta" },
+    { "id": "B1", "title": "index ≠ instrumento", "priority": "alta", "estado": "resuelto", "nota": "Instrumento → contra-archivo-v2.html; index.html alias de landing" },
     { "id": "B2", "title": "Dos navs paralelas", "priority": "media" },
     { "id": "B3", "title": "archivo-lecturas huérfana", "priority": "media" },
-    { "id": "B4", "title": "Fichas C03/C04 sin indexar", "priority": "media" },
+    { "id": "B4", "title": "Fichas C03/C04 sin indexar", "priority": "media", "estado": "resuelto", "nota": "archivo-index.json actualizado 2026-06-20" },
     { "id": "B5", "title": "Sitemap triplica home", "priority": "baja" },
     { "id": "B6", "title": "manifest start_url", "priority": "baja" },
     { "id": "B7", "title": "README anchors obsoletos", "priority": "baja" },
@@ -291,13 +290,16 @@
       "id": "B8",
       "title": "Narrativa papelera sin publicar (§00, protocolo C.01–C.04, P3 fricción)",
       "priority": "alta",
+      "estado": "parcial",
       "doc": "docs/VALOR_NARRATIVO_PAPELERA.md",
-      "rescue_ids": ["N1", "N2", "N3", "N4"]
+      "rescue_ids": ["N1", "N2", "N3", "N4"],
+      "nota": "N1+N2+N4 en v2#leer; N3 pendiente modo Explorar"
     },
     {
       "id": "B9",
       "title": "D4 Ensayo: artículo etnográfico sin publicar + espejos triplicados",
       "priority": "alta",
+      "estado": "parcial",
       "doc": "docs/VALOR_NARRATIVO_D4_ENSAYO.md",
       "index": "data/ensayo-traduccion-index.json",
       "rescue_ids": ["D4-R1", "D4-R2", "D4-R3"]
@@ -314,7 +316,7 @@
     "rutas_web": {
       "articulo_resumen": "contra-archivo-v2.html#eje-1",
       "ensayo_teorico": "contra-archivo-v2.html#eje-4",
-      "biblioteca_pendiente": "tesis.html#articulo-etnografico-huracan",
+      "biblioteca": "articulo-fabricar-enemigos.html",
       "archivo": "archivo.html"
     }
   },

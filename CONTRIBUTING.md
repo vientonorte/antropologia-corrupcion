@@ -114,6 +114,17 @@ Tipos válidos:
 - `test`
 - `ci`
 
+## Gate de pre-publicación (C03)
+
+Antes de publicar material en `web/` o en capas públicas del repositorio, aplica el gate de [`docs/fichas/C03-protocolo-documentacion.md`](docs/fichas/C03-protocolo-documentacion.md):
+
+1. clasifica cada fuente como **P** (público), **R** (restringido) o **C** (confidencial)
+2. verifica que ninguna afirmación pública dependa de fuente **C**
+3. aplica anonimización si el material migró de **R** a **P**
+4. añade disclaimer de capa cuando corresponda
+
+La suite `node tests/runner.js` incluye `publishGate.test.js`, que valida invariantes mínimas (sin enlaces a `vault/`, `archivo-index` con estados, presencia de C03). Un solo incumplimiento del gate detiene la publicación.
+
 ## Validación mínima
 
 ```sh

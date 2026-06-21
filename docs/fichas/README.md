@@ -100,6 +100,7 @@ Toda ficha debe incluir:
 | C01 | El núcleo y el margen | Conceptual | Borrador |
 | C02 | La cuenta y el núcleo | Sistema | Borrador |
 | C03 | Protocolo de buenas prácticas de documentación | Metodológica | Borrador |
+| C04 | Bomba (Colectivo Viento Norte) | Caso etnográfico | Open coding |
 
 ## Definition of Done para ficha publicable
 

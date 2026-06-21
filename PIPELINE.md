@@ -24,7 +24,7 @@
 
 `qa.yml` consolida los checks que deben mirarse primero en cada PR:
 
-1. **Tests unitarios**
+1. **Tests unitarios** (incluye gate C03 vía `publishGate.test.js`)
 2. **Integridad de datos**
 3. **Lighthouse CI**
 4. **QA Gate** como resultado consolidado

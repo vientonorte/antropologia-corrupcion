@@ -279,6 +279,7 @@ require('./privadoChatValidation.test.js')(describe, it, assert, assertEqual);
 require('./blackScholes.test.js')(describe, it, assert, assertEqual, assertDeepEqual, assertApprox, assertGreaterThan, assertLessThan, assertArrayIncludes, casosData);
 require('./sourceNormalizers.test.js')(describe, it, assert, assertEqual, assertDeepEqual, assertApprox, assertGreaterThan, assertLessThan, assertArrayIncludes);
 require('./exportPipeline.test.js')(describe, it, assert, assertEqual, assertDeepEqual, assertApprox, assertGreaterThan, assertLessThan, assertArrayIncludes, casosData, fuentesData);
+require('./publishGate.test.js')(describe, it, assert, assertEqual);
 
 /* ─── SUMMARY ─── */
 
