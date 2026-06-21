@@ -422,9 +422,9 @@
             >
                 <span class="ca-drop-icon" aria-hidden="true">🖼</span>
                 <p class="ca-drop-text">Arrastra una foto aquí o haz clic para seleccionar</p>
-                <p class="ca-drop-hint">JPG · PNG · WebP · Máx 5 MB</p>
+                <p class="ca-drop-hint">JPG · PNG · WebP · HEIC · Máx 20 MB</p>
                 <input
-                    type="file" id="file-input" accept="image/jpeg,image/png,image/webp,image/gif"
+                    type="file" id="file-input" accept="image/jpeg,image/png,image/webp,image/gif,image/heic,image/heif,.heic,.heif"
                     style="position:absolute;opacity:0;width:0;height:0;pointer-events:none"
                     tabindex="-1" aria-hidden="true"
                 >
@@ -1288,15 +1288,36 @@
                 document.getElementById('btn-analyze').disabled = !(hasImage && hasKey);
             }
 
+            function resolveImageMime(file) {
+                var mimeType = file.type || '';
+                var name = (file.name || '').toLowerCase();
+                if (!mimeType || mimeType === 'application/octet-stream') {
+                    if (name.endsWith('.heic') || name.endsWith('.heif')) mimeType = 'image/heic';
+                    else if (name.endsWith('.png')) mimeType = 'image/png';
+                    else if (name.endsWith('.webp')) mimeType = 'image/webp';
+                    else if (name.endsWith('.gif')) mimeType = 'image/gif';
+                    else if (name.endsWith('.jpg') || name.endsWith('.jpeg')) mimeType = 'image/jpeg';
+                }
+                var allowed = ['image/jpeg', 'image/png', 'image/webp', 'image/gif', 'image/heic', 'image/heif'];
+                if (allowed.indexOf(mimeType) === -1) {
+                    return null;
+                }
+                return mimeType;
+            }
+
+            function apiMediaType(mimeType) {
+                if (mimeType === 'image/heic' || mimeType === 'image/heif') return 'image/jpeg';
+                return mimeType;
+            }
+
             function handleImageLoad(file) {
-                if (file.size > 5 * 1024 * 1024) {
-                    setStatus('La imagen supera 5 MB. Reduce el tamaño antes de subir.', 'error');
+                if (file.size > 20 * 1024 * 1024) {
+                    setStatus('La imagen supera 20 MB. Reduce el tamaño antes de subir.', 'error');
                     return;
                 }
-                var mimeType = file.type;
-                var allowed = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
-                if (allowed.indexOf(mimeType) === -1) {
-                    setStatus('Formato no admitido. Usa JPG, PNG o WebP.', 'error');
+                var mimeType = resolveImageMime(file);
+                if (!mimeType) {
+                    setStatus('Formato no admitido. Usa JPG, PNG, WebP o HEIC.', 'error');
                     return;
                 }
                 uploadImageType = mimeType;
@@ -1507,7 +1528,7 @@
                                         type: 'image',
                                         source: {
                                             type: 'base64',
-                                            media_type: uploadImageType,
+                                            media_type: apiMediaType(uploadImageType),
                                             data: uploadImageBase64
                                         }
                                     },
@@ -1575,7 +1596,7 @@
                     function () { return typeof window.PasskeyAuth !== 'undefined'; },
                     function () {
                         if (!window.PasskeyAuth.isAuthenticated()) {
-                            window.location.href = 'login.html?redirect=archivo-lecturas.html';
+                            window.location.href = 'privado-login.html?redirect=archivo-lecturas.html';
                             return;
                         }
                         initApp();
@@ -1621,7 +1642,7 @@
                 /* Logout */
                 document.getElementById('logout-btn').addEventListener('click', function () {
                     if (window.PasskeyAuth && window.PasskeyAuth.logout) window.PasskeyAuth.logout();
-                    window.location.href = 'login.html';
+                    window.location.href = 'privado-login.html';
                 });
 
                 /* Toggle upload panel */

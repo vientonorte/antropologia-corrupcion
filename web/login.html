@@ -5,14 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Redirigiendo — Acceso privado</title>
   <meta name="description" content="login.html se consolidó en privado-login.html — acceso único con passkey.">
-  <meta http-equiv="refresh" content="0;url=privado-login.html">
   <link rel="canonical" href="privado-login.html">
   <link rel="stylesheet" href="styles/shared.css?v=20260507">
 </head>
 <body>
   <main class="login-card" style="max-width:440px;margin:48px auto;padding:32px;text-align:center">
     <p>Redirigiendo al acceso privado unificado…</p>
-    <p><a href="privado-login.html">privado-login.html</a></p>
+    <p><a id="login-fallback" href="privado-login.html">privado-login.html</a></p>
   </main>
+  <script>
+    (function () {
+      var target = 'privado-login.html' + (window.location.search || '');
+      var link = document.getElementById('login-fallback');
+      if (link) link.href = target;
+      window.location.replace(target);
+    }());
+  </script>
 </body>
 </html>

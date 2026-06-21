@@ -39,6 +39,8 @@ const SEED_PATHS = [
   '/data/zuboff-citas.json',
   '/data/attac-citas.json',
   '/data/corpus-categorias.json',
+  '/data/libros-clave-b.json',
+  '/archivo-lecturas.html',
   '/styles/shared.css',
   '/styles/graph.css',
   '/img/evidencia-reservada.svg',
