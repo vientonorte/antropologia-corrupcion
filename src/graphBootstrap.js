@@ -277,6 +277,26 @@ const GraphBootstrap = (function () {
         });
     }
 
+    function applyDeepLinkCaso() {
+        const deepCaso = new URLSearchParams(window.location.search).get('caso');
+        if (!deepCaso || !STATE.graph) return;
+        try {
+            requestAnimationFrame(() => {
+                if (typeof STATE.graph.selectNodeById === 'function') {
+                    STATE.graph.selectNodeById(deepCaso);
+                } else {
+                    const nodes = STATE.graph.sim?.nodes;
+                    const target = nodes?.find((n) => n.id === deepCaso);
+                    if (target && typeof STATE.graph._selectNode === 'function') {
+                        STATE.graph._selectNode(target);
+                    }
+                }
+            });
+        } catch (err) {
+            console.warn('[GraphBootstrap] Deep-link ?caso= ignorado:', deepCaso, err);
+        }
+    }
+
     function showFallbackError(err) {
         const container = document.getElementById('ca-graph-canvas');
         if (!container) return;
@@ -382,13 +402,7 @@ const GraphBootstrap = (function () {
                 if (status) status.textContent = 'Instrumento activo — explora casos y métricas de entropía.';
             }
 
-            const deepCaso = new URLSearchParams(window.location.search).get('caso');
-            if (deepCaso && STATE.graph) {
-                const target = STATE.graph.nodes.find((n) => n.id === deepCaso);
-                if (target && typeof STATE.graph._selectNode === 'function') {
-                    requestAnimationFrame(() => STATE.graph._selectNode(target));
-                }
-            }
+            applyDeepLinkCaso();
 
             const mountEl = options.mount ? document.querySelector(options.mount) : null;
             if (mountEl) mountEl.classList.remove('is-loading');

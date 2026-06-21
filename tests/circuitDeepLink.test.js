@@ -22,6 +22,15 @@ module.exports = function (describe, it, assert, assertEqual) {
         it('graphBootstrap reads ?caso= for node preselection', function () {
             var js = fs.readFileSync(path.join(src, 'graphBootstrap.js'), 'utf8');
             assert(js.indexOf("get('caso')") !== -1, 'caso deep-link in bootstrap');
+            assert(js.indexOf('selectNodeById') !== -1, 'usa API pública del grafo');
+            assert(js.indexOf('graph.nodes.find') === -1, 'no accede a graph.nodes inexistente');
+        });
+
+        it('FrictionGraph expone getNodeById sobre sim.nodes', function () {
+            var js = fs.readFileSync(path.join(src, 'graph.js'), 'utf8');
+            assert(js.indexOf('getNodeById') !== -1, 'getter público de nodos');
+            assert(js.indexOf('selectNodeById') !== -1, 'selector por id para deep-links');
+            assert(js.indexOf('this.sim.nodes.find') !== -1, 'nodos viven en simulación');
         });
 
         it('buscador dossier links to index grafo and huella tab', function () {

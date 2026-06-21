@@ -597,6 +597,20 @@ class FrictionGraph {
         });
     }
 
+    /** Nodo simulado por id (API pública — no usar graph.nodes) */
+    getNodeById(id) {
+        if (!id || !this.sim?.nodes) return null;
+        return this.sim.nodes.find((n) => n.id === id) || null;
+    }
+
+    /** Preselecciona nodo desde deep-link ?caso= */
+    selectNodeById(id) {
+        const node = this.getNodeById(id);
+        if (!node) return false;
+        this._selectNode(node);
+        return true;
+    }
+
     /* ─── RESIZE ─── */
 
     _setupResize() {
