@@ -56,6 +56,11 @@ module.exports = function (describe, it, assert, assertEqual) {
       assert(html.indexOf('LecturaClaveB') !== -1 || html.indexOf('lectura-clave-b.js') !== -1, 'captura Clave B local');
       assert(html.indexOf('corpusCitasStore.js') !== -1, 'almacén unificado');
       assert(html.indexOf('librosClaveB.js') !== -1, 'registro libros físicos');
+      assert(html.indexOf('imagePrepare.js') !== -1, 'preparación de imágenes local');
+      var imgIdx = html.indexOf('imagePrepare.js');
+      var inlineIdx = html.indexOf('initCaptureReaders');
+      assert(imgIdx !== -1 && inlineIdx !== -1 && imgIdx < inlineIdx, 'imagePrepare antes del inline');
+      assert(fs.existsSync(path.join(web, 'vendor', 'heic2any.min.js')), 'heic2any vendoreado');
     });
 
     it('index.html es home canónica, no redirect', function () {

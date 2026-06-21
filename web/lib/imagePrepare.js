@@ -1,15 +1,17 @@
 /**
- * lib/imagePrepare.js — Preparar fotos para canvas (incl. HEIC iPhone → JPEG local)
+ * lib/imagePrepare.js — Preparar fotos para canvas (JPG/PNG/HEIC iPhone)
+ * Usa object URLs (más fiables que data URLs en fotos grandes).
  */
 (function (global) {
     'use strict';
 
     var MAX_BYTES = 20 * 1024 * 1024;
-    var HEIC2ANY_URL = 'https://cdn.jsdelivr.net/npm/heic2any@0.0.4/dist/heic2any.min.js';
+    var MAX_EDGE = 4096;
+    var HEIC2ANY_URL = 'vendor/heic2any.min.js';
 
     function resolveMime(file) {
-        var mime = file.type || '';
-        var name = (file.name || '').toLowerCase();
+        var mime = (file && file.type) || '';
+        var name = ((file && file.name) || '').toLowerCase();
         if (!mime || mime === 'application/octet-stream') {
             if (/\.heic$/i.test(name)) mime = 'image/heic';
             else if (/\.heif$/i.test(name)) mime = 'image/heif';
@@ -18,12 +20,12 @@
             else if (/\.gif$/i.test(name)) mime = 'image/gif';
             else if (/\.jpe?g$/i.test(name)) mime = 'image/jpeg';
         }
-        return mime;
+        return mime.toLowerCase();
     }
 
     function isHeic(file) {
         var mime = resolveMime(file);
-        return mime === 'image/heic' || mime === 'image/heif';
+        return mime === 'image/heic' || mime === 'image/heif' || /heic|heif/.test(mime);
     }
 
     function isSupportedImage(file) {
@@ -33,39 +35,104 @@
         return /\.(jpe?g|png|webp|gif|heic|heif)$/i.test(file.name || '');
     }
 
-    function loadHeic2any() {
+    function loadScript(src) {
         if (global.heic2any) return Promise.resolve();
         return new Promise(function (resolve, reject) {
             var s = document.createElement('script');
-            s.src = HEIC2ANY_URL;
+            s.src = src;
             s.onload = function () { resolve(); };
             s.onerror = function () {
-                reject(new Error('No se pudo cargar el convertidor HEIC. Comprueba tu conexión o exporta la foto como JPEG.'));
+                reject(new Error('No se pudo cargar el convertidor HEIC. Recarga la página o exporta la foto como JPEG desde Fotos.'));
             };
             document.head.appendChild(s);
         });
     }
 
-    function blobToDataUrl(blob) {
-        return new Promise(function (resolve, reject) {
-            var reader = new FileReader();
-            reader.onload = function () { resolve(reader.result); };
-            reader.onerror = function () { reject(new Error('Error leyendo imagen convertida')); };
-            reader.readAsDataURL(blob);
+    function tryDecodeImage(url) {
+        return new Promise(function (resolve) {
+            var img = new Image();
+            var done = false;
+            function finish(ok) {
+                if (done) return;
+                done = true;
+                resolve(!!ok);
+            }
+            img.onload = function () { finish(img.naturalWidth > 0 && img.naturalHeight > 0); };
+            img.onerror = function () { finish(false); };
+            img.src = url;
         });
     }
 
-    function fileToDataUrl(file) {
+    function blobToObjectUrl(blob) {
+        return URL.createObjectURL(blob);
+    }
+
+    function canvasToJpegBlob(canvas, quality) {
         return new Promise(function (resolve, reject) {
-            var reader = new FileReader();
-            reader.onload = function () { resolve(reader.result); };
-            reader.onerror = function () { reject(new Error('No se pudo leer el archivo')); };
-            reader.readAsDataURL(file);
+            if (canvas.toBlob) {
+                canvas.toBlob(function (b) {
+                    if (b) resolve(b);
+                    else reject(new Error('No se pudo comprimir la imagen'));
+                }, 'image/jpeg', quality || 0.9);
+                return;
+            }
+            try {
+                var dataUrl = canvas.toDataURL('image/jpeg', quality || 0.9);
+                var parts = dataUrl.split(',');
+                var bin = atob(parts[1]);
+                var arr = new Uint8Array(bin.length);
+                for (var i = 0; i < bin.length; i++) arr[i] = bin.charCodeAt(i);
+                resolve(new Blob([arr], { type: 'image/jpeg' }));
+            } catch (e) {
+                reject(e);
+            }
         });
     }
 
-    function convertHeic(file) {
-        return loadHeic2any().then(function () {
+    function downscaleIfNeeded(url, progress) {
+        return new Promise(function (resolve, reject) {
+            var img = new Image();
+            img.onload = function () {
+                var w = img.naturalWidth;
+                var h = img.naturalHeight;
+                if (!w || !h) {
+                    reject(new Error('Imagen vacía o corrupta'));
+                    return;
+                }
+                var maxEdge = Math.max(w, h);
+                if (maxEdge <= MAX_EDGE) {
+                    resolve({ url: url, revoke: true });
+                    return;
+                }
+                if (progress) progress('Reduciendo tamaño para el navegador…');
+                var scale = MAX_EDGE / maxEdge;
+                var cw = Math.round(w * scale);
+                var ch = Math.round(h * scale);
+                var canvas = document.createElement('canvas');
+                canvas.width = cw;
+                canvas.height = ch;
+                var ctx = canvas.getContext('2d');
+                if (!ctx) {
+                    resolve({ url: url, revoke: true });
+                    return;
+                }
+                ctx.drawImage(img, 0, 0, cw, ch);
+                canvasToJpegBlob(canvas, 0.88).then(function (blob) {
+                    URL.revokeObjectURL(url);
+                    resolve({ url: blobToObjectUrl(blob), revoke: true });
+                }).catch(function () {
+                    resolve({ url: url, revoke: true });
+                });
+            };
+            img.onerror = function () {
+                reject(new Error('No se pudo decodificar la imagen'));
+            };
+            img.src = url;
+        });
+    }
+
+    function convertHeic(file, progress) {
+        return loadScript(HEIC2ANY_URL).then(function () {
             return global.heic2any({
                 blob: file,
                 toType: 'image/jpeg',
@@ -73,15 +140,40 @@
             });
         }).then(function (result) {
             var blob = Array.isArray(result) ? result[0] : result;
-            if (!blob) throw new Error('Conversión HEIC vacía — prueba exportar como JPEG desde Fotos.');
-            return blobToDataUrl(blob);
+            if (!blob) throw new Error('Conversión HEIC vacía — exporta como JPEG desde Fotos (Compartir → Guardar imagen).');
+            var url = blobToObjectUrl(blob);
+            return downscaleIfNeeded(url, progress);
+        });
+    }
+
+    function prepareRasterBlob(blob, progress) {
+        var url = blobToObjectUrl(blob);
+        return tryDecodeImage(url).then(function (ok) {
+            if (!ok) {
+                URL.revokeObjectURL(url);
+                throw new Error('Formato de imagen no reconocido por el navegador');
+            }
+            return downscaleIfNeeded(url, progress);
+        });
+    }
+
+    function prepareHeic(file, progress) {
+        if (progress) progress('Preparando HEIC…');
+        var nativeUrl = blobToObjectUrl(file);
+        return tryDecodeImage(nativeUrl).then(function (nativeOk) {
+            if (nativeOk) {
+                return downscaleIfNeeded(nativeUrl, progress);
+            }
+            URL.revokeObjectURL(nativeUrl);
+            if (progress) progress('Convirtiendo HEIC a JPEG en el navegador…');
+            return convertHeic(file, progress);
         });
     }
 
     /**
-     * @param {File} file
+     * @param {File|Blob} file
      * @param {{ onProgress?: (msg: string) => void }} [opts]
-     * @returns {Promise<string>} data URL (JPEG/PNG…)
+     * @returns {Promise<{ url: string, revoke?: boolean }>}
      */
     function prepareImageFile(file, opts) {
         opts = opts || {};
@@ -95,11 +187,10 @@
             return Promise.reject(new Error('Formato no admitido. Usa JPG, PNG, WebP o HEIC.'));
         }
         if (isHeic(file)) {
-            progress('Convirtiendo HEIC a JPEG en el navegador…');
-            return convertHeic(file);
+            return prepareHeic(file, progress);
         }
         progress('Cargando imagen…');
-        return fileToDataUrl(file);
+        return prepareRasterBlob(file, progress);
     }
 
     global.CAImagePrepare = {
@@ -108,5 +199,6 @@
         isHeic: isHeic,
         resolveMime: resolveMime,
         MAX_BYTES: MAX_BYTES,
+        MAX_EDGE: MAX_EDGE,
     };
 })(typeof window !== 'undefined' ? window : globalThis);

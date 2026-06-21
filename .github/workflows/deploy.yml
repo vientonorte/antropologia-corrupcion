@@ -83,6 +83,7 @@ jobs:
           test -f lib/corpusCitasStore.js || { echo "❌ lib/corpusCitasStore.js faltante"; exit 1; }
           test -f js/lectura-clave-a.js || { echo "❌ js/lectura-clave-a.js faltante"; exit 1; }
           test -f lib/imagePrepare.js || { echo "❌ lib/imagePrepare.js faltante"; exit 1; }
+          test -f vendor/heic2any.min.js || { echo "❌ vendor/heic2any.min.js faltante"; exit 1; }
           node scripts/qa-links.mjs --deployed
           echo "✅ Assets críticos presentes"
 

@@ -223,31 +223,55 @@
     });
   };
 
-  LecturaClaveB.prototype.loadImage = function (dataUrl) {
+  LecturaClaveB.prototype.revokeImageUrl = function () {
+    if (this._objectUrl) {
+      try {
+        URL.revokeObjectURL(this._objectUrl);
+      } catch (e) {
+        /* noop */
+      }
+      this._objectUrl = null;
+    }
+  };
+
+  LecturaClaveB.prototype.loadImage = function (src) {
     const self = this;
+    const url = typeof src === 'string' ? src : src && src.url;
+    if (!url) {
+      this.status('URL de imagen inválida.', 'error');
+      return;
+    }
+    this.revokeImageUrl();
+    if (typeof src === 'object' && src.url && src.revoke !== false) {
+      this._objectUrl = src.url;
+    }
     const img = new Image();
     img.onload = function () {
       self.image = img;
       if (self.els.workspace) self.els.workspace.style.display = 'block';
       requestAnimationFrame(function () {
-        self.fitCanvas();
-        self.draw();
-        self.status('Foto cargada. Elige color Clave B y marca fragmentos.', 'success');
+        requestAnimationFrame(function () {
+          self.fitCanvas();
+          self.draw();
+          self.status('Foto cargada. Elige color Clave B y marca fragmentos.', 'success');
+        });
       });
     };
     img.onerror = function () {
+      self.revokeImageUrl();
       self.status(
-        'No se pudo mostrar la imagen. Si es HEIC, espera la conversión o exporta como JPEG desde Fotos.',
+        'No se pudo mostrar la imagen. Prueba exportar como JPEG desde Fotos o usa una foto más pequeña.',
         'error',
       );
     };
-    img.src = dataUrl;
+    img.src = url;
   };
 
   LecturaClaveB.prototype.clear = function () {
     this.image = null;
     this.selection = null;
-    this.ctx.clearRect(0, 0, this.els.canvas.width, this.els.canvas.height);
+    this.revokeImageUrl();
+    if (this.ctx) this.ctx.clearRect(0, 0, this.els.canvas.width, this.els.canvas.height);
     if (this.els.workspace) this.els.workspace.style.display = 'none';
     this.status('');
   };

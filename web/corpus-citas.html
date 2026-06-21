@@ -1067,7 +1067,7 @@
                 </div>
 
                 <div class="drop-zone" id="dropZone">
-                    <input type="file" id="photoInput" accept="image/jpeg,image/png,image/webp,image/gif,image/heic,image/heif,.heic,.heif" onchange="handlePhotoSelect(event)">
+                    <input type="file" id="photoInput" accept="image/*,.heic,.heif,image/heic,image/heif" onchange="handlePhotoSelect(event)">
                     <div class="drop-zone-icon">📖</div>
                     <div class="drop-zone-label">Arrastra o selecciona foto del libro</div>
                     <div class="drop-zone-sub">JPG · PNG · HEIC · hasta 20MB</div>
@@ -1149,7 +1149,7 @@
                 </div>
 
                 <div class="drop-zone" id="claveADropZone">
-                    <input type="file" id="claveAPhotoInput" accept="image/jpeg,image/png,image/webp,image/gif,image/heic,image/heif,.heic,.heif" onchange="handleClaveAPhotoSelect(event)">
+                    <input type="file" id="claveAPhotoInput" accept="image/*,.heic,.heif,image/heic,image/heif" onchange="handleClaveAPhotoSelect(event)">
                     <div class="drop-zone-icon">📓</div>
                     <div class="drop-zone-label">Arrastra o selecciona foto del cuaderno</div>
                     <div class="drop-zone-sub">JPG · PNG · HEIC · hasta 20MB</div>
@@ -1331,9 +1331,9 @@
     <script src="src/passkey.js?v=20260619"></script>
     <script src="lib/corpusCitasStore.js?v=20260621"></script>
     <script src="lib/librosClaveB.js?v=20260621"></script>
-    <script src="lib/imagePrepare.js?v=20260622"></script>
-    <script src="js/lectura-clave-b.js?v=20260622"></script>
-    <script src="js/lectura-clave-a.js?v=20260622"></script>
+    <script src="lib/imagePrepare.js?v=20260621b"></script>
+    <script src="js/lectura-clave-b.js?v=20260621b"></script>
+    <script src="js/lectura-clave-a.js?v=20260621b"></script>
     <script>
         // Citation Archive Management — almacén unificado corpusCitas
         const STORAGE_KEY = window.CorpusCitasStore ? CorpusCitasStore.STORAGE_KEY : 'corpusCitas';
@@ -1915,7 +1915,19 @@ Notas: Conexión directa con tu experiencia de expulsión a los 15. Lo que perdi
             if (!claveAReader) {
                 claveAReader = LecturaClaveA.init({ onImportAll: importCaptureResults });
             }
-            return !!(claveBReader && claveAReader && claveBReader.ctx && claveAReader.ctx);
+            return !!(claveBReader && claveBReader.ctx);
+        }
+
+        function ensureReaderB() {
+            if (claveBReader && claveBReader.ctx) return claveBReader;
+            initCaptureReaders();
+            return claveBReader && claveBReader.ctx ? claveBReader : null;
+        }
+
+        function ensureReaderA() {
+            if (claveAReader && claveAReader.ctx) return claveAReader;
+            initCaptureReaders();
+            return claveAReader && claveAReader.ctx ? claveAReader : null;
         }
 
         function toggleAnalyzer() {
@@ -1957,23 +1969,21 @@ Notas: Conexión directa con tu experiencia de expulsión a los 15. Lo que perdi
                 onProgress: function (msg) {
                     notifyCapture(reader, dropStatusId, msg);
                 }
-            }).then(function (dataUrl) {
-                reader.loadImage(dataUrl);
+            }).then(function (prepared) {
+                reader.loadImage(prepared);
             }).catch(function (err) {
-                notifyCapture(reader, dropStatusId, err.message, 'error');
+                notifyCapture(reader, dropStatusId, err.message || 'Error al cargar la imagen', 'error');
             });
         }
 
         function loadPhoto(file) {
-            if (!claveBReader || !claveBReader.ctx) {
-                pendingPhotoB = file;
-                setDropStatus('dropZoneStatusB', 'Inicializando motor de captura…');
-                if (!initCaptureReaders()) {
-                    setDropStatus('dropZoneStatusB', 'Error al iniciar captura. Recarga con Cmd+Shift+R.', 'error');
-                    return;
-                }
+            if (!file) return;
+            var reader = ensureReaderB();
+            if (!reader) {
+                setDropStatus('dropZoneStatusB', 'Error al iniciar captura Clave B. Recarga con Cmd+Shift+R.', 'error');
+                return;
             }
-            loadImageFile(file, claveBReader, 'dropZoneStatusB');
+            loadImageFile(file, reader, 'dropZoneStatusB');
             pendingPhotoB = null;
         }
 
@@ -1989,16 +1999,31 @@ Notas: Conexión directa con tu experiencia de expulsión a los 15. Lo que perdi
         }
 
         function loadClaveAPhoto(file) {
-            if (!claveAReader || !claveAReader.ctx) {
-                pendingPhotoA = file;
-                setDropStatus('dropZoneStatusA', 'Inicializando motor de captura…');
-                if (!initCaptureReaders()) {
-                    setDropStatus('dropZoneStatusA', 'Error al iniciar captura. Recarga con Cmd+Shift+R.', 'error');
-                    return;
-                }
+            if (!file) return;
+            var reader = ensureReaderA();
+            if (!reader) {
+                setDropStatus('dropZoneStatusA', 'Error al iniciar captura Clave A. Recarga con Cmd+Shift+R.', 'error');
+                return;
             }
-            loadImageFile(file, claveAReader, 'dropZoneStatusA');
+            loadImageFile(file, reader, 'dropZoneStatusA');
             pendingPhotoA = null;
+        }
+
+        function handleDroppedImage(file, loader, statusId) {
+            if (!file) {
+                setDropStatus(statusId, 'No se detectó archivo en el arrastre.', 'error');
+                return;
+            }
+            if (!window.CAImagePrepare) {
+                setDropStatus(statusId, 'Módulo de imagen no cargado. Recarga con Cmd+Shift+R.', 'error');
+                return;
+            }
+            if (!CAImagePrepare.isSupportedImage(file)) {
+                var hint = (file.name || 'archivo') + (file.type ? ' (' + file.type + ')' : '');
+                setDropStatus(statusId, 'Formato no admitido: ' + hint + '. Usa JPG, PNG o HEIC.', 'error');
+                return;
+            }
+            loader(file);
         }
 
         function clearClaveAPhoto() {
@@ -2058,12 +2083,13 @@ Notas: Conexión directa con tu experiencia de expulsión a los 15. Lo que perdi
         dropZone.addEventListener('drop', e => {
             e.preventDefault();
             dropZone.classList.remove('drag-over');
-            const file = e.dataTransfer.files[0];
-            if (file && window.CAImagePrepare && CAImagePrepare.isSupportedImage(file)) loadPhoto(file);
+            handleDroppedImage(e.dataTransfer.files[0], loadPhoto, 'dropZoneStatusB');
         });
 
         if (!initCaptureReaders()) {
-            setDropStatus('dropZoneStatusB', 'Error cargando motor de captura. Recarga con Cmd+Shift+R.', 'error');
+            setDropStatus('dropZoneStatusB', 'Motor Clave B no listo — recarga con Cmd+Shift+R.', 'error');
+        } else {
+            setDropStatus('dropZoneStatusB', 'Listo — arrastra o selecciona JPG/HEIC.', 'success');
         }
 
         const claveADropZone = document.getElementById('claveADropZone');
@@ -2076,8 +2102,7 @@ Notas: Conexión directa con tu experiencia de expulsión a los 15. Lo que perdi
             claveADropZone.addEventListener('drop', (e) => {
                 e.preventDefault();
                 claveADropZone.classList.remove('drag-over');
-                const file = e.dataTransfer.files[0];
-                if (file && window.CAImagePrepare && CAImagePrepare.isSupportedImage(file)) loadClaveAPhoto(file);
+                handleDroppedImage(e.dataTransfer.files[0], loadClaveAPhoto, 'dropZoneStatusA');
             });
         }
     </script>
