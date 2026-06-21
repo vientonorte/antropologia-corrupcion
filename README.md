@@ -33,6 +33,7 @@ Este `README.md` es la **fuente de verdad pública** para la visión del proyect
 | CI/CD y workflows | [`PIPELINE.md`](PIPELINE.md) |
 | Contexto privado de `terraza/` | [`CLAUDE.md`](CLAUDE.md) |
 | Mapa editorial y triage completo de `.md` | [`docs/DOCUMENTATION_SYSTEM.md`](docs/DOCUMENTATION_SYSTEM.md) |
+| **Inventario de contenidos / arquitectura de información** | [`docs/INVENTARIO_CONTENIDOS_IA.md`](docs/INVENTARIO_CONTENIDOS_IA.md) · [`data/ia-inventario.json`](data/ia-inventario.json) |
 
 ## Tesis e instrumento
 

@@ -1,0 +1,238 @@
+{
+  "_meta": {
+    "version": "2026-06-20",
+    "description": "Inventario machine-readable para arquitectura de información del Contra-Archivo",
+    "doc": "docs/INVENTARIO_CONTENIDOS_IA.md",
+    "site": "https://vientonorte.github.io/antropologia-corrupcion/"
+  },
+  "taxonomy": [
+    { "id": "entrada", "label": "Entrada y descubrimiento", "order": 1 },
+    { "id": "exploracion", "label": "Exploración de datos", "order": 2 },
+    { "id": "instrumento", "label": "Instrumento analítico", "order": 3 },
+    { "id": "archivo", "label": "Archivo editorial", "order": 4 },
+    { "id": "corpus", "label": "Corpus y citas", "order": 5 },
+    { "id": "publicaciones", "label": "Publicaciones", "order": 6 },
+    { "id": "investigador", "label": "Acceso investigador", "order": 7 },
+    { "id": "produccion", "label": "Producción (no público)", "order": 8 }
+  ],
+  "surfaces": [
+    {
+      "id": "P01",
+      "file": "web/landing.html",
+      "path": "landing.html",
+      "title": "Contra-Archivo — Antropología de la Corrupción",
+      "taxonomy": "entrada",
+      "audience": "publico",
+      "nav_label": "Inicio",
+      "nav_primary": true,
+      "sitemap": true,
+      "priority": 0.95,
+      "canonical": true,
+      "data": ["fuentes-oficiales.json", "casos.json", "bcn-legislativo.json"]
+    },
+    {
+      "id": "P02",
+      "file": "web/index.html",
+      "path": "index.html",
+      "title": "Contra-Archivo (duplicado landing)",
+      "taxonomy": "entrada",
+      "audience": "publico",
+      "nav_label": "Instrumento",
+      "nav_primary": true,
+      "sitemap": true,
+      "priority": 0.9,
+      "canonical": false,
+      "canonical_to": "landing.html",
+      "ia_debt": "B1-nav-instrumento-confuso"
+    },
+    {
+      "id": "P03",
+      "file": "web/buscador.html",
+      "path": "buscador.html",
+      "title": "Búsqueda Avanzada",
+      "taxonomy": "exploracion",
+      "audience": "publico_avanzado",
+      "nav_label": "Búsqueda",
+      "nav_primary": true,
+      "sitemap": true,
+      "priority": 0.85,
+      "data": ["fuentes-oficiales.json", "casos.json", "bcn-legislativo.json"]
+    },
+    {
+      "id": "P04",
+      "file": "web/archivo.html",
+      "path": "archivo.html",
+      "title": "Archivo público",
+      "taxonomy": "archivo",
+      "audience": "publico_academico",
+      "nav_label": "Archivo",
+      "nav_primary": true,
+      "sitemap": true,
+      "priority": 0.85,
+      "data": ["archivo-index.json"]
+    },
+    {
+      "id": "P05",
+      "file": "web/contra-archivo-v2.html",
+      "path": "contra-archivo-v2.html",
+      "title": "Negra Colorá — Contra-archivo",
+      "taxonomy": "instrumento",
+      "audience": "publico",
+      "nav_label": "Contra-archivo",
+      "nav_primary": true,
+      "nav_contextual": ["#leer", "#explorar", "#consultar"],
+      "sitemap": true,
+      "priority": 0.9,
+      "data": ["casos.json"],
+      "modules": ["main.js", "graph.js", "socialField.js", "frictionEngine.js"]
+    },
+    {
+      "id": "P06",
+      "file": "web/zuboff-archivo.html",
+      "path": "zuboff-archivo.html",
+      "title": "⑤ Archivo de Citas",
+      "taxonomy": "corpus",
+      "audience": "metodologico",
+      "nav_label": "Corpus citas",
+      "nav_primary": true,
+      "sitemap": true,
+      "priority": 0.85,
+      "data": ["zuboff-citas.json", "attac-citas.json", "corpus-categorias.json", "ai-proxy-config.json"]
+    },
+    {
+      "id": "P07",
+      "file": "web/tesis.html",
+      "path": "tesis.html",
+      "title": "Biblioteca de Tesis",
+      "taxonomy": "publicaciones",
+      "audience": "publico",
+      "nav_label": "Biblioteca",
+      "nav_primary": true,
+      "sitemap": true,
+      "priority": 0.75
+    },
+    {
+      "id": "P08",
+      "file": "web/404.html",
+      "path": "404.html",
+      "title": "404",
+      "taxonomy": "entrada",
+      "audience": "todos",
+      "nav_primary": false,
+      "sitemap": false
+    },
+    {
+      "id": "P09",
+      "file": "web/Poemarios/poemas.html",
+      "path": "Poemarios/poemas.html",
+      "title": "Poemas",
+      "taxonomy": "publicaciones",
+      "audience": "publico",
+      "nav_primary": false,
+      "sitemap": true,
+      "priority": 0.6
+    },
+    {
+      "id": "P10",
+      "file": "web/Poemarios/trabajo-en-sura.html",
+      "path": "Poemarios/trabajo-en-sura.html",
+      "title": "Trabajo en SURA",
+      "taxonomy": "publicaciones",
+      "audience": "publico",
+      "nav_primary": false,
+      "sitemap": true,
+      "priority": 0.55
+    },
+    {
+      "id": "R01",
+      "file": "web/privado-login.html",
+      "path": "privado-login.html",
+      "title": "Acceso privado",
+      "taxonomy": "investigador",
+      "audience": "investigador",
+      "nav_label": "Acceder",
+      "nav_primary": true,
+      "sitemap": false,
+      "auth": "passkey"
+    },
+    {
+      "id": "R02",
+      "file": "web/privado.html",
+      "path": "privado.html",
+      "title": "Espacio Privado",
+      "taxonomy": "investigador",
+      "audience": "investigador",
+      "nav_primary": false,
+      "sitemap": false,
+      "robots": "disallow",
+      "auth": "session",
+      "tabs": ["simulacion", "chat", "ciper", "tesis", "huella"],
+      "data": ["contenido-ramas-rescatado.json", "huella-digital-publica.json", "casos.json"]
+    },
+    {
+      "id": "R03",
+      "file": "web/archivo-lecturas.html",
+      "path": "archivo-lecturas.html",
+      "title": "Archivo de Lecturas",
+      "taxonomy": "investigador",
+      "audience": "investigador",
+      "nav_primary": false,
+      "sitemap": false,
+      "robots": "noindex",
+      "ia_debt": "B3-huerfana"
+    },
+    {
+      "id": "R04",
+      "file": "web/admin.html",
+      "path": "admin.html",
+      "title": "Admin CMS",
+      "taxonomy": "produccion",
+      "audience": "admin",
+      "nav_primary": false,
+      "sitemap": false,
+      "robots": "disallow",
+      "blocked_on": "github.io"
+    },
+    {
+      "id": "R05",
+      "file": "web/terraza-gateway.html",
+      "path": "terraza/",
+      "title": "Terraza gateway",
+      "taxonomy": "produccion",
+      "audience": "admin",
+      "nav_primary": false,
+      "sitemap": false,
+      "deploy_note": "terraza-gateway.html copiado a terraza/index.html"
+    }
+  ],
+  "redirects": [
+    { "from": "login.html", "to": "privado-login.html" },
+    { "from": "contra-archivo.html", "to": "index.html" },
+    { "from": "citas-attac.html", "to": "zuboff-archivo.html" },
+    { "from": "zuboff-citas.html", "to": "zuboff-archivo.html" },
+    { "from": "Poemarios/index.html", "to": "Poemarios/poemas.html" }
+  ],
+  "hubs": [
+    { "id": "home", "surface": "P01", "role": "onboarding" },
+    { "id": "archivo-hub", "surface": "P04", "role": "catalogo-editorial" },
+    { "id": "instrumento", "surface": "P05", "role": "narrativa-grafo-biblioteca" }
+  ],
+  "ia_debt": [
+    { "id": "B1", "title": "index ≠ instrumento", "priority": "alta" },
+    { "id": "B2", "title": "Dos navs paralelas", "priority": "media" },
+    { "id": "B3", "title": "archivo-lecturas huérfana", "priority": "media" },
+    { "id": "B4", "title": "Fichas C03/C04 sin indexar", "priority": "media" },
+    { "id": "B5", "title": "Sitemap triplica home", "priority": "baja" },
+    { "id": "B6", "title": "manifest start_url", "priority": "baja" },
+    { "id": "B7", "title": "README anchors obsoletos", "priority": "baja" }
+  ],
+  "nav_proposed": [
+    { "label": "Inicio", "path": "landing.html", "surface": "P01" },
+    { "label": "Explorar datos", "path": "buscador.html", "surface": "P03" },
+    { "label": "Contra-archivo", "path": "contra-archivo-v2.html#leer", "surface": "P05" },
+    { "label": "Archivo", "path": "archivo.html", "surface": "P04" },
+    { "label": "Corpus citas", "path": "zuboff-archivo.html", "surface": "P06" },
+    { "label": "Biblioteca", "path": "tesis.html", "surface": "P07" },
+    { "label": "Acceder", "path": "privado-login.html", "surface": "R01" }
+  ]
+}
