@@ -1072,6 +1072,7 @@
                     <div class="drop-zone-label">Arrastra o selecciona foto del libro</div>
                     <div class="drop-zone-sub">JPG · PNG · HEIC · hasta 20MB</div>
                 </div>
+                <p class="analyze-status" id="dropZoneStatusB" role="status" aria-live="polite" style="margin-top:10px;min-height:1.2em"></p>
 
                 <div class="clave-b-workspace" id="claveBWorkspace">
                     <p class="clave-b-color-hint" id="claveBColorLabel">🟨 Referencia · referencia</p>
@@ -1153,6 +1154,7 @@
                     <div class="drop-zone-label">Arrastra o selecciona foto del cuaderno</div>
                     <div class="drop-zone-sub">JPG · PNG · HEIC · hasta 20MB</div>
                 </div>
+                <p class="analyze-status" id="dropZoneStatusA" role="status" aria-live="polite" style="margin-top:10px;min-height:1.2em"></p>
 
                 <div class="clave-b-workspace" id="claveAWorkspace" style="display:none">
                     <p class="clave-b-color-hint" id="claveAColorLabel">🟡 Referencias · referencia</p>
@@ -1329,6 +1331,9 @@
     <script src="src/passkey.js?v=20260619"></script>
     <script src="lib/corpusCitasStore.js?v=20260621"></script>
     <script src="lib/librosClaveB.js?v=20260621"></script>
+    <script src="lib/imagePrepare.js?v=20260622"></script>
+    <script src="js/lectura-clave-b.js?v=20260622"></script>
+    <script src="js/lectura-clave-a.js?v=20260622"></script>
     <script>
         // Citation Archive Management — almacén unificado corpusCitas
         const STORAGE_KEY = window.CorpusCitasStore ? CorpusCitasStore.STORAGE_KEY : 'corpusCitas';
@@ -1879,6 +1884,39 @@ Notas: Conexión directa con tu experiencia de expulsión a los 15. Lo que perdi
 
         let claveBReader = null;
         let claveAReader = null;
+        let pendingPhotoB = null;
+        let pendingPhotoA = null;
+
+        function setDropStatus(id, msg, type) {
+            const el = document.getElementById(id);
+            if (!el) return;
+            el.textContent = msg || '';
+            el.className = 'analyze-status' + (type ? ' ' + type : '');
+        }
+
+        function importCaptureResults(results) {
+            results.forEach(function (r) { addResultToCitations(r); });
+            renderCitations();
+            updateStats();
+        }
+
+        function initCaptureReaders() {
+            if (!window.LecturaClaveB || !window.LecturaClaveA) {
+                console.error('[corpus-citas] Motores LecturaClaveA/B no cargados');
+                return false;
+            }
+            if (!claveBReader) {
+                claveBReader = LecturaClaveB.init({
+                    defaultLibro: DEFAULT_BOOK_TITLE,
+                    defaultAutor: DEFAULT_AUTHOR,
+                    onImportAll: importCaptureResults
+                });
+            }
+            if (!claveAReader) {
+                claveAReader = LecturaClaveA.init({ onImportAll: importCaptureResults });
+            }
+            return !!(claveBReader && claveAReader && claveBReader.ctx && claveAReader.ctx);
+        }
 
         function toggleAnalyzer() {
             const section = document.getElementById('analyzerSection');
@@ -1900,25 +1938,43 @@ Notas: Conexión directa con tu experiencia de expulsión a los 15. Lo que perdi
             loadPhoto(file);
         }
 
-        function loadImageFile(file, reader) {
+        function notifyCapture(reader, dropStatusId, msg, type) {
+            if (reader && reader.status) reader.status(msg, type || '');
+            if (dropStatusId) setDropStatus(dropStatusId, msg, type || '');
+        }
+
+        function loadImageFile(file, reader, dropStatusId) {
             if (!window.CAImagePrepare) {
-                if (reader) reader.status('Módulo de imagen no cargado. Recarga la página.', 'error');
+                notifyCapture(reader, dropStatusId, 'Módulo de imagen no cargado. Recarga con Cmd+Shift+R.', 'error');
                 return;
             }
-            if (reader) reader.status('Preparando imagen…');
+            if (!reader || !reader.ctx) {
+                notifyCapture(reader, dropStatusId, 'Motor de captura no listo. Recarga la página.', 'error');
+                return;
+            }
+            notifyCapture(reader, dropStatusId, 'Preparando imagen…');
             CAImagePrepare.prepareImageFile(file, {
                 onProgress: function (msg) {
-                    if (reader) reader.status(msg);
+                    notifyCapture(reader, dropStatusId, msg);
                 }
             }).then(function (dataUrl) {
-                if (reader) reader.loadImage(dataUrl);
+                reader.loadImage(dataUrl);
             }).catch(function (err) {
-                if (reader) reader.status(err.message, 'error');
+                notifyCapture(reader, dropStatusId, err.message, 'error');
             });
         }
 
         function loadPhoto(file) {
-            loadImageFile(file, claveBReader);
+            if (!claveBReader || !claveBReader.ctx) {
+                pendingPhotoB = file;
+                setDropStatus('dropZoneStatusB', 'Inicializando motor de captura…');
+                if (!initCaptureReaders()) {
+                    setDropStatus('dropZoneStatusB', 'Error al iniciar captura. Recarga con Cmd+Shift+R.', 'error');
+                    return;
+                }
+            }
+            loadImageFile(file, claveBReader, 'dropZoneStatusB');
+            pendingPhotoB = null;
         }
 
         function clearPhoto() {
@@ -1933,7 +1989,16 @@ Notas: Conexión directa con tu experiencia de expulsión a los 15. Lo que perdi
         }
 
         function loadClaveAPhoto(file) {
-            loadImageFile(file, claveAReader);
+            if (!claveAReader || !claveAReader.ctx) {
+                pendingPhotoA = file;
+                setDropStatus('dropZoneStatusA', 'Inicializando motor de captura…');
+                if (!initCaptureReaders()) {
+                    setDropStatus('dropZoneStatusA', 'Error al iniciar captura. Recarga con Cmd+Shift+R.', 'error');
+                    return;
+                }
+            }
+            loadImageFile(file, claveAReader, 'dropZoneStatusA');
+            pendingPhotoA = null;
         }
 
         function clearClaveAPhoto() {
@@ -1997,42 +2062,9 @@ Notas: Conexión directa con tu experiencia de expulsión a los 15. Lo que perdi
             if (file && window.CAImagePrepare && CAImagePrepare.isSupportedImage(file)) loadPhoto(file);
         });
 
-        // ── Lectura Clave B + A (motor local) ──
-        function importCaptureResults(results) {
-            results.forEach(function (r) { addResultToCitations(r); });
-            renderCitations();
-            updateStats();
+        if (!initCaptureReaders()) {
+            setDropStatus('dropZoneStatusB', 'Error cargando motor de captura. Recarga con Cmd+Shift+R.', 'error');
         }
-
-        (function bootClaveB() {
-            function startClaveB() {
-                if (!window.LecturaClaveB || claveBReader) return;
-                claveBReader = LecturaClaveB.init({
-                    defaultLibro: DEFAULT_BOOK_TITLE,
-                    defaultAutor: DEFAULT_AUTHOR,
-                    onImportAll: importCaptureResults
-                });
-            }
-            if (window.LecturaClaveB) startClaveB();
-            else {
-                var scriptEl = document.querySelector('script[src*="lectura-clave-b"]');
-                if (scriptEl) scriptEl.addEventListener('load', startClaveB);
-                setTimeout(bootClaveB, 40);
-            }
-        })();
-
-        (function bootClaveA() {
-            function startClaveA() {
-                if (!window.LecturaClaveA || claveAReader) return;
-                claveAReader = LecturaClaveA.init({ onImportAll: importCaptureResults });
-            }
-            if (window.LecturaClaveA) startClaveA();
-            else {
-                var scriptEl = document.querySelector('script[src*="lectura-clave-a"]');
-                if (scriptEl) scriptEl.addEventListener('load', startClaveA);
-                setTimeout(bootClaveA, 40);
-            }
-        })();
 
         const claveADropZone = document.getElementById('claveADropZone');
         if (claveADropZone) {
@@ -2049,9 +2081,6 @@ Notas: Conexión directa con tu experiencia de expulsión a los 15. Lo que perdi
             });
         }
     </script>
-    <script src="lib/imagePrepare.js?v=20260621"></script>
-    <script src="js/lectura-clave-b.js?v=20260621" defer></script>
-    <script src="js/lectura-clave-a.js?v=20260621" defer></script>
     <script>
         (function() {
             if (window.__CA_UNIFIED_SHELL_LOADER__) {

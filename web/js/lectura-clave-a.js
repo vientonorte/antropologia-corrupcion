@@ -112,7 +112,10 @@
       status: document.getElementById('claveAStatus'),
     };
 
-    if (!this.els.canvas) return;
+    if (!this.els.canvas) {
+      console.error('[LecturaClaveA] canvas #claveACanvas no encontrado');
+      return;
+    }
     this.ctx = this.els.canvas.getContext('2d', { willReadFrequently: true });
     this.bindUi();
     this.renderToolbar();
@@ -212,10 +215,12 @@
     const img = new Image();
     img.onload = function () {
       self.image = img;
-      self.fitCanvas();
-      self.draw();
       if (self.els.workspace) self.els.workspace.style.display = 'block';
-      self.status('Foto cargada. Elige color Clave A y marca fragmentos.', 'success');
+      requestAnimationFrame(function () {
+        self.fitCanvas();
+        self.draw();
+        self.status('Foto cargada. Elige color Clave A y marca fragmentos.', 'success');
+      });
     };
     img.onerror = function () {
       self.status(
