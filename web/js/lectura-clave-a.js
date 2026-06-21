@@ -274,8 +274,9 @@
   };
 
   LecturaClaveA.prototype.draw = function () {
-    if (!this.image) return;
-    const { canvas, ctx, scale } = this;
+    const canvas = this.els.canvas;
+    const ctx = this.ctx;
+    if (!this.image || !canvas || !ctx) return;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.drawImage(this.image, 0, 0, canvas.width, canvas.height);
     if (this.selection) {

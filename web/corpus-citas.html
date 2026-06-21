@@ -747,18 +747,69 @@
         }
         
         .analyze-status {
-            font-size: 10px;
-            letter-spacing: 0.08em;
+            font-size: 12px;
+            letter-spacing: 0.06em;
             color: var(--neutral);
             font-family: 'DM Mono', monospace;
+            padding: 8px 10px;
+            border-radius: 4px;
+            background: var(--paper-dark);
+            border: 1px solid var(--line);
         }
         
         .analyze-status.error {
             color: var(--ro);
+            background: var(--ro-soft);
+            border-color: var(--ro-mid);
         }
         
         .analyze-status.success {
             color: var(--accent-green);
+            background: rgba(58, 122, 74, 0.08);
+            border-color: rgba(58, 122, 74, 0.35);
+        }
+
+        .analyze-status.loading {
+            color: var(--ink);
+            background: rgba(196, 150, 42, 0.08);
+            border-color: var(--accent-gold);
+        }
+
+        .drop-zone.has-preview {
+            padding: 16px;
+        }
+
+        .drop-zone.has-preview .drop-zone-icon,
+        .drop-zone.has-preview .drop-zone-label,
+        .drop-zone.has-preview .drop-zone-sub {
+            display: none;
+        }
+
+        .drop-zone-preview {
+            display: none;
+            width: 100%;
+            max-height: 320px;
+            object-fit: contain;
+            border-radius: 4px;
+            background: #fff;
+            border: 1px solid var(--line);
+        }
+
+        .drop-zone.has-preview .drop-zone-preview {
+            display: block;
+        }
+
+        .drop-zone-loading {
+            display: none;
+            margin-top: 8px;
+            font-size: 11px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--accent-gold);
+        }
+
+        .drop-zone.is-loading .drop-zone-loading {
+            display: block;
         }
         
         .results-preview {
@@ -1069,9 +1120,11 @@
 
                 <div class="drop-zone" id="dropZone">
                     <input type="file" id="photoInput" accept="image/*,.heic,.heif,image/heic,image/heif" onchange="handlePhotoSelect(event)">
+                    <img class="drop-zone-preview" id="dropZonePreviewB" alt="Vista previa de la foto del libro">
                     <div class="drop-zone-icon">📖</div>
                     <div class="drop-zone-label">Arrastra o selecciona foto del libro</div>
-                    <div class="drop-zone-sub">JPG · PNG · HEIC · hasta 20MB</div>
+                    <div class="drop-zone-sub">JPG · PNG · HEIC iPhone · hasta 20MB</div>
+                    <p class="drop-zone-loading" id="dropZoneLoadingB" aria-live="polite">Preparando imagen…</p>
                 </div>
                 <p class="analyze-status" id="dropZoneStatusB" role="status" aria-live="polite" style="margin-top:10px;min-height:1.2em"></p>
 
@@ -1338,9 +1391,9 @@
     <script src="src/passkey.js?v=20260619"></script>
     <script src="lib/corpusCitasStore.js?v=20260621"></script>
     <script src="lib/librosClaveB.js?v=20260621"></script>
-    <script src="lib/imagePrepare.js?v=20260621e"></script>
-    <script src="js/lectura-clave-b.js?v=20260621c"></script>
-    <script src="js/lectura-clave-a.js?v=20260621c"></script>
+    <script src="lib/imagePrepare.js?v=20260621f"></script>
+    <script src="js/lectura-clave-b.js?v=20260621f"></script>
+    <script src="js/lectura-clave-a.js?v=20260621f"></script>
     <script>
         // Citation Archive Management — almacén unificado corpusCitas
         const STORAGE_KEY = window.CorpusCitasStore ? CorpusCitasStore.STORAGE_KEY : 'corpusCitas';
@@ -1918,6 +1971,48 @@ Notas: Conexión directa con tu experiencia de expulsión a los 15. Lo que perdi
             el.className = 'analyze-status' + (type ? ' ' + type : '');
         }
 
+        var dropPreviewUrlB = null;
+
+        function revokeDropPreviewB() {
+            if (dropPreviewUrlB) {
+                try { URL.revokeObjectURL(dropPreviewUrlB); } catch (e) { /* noop */ }
+                dropPreviewUrlB = null;
+            }
+        }
+
+        function setDropZoneLoading(isLoading, msg) {
+            var zone = document.getElementById('dropZone');
+            var loading = document.getElementById('dropZoneLoadingB');
+            if (zone) zone.classList.toggle('is-loading', !!isLoading);
+            if (loading) loading.textContent = msg || 'Preparando imagen…';
+        }
+
+        function showDropPreviewB(url) {
+            var zone = document.getElementById('dropZone');
+            var img = document.getElementById('dropZonePreviewB');
+            if (!zone || !img) return;
+            revokeDropPreviewB();
+            dropPreviewUrlB = url;
+            img.src = url;
+            zone.classList.add('has-preview');
+            setDropZoneLoading(false);
+        }
+
+        function clearDropPreviewB() {
+            var zone = document.getElementById('dropZone');
+            var img = document.getElementById('dropZonePreviewB');
+            revokeDropPreviewB();
+            if (img) img.removeAttribute('src');
+            if (zone) zone.classList.remove('has-preview', 'is-loading');
+        }
+
+        function revealClaveBWorkspace() {
+            var ws = document.getElementById('claveBWorkspace');
+            if (!ws) return;
+            ws.style.display = 'block';
+            ws.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
         function importCaptureResults(results) {
             results.forEach(function (r) { addResultToCitations(r); });
             renderCitations();
@@ -1971,6 +2066,9 @@ Notas: Conexión directa con tu experiencia de expulsión a los 15. Lo que perdi
         function handlePhotoSelect(e) {
             const file = e.target.files[0];
             if (!file) return;
+            setDropStatus('dropZoneStatusB', 'Archivo seleccionado: ' + (file.name || 'sin nombre') + ' — iniciando…', 'loading');
+            setDropZoneLoading(true, 'Leyendo ' + (file.name || 'imagen') + '…');
+            revealClaveBWorkspace();
             loadPhoto(file);
         }
 
@@ -1981,22 +2079,33 @@ Notas: Conexión directa con tu experiencia de expulsión a los 15. Lo que perdi
 
         function loadImageFile(file, reader, dropStatusId) {
             if (!window.CAImagePrepare) {
+                setDropZoneLoading(false);
                 notifyCapture(reader, dropStatusId, 'Módulo de imagen no cargado. Recarga con Cmd+Shift+R.', 'error');
-                return;
+                return Promise.resolve();
             }
             if (!reader || !reader.ctx) {
+                setDropZoneLoading(false);
                 notifyCapture(reader, dropStatusId, 'Motor de captura no listo. Recarga la página.', 'error');
-                return;
+                return Promise.resolve();
             }
-            notifyCapture(reader, dropStatusId, 'Preparando imagen…');
-            CAImagePrepare.prepareImageFile(file, {
+            revealClaveBWorkspace();
+            notifyCapture(reader, dropStatusId, 'Preparando imagen…', 'loading');
+            setDropZoneLoading(true, 'Preparando imagen…');
+            return CAImagePrepare.prepareImageFile(file, {
                 onProgress: function (msg) {
-                    notifyCapture(reader, dropStatusId, msg);
+                    notifyCapture(reader, dropStatusId, msg, 'loading');
+                    setDropZoneLoading(true, msg);
                 }
             }).then(function (prepared) {
-                reader.loadImage(prepared);
-                notifyCapture(reader, dropStatusId, 'Foto cargada — usa Escanear marcadores Clave B.', 'success');
+                if (prepared && prepared.url) showDropPreviewB(prepared.url);
+                return reader.loadImage(prepared);
+            }).then(function () {
+                setDropZoneLoading(false);
+                notifyCapture(reader, dropStatusId, 'Foto cargada — revisa la vista previa y pulsa Escanear marcadores Clave B.', 'success');
+                revealClaveBWorkspace();
             }).catch(function (err) {
+                setDropZoneLoading(false);
+                clearDropPreviewB();
                 notifyCapture(reader, dropStatusId, err.message || 'Error al cargar la imagen', 'error');
             });
         }
@@ -2014,6 +2123,8 @@ Notas: Conexión directa con tu experiencia de expulsión a los 15. Lo que perdi
 
         function clearPhoto() {
             document.getElementById('photoInput').value = '';
+            clearDropPreviewB();
+            setDropStatus('dropZoneStatusB', 'Listo — arrastra o selecciona JPG/HEIC.', 'success');
             if (claveBReader) claveBReader.clear();
         }
 
@@ -2108,7 +2219,13 @@ Notas: Conexión directa con tu experiencia de expulsión a los 15. Lo que perdi
         dropZone.addEventListener('drop', e => {
             e.preventDefault();
             dropZone.classList.remove('drag-over');
-            handleDroppedImage(e.dataTransfer.files[0], loadPhoto, 'dropZoneStatusB');
+            const file = e.dataTransfer.files[0];
+            if (file) {
+                setDropStatus('dropZoneStatusB', 'Archivo recibido: ' + (file.name || 'sin nombre') + ' — iniciando…', 'loading');
+                setDropZoneLoading(true, 'Leyendo ' + (file.name || 'imagen') + '…');
+                revealClaveBWorkspace();
+            }
+            handleDroppedImage(file, loadPhoto, 'dropZoneStatusB');
         });
 
         if (!initCaptureReaders()) {

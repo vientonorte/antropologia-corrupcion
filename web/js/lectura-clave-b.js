@@ -333,56 +333,79 @@
     const url = typeof src === 'string' ? src : src && src.url;
     if (!url) {
       this.status('URL de imagen inválida.', 'error');
-      return;
+      return Promise.reject(new Error('URL de imagen inválida'));
+    }
+    if (!this.els.canvas || !this.ctx) {
+      this.status('Canvas no disponible. Recarga la página.', 'error');
+      return Promise.reject(new Error('Canvas no disponible'));
     }
     this.revokeImageUrl();
     if (typeof src === 'object' && src.url && src.revoke !== false) {
       this._objectUrl = src.url;
     }
-    const img = new Image();
-    img.onload = function () {
-      self.image = img;
-      if (self.els.workspace) self.els.workspace.style.display = 'block';
-      requestAnimationFrame(function () {
+    if (this.els.workspace) this.els.workspace.style.display = 'block';
+    return new Promise(function (resolve, reject) {
+      const img = new Image();
+      img.onload = function () {
+        if (!img.naturalWidth || !img.naturalHeight) {
+          self.revokeImageUrl();
+          self.status('Imagen vacía o corrupta.', 'error');
+          reject(new Error('Imagen vacía o corrupta'));
+          return;
+        }
+        self.image = img;
         requestAnimationFrame(function () {
-          self.fitCanvas();
-          self.draw();
-          self.status('Foto cargada. Elige color Clave B y marca fragmentos.', 'success');
+          requestAnimationFrame(function () {
+            try {
+              self.fitCanvas();
+              self.draw();
+              self.status('Foto cargada. Elige color Clave B y marca fragmentos.', 'success');
+              resolve();
+            } catch (err) {
+              self.status('Error al dibujar la imagen: ' + err.message, 'error');
+              reject(err);
+            }
+          });
         });
-      });
-    };
-    img.onerror = function () {
-      self.revokeImageUrl();
-      self.status(
-        'No se pudo mostrar la imagen. Prueba exportar como JPEG desde Fotos o usa una foto más pequeña.',
-        'error',
-      );
-    };
-    img.src = url;
+      };
+      img.onerror = function () {
+        self.revokeImageUrl();
+        const msg = 'No se pudo mostrar la imagen. Prueba exportar como JPEG desde Fotos o usa una foto más pequeña.';
+        self.status(msg, 'error');
+        reject(new Error(msg));
+      };
+      img.src = url;
+    });
   };
 
   LecturaClaveB.prototype.clear = function () {
     this.image = null;
     this.selection = null;
     this.revokeImageUrl();
-    if (this.ctx) this.ctx.clearRect(0, 0, this.els.canvas.width, this.els.canvas.height);
+    if (this.ctx && this.els.canvas) {
+      this.ctx.clearRect(0, 0, this.els.canvas.width, this.els.canvas.height);
+    }
     if (this.els.workspace) this.els.workspace.style.display = 'none';
     this.status('');
   };
 
   LecturaClaveB.prototype.fitCanvas = function () {
-    if (!this.image || !this.els.wrap) return;
+    if (!this.image || !this.els.wrap || !this.els.canvas) return;
+    const iw = this.image.naturalWidth || this.image.width;
+    const ih = this.image.naturalHeight || this.image.height;
+    if (!iw || !ih) return;
     const maxW = this.els.wrap.clientWidth || 640;
     const maxH = 480;
-    const ratio = Math.min(maxW / this.image.width, maxH / this.image.height, 1);
+    const ratio = Math.min(maxW / iw, maxH / ih, 1);
     this.scale = ratio;
-    this.els.canvas.width = Math.round(this.image.width * ratio);
-    this.els.canvas.height = Math.round(this.image.height * ratio);
+    this.els.canvas.width = Math.max(1, Math.round(iw * ratio));
+    this.els.canvas.height = Math.max(1, Math.round(ih * ratio));
   };
 
   LecturaClaveB.prototype.draw = function () {
-    if (!this.image) return;
-    const { canvas, ctx, scale } = this;
+    const canvas = this.els.canvas;
+    const ctx = this.ctx;
+    if (!this.image || !canvas || !ctx) return;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.drawImage(this.image, 0, 0, canvas.width, canvas.height);
     if (this.selection) {
