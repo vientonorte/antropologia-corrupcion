@@ -1330,9 +1330,11 @@
     .ca-link {
         transition: none !important;
     }
-    .friction-field-canvas,
-    .social-field-canvas {
+    .friction-field-canvas {
         display: none !important;
+    }
+    .social-field-canvas {
+        animation: none !important;
     }
     .sf-status--collapse,
     .sf-badge-chaos {

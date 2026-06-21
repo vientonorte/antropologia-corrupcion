@@ -138,6 +138,16 @@ const GraphBootstrap = (function () {
         }
     }
 
+    function syncEntropyUi(visible) {
+        const entropyBtn = document.querySelector('.ca-field-btn[data-field="entropy"]');
+        if (entropyBtn) {
+            entropyBtn.classList.toggle('active', visible);
+            entropyBtn.setAttribute('aria-pressed', visible ? 'true' : 'false');
+        }
+        const hud = document.getElementById('ca-sf-hud');
+        if (hud) hud.style.display = visible ? '' : 'none';
+    }
+
     function setupControls() {
         document.querySelectorAll('.ca-layer-btn').forEach((btn) => {
             btn.addEventListener('click', () => {
@@ -171,11 +181,8 @@ const GraphBootstrap = (function () {
 
                 if (action === 'entropy') {
                     const next = !wasActive;
-                    btn.classList.toggle('active', next);
-                    btn.setAttribute('aria-pressed', next ? 'true' : 'false');
+                    syncEntropyUi(next);
                     STATE.socialField?.setVisible(next);
-                    const hud = document.getElementById('ca-sf-hud');
-                    if (hud) hud.style.display = next ? '' : 'none';
                     return;
                 }
 
@@ -373,9 +380,10 @@ const GraphBootstrap = (function () {
                     fuentes,
                 });
 
+                STATE.socialField.setVisible(true);
+                syncEntropyUi(true);
                 if (prefersReducedMotion) {
-                    STATE.socialField._updateMetrics();
-                    STATE.socialField.setVisible(false);
+                    STATE.socialField.renderFrame();
                 }
 
                 let resizeRaf = null;
@@ -394,6 +402,7 @@ const GraphBootstrap = (function () {
             requestAnimationFrame(() => {
                 STATE.graph?._onResize?.();
                 resizeSocialField();
+                STATE.socialField?.renderFrame?.();
             });
 
             if (options.embedded) {

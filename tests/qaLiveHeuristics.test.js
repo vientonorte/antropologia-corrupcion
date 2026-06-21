@@ -23,6 +23,8 @@ module.exports = function (describe, it, assert, assertEqual) {
 
     it('monta grafo y superficies JSON', function () {
       assert(/graphBootstrap\.js/i.test(html), 'falta graphBootstrap');
+      assert(/tokens\.js/i.test(html), 'falta tokens.js para canvas de entropía');
+      assert(/socialField\.js/i.test(html), 'falta socialField');
       assert(/siteSurface\.js/i.test(html), 'falta siteSurface');
       assert(/shared-shell\.js/i.test(html), 'falta shared-shell');
     });
