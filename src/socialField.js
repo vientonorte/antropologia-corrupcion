@@ -260,15 +260,19 @@ class SocialField {
         this.width = Math.max(rect.width || this.container.offsetWidth || 600, 300);
         this.height = Math.max(rect.height || this.container.offsetHeight || 500, 300);
 
-        // Asignar posiciones a nodos (layout circular centrado)
-        const cx = this.width / 2;
-        const cy = this.height / 2;
-        const radius = Math.min(this.width, this.height) * 0.32;
-        const n = this.nodes.length || 1;
-        for (let i = 0; i < this.nodes.length; i++) {
-            const angle = (2 * Math.PI * i) / n - Math.PI / 2;
-            this.nodes[i].x = cx + radius * Math.cos(angle);
-            this.nodes[i].y = cy + radius * Math.sin(angle);
+        // Si el grafo ya aportó posiciones (D3 / simulación), conservarlas
+        const hasGraphPositions = this.nodes.length > 0 &&
+            this.nodes.every((nd) => typeof nd.x === 'number' && typeof nd.y === 'number');
+        if (!hasGraphPositions) {
+            const cx = this.width / 2;
+            const cy = this.height / 2;
+            const radius = Math.min(this.width, this.height) * 0.32;
+            const n = this.nodes.length || 1;
+            for (let i = 0; i < this.nodes.length; i++) {
+                const angle = (2 * Math.PI * i) / n - Math.PI / 2;
+                this.nodes[i].x = cx + radius * Math.cos(angle);
+                this.nodes[i].y = cy + radius * Math.sin(angle);
+            }
         }
 
         // Resolver links: convertir string IDs a referencias de objeto nodo

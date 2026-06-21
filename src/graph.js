@@ -7,8 +7,8 @@
  * Cada nodo = un caso con 3 capas de verdad.
  * Cada arista = conexión entre conflictos (actores, instituciones, tags compartidos).
  *
- * NO usa D3 para mantener zero-dependency.
- * Implementa física de resortes simplificada (Fruchterman-Reingold adaptado).
+ * Simulación force-directed con D3.js v7 (d3-force) cuando está disponible;
+ * fallback Fruchterman-Reingold en entornos sin D3 (tests Node).
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
@@ -18,44 +18,102 @@
 
 class ForceSimulation {
     constructor(nodes, links, width, height) {
-        this.nodes = nodes.map((n, i) => ({
+        this.width = width;
+        this.height = height;
+        this.margin = 80;
+        this.alpha = 1;
+        this.alphaDecay = 0.0228;
+        this.alphaMin = 0.001;
+        this.velocityDecay = 0.4;
+        this.gravityStrength = 0.06;
+        this.simulation = null;
+        this.engine = 'vanilla';
+
+        this.nodes = nodes.map((n) => ({
             ...n,
             x: width / 2 + (Math.random() - 0.5) * width * 0.6,
             y: height / 2 + (Math.random() - 0.5) * height * 0.6,
             vx: 0,
             vy: 0,
         }));
-        this.links = links.map(l => ({
+
+        this.links = links.map((l) => ({
             ...l,
-            source: this.nodes.find(n => n.id === (l.source ?.id ?? l.source)),
-            target: this.nodes.find(n => n.id === (l.target ?.id ?? l.target)),
-        })).filter(l => l.source && l.target);
-        this.width = width;
-        this.height = height;
-        this.alpha = 1;
-        this.alphaDecay = 0.0228;
-        this.alphaMin = 0.001;
-        this.velocityDecay = 0.4;
-        this.gravityStrength = 0.06;
+            source: this._resolveNodeRef(l.source),
+            target: this._resolveNodeRef(l.target),
+        })).filter((l) => l.source && l.target);
+
+        if (typeof d3 !== 'undefined' && d3.forceSimulation) {
+            this._initD3();
+        }
+    }
+
+    _resolveNodeRef(ref) {
+        if (!ref) return null;
+        const id = typeof ref === 'object' ? (ref.id ?? ref) : ref;
+        return this.nodes.find((n) => n.id === id) || null;
+    }
+
+    _initD3() {
+        this.engine = 'd3';
+        const cx = this.width / 2;
+        const cy = this.height / 2;
+        const linkDistance = Math.min(
+            Math.sqrt((this.width * this.height) / (this.nodes.length || 1)) * 1.2,
+            180,
+        );
+
+        this.simulation = d3.forceSimulation(this.nodes)
+            .force(
+                'link',
+                d3.forceLink(this.links)
+                    .id((d) => d.id)
+                    .distance(linkDistance)
+                    .strength((l) => (l.weight || 0.5) * 0.85),
+            )
+            .force('charge', d3.forceManyBody().strength(-520).distanceMax(420))
+            .force('center', d3.forceCenter(cx, cy).strength(this.gravityStrength))
+            .force('collide', d3.forceCollide(42).strength(0.85))
+            .alphaDecay(this.alphaDecay)
+            .alphaMin(this.alphaMin)
+            .velocityDecay(this.velocityDecay)
+            .stop();
+
+        this.alpha = this.simulation.alpha();
+    }
+
+    _applyBounds() {
+        const margin = this.margin;
+        for (const n of this.nodes) {
+            if (n.fixed || n.fx != null || n.fy != null) continue;
+            n.x = Math.max(margin, Math.min(this.width - margin, n.x));
+            n.y = Math.max(margin, Math.min(this.height - margin, n.y));
+        }
     }
 
     tick() {
+        if (this.engine === 'd3' && this.simulation) {
+            this.simulation.tick();
+            this._applyBounds();
+            this.alpha = this.simulation.alpha();
+            return this.alpha > this.alphaMin;
+        }
+
         if (this.alpha < this.alphaMin) return false;
         this.alpha *= (1 - this.alphaDecay);
 
         const k = Math.min(Math.sqrt((this.width * this.height) / (this.nodes.length || 1)), 180);
 
-        // Fuerza repulsiva entre nodos
         for (let i = 0; i < this.nodes.length; i++) {
             for (let j = i + 1; j < this.nodes.length; j++) {
-                const ni = this.nodes[i],
-                    nj = this.nodes[j];
-                let dx = nj.x - ni.x,
-                    dy = nj.y - ni.y;
+                const ni = this.nodes[i];
+                const nj = this.nodes[j];
+                const dx = nj.x - ni.x;
+                const dy = nj.y - ni.y;
                 const dist = Math.sqrt(dx * dx + dy * dy) || 1;
                 const force = (k * k) / dist * this.alpha;
-                const fx = dx / dist * force;
-                const fy = dy / dist * force;
+                const fx = (dx / dist) * force;
+                const fy = (dy / dist) * force;
                 ni.vx -= fx;
                 ni.vy -= fy;
                 nj.vx += fx;
@@ -63,13 +121,12 @@ class ForceSimulation {
             }
         }
 
-        // Fuerza atractiva sobre aristas (resortes)
         for (const link of this.links) {
-            let dx = link.target.x - link.source.x;
-            let dy = link.target.y - link.source.y;
+            const dx = link.target.x - link.source.x;
+            const dy = link.target.y - link.source.y;
             const dist = Math.sqrt(dx * dx + dy * dy) || 1;
-            const targetDist = k * 1.5; // distancia ideal
-            const force = (dist - targetDist) / dist * this.alpha * (link.weight || 0.5);
+            const targetDist = k * 1.5;
+            const force = ((dist - targetDist) / dist) * this.alpha * (link.weight || 0.5);
             const fx = dx * force;
             const fy = dy * force;
             link.source.vx += fx;
@@ -78,16 +135,14 @@ class ForceSimulation {
             link.target.vy -= fy;
         }
 
-        // Fuerza hacia el centro (gravedad suave)
-        const cx = this.width / 2,
-            cy = this.height / 2;
+        const cx = this.width / 2;
+        const cy = this.height / 2;
         for (const n of this.nodes) {
             n.vx += (cx - n.x) * this.gravityStrength * this.alpha;
             n.vy += (cy - n.y) * this.gravityStrength * this.alpha;
         }
 
-        // Aplicar velocidades + decay + bounds
-        const margin = 80;
+        const margin = this.margin;
         for (const n of this.nodes) {
             if (n.fixed) continue;
             n.vx *= (1 - this.velocityDecay);
@@ -99,24 +154,39 @@ class ForceSimulation {
         return true;
     }
 
-    // Fijar un nodo (drag)
     fix(id, x, y) {
-        const n = this.nodes.find(n => n.id === id);
-        if (n) {
-            n.x = x;
-            n.y = y;
-            n.vx = 0;
-            n.vy = 0;
-            n.fixed = true;
+        const n = this.nodes.find((node) => node.id === id);
+        if (!n) return;
+        n.x = x;
+        n.y = y;
+        n.vx = 0;
+        n.vy = 0;
+        n.fixed = true;
+        if (this.simulation) {
+            n.fx = x;
+            n.fy = y;
+            this.simulation.alpha(0.3).restart();
+            this.alpha = this.simulation.alpha();
         }
     }
 
     release(id) {
-        const n = this.nodes.find(n => n.id === id);
-        if (n) n.fixed = false;
+        const n = this.nodes.find((node) => node.id === id);
+        if (!n) return;
+        n.fixed = false;
+        if (this.simulation) {
+            n.fx = null;
+            n.fy = null;
+        }
     }
 
-    reheat() { this.alpha = 0.3; }
+    reheat() {
+        this.alpha = 0.3;
+        if (this.simulation) {
+            this.simulation.alpha(0.3).restart();
+            this.alpha = this.simulation.alpha();
+        }
+    }
 }
 
 /* ─── GRAFO SVG ─── */
@@ -130,13 +200,14 @@ class FrictionGraph {
      * @param {Function} options.onNodeClick  - callback(node)
      * @param {Function} options.onNodeHover  - callback(node|null)
      */
-    constructor({ container, nodes, links, onNodeClick, onNodeHover, onLinkHover }) {
+    constructor({ container, nodes, links, onNodeClick, onNodeHover, onLinkHover, onPositionUpdate }) {
         this.container = container;
         this.rawNodes = nodes;
         this.rawLinks = links;
         this.onNodeClick = onNodeClick || (() => {});
         this.onNodeHover = onNodeHover || (() => {});
         this.onLinkHover = onLinkHover || (() => {});
+        this.onPositionUpdate = onPositionUpdate || null;
         this.activeLayer = 'all'; // 'all' | 'etica' | 'institucional' | 'material'
         this.selectedId = null;
         this.animFrame = null;
@@ -546,8 +617,9 @@ class FrictionGraph {
             }
         }
 
-        // Sincronizar campo de física con posiciones
+        // Sincronizar campos con posiciones del grafo
         if (this.field) this.field.updateNodes(this.sim.nodes, this.sim.links);
+        if (this.onPositionUpdate) this.onPositionUpdate(this.sim.nodes, this.sim.links);
     }
 
     /* ─── FILTROS EXTERNOS ─── */
@@ -625,8 +697,15 @@ class FrictionGraph {
         this.svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
         this.sim.width = width;
         this.sim.height = height;
+        if (this.sim.simulation && typeof d3 !== 'undefined') {
+            this.sim.simulation.force(
+                'center',
+                d3.forceCenter(width / 2, height / 2).strength(this.sim.gravityStrength),
+            );
+        }
         this.sim.reheat();
         if (this.field) this.field.resize(width, height);
+        if (this.onPositionUpdate) this.onPositionUpdate(this.sim.nodes, this.sim.links);
     }
 
     /* ─── UTILIDADES DE COLOR ─── */

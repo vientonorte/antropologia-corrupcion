@@ -335,17 +335,6 @@ const GraphBootstrap = (function () {
                 window.BlackScholes.enrichNodes(graphData.nodes, json.casos);
             }
 
-            const fieldNodes = graphData.nodes.map((n) => ({
-                id: n.id,
-                tipo: n.tipo,
-                intensidad: n.intensidad,
-            }));
-            const fieldLinks = graphData.links.map((l) => ({
-                source: (l.source && l.source.id) || l.source,
-                target: (l.target && l.target.id) || l.target,
-                tipo: l.tipo,
-            }));
-
             setupGraphDOM(options);
 
             const container = document.getElementById('ca-graph-canvas');
@@ -359,6 +348,9 @@ const GraphBootstrap = (function () {
                 },
                 onNodeHover: (node) => STATE.renderer.showPreview(node),
                 onLinkHover: (link) => STATE.renderer.showLinkPreview(link),
+                onPositionUpdate: (nodes, links) => {
+                    STATE.socialField?.updateNodes(nodes, links);
+                },
             });
 
             STATE.renderer = new window.NodeRenderer({
@@ -375,8 +367,8 @@ const GraphBootstrap = (function () {
 
                 STATE.socialField = new window.SocialField({
                     container,
-                    nodes: fieldNodes,
-                    links: fieldLinks,
+                    nodes: STATE.graph.sim.nodes,
+                    links: STATE.graph.sim.links,
                     metricsEl: hudEl,
                     fuentes,
                 });
@@ -399,8 +391,12 @@ const GraphBootstrap = (function () {
                 setupModeToggle();
             }
 
-            if (options.embedded) {
+            requestAnimationFrame(() => {
+                STATE.graph?._onResize?.();
                 resizeSocialField();
+            });
+
+            if (options.embedded) {
                 const status = document.getElementById('thesis-graph-status');
                 if (status) status.textContent = 'Instrumento activo — explora casos y métricas de entropía.';
             }

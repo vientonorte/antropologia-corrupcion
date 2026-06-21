@@ -237,6 +237,13 @@ require('../src/frictionEngine.js');
 // searchEngine.js exposes via window.FrictionSearchEngine, window.normalizeBcnDataset
 require('../src/searchEngine.js');
 
+// d3-force para graph.js (fallback vanilla si falla la carga)
+try {
+    require('../web/vendor/d3.min.js');
+} catch (_) {
+    /* entorno sin vendor — tests usan motor vanilla */
+}
+
 // graph.js exposes via window.FrictionGraph, window.ForceSimulation
 require('../src/graph.js');
 

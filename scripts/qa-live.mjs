@@ -35,6 +35,7 @@ export const CRITICAL_PATHS = [
   '/data/narrativa-rescatada.json',
   '/src/graphBootstrap.js',
   '/src/frictionEngine.js',
+  '/vendor/d3.min.js',
   '/terraza/',
   '/404.html',
   '/xml/sitemap.xml',

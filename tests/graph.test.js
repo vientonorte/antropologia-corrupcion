@@ -15,6 +15,16 @@ module.exports = function (describe, it, assert, assertEqual, assertDeepEqual, a
             assertEqual(typeof ForceSimulation, 'function');
         });
 
+        it('usa motor d3 cuando la librería está cargada', function () {
+            if (typeof d3 === 'undefined') {
+                assert(true, 'd3 no cargado en runner — fallback vanilla OK');
+                return;
+            }
+            var sim = new ForceSimulation([{ id: 'a' }, { id: 'b' }], [{ source: 'a', target: 'b', weight: 0.5 }], 600, 400);
+            assertEqual(sim.engine, 'd3');
+            assert(sim.simulation != null, 'debe tener simulation d3');
+        });
+
         it('initializes nodes with positions and velocities', function () {
             var nodes = [{ id: 'a' }, { id: 'b' }];
             var links = [];
