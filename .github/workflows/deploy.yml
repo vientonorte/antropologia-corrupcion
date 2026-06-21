@@ -35,6 +35,9 @@ jobs:
       - name: QA enlaces locales (web + data + img)
         run: node scripts/qa-links.mjs --local
 
+      - name: Auditoría Atomic Design (local)
+        run: node scripts/atomic-audit.mjs --local
+
   deploy:
     name: Deploy
     needs: test
@@ -104,3 +107,6 @@ jobs:
 
       - name: Auditoría live — paths, heurísticas y enlaces
         run: node scripts/qa-live.mjs
+
+      - name: Atomic Design — verificación live superficies partial
+        run: node scripts/atomic-audit.mjs

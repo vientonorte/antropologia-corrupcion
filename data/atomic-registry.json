@@ -1,0 +1,136 @@
+{
+  "_meta": {
+    "version": "2026-06-21",
+    "description": "Registro evolutivo Atomic Design + gates DevOps E2E del sitio público",
+    "doc": "docs/INVENTARIO_CONTENIDOS_IA.md",
+    "ia_inventario": "data/ia-inventario.json"
+  },
+  "layers": {
+    "tokens": { "paths": ["web/styles/shared.css", "web/styles/ui-kit.css"], "rule": "variables CSS, sin lógica de negocio" },
+    "atoms": { "paths": ["web/components/atoms/", "web/styles/atoms/"], "rule": "no importa moléculas ni organismos" },
+    "molecules": { "paths": ["web/components/molecules/", "web/styles/molecules/"], "rule": "compone átomos; no importa organismos" },
+    "organisms": { "paths": ["web/components/organisms/", "web/styles/organisms/"], "rule": "compone moléculas y átomos" },
+    "templates": { "paths": ["web/pages/", "web/shared-shell.js"], "rule": "monta organismos; mínimo CSS inline" },
+    "pages": { "paths": ["web/*.html"], "rule": "solo enlaza templates, tokens y boots" }
+  },
+  "components": {
+    "atoms": [
+      { "id": "dom", "js": "web/components/atoms/dom.js", "namespace": "CAAtoms.dom" },
+      { "id": "kicker", "js": "web/components/atoms/kicker.js", "namespace": "CAAtoms.kicker", "css": null },
+      { "id": "epistemic-badge", "js": "web/components/atoms/epistemic-badge.js", "namespace": "CAAtoms.epistemicBadge", "css": "web/styles/atoms/epistemic-badge.css" }
+    ],
+    "molecules": [
+      { "id": "section-header", "js": "web/components/molecules/section-header.js", "namespace": "CAMolecules.sectionHeader", "css": "web/styles/molecules/section-header.css", "uses": ["dom", "kicker"] }
+    ],
+    "organisms": [
+      { "id": "thesis-section", "js": "web/components/organisms/thesis-section.js", "namespace": "CAOrganisms.thesisSection", "css": "web/styles/organisms/thesis-graph.css", "uses": ["section-header"] },
+      { "id": "huella-panel", "js": null, "css": "web/styles/organisms/huella-panel.css", "uses": [], "debt": "JS organism pendiente — hoy lib/huellaDigital.js" },
+      { "id": "narrative-document", "js": null, "css": "web/styles/organisms/narrative-document.css", "uses": [], "debt": "renderer en lib/narrativeRenderer.js" }
+    ]
+  },
+  "surfaces": [
+    {
+      "surface": "P01",
+      "path": "web/index.html",
+      "maturity": "partial",
+      "wave": 2,
+      "required_scripts": ["components/atoms/dom.js", "components/organisms/thesis-section.js", "shared-shell.js"],
+      "required_styles": ["styles/atoms/", "styles/organisms/thesis-graph.css"],
+      "boot": "web/pages/home-boot.js"
+    },
+    {
+      "surface": "P03",
+      "path": "web/buscador.html",
+      "maturity": "partial",
+      "wave": 3,
+      "required_scripts": ["shared-shell.js"],
+      "required_styles": ["styles/organisms/huella-panel.css"],
+      "boot": "web/pages/buscador-boot.js",
+      "libs": ["web/lib/huellaDigital.js", "web/lib/buscadorAvanzado.js"]
+    },
+    {
+      "surface": "P05",
+      "path": "web/leer.html",
+      "maturity": "partial",
+      "wave": 2,
+      "required_scripts": ["components/atoms/dom.js", "components/molecules/section-header.js"],
+      "boot": "web/pages/leer-boot.js"
+    },
+    {
+      "surface": "P_INSTRUMENTO",
+      "path": "web/contra-archivo-v2.html",
+      "maturity": "partial",
+      "wave": 2,
+      "required_scripts": ["components/organisms/thesis-section.js"],
+      "boot": "web/pages/instrumento-boot.js"
+    },
+    {
+      "surface": "P_NARRATIVA",
+      "path": "web/contra-archivo.html",
+      "maturity": "partial",
+      "wave": 3,
+      "required_scripts": ["components/atoms/epistemic-badge.js"],
+      "required_styles": ["styles/organisms/narrative-document.css"],
+      "libs": ["web/lib/narrativeRenderer.js"]
+    },
+    {
+      "surface": "P04",
+      "path": "web/archivo.html",
+      "maturity": "legacy",
+      "wave": 5,
+      "debt": "inline styles + sin components/"
+    },
+    {
+      "surface": "P06",
+      "path": "web/zuboff-archivo.html",
+      "maturity": "legacy",
+      "wave": 5
+    },
+    {
+      "surface": "R01",
+      "path": "web/privado-login.html",
+      "maturity": "legacy",
+      "wave": 5
+    },
+    {
+      "surface": "R02",
+      "path": "web/privado.html",
+      "maturity": "legacy",
+      "wave": 5
+    }
+  ],
+  "sprint": {
+    "name": "Sprint evolutivo Atomic Design E2E",
+    "started": "2026-06-20",
+    "waves": [
+      { "id": 0, "title": "Tokens", "status": "done", "deliverable": "shared.css + ui-kit.css" },
+      { "id": 1, "title": "Átomos JS/CSS", "status": "done", "deliverable": "dom, kicker, epistemic-badge" },
+      { "id": 2, "title": "Circuito tesis + leer", "status": "done", "deliverable": "thesis-section en home e instrumento" },
+      { "id": 3, "title": "Circuito buscador + narrativa", "status": "in_progress", "deliverable": "huella-panel + narrative-document organismos JS" },
+      { "id": 4, "title": "Shell como organism", "status": "pending", "deliverable": "nav-shell.js extraído de shared-shell.js" },
+      { "id": 5, "title": "Superficies legacy", "status": "pending", "deliverable": "archivo, zuboff, privado sin <style> monolítico" },
+      { "id": 6, "title": "Templates puros", "status": "pending", "deliverable": "HTML sin lógica; boots en pages/" }
+    ]
+  },
+  "devops_pipeline": {
+    "local": [
+      "node tests/runner.js",
+      "node scripts/atomic-audit.mjs --local",
+      "node scripts/qa-links.mjs --local"
+    ],
+    "pre_deploy": [
+      "node tests/runner.js",
+      "node scripts/atomic-audit.mjs --local",
+      "node scripts/qa-links.mjs --local",
+      "node scripts/qa-links.mjs --deployed"
+    ],
+    "post_deploy": [
+      "node scripts/qa-live.mjs",
+      "node scripts/atomic-audit.mjs"
+    ],
+    "pull_request": [
+      "node tests/runner.js",
+      "lhci autorun (web promovido a raíz)"
+    ]
+  }
+}

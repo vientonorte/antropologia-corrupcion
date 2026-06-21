@@ -28,9 +28,10 @@ jobs:
         with:
           filters: |
             web:
-              - "*.html"
+              - "web/**"
               - "src/**"
               - "styles/**"
+              - "data/atomic-registry.json"
               - ".lighthouserc.json"
 
   # ─────────────────────────────────────────────
@@ -49,6 +50,9 @@ jobs:
 
       - name: Ejecutar suite de tests
         run: node tests/runner.js
+
+      - name: Auditoría Atomic Design
+        run: node scripts/atomic-audit.mjs --local
 
   # ─────────────────────────────────────────────
   # Gate 2: Lighthouse CI (performance, a11y, SEO)
@@ -79,8 +83,9 @@ jobs:
       - name: Lighthouse audit
         run: |
           npm install -g @lhci/cli serve wait-on
+          rsync -av --exclude='terraza' web/ .
           serve . -p 3000 &
-          wait-on http://localhost:3000 --timeout 30000
+          wait-on http://localhost:3000/index.html --timeout 30000
           lhci autorun
         env:
           LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}

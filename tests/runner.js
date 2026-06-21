@@ -293,6 +293,7 @@ require('./publishGate.test.js')(describe, it, assert, assertEqual);
 require('./huellaDigitalLib.test.js')(describe, it, assert, assertEqual, assertDeepEqual, assertApprox, assertGreaterThan, assertArrayIncludes, casosData, fuentesData, bcnData, huellaData);
 require('./circuitDeepLink.test.js')(describe, it, assert, assertEqual);
 require('./qaLiveHeuristics.test.js')(describe, it, assert, assertEqual);
+require('./atomicDesign.test.js')(describe, it, assert, assertEqual);
 
 /* ─── SUMMARY ─── */
 
