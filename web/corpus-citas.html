@@ -940,17 +940,159 @@
             box-shadow: 0 0 0 2px var(--paper), 0 0 0 4px var(--swatch, var(--ink));
         }
 
+        .clave-b-flow {
+            margin: 0 0 14px;
+            padding: 0;
+        }
+
+        .clave-b-flow ol {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px 10px;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            font-size: 10px;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--neutral);
+        }
+
+        .clave-b-flow li {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .clave-b-flow-n {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: var(--ink);
+            color: var(--paper);
+            font-size: 9px;
+            font-weight: 600;
+        }
+
+        .clave-b-tools-panel {
+            display: grid;
+            gap: 12px;
+            margin-bottom: 14px;
+        }
+
+        @media (min-width: 720px) {
+            .clave-b-tools-panel {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .clave-b-tools-group {
+            border: 1px solid var(--line);
+            border-radius: 4px;
+            padding: 12px;
+            background: #fff;
+        }
+
+        .clave-b-tools-group--primary {
+            border-color: var(--accent-green);
+            background: linear-gradient(180deg, #f8fcf9 0%, #fff 100%);
+        }
+
+        .clave-b-tools-heading {
+            margin: 0 0 6px;
+            font-size: 10px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            font-weight: 600;
+            color: var(--ink);
+        }
+
+        .clave-b-tools-desc {
+            margin: 0 0 10px;
+            font-size: 11px;
+            line-height: 1.55;
+            color: var(--neutral);
+        }
+
+        .clave-b-tools-micro {
+            margin: 8px 0 0;
+            font-size: 10px;
+            line-height: 1.5;
+            color: var(--neutral);
+            font-style: italic;
+        }
+
         .clave-b-tools {
             display: flex;
             flex-wrap: wrap;
             gap: 8px;
-            margin: 10px 0 14px;
             align-items: center;
         }
 
         .clave-b-tools button.active {
             background: var(--ink);
             color: var(--paper);
+        }
+
+        .clave-b-tools button:disabled {
+            opacity: 0.45;
+            cursor: not-allowed;
+        }
+
+        .clave-b-ocr-guide {
+            margin: 0 0 14px;
+            border: 1px solid var(--line);
+            border-radius: 4px;
+            background: var(--paper);
+            font-size: 11px;
+            line-height: 1.65;
+            color: var(--ink);
+        }
+
+        .clave-b-ocr-guide summary {
+            padding: 10px 12px;
+            cursor: pointer;
+            font-size: 10px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            font-weight: 600;
+            color: var(--zuboff);
+            list-style: none;
+        }
+
+        .clave-b-ocr-guide summary::-webkit-details-marker {
+            display: none;
+        }
+
+        .clave-b-ocr-guide summary::before {
+            content: '▸ ';
+            display: inline-block;
+            transition: transform 0.15s;
+        }
+
+        .clave-b-ocr-guide[open] summary::before {
+            transform: rotate(90deg);
+        }
+
+        .clave-b-ocr-guide-body {
+            padding: 0 12px 12px;
+            border-top: 1px solid var(--line);
+        }
+
+        .clave-b-ocr-guide-body p {
+            margin: 10px 0 0;
+        }
+
+        .clave-b-ocr-guide-body ul {
+            margin: 8px 0 0;
+            padding-left: 18px;
+        }
+
+        .clave-b-ocr-guide-body li {
+            margin: 4px 0;
         }
 
         .clave-b-canvas-wrap {
@@ -1105,8 +1247,8 @@
             <div class="analyzer-body">
                 <p style="font-size:11px;color:var(--neutral);margin:0 0 14px;line-height:1.6;">
                     Sube una foto de página marcada (JPG o HEIC iPhone — incluso si el archivo dice <code>.jpg</code> pero es HEIC).
-                    El motor <strong>Clave B</strong> detecta colores, transcribe con OCR local y codifica citas GTD para el corpus epistémico.
-                    Flujo: <strong>foto → escaneo automático → revisar cola → importar al archivo</strong>.
+                    El motor <strong>Clave B</strong> detecta colores, propone transcripciones con <strong>OCR local</strong> (reconocimiento óptico de caracteres en tu navegador) y codifica citas GTD para el corpus epistémico.
+                    Flujo: <strong>foto → escaneo automático → revisar cola → importar al archivo</strong>. El botón de transcripción manual es para corregir omisiones.
                 </p>
 
                 <div class="clave-b-legend" aria-label="Clave B — libros impresos">
@@ -1131,12 +1273,48 @@
                 <div class="clave-b-workspace" id="claveBWorkspace">
                     <p class="clave-b-color-hint" id="claveBColorLabel">🟨 Referencia · referencia</p>
                     <div class="clave-b-toolbar" id="claveBToolbar" role="toolbar" aria-label="Colores Clave B"></div>
-                    <div class="clave-b-tools">
-                        <button type="button" class="btn-primary" id="claveBAutoScan">⚡ Escanear marcadores Clave B</button>
-                        <button type="button" class="btn-secondary active" data-clave-mode="eyedropper" aria-pressed="true">Cuentagotas</button>
-                        <button type="button" class="btn-secondary" data-clave-mode="region" aria-pressed="false">Seleccionar región</button>
-                        <button type="button" class="btn-secondary" id="claveBOcrRegion">OCR en región</button>
+
+                    <nav class="clave-b-flow" aria-label="Flujo de captura Clave B">
+                        <ol>
+                            <li><span class="clave-b-flow-n" aria-hidden="true">1</span> Foto</li>
+                            <li><span class="clave-b-flow-n" aria-hidden="true">2</span> Escaneo</li>
+                            <li><span class="clave-b-flow-n" aria-hidden="true">3</span> Revisión</li>
+                            <li><span class="clave-b-flow-n" aria-hidden="true">4</span> Importar</li>
+                        </ol>
+                    </nav>
+
+                    <div class="clave-b-tools-panel">
+                        <section class="clave-b-tools-group clave-b-tools-group--primary" aria-labelledby="claveBScanLabel">
+                            <h3 id="claveBScanLabel" class="clave-b-tools-heading">Escaneo automático</h3>
+                            <p class="clave-b-tools-desc">Detecta todos los marcadores de color en la página y transcribe cada fragmento con OCR local. Omite pasajes ilegibles o incoherentes.</p>
+                            <button type="button" class="btn-primary" id="claveBAutoScan">⚡ Escanear marcadores Clave B</button>
+                        </section>
+                        <section class="clave-b-tools-group" aria-labelledby="claveBManualLabel">
+                            <h3 id="claveBManualLabel" class="clave-b-tools-heading">Corrección manual</h3>
+                            <p class="clave-b-tools-desc">Si el escaneo omitió un pasaje: activa <strong>Seleccionar región</strong>, arrastra un rectángulo sobre el texto y pide la transcripción.</p>
+                            <div class="clave-b-tools" role="group" aria-label="Herramientas de selección manual">
+                                <button type="button" class="btn-secondary active" data-clave-mode="eyedropper" aria-pressed="true" title="Clic en un marcador de color para detectar su categoría">Cuentagotas</button>
+                                <button type="button" class="btn-secondary" data-clave-mode="region" aria-pressed="false" title="Arrastra un rectángulo sobre el texto marcado">Seleccionar región</button>
+                                <button type="button" class="btn-secondary" id="claveBOcrRegion" disabled aria-describedby="claveBOcrHelp" title="Primero selecciona una región en la foto">Transcribir región</button>
+                            </div>
+                            <p class="clave-b-tools-micro" id="claveBOcrHelp">OCR convierte píxeles de la foto en texto editable — solo cuando tú lo pidas.</p>
+                        </section>
                     </div>
+
+                    <details class="clave-b-ocr-guide">
+                        <summary>¿Qué es OCR y por qué es un botón?</summary>
+                        <div class="clave-b-ocr-guide-body">
+                            <p><strong>OCR</strong> (<em>Optical Character Recognition</em>, reconocimiento óptico de caracteres) es el proceso por el cual un programa lee una imagen — letra por letra — y propone texto que puedes editar. Aquí usamos <strong>Tesseract</strong>, que corre íntegramente en tu navegador: la foto no sale a ningún servidor.</p>
+                            <p>El <strong>escaneo automático</strong> ya aplica OCR a todos los marcadores que detecta. El botón <strong>Transcribir región</strong> existe para cuando necesitas precisión manual:</p>
+                            <ul>
+                                <li>El escaneo omitió un fragmento (marcador tenue, texto borroso).</li>
+                                <li>Quieres reintentar con un recorte más ajustado.</li>
+                                <li>El pasaje no tiene marcador de color y lo seleccionas a mano.</li>
+                            </ul>
+                            <p>No transcribe al subir la foto porque OCR es lento, puede fallar con ángulos o resaltados, y <strong>el corpus solo recibe transcripciones que tú revisas</strong>. Tú decides cuándo gastar ese procesamiento y qué entra al archivo.</p>
+                        </div>
+                    </details>
+
                     <div class="clave-b-canvas-wrap" id="claveBCanvasWrap">
                         <canvas id="claveBCanvas" aria-label="Foto del libro para lectura cromática"></canvas>
                     </div>
@@ -1219,11 +1397,12 @@
                 <div class="clave-b-workspace" id="claveAWorkspace" style="display:none">
                     <p class="clave-b-color-hint" id="claveAColorLabel">🟡 Referencias · referencia</p>
                     <div class="clave-b-toolbar" id="claveAToolbar" role="toolbar" aria-label="Colores Clave A"></div>
-                    <div class="clave-b-tools">
-                        <button type="button" class="btn-secondary active" data-clave-a-mode="eyedropper" aria-pressed="true">Cuentagotas</button>
-                        <button type="button" class="btn-secondary" data-clave-a-mode="region" aria-pressed="false">Seleccionar región</button>
-                        <button type="button" class="btn-secondary" id="claveAOcrRegion">OCR en región</button>
+                    <div class="clave-b-tools" role="group" aria-label="Herramientas de selección Clave A">
+                        <button type="button" class="btn-secondary active" data-clave-a-mode="eyedropper" aria-pressed="true" title="Clic en un marcador de color">Cuentagotas</button>
+                        <button type="button" class="btn-secondary" data-clave-a-mode="region" aria-pressed="false" title="Arrastra un rectángulo sobre el texto">Seleccionar región</button>
+                        <button type="button" class="btn-secondary" id="claveAOcrRegion" disabled aria-describedby="claveAOcrHelp" title="Primero selecciona una región en la foto">Transcribir región</button>
                     </div>
+                    <p class="clave-b-tools-micro" id="claveAOcrHelp">OCR local: convierte la región seleccionada en texto editable (Tesseract en tu navegador).</p>
                     <div class="clave-b-canvas-wrap" id="claveACanvasWrap">
                         <canvas id="claveACanvas" aria-label="Foto del cuaderno para lectura cromática"></canvas>
                     </div>
@@ -1392,8 +1571,8 @@
     <script src="lib/corpusCitasStore.js?v=20260621"></script>
     <script src="lib/librosClaveB.js?v=20260621"></script>
     <script src="lib/imagePrepare.js?v=20260621g"></script>
-    <script src="js/lectura-clave-b.js?v=20260621g"></script>
-    <script src="js/lectura-clave-a.js?v=20260621f"></script>
+    <script src="js/lectura-clave-b.js?v=20260621h"></script>
+    <script src="js/lectura-clave-a.js?v=20260621h"></script>
     <script>
         // Citation Archive Management — almacén unificado corpusCitas
         const STORAGE_KEY = window.CorpusCitasStore ? CorpusCitasStore.STORAGE_KEY : 'corpusCitas';

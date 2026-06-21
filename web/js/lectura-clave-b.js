@@ -300,6 +300,7 @@
       queue: document.getElementById('claveBQueue'),
       queueCount: document.getElementById('claveBQueueCount'),
       status: document.getElementById('claveBStatus'),
+      ocrBtn: document.getElementById('claveBOcrRegion'),
     };
 
     if (!this.els.canvas) {
@@ -310,7 +311,27 @@
     this.bindUi();
     this.renderToolbar();
     this.setDefaults();
+    this.updateOcrButton();
   }
+
+  LecturaClaveB.prototype.updateOcrButton = function () {
+    const btn = this.els.ocrBtn;
+    if (!btn) return;
+    const busy = !!this._scanning;
+    const hasSelection =
+      !busy &&
+      this.image &&
+      this.selection &&
+      this.selection.w > 8 &&
+      this.selection.h > 8;
+    btn.disabled = !hasSelection;
+    btn.setAttribute('aria-disabled', hasSelection ? 'false' : 'true');
+    btn.title = busy
+      ? 'Espera a que termine el escaneo automático'
+      : hasSelection
+        ? 'Transcribir el texto dentro de la región seleccionada'
+        : 'Primero selecciona una región (modo Seleccionar región)';
+  };
 
   LecturaClaveB.prototype.setDefaults = function () {
     if (this.els.libro) this.els.libro.value = this.opts.defaultLibro;
@@ -451,7 +472,8 @@
             try {
               self.fitCanvas();
               self.draw();
-              self.status('Foto cargada. Elige color Clave B y marca fragmentos.', 'success');
+              self.status('Foto cargada. Escanea marcadores o selecciona una región manual.', 'success');
+              self.updateOcrButton();
               resolve();
             } catch (err) {
               self.status('Error al dibujar la imagen: ' + err.message, 'error');
@@ -479,6 +501,7 @@
     }
     if (this.els.workspace) this.els.workspace.style.display = 'none';
     this.status('');
+    this.updateOcrButton();
   };
 
   LecturaClaveB.prototype.fitCanvas = function () {
@@ -579,6 +602,7 @@
     }
     this.drag = null;
     this.draw();
+    this.updateOcrButton();
   };
 
   LecturaClaveB.prototype.cropRegionToCanvas = function (region) {
@@ -650,6 +674,7 @@
       return;
     }
     this._scanning = true;
+    this.updateOcrButton();
     this.status('Escaneando marcadores Clave B en la página…');
     try {
       const regions = detectMarkedRegions(
@@ -714,6 +739,7 @@
       this.status('Error en escaneo automático: ' + err.message, 'error');
     }
     this._scanning = false;
+    this.updateOcrButton();
   };
 
   LecturaClaveB.prototype.readForm = function () {
@@ -750,6 +776,7 @@
     if (this.els.notas) this.els.notas.value = '';
     this.selection = null;
     this.draw();
+    this.updateOcrButton();
     this.renderQueue();
     this.status(`Fragmento añadido (${this.queue.length} en cola).`, 'success');
     if (this.opts.onQueueChange) this.opts.onQueueChange(this.queue);

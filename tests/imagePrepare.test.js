@@ -111,6 +111,13 @@ module.exports = function (describe, it, assert, assertEqual) {
       assert(code.indexOf('autoScanFragments') !== -1, 'autoScanFragments definido');
       assert(code.indexOf('detectMarkedRegions') !== -1, 'detectMarkedRegions definido');
       assert(code.indexOf('claveBAutoScan') !== -1, 'botón auto scan cableado');
+      assert(code.indexOf('updateOcrButton') !== -1, 'botón OCR con estado');
+    });
+
+    it('corpus-citas explica OCR en la UI', function () {
+      var html = fs.readFileSync(path.join(web, 'corpus-citas.html'), 'utf8');
+      assert(html.indexOf('¿Qué es OCR y por qué es un botón?') !== -1, 'guía OCR visible');
+      assert(html.indexOf('Transcribir región') !== -1, 'etiqueta clara del botón OCR');
     });
 
     it('assessTranscription filtra nulos e incoherentes', function () {

@@ -110,6 +110,7 @@
       queue: document.getElementById('claveAQueue'),
       queueCount: document.getElementById('claveAQueueCount'),
       status: document.getElementById('claveAStatus'),
+      ocrBtn: document.getElementById('claveAOcrRegion'),
     };
 
     if (!this.els.canvas) {
@@ -119,7 +120,23 @@
     this.ctx = this.els.canvas.getContext('2d', { willReadFrequently: true });
     this.bindUi();
     this.renderToolbar();
+    this.updateOcrButton();
   }
+
+  LecturaClaveA.prototype.updateOcrButton = function () {
+    const btn = this.els.ocrBtn;
+    if (!btn) return;
+    const hasSelection =
+      this.image &&
+      this.selection &&
+      this.selection.w > 8 &&
+      this.selection.h > 8;
+    btn.disabled = !hasSelection;
+    btn.setAttribute('aria-disabled', hasSelection ? 'false' : 'true');
+    btn.title = hasSelection
+      ? 'Transcribir el texto dentro de la región seleccionada'
+      : 'Primero selecciona una región (modo Seleccionar región)';
+  };
 
   LecturaClaveA.prototype.status = function (msg, type) {
     if (this.els.status) {
@@ -240,7 +257,8 @@
         requestAnimationFrame(function () {
           self.fitCanvas();
           self.draw();
-          self.status('Foto cargada. Elige color Clave A y marca fragmentos.', 'success');
+          self.status('Foto cargada. Selecciona una región y transcribe si lo necesitas.', 'success');
+          self.updateOcrButton();
         });
       });
     };
@@ -261,6 +279,7 @@
     if (this.ctx) this.ctx.clearRect(0, 0, this.els.canvas.width, this.els.canvas.height);
     if (this.els.workspace) this.els.workspace.style.display = 'none';
     this.status('');
+    this.updateOcrButton();
   };
 
   LecturaClaveA.prototype.fitCanvas = function () {
@@ -358,6 +377,7 @@
     }
     this.drag = null;
     this.draw();
+    this.updateOcrButton();
   };
 
   LecturaClaveA.prototype.ocrSelection = async function () {
@@ -426,6 +446,7 @@
     if (this.els.notas) this.els.notas.value = '';
     this.selection = null;
     this.draw();
+    this.updateOcrButton();
     this.renderQueue();
     this.status(`Fragmento añadido (${this.queue.length} en cola).`, 'success');
     if (this.opts.onQueueChange) this.opts.onQueueChange(this.queue);
