@@ -100,3 +100,34 @@ VS Code (dev local) → PR → qa.yml (4 gates) → Copilot Agent (aprueba) → 
 ```
 
 *Fecha: 2026-04-20*
+
+---
+
+## 2026-06-20 — Limpieza de espejos en raíz del repo
+
+**Decisión:** Eliminar HTML y assets duplicados en la raíz que desactualizaban `web/` (fuente de verdad). El deploy ya promueve `web/` vía `rsync`; los espejos en raíz generaban confusión en Finder y riesgo de editar la copia incorrecta.
+
+### Archivos eliminados de la raíz (git)
+
+| Archivo / ruta | Motivo |
+|---|---|
+| `buscador.html`, `landing.html`, `contra-archivo-v2.html`, `tesis.html` | Espejos obsoletos de `web/` |
+| `privado.html`, `privado-login.html`, `login.html`, `poemas.html` | Espejos obsoletos de `web/` |
+| `Poemarios/poemas.html` | Canónico en `web/Poemarios/poemas.html` |
+| `Ensayo Traducción de Saberes/contra-archivo.html` | v1 (~1.5 MB); canónico en `docs/…` y `web/contra-archivo-v2.html` |
+| `styles.css` | Legacy; sitio usa `web/styles/shared.css` |
+| `LICENSE 2` | Duplicado iCloud del `LICENSE` canónico |
+| `shared-shell.js` (raíz) | Movido a `web/shared-shell.js` |
+
+### Basura local eliminada (no versionada)
+
+- `antropologia_corrupcion_context.zip`
+- `recueda_SKILL_actualizado_2026-05-17 2.md`
+- `.screenshot-review.png`
+
+### Regla operativa
+
+- Editar siempre en `web/` para páginas y shell.
+- `_papelera_duplicados/` permanece gitignored hasta extracción completa (ver `docs/VALOR_NARRATIVO_PAPELERA.md`).
+
+*Fecha: 2026-06-20*

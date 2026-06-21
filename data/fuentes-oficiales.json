@@ -965,5 +965,35 @@
       "usurpación",
       "CONADI"
     ]
+  },
+  {
+    "id": "ensayo-traduccion-marco-2026",
+    "fuente": "leychile",
+    "titulo": "Ley 19.974 — Sistema de Inteligencia del Estado (marco D4 / Operación Huracán)",
+    "fecha": "2004-10-07",
+    "url": "https://www.leychile.cl/Navegar?idNorma=241195",
+    "institucion": "Estado de Chile / Carabineros / ANI",
+    "actores_lobby": [
+      "Dirección de Inteligencia Policial",
+      "UIOE",
+      "Comunidades mapuche"
+    ],
+    "materia": "Marco legal del aparato de inteligencia que habilitó la UIOE y la fabricación de evidencia en Operación Huracán — caso D4 Ensayo Traducción de Saberes",
+    "keywords": [
+      "inteligencia policial",
+      "Ley 19974",
+      "mistranslation",
+      "Operación Huracán",
+      "D4"
+    ],
+    "capa_oficial": "La ley define un sistema de inteligencia con controles formales. La práctica documentada en el artículo etnográfico 2026 muestra fabricación de evidencia y bypass de cadena de mando.",
+    "friccion_con": "ensayo-traduccion-saberes",
+    "tipo_friccion": "politica",
+    "tags": [
+      "ensayo",
+      "traducción",
+      "seguridad",
+      "archivo"
+    ]
   }
 ]

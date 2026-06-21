@@ -65,8 +65,13 @@ function urlToLocalPath(url) {
   if (!rel) rel = 'index.html';
   if (rel.endsWith('/')) rel += 'index.html';
   const htmlRoot = DEPLOYED ? ROOT : path.join(ROOT, 'web');
-  const alwaysRoot = ['data/', 'img/', 'xml/', 'src/', 'manifest.json', 'shared-shell.js'];
+  const alwaysRoot = ['data/', 'img/', 'xml/', 'src/', 'manifest.json'];
   if (alwaysRoot.some((p) => rel === p || rel.startsWith(p))) {
+    return path.join(ROOT, rel);
+  }
+  if (rel === 'shared-shell.js') {
+    const webShell = path.join(ROOT, 'web', rel);
+    if (!DEPLOYED && fs.existsSync(webShell)) return webShell;
     return path.join(ROOT, rel);
   }
   const deployedPath = path.join(ROOT, rel);

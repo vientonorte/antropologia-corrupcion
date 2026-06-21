@@ -1003,6 +1003,137 @@
           "descripcion": "Documento estatal que establece el derecho — nunca ejecutado efectivamente por el Estado"
         }
       ]
+    },
+    {
+      "id": "ensayo-traduccion-saberes",
+      "titulo": "Ensayo: Traducción de Saberes — Mistranslation como régimen",
+      "anio": 2026,
+      "dimension": "D4",
+      "actores": [
+        "Comunidades mapuche-huilliche",
+        "Colectivo Viento Norte",
+        "SURA Investments",
+        "Carabineros de Chile (UIOE)"
+      ],
+      "instituciones": [
+        "Estado chileno",
+        "CMF",
+        "CONADI",
+        "Tribunales de justicia"
+      ],
+      "etica": {
+        "titulo": "El testimonio que el código no traduce",
+        "descripcion": "La experiencia vivida del despojo, la vigilancia y la fabricación de enemigos no encuentra traducción en los registros normativos que la producen. El artículo etnográfico 2026 lee el archivo de diciembre 2018 como saber situado que la justicia tardó ocho años en validar.",
+        "voces": [
+          "Comunidad Autónoma de Temucuicui",
+          "Familias de víctimas de Operación Huracán",
+          "Víctimas de montaje digital (WhatsApp implantado)"
+        ],
+        "documentos_ref": [
+          "articulo_etnografico.docx",
+          "archivo La Negra diciembre 2018"
+        ],
+        "keywords": [
+          "testimonio",
+          "vigilancia",
+          "Wallmapu",
+          "epistemología situada",
+          "contra-archivo"
+        ],
+        "color": "#c8a96e"
+      },
+      "institucional": {
+        "titulo": "Marcos normativos como artefactos de mistranslation",
+        "descripcion": "Ley 19.628, Convenio OIT 169, Ley 19.974 y la Orden General 2371 habitan registros incompatibles con las prácticas que deberían regular. Los documentos normativos operan como artefactos (Riles): su eficacia depende de cadenas de traducción rotas o capturadas.",
+        "documentos": [
+          "Ley 19.628 Protección de Datos",
+          "Convenio OIT 169",
+          "Ley 19.974 Sistema de Inteligencia del Estado",
+          "Orden General 2371 Carabineros"
+        ],
+        "clasificaciones": [
+          "consentimiento expreso",
+          "consulta previa",
+          "inteligencia policial",
+          "evidencia digital"
+        ],
+        "keywords": [
+          "mistranslation",
+          "norma",
+          "Riles",
+          "Latour",
+          "intermediarios"
+        ],
+        "color": "#4a7fa5"
+      },
+      "material": {
+        "titulo": "Archivo, organigrama y territorio como evidencia",
+        "descripcion": "Organigramas marcados, infografías de investigación, veredicto Operación Huracán 2026 y títulos de merced materializan la brecha entre registro institucional y daño producido. El contra-archivo pone en circulación lo que cada archivo sectorial obscurece.",
+        "evidencias": [
+          "Dossier La Negra diciembre 2018",
+          "Artículo La máquina de fabricar enemigos (mar 2026)",
+          "Infografías Catrillanca y Huracán"
+        ],
+        "keywords": [
+          "archivo",
+          "organigrama",
+          "territorio",
+          "Stoler",
+          "Taussig"
+        ],
+        "color": "#7a9e6e"
+      },
+      "friccion": {
+        "tipo": "epistemologica",
+        "subtipo": "semantica",
+        "intensidad": 0.88,
+        "estado": "abierta",
+        "descripcion": "La corrupción institucional opera como mistranslation entre marcos normativos, arquitecturas técnicas y experiencia vivida. D4 articula el dispositivo analítico que conecta SURA/AFP, territorio mapuche y aparato de seguridad.",
+        "tension_central": "¿Puede la institución traducir sin epistemicidio cuando sus archivos están diseñados para la opacidad?",
+        "sin_resolver": true
+      },
+      "conexiones": [
+        "sura-gobernanza-datos",
+        "la-negra-territorio-mapuche",
+        "michillanca-extractivismo-ley-anti"
+      ],
+      "tags": [
+        "D4",
+        "ensayo",
+        "traducción de saberes",
+        "mistranslation",
+        "metodología",
+        "decolonial"
+      ],
+      "nodos": [
+        {
+          "id": "mistranslation-institucionalizada",
+          "capa": "institucional",
+          "tipo": "concepto",
+          "peso_friccion": 0.9,
+          "fuente_id": "ensayo-traduccion-marco-2026",
+          "fecha_evidencia": "2026-03-01",
+          "descripcion": "Categoría analítica D4: incompatibilidad deliberada entre registros normativos, técnicos y experienciales"
+        },
+        {
+          "id": "articulo-fabricar-enemigos",
+          "capa": "material",
+          "tipo": "documento",
+          "peso_friccion": 0.92,
+          "fuente_id": "ensayo-traduccion-marco-2026",
+          "fecha_evidencia": "2026-03-01",
+          "descripcion": "Artículo etnográfico mar 2026 — lectura del aparato de seguridad desde archivo La Negra 2018"
+        },
+        {
+          "id": "protocolo-buena-traduccion",
+          "capa": "etica",
+          "tipo": "dispositivo",
+          "peso_friccion": 0.75,
+          "fuente_id": "ensayo-traduccion-marco-2026",
+          "fecha_evidencia": "2026-05-18",
+          "descripcion": "Horizonte normativo C.01–C.04: condiciones mínimas de equivalencia entre capas sin epistemicidio"
+        }
+      ]
     }
   ]
 }

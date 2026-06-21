@@ -47,7 +47,9 @@ El proyecto trabaja sobre tres capas irreductibles:
 
 La fricción entre capas se expresa como intensidad `0.0 → 1.0` y como tipo `política`, `semántica` o `técnica`.
 
-## Sitio estático en la raíz
+## Sitio estático (`web/`)
+
+La fuente de verdad del sitio público es **`web/`**. En deploy, `rsync web/ .` promueve esos archivos a la raíz del artefacto de GitHub Pages. No editar HTML duplicados en la raíz del repo — si reaparecen, son espejos obsoletos.
 
 ### Secciones activas
 
@@ -64,9 +66,10 @@ La fricción entre capas se expresa como intensidad `0.0 → 1.0` y como tipo `p
 ### Arquitectura pública
 
 ```text
-index.html
-styles.css
-styles/graph.css
+web/index.html
+web/shared-shell.js
+web/styles/shared.css
+web/styles/graph.css
 src/main.js
 src/frictionEngine.js
 src/graph.js
@@ -100,9 +103,17 @@ data/huella-digital-publica.json
 ## Desarrollo local
 
 ```sh
+cd web
 python3 -m http.server 4321
 # o
 npx serve .
+```
+
+Para probar el layout post-deploy (con `data/`, `src/`, `img/` en la raíz), desde el repo:
+
+```sh
+rsync -av --exclude=terraza web/ /tmp/ca-preview && rsync -av data src img xml manifest.json /tmp/ca-preview/
+cd /tmp/ca-preview && npx serve .
 ```
 
 Validación principal del repositorio:

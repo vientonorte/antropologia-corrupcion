@@ -21,8 +21,8 @@ module.exports = function (describe, it, assert, assertEqual, assertDeepEqual, a
             assert(Array.isArray(casosData.casos), 'casos should be array');
         });
 
-        it('has exactly 6 cases', function () {
-            assertEqual(casosData.casos.length, 6, 'should have 6 casos');
+        it('has exactly 7 cases', function () {
+            assertEqual(casosData.casos.length, 7, 'should have 7 casos');
         });
 
         it('each caso has required top-level fields', function () {
@@ -320,7 +320,7 @@ module.exports = function (describe, it, assert, assertEqual, assertDeepEqual, a
             }
         });
 
-        it('all 6 casos are referenced by at least one fuente', function () {
+        it('all 7 casos are referenced by at least one fuente', function () {
             var casoRefs = {};
             for (var i = 0; i < fuentesData.length; i++) {
                 casoRefs[fuentesData[i].friccion_con] = true;

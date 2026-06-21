@@ -112,6 +112,20 @@
       "priority": 0.75
     },
     {
+      "id": "P07b",
+      "file": "web/articulo-fabricar-enemigos.html",
+      "path": "articulo-fabricar-enemigos.html",
+      "title": "La máquina de fabricar enemigos",
+      "taxonomy": "publicaciones",
+      "audience": "publico",
+      "nav_label": null,
+      "nav_primary": false,
+      "sitemap": true,
+      "priority": 0.8,
+      "dimension": "D4",
+      "parent": "P05"
+    },
+    {
       "id": "P08",
       "file": "web/404.html",
       "path": "404.html",
@@ -223,11 +237,45 @@
       "git": "gitignored",
       "deploy": false,
       "note": "Copias EA_* obsoletas; no forman parte de la IA publicada",
+      "valor_doc": "docs/VALOR_NARRATIVO_PAPELERA.md",
       "files": [
-        { "file": "EA_admin.html", "superseded_by": "web/admin.html", "status": "obsolete" },
-        { "file": "EA_index.html", "superseded_by": "web/index.html", "status": "obsolete" },
-        { "file": "EA_contra-archivo-v2.html", "superseded_by": "web/contra-archivo-v2.html", "status": "obsolete" },
-        { "file": "EA_contra-archivo-v1-DEPRECATED.html", "superseded_by": "web/contra-archivo.html", "status": "deprecated" }
+        {
+          "file": "EA_admin.html",
+          "superseded_by": "web/admin.html",
+          "status": "obsolete",
+          "narrative_valor": "medio",
+          "extracted": false,
+          "unique_content": ["mapa_d1_d7", "notas_admin_gestion", "rutas_la_negra_estado_arte"],
+          "rescue_priority": "P2"
+        },
+        {
+          "file": "EA_index.html",
+          "superseded_by": "web/index.html",
+          "status": "obsolete",
+          "narrative_valor": "alto",
+          "extracted": false,
+          "unique_content": ["hero_mistranslation", "protocolo_c01_c04", "umbrales_friccion", "instrumento_3_capas"],
+          "rescue_priority": "P0"
+        },
+        {
+          "file": "EA_contra-archivo-v2.html",
+          "superseded_by": "web/contra-archivo-v2.html",
+          "status": "obsolete",
+          "narrative_valor": "bajo",
+          "extracted": true,
+          "unique_content": [],
+          "rescue_priority": null
+        },
+        {
+          "file": "EA_contra-archivo-v1-DEPRECATED.html",
+          "superseded_by": "web/contra-archivo.html",
+          "status": "deprecated",
+          "narrative_valor": "alto",
+          "extracted": "parcial",
+          "unique_content": ["presentacion_00", "ensayo_args_03", "hipotesis_p3_10", "matriz_tensiones"],
+          "already_in": ["data/contenido-ramas-rescatado.json"],
+          "rescue_priority": "P0"
+        }
       ]
     }
   ],
@@ -238,8 +286,38 @@
     { "id": "B4", "title": "Fichas C03/C04 sin indexar", "priority": "media" },
     { "id": "B5", "title": "Sitemap triplica home", "priority": "baja" },
     { "id": "B6", "title": "manifest start_url", "priority": "baja" },
-    { "id": "B7", "title": "README anchors obsoletos", "priority": "baja" }
+    { "id": "B7", "title": "README anchors obsoletos", "priority": "baja" },
+    {
+      "id": "B8",
+      "title": "Narrativa papelera sin publicar (§00, protocolo C.01–C.04, P3 fricción)",
+      "priority": "alta",
+      "doc": "docs/VALOR_NARRATIVO_PAPELERA.md",
+      "rescue_ids": ["N1", "N2", "N3", "N4"]
+    },
+    {
+      "id": "B9",
+      "title": "D4 Ensayo: artículo etnográfico sin publicar + espejos triplicados",
+      "priority": "alta",
+      "doc": "docs/VALOR_NARRATIVO_D4_ENSAYO.md",
+      "index": "data/ensayo-traduccion-index.json",
+      "rescue_ids": ["D4-R1", "D4-R2", "D4-R3"]
+    }
   ],
+  "dimension_d4": {
+    "id": "D4",
+    "label": "Ensayo Traducción de Saberes",
+    "canonical_root": "docs/Ensayo Traducción de Saberes/",
+    "valor_doc": "docs/VALOR_NARRATIVO_D4_ENSAYO.md",
+    "index": "data/ensayo-traduccion-index.json",
+    "deploy": false,
+    "textos_canonicos": "docs/Ensayo Traducción de Saberes/textos-canonicos/",
+    "rutas_web": {
+      "articulo_resumen": "contra-archivo-v2.html#eje-1",
+      "ensayo_teorico": "contra-archivo-v2.html#eje-4",
+      "biblioteca_pendiente": "tesis.html#articulo-etnografico-huracan",
+      "archivo": "archivo.html"
+    }
+  },
   "nav_proposed": [
     { "label": "Inicio", "path": "landing.html", "surface": "P01" },
     { "label": "Explorar datos", "path": "buscador.html", "surface": "P03" },

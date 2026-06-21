@@ -1,0 +1,111 @@
+{
+  "total_paragraphs": 66,
+  "sections": [
+    {
+      "id": "intro",
+      "title": "Introducción",
+      "paragraphs": [
+        "«A pesar de toda la represión, los engaños, las leyes y toda la fuerza",
+        "del estado terrorista chileno, este proceso no se detiene ni se tranza»",
+        "— Comunidad Autónoma de Temucuicui, declaración pública",
+        "El 9 de enero de 2026, el Tribunal Oral en lo Penal de Temuco declaró culpables a seis personas —cinco exoficiales de Carabineros y un civil— por haber fabricado pruebas digitales para incriminar a comuneros mapuche en delitos de terrorismo. La lectura del veredicto cerró formalmente un ciclo judicial de casi nueve años. Pero para las comunidades del Wallmapu, el veredicto no fue un punto final: fue la confirmación tardía de algo que ya sabían desde el primer día.",
+        "Este artículo ensaya una lectura etnográfica de ese saber. No se propone como investigación de campo en sentido clásico, sino como análisis cultural de un archivo documental: un conjunto de capturas de pantalla, infografías, fragmentos normativos y recortes de prensa reunidos en diciembre de 2018 por un investigador anónimo que, con herramientas precarias pero con lucidez analítica, cartografió la estructura institucional que hizo posible el montaje. Ese archivo anticipó con precisión lo que la justicia tardó ocho años en acreditar.",
+        "La pregunta que guía este texto no es jurídica —el tribunal ya respondió esa— sino antropológica: ¿qué tipo de Estado necesita fabricar enemigos para sostenerse? ¿Qué formas de vida se despliegan bajo la vigilancia permanente? ¿Qué nos dice un organigrama policial sobre la producción social del miedo?"
+      ]
+    },
+    {
+      "id": "sec-i",
+      "title": "I. El paisaje antes de la tormenta: Ercilla, 2015",
+      "paragraphs": [
+        "Temucuicui —del mapudungun temu (un árbol mirtáceo de semilla amarga) y kuykuy (puente)— se encuentra a 4,5 kilómetros de Ercilla, en el corazón de La Araucanía. Es un territorio que la sociedad chilena conoce por las noticias policiales, pero que sus habitantes conocen por la memoria oral de un despojo que comenzó a fines del siglo XIX, cuando el Estado chileno redujo a las familias mapuche a títulos de merced que fragmentaron el territorio ancestral.",
+        "En 2015, mientras la comunidad continuaba su proceso de demarcación de las 12.000 hectáreas que identifica como territorio histórico del lof, a 600 kilómetros al norte, en Santiago, el General Director de Carabineros Bruno Villalobos firmaba la Orden General Nº 2371. El documento, de apariencia burocrática, reorganizaba la Dirección Nacional de Inteligencia, Drogas e Investigación Criminal, creando tres «Altas Reparticiones» y estableciendo que las Unidades de Inteligencia Operativa Especializada dependerían de la Dirección de Inteligencia Policial.",
+        "Ningún comunero de Temucuicui fue notificado de esta orden. No tenían por qué serlo: era un acto administrativo interno de una institución policial. Pero esa orden creó la UIOE —la unidad que dos años después fabricaría las pruebas que los enviaría a prisión."
+      ]
+    },
+    {
+      "id": "sec-ii",
+      "title": "II. La arquitectura del montaje: una etnografía del organigrama",
+      "paragraphs": [
+        "El material del dossier incluye un artboard que muestra el organigrama completo de Carabineros con marcas visuales: círculos azules sobre la Subdirección General y la Dirección Nacional de Inteligencia; círculos rojos sobre la Dirección de Investigación Criminal y la Dirección de Control Sindical. Es un ejercicio de análisis visual que merece atención etnográfica: alguien miró un documento institucional y vio en él no una estructura administrativa neutral, sino un mapa de poder.",
+        "Los organigramas son artefactos culturales. Representan la ilusión de racionalidad burocrática que permite a las instituciones operar como si fueran máquinas impersonales. Pero la Operación Huracán demostró exactamente lo contrario: la estructura no operó como máquina impersonal sino como red de lealtades personales. Gonzalo Blu, designado por Villalobos como Director de Inteligencia, declaró en el juicio de 2025 que Villalobos instruía directamente a la UIOE a través de Patricio Marín, bypasseando la cadena de mando formal. El organigrama era ficción; la operación real corría por canales de confianza, favores y complicidad.",
+        "En términos antropológicos, estamos ante lo que Michael Taussig llamó el «sistema nervioso» del Estado: una combinación de orden racional y terror irracional que produce sus efectos precisamente porque oscila entre ambos. La Orden General 2371 es el polo del orden: un documento legal, firmado, publicado en el Boletín Oficial. La Operación Huracán es el polo del terror: fabricación de pruebas, detenciones aparatosas con helicópteros, difusión mediática masiva de mensajes falsos. Ambos polos necesitan del otro para funcionar."
+      ]
+    },
+    {
+      "id": "sec-iii",
+      "title": "III. Antorcha: el software que nunca existió",
+      "paragraphs": [
+        "Uno de los hallazgos más reveladores del dossier —y del juicio posterior— es que el software «Antorcha», presentado por Alex Schmidt (conocido como «El Profesor») como una herramienta capaz de interceptar mensajes de WhatsApp, nunca existió. Era un nombre para una ficción técnica que servía de coartada: si alguien preguntaba cómo se habían obtenido los mensajes, la respuesta era «Antorcha». Lo que realmente se utilizó fue Oxygen Forensics, un software de extracción forense legítimo, adquirido con 21,5 millones de pesos provenientes de gastos reservados autorizados por Villalobos, y usado no para extraer datos sino para implantarlos.",
+        "La historia de Antorcha es una historia sobre la performatividad de la técnica. En el contexto de la sociedad contemporánea, invocar un «software» es invocar una autoridad casi mágica: si la máquina lo dice, debe ser verdad. Los mensajes fabricados por la UIOE fueron difundidos masivamente por la televisión nacional el mismo día de las detenciones. La credibilidad no provino de su contenido —que era grotesco, incluyendo supuestas conversaciones entre el líder mapuche Aucán Huilcamán y el presidente de Bolivia Evo Morales— sino del aura tecnológica que los envolvía. Nadie preguntó si un programa así era técnicamente posible. La palabra «interceptación» hizo el trabajo por sí sola.",
+        "David Cid Aedo, una de las víctimas del montaje, lo sintetizó en su libro autobiográfico publicado en 2023: un testimonio escrito como acto de catarsis contra un proceso que se dilataba con pretensiones de impunidad, donde describía la Operación Huracán como un montaje que había involucrado a policías, fiscales y ambas administraciones gubernamentales —la de Bachelet y la de Piñera— funcionando como extensión operativa de los intereses de la industria extractiva y los terratenientes del sur."
+      ]
+    },
+    {
+      "id": "sec-iv",
+      "title": "IV. El cuerpo vigilado: la experiencia cotidiana de la inteligencia",
+      "paragraphs": [
+        "Los archivos de inteligencia de Carabineros filtrados y analizados por CIPER Chile en 2022 —220 gigabytes de registros de la Dirección de Inteligencia Policial— revelaron que la vigilancia sobre comunidades mapuche y dirigentes estudiantiles no comenzó con la UIOE ni con la Orden General 2371, sino al menos desde 2012. Los documentos incluían fichas sobre Gabriel Boric, Camila Vallejo y Giorgio Jackson cuando eran dirigentes estudiantiles, elaboradas por agentes que habían reclutado informantes entre alumnos y funcionarios de universidades.",
+        "Pero la vigilancia sobre el mundo mapuche tiene una textura distinta a la vigilancia sobre estudiantes santiaguinos. Para un estudiante de la FECH, la ficha de inteligencia es una anomalía, un dato perturbador que se descubre años después. Para una familia de Temucuicui, la vigilancia es el paisaje. Los blindados de Carabineros patrullan los caminos; los helicópteros sobrevuelan las comunidades; los allanamientos ocurren al amanecer, con ingreso violento a las viviendas, destrucción de enseres y detenciones frente a niños. El 7 de enero de 2021, el mismo día del veredicto del caso Catrillanca, la PDI allanó seis comunidades de Temucuicui con 800 efectivos.",
+        "Esta simultaneidad —justicia y allanamiento en el mismo momento— es la gramática profunda de la relación entre el Estado chileno y el pueblo mapuche. No es una contradicción: es la forma que toma esa relación. La Comunidad Autónoma de Temucuicui lo expresó así en su rechazo al Censo 2024: el proceso censal, dijeron, no es otra cosa que contar la pobreza y la marginalidad para perfeccionar las políticas de represión y contención del movimiento mapuche. No participar del censo no es apatía; es un acto político que dice: no seremos legibles para el aparato que nos vigila."
+      ]
+    },
+    {
+      "id": "sec-v",
+      "title": "V. Los nombres detrás de los números: víctimas y racismo institucional",
+      "paragraphs": [
+        "Los ocho comuneros detenidos por la Operación Huracán el 23 de septiembre de 2017 fueron Héctor Llaitul Carrillanca, su hijo Héctor Llaitul Pezoa, los hermanos Rodrigo, Jaime y Jorge Huenchullán Cayul, David Cid Aedo, Martín Curiche, Claudio Leiva y el machi Fidel Tranamil. Fueron acusados de asociación ilícita terrorista con base en mensajes que nunca enviaron, interceptados por un software que nunca existió.",
+        "Cuando el tribunal leyó el veredicto condenatorio contra los carabineros que los inculparon, las hijas y familiares de estos comuneros viajaron a Temuco para escucharlo. Lo que encontraron al llegar fue otro episodio de violencia institucional: Gendarmería les bloqueó el ingreso al tribunal con escudos antimotines, incluyendo a menores de edad. La abogada querellante Karina Riquelme denunció que fueron discriminados por su vestimenta y su origen. Las familias regresaron a sus territorios a una región donde, según sus propias palabras, el racismo institucional sigue presente incluso en los espacios que debieran garantizar justicia.",
+        "Los hermanos Jorge, Jaime y Rodrigo Huenchullán y Armando Henriquez han demandado al Estado por 2.000 millones de pesos por las detenciones basadas en pruebas falsas. La abogada del Centro de Investigación y Defensa Sur (CIDSUR) ha planteado la posibilidad de recurrir a la Comisión Interamericana de Derechos Humanos. El caso de Julia Chuñil —defensora de bosque nativo desaparecida, cuyos hijos fueron formalizados en lo que organizaciones de derechos humanos calificaron como un nuevo «Huracán»— muestra que la estructura de criminalización no se desmontó con la disolución de la UIOE."
+      ]
+    },
+    {
+      "id": "sec-vi",
+      "title": "VI. Catrillanca: el punto donde la estructura mata",
+      "paragraphs": [
+        "El 14 de noviembre de 2018 —un mes antes de que el investigador anónimo compilara el dossier que analizamos— Camilo Catrillanca conducía un tractor por un camino de Temucuicui junto a un adolescente de 15 años. Efectivos del GOPE dispararon. Un proyectil de fusil Colt M4 impactó a Catrillanca en la cabeza. Murió instantáneamente. El adolescente fue detenido y golpeado. La cámara GoPro que registraba el operativo fue destruida. Los carabineros mintieron: declararon que habían sido atacados con armas de fuego. La reconstrucción de CIPER Chile demostró que no hubo enfrentamiento.",
+        "El dossier original conecta el caso Catrillanca con la estructura creada por la OG 2371 a través de una inferencia que no es directa pero sí culturalmente significativa: la UIOE no ejecutó el operativo del Comando Jungla, pero la cultura institucional de impunidad y fabricación de versiones falsas que se instaló en la inteligencia policial permeó el conjunto de la actuación de Carabineros en territorio mapuche. Cuando los carabineros del GOPE destruyeron la GoPro y mintieron en sus declaraciones, estaban reproduciendo el mismo patrón que sus colegas de inteligencia habían perfeccionado con Antorcha: si la versión no se sostiene, se fabrica otra.",
+        "Carlos Alarcón fue condenado a 16 años de presidio efectivo. La Corte Suprema ratificó la sentencia. Pero el padre de Camilo, Marcelo Catrillanca, dijo no estar conforme: la familia buscaba una condena ejemplar y considera recurrir a tribunales internacionales. La pregunta que queda es la de siempre: ¿dónde termina la responsabilidad individual y dónde comienza la responsabilidad del Estado que creó, financió y desplegó la estructura?"
+      ]
+    },
+    {
+      "id": "sec-vii",
+      "title": "VII. Wallmapu, 2026: después del veredicto",
+      "paragraphs": [
+        "El balance de 2025 del movimiento mapuche, publicado por Diario Mapuche en enero de 2026, describe un campo de acción múltiple: dimensiones jurídicas, ambientales, lingüísticas, políticas y culturales que se articulan simultáneamente. El Censo 2024 identificó a 1,62 millones de personas mapuche, el 8,8% de la población de Chile. No se trata de una minoría marginal sino de un pueblo con presencia urbana y rural, experiencia política acumulada, inserción institucional y proyección internacional.",
+        "El rechazo unánime a la consulta indígena sobre un nuevo sistema de tierras fue el hecho político más articulador de 2025. La desaparición de Julia Chuñil quedó como herida abierta. La defensa del río San Pedro sintetizó la expansión del modelo salmonero hacia cuencas continentales. Y en el plano legislativo, la Comisión de Defensa de la Cámara aprobó un proyecto para modernizar el sistema de inteligencia del Estado que incluye la creación de una Agencia Nacional de Inteligencia Civil y una Escuela de Inteligencia.",
+        "Pero Temucuicui sigue siendo Temucuicui. La comunidad que rechazó el censo, que demarcó sus 12.000 hectáreas sin esperar a la CONADI, que enterró a Camilo Catrillanca y que vio cómo sus dirigentes eran detenidos con pruebas falsas, sigue articulando su autonomía territorial desde la lógica de sus kuifikeche —los antepasados cuyo mandato, según el lonko Víctor Queipul, obliga a continuar avanzando y reconstruyendo la vida mapuche."
+      ]
+    },
+    {
+      "id": "sec-viii",
+      "title": "VIII. Nota metodológica: sobre el archivo como campo",
+      "paragraphs": [
+        "Este artículo no es producto de trabajo de campo en sentido convencional. No incluye entrevistas realizadas por el autor ni observación participante en las comunidades. Se construye a partir de tres capas de material: primero, un archivo documental de diciembre de 2018 compuesto por capturas de pantalla, infografías analíticas y fragmentos normativos; segundo, fuentes periodísticas de investigación (CIPER Chile, Interferencia, El Mostrador, entre otras); tercero, registros judiciales públicos.",
+        "La opción metodológica se justifica en la tradición de lo que Ann Stoler llamó «etnografía del archivo»: la lectura atenta de los documentos del poder como artefactos culturales que revelan no solo lo que dicen explícitamente, sino los silencios, las tensiones y las formas de clasificación que organizan la mirada del Estado sobre sus sujetos. La Orden General 2371 es, en este sentido, un texto etnográfico: dice quién vigila a quién, cómo se organiza el aparato y qué categorías de personas son objeto de inteligencia. Los artboards del dossier son ejercicios de contra-archivo: un observador externo que toma la estructura del poder y la marca con círculos rojos, señalando los puntos donde la máquina produce daño.",
+        "Las limitaciones son evidentes: falta la voz directa de las víctimas y sus familias, faltan las texturas de la vida cotidiana bajo vigilancia, falta el mapudungun que nombra experiencias para las que el castellano no tiene palabras. Este artículo es, en el mejor de los casos, una invitación a que ese trabajo etnográfico más completo sea realizado —idealmente por investigadores mapuche que puedan hablar desde dentro de la experiencia que aquí se intenta describir desde fuera.",
+        "Coda: el archivo que anticipó el veredicto",
+        "En diciembre de 2018, alguien se sentó frente a un computador, abrió el PDF de la Orden General 2371, tomó capturas de pantalla, descargó el organigrama de Carabineros, marcó con círculos los nodos de poder, conectó los nombres con los hechos y escribió, con letras grandes: «NACE UIOE». Luego vinculó esa unidad con Antorcha, con Leonardo Osses, con seis montajes, con la muerte de Catrillanca. Pegó fotos de generales, recortó noticias de CIPER y de Ahora Noticias, incluyó una captura de WhatsApp que parece pertenecer a un asunto legal distinto —tal vez el suyo propio—, y guardó todo en un conjunto de imágenes.",
+        "Ocho años después, el Tribunal de Temuco le dio la razón. Gonzalo Blu: culpable. Leonardo Osses: culpable. Patricio Marín: culpable. Alex Schmidt: culpable. Marcelo Teuber: culpable. Manuel Riquelme: culpable. La sentencia será leída el 2 de abril de 2026.",
+        "Bruno Villalobos, el firmante de la Orden General 2371, no fue juzgado en la causa Huracán. Enfrenta un juicio separado por el desvío de 585 millones de pesos en gastos reservados, donde arriesga 24 años de cárcel. Pero en el organigrama del dossier, su nombre está arriba de todo. Y los círculos rojos apuntan hacia abajo, hacia la estructura que él creó y que sigue operando —con otros nombres, en otros formatos— cada vez que un helicóptero sobrevuela Temucuicui.",
+        "Referencias",
+        "CIPER Chile (2018, 2019, 2020, 2022). Serie «Archivos secretos de Carabineros»; «Chats de inteligencia: la red de Carabineros para inculpar a mapuches»; «Carabineros: una institución que legalmente se manda sola».",
+        "Cid Aedo, David (2023). Operación Huracán: montaje y fracaso del Estado chileno contra la resistencia mapuche. Editorial Alquimia, Santiago.",
+        "Comunidad Mapuche Autónoma de Temucuicui (2024). Declaración pública de rechazo al Censo 2024.",
+        "Diario Mapuche (2/ene/2026). «Balance 2025 del Pueblo Mapuche: avances, límites y escenarios en tensión».",
+        "El Diario de La Araucanía (11/ene/2026). «Denuncian racismo contra víctimas de Operación Huracán en Temuco».",
+        "El Mostrador (9/ene/2026). «Operación Huracán: cinco oficiales de Carabineros y El Profesor culpables de montaje».",
+        "El Mostrador (8/abr/2025). «General (r) Blu lanza dardos envenenados contra Bruno Villalobos en juicio».",
+        "Garay, Vladimir y Rogoff, Zak. «Tecnología y vigilancia en la Operación Huracán». Derechos Digitales.",
+        "INDH (28/ene/2021). Sentencia caso Catrillanca.",
+        "Interferencia. Coberturas: «Bruno Villalobos, el intocable» (2019); «Demanda territorial de Temucuicui» (2023); «Condena caso Catrillanca».",
+        "La Tercera (21/jul/2025). «Organización criminal operó durante más de una década: finaliza juicio por fraude de $28.000 millones en Carabineros».",
+        "Orden General Nº 2371, Carabineros de Chile, Dirección General, 20 de octubre de 2015.",
+        "Poder Judicial de Chile (causa rol 16.945-2021). Caso Catrillanca. Corte Suprema.",
+        "Radio Kurruf (13/ene/2026). «Defensa en Caso Huracán solicita rebaja de condena».",
+        "Resumen Latinoamericano (30/nov/2025). «Resistencia mapuche se articula y moderniza ante la amenaza estatal».",
+        "Stoler, Ann Laura (2009). Along the Archival Grain: Epistemic Anxieties and Colonial Common Sense. Princeton UP.",
+        "Taussig, Michael (1992). The Nervous System. Routledge."
+      ]
+    }
+  ]
+}

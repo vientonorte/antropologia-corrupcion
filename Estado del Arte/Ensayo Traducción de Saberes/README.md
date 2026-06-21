@@ -1,6 +1,18 @@
 # Ensayo: Traducción de Saberes — Núcleo Argumentativo de la Tesis Doctoral
 
+> **Árbol canónico (trabajo local):** [`docs/Ensayo Traducción de Saberes/`](../../docs/Ensayo%20Traducción%20de%20Saberes/README.md)  
+> **Índice D4:** `data/ensayo-traduccion-index.json` · **Auditoría valor:** `docs/VALOR_NARRATIVO_D4_ENSAYO.md`  
+> Este README en git es el **resumen teórico público**; manuscritos y corpus viven en `docs/…`.
+
 Esta carpeta contiene los ensayos sobre traducción de saberes, que constituyen el núcleo argumentativo central de la tesis doctoral sobre Antropología y Corrupción.
+
+## Textos canónicos (mar 2026)
+
+| Pieza | Ubicación | Ruta web |
+|---|---|---|
+| Artículo etnográfico «La máquina de fabricar enemigos» | `docs/…/textos-canonicos/articulo_etnografico.docx` | `contra-archivo-v2.html#eje-1` (resumen; texto completo pendiente) |
+| Etnografía audiovisual | `docs/…/textos-canonicos/etnografia-audiovisual-traduciendo-saberes.pdf` | `tesis.html` (pendiente) |
+| Ensayo teórico (este README) | aquí | `contra-archivo-v2.html#eje-4` |
 
 ## Tesis central
 

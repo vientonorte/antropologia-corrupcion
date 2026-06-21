@@ -1,0 +1,153 @@
+{
+  "_meta": {
+    "version": "2026-06-20",
+    "dimension": "D4",
+    "label": "Ensayo Traducción de Saberes",
+    "canonical_root": "docs/Ensayo Traducción de Saberes/",
+    "valor_doc": "docs/VALOR_NARRATIVO_D4_ENSAYO.md",
+    "readme": "docs/Ensayo Traducción de Saberes/README.md",
+    "deploy": false,
+    "git": "parcial — README teórico en Estado del Arte/; binarios gitignored"
+  },
+  "reorganizacion": {
+    "fecha": "2026-06-20",
+    "cambios": [
+      "textos sueltos → textos-canonicos/",
+      "articulo_etnografico.pages → _archivo-borradores/ (borrador)",
+      "typo audiovisaul → etnografia-audiovisual-traduciendo-saberes"
+    ]
+  },
+  "espejos_obsoletos": [],
+  "espejos_eliminados": [
+    "docs/Estado del Arte/Ensayo Traducción de Saberes/ (2026-06-20)",
+    "docs/Estado del Arte/Proyectos/Ensayo Traducción de Saberes/ (2026-06-20)"
+  ],
+  "textos": [
+    {
+      "id": "articulo-etnografico-huracan",
+      "titulo": "La máquina de fabricar enemigos",
+      "subtitulo": "Inteligencia policial, montaje y vida cotidiana mapuche",
+      "tipo": "articulo_etnografico",
+      "valor": "critico",
+      "prioridad": "P0",
+      "caracteres": 18439,
+      "fecha": "2026-03",
+      "canonical": "docs/Ensayo Traducción de Saberes/textos-canonicos/articulo_etnografico.docx",
+      "borrador": "docs/Ensayo Traducción de Saberes/_archivo-borradores/articulo_etnografico.borrador-2026-03-17.pages",
+      "secciones": [
+        { "num": "I", "titulo": "El paisaje antes de la tormenta: Ercilla, 2015" },
+        { "num": "II", "titulo": "La arquitectura del montaje: una etnografía del organigrama" },
+        { "num": "III", "titulo": "Antorcha: el software que nunca existió" },
+        { "num": "IV", "titulo": "El cuerpo vigilado: la experiencia cotidiana de la inteligencia" },
+        { "num": "V", "titulo": "Los nombres detrás de los números: víctimas y racismo institucional" },
+        { "num": "VI", "titulo": "Catrillanca: el punto donde la estructura mata" },
+        { "num": "VII", "titulo": "Wallmapu, 2026: después del veredicto" },
+        { "num": "VIII", "titulo": "Nota metodológica: sobre el archivo como campo" }
+      ],
+      "marco_teorico": ["Taussig", "Stoler"],
+      "casos_vinculados": ["operacion-huracan", "catrillanca", "michillanca"],
+      "rutas_web": {
+        "resumen": "contra-archivo-v2.html#eje-1",
+        "grafo_nodo": "La máquina de fabricar enemigos",
+        "publicacion_pendiente": "articulo-fabricar-enemigos.html"
+      },
+      "estado": "publicable",
+      "en_web": "articulo-fabricar-enemigos.html"
+    },
+    {
+      "id": "ensayo-traduccion-teorico",
+      "titulo": "Ensayo: Traducción de Saberes — Núcleo argumentativo",
+      "tipo": "ensayo_teorico",
+      "valor": "alto",
+      "prioridad": "P0",
+      "fuentes": [
+        "Estado del Arte/Ensayo Traducción de Saberes/README.md",
+        "_papelera_duplicados/EA_contra-archivo-v1-DEPRECATED.html#03"
+      ],
+      "argumentos": 4,
+      "rutas_web": {
+        "resumen": "Estado del Arte/Ensayo Traducción de Saberes/README.md",
+        "destino": "contra-archivo-v2.html#eje-4",
+        "json_pendiente": "data/narrativa-rescatada.json#ensayo_argumentos"
+      },
+      "estado": "publicable_resumen",
+      "en_web": "parcial"
+    },
+    {
+      "id": "etnografia-audiovisual-traduciendo-saberes",
+      "titulo": "Etnografía audiovisual — Traduciendo saberes",
+      "tipo": "ensayo_metodologico",
+      "valor": "alto",
+      "prioridad": "P1",
+      "canonical_docx": "docs/Ensayo Traducción de Saberes/textos-canonicos/etnografia-audiovisual-traduciendo-saberes.docx",
+      "canonical_pdf": "docs/Ensayo Traducción de Saberes/textos-canonicos/etnografia-audiovisual-traduciendo-saberes.pdf",
+      "rutas_web": {
+        "destino": "tesis.html#etnografia-audiovisual",
+        "eje": "contra-archivo-v2.html#eje-4"
+      },
+      "estado": "investigador",
+      "en_web": false
+    }
+  ],
+  "subcorpus": [
+    {
+      "id": "marco-decolonial",
+      "path": "Marco Teórico/Pensamiento Decolonial/",
+      "archivos": 25,
+      "valor": "alto",
+      "grafo_ref": "Biblioteca decolonial"
+    },
+    {
+      "id": "resistencia-cultural",
+      "path": "Marco Teórico/Resistencia Cultural/",
+      "archivos": 8,
+      "valor": "alto"
+    },
+    {
+      "id": "bibliografia-tiempo",
+      "path": "Bibliografía/Bibliografía del tiempo/",
+      "archivos": 18,
+      "valor": "medio"
+    },
+    {
+      "id": "wallmapu-referencia",
+      "path": "Marco de Referencia/Bibliografía/R público y privado/Wallmapu/",
+      "archivos": 12,
+      "valor": "alto",
+      "vinculo": "D5"
+    },
+    {
+      "id": "estado-arte-articulos",
+      "path": "Estado del Arte/Articulos Académicos/",
+      "archivos": 12,
+      "valor": "medio"
+    },
+    {
+      "id": "metodologias",
+      "path": "Metodologías/",
+      "archivos": 4,
+      "valor": "medio"
+    },
+    {
+      "id": "fotos-ensayo",
+      "path": "Fotos Ensayo/",
+      "archivos": 9,
+      "valor": "alto",
+      "nota": "Campo Wallmapu — no indexado en archivo público"
+    },
+    {
+      "id": "produccion-colaborativa",
+      "path": "Producción Colaborativa/",
+      "archivos": 2,
+      "valor": "medio",
+      "deuda": "renombrar Codigo QR - Material Interactivo.png.png"
+    }
+  ],
+  "rescue": [
+    { "id": "D4-R1", "bloque": "articulo_etnografico", "prioridad": "P0" },
+    { "id": "D4-R2", "bloque": "ensayo_teorico", "prioridad": "P0" },
+    { "id": "D4-R3", "bloque": "etnografia_audiovisual", "prioridad": "P1" },
+    { "id": "D4-R4", "bloque": "fotos_ensayo", "prioridad": "P2" },
+    { "id": "D4-R5", "bloque": "caso_casos_json", "prioridad": "P1", "nota": "requiere tests 6→7" }
+  ]
+}

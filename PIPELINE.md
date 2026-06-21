@@ -40,9 +40,11 @@
 `deploy.yml` corre sobre `main` y hace:
 
 1. `node tests/runner.js`
-2. preparación del artefacto estático
-3. exclusión de `terraza/`, `Estado del Arte/` y `docs/` del artefacto público
+2. `rsync web/ .` — `web/` es la fuente de verdad del sitio (HTML, CSS, `shared-shell.js`)
+3. exclusión de `web/`, `Estado del Arte/`, `Ensayo Traducción de Saberes/` y `docs/` del artefacto público
 4. deploy a GitHub Pages
+
+**Regla:** no mantener espejos HTML en la raíz del repo; editar siempre en `web/`.
 
 ## Seguridad automatizada
 

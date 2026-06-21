@@ -15,6 +15,7 @@ var path = require('path');
 module.exports = function (describe, it, assert, assertEqual) {
 
     var repoRoot = path.join(__dirname, '..');
+    var webRoot = path.join(repoRoot, 'web');
 
     /* HTML files to audit */
     var htmlFiles = [
@@ -95,7 +96,7 @@ module.exports = function (describe, it, assert, assertEqual) {
         };
 
         htmlFiles.forEach(function (file) {
-            var filePath = path.join(repoRoot, file);
+            var filePath = path.join(webRoot, file);
             if (!fs.existsSync(filePath)) return;
 
             var html = fs.readFileSync(filePath, 'utf8');
@@ -132,7 +133,7 @@ module.exports = function (describe, it, assert, assertEqual) {
         var pagesWithExternal = ['landing.html', 'archivo.html', 'buscador.html', 'login.html', 'privado.html', 'tesis.html', 'contra-archivo-v2.html'];
 
         pagesWithExternal.forEach(function (file) {
-            var filePath = path.join(repoRoot, file);
+            var filePath = path.join(webRoot, file);
             if (!fs.existsSync(filePath)) return;
 
             var html = fs.readFileSync(filePath, 'utf8');
@@ -164,7 +165,7 @@ module.exports = function (describe, it, assert, assertEqual) {
     describe('HTML lint — nav elements have scoped classes', function () {
 
         htmlFiles.forEach(function (file) {
-            var filePath = path.join(repoRoot, file);
+            var filePath = path.join(webRoot, file);
             if (!fs.existsSync(filePath)) return;
 
             var html = fs.readFileSync(filePath, 'utf8');

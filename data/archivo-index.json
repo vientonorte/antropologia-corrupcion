@@ -57,6 +57,26 @@
       "descripcion": "Performance poética: testimonio, etnografía del terror, dualidad laboral y filosofía de la liberación.",
       "url": "Poemarios/trabajo-en-sura.html",
       "estado": "publicable"
+    },
+    {
+      "id": "articulo-etnografico-huracan",
+      "tipo": "articulo",
+      "seccion": "biblioteca",
+      "titulo": "La máquina de fabricar enemigos",
+      "descripcion": "Artículo etnográfico mar 2026: vigilancia estatal, Operación Huracán, archivo La Negra 2018. Fuente: docs/Ensayo…/textos-canonicos/articulo_etnografico.docx",
+      "url": "articulo-fabricar-enemigos.html",
+      "estado": "publicable",
+      "dimension": "D4"
+    },
+    {
+      "id": "ensayo-traduccion-teorico",
+      "tipo": "ensayo",
+      "seccion": "biblioteca",
+      "titulo": "Ensayo: Traducción de Saberes",
+      "descripcion": "Núcleo argumentativo: mistranslation institucionalizada, marcos normativos, epistemicidio. README en Estado del Arte + rescate papelera §03 pendiente.",
+      "url": "https://github.com/vientonorte/antropologia-corrupcion/blob/main/Estado%20del%20Arte/Ensayo%20Traducci%C3%B3n%20de%20Saberes/README.md",
+      "estado": "publicable_resumen",
+      "dimension": "D4"
     }
   ]
 }

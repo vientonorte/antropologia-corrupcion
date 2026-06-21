@@ -1,0 +1,53 @@
+{
+  "_meta": {
+    "version": "2026-06-20",
+    "fuentes": [
+      "Estado del Arte/Ensayo Traducción de Saberes/README.md",
+      "_papelera_duplicados/EA_contra-archivo-v1-DEPRECATED.html §03",
+      "docs/VALOR_NARRATIVO_D4_ENSAYO.md"
+    ],
+    "destino_web": "contra-archivo-v2.html#eje-4"
+  },
+  "ensayo_argumentos": {
+    "titulo": "Ensayo: Traducción de Saberes — Núcleo argumentativo",
+    "abstract": "La corrupción institucional puede entenderse como una falla sistemática en la traducción entre marcos normativos, lenguajes técnicos y prácticas organizacionales. La opacidad y el despojo no son efectos colaterales sino resultados estructurales de la mistranslation institucionalizada.",
+    "argumentos": [
+      {
+        "id": 1,
+        "titulo": "La corrupción como problema de traducción",
+        "cuerpo": "Las vulneraciones normativas son brechas estructurales entre el lenguaje del derecho y la arquitectura técnica u organizacional. Siguiendo a Riles (2006), los documentos normativos son artefactos cuya eficacia depende de las cadenas de traducción que los conectan con las prácticas."
+      },
+      {
+        "id": 2,
+        "titulo": "El despojo territorial como traducción forzada",
+        "cuerpo": "El proceso de radicación mapuche (1884–1929) operó como traducción coercitiva del sistema comunal al lenguaje de la propiedad privada. Analizable con Tsing (2005): la traducción entre sistemas produce efectos materiales irreversibles."
+      },
+      {
+        "id": 3,
+        "titulo": "La mistranslation como dispositivo de poder",
+        "cuerpo": "Las instituciones explotan la incomprensibilidad técnica y jurídica. La opacidad es producto activo de la arquitectura institucional, no falla de gobernanza (World Bank, Transparency International)."
+      },
+      {
+        "id": 4,
+        "titulo": "El contra-archivo como traducción crítica",
+        "cuerpo": "Frente a la mistranslation institucional, el contra-archivo propone re-traducción: poner en circulación documentos y testimonios que los marcos oficiales ocultan. Inspirado en Derrida (1995), produce nuevas legibilidades sin restituir un original perdido."
+      }
+    ],
+    "contribucion": [
+      "Concepto de mistranslation institucionalizada como categoría analítica",
+      "Metodología de etnografía multi-situada (SURA/AFP + territorio indígena)",
+      "Contra-archivo como intervención epistémica",
+      "Poesía y etnografía audiovisual como formas que desestabilizan la opacidad"
+    ],
+    "marcos_normativos": [
+      { "marco": "Ley 19.628", "contenido": "Tratamiento de datos con autorización del titular", "relevancia": "Caso SURA/AFP" },
+      { "marco": "Nueva Ley de Datos 2024", "contenido": "Agencia de Protección de Datos, sanciones CMF", "relevancia": "Marco actualizado" },
+      { "marco": "Convenio OIT 169", "contenido": "Consulta previa libre e informada", "relevancia": "Derechos indígenas" },
+      { "marco": "Art. 11 Constitución", "contenido": "Vida privada y honor", "relevancia": "Protección constitucional" },
+      { "marco": "CIDH — Jurisprudencia", "contenido": "Tensión divulgación vs protección", "relevancia": "Contexto interamericano" }
+    ],
+    "epistemicidio": "Rivera Cusicanqui (2010): la radicación mapuche invalidó sistemas de conocimiento territorial al imponer catastro y escritura como únicos registros válidos.",
+    "html": "<div class=\"section-header\"><span class=\"section-number\">D4</span><h2>Ensayo: Traducción de Saberes</h2></div><p class=\"abstract\">La corrupción institucional opera como un régimen de <strong>mistranslation institucionalizada</strong>: falla sistemática en la traducción entre marcos normativos, arquitecturas técnicas y prácticas organizacionales.</p><ol class=\"key-args\"><li><strong>Corrupción como traducción</strong> — Riles: documentos normativos como artefactos.</li><li><strong>Despojo como traducción forzada</strong> — Tsing: fricción violenta entre sistemas.</li><li><strong>Mistranslation como poder</strong> — opacidad como producto activo.</li><li><strong>Contra-archivo como re-traducción</strong> — Derrida: nuevas legibilidades.</li></ol>",
+    "caracteres": 2840
+  }
+}

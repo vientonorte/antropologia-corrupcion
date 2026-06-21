@@ -8,7 +8,7 @@ var fs = require('fs');
 var path = require('path');
 
 module.exports = function(describe, it, assert, assertEqual) {
-    var html = fs.readFileSync(path.join(__dirname, '..', 'privado.html'), 'utf8');
+    var html = fs.readFileSync(path.join(__dirname, '..', 'web', 'privado.html'), 'utf8');
 
     describe('privado.html chat wiring', function() {
         it('loads rescued branch content dataset', function() {

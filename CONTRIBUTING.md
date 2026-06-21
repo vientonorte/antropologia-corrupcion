@@ -66,13 +66,14 @@ Este repositorio **solo acepta fuentes públicas oficiales chilenas verificables
 
 ### Identifica el contexto correcto
 
-#### A. Raíz del repositorio
+#### A. Sitio estático (`web/`)
 
 - stack: **HTML5 + CSS3 + Vanilla JS**
 - sin frameworks
 - sin D3
 - sin bundlers
 - sin dependencias externas en el sitio estático
+- **editar páginas y shell en `web/`** — la raíz del repo no debe acumular espejos HTML
 
 #### B. `terraza/`
 

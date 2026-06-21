@@ -34,7 +34,7 @@ Este documento es la **base angular** de la arquitectura de información (IA). T
 | Sitio estático público | `web/` + `data/` + `src/` + `img/` | Sí |
 | Investigación autenticada | `privado-login.html`, `privado.html`, `archivo-lecturas.html` | Sí (con restricciones) |
 | Producción doctoral | `web/terraza/` (Next.js), `admin.html` | No (gateway estático en `/terraza/`) |
-| Archivo pesado de tesis | `Estado del Arte/`, `Ensayo Traducción de Saberes/`, `docs/` | No |
+| Archivo pesado de tesis | `Estado del Arte/`, `docs/Ensayo Traducción de Saberes/` (canónico D4), `docs/` | No |
 
 ---
 
@@ -304,11 +304,28 @@ Esta es la **nav objetivo** derivada del inventario (no necesariamente implement
 
 ---
 
+## 11b. D4 — Ensayo Traducción de Saberes (reorganizado 2026-06-20)
+
+> **Canónico local:** `docs/Ensayo Traducción de Saberes/` · **Índice:** `data/ensayo-traduccion-index.json`  
+> **Valor narrativo:** [`docs/VALOR_NARRATIVO_D4_ENSAYO.md`](VALOR_NARRATIVO_D4_ENSAYO.md) · deuda **B9**
+
+| Pieza | Valor | Canónico | En `web/` |
+|---|---|---|---|
+| Artículo «La máquina de fabricar enemigos» | **Crítico** | `textos-canonicos/articulo_etnografico.docx` | Solo resumen en v2 `#eje-1` |
+| Ensayo teórico (mistranslation) | Alto | `Estado del Arte/…/README.md` | Parcial |
+| Etnografía audiovisual | Alto | `textos-canonicos/*.pdf` | No |
+| Corpus PDF (50+) | Medio–Alto | subcarpetas Marco/Bibliografía | Referenciado en grafo |
+
+**Espejos obsoletos:** `docs/Estado del Arte/Ensayo…`, `docs/Estado del Arte/Proyectos/Ensayo…`, `Ensayo Traducción de Saberes/contra-archivo.html` (raíz).
+
+---
+
 ## 12. Excluidos — `_papelera_duplicados/` (solo local)
 
 > **Ruta:** `_papelera_duplicados/` · **Git:** en `.gitignore` (no está en GitHub ni en Pages)  
 > **Prefijo `EA_`:** copias sacadas del árbol activo durante limpieza de duplicados (*Estado del Arte* / raíz pre-`web/`).  
-> **Decisión documentada:** `skills/QUICK_WINS_PRODUCCION.md` → eliminar cuando no hagan falta como referencia.
+> **Decisión documentada:** `skills/QUICK_WINS_PRODUCCION.md` → eliminar cuando no hagan falta como referencia.  
+> **Valor narrativo (auditoría 2026-06-20):** [`docs/VALOR_NARRATIVO_PAPELERA.md`](VALOR_NARRATIVO_PAPELERA.md) · deuda **B8** en `ia-inventario.json`
 
 | Archivo papelera | Canónico actual | Fecha snapshot | Estado vs canónico |
 |---|---|---|---|
