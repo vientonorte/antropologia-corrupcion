@@ -208,6 +208,15 @@
             font-size: .72rem; color: var(--ca-orange); font-family: var(--font-mono);
             margin-top: 4px;
         }
+        .ca-proxy-status {
+            font-size: .78rem; color: var(--ca-teal); font-family: var(--font-mono);
+            margin-bottom: var(--sp-2, 8px);
+        }
+        .ca-api-key-status {
+            font-size: .72rem; color: var(--muted); font-family: var(--font-mono);
+            margin-top: 4px;
+        }
+        .ca-api-key-status.saved { color: var(--ca-teal); }
 
         /* ── UPLOAD ACTIONS / STATUS ── */
         .ca-upload-actions { display: flex; gap: var(--sp-3, 12px); align-items: center; flex-wrap: wrap; }
@@ -489,18 +498,21 @@
             <details class="ca-api-details">
                 <summary>Configuración API Claude</summary>
                 <div class="ca-api-inner">
-                    <div class="ca-form-group">
+                    <p id="proxy-status" class="ca-proxy-status" hidden role="status" aria-live="polite"></p>
+                    <div class="ca-form-group" id="api-key-row">
                         <label class="ca-form-label" for="api-key-input">Anthropic API Key</label>
                         <div class="ca-api-key-wrap">
                             <input type="password" id="api-key-input" class="ca-form-input" placeholder="sk-ant-…" autocomplete="off">
                             <button type="button" id="btn-toggle-key" aria-label="Mostrar u ocultar clave API">👁</button>
+                            <button type="button" class="ca-btn-sm" id="btn-save-key">Guardar</button>
                         </div>
-                        <p class="ca-api-warn">🔒 La clave no se almacena — se introduce una vez por sesión y se descarta al cerrar la pestaña.</p>
+                        <p id="api-key-status" class="ca-api-key-status" aria-live="polite"></p>
+                        <p class="ca-api-warn">🔒 La clave no se almacena en disco — solo en memoria de esta pestaña. Alternativa: proxy IA (ver <code>data/ai-proxy-config.json</code>).</p>
                     </div>
                     <div class="ca-form-group">
                         <label class="ca-form-label" for="api-model-input">Modelo</label>
-                        <input type="text" id="api-model-input" class="ca-form-input" value="claude-opus-4-7"
-                            placeholder="claude-opus-4-7">
+                        <input type="text" id="api-model-input" class="ca-form-input" value="claude-sonnet-4-6"
+                            placeholder="claude-sonnet-4-6">
                     </div>
                 </div>
             </details>
@@ -702,6 +714,9 @@
 
             var STORAGE_KEY = 'contraarchivoLecturas';
             var STORAGE_API_MODEL = 'contraarchivoApiModel';
+            var AI_PROXY_STORAGE = 'contra_archivo_proxy_url';
+            var _sessionApiKey = '';
+            var AI_CFG = { proxyUrl: '', model: 'claude-sonnet-4-6' };
 
             /* Clave A — Bullet Ro */
             var COLORS_A = [
@@ -1273,19 +1288,138 @@
                 return JSON.parse(stripped);
             }
 
+            function getBasePath() {
+                return window.location.pathname.indexOf('/antropologia-corrupcion/') === 0
+                    ? '/antropologia-corrupcion/'
+                    : '/';
+            }
+
+            function hasAiAccess() {
+                return !!AI_CFG.proxyUrl || !!_sessionApiKey
+                    || !!document.getElementById('api-key-input').value.trim();
+            }
+
+            function getActiveApiKey() {
+                return _sessionApiKey || document.getElementById('api-key-input').value.trim();
+            }
+
+            function formatApiError(message) {
+                if (!message) return 'Error desconocido de la API.';
+                if (message.indexOf('invalid x-api-key') !== -1) {
+                    return 'Clave API inválida o revocada. Genera una nueva en console.anthropic.com → API Keys (debe empezar con sk-ant-).';
+                }
+                if (message.indexOf('authentication') !== -1) {
+                    return 'Error de autenticación: ' + message + '. Verifica la clave o usa proxy IA.';
+                }
+                return message;
+            }
+
+            function updateAiAccessUi() {
+                var row = document.getElementById('api-key-row');
+                var status = document.getElementById('proxy-status');
+                if (AI_CFG.proxyUrl) {
+                    if (row) row.hidden = true;
+                    if (status) {
+                        status.hidden = false;
+                        status.textContent = 'Proxy IA activo — no necesitas pegar API key.';
+                    }
+                } else {
+                    if (row) row.hidden = false;
+                    if (status) status.hidden = true;
+                }
+                updateAnalyzeBtn();
+            }
+
+            function loadAiProxyConfig() {
+                return fetch(getBasePath() + 'data/ai-proxy-config.json', { cache: 'no-cache' })
+                    .then(function (res) {
+                        if (res.ok) return res.json();
+                        return {};
+                    })
+                    .then(function (cfg) {
+                        AI_CFG.proxyUrl = ((cfg.proxyUrl || '') + '').trim().replace(/\/+$/, '');
+                        if (cfg.model) AI_CFG.model = cfg.model;
+                    })
+                    .catch(function () { /* config opcional */ })
+                    .then(function () {
+                        var localOverride = (localStorage.getItem(AI_PROXY_STORAGE) || '').trim().replace(/\/+$/, '');
+                        if (localOverride) AI_CFG.proxyUrl = localOverride;
+                        updateAiAccessUi();
+                    });
+            }
+
+            async function callClaudeMessages(payload) {
+                var proxy = AI_CFG.proxyUrl;
+                if (proxy) {
+                    var proxyRes = await fetch(proxy + '/api/claude', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    if (!proxyRes.ok) {
+                        var proxyErr = await proxyRes.json().catch(function () { return {}; });
+                        var proxyMsg = proxyErr.error && proxyErr.error.message
+                            ? proxyErr.error.message
+                            : ('Proxy ' + proxyRes.status);
+                        throw new Error(formatApiError(proxyMsg));
+                    }
+                    return proxyRes.json();
+                }
+                var apiKey = getActiveApiKey();
+                if (!apiKey) {
+                    throw new Error('Sin proxy IA ni API key. Pega sk-ant-… y pulsa Guardar, o configura proxyUrl en data/ai-proxy-config.json.');
+                }
+                if (!apiKey.startsWith('sk-ant-')) {
+                    throw new Error('La clave debe empezar con sk-ant-. Cópiala desde console.anthropic.com.');
+                }
+                var directRes = await fetch('https://api.anthropic.com/v1/messages', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'x-api-key': apiKey,
+                        'anthropic-version': '2023-06-01',
+                        'anthropic-dangerous-direct-browser-access': 'true'
+                    },
+                    body: JSON.stringify(payload)
+                });
+                if (!directRes.ok) {
+                    var directErr = await directRes.json().catch(function () { return {}; });
+                    var directMsg = directErr.error && directErr.error.message
+                        ? directErr.error.message
+                        : ('HTTP ' + directRes.status);
+                    throw new Error(formatApiError(directMsg));
+                }
+                return directRes.json();
+            }
+
+            function saveApiKey() {
+                var key = document.getElementById('api-key-input').value.trim();
+                var statusEl = document.getElementById('api-key-status');
+                if (!key.startsWith('sk-ant-')) {
+                    statusEl.textContent = 'Key inválida — debe empezar con sk-ant-';
+                    statusEl.className = 'ca-api-key-status';
+                    return;
+                }
+                _sessionApiKey = key;
+                document.getElementById('api-key-input').value = '';
+                statusEl.textContent = 'Clave lista para esta sesión ✓';
+                statusEl.className = 'ca-api-key-status saved';
+                updateAnalyzeBtn();
+            }
+
             function loadApiSettings() {
-                /* API key is never persisted — user re-enters each session */
                 var model = localStorage.getItem(STORAGE_API_MODEL);
                 if (model) {
                     document.getElementById('api-model-input').value = model;
+                } else if (AI_CFG.model) {
+                    document.getElementById('api-model-input').value = AI_CFG.model;
                 }
                 updateAnalyzeBtn();
             }
 
             function updateAnalyzeBtn() {
                 var hasImage = !!uploadImageBase64;
-                var hasKey = !!document.getElementById('api-key-input').value.trim();
-                document.getElementById('btn-analyze').disabled = !(hasImage && hasKey);
+                document.getElementById('btn-analyze').disabled = !(hasImage && hasAiAccess());
             }
 
             function resolveImageMime(file) {
@@ -1493,15 +1627,13 @@
             }
 
             async function analyzeImage() {
-                var apiKey = document.getElementById('api-key-input').value.trim();
-                var model = document.getElementById('api-model-input').value.trim() || 'claude-opus-4-7';
+                var model = document.getElementById('api-model-input').value.trim() || AI_CFG.model || 'claude-sonnet-4-6';
                 var clave = getSelectedUploadClave();
                 var fuente = document.getElementById('upload-fuente').value.trim();
 
-                /* Persist model preference only — API key is never stored */
                 try { localStorage.setItem(STORAGE_API_MODEL, model); } catch (e) {}
 
-                if (!uploadImageBase64 || !apiKey) return;
+                if (!uploadImageBase64 || !hasAiAccess()) return;
 
                 var btn = document.getElementById('btn-analyze');
                 btn.disabled = true;
@@ -1510,45 +1642,27 @@
                 var prompt = getAnalyzePrompt(clave);
 
                 try {
-                    var response = await fetch('https://api.anthropic.com/v1/messages', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'x-api-key': apiKey,
-                            'anthropic-version': '2023-06-01',
-                            'anthropic-dangerous-direct-browser-access': 'true'
-                        },
-                        body: JSON.stringify({
-                            model: model,
-                            max_tokens: 4096,
-                            messages: [{
-                                role: 'user',
-                                content: [
-                                    {
-                                        type: 'image',
-                                        source: {
-                                            type: 'base64',
-                                            media_type: apiMediaType(uploadImageType),
-                                            data: uploadImageBase64
-                                        }
-                                    },
-                                    {
-                                        type: 'text',
-                                        text: prompt
+                    var data = await callClaudeMessages({
+                        model: model,
+                        max_tokens: 4096,
+                        messages: [{
+                            role: 'user',
+                            content: [
+                                {
+                                    type: 'image',
+                                    source: {
+                                        type: 'base64',
+                                        media_type: apiMediaType(uploadImageType),
+                                        data: uploadImageBase64
                                     }
-                                ]
-                            }]
-                        })
+                                },
+                                {
+                                    type: 'text',
+                                    text: prompt
+                                }
+                            ]
+                        }]
                     });
-
-                    if (!response.ok) {
-                        var err = await response.json().catch(function () { return {}; });
-                        setStatus('Error API: ' + (err.error && err.error.message ? err.error.message : response.status), 'error');
-                        btn.disabled = false;
-                        return;
-                    }
-
-                    var data = await response.json();
                     var rawText = data.content && data.content[0] && data.content[0].text ? data.content[0].text : '';
 
                     var parsed;
@@ -1572,7 +1686,7 @@
                     renderAnalysisResults(parsed, clave, fuente);
 
                 } catch (fetchErr) {
-                    setStatus('Error de red: ' + fetchErr.message, 'error');
+                    setStatus('Error API: ' + fetchErr.message, 'error');
                     console.error(fetchErr);
                 } finally {
                     btn.disabled = false;
@@ -1624,6 +1738,16 @@
                     if (filterLibroEl) {
                         window.CALibrosClaveB.populateSelect(filterLibroEl, registry, { placeholder: 'Todos' });
                     }
+                    var hint = document.getElementById('upload-libro-hint');
+                    if (hint) {
+                        if (registry.libros && registry.libros.length) {
+                            hint.textContent = registry.libros.length + ' libros en registro Clave B. Al elegir uno se rellena la fuente.';
+                            hint.style.color = 'var(--dim)';
+                        } else {
+                            hint.textContent = 'No se cargó el registro de libros. Recarga la página o verifica data/libros-clave-b.json.';
+                            hint.style.color = 'var(--crit)';
+                        }
+                    }
                 });
             }
 
@@ -1632,7 +1756,9 @@
                 document.getElementById('main-content').hidden = false;
 
                 load();
-                loadApiSettings();
+                loadAiProxyConfig().then(function () {
+                    loadApiSettings();
+                });
                 loadLibrosRegistry().then(function () {
                     renderFilterChips();
                     updateStats();
@@ -1753,6 +1879,8 @@
                     input.type = input.type === 'password' ? 'text' : 'password';
                     this.textContent = input.type === 'password' ? '👁' : '🙈';
                 });
+
+                document.getElementById('btn-save-key').addEventListener('click', saveApiKey);
 
                 /* API key input changes → update analyze button */
                 document.getElementById('api-key-input').addEventListener('input', updateAnalyzeBtn);
