@@ -209,7 +209,7 @@ async function main() {
     }
   }
 
-  const localStale = scanLocalStale();
+  const localStale = DEPLOYED ? [] : scanLocalStale();
   const redirectStubs = [];
   for (const stub of ['zuboff-citas.html', 'citas-attac.html']) {
     const url = `${BASE}/${stub}`;
