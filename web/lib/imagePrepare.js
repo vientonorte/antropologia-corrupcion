@@ -1,6 +1,6 @@
 /**
  * lib/imagePrepare.js — Preparar fotos para canvas (JPG/PNG/HEIC iPhone)
- * Usa object URLs (más fiables que data URLs en fotos grandes).
+ * Detecta HEIC aunque venga como IMG_xxxx.jpg (iPhone).
  */
 (function (global) {
     'use strict';
@@ -8,6 +8,7 @@
     var MAX_BYTES = 20 * 1024 * 1024;
     var MAX_EDGE = 4096;
     var HEIC2ANY_URL = 'vendor/heic2any.min.js';
+    var HEIF_BRANDS = ['heic', 'heix', 'hevc', 'hevx', 'mif1', 'msf1', 'MiHE', 'MiHA', 'heis', 'heim', 'avif'];
 
     function resolveMime(file) {
         var mime = (file && file.type) || '';
@@ -23,7 +24,34 @@
         return mime.toLowerCase();
     }
 
-    function isHeic(file) {
+    function sniffHeifBrand(buffer) {
+        if (!buffer || buffer.length < 12) return null;
+        var ftyp = String.fromCharCode(buffer[4], buffer[5], buffer[6], buffer[7]);
+        if (ftyp !== 'ftyp') return null;
+        var brand = String.fromCharCode(buffer[8], buffer[9], buffer[10], buffer[11]);
+        if (HEIF_BRANDS.indexOf(brand) !== -1) return brand;
+        if (/heic|heif|mif1/i.test(brand)) return brand;
+        return null;
+    }
+
+    function sniffContainerFormat(file) {
+        if (!file || !file.slice) return Promise.resolve(null);
+        return new Promise(function (resolve) {
+            var reader = new FileReader();
+            reader.onload = function () {
+                resolve(sniffHeifBrand(new Uint8Array(reader.result)));
+            };
+            reader.onerror = function () { resolve(null); };
+            try {
+                reader.readAsArrayBuffer(file.slice(0, 64));
+            } catch (e) {
+                resolve(null);
+            }
+        });
+    }
+
+    function isHeic(file, sniffedBrand) {
+        if (sniffedBrand) return true;
         var mime = resolveMime(file);
         return mime === 'image/heic' || mime === 'image/heif' || /heic|heif/.test(mime);
     }
@@ -151,14 +179,14 @@
         return tryDecodeImage(url).then(function (ok) {
             if (!ok) {
                 URL.revokeObjectURL(url);
-                throw new Error('Formato de imagen no reconocido por el navegador');
+                throw new Error('decode_failed');
             }
             return downscaleIfNeeded(url, progress);
         });
     }
 
     function prepareHeic(file, progress) {
-        if (progress) progress('Preparando HEIC…');
+        if (progress) progress('Preparando HEIC (iPhone)…');
         var nativeUrl = blobToObjectUrl(file);
         return tryDecodeImage(nativeUrl).then(function (nativeOk) {
             if (nativeOk) {
@@ -173,7 +201,7 @@
     /**
      * @param {File|Blob} file
      * @param {{ onProgress?: (msg: string) => void }} [opts]
-     * @returns {Promise<{ url: string, revoke?: boolean }>}
+     * @returns {Promise<{ url: string, revoke?: boolean, format?: string }>}
      */
     function prepareImageFile(file, opts) {
         opts = opts || {};
@@ -186,11 +214,29 @@
         if (!isSupportedImage(file)) {
             return Promise.reject(new Error('Formato no admitido. Usa JPG, PNG, WebP o HEIC.'));
         }
-        if (isHeic(file)) {
-            return prepareHeic(file, progress);
-        }
-        progress('Cargando imagen…');
-        return prepareRasterBlob(file, progress);
+
+        return sniffContainerFormat(file).then(function (brand) {
+            if (isHeic(file, brand)) {
+                return prepareHeic(file, progress).then(function (prepared) {
+                    prepared.format = brand || 'heic';
+                    return prepared;
+                });
+            }
+            progress('Cargando imagen…');
+            return prepareRasterBlob(file, progress).then(function (prepared) {
+                prepared.format = resolveMime(file);
+                return prepared;
+            }).catch(function (err) {
+                if (err && err.message === 'decode_failed') {
+                    progress('Archivo iPhone HEIC con extensión .jpg — convirtiendo…');
+                    return prepareHeic(file, progress).then(function (prepared) {
+                        prepared.format = 'heic-disguised-jpg';
+                        return prepared;
+                    });
+                }
+                throw err;
+            });
+        });
     }
 
     global.CAImagePrepare = {
@@ -198,6 +244,8 @@
         isSupportedImage: isSupportedImage,
         isHeic: isHeic,
         resolveMime: resolveMime,
+        sniffHeifBrand: sniffHeifBrand,
+        sniffContainerFormat: sniffContainerFormat,
         MAX_BYTES: MAX_BYTES,
         MAX_EDGE: MAX_EDGE,
     };

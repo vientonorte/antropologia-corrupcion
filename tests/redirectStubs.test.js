@@ -57,6 +57,7 @@ module.exports = function (describe, it, assert, assertEqual) {
       assert(html.indexOf('corpusCitasStore.js') !== -1, 'almacén unificado');
       assert(html.indexOf('librosClaveB.js') !== -1, 'registro libros físicos');
       assert(html.indexOf('imagePrepare.js') !== -1, 'preparación de imágenes local');
+      assert(html.indexOf('claveBAutoScan') !== -1, 'escaneo automático Clave B');
       var imgIdx = html.indexOf('imagePrepare.js');
       var inlineIdx = html.indexOf('initCaptureReaders');
       assert(imgIdx !== -1 && inlineIdx !== -1 && imgIdx < inlineIdx, 'imagePrepare antes del inline');

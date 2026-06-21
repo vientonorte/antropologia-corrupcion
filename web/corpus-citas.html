@@ -1053,8 +1053,9 @@
             </div>
             <div class="analyzer-body">
                 <p style="font-size:11px;color:var(--neutral);margin:0 0 14px;line-height:1.6;">
-                    Sube una foto de tu libro subrayado, aplica la <strong>Clave B</strong> (protocolo bujo-ro v1.2),
-                    transcribe cada fragmento y archívalo en el corpus. Todo corre en tu navegador — OCR opcional con Tesseract.
+                    Sube una foto de página marcada (JPG o HEIC iPhone — incluso si el archivo dice <code>.jpg</code> pero es HEIC).
+                    El motor <strong>Clave B</strong> detecta colores, transcribe con OCR local y codifica citas GTD para el corpus epistémico.
+                    Flujo: <strong>foto → escaneo automático → revisar cola → importar al archivo</strong>.
                 </p>
 
                 <div class="clave-b-legend" aria-label="Clave B — libros impresos">
@@ -1078,6 +1079,7 @@
                     <p class="clave-b-color-hint" id="claveBColorLabel">🟨 Referencia · referencia</p>
                     <div class="clave-b-toolbar" id="claveBToolbar" role="toolbar" aria-label="Colores Clave B"></div>
                     <div class="clave-b-tools">
+                        <button type="button" class="btn-primary" id="claveBAutoScan">⚡ Escanear marcadores Clave B</button>
                         <button type="button" class="btn-secondary active" data-clave-mode="eyedropper" aria-pressed="true">Cuentagotas</button>
                         <button type="button" class="btn-secondary" data-clave-mode="region" aria-pressed="false">Seleccionar región</button>
                         <button type="button" class="btn-secondary" id="claveBOcrRegion">OCR en región</button>
@@ -1087,7 +1089,12 @@
                     </div>
 
                     <div class="clave-b-form">
-                        <label>Libro
+                        <label>Libro del registro físico
+                            <select id="claveBLibroSelect" aria-label="Seleccionar libro del registro Clave B">
+                                <option value="">— Seleccionar del registro —</option>
+                            </select>
+                        </label>
+                        <label>Título (editable)
                             <input type="text" id="claveBLibro" placeholder="La era del capitalismo de la vigilancia">
                         </label>
                         <label>Autor
@@ -1331,9 +1338,9 @@
     <script src="src/passkey.js?v=20260619"></script>
     <script src="lib/corpusCitasStore.js?v=20260621"></script>
     <script src="lib/librosClaveB.js?v=20260621"></script>
-    <script src="lib/imagePrepare.js?v=20260621b"></script>
-    <script src="js/lectura-clave-b.js?v=20260621b"></script>
-    <script src="js/lectura-clave-a.js?v=20260621b"></script>
+    <script src="lib/imagePrepare.js?v=20260621c"></script>
+    <script src="js/lectura-clave-b.js?v=20260621c"></script>
+    <script src="js/lectura-clave-a.js?v=20260621c"></script>
     <script>
         // Citation Archive Management — almacén unificado corpusCitas
         const STORAGE_KEY = window.CorpusCitasStore ? CorpusCitasStore.STORAGE_KEY : 'corpusCitas';
@@ -1844,12 +1851,29 @@ Notas: Conexión directa con tu experiencia de expulsión a los 15. Lo que perdi
                 if (captureLibro) {
                     CALibrosClaveB.populateSelect(captureLibro, registry);
                 }
+                var claveBLibroSelect = document.getElementById('claveBLibroSelect');
+                if (claveBLibroSelect) {
+                    CALibrosClaveB.populateSelect(claveBLibroSelect, registry);
+                }
                 var hint = document.getElementById('captureLibroHint');
                 if (hint && registry.libros) {
                     hint.textContent = registry.libros.length + ' libros del registro físico · rellena título y autor';
                 }
             });
         }
+
+        function applyLibroToClaveB() {
+            var select = document.getElementById('claveBLibroSelect');
+            if (!select || !librosRegistry || !window.CALibrosClaveB) return;
+            var libro = CALibrosClaveB.getLibroById(librosRegistry, select.value);
+            if (!libro) return;
+            var titleEl = document.getElementById('claveBLibro');
+            var authorEl = document.getElementById('claveBAutor');
+            if (titleEl) titleEl.value = libro.titulo || '';
+            if (authorEl) authorEl.value = libro.autor || '';
+        }
+
+        document.getElementById('claveBLibroSelect')?.addEventListener('change', applyLibroToClaveB);
 
         function applyLibroToCapture() {
             var select = document.getElementById('captureLibro');

@@ -1,5 +1,5 @@
 /**
- * imagePrepare.test.js — detección MIME y formatos admitidos
+ * imagePrepare.test.js — detección MIME, magic bytes HEIC, formatos admitidos
  */
 'use strict';
 
@@ -37,6 +37,11 @@ module.exports = function (describe, it, assert, assertEqual) {
       },
       Blob: function () {},
       atob: function () { return ''; },
+      FileReader: function () {
+        this.onload = null;
+        this.onerror = null;
+        this.readAsArrayBuffer = function () {};
+      },
       console: console,
     };
     sandbox.window = sandbox;
@@ -62,7 +67,15 @@ module.exports = function (describe, it, assert, assertEqual) {
       assertEqual(CA.resolveMime(file), 'image/heic');
     });
 
-    it('detecta JPEG por extensión', function () {
+    it('detecta HEIC disfrazado de JPG por magic bytes (IMG_1210.jpg iPhone)', function () {
+      CA = CA || loadCAImagePrepare();
+      var sample = fs.readFileSync(path.join(__dirname, '..', 'tests', 'fixtures', 'heic-header.bin'));
+      assertEqual(CA.sniffHeifBrand(sample), 'heic');
+      var fakeJpg = { name: 'IMG_1210.jpg', type: 'image/jpeg', size: 1483683 };
+      assert(CA.isHeic(fakeJpg, 'heic'), 'HEIC aunque diga .jpg');
+    });
+
+    it('detecta JPEG real por extensión', function () {
       CA = CA || loadCAImagePrepare();
       var file = { name: 'foto.jpg', type: 'application/octet-stream', size: 1024 };
       assert(!CA.isHeic(file));
@@ -81,6 +94,13 @@ module.exports = function (describe, it, assert, assertEqual) {
       assert(fs.existsSync(vendor), 'vendor/heic2any.min.js existe');
       var stat = fs.statSync(vendor);
       assert(stat.size > 100000, 'heic2any no está vacío');
+    });
+
+    it('lectura-clave-b expone escaneo automático', function () {
+      var code = fs.readFileSync(path.join(web, 'js', 'lectura-clave-b.js'), 'utf8');
+      assert(code.indexOf('autoScanFragments') !== -1, 'autoScanFragments definido');
+      assert(code.indexOf('detectMarkedRegions') !== -1, 'detectMarkedRegions definido');
+      assert(code.indexOf('claveBAutoScan') !== -1, 'botón auto scan cableado');
     });
   });
 };

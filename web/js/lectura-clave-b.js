@@ -62,6 +62,97 @@
     return Object.entries(counts).sort((a, b) => b[1] - a[1])[0][0];
   }
 
+  function clusterPoints(points, maxDist) {
+    const clusters = [];
+    const used = new Uint8Array(points.length);
+    const maxDistSq = maxDist * maxDist;
+    for (let i = 0; i < points.length; i++) {
+      if (used[i]) continue;
+      const cluster = [points[i]];
+      used[i] = 1;
+      let changed = true;
+      while (changed) {
+        changed = false;
+        for (let j = 0; j < points.length; j++) {
+          if (used[j]) continue;
+          for (let k = 0; k < cluster.length; k++) {
+            const dx = points[j].x - cluster[k].x;
+            const dy = points[j].y - cluster[k].y;
+            if (dx * dx + dy * dy <= maxDistSq) {
+              cluster.push(points[j]);
+              used[j] = 1;
+              changed = true;
+              break;
+            }
+          }
+        }
+      }
+      clusters.push(cluster);
+    }
+    return clusters;
+  }
+
+  function boundingBox(points, pad) {
+    let minX = Infinity;
+    let minY = Infinity;
+    let maxX = -Infinity;
+    let maxY = -Infinity;
+    points.forEach((p) => {
+      minX = Math.min(minX, p.x);
+      minY = Math.min(minY, p.y);
+      maxX = Math.max(maxX, p.x);
+      maxY = Math.max(maxY, p.y);
+    });
+    const p = pad || 0;
+    return {
+      x: Math.max(0, minX - p),
+      y: Math.max(0, minY - p),
+      w: maxX - minX + p * 2,
+      h: maxY - minY + p * 2,
+    };
+  }
+
+  function detectMarkedRegions(ctx, width, height, stride) {
+    const step = stride || 6;
+    const byColor = {};
+    const data = ctx.getImageData(0, 0, width, height).data;
+    for (let y = 0; y < height; y += step) {
+      for (let x = 0; x < width; x += step) {
+        const i = (y * width + x) * 4;
+        const hit = classifyPixel(data[i], data[i + 1], data[i + 2]);
+        if (!hit) continue;
+        if (!byColor[hit]) byColor[hit] = [];
+        byColor[hit].push({ x, y });
+      }
+    }
+    const boxes = [];
+    Object.entries(byColor).forEach(([color, points]) => {
+      if (points.length < 8) return;
+      clusterPoints(points, 36).forEach((cluster) => {
+        const box = boundingBox(cluster, 10);
+        if (box.w >= 28 && box.h >= 10) {
+          boxes.push({
+            x: box.x,
+            y: box.y,
+            w: Math.min(width - box.x, box.w),
+            h: Math.min(height - box.y, box.h),
+            color,
+          });
+        }
+      });
+    });
+    return boxes.sort((a, b) => a.y - b.y || a.x - b.x);
+  }
+
+  const GTD_NOTA_PREFIX = {
+    concepto_clave: 'GTD · concepto axial · motor epistémico',
+    investigar: 'GTD · open coding · pendiente verificar fuente',
+    referencia: 'GTD · referencia bibliográfica · archivo',
+    persona_interes: 'GTD · actor de red · mapear vínculo',
+    reflexion: 'GTD · memo analítico · mistranslation',
+    compartir: 'GTD · salida pública · revisar antes de exportar',
+  };
+
   function getClaveById(id) {
     return CLAVE_B.find((c) => c.id === id) || CLAVE_B[2];
   }
@@ -194,6 +285,9 @@
     );
     document.getElementById('claveBOcrRegion')?.addEventListener('click', () =>
       self.ocrSelection(),
+    );
+    document.getElementById('claveBAutoScan')?.addEventListener('click', () =>
+      self.autoScanFragments(),
     );
 
     canvas.addEventListener('mousedown', (e) => self.onPointerDown(e));
@@ -372,6 +466,32 @@
     this.draw();
   };
 
+  LecturaClaveB.prototype.cropRegionToCanvas = function (region) {
+    const crop = document.createElement('canvas');
+    const inv = 1 / this.scale;
+    crop.width = Math.max(1, Math.round(region.w * inv));
+    crop.height = Math.max(1, Math.round(region.h * inv));
+    crop.getContext('2d').drawImage(
+      this.image,
+      region.x * inv,
+      region.y * inv,
+      region.w * inv,
+      region.h * inv,
+      0,
+      0,
+      crop.width,
+      crop.height,
+    );
+    return crop;
+  };
+
+  LecturaClaveB.prototype.ocrRegion = async function (region, Tesseract) {
+    const tess = Tesseract || (await ensureTesseract());
+    const crop = this.cropRegionToCanvas(region);
+    const result = await tess.recognize(crop, 'spa', { logger: () => {} });
+    return (result.data.text || '').replace(/\s+/g, ' ').trim();
+  };
+
   LecturaClaveB.prototype.ocrSelection = async function () {
     if (!this.selection || !this.image) {
       this.status('Selecciona una región en la foto primero.', 'error');
@@ -379,32 +499,71 @@
     }
     this.status('OCR local en progreso…');
     try {
-      const Tesseract = await ensureTesseract();
-      const crop = document.createElement('canvas');
-      const s = this.selection;
-      const inv = 1 / this.scale;
-      crop.width = Math.max(1, Math.round(s.w * inv));
-      crop.height = Math.max(1, Math.round(s.h * inv));
-      crop.getContext('2d').drawImage(
-        this.image,
-        s.x * inv,
-        s.y * inv,
-        s.w * inv,
-        s.h * inv,
-        0,
-        0,
-        crop.width,
-        crop.height,
-      );
-      const result = await Tesseract.recognize(crop, 'spa', {
-        logger: () => {},
-      });
-      const text = (result.data.text || '').replace(/\s+/g, ' ').trim();
+      const text = await this.ocrRegion(this.selection);
       if (this.els.texto) this.els.texto.value = text || '[ilegible]';
       this.status(text ? 'OCR completado — revisa y corrige la transcripción.' : 'OCR sin texto — transcribe manualmente.', text ? 'success' : '');
     } catch (err) {
       this.status('Error OCR: ' + err.message, 'error');
     }
+  };
+
+  LecturaClaveB.prototype.autoScanFragments = async function () {
+    if (!this.image || !this.ctx) {
+      this.status('Sube una foto del libro primero.', 'error');
+      return;
+    }
+    this._scanning = true;
+    this.status('Escaneando marcadores Clave B en la página…');
+    try {
+      const regions = detectMarkedRegions(
+        this.ctx,
+        this.els.canvas.width,
+        this.els.canvas.height,
+        6,
+      );
+      if (!regions.length) {
+        this.status('No se detectaron marcadores de color. Usa cuentaagotas o selección manual.', 'error');
+        this._scanning = false;
+        return;
+      }
+      const Tesseract = await ensureTesseract();
+      const libro = (this.els.libro?.value || '').trim() || this.opts.defaultLibro;
+      const autor = (this.els.autor?.value || '').trim() || this.opts.defaultAutor;
+      const pagina = parseInt(this.els.pagina?.value, 10) || null;
+      let added = 0;
+      for (let i = 0; i < regions.length; i++) {
+        const region = regions[i];
+        this.status(`OCR fragmento ${i + 1}/${regions.length} · ${getClaveById(region.color).label}…`);
+        const texto = await this.ocrRegion(region, Tesseract);
+        if (!texto || texto.length < 4) continue;
+        const clave = getClaveById(region.color);
+        this.queue.push({
+          libro,
+          autor,
+          pagina,
+          texto,
+          color: clave.id,
+          categoria: clave.categoria,
+          notas_clave_b: (GTD_NOTA_PREFIX[clave.categoria] || 'GTD · captura automática Clave B') +
+            ' · revisar transcripción',
+          auto: true,
+        });
+        added += 1;
+      }
+      this.renderQueue();
+      if (!added) {
+        this.status('Marcadores detectados pero OCR sin texto legible — transcribe manualmente.', 'error');
+      } else {
+        this.status(
+          `${added} fragmento${added !== 1 ? 's' : ''} detectado${added !== 1 ? 's' : ''} y transcrito${added !== 1 ? 's' : ''}. Revisa la cola e importa al archivo.`,
+          'success',
+        );
+        if (this.opts.onQueueChange) this.opts.onQueueChange(this.queue);
+      }
+    } catch (err) {
+      this.status('Error en escaneo automático: ' + err.message, 'error');
+    }
+    this._scanning = false;
   };
 
   LecturaClaveB.prototype.readForm = function () {
@@ -505,6 +664,7 @@
   global.LecturaClaveB = {
     CLAVE_B,
     classifyPixel,
+    detectMarkedRegions,
     init: function (options) {
       return new LecturaClaveB(options);
     },
