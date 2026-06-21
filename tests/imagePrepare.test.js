@@ -57,6 +57,8 @@ module.exports = function (describe, it, assert, assertEqual) {
       CA = loadCAImagePrepare();
       assert(CA, 'CAImagePrepare definido');
       assertEqual(CA.MAX_BYTES, 20 * 1024 * 1024);
+      assertEqual(CA.MAX_EDGE, 4096);
+      assertEqual(CA.JPEG_QUALITY, 0.96);
     });
 
     it('detecta HEIC por extensión sin MIME', function () {
@@ -109,6 +111,21 @@ module.exports = function (describe, it, assert, assertEqual) {
       assert(code.indexOf('autoScanFragments') !== -1, 'autoScanFragments definido');
       assert(code.indexOf('detectMarkedRegions') !== -1, 'detectMarkedRegions definido');
       assert(code.indexOf('claveBAutoScan') !== -1, 'botón auto scan cableado');
+    });
+
+    it('assessTranscription filtra nulos e incoherentes', function () {
+      var code = fs.readFileSync(path.join(web, 'js', 'lectura-clave-b.js'), 'utf8');
+      var sandbox = { window: {}, globalThis: {}, document: { getElementById: function () { return null; } } };
+      sandbox.window = sandbox;
+      sandbox.globalThis = sandbox;
+      vm.runInNewContext(code, sandbox);
+      var assess = sandbox.LecturaClaveB.assessTranscription;
+      assert(assess('La vigilancia como forma de poder extractivo en la era digital').ok, 'texto válido');
+      assert(!assess('abc').ok, 'muy corto');
+      assert(!assess('x x x x x x x x x x x x').ok, 'sin vocales');
+      assert(!assess('||| ### @@@ $$$ %%% &&&').ok, 'ruido');
+      assert(!assess('fragmento legible con palabras', 20).ok, 'baja confianza');
+      assert(assess('fragmento legible con palabras suficientes').ok, 'manual sin confianza');
     });
   });
 };

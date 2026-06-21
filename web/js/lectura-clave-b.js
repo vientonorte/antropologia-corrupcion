@@ -175,6 +175,98 @@
     return global.Tesseract;
   }
 
+  const OCR_MIN_CONFIDENCE = 45;
+  const OCR_MIN_CHARS = 12;
+  const OCR_MIN_WORDS = 2;
+
+  /**
+   * Rechaza transcripciones nulas, fragmentadas o incoherentes antes de entrar al corpus.
+   * @param {string} text
+   * @param {number} [confidence] — confianza Tesseract 0–100; omitir en entrada manual
+   */
+  function assessTranscription(text, confidence) {
+    if (!text || typeof text !== 'string') {
+      return { ok: false, reason: 'vacio' };
+    }
+    const t = text.replace(/\s+/g, ' ').trim();
+    if (t.length < OCR_MIN_CHARS) {
+      return { ok: false, reason: 'muy_corto' };
+    }
+    const letters = (t.match(/[A-Za-zÀ-ÿ]/g) || []).length;
+    if (letters < 8 || letters / t.length < 0.55) {
+      return { ok: false, reason: 'pocos_caracteres_letra' };
+    }
+    const words = t.split(/\s+/).filter((w) => w.replace(/[^\wÀ-ÿ]/g, '').length >= 2);
+    if (words.length < OCR_MIN_WORDS) {
+      return { ok: false, reason: 'pocas_palabras' };
+    }
+    const vowels = (t.match(/[aeiouáéíóúüAEIOUÁÉÍÓÚÜ]/g) || []).length;
+    if (vowels < 2 || (letters > 0 && vowels / letters < 0.12)) {
+      return { ok: false, reason: 'sin_vocales' };
+    }
+    const singles = t.split(/\s+/).filter((w) => w.length === 1).length;
+    if (singles > Math.max(2, words.length * 0.45)) {
+      return { ok: false, reason: 'fragmentado' };
+    }
+    const noise = (t.match(/[^\wÀ-ÿ\s.,;:!?¿¡'"()\-—«»]/g) || []).length;
+    if (noise / t.length > 0.22) {
+      return { ok: false, reason: 'ruido' };
+    }
+    if (/^[\W\d_]+$/.test(t) || /(.)\1{5,}/.test(t)) {
+      return { ok: false, reason: 'incoherente' };
+    }
+    if (typeof confidence === 'number' && confidence < OCR_MIN_CONFIDENCE) {
+      return { ok: false, reason: 'baja_confianza' };
+    }
+    return { ok: true };
+  }
+
+  /** Upscale, fondo blanco y contraste para regiones pequeñas antes de Tesseract. */
+  function enhanceCropForOcr(canvas) {
+    const minDim = Math.min(canvas.width, canvas.height);
+    const targetMin = 420;
+    const scale = minDim < targetMin ? targetMin / minDim : 1;
+    const outW = Math.max(1, Math.round(canvas.width * scale));
+    const outH = Math.max(1, Math.round(canvas.height * scale));
+    const out = document.createElement('canvas');
+    out.width = outW;
+    out.height = outH;
+    const ctx = out.getContext('2d', { willReadFrequently: true });
+    if (!ctx) return canvas;
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(0, 0, outW, outH);
+    ctx.imageSmoothingEnabled = true;
+    ctx.imageSmoothingQuality = 'high';
+    ctx.drawImage(canvas, 0, 0, outW, outH);
+    const imageData = ctx.getImageData(0, 0, outW, outH);
+    const data = imageData.data;
+    const contrast = 1.35;
+    const factor = (259 * (contrast * 100 + 255)) / (255 * (259 - contrast * 100));
+    for (let i = 0; i < data.length; i += 4) {
+      const gray = 0.299 * data[i] + 0.587 * data[i + 1] + 0.114 * data[i + 2];
+      let v = factor * (gray - 128) + 128;
+      v = Math.max(0, Math.min(255, v));
+      data[i] = data[i + 1] = data[i + 2] = v;
+    }
+    ctx.putImageData(imageData, 0, 0);
+    return out;
+  }
+
+  function reasonLabel(reason) {
+    const labels = {
+      vacio: 'sin texto',
+      muy_corto: 'demasiado corto',
+      pocos_caracteres_letra: 'pocos caracteres legibles',
+      pocas_palabras: 'pocas palabras',
+      sin_vocales: 'sin vocales (español)',
+      fragmentado: 'texto fragmentado',
+      ruido: 'demasiado ruido OCR',
+      incoherente: 'incoherente',
+      baja_confianza: 'baja confianza OCR',
+    };
+    return labels[reason] || reason;
+  }
+
   function LecturaClaveB(options) {
     this.opts = Object.assign(
       {
@@ -395,7 +487,7 @@
     const ih = this.image.naturalHeight || this.image.height;
     if (!iw || !ih) return;
     const maxW = this.els.wrap.clientWidth || 640;
-    const maxH = 480;
+    const maxH = 640;
     const ratio = Math.min(maxW / iw, maxH / ih, 1);
     this.scale = ratio;
     this.els.canvas.width = Math.max(1, Math.round(iw * ratio));
@@ -511,8 +603,21 @@
   LecturaClaveB.prototype.ocrRegion = async function (region, Tesseract) {
     const tess = Tesseract || (await ensureTesseract());
     const crop = this.cropRegionToCanvas(region);
-    const result = await tess.recognize(crop, 'spa', { logger: () => {} });
-    return (result.data.text || '').replace(/\s+/g, ' ').trim();
+    const enhanced = enhanceCropForOcr(crop);
+    const psm = tess.PSM && tess.PSM.SINGLE_BLOCK ? tess.PSM.SINGLE_BLOCK : '6';
+    const result = await tess.recognize(enhanced, 'spa', {
+      logger: () => {},
+      tessedit_pageseg_mode: psm,
+    });
+    const text = (result.data.text || '').replace(/\s+/g, ' ').trim();
+    const confidence = result.data.confidence;
+    const assessment = assessTranscription(text, confidence);
+    return {
+      text,
+      confidence,
+      ok: assessment.ok,
+      reason: assessment.reason,
+    };
   };
 
   LecturaClaveB.prototype.ocrSelection = async function () {
@@ -522,9 +627,18 @@
     }
     this.status('OCR local en progreso…');
     try {
-      const text = await this.ocrRegion(this.selection);
-      if (this.els.texto) this.els.texto.value = text || '[ilegible]';
-      this.status(text ? 'OCR completado — revisa y corrige la transcripción.' : 'OCR sin texto — transcribe manualmente.', text ? 'success' : '');
+      const ocr = await this.ocrRegion(this.selection);
+      if (this.els.texto) this.els.texto.value = ocr.text || '';
+      if (ocr.ok) {
+        this.status('OCR completado — revisa y corrige la transcripción.', 'success');
+      } else if (ocr.text) {
+        this.status(
+          `OCR dudoso (${reasonLabel(ocr.reason)}) — corrige o transcribe manualmente.`,
+          '',
+        );
+      } else {
+        this.status('OCR sin texto legible — transcribe manualmente.', '');
+      }
     } catch (err) {
       this.status('Error OCR: ' + err.message, 'error');
     }
@@ -554,17 +668,21 @@
       const autor = (this.els.autor?.value || '').trim() || this.opts.defaultAutor;
       const pagina = parseInt(this.els.pagina?.value, 10) || null;
       let added = 0;
+      let skipped = 0;
       for (let i = 0; i < regions.length; i++) {
         const region = regions[i];
         this.status(`OCR fragmento ${i + 1}/${regions.length} · ${getClaveById(region.color).label}…`);
-        const texto = await this.ocrRegion(region, Tesseract);
-        if (!texto || texto.length < 4) continue;
+        const ocr = await this.ocrRegion(region, Tesseract);
+        if (!ocr.ok) {
+          skipped += 1;
+          continue;
+        }
         const clave = getClaveById(region.color);
         this.queue.push({
           libro,
           autor,
           pagina,
-          texto,
+          texto: ocr.text,
           color: clave.id,
           categoria: clave.categoria,
           notas_clave_b: (GTD_NOTA_PREFIX[clave.categoria] || 'GTD · captura automática Clave B') +
@@ -575,10 +693,19 @@
       }
       this.renderQueue();
       if (!added) {
-        this.status('Marcadores detectados pero OCR sin texto legible — transcribe manualmente.', 'error');
-      } else {
+        const skipMsg = skipped
+          ? ` ${skipped} región${skipped !== 1 ? 'es' : ''} omitida${skipped !== 1 ? 's' : ''} por ilegibles o incoherentes.`
+          : '';
         this.status(
-          `${added} fragmento${added !== 1 ? 's' : ''} detectado${added !== 1 ? 's' : ''} y transcrito${added !== 1 ? 's' : ''}. Revisa la cola e importa al archivo.`,
+          'Marcadores detectados pero sin transcripciones válidas — transcribe manualmente.' + skipMsg,
+          'error',
+        );
+      } else {
+        const skipMsg = skipped
+          ? ` · ${skipped} omitido${skipped !== 1 ? 's' : ''} (ilegible/incoherente)`
+          : '';
+        this.status(
+          `${added} fragmento${added !== 1 ? 's' : ''} válido${added !== 1 ? 's' : ''} en cola${skipMsg}. Revisa e importa al archivo.`,
           'success',
         );
         if (this.opts.onQueueChange) this.opts.onQueueChange(this.queue);
@@ -594,6 +721,14 @@
     const texto = (this.els.texto?.value || '').trim();
     if (!texto) {
       this.status('Escribe o extrae el texto del fragmento.', 'error');
+      return null;
+    }
+    const assessment = assessTranscription(texto);
+    if (!assessment.ok) {
+      this.status(
+        `Transcripción incoherente (${reasonLabel(assessment.reason)}) — corrige antes de añadir.`,
+        'error',
+      );
       return null;
     }
     return {
@@ -668,9 +803,18 @@
       this.status('No hay fragmentos para importar.', 'error');
       return;
     }
+    const valid = this.queue.filter((f) => assessTranscription(f.texto).ok);
+    const dropped = this.queue.length - valid.length;
+    if (!valid.length) {
+      this.status('Ningún fragmento en cola cumple criterios de legibilidad.', 'error');
+      return;
+    }
     if (this.opts.onImportAll) {
-      this.opts.onImportAll(this.queue.slice());
-      this.status(`${this.queue.length} citas importadas al archivo.`, 'success');
+      this.opts.onImportAll(valid);
+      const dropMsg = dropped
+        ? ` · ${dropped} descartado${dropped !== 1 ? 's' : ''} por incoherentes`
+        : '';
+      this.status(`${valid.length} cita${valid.length !== 1 ? 's' : ''} importada${valid.length !== 1 ? 's' : ''} al archivo${dropMsg}.`, 'success');
       this.queue = [];
       this.renderQueue();
     }
@@ -688,6 +832,9 @@
     CLAVE_B,
     classifyPixel,
     detectMarkedRegions,
+    assessTranscription,
+    enhanceCropForOcr,
+    reasonLabel,
     init: function (options) {
       return new LecturaClaveB(options);
     },
