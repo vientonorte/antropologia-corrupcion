@@ -1,0 +1,242 @@
+/* Molecule: bases consultadas — estados DevOps / Scrum */
+
+.ca-bases {
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.ca-bases__header {
+    margin-bottom: 16px;
+}
+
+.ca-bases__title {
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    margin: 0 0 6px;
+}
+
+.ca-bases__subtitle {
+    font-size: 11px;
+    font-family: var(--font-mono);
+    color: var(--dim);
+    margin: 0 0 8px;
+    line-height: 1.45;
+}
+
+.ca-bases__summary {
+    font-size: 11px;
+    font-family: var(--font-mono);
+    color: var(--muted);
+    margin: 0;
+}
+
+.ca-bases__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.ca-bases__item {
+    padding: 10px 12px;
+    background: var(--s2);
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+}
+
+.ca-bases__item--inactive {
+    opacity: 0.55;
+}
+
+.ca-bases__item-head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.ca-bases__icon {
+    font-size: 14px;
+    line-height: 1;
+}
+
+.ca-bases__name {
+    flex: 1;
+    min-width: 0;
+    font-weight: 500;
+    font-size: 12px;
+}
+
+.ca-bases__readiness {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 2px 6px;
+    border-radius: 4px;
+    border: 1px solid var(--border);
+    white-space: nowrap;
+}
+
+.ca-bases__readiness--operativo {
+    color: var(--mat);
+    border-color: rgba(122, 158, 110, 0.45);
+}
+
+.ca-bases__readiness--parcial {
+    color: var(--warn);
+    border-color: rgba(232, 184, 75, 0.45);
+}
+
+.ca-bases__readiness--pipeline,
+.ca-bases__readiness--planificado {
+    color: var(--muted);
+}
+
+.ca-bases__readiness--inactivo {
+    color: var(--dim);
+    opacity: 0.8;
+}
+
+.ca-bases__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 6px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--dim);
+}
+
+.ca-bases__pipeline {
+    color: var(--etica);
+}
+
+.ca-bases__sprint {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 8px;
+}
+
+.ca-bases__dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--border);
+    flex-shrink: 0;
+}
+
+.ca-bases__dot--done {
+    background: var(--mat);
+}
+
+.ca-bases__sprint-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--dim);
+}
+
+.ca-bases__detail {
+    margin: 6px 0 0;
+    font-size: 10px;
+    font-family: var(--font-mono);
+    color: var(--muted);
+}
+
+.ca-bases__footer {
+    margin-top: 12px;
+    font-size: 10px;
+}
+
+/* Chips compactos (onboarding) */
+
+.search-sources.ca-bases-line {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 2px;
+    line-height: 1.8;
+}
+
+.ca-bases-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    color: var(--dim);
+}
+
+.ca-bases-chip__dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--border);
+    flex-shrink: 0;
+}
+
+.ca-bases-chip__dot.ca-bases__readiness--operativo {
+    background: var(--mat);
+}
+
+.ca-bases-chip__dot.ca-bases__readiness--parcial {
+    background: var(--warn);
+}
+
+.ca-bases-chip-sep {
+    color: var(--border);
+}
+
+/* Pills en resultados */
+
+.ca-bases-pills {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    align-items: center;
+}
+
+.ca-bases-pill {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    padding: 1px 6px;
+    border-radius: 3px;
+    border: 1px solid var(--border);
+    white-space: nowrap;
+}
+
+.ca-bases-pill--ok {
+    color: var(--mat);
+    border-color: rgba(122, 158, 110, 0.4);
+}
+
+.ca-bases-pill--warn {
+    color: var(--warn);
+    border-color: rgba(232, 184, 75, 0.4);
+}
+
+.ca-bases-pill--verif,
+.ca-bases-pill--etapa,
+.ca-bases-pill--pipeline {
+    color: var(--muted);
+}
+
+.ca-bases-pill--score {
+    color: var(--inst);
+    border-color: rgba(74, 127, 165, 0.35);
+}
+
+.result-meta .ca-bases-pills {
+    margin-left: 4px;
+}
+
+.ca-huella__event-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-top: 4px;
+}

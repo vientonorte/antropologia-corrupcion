@@ -21,6 +21,7 @@
     var hasSourceFilter = false;
     var catCounts = {};
     var corpusBundle = null;
+    var sourceReport = null;
 
     var CAT_META = {
         E: {
@@ -153,6 +154,14 @@
             registrosCache = bundle.fuentes || [];
             bcnNormCache = bundle.bcnRecords || [];
             allRecords = bundle.allRecords || registrosCache.concat(bcnNormCache);
+
+            if (window.CABasesConsultadas && window.CABasesConsultadas.buildFromBundle) {
+                sourceReport = window.CABasesConsultadas.buildFromBundle(bundle);
+                window.CABuscadorSourceReport = sourceReport;
+                window.CABasesConsultadas.mountPanel('basesConsultadasPanel', sourceReport, {
+                    onlyActivas: true,
+                });
+            }
 
             // Build "I" category filter using caso keywords
             var casoKeywords = [];
@@ -329,6 +338,10 @@
             var inst = r.institucion || fuenteLabel(r.fuente) || r.fuente || '';
             var cat = getRecordCategory(r);
             var catBadge = '<span class="cat-badge cat-' + cat + '" aria-label="Categoría ' + cat + '">' + cat + '</span>';
+            var stateBadges = '';
+            if (window.CABasesConsultadas && sourceReport) {
+                stateBadges = window.CABasesConsultadas.renderRecordBadges(r, sourceReport);
+            }
 
             var dossierId = 'dossier-' + esc(r.id);
             item.innerHTML =
@@ -338,6 +351,7 @@
                 '<div class="result-meta">' +
                 catBadge +
                 '<span class="result-inst">' + esc(inst) + '</span>' +
+                stateBadges +
                 '<span class="friction-pill ' + pillClass + '">' + score.toFixed(2) + '</span>' +
                 '<span class="result-date">' + esc(fecha) + '</span>' +
                 '</div>' +
@@ -379,9 +393,32 @@
     }
 
     function buildDossier(r) {
+        var metaHtml = '';
+        if (window.CABasesConsultadas && sourceReport) {
+            var stateBadges = window.CABasesConsultadas.renderRecordBadges(r, sourceReport);
+            if (stateBadges) {
+                metaHtml =
+                    '<div class="dossier-source-meta" style="margin-bottom:12px;font-size:12px;">' +
+                    '<span style="color:var(--dim);font-family:var(--font-mono);font-size:10px;text-transform:uppercase;letter-spacing:.06em;">Estado del registro</span><br>' +
+                    stateBadges +
+                    '</div>';
+            }
+        }
+        if (r.estado_verificacion || r.etapa_actual) {
+            metaHtml +=
+                '<p style="font-size:11px;font-family:var(--font-mono);color:var(--muted);margin:0 0 12px;">' +
+                (r.estado_verificacion ? 'Verificación: ' + esc(r.estado_verificacion) : '') +
+                (r.estado_verificacion && r.etapa_actual ? ' · ' : '') +
+                (r.etapa_actual ? 'Etapa: ' + esc(r.etapa_actual) : '') +
+                '</p>';
+        }
+
         var c = r._linkedCaso;
         if (!c) {
-            return '<div style="color:var(--dim);font-size:13px;padding:8px 0;">Sin caso vinculado para desplegar capas en búsqueda avanzada.</div>';
+            return (
+                metaHtml +
+                '<div style="color:var(--dim);font-size:13px;padding:8px 0;">Sin caso vinculado para desplegar capas en búsqueda avanzada.</div>'
+            );
         }
 
         var layers = ['etica', 'institucional', 'material'];
@@ -442,7 +479,7 @@
             '<a href="' + esc(huellaHref) + '">Huella digital →</a>' +
             '</div>';
 
-        return grid + friction + actions;
+        return metaHtml + grid + friction + actions;
     }
 
     function toggleDossier(id) {
@@ -531,9 +568,22 @@
         $sourceChecks.innerHTML = '';
         sourceCheckboxes = [];
         keys.forEach(function(f) {
+            var entry = sourceReport && window.CASourceRegistry
+                ? window.CASourceRegistry.getEntryById(sourceReport, f)
+                : null;
+            var readiness = entry
+                ? '<span class="ca-bases__readiness ca-bases__readiness--' + esc(entry.readiness) + '" style="font-size:8px;margin-left:4px">' + esc(entry.readinessLabel) + '</span>'
+                : '';
+            var count = entry ? ' <span style="color:var(--dim);font-size:10px">(' + entry.records + ')</span>' : '';
             var label = document.createElement('label');
             label.className = 'filter-check';
-            label.innerHTML = '<input type="checkbox" value="' + esc(f) + '" checked> ' + esc(fuenteLabel(f) || f);
+            label.innerHTML =
+                '<input type="checkbox" value="' +
+                esc(f) +
+                '" checked> ' +
+                esc(fuenteLabel(f) || f) +
+                count +
+                readiness;
             $sourceChecks.appendChild(label);
             sourceCheckboxes.push(label.querySelector('input'));
         });

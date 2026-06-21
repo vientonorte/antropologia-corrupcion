@@ -81,6 +81,33 @@ module.exports = function (
             assertGreaterThan(rendered.events.length, 0, 'events collected');
         });
 
+        it('renders verification badges in timeline when present', function () {
+            var bcnNorm = HD.normalizeBcnRecords(bcnData);
+            var withVerif = bcnNorm.find(function (r) {
+                return r.estado_verificacion;
+            });
+            if (!withVerif) return;
+            var events = HD.collectEvents([withVerif.titulo], [], bcnNorm, null);
+            var hasVerifEvent = events.some(function (e) {
+                return e.estado_verificacion;
+            });
+            assert(hasVerifEvent, 'events carry estado_verificacion');
+            var rendered = HD.renderFromData(
+                {
+                    huella: huellaData,
+                    fuentes: fuentesData,
+                    bcn: bcnData,
+                    casos: casosData,
+                },
+                { query: withVerif.titulo.substring(0, 12) },
+            );
+            assert(
+                rendered.html.indexOf('ca-huella__event-badges') !== -1 ||
+                    rendered.html.indexOf('ca-bases-pill') !== -1,
+                'badge markup in timeline',
+            );
+        });
+
         it('returns empty state when no matches', function () {
             var rendered = HD.renderFromData(
                 {

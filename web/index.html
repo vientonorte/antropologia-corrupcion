@@ -18,6 +18,7 @@
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=newsreader:400,400i,600|inter:400,500,600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles/shared.css?v=20260621e">
+    <link rel="stylesheet" href="styles/molecules/bases-consultadas.css?v=20260621">
     <link rel="stylesheet" href="styles/graph.css?v=20260623">
     <link rel="stylesheet" href="styles/atoms/epistemic-badge.css?v=20260620">
     <link rel="stylesheet" href="styles/molecules/section-header.css?v=20260620">
@@ -531,7 +532,7 @@
             <div class="suggest-dropdown" id="suggest-dropdown"></div>
         </div>
 
-        <p class="search-sources" id="search-sources">InfoLobby · Transparencia · BCN · SEIA · ComprasPúblicas · CMF</p>
+        <p class="search-sources ca-bases-line" id="search-sources" aria-label="Bases consultadas">Cargando fuentes…</p>
         <p id="data-status" style="font-size:11px;font-family:var(--font-mono);color:var(--dim);margin-top:8px;display:none" aria-live="polite"></p>
     </main>
 
@@ -570,7 +571,9 @@
     <script defer src="src/frictionEngine.js?v=20260621"></script>
     <script defer src="src/searchEngine.js?v=20260621"></script>
     <script defer src="lib/casoPublico.js?v=20260621d"></script>
-    <script defer src="lib/dataLoader.js?v=20260621d"></script>
+    <script defer src="lib/dataLoader.js?v=20260621e"></script>
+    <script defer src="lib/sourceRegistry.js?v=20260621"></script>
+    <script defer src="lib/basesConsultadas.js?v=20260621"></script>
     <script defer src="src/tokens.js?v=20260623"></script>
     <script defer src="src/socialField.js?v=20260623"></script>
     <script defer src="vendor/d3.min.js?v=7.9.0"></script>

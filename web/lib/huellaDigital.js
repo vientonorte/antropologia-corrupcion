@@ -143,6 +143,11 @@
                 id: rec.id,
                 url: rec.url || '',
                 frictionScore: typeof rec.friction_score === 'number' ? rec.friction_score : null,
+                verificado: rec.verificado === true,
+                estado_verificacion: rec.estado_verificacion || null,
+                etapa_actual: rec.etapa_actual || null,
+                official_score:
+                    typeof rec.official_score === 'number' ? rec.official_score : null,
             });
         }
 
@@ -378,6 +383,39 @@
             if (ev.friction) {
                 html +=
                     '<span class="ca-huella__event-friction">tipo: ' + escapeHtml(ev.friction) + '</span>';
+            }
+            var badgeBits = [];
+            if (ev.verificado === true) {
+                badgeBits.push('<span class="ca-bases-pill ca-bases-pill--ok">Verificado</span>');
+            } else if (ev.verificado === false) {
+                badgeBits.push('<span class="ca-bases-pill ca-bases-pill--warn">Sin verificar</span>');
+            }
+            if (ev.estado_verificacion) {
+                badgeBits.push(
+                    '<span class="ca-bases-pill ca-bases-pill--verif">' +
+                        escapeHtml(ev.estado_verificacion) +
+                        '</span>',
+                );
+            }
+            if (ev.etapa_actual) {
+                badgeBits.push(
+                    '<span class="ca-bases-pill ca-bases-pill--etapa">' +
+                        escapeHtml(ev.etapa_actual) +
+                        '</span>',
+                );
+            }
+            if (ev.official_score != null) {
+                badgeBits.push(
+                    '<span class="ca-bases-pill ca-bases-pill--score">Conf. ' +
+                        Math.round(ev.official_score * 100) +
+                        '%</span>',
+                );
+            }
+            if (badgeBits.length) {
+                html +=
+                    '<div class="ca-huella__event-badges" role="list">' +
+                    badgeBits.join('') +
+                    '</div>';
             }
             html += '</article>';
         });

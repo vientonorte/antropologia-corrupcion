@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="styles/shared.css?v=20260621e">
     <link rel="stylesheet" href="styles/atoms/epistemic-badge.css?v=20260620">
     <link rel="stylesheet" href="styles/organisms/huella-panel.css?v=20260620">
+    <link rel="stylesheet" href="styles/molecules/bases-consultadas.css?v=20260621">
     <style>
         /* ── Page-specific overrides ── */
         
@@ -889,6 +890,9 @@
                     <div class="filter-range-val" id="frictionVal">0.00</div>
                 </div>
             </div>
+            <div class="filter-section" id="basesConsultadasSection">
+                <div id="basesConsultadasPanel" aria-live="polite"></div>
+            </div>
             <div class="filter-section">
                 <div class="filter-label">Tipo de fuente</div>
                 <div id="sourceChecks"></div>
@@ -912,11 +916,12 @@
     <script defer src="src/frictionEngine.js?v=20260620"></script>
     <script defer src="src/searchEngine.js?v=20260620"></script>
     <script defer src="src/categoryExport.js?v=20260620"></script>
-    <script defer src="lib/dataLoader.js?v=20260621d"></script>
-    <script defer src="lib/huellaDigital.js?v=20260621"></script>
+    <script defer src="lib/dataLoader.js?v=20260621e"></script>
+    <script defer src="lib/sourceRegistry.js?v=20260621"></script>
+    <script defer src="lib/basesConsultadas.js?v=20260621"></script>
+    <script defer src="lib/huellaDigital.js?v=20260621e"></script>
     <script defer src="pages/buscador-boot.js?v=20260621"></script>
-    <script defer src="lib/buscadorAvanzado.js?v=20260621"></script>
-    </script>
+    <script defer src="lib/buscadorAvanzado.js?v=20260621e"></script>
     <script>
         (function() {
             if (window.__CA_UNIFIED_SHELL_LOADER__) {

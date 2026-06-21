@@ -83,6 +83,9 @@
                 fetch(resolveDataPath('bcn-legislativo.json')).then(function (r) {
                     return r.json();
                 }),
+                fetch(resolveDataPath('fuentes-config.json')).then(function (r) {
+                    return r.ok ? r.json() : { sources: [] };
+                }),
             ];
 
             if (options.includeHuella !== false) {
@@ -97,7 +100,8 @@
                 var fuentesRaw = results[0];
                 var casosData = results[1];
                 var bcnData = results[2];
-                var huella = results[3] || { entidades: [], trazas: [] };
+                var sourceConfig = results[3] || { sources: [] };
+                var huella = results[4] || { entidades: [], trazas: [] };
                 var registros = normalizeFuentes(fuentesRaw);
                 var bcnRecords = normalizeBcnRecords(bcnData);
                 var casos = casosData.casos || casosData;
@@ -110,6 +114,7 @@
                     bcnRecords: bcnRecords,
                     casos: casos,
                     casosData: casosData,
+                    sourceConfig: sourceConfig,
                     allRecords: registros.concat(bcnRecords),
                 });
                 return cache;

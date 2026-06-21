@@ -63,6 +63,10 @@
                 }
 
                 buildSuggestionIndex(casos, registros, bcnRegistros);
+                if (window.CABasesConsultadas && window.CABasesConsultadas.buildFromBundle) {
+                    var report = window.CABasesConsultadas.buildFromBundle(bundle);
+                    window.CABasesConsultadas.mountCompactLine('search-sources', report);
+                }
                 setStatus('');
             })
             .catch(function (err) {
@@ -220,6 +224,17 @@
                 (reg.capa_oficial || '').length > 150
                     ? reg.capa_oficial.substring(0, 150) + '…'
                     : reg.capa_oficial || '—';
+            var stateBadges = '';
+            if (window.CABasesConsultadas && window.CABasesConsultadas.buildFromBundle) {
+                var report = window.CABasesConsultadas.buildFromBundle(
+                    window.CADataLoader && window.CADataLoader.getCached
+                        ? window.CADataLoader.getCached()
+                        : null,
+                );
+                if (report) {
+                    stateBadges = window.CABasesConsultadas.renderRecordBadges(reg, report);
+                }
+            }
 
             var card = document.createElement('div');
             card.className = 'result-card';
@@ -245,6 +260,9 @@
                 fs.toFixed(2) +
                 '</span>' +
                 '</div>' +
+                (stateBadges
+                    ? '<div style="margin:8px 0">' + stateBadges + '</div>'
+                    : '') +
                 '<p class="result-description">' +
                 escapeHtml(desc) +
                 '</p>' +

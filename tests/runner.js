@@ -268,6 +268,10 @@ require('../src/exportPipeline.js');
 // huellaDigital.js exposes via window.CAHuellaDigital
 require('../web/lib/huellaDigital.js');
 
+// sourceRegistry.js + basesConsultadas.js
+require('../web/lib/sourceRegistry.js');
+require('../web/lib/basesConsultadas.js');
+
 /* ─── LOAD DATA ─── */
 
 var fs = require('fs');
@@ -303,6 +307,19 @@ require('./qaLiveHeuristics.test.js')(describe, it, assert, assertEqual);
 require('./atomicDesign.test.js')(describe, it, assert, assertEqual);
 require('./archivoIndex.test.js')(describe, it, assert, assertEqual);
 require('./casoPublico.test.js')(describe, it, assert, assertEqual);
+require('./sourceRegistry.test.js')(
+    describe,
+    it,
+    assert,
+    assertEqual,
+    assertDeepEqual,
+    assertApprox,
+    assertGreaterThan,
+    assertArrayIncludes,
+    fuentesData,
+    bcnData,
+    fuentesConfig,
+);
 
 /* ─── SUMMARY ─── */
 
