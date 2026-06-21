@@ -57,8 +57,8 @@ module.exports = function (describe, it, assert, assertEqual) {
       CA = loadCAImagePrepare();
       assert(CA, 'CAImagePrepare definido');
       assertEqual(CA.MAX_BYTES, 20 * 1024 * 1024);
-      assertEqual(CA.MAX_EDGE, 4096);
-      assertEqual(CA.JPEG_QUALITY, 0.96);
+      assertEqual(CA.MAX_EDGE, 6144);
+      assertEqual(CA.JPEG_QUALITY, 0.98);
     });
 
     it('detecta HEIC por extensión sin MIME', function () {
@@ -133,6 +133,14 @@ module.exports = function (describe, it, assert, assertEqual) {
       assert(!assess('||| ### @@@ $$$ %%% &&&').ok, 'ruido');
       assert(!assess('fragmento legible con palabras', 20).ok, 'baja confianza');
       assert(assess('fragmento legible con palabras suficientes').ok, 'manual sin confianza');
+      assert(
+        !assess('the quick brown fox jumps over the lazy dog and more words here', 80).ok,
+        'rechaza inglés OCR',
+      );
+      assert(
+        assess('La vigilancia como forma de poder extractivo en la sociedad digital', 72).ok,
+        'español con confianza',
+      );
     });
   });
 };

@@ -167,6 +167,8 @@
     });
   }
 
+  let tessWorker = null;
+
   async function ensureTesseract() {
     if (global.Tesseract) return global.Tesseract;
     await loadScript(
@@ -175,16 +177,72 @@
     return global.Tesseract;
   }
 
-  const OCR_MIN_CONFIDENCE = 45;
-  const OCR_MIN_CHARS = 12;
-  const OCR_MIN_WORDS = 2;
+  async function ensureTesseractWorker() {
+    if (tessWorker) return tessWorker;
+    const Tesseract = await ensureTesseract();
+    const worker = await Tesseract.createWorker('spa', 1, { logger: () => {} });
+    const psm = Tesseract.PSM && Tesseract.PSM.SINGLE_BLOCK
+      ? Tesseract.PSM.SINGLE_BLOCK
+      : '6';
+    await worker.setParameters({
+      tessedit_pageseg_mode: psm,
+      preserve_interword_spaces: '1',
+      user_defined_dpi: '300',
+    });
+    tessWorker = worker;
+    return worker;
+  }
+
+  const OCR_MIN_CONFIDENCE = 58;
+  const OCR_MIN_WORD_CONFIDENCE = 42;
+  const OCR_MIN_CHARS = 14;
+  const OCR_MIN_WORDS = 3;
+
+  const SPANISH_HINTS = new Set([
+    'de', 'la', 'el', 'en', 'los', 'las', 'un', 'una', 'que', 'del', 'por', 'con', 'para', 'al',
+    'se', 'es', 'su', 'sus', 'como', 'más', 'pero', 'son', 'esta', 'este', 'entre', 'sobre',
+    'también', 'cuando', 'donde', 'todo', 'muy', 'sin', 'hay', 'ser', 'fue', 'han', 'puede',
+    'forma', 'modo', 'otro', 'otra', 'cada', 'solo', 'bien', 'vez', 'parte', 'mismo', 'misma',
+    'tiene', 'desde', 'hasta', 'ello', 'ella', 'ellos', 'así', 'aquí', 'ante', 'cual', 'quien',
+    'ni', 'no', 'sí', 'ya', 'aún', 'tan', 'nos', 'ese', 'esa', 'eso', 'estas', 'estos', 'qué',
+  ]);
+
+  const ENGLISH_STOP = new Set([
+    'the', 'and', 'for', 'with', 'that', 'this', 'from', 'have', 'has', 'was', 'were', 'are',
+    'not', 'but', 'you', 'your', 'they', 'their', 'what', 'when', 'where', 'which', 'who', 'how',
+    'all', 'can', 'will', 'one', 'two', 'out', 'about', 'into', 'through', 'during', 'before',
+    'after', 'above', 'below', 'between', 'would', 'could', 'should', 'there', 'these', 'those',
+  ]);
+
+  function normalizeWord(w) {
+    return w.toLowerCase().replace(/[^\wáéíóúüñ]/gi, '');
+  }
+
+  function spanishPlausibility(words) {
+    if (!words.length) return { score: 0, englishRatio: 0 };
+    let spanishHits = 0;
+    let englishHits = 0;
+    let morphHits = 0;
+    for (const raw of words) {
+      const w = normalizeWord(raw);
+      if (!w) continue;
+      if (SPANISH_HINTS.has(w)) spanishHits += 1;
+      if (ENGLISH_STOP.has(w)) englishHits += 1;
+      if (/[ñáéíóúü]/i.test(w)) morphHits += 1;
+      if (/(ción|sión|mente|idad|ando|iendo|ado|ada|oso|osa|ante|ible|amiento)$/i.test(w)) {
+        morphHits += 1;
+      }
+    }
+    return {
+      score: (spanishHits + morphHits * 0.6) / words.length,
+      englishRatio: englishHits / words.length,
+    };
+  }
 
   /**
-   * Rechaza transcripciones nulas, fragmentadas o incoherentes antes de entrar al corpus.
-   * @param {string} text
-   * @param {number} [confidence] — confianza Tesseract 0–100; omitir en entrada manual
+   * Rechaza transcripciones nulas, fragmentadas, anglicismos OCR o incoherentes.
    */
-  function assessTranscription(text, confidence) {
+  function assessTranscription(text, confidence, wordConfs) {
     if (!text || typeof text !== 'string') {
       return { ok: false, reason: 'vacio' };
     }
@@ -193,39 +251,80 @@
       return { ok: false, reason: 'muy_corto' };
     }
     const letters = (t.match(/[A-Za-zÀ-ÿ]/g) || []).length;
-    if (letters < 8 || letters / t.length < 0.55) {
+    if (letters < 10 || letters / t.length < 0.58) {
       return { ok: false, reason: 'pocos_caracteres_letra' };
     }
-    const words = t.split(/\s+/).filter((w) => w.replace(/[^\wÀ-ÿ]/g, '').length >= 2);
+    const words = t.split(/\s+/).filter((w) => normalizeWord(w).length >= 2);
     if (words.length < OCR_MIN_WORDS) {
       return { ok: false, reason: 'pocas_palabras' };
     }
     const vowels = (t.match(/[aeiouáéíóúüAEIOUÁÉÍÓÚÜ]/g) || []).length;
-    if (vowels < 2 || (letters > 0 && vowels / letters < 0.12)) {
+    if (vowels < 3 || (letters > 0 && vowels / letters < 0.14)) {
       return { ok: false, reason: 'sin_vocales' };
     }
     const singles = t.split(/\s+/).filter((w) => w.length === 1).length;
-    if (singles > Math.max(2, words.length * 0.45)) {
+    if (singles > Math.max(2, words.length * 0.4)) {
       return { ok: false, reason: 'fragmentado' };
     }
     const noise = (t.match(/[^\wÀ-ÿ\s.,;:!?¿¡'"()\-—«»]/g) || []).length;
-    if (noise / t.length > 0.22) {
+    if (noise / t.length > 0.18) {
       return { ok: false, reason: 'ruido' };
     }
     if (/^[\W\d_]+$/.test(t) || /(.)\1{5,}/.test(t)) {
       return { ok: false, reason: 'incoherente' };
     }
+    const plaus = spanishPlausibility(words);
+    if (plaus.englishRatio > 0.2) {
+      return { ok: false, reason: 'texto_en_ingles' };
+    }
+    if (words.length >= 4 && plaus.score < 0.12 && plaus.englishRatio > 0.08) {
+      return { ok: false, reason: 'no_parece_espanol' };
+    }
     if (typeof confidence === 'number' && confidence < OCR_MIN_CONFIDENCE) {
       return { ok: false, reason: 'baja_confianza' };
+    }
+    if (wordConfs && wordConfs.length) {
+      const low = wordConfs.filter((c) => c < OCR_MIN_WORD_CONFIDENCE).length;
+      if (low / wordConfs.length > 0.45) {
+        return { ok: false, reason: 'palabras_dudosas' };
+      }
+      const avg = wordConfs.reduce((a, b) => a + b, 0) / wordConfs.length;
+      if (avg < OCR_MIN_CONFIDENCE) {
+        return { ok: false, reason: 'baja_confianza' };
+      }
     }
     return { ok: true };
   }
 
-  /** Upscale, fondo blanco y contraste para regiones pequeñas antes de Tesseract. */
+  function otsuThreshold(hist, total) {
+    let sum = 0;
+    for (let i = 0; i < 256; i++) sum += i * hist[i];
+    let sumB = 0;
+    let wB = 0;
+    let max = 0;
+    let threshold = 128;
+    for (let t = 0; t < 256; t++) {
+      wB += hist[t];
+      if (!wB) continue;
+      const wF = total - wB;
+      if (!wF) break;
+      sumB += t * hist[t];
+      const mB = sumB / wB;
+      const mF = (sum - sumB) / wF;
+      const between = wB * wF * (mB - mF) * (mB - mF);
+      if (between > max) {
+        max = between;
+        threshold = t;
+      }
+    }
+    return threshold;
+  }
+
+  /** Blanquea resaltados, binariza y escala para OCR de libros marcados. */
   function enhanceCropForOcr(canvas) {
-    const minDim = Math.min(canvas.width, canvas.height);
-    const targetMin = 420;
-    const scale = minDim < targetMin ? targetMin / minDim : 1;
+    const minH = canvas.height;
+    const targetH = 560;
+    const scale = minH < targetH ? targetH / minH : 1;
     const outW = Math.max(1, Math.round(canvas.width * scale));
     const outH = Math.max(1, Math.round(canvas.height * scale));
     const out = document.createElement('canvas');
@@ -240,16 +339,45 @@
     ctx.drawImage(canvas, 0, 0, outW, outH);
     const imageData = ctx.getImageData(0, 0, outW, outH);
     const data = imageData.data;
-    const contrast = 1.35;
-    const factor = (259 * (contrast * 100 + 255)) / (255 * (259 - contrast * 100));
-    for (let i = 0; i < data.length; i += 4) {
-      const gray = 0.299 * data[i] + 0.587 * data[i + 1] + 0.114 * data[i + 2];
-      let v = factor * (gray - 128) + 128;
-      v = Math.max(0, Math.min(255, v));
+    const hist = new Array(256).fill(0);
+    const gray = new Float32Array(outW * outH);
+    for (let i = 0, p = 0; i < data.length; i += 4, p++) {
+      let r = data[i];
+      let g = data[i + 1];
+      let b = data[i + 2];
+      const maxC = Math.max(r, g, b);
+      const minC = Math.min(r, g, b);
+      const sat = maxC - minC;
+      if (sat > 28 && maxC > 110 && maxC < 248 && minC > 45) {
+        const bleed = Math.min(1, sat / 110);
+        r += (255 - r) * bleed * 0.88;
+        g += (255 - g) * bleed * 0.88;
+        b += (255 - b) * bleed * 0.88;
+      }
+      const gv = 0.299 * r + 0.587 * g + 0.114 * b;
+      gray[p] = gv;
+      const bin = Math.max(0, Math.min(255, Math.round(gv)));
+      hist[bin] += 1;
+    }
+    const threshold = otsuThreshold(hist, gray.length);
+    for (let i = 0, p = 0; i < data.length; i += 4, p++) {
+      const v = gray[p] > threshold ? 255 : 0;
       data[i] = data[i + 1] = data[i + 2] = v;
+      data[i + 3] = 255;
     }
     ctx.putImageData(imageData, 0, 0);
     return out;
+  }
+
+  /** Amplía la caja del marcador para incluir líneas de texto completas. */
+  function expandRegionForOcr(region, canvasW, canvasH) {
+    const padX = Math.max(6, Math.round(region.w * 0.06));
+    const padY = Math.max(14, Math.round(region.h * 0.75));
+    const x = Math.max(0, region.x - padX);
+    const y = Math.max(0, region.y - padY);
+    const w = Math.min(canvasW - x, region.w + padX * 2);
+    const h = Math.min(canvasH - y, region.h + padY * 2);
+    return { x, y, w, h, color: region.color };
   }
 
   function reasonLabel(reason) {
@@ -263,8 +391,24 @@
       ruido: 'demasiado ruido OCR',
       incoherente: 'incoherente',
       baja_confianza: 'baja confianza OCR',
+      palabras_dudosas: 'palabras dudosas',
+      texto_en_ingles: 'parece inglés (foto ilegible)',
+      no_parece_espanol: 'no parece español',
+      foto_baja_calidad: 'foto con poca resolución',
     };
     return labels[reason] || reason;
+  }
+
+  function photoQualityHint(meta) {
+    if (!meta) return '';
+    if (meta.fullRes === false) {
+      return ' Foto reducida para el navegador — sube JPEG sin comprimir o acerca más el texto.';
+    }
+    const maxEdge = Math.max(meta.width || 0, meta.height || 0);
+    if (maxEdge > 0 && maxEdge < 2400) {
+      return ' Resolución baja para OCR — luz uniforme, perpendicular al texto, sin sombra.';
+    }
+    return '';
   }
 
   function LecturaClaveB(options) {
@@ -282,6 +426,7 @@
     this.mode = 'eyedropper';
     this.queue = [];
     this.image = null;
+    this.imageMeta = null;
     this.scale = 1;
     this.selection = null;
     this.drag = null;
@@ -456,6 +601,16 @@
     if (typeof src === 'object' && src.url && src.revoke !== false) {
       this._objectUrl = src.url;
     }
+    if (typeof src === 'object') {
+      this.imageMeta = {
+        width: src.width || null,
+        height: src.height || null,
+        fullRes: src.fullRes !== false,
+        format: src.format || null,
+      };
+    } else {
+      this.imageMeta = null;
+    }
     if (this.els.workspace) this.els.workspace.style.display = 'block';
     return new Promise(function (resolve, reject) {
       const img = new Image();
@@ -472,7 +627,14 @@
             try {
               self.fitCanvas();
               self.draw();
-              self.status('Foto cargada. Escanea marcadores o selecciona una región manual.', 'success');
+              const dim = self.imageMeta && self.imageMeta.width
+                ? ` (${self.imageMeta.width}×${self.imageMeta.height})`
+                : '';
+              const hint = photoQualityHint(self.imageMeta);
+              self.status(
+                'Foto cargada' + dim + '. Escanea marcadores o selecciona región manual.' + hint,
+                hint ? '' : 'success',
+              );
               self.updateOcrButton();
               resolve();
             } catch (err) {
@@ -494,6 +656,7 @@
 
   LecturaClaveB.prototype.clear = function () {
     this.image = null;
+    this.imageMeta = null;
     this.selection = null;
     this.revokeImageUrl();
     if (this.ctx && this.els.canvas) {
@@ -624,18 +787,20 @@
     return crop;
   };
 
-  LecturaClaveB.prototype.ocrRegion = async function (region, Tesseract) {
-    const tess = Tesseract || (await ensureTesseract());
+  LecturaClaveB.prototype.ocrRegion = async function (region, worker) {
+    const w = worker || (await ensureTesseractWorker());
     const crop = this.cropRegionToCanvas(region);
+    if (crop.width < 80 || crop.height < 24) {
+      return { text: '', confidence: 0, ok: false, reason: 'foto_baja_calidad' };
+    }
     const enhanced = enhanceCropForOcr(crop);
-    const psm = tess.PSM && tess.PSM.SINGLE_BLOCK ? tess.PSM.SINGLE_BLOCK : '6';
-    const result = await tess.recognize(enhanced, 'spa', {
-      logger: () => {},
-      tessedit_pageseg_mode: psm,
-    });
+    const result = await w.recognize(enhanced);
     const text = (result.data.text || '').replace(/\s+/g, ' ').trim();
     const confidence = result.data.confidence;
-    const assessment = assessTranscription(text, confidence);
+    const wordConfs = (result.data.words || [])
+      .map((item) => item.confidence)
+      .filter((c) => typeof c === 'number' && c >= 0);
+    const assessment = assessTranscription(text, confidence, wordConfs);
     return {
       text,
       confidence,
@@ -652,16 +817,19 @@
     this.status('OCR local en progreso…');
     try {
       const ocr = await this.ocrRegion(this.selection);
-      if (this.els.texto) this.els.texto.value = ocr.text || '';
+      if (this.els.texto) {
+        this.els.texto.value = ocr.ok ? ocr.text : '';
+      }
+      const photoHint = photoQualityHint(this.imageMeta);
       if (ocr.ok) {
         this.status('OCR completado — revisa y corrige la transcripción.', 'success');
       } else if (ocr.text) {
         this.status(
-          `OCR dudoso (${reasonLabel(ocr.reason)}) — corrige o transcribe manualmente.`,
-          '',
+          `OCR rechazado (${reasonLabel(ocr.reason)}). Transcribe manualmente.${photoHint}`,
+          'error',
         );
       } else {
-        this.status('OCR sin texto legible — transcribe manualmente.', '');
+        this.status(`OCR sin texto legible — transcribe manualmente.${photoHint}`, 'error');
       }
     } catch (err) {
       this.status('Error OCR: ' + err.message, 'error');
@@ -688,16 +856,19 @@
         this._scanning = false;
         return;
       }
-      const Tesseract = await ensureTesseract();
+      const worker = await ensureTesseractWorker();
       const libro = (this.els.libro?.value || '').trim() || this.opts.defaultLibro;
       const autor = (this.els.autor?.value || '').trim() || this.opts.defaultAutor;
       const pagina = parseInt(this.els.pagina?.value, 10) || null;
+      const canvasW = this.els.canvas.width;
+      const canvasH = this.els.canvas.height;
+      const photoHint = photoQualityHint(this.imageMeta);
       let added = 0;
       let skipped = 0;
       for (let i = 0; i < regions.length; i++) {
-        const region = regions[i];
+        const region = expandRegionForOcr(regions[i], canvasW, canvasH);
         this.status(`OCR fragmento ${i + 1}/${regions.length} · ${getClaveById(region.color).label}…`);
-        const ocr = await this.ocrRegion(region, Tesseract);
+        const ocr = await this.ocrRegion(region, worker);
         if (!ocr.ok) {
           skipped += 1;
           continue;
@@ -722,7 +893,9 @@
           ? ` ${skipped} región${skipped !== 1 ? 'es' : ''} omitida${skipped !== 1 ? 's' : ''} por ilegibles o incoherentes.`
           : '';
         this.status(
-          'Marcadores detectados pero sin transcripciones válidas — transcribe manualmente.' + skipMsg,
+          'Marcadores detectados pero sin transcripciones válidas — transcribe manualmente.' +
+            skipMsg +
+            photoHint,
           'error',
         );
       } else {
@@ -730,8 +903,8 @@
           ? ` · ${skipped} omitido${skipped !== 1 ? 's' : ''} (ilegible/incoherente)`
           : '';
         this.status(
-          `${added} fragmento${added !== 1 ? 's' : ''} válido${added !== 1 ? 's' : ''} en cola${skipMsg}. Revisa e importa al archivo.`,
-          'success',
+          `${added} fragmento${added !== 1 ? 's' : ''} válido${added !== 1 ? 's' : ''} en cola${skipMsg}. Revisa e importa al archivo.${photoHint}`,
+          photoHint ? '' : 'success',
         );
         if (this.opts.onQueueChange) this.opts.onQueueChange(this.queue);
       }
@@ -861,7 +1034,10 @@
     detectMarkedRegions,
     assessTranscription,
     enhanceCropForOcr,
+    expandRegionForOcr,
+    spanishPlausibility,
     reasonLabel,
+    photoQualityHint,
     init: function (options) {
       return new LecturaClaveB(options);
     },

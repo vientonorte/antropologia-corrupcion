@@ -6,9 +6,9 @@
     'use strict';
 
     var MAX_BYTES = 20 * 1024 * 1024;
-    /** Máximo lado largo — conservar legibilidad para OCR (fotos iPhone ~12MP) */
-    var MAX_EDGE = 4096;
-    var JPEG_QUALITY = 0.96;
+    /** Sin recorte en iPhone 15 (~5712px). Solo reducir fotos excepcionalmente grandes. */
+    var MAX_EDGE = 6144;
+    var JPEG_QUALITY = 0.98;
     var HEIC_TO_URL = 'vendor/heic-to.js';
     var HEIC2ANY_URL = 'vendor/heic2any.min.js';
     var HEIF_BRANDS = ['heic', 'heix', 'hevc', 'hevx', 'mif1', 'msf1', 'MiHE', 'MiHA', 'heis', 'heim', 'avif'];
@@ -199,7 +199,14 @@
                 ctx.drawImage(resized, 0, 0);
                 resized.close();
                 return canvasToJpegBlob(canvas, JPEG_QUALITY).then(function (jpeg) {
-                    return { url: blobToObjectUrl(jpeg), revoke: true, width: cw, height: ch, fullRes: false };
+                    return {
+                        url: blobToObjectUrl(jpeg),
+                        revoke: true,
+                        width: cw,
+                        height: ch,
+                        fullRes: false,
+                        downscaled: true,
+                    };
                 });
             });
         });
@@ -240,9 +247,16 @@
                 ctx.drawImage(img, 0, 0, cw, ch);
                 canvasToJpegBlob(canvas, JPEG_QUALITY).then(function (jpeg) {
                     URL.revokeObjectURL(url);
-                    resolve({ url: blobToObjectUrl(jpeg), revoke: true, width: cw, height: ch });
+                    resolve({
+                        url: blobToObjectUrl(jpeg),
+                        revoke: true,
+                        width: cw,
+                        height: ch,
+                        fullRes: false,
+                        downscaled: true,
+                    });
                 }).catch(function () {
-                    resolve({ url: url, revoke: true, width: w, height: h });
+                    resolve({ url: url, revoke: true, width: w, height: h, fullRes: true });
                 });
             };
             img.onerror = function () {
@@ -256,7 +270,7 @@
     function heicBlobToJpeg(file, progress) {
         return ensureHeicTo().then(function (heicTo) {
             if (progress) progress('Convirtiendo HEIC iPhone (heic-to)…');
-            return heicTo({ blob: file, type: 'image/jpeg', quality: 0.98 });
+            return heicTo({ blob: file, type: 'image/jpeg', quality: 0.99 });
         }).then(function (result) {
             var blob = Array.isArray(result) ? result[0] : result;
             if (!blob) throw new Error('heic-to vacío');
@@ -267,7 +281,7 @@
                 return global.heic2any({
                     blob: file,
                     toType: 'image/jpeg',
-                    quality: 0.98,
+                    quality: 0.99,
                 });
             }).then(function (result) {
                 var blob = Array.isArray(result) ? result[0] : result;
