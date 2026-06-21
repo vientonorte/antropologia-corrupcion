@@ -1,81 +1,92 @@
 {
   "_meta": {
     "schema": "contra-archivo/libros-clave-b",
-    "version": 1,
+    "version": 2,
     "updated_at": "2026-06-21",
     "protocolo": "Clave B — bujo-ro",
-    "doc": "docs/skills/BASES_CONSULTADAS.md"
+    "doc": "docs/skills/BASES_CONSULTADAS.md",
+    "fuente": "Foto física Rö — 7 libros tesis.jpg (8 volúmenes, 2026-06-21)"
   },
   "libros": [
     {
+      "id": "gramsci-reforma",
+      "autor": "Antonio Gramsci",
+      "titulo": "Para la reforma moral e intelectual",
+      "anio": null,
+      "clave": "B",
+      "estado": "pendiente",
+      "capturas_objetivo": 0,
+      "notas": "Cuadernos · capa filosófica bujo-ro · hegemonía / sociedad civil"
+    },
+    {
+      "id": "salazar-acumulacion",
+      "autor": "Gabriel Salazar",
+      "titulo": "Historia de la acumulación capitalista en Chile (aportes de clase)",
+      "anio": 1985,
+      "clave": "B",
+      "estado": "pendiente",
+      "capturas_objetivo": 0,
+      "notas": "LOM ediciones · acumulación aberrante · Chile"
+    },
+    {
+      "id": "jara-pinera-offshore",
+      "autor": "Sergio Jara, Juan Pablo Figueroa",
+      "titulo": "Piñera Offshore",
+      "anio": null,
+      "clave": "B",
+      "estado": "pendiente",
+      "capturas_objetivo": 0,
+      "notas": "Periodismo de investigación · offshore · élite chilena"
+    },
+    {
+      "id": "guzman-empresarios-zombis",
+      "autor": "Juan Andrés Guzmán, Jorge Rojas",
+      "titulo": "Empresarios zombis: la mayor elusión tributaria de la élite chilena",
+      "anio": 2022,
+      "clave": "B",
+      "estado": "pendiente",
+      "capturas_objetivo": 0,
+      "notas": "Editorial Catalonia · elusión · corrupción estructural"
+    },
+    {
+      "id": "dussel-hipotesis",
+      "autor": "Enrique Dussel",
+      "titulo": "Hipótesis para el Estudio de Latinoamérica en la Historia Universal",
+      "anio": 1974,
+      "clave": "B",
+      "estado": "pendiente",
+      "capturas_objetivo": 0,
+      "notas": "Filosofía de la liberación · marco territorial bujo-ro"
+    },
+    {
+      "id": "marx-capital-i",
+      "autor": "Karl Marx",
+      "titulo": "El capital I",
+      "anio": 1867,
+      "clave": "B",
+      "estado": "pendiente",
+      "capturas_objetivo": 0,
+      "notas": "Tomo I · extracción · fetichismo de la mercancía"
+    },
+    {
       "id": "zuboff-vigilancia",
       "autor": "Shoshana Zuboff",
-      "titulo": "La era del capitalismo de la vigilancia",
+      "titulo": "La era del capitalismo de la vigilancia: la lucha por un futuro humano frente a las nuevas fronteras del poder",
       "anio": 2019,
       "clave": "B",
       "estado": "en-curso",
       "capturas_objetivo": 0,
-      "notas": "Ed. Paidós · Caso SURA / gobernanza de datos · corpus zuboff-citas.json"
+      "notas": "Paidós · corpus zuboff-citas.json · gobernanza de datos / SURA"
     },
     {
-      "id": "stoler-archivo",
-      "autor": "Ann Laura Stoler",
-      "titulo": "Along the Archival Grain: Epistemic Anxieties and Colonial Common Sense",
-      "anio": 2009,
+      "id": "varoufakis-tecnofeudalismo",
+      "autor": "Yanis Varoufakis",
+      "titulo": "Tecnofeudalismo",
+      "anio": 2023,
       "clave": "B",
       "estado": "pendiente",
       "capturas_objetivo": 0,
-      "notas": "Princeton UP · archivo imperial · grain epistémico · C01/C02"
-    },
-    {
-      "id": "taussig-terror",
-      "autor": "Michael Taussig",
-      "titulo": "Chamanismo, colonialismo y el hombre salvaje: un estudio sobre el terror y la curación",
-      "anio": 1987,
-      "clave": "B",
-      "estado": "pendiente",
-      "capturas_objetivo": 0,
-      "notas": "Siglo XXI · terror · mimesis · sujeto colonial · C05"
-    },
-    {
-      "id": "riles-documentos",
-      "autor": "Annelise Riles",
-      "titulo": "Documents: Artifacts of Modern Knowledge",
-      "anio": 2006,
-      "clave": "B",
-      "estado": "pendiente",
-      "capturas_objetivo": 0,
-      "notas": "Princeton UP · documentos como artefactos · ensayo D4"
-    },
-    {
-      "id": "tsing-friccion",
-      "autor": "Anna Lowenhaupt Tsing",
-      "titulo": "Fricción: una etnografía de la conexión global",
-      "anio": 2005,
-      "clave": "B",
-      "estado": "pendiente",
-      "capturas_objetivo": 0,
-      "notas": "Traficantes de Sueños / Virus Editorial · La Negra · ensayo D4"
-    },
-    {
-      "id": "rivera-ch-ixi",
-      "autor": "Silvia Rivera Cusicanqui",
-      "titulo": "Ch'ixinakax utxiwa: una reflexión sobre prácticas y discursos descolonizadores",
-      "anio": 2010,
-      "clave": "B",
-      "estado": "pendiente",
-      "capturas_objetivo": 0,
-      "notas": "Tinta Limón · epistemicidio · traducción de saberes · ensayo D4"
-    },
-    {
-      "id": "adler-redes",
-      "autor": "Larissa Adler-Lomnitz",
-      "titulo": "Redes sociales, cultura y poder: ensayos de antropología latinoamericana",
-      "anio": 2000,
-      "clave": "B",
-      "estado": "pendiente",
-      "capturas_objetivo": 0,
-      "notas": "FCE · redes informales · corrupción estructural"
+      "notas": "Capa económico-digital bujo-ro · D17 tecnofeudalismo"
     }
   ]
 }
