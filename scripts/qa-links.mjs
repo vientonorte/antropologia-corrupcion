@@ -48,6 +48,8 @@ const SEED_PATHS = [
   '/src/frictionEngine.js',
   '/shared-shell.js',
   '/js/lectura-clave-b.js',
+  '/js/lectura-clave-a.js',
+  '/js/lectura-clave-a.js',
 ];
 
 const HREF_RE = /(?:href|src)=["']([^"'#]+)["']/gi;

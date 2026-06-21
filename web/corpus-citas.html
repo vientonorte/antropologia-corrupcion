@@ -5,9 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Corpus de Citas — Clave A/B · Contra-Archivo</title>
-    <meta name="description" content="Archivo canónico de citas del corpus doctoral: Zuboff, ATTAC, libros físicos Clave B, captura local sin IA y análisis opcional con Claude.">
+    <meta name="description" content="Archivo canónico de citas del corpus doctoral: Zuboff, ATTAC, libros físicos. Captura 100% local — detección cromática + OCR en el navegador, sin API ni terceros.">
     <meta property="og:title" content="Corpus de Citas — Contra-Archivo">
-    <meta property="og:description" content="Captura, codifica y exporta citas de libros físicos — OCR local, corpus editorial y Clave A/B.">
+    <meta property="og:description" content="Captura, codifica y exporta citas — motor local Clave A/B, sin dependencia de servicios externos.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://vientonorte.github.io/antropologia-corrupcion/corpus-citas.html">
     <link rel="manifest" href="manifest.json">
@@ -1038,12 +1038,11 @@
             </span>
         </div>
         <div class="archive-intro">
-            <p><strong>Historial de citas codificadas</strong> — Captura extractos de libros físicos del corpus (no solo Zuboff) con <strong>Clave B</strong> en el navegador (sin Claude): sube la foto, detecta color, transcribe y archiva. Marcadores: rojo/amarillo/rosa/verde/azul/naranja. Cada cita se archiva con libro, autor, página, categoría
-                temática y notas de alineación con tu tesis sobre "mistranslation" institucional y contra-archivo.</p>
+            <p><strong>Historial de citas codificadas</strong> — Motor <strong>100% local</strong>: detección cromática por píxel, selección de región y OCR (Tesseract) en tu navegador. Sin API keys, sin proxy, sin terceros. Clave B (libros) y Clave A (Bullet Ro). Cada cita archiva libro, autor, página, categoría y notas de alineación con la tesis de mistranslation institucional.</p>
             <p style="margin-top:12px; font-size:11px; color:var(--neutral);">Base metodológica alineada a BJ_analisis_consolidado_D17_Intro. El corpus Zuboff + ATTAC se sincroniza desde <code>data/</code>; tus capturas y ediciones persisten en <code>localStorage</code> (<code>corpusCitas</code>). Las páginas <code>zuboff-archivo.html</code> y <code>archivo-lecturas.html</code> redirigen aquí y migran citas automáticamente. Investigadoras: <a href="privado-login.html" style="color:var(--zuboff);">espacio privado</a>.</p>
         </div>
 
-        <!-- LECTURA CROMÁTICA CLAVE B (local, sin Claude) -->
+        <!-- LECTURA CROMÁTICA CLAVE B (motor local) -->
         <div class="analyzer-section open" id="analyzerSection">
             <div class="analyzer-header" onclick="toggleAnalyzer()">
                 <div class="analyzer-header-left">
@@ -1122,61 +1121,79 @@
                     </div>
                 </div>
 
-                <details class="ai-fallback">
-                    <summary>Modo IA opcional (Claude / proxy viento norte)</summary>
-                    <p class="api-key-status saved" id="proxyStatus" style="display:none;margin:12px 0 10px;"></p>
-                    <div class="api-key-row" id="apiKeyRow">
-                        <input type="password" id="apiKeyInput" placeholder="sk-ant-… (solo si no hay proxy)" autocomplete="off">
-                        <button class="btn-secondary" onclick="saveApiKey()" style="flex-shrink:0;">Guardar key</button>
-                        <span class="api-key-status" id="apiKeyStatus">Sin key — opcional</span>
-                    </div>
-                    <p style="font-size:10px;color:var(--neutral);margin:0 0 12px;">Inferencia automática vía <a href="https://github.com/vientonorte/table-ro/blob/main/WORKER-DEPLOY.md" target="_blank" rel="noopener">Cloudflare Worker</a> o API key en sesión.</p>
-                    <div class="analyzer-actions">
-                        <button class="btn-secondary" id="analyzeBtn" onclick="analyzePhoto()" disabled>Analizar con Claude</button>
-                        <span class="analyze-status" id="analyzeStatus"></span>
-                    </div>
-                    <div class="results-preview" id="resultsPreview">
-                        <div class="results-preview-header">
-                            <span id="resultsCount">0 citas detectadas</span>
-                            <button class="btn-import-all" onclick="importAllResults()">Importar todas →</button>
-                        </div>
-                        <div id="resultsList"></div>
-                    </div>
-                </details>
             </div>
         </div>
 
-        <!-- ANALIZADOR BUJO-RO -->
-        <div class="analyzer-section" id="bujoSection">
-            <div class="analyzer-header" onclick="toggleBujo()">
+        <!-- LECTURA CROMÁTICA CLAVE A — Bullet Ro (local, sin IA) -->
+        <div class="analyzer-section" id="claveASection">
+            <div class="analyzer-header" onclick="toggleClaveA()">
                 <div class="analyzer-header-left">
-                    <span class="analyzer-title">✏️ Analizar página Bullet Ro</span>
-                    <span class="analyzer-badge">Claude API · bujo-ro v1.2</span>
+                    <span class="analyzer-title">📓 Lectura cromática Clave A</span>
+                    <span class="analyzer-badge local">Bullet Ro · local</span>
                 </div>
-                <span class="analyzer-toggle" id="bujoToggleLabel">Abrir</span>
+                <span class="analyzer-toggle" id="claveAToggleLabel">Abrir</span>
             </div>
             <div class="analyzer-body">
-                <p style="font-size:11px;color:var(--neutral);margin-bottom:12px;">Sube una foto de una página manuscrita del cuaderno (dot grid, post-it, wireframe). Claude extrae notas estructuradas según el protocolo bujo-ro v1.2 — Clave A.</p>
+                <p style="font-size:11px;color:var(--neutral);margin:0 0 14px;line-height:1.6;">
+                    Cuaderno Bullet Ro, post-its y wireframes. Mismo motor que Clave B: cuentaagotas, región, OCR local (Tesseract).
+                    Transcripción fiel — tú revisas, el corpus archiva.
+                </p>
 
-                <div class="drop-zone" id="bujoDropZone">
-                    <input type="file" id="bujoPhotoInput" accept="image/*" onchange="handleBujoPhotoSelect(event)">
+                <div class="clave-b-legend" aria-label="Clave A — Bullet Ro">
+                    <span>🩷 Personal</span>
+                    <span>⬛ Vínculos</span>
+                    <span>🩵 Camila</span>
+                    <span>🟠 Laboral</span>
+                    <span>🟡 Referencias</span>
+                </div>
+
+                <div class="drop-zone" id="claveADropZone">
+                    <input type="file" id="claveAPhotoInput" accept="image/*" onchange="handleClaveAPhotoSelect(event)">
                     <div class="drop-zone-icon">📓</div>
                     <div class="drop-zone-label">Arrastra o selecciona foto del cuaderno</div>
                     <div class="drop-zone-sub">JPG · PNG · HEIC · hasta 20MB</div>
                 </div>
-                <img id="bujoPreviewImg" class="preview-img" alt="Vista previa cuaderno">
 
-                <div class="analyzer-actions">
-                    <button class="btn-primary" id="bujoAnalyzeBtn" onclick="analyzeBujo()" disabled>Analizar con bujo-ro</button>
-                    <button class="btn-secondary" id="bujoClearBtn" onclick="clearBujoPhoto()" style="display:none;">Limpiar</button>
-                    <span class="analyze-status" id="bujoStatus"></span>
-                </div>
-
-                <div class="results-preview" id="bujoResultsPreview">
-                    <div class="results-preview-header">
-                        <span id="bujoResultsCount">0 notas detectadas</span>
+                <div class="clave-b-workspace" id="claveAWorkspace" style="display:none">
+                    <p class="clave-b-color-hint" id="claveAColorLabel">🟡 Referencias · referencia</p>
+                    <div class="clave-b-toolbar" id="claveAToolbar" role="toolbar" aria-label="Colores Clave A"></div>
+                    <div class="clave-b-tools">
+                        <button type="button" class="btn-secondary active" data-clave-a-mode="eyedropper" aria-pressed="true">Cuentagotas</button>
+                        <button type="button" class="btn-secondary" data-clave-a-mode="region" aria-pressed="false">Seleccionar región</button>
+                        <button type="button" class="btn-secondary" id="claveAOcrRegion">OCR en región</button>
                     </div>
-                    <div id="bujoResultsList" style="font-size:12px;line-height:1.6;white-space:pre-wrap;padding:8px 0;color:var(--ink);"></div>
+                    <div class="clave-b-canvas-wrap" id="claveACanvasWrap">
+                        <canvas id="claveACanvas" aria-label="Foto del cuaderno para lectura cromática"></canvas>
+                    </div>
+
+                    <div class="clave-b-form">
+                        <label>Referencia de página (D17, NOTAS 2026-05…)
+                            <input type="text" id="claveAReferencia" placeholder="Ej: D17 · p. interna 12">
+                        </label>
+                        <label>Transcripción fiel
+                            <textarea id="claveATexto" placeholder="Texto manuscrito — marca [ilegible] donde corresponda"></textarea>
+                        </label>
+                        <label>Notas (conexión contra-archivo)
+                            <textarea id="claveANotas" placeholder="Por qué importa este fragmento…"></textarea>
+                        </label>
+                    </div>
+
+                    <div class="analyzer-actions">
+                        <button type="button" class="btn-primary" id="claveAAddFragment">+ Añadir fragmento</button>
+                        <button type="button" class="btn-secondary" id="claveAClearPhoto">Limpiar foto</button>
+                        <span class="analyze-status" id="claveAStatus"></span>
+                    </div>
+
+                    <div class="clave-b-queue">
+                        <div class="results-preview-header">
+                            <span id="claveAQueueCount">0 fragmentos</span>
+                            <div style="display:flex;gap:8px;">
+                                <button type="button" class="btn-import-all" id="claveAImportQueue">Importar al archivo →</button>
+                                <button type="button" class="btn-secondary" id="claveAClearQueue" style="padding:6px 10px;font-size:10px;">Vaciar</button>
+                            </div>
+                        </div>
+                        <div id="claveAQueue"></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1814,17 +1831,6 @@ Notas: Conexión directa con tu experiencia de expulsión a los 15. Lo que perdi
             }
         }
 
-        function formatApiError(message) {
-            if (!message) return 'Error desconocido de la API.';
-            if (/credit balance is too low/i.test(message)) {
-                return 'Saldo Anthropic insuficiente. Usa captura local (sin IA) arriba, o recarga créditos en console.anthropic.com → Plans & Billing.';
-            }
-            if (/invalid x-api-key/i.test(message)) {
-                return 'Clave API inválida. Genera una nueva en console.anthropic.com (sk-ant-…).';
-            }
-            return message;
-        }
-
         function loadLibrosRegistry() {
             if (!window.CALibrosClaveB) return Promise.resolve();
             return CALibrosClaveB.loadRegistry().then(function (registry) {
@@ -1869,94 +1875,10 @@ Notas: Conexión directa con tu experiencia de expulsión a los 15. Lo que perdi
             updateStats();
         });
 
-        // ── ANALIZADOR CLAVE B ──────────────────────────────────────────────────────
+        // ── CAPTURA LOCAL Clave B + Clave A (sin terceros) ───────────────────────
 
-        let currentPhotoBase64 = null;
-        let currentPhotoType = null;
-        let pendingResults = [];
         let claveBReader = null;
-        // API key solo en memoria — fallback si no hay proxy Worker
-        let _sessionApiKey = '';
-        const AI_PROXY_STORAGE = 'contra_archivo_proxy_url';
-        let AI_CFG = { proxyUrl: '', model: 'claude-sonnet-4-6' };
-
-        function getBasePath() {
-            return location.pathname.indexOf('/antropologia-corrupcion/') === 0 ? '/antropologia-corrupcion/' : '/';
-        }
-
-        async function loadAiProxyConfig() {
-            try {
-                const res = await fetch(getBasePath() + 'data/ai-proxy-config.json', { cache: 'no-cache' });
-                if (res.ok) {
-                    const cfg = await res.json();
-                    AI_CFG.proxyUrl = (cfg.proxyUrl || '').trim().replace(/\/+$/, '');
-                    if (cfg.model) AI_CFG.model = cfg.model;
-                }
-            } catch (_) { /* config opcional */ }
-            const localOverride = (localStorage.getItem(AI_PROXY_STORAGE) || '').trim().replace(/\/+$/, '');
-            if (localOverride) AI_CFG.proxyUrl = localOverride;
-            updateAiAccessUi();
-        }
-
-        function hasAiAccess() {
-            return !!AI_CFG.proxyUrl || !!_sessionApiKey;
-        }
-
-        function updateAiAccessUi() {
-            const row = document.getElementById('apiKeyRow');
-            const status = document.getElementById('proxyStatus');
-            const analyzeBtn = document.getElementById('analyzeBtn');
-            if (AI_CFG.proxyUrl) {
-                if (row) row.style.display = 'none';
-                if (status) {
-                    status.style.display = 'block';
-                    status.textContent = 'Proxy IA disponible (modo opcional).';
-                }
-            } else {
-                if (row) row.style.display = '';
-                if (status) status.style.display = 'none';
-            }
-            if (analyzeBtn && currentPhotoBase64) {
-                analyzeBtn.disabled = !hasAiAccess();
-            }
-        }
-
-        async function callClaudeMessages(payload) {
-            const proxy = AI_CFG.proxyUrl;
-            if (proxy) {
-                const res = await fetch(proxy + '/api/claude', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-                if (!res.ok) {
-                    const err = await res.json().catch(() => ({}));
-                    throw new Error((err && err.error && err.error.message) ? err.error.message : ('Proxy ' + res.status));
-                }
-                return res.json();
-            }
-            const apiKey = _sessionApiKey;
-            if (!apiKey) {
-                throw new Error('Sin proxy IA ni API key. Despliega table-ro/worker (WORKER-DEPLOY.md) o ingresa sk-ant-… en esta sesión.');
-            }
-            const res = await fetch('https://api.anthropic.com/v1/messages', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'x-api-key': apiKey,
-                    'anthropic-version': '2023-06-01',
-                    'anthropic-dangerous-direct-browser-access': 'true'
-                },
-                body: JSON.stringify(payload)
-            });
-            if (!res.ok) {
-                const err = await res.json().catch(() => ({}));
-                throw new Error((err && err.error && err.error.message) ? err.error.message : ('HTTP ' + res.status));
-            }
-            return res.json();
-        }
-
-        loadAiProxyConfig();
+        let claveAReader = null;
 
         function toggleAnalyzer() {
             const section = document.getElementById('analyzerSection');
@@ -1965,22 +1887,11 @@ Notas: Conexión directa con tu experiencia de expulsión a los 15. Lo que perdi
             label.textContent = section.classList.contains('open') ? 'Cerrar' : 'Abrir';
         }
 
-        function saveApiKey() {
-            const key = document.getElementById('apiKeyInput').value.trim();
-            if (!key.startsWith('sk-ant-')) {
-                setApiKeyStatus('Key inválida (debe empezar con sk-ant-)', false);
-                return;
-            }
-            _sessionApiKey = key;
-            document.getElementById('apiKeyInput').value = '';
-            setApiKeyStatus('Lista para esta sesión ✓', true);
-            document.getElementById('analyzerSection').classList.add('has-key');
-        }
-
-        function setApiKeyStatus(msg, ok) {
-            const el = document.getElementById('apiKeyStatus');
-            el.textContent = msg;
-            el.className = 'api-key-status' + (ok ? ' saved' : '');
+        function toggleClaveA() {
+            const section = document.getElementById('claveASection');
+            const label = document.getElementById('claveAToggleLabel');
+            section.classList.toggle('open');
+            label.textContent = section.classList.contains('open') ? 'Cerrar' : 'Abrir';
         }
 
         function handlePhotoSelect(e) {
@@ -1992,176 +1903,51 @@ Notas: Conexión directa con tu experiencia de expulsión a los 15. Lo que perdi
         function loadPhoto(file) {
             const reader = new FileReader();
             reader.onload = (e) => {
-                const dataUrl = e.target.result;
-                currentPhotoBase64 = dataUrl.split(',')[1];
-                currentPhotoType = file.type || 'image/jpeg';
-                document.getElementById('analyzeBtn').disabled = !hasAiAccess();
-                document.getElementById('resultsPreview').classList.remove('visible');
-                setAnalyzeStatus('');
-                if (claveBReader) claveBReader.loadImage(dataUrl);
+                if (claveBReader) claveBReader.loadImage(e.target.result);
             };
             reader.readAsDataURL(file);
         }
 
         function clearPhoto() {
-            currentPhotoBase64 = null;
-            currentPhotoType = null;
-            pendingResults = [];
             document.getElementById('photoInput').value = '';
-            document.getElementById('analyzeBtn').disabled = true;
-            document.getElementById('resultsPreview').classList.remove('visible');
-            setAnalyzeStatus('');
             if (claveBReader) claveBReader.clear();
         }
 
-        function setAnalyzeStatus(msg, type = '') {
-            const el = document.getElementById('analyzeStatus');
-            el.textContent = msg;
-            el.className = 'analyze-status' + (type ? ' ' + type : '');
+        function handleClaveAPhotoSelect(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            loadClaveAPhoto(file);
         }
 
-        async function analyzePhoto() {
-            if (!hasAiAccess()) {
-                setAnalyzeStatus('Modo IA opcional: despliega el Worker (table-ro) o ingresa sk-ant-…', 'error');
-                return;
-            }
-            if (!currentPhotoBase64) {
-                setAnalyzeStatus('Selecciona una foto primero.', 'error');
-                return;
-            }
-
-            const btn = document.getElementById('analyzeBtn');
-            btn.disabled = true;
-            setAnalyzeStatus('Analizando con Claude…');
-
-            const systemPrompt = `Eres el skill lectura-clave-b del protocolo bujo-ro v1.2.
-Analizas fotos de páginas de libros académicos anotados con marcadores de color.
-
-CLAVE B — sistema cromático para libros impresos:
-- Rosa fucsia → concepto_clave → color JSON: "red"
-- Gris        → investigar    → color JSON: "gray"
-- Amarillo    → referencia    → color JSON: "yellow"
-- Verde       → persona_interes → color JSON: "green"
-- Azul claro  → reflexion    → color JSON: "blue"
-- Naranja salmón → compartir → color JSON: "orange"
-
-Extrae TODOS los fragmentos marcados visibles en la imagen.
-Para cada uno devuelve un objeto JSON con estos campos exactos:
-- libro: nombre del libro (inferir de la imagen o usar "Zuboff — La era del capitalismo de la vigilancia" si no es claro)
-- autor: apellido del autor
-- pagina: número de página (integer) o null si no es visible
-- texto: transcripción exacta del fragmento marcado
-- color: "red" | "yellow" | "green" | "blue" | "orange" | "pink"
-- categoria: "concepto_clave" | "referencia" | "persona_interes" | "reflexion" | "compartir" | "investigar"
-- notas_clave_b: una frase breve sobre por qué este fragmento importa para el contra-archivo
-
-Responde SOLO con un JSON array válido. Sin texto adicional, sin markdown, sin explicaciones.`;
-
-            try {
-                const data = await callClaudeMessages({
-                    model: AI_CFG.model,
-                    max_tokens: 2048,
-                    system: systemPrompt,
-                    messages: [{
-                        role: 'user',
-                        content: [{
-                            type: 'image',
-                            source: {
-                                type: 'base64',
-                                media_type: currentPhotoType,
-                                data: currentPhotoBase64
-                            }
-                        }, {
-                            type: 'text',
-                            text: 'Extrae todas las citas marcadas con Clave B de esta página.'
-                        }]
-                    }]
-                });
-                const raw = data && data.content && data.content[0] && data.content[0].text ? data.content[0].text : '[]';
-                const cleaned = raw.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
-                pendingResults = JSON.parse(cleaned);
-
-                if (!Array.isArray(pendingResults) || pendingResults.length === 0) {
-                    setAnalyzeStatus('No se detectaron citas marcadas.', '');
-                    btn.disabled = false;
-                    return;
-                }
-
-                renderResults(pendingResults);
-                setAnalyzeStatus(`${pendingResults.length} cita${pendingResults.length > 1 ? 's' : ''} detectada${pendingResults.length > 1 ? 's' : ''}.`, 'success');
-
-            } catch (err) {
-                setAnalyzeStatus('Error: ' + formatApiError(err.message), 'error');
-                console.error(err);
-            }
-
-            btn.disabled = false;
+        function loadClaveAPhoto(file) {
+            const reader = new FileReader();
+            reader.onload = (ev) => {
+                if (claveAReader) claveAReader.loadImage(ev.target.result);
+            };
+            reader.readAsDataURL(file);
         }
 
-        const COLOR_DOTS = {
-            red: '#e066a6',
-            gray: '#888888',
-            yellow: '#e6c800',
-            green: '#3a7a4a',
-            blue: '#2A5FAC',
-            orange: '#c4962a'
-        };
-        const COLOR_LABELS = {
-            red: 'Concepto clave',
-            gray: 'Investigar',
-            yellow: 'Referencia',
-            green: 'Persona de interés',
-            blue: 'Reflexión',
-            orange: 'Compartir'
-        };
-
-        function renderResults(results) {
-            const preview = document.getElementById('resultsPreview');
-            const list = document.getElementById('resultsList');
-            document.getElementById('resultsCount').textContent = `${results.length} cita${results.length > 1 ? 's' : ''} detectada${results.length > 1 ? 's' : ''}`;
-
-            list.innerHTML = results.map((r, i) => `
-      <div class="result-item">
-        <div class="result-color-dot" style="background:${COLOR_DOTS[r.color] || '#888'}"></div>
-        <div style="flex:1">
-          <div class="result-text">"${escapeHtml(r.texto)}"</div>
-          <div class="result-meta">
-            p.${r.pagina || '?'} · ${COLOR_LABELS[r.color] || r.color} · ${escapeHtml(r.notas_clave_b || '')}
-          </div>
-        </div>
-        <button onclick="importSingle(${i})" style="background:none;border:1px solid var(--line);border-radius:2px;padding:4px 8px;cursor:pointer;font-size:10px;font-family:'DM Mono',monospace;flex-shrink:0;" title="Importar esta cita">+</button>
-      </div>
-    `).join('');
-
-            preview.classList.add('visible');
+        function clearClaveAPhoto() {
+            document.getElementById('claveAPhotoInput').value = '';
+            if (claveAReader) claveAReader.clear();
         }
 
-        function importSingle(i) {
-            const r = pendingResults[i];
-            if (!r) return;
-            addResultToCitations(r);
-            setAnalyzeStatus(`Cita ${i + 1} importada.`, 'success');
-        }
-
-        function importAllResults() {
-            pendingResults.forEach(r => addResultToCitations(r));
-            setAnalyzeStatus(`${pendingResults.length} citas importadas.`, 'success');
-            renderCitations();
-            updateStats();
-        }
+        document.getElementById('claveAClearPhoto')?.addEventListener('click', clearClaveAPhoto);
 
         function addResultToCitations(r) {
-            citations.push({
+            const isClaveA = r.clave === 'A';
+            citations.push(normalizeCitation({
                 id: Date.now() + Math.random(),
-                bookTitle: r.libro || DEFAULT_BOOK_TITLE,
-                author: r.autor || DEFAULT_AUTHOR,
-                pageNo: r.pagina || 0,
+                bookTitle: r.libro || (isClaveA ? 'Bullet Ro' : DEFAULT_BOOK_TITLE),
+                author: r.autor || (isClaveA ? 'Rö' : DEFAULT_AUTHOR),
+                pageNo: isClaveA ? (r.pagina || r.referencia || '') : (r.pagina || 0),
                 text: r.texto || '',
                 color: r.color || 'yellow',
-                category: mapCategoryToLocal(r.categoria),
-                notes: r.notas_clave_b || '',
+                category: isClaveA ? mapClaveACategory(r.categoria) : mapCategoryToLocal(r.categoria),
+                notes: r.notas_clave_b || r.notas_clave_a || r.notas || '',
+                clave: isClaveA ? 'A' : 'B',
                 timestamp: new Date().toISOString()
-            });
+            }));
             persistCitations();
         }
 
@@ -2177,151 +1963,16 @@ Responde SOLO con un JSON array válido. Sin texto adicional, sin markdown, sin 
             return map[cat] || 'metodologia';
         }
 
-        // ─── BUJO-RO ───
-        let bujoPhotoBase64 = null;
-        let bujoPhotoType = null;
-
-        function toggleBujo() {
-            const section = document.getElementById('bujoSection');
-            const label = document.getElementById('bujoToggleLabel');
-            section.classList.toggle('open');
-            label.textContent = section.classList.contains('open') ? 'Cerrar' : 'Abrir';
-        }
-
-        function handleBujoPhotoSelect(e) {
-            const file = e.target.files[0];
-            if (!file) return;
-            loadBujoPhoto(file);
-        }
-
-        function loadBujoPhoto(file) {
-            const reader = new FileReader();
-            reader.onload = ev => {
-                const dataUrl = ev.target.result;
-                const match = dataUrl.match(/^data:(image\/[a-z+]+);base64,(.+)$/);
-                if (!match) return;
-                bujoPhotoType = match[1] === 'image/heic' ? 'image/jpeg' : match[1];
-                bujoPhotoBase64 = match[2];
-                const img = document.getElementById('bujoPreviewImg');
-                img.src = dataUrl;
-                img.style.display = 'block';
-                document.getElementById('bujoAnalyzeBtn').disabled = false;
-                document.getElementById('bujoClearBtn').style.display = '';
-                document.getElementById('bujoResultsPreview').classList.remove('visible');
+        function mapClaveACategory(cat) {
+            const map = {
+                personal: 'metodologia',
+                vinculos: 'regimenes_verdad',
+                camila: 'hogar',
+                laboral: 'vigilancia_inst',
+                referencia: 'metodologia'
             };
-            reader.readAsDataURL(file);
+            return map[cat] || 'metodologia';
         }
-
-        function clearBujoPhoto() {
-            bujoPhotoBase64 = null;
-            bujoPhotoType = null;
-            document.getElementById('bujoPreviewImg').style.display = 'none';
-            document.getElementById('bujoPreviewImg').src = '';
-            document.getElementById('bujoPhotoInput').value = '';
-            document.getElementById('bujoAnalyzeBtn').disabled = true;
-            document.getElementById('bujoClearBtn').style.display = 'none';
-            document.getElementById('bujoResultsPreview').classList.remove('visible');
-            document.getElementById('bujoStatus').textContent = '';
-        }
-
-        function setBujoStatus(msg, type) {
-            const el = document.getElementById('bujoStatus');
-            el.textContent = msg;
-            el.className = 'analyze-status' + (type ? ' ' + type : '');
-        }
-
-        async function analyzeBujo() {
-            if (!hasAiAccess()) {
-                setBujoStatus('Sin proxy IA ni API key. Despliega el Worker (table-ro) o ingresa sk-ant-…', 'error');
-                return;
-            }
-            if (!bujoPhotoBase64) {
-                setBujoStatus('Selecciona una foto primero.', 'error');
-                return;
-            }
-
-            const btn = document.getElementById('bujoAnalyzeBtn');
-            btn.disabled = true;
-            setBujoStatus('Analizando con Claude…');
-
-            const systemPrompt = `Eres el skill bujo-ro v1.2 del protocolo bujo-ro.
-Procesas imágenes manuscritas del cuaderno Bullet Ro (dot grid, moleskine).
-
-PROTOCOLO:
-1. Transcripción fiel del texto manuscrito (marca [ilegible] donde no sea claro)
-2. Corrección mínima: solo errores de ortografía obvios, nunca cambiar el sentido
-3. División lógica en bloques temáticos
-4. Análisis técnico-lingüístico de cada bloque (NO psicológico, NO poético)
-5. Identificación de conexiones con el marco teórico del contra-archivo cuando corresponda
-6. Síntesis estructurada
-
-CLAVE A — sistema cromático para Bullet Ro:
-- Rojo/fucsia → urgente / acción inmediata
-- Naranja → importante / seguimiento
-- Amarillo → referencia / dato
-- Verde → positivo / logro / recurso
-- Azul → proceso / reflexión
-- Sin color → registro neutro
-
-REGLA DE ANONIMIZACIÓN: En el análisis (no en la transcripción), reemplazar nombres de la organización empleadora con [INSTITUCIÓN] y colegas con [colega].
-
-Responde con estructura Markdown:
-## Transcripción
-(texto fiel)
-
-## Análisis por bloques
-(análisis técnico de cada segmento)
-
-## Conexiones contra-archivo
-(si las hay)
-
-## Síntesis`;
-
-            try {
-                const data = await callClaudeMessages({
-                    model: AI_CFG.model,
-                    max_tokens: 2048,
-                    system: systemPrompt,
-                    messages: [{
-                        role: 'user',
-                        content: [{
-                            type: 'image',
-                            source: {
-                                type: 'base64',
-                                media_type: bujoPhotoType,
-                                data: bujoPhotoBase64
-                            }
-                        }, {
-                            type: 'text',
-                            text: 'Analiza esta página del cuaderno Bullet Ro según el protocolo bujo-ro v1.2.'
-                        }]
-                    }]
-                });
-                const text = data && data.content && data.content[0] && data.content[0].text ? data.content[0].text : '';
-                document.getElementById('bujoResultsList').textContent = text;
-                document.getElementById('bujoResultsCount').textContent = 'Análisis completo';
-                document.getElementById('bujoResultsPreview').classList.add('visible');
-                setBujoStatus('Análisis completado.', 'success');
-            } catch (err) {
-                setBujoStatus('Error: ' + err.message, 'error');
-            }
-
-            btn.disabled = false;
-        }
-
-        // Drag & drop bujo
-        const bujoDropZone = document.getElementById('bujoDropZone');
-        bujoDropZone.addEventListener('dragover', e => {
-            e.preventDefault();
-            bujoDropZone.classList.add('drag-over');
-        });
-        bujoDropZone.addEventListener('dragleave', () => bujoDropZone.classList.remove('drag-over'));
-        bujoDropZone.addEventListener('drop', e => {
-            e.preventDefault();
-            bujoDropZone.classList.remove('drag-over');
-            const file = e.dataTransfer.files[0];
-            if (file && file.type.startsWith('image/')) loadBujoPhoto(file);
-        });
 
         // ─── DRAG & DROP libro ───
         const dropZone = document.getElementById('dropZone');
@@ -2337,32 +1988,60 @@ Responde con estructura Markdown:
             if (file && file.type.startsWith('image/')) loadPhoto(file);
         });
 
-        // ── Lectura Clave B local (sin Claude) ──
+        // ── Lectura Clave B + A (motor local) ──
+        function importCaptureResults(results) {
+            results.forEach(function (r) { addResultToCitations(r); });
+            renderCitations();
+            updateStats();
+        }
+
         (function bootClaveB() {
             function startClaveB() {
                 if (!window.LecturaClaveB || claveBReader) return;
                 claveBReader = LecturaClaveB.init({
                     defaultLibro: DEFAULT_BOOK_TITLE,
                     defaultAutor: DEFAULT_AUTHOR,
-                    onImportAll: function(results) {
-                        results.forEach(function(r) { addResultToCitations(r); });
-                        renderCitations();
-                        updateStats();
-                    }
+                    onImportAll: importCaptureResults
                 });
             }
-            if (window.LecturaClaveB) {
-                startClaveB();
-            } else {
+            if (window.LecturaClaveB) startClaveB();
+            else {
                 var scriptEl = document.querySelector('script[src*="lectura-clave-b"]');
                 if (scriptEl) scriptEl.addEventListener('load', startClaveB);
                 setTimeout(bootClaveB, 40);
             }
         })();
 
-        // No se restaura API key — no se persiste entre sesiones
+        (function bootClaveA() {
+            function startClaveA() {
+                if (!window.LecturaClaveA || claveAReader) return;
+                claveAReader = LecturaClaveA.init({ onImportAll: importCaptureResults });
+            }
+            if (window.LecturaClaveA) startClaveA();
+            else {
+                var scriptEl = document.querySelector('script[src*="lectura-clave-a"]');
+                if (scriptEl) scriptEl.addEventListener('load', startClaveA);
+                setTimeout(bootClaveA, 40);
+            }
+        })();
+
+        const claveADropZone = document.getElementById('claveADropZone');
+        if (claveADropZone) {
+            claveADropZone.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                claveADropZone.classList.add('drag-over');
+            });
+            claveADropZone.addEventListener('dragleave', () => claveADropZone.classList.remove('drag-over'));
+            claveADropZone.addEventListener('drop', (e) => {
+                e.preventDefault();
+                claveADropZone.classList.remove('drag-over');
+                const file = e.dataTransfer.files[0];
+                if (file && file.type.startsWith('image/')) loadClaveAPhoto(file);
+            });
+        }
     </script>
-    <script src="js/lectura-clave-b.js?v=20260619" defer></script>
+    <script src="js/lectura-clave-b.js?v=20260621" defer></script>
+    <script src="js/lectura-clave-a.js?v=20260621" defer></script>
     <script>
         (function() {
             if (window.__CA_UNIFIED_SHELL_LOADER__) {

@@ -81,6 +81,7 @@ jobs:
           test -f data/libros-clave-b.json || { echo "❌ data/libros-clave-b.json faltante"; exit 1; }
           test -f corpus-citas.html || { echo "❌ corpus-citas.html faltante"; exit 1; }
           test -f lib/corpusCitasStore.js || { echo "❌ lib/corpusCitasStore.js faltante"; exit 1; }
+          test -f js/lectura-clave-a.js || { echo "❌ js/lectura-clave-a.js faltante"; exit 1; }
           node scripts/qa-links.mjs --deployed
           echo "✅ Assets críticos presentes"
 
