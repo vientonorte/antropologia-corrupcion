@@ -103,6 +103,20 @@
     var $btnExportCSV = document.getElementById('btnExportCSV');
     var suggestActiveIdx = -1;
 
+    function sanitizeCatMeta() {
+        if (!window.CACasoPublico || !window.CACasoPublico.shouldAnonymize()) return;
+        var CP = window.CACasoPublico;
+        Object.keys(CAT_META).forEach(function(cat) {
+            if (CAT_META[cat].desc) CAT_META[cat].desc = CP.sanitizeText(CAT_META[cat].desc);
+            if (CAT_META[cat].desc_extendida) {
+                CAT_META[cat].desc_extendida = CP.sanitizeText(CAT_META[cat].desc_extendida);
+            }
+            if (Array.isArray(CAT_META[cat].ejemplos)) {
+                CAT_META[cat].ejemplos = CAT_META[cat].ejemplos.map(CP.sanitizeText);
+            }
+        });
+    }
+
     function applyDeepLinkFromUrl() {
         var params = new URLSearchParams(window.location.search);
         var casoId = params.get('caso');
@@ -131,6 +145,7 @@
             : Promise.reject(new Error('CADataLoader no disponible'));
 
         loader.then(function(bundle) {
+            sanitizeCatMeta();
             corpusBundle = bundle;
             window.CABuscadorCorpus = bundle;
             huellaIndex = bundle.huella || { entidades: [], trazas: [] };

@@ -517,12 +517,25 @@
                       return r.ok ? r.json() : { casos: [] };
                   }),
               ]).then(function (results) {
-                  return {
+                  var fuentesRaw = results[1];
+                  var casosData = results[3];
+                  var registros = normalizeFuentes(fuentesRaw);
+                  var bcnRecords = normalizeBcnRecords(results[2]);
+                  var casos = casosData.casos || casosData;
+                  var bundle = {
                       huella: results[0],
-                      fuentesRaw: results[1],
+                      fuentesRaw: fuentesRaw,
+                      fuentes: registros,
                       bcn: results[2],
-                      casos: results[3],
+                      bcnRecords: bcnRecords,
+                      casos: casos,
+                      casosData: casosData,
+                      allRecords: registros.concat(bcnRecords),
                   };
+                  if (window.CACasoPublico && window.CACasoPublico.prepareCorpusBundle) {
+                      return window.CACasoPublico.prepareCorpusBundle(bundle);
+                  }
+                  return bundle;
               });
 
         return loadPromise

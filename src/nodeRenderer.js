@@ -706,7 +706,15 @@ class NodeRenderer {
    */
   _esc(str) {
     if (!str) return '';
-    return String(str)
+    let text = String(str);
+    if (
+      typeof window !== 'undefined' &&
+      window.CACasoPublico?.shouldAnonymize?.() &&
+      window.CACasoPublico?.sanitizeText
+    ) {
+      text = window.CACasoPublico.sanitizeText(text);
+    }
+    return text
       .replace(/&/g, '&amp;')
       .replace(/</g, '&lt;')
       .replace(/>/g, '&gt;')

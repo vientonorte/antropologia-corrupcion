@@ -12,6 +12,19 @@
             '/';
     }
 
+    function preloadCasoPublico() {
+        if (window.CACasoPublico || document.querySelector('script[data-ca-caso-publico]')) {
+            return;
+        }
+        var script = document.createElement('script');
+        script.src = resolveBasePath() + 'lib/casoPublico.js?v=20260621d';
+        script.defer = true;
+        script.setAttribute('data-ca-caso-publico', 'true');
+        document.head.appendChild(script);
+    }
+
+    preloadCasoPublico();
+
     function injectStyles() {
         if (document.getElementById('ca-unified-shell-styles')) {
             return;
