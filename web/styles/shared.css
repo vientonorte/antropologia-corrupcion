@@ -5,6 +5,12 @@
    ══════════════════════════════════════════════════════════════ */
 
 /* ── Tokens ── */
+/* Nav legado: ocultar cuando shell unificado inyectó bottom nav */
+body.ca-has-bottom-nav > header.site-header,
+body.ca-has-bottom-nav > footer.site-footer:not([data-ca-unified-footer]) {
+    display: none !important;
+}
+
 :root {
     --bg: #0c0c0c;
     --s1: #131313;

@@ -120,14 +120,41 @@
         }
     }
 
+    function enrichForExport(records, sourceReport) {
+        if (!sourceReport || !window.CASourceRegistry) {
+            return records;
+        }
+        var SR = window.CASourceRegistry;
+        return records.map(function(r) {
+            var entry = SR.getEntryById(sourceReport, r.fuente);
+            var state = SR.resolveRecordState(r, entry);
+            var enriched = Object.assign({}, r);
+            enriched.verificado = r.verificado === true ? 'si' : r.verificado === false ? 'no' : '';
+            enriched.estado_verificacion = r.estado_verificacion || state.estadoVerificacion || '';
+            enriched.official_score =
+                typeof r.official_score === 'number' ? r.official_score.toFixed(3) : '';
+            enriched.readiness_fuente = entry ? entry.readinessLabel : '';
+            return enriched;
+        });
+    }
+
     /**
      * Exporta resultados de categoría filtrados
      * @param {string} category - Categoría (E, F, G, H, I)
      * @param {Array} filteredRecords - Registros filtrados a exportar
+     * @param {Object} options - { sourceReport }
      */
-    function exportCategoryResults(category, filteredRecords) {
-        var csv = generateCSV(filteredRecords, {
-            columns: ['id', 'titulo', 'fecha', 'fuente', 'institucion', 'friccion_score', 'tipo_friccion', 'friccion_con', 'keywords', 'tags'],
+    function exportCategoryResults(category, filteredRecords, options) {
+        options = options || {};
+        var rows = options.sourceReport
+            ? enrichForExport(filteredRecords, options.sourceReport)
+            : filteredRecords;
+        var csv = generateCSV(rows, {
+            columns: [
+                'id', 'titulo', 'fecha', 'fuente', 'institucion',
+                'verificado', 'estado_verificacion', 'official_score', 'readiness_fuente',
+                'friccion_score', 'tipo_friccion', 'friccion_con', 'keywords', 'tags'
+            ],
             metadata: {
                 categoria: category,
                 fecha_export: new Date().toISOString(),
@@ -146,6 +173,7 @@
         window.categoryExport = {
             generateCSV: generateCSV,
             downloadCSV: downloadCSV,
+            enrichForExport: enrichForExport,
             exportCategoryResults: exportCategoryResults
         };
     }

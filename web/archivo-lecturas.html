@@ -400,6 +400,8 @@
                 <button class="ca-btn" id="btn-toggle-upload" type="button" aria-expanded="false" aria-controls="upload-section">
                     📷 Analizar imagen
                 </button>
+                <button class="ca-btn" id="btn-import-json" type="button" aria-label="Importar JSON de citas">↑ JSON</button>
+                <input type="file" id="import-json-input" accept="application/json,.json" hidden>
                 <button class="ca-btn" id="btn-export-json" type="button" aria-label="Exportar en JSON">↓ JSON</button>
                 <button class="ca-btn" id="btn-export-csv" type="button" aria-label="Exportar en CSV">↓ CSV</button>
                 <button class="ca-btn ca-btn-primary" id="btn-nueva" type="button">+ Nueva cita</button>
@@ -461,6 +463,15 @@
                     </span>
                 </label>
             </fieldset>
+
+            <!-- Libro del registro Clave B -->
+            <div class="ca-form-group">
+                <label class="ca-form-label" for="upload-libro">Libro (registro Clave B)</label>
+                <select class="ca-form-select" id="upload-libro" aria-describedby="upload-libro-hint">
+                    <option value="">— Seleccionar libro —</option>
+                </select>
+                <span id="upload-libro-hint" style="font-size:.72rem;color:var(--dim)">7 libros del marco doctoral. Al elegir uno se rellena la fuente.</span>
+            </div>
 
             <!-- Fuente por defecto -->
             <div class="ca-form-group">
@@ -542,6 +553,11 @@
         <div class="ca-filters" role="group" aria-label="Filtros de búsqueda">
             <input type="search" class="ca-search" id="filter-search" placeholder="Buscar en citas…" aria-label="Buscar en citas">
             <span class="ca-filter-sep" aria-hidden="true"></span>
+            <label class="ca-filter-label" for="filter-libro">Libro:</label>
+            <select class="ca-form-select" id="filter-libro" style="max-width:220px;font-size:.8rem" aria-label="Filtrar por libro">
+                <option value="">Todos</option>
+            </select>
+            <span class="ca-filter-sep" aria-hidden="true"></span>
             <span class="ca-filter-label">Clave:</span>
             <div id="filter-clave" style="display:flex;gap:6px" role="group" aria-label="Filtrar por clave cromática"></div>
             <span class="ca-filter-sep" aria-hidden="true"></span>
@@ -583,6 +599,13 @@
                         aria-required="true"
                         placeholder="Fragmento exacto del libro, nota de campo, o transcripción BJ…"
                     ></textarea>
+                </div>
+
+                <div class="ca-form-group">
+                    <label class="ca-form-label" for="field-libro">Libro (Clave B)</label>
+                    <select class="ca-form-select" id="field-libro">
+                        <option value="">— Sin libro del registro —</option>
+                    </select>
                 </div>
 
                 <div class="ca-form-row">
@@ -668,6 +691,7 @@
     </div>
 
     <script defer src="src/passkey.js?v=20260504"></script>
+    <script defer src="lib/librosClaveB.js?v=20260621"></script>
     <script>
         (function () {
             'use strict';
@@ -721,7 +745,9 @@
             var filterColor = null;
             var filterCat = null;
             var filterClave = null;
+            var filterLibro = null;
             var filterSearch = '';
+            var librosRegistry = null;
             var editingId = null;
             var selectedColor = '';
             var selectedFormClave = 'B';
@@ -871,6 +897,7 @@
 
             function filteredCitations() {
                 return citations.filter(function (c) {
+                    if (filterLibro && c.libro_id !== filterLibro) return false;
                     if (filterClave && c.clave !== filterClave) return false;
                     if (filterColor && c.color !== filterColor) return false;
                     if (filterCat && c.categoria !== filterCat) return false;
@@ -1022,6 +1049,9 @@
                 document.getElementById('field-pagina').value = c.pagina || '';
                 document.getElementById('field-categoria').value = c.categoria || '';
                 document.getElementById('field-notas').value = c.notas || '';
+                if (document.getElementById('field-libro')) {
+                    document.getElementById('field-libro').value = c.libro_id || '';
+                }
                 document.getElementById('field-color').value = c.color || '';
                 selectedColor = c.color || '';
                 selectedFormClave = c.clave || 'B';
@@ -1092,8 +1122,55 @@
 
             function dateStamp() { return new Date().toISOString().slice(0, 10).replace(/-/g, ''); }
 
+            function importJSON(file) {
+                if (!file) return;
+                var reader = new FileReader();
+                reader.onload = function (ev) {
+                    try {
+                        var parsed = JSON.parse(ev.target.result);
+                        var incoming = Array.isArray(parsed) ? parsed : parsed.citas || parsed.citations || [];
+                        if (!incoming.length) {
+                            window.alert('El archivo no contiene citas válidas.');
+                            return;
+                        }
+                        var merged = 0;
+                        incoming.forEach(function (item) {
+                            if (!item || !item.texto) return;
+                            citations.unshift({
+                                id: item.id || uuid(),
+                                texto: item.texto,
+                                fuente: item.fuente || item.libro || '',
+                                pagina: item.pagina != null ? String(item.pagina) : '',
+                                clave: item.clave || 'B',
+                                categoria: item.categoria || 'concepto-clave',
+                                color: item.color || 'yellow',
+                                notas: item.notas || item.contexto || '',
+                                libro_id: item.libro_id || '',
+                                fecha: item.fecha || today(),
+                            });
+                            merged += 1;
+                        });
+                        save();
+                        updateStats();
+                        renderGrid();
+                        window.alert('Importadas ' + merged + ' citas al corpus local.');
+                    } catch (e) {
+                        window.alert('JSON inválido: ' + e.message);
+                    }
+                };
+                reader.readAsText(file);
+            }
+
             function exportJSON() {
-                var blob = new Blob([JSON.stringify(citations, null, 2)], { type: 'application/json' });
+                var payload = {
+                    _meta: {
+                        exported_at: new Date().toISOString(),
+                        schema: 'contra-archivo/lecturas-clave-b',
+                        total: citations.length,
+                    },
+                    citas: citations,
+                };
+                var blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
                 var a = document.createElement('a');
                 a.href = URL.createObjectURL(blob);
                 a.download = 'contra-archivo-lecturas-' + dateStamp() + '.json';
@@ -1150,10 +1227,13 @@
                 if (!categoria) { errEl.textContent = 'La categoría es obligatoria.'; errEl.style.display = 'block'; return; }
                 if (!color) { errEl.textContent = 'Elige un color de anotación.'; errEl.style.display = 'block'; return; }
 
+                var libroSelect = document.getElementById('field-libro');
+                var libroId = libroSelect ? libroSelect.value : '';
                 var id = editingId || uuid();
                 saveCitation({
                     id: id, texto: texto, fuente: fuente, pagina: pagina,
-                    clave: clave.value, categoria: categoria, color: color, notas: notas, fecha: today()
+                    clave: clave.value, categoria: categoria, color: color, notas: notas,
+                    libro_id: libroId, fecha: today()
                 });
             }
 
@@ -1361,6 +1441,8 @@
                 if (!r || r._added) return;
                 var fuente = r.fuente_detectada || r._fuente || '';
                 var pagina = r.pagina != null ? String(r.pagina) : '';
+                var libroSelect = document.getElementById('upload-libro');
+                var libroId = libroSelect ? libroSelect.value : '';
                 citations.unshift({
                     id: uuid(),
                     texto: r.texto || '',
@@ -1370,6 +1452,7 @@
                     categoria: r.categoria || 'concepto-clave',
                     color: r.color || 'yellow',
                     notas: r.notas || '',
+                    libro_id: libroId,
                     fecha: today()
                 });
                 save(); updateStats(); renderGrid();
@@ -1500,15 +1583,40 @@
                 );
             }
 
+            function applyLibroToFuente(selectId, fuenteInputId) {
+                var select = document.getElementById(selectId);
+                var fuenteInput = document.getElementById(fuenteInputId);
+                if (!select || !fuenteInput || !window.CALibrosClaveB || !librosRegistry) return;
+                var libro = window.CALibrosClaveB.getLibroById(librosRegistry, select.value);
+                if (libro) {
+                    fuenteInput.value = window.CALibrosClaveB.formatLibroLabel(libro);
+                }
+            }
+
+            function loadLibrosRegistry() {
+                if (!window.CALibrosClaveB) return Promise.resolve();
+                return window.CALibrosClaveB.loadRegistry().then(function (registry) {
+                    librosRegistry = registry;
+                    window.CALibrosClaveB.populateSelect(document.getElementById('upload-libro'), registry);
+                    window.CALibrosClaveB.populateSelect(document.getElementById('field-libro'), registry);
+                    var filterLibroEl = document.getElementById('filter-libro');
+                    if (filterLibroEl) {
+                        window.CALibrosClaveB.populateSelect(filterLibroEl, registry, { placeholder: 'Todos' });
+                    }
+                });
+            }
+
             function initApp() {
                 document.getElementById('auth-msg').hidden = true;
                 document.getElementById('main-content').hidden = false;
 
                 load();
                 loadApiSettings();
-                renderFilterChips();
-                updateStats();
-                renderGrid();
+                loadLibrosRegistry().then(function () {
+                    renderFilterChips();
+                    updateStats();
+                    renderGrid();
+                });
 
                 /* Logout */
                 document.getElementById('logout-btn').addEventListener('click', function () {
@@ -1528,14 +1636,34 @@
                 /* New citation */
                 document.getElementById('btn-nueva').addEventListener('click', openNew);
 
-                /* Export */
+                /* Export / Import */
                 document.getElementById('btn-export-json').addEventListener('click', exportJSON);
                 document.getElementById('btn-export-csv').addEventListener('click', exportCSV);
+                document.getElementById('btn-import-json').addEventListener('click', function () {
+                    document.getElementById('import-json-input').click();
+                });
+                document.getElementById('import-json-input').addEventListener('change', function (e) {
+                    var file = e.target.files && e.target.files[0];
+                    if (file) importJSON(file);
+                    e.target.value = '';
+                });
+
+                document.getElementById('upload-libro').addEventListener('change', function () {
+                    applyLibroToFuente('upload-libro', 'upload-fuente');
+                });
+                document.getElementById('field-libro').addEventListener('change', function () {
+                    applyLibroToFuente('field-libro', 'field-fuente');
+                });
+                document.getElementById('filter-libro').addEventListener('change', function () {
+                    filterLibro = this.value || null;
+                    renderGrid();
+                });
 
                 /* Clear filters */
                 document.getElementById('btn-clear-filters').addEventListener('click', function () {
-                    filterColor = null; filterCat = null; filterClave = null; filterSearch = '';
+                    filterColor = null; filterCat = null; filterClave = null; filterLibro = null; filterSearch = '';
                     document.getElementById('filter-search').value = '';
+                    document.getElementById('filter-libro').value = '';
                     renderFilterChips(); renderGrid();
                 });
 
@@ -1630,6 +1758,7 @@
             boot();
         }());
     </script>
+    <script>(function(){if(window.__CA_UNIFIED_SHELL_LOADER__){return;}window.__CA_UNIFIED_SHELL_LOADER__=true;var s=document.createElement('script');var b=location.pathname.indexOf('/antropologia-corrupcion/')===0?'/antropologia-corrupcion/':'/';s.src=b+'shared-shell.js';s.defer=true;document.head.appendChild(s);}());</script>
 </body>
 
 </html>

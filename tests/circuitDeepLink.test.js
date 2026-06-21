@@ -33,6 +33,17 @@ module.exports = function (describe, it, assert, assertEqual) {
             assert(js.indexOf('this.sim.nodes.find') !== -1, 'nodos viven en simulación');
         });
 
+        it('buscador supports ?fuente= deep-link filter', function () {
+            var js = fs.readFileSync(path.join(web, 'lib', 'buscadorAvanzado.js'), 'utf8');
+            assert(js.indexOf("get('fuente')") !== -1, 'fuente param reader');
+            assert(js.indexOf('applyFuenteFilterFromUrl') !== -1, 'fuente filter applier');
+        });
+
+        it('onboarding chips link to buscador with fuente param', function () {
+            var js = fs.readFileSync(path.join(web, 'lib', 'basesConsultadas.js'), 'utf8');
+            assert(js.indexOf('buscador.html?fuente=') !== -1, 'chip href to buscador');
+        });
+
         it('buscador dossier links to index grafo and huella tab', function () {
             var js = fs.readFileSync(path.join(web, 'lib', 'buscadorAvanzado.js'), 'utf8');
             assert(js.indexOf('index.html?caso=') !== -1, 'grafo link in dossier');

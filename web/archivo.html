@@ -200,18 +200,6 @@
 
 <body>
     <a href="#main-content" class="skip-link">Saltar al contenido</a>
-    <header class="site-header">
-        <a href="index.html" class="site-logo"><span>⊘</span> Contra-Archivo</a>
-        <nav class="site-nav" aria-label="Navegación principal">
-            <a href="index.html">Inicio</a>
-            <a href="buscador.html">Búsqueda</a>
-            <a href="index.html#tesis">Tesis</a>
-            <a href="leer.html">Leer</a>
-            <a href="archivo.html">Archivo</a>
-            <a href="tesis.html">Biblioteca</a>
-            <a href="login.html" class="nav-cta">Acceder →</a>
-        </nav>
-    </header>
     <main class="archivo-main" id="main-content">
         <section class="archivo-intro" aria-labelledby="archivo-title">
             <span class="archivo-kicker">Archivo público curado</span>
@@ -246,6 +234,23 @@
                 <p class="archivo-section__copy">Navegación de materiales curatoriales de lectura abierta asociados al Contra-Archivo.</p>
             </div>
             <div class="archivo-grid" id="archivo-biblioteca"></div>
+        </section>
+
+        <section class="archivo-section" aria-labelledby="corpus-lecturas-title">
+            <div class="archivo-section__head">
+                <h2 class="archivo-section__title" id="corpus-lecturas-title">Corpus de lecturas · Clave B</h2>
+                <p class="archivo-section__copy">Capturas de libros académicos anotados con marcadores de color. Requiere acceso investigador.</p>
+            </div>
+            <div class="archivo-grid">
+                <a class="archivo-card" href="privado-login.html?redirect=archivo-lecturas.html">
+                    <div class="archivo-card__meta">
+                        <span class="archivo-card__tipo">corpus</span>
+                        <span class="archivo-card__estado" data-estado="investigador">investigador</span>
+                    </div>
+                    <h3 class="archivo-card__title">Archivo de lecturas</h3>
+                    <p class="archivo-card__desc">Sube fotos de páginas marcadas, aplica Clave B y exporta JSON para el corpus doctoral.</p>
+                </a>
+            </div>
         </section>
 
         <section class="archivo-section" aria-labelledby="poemarios-title">

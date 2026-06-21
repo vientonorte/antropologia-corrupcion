@@ -268,8 +268,8 @@
   ],
   "ia_debt": [
     { "id": "B1", "title": "index ≠ instrumento", "priority": "alta", "estado": "resuelto", "nota": "Home canónica en index.html; instrumento en #tesis y contra-archivo-v2.html" },
-    { "id": "B2", "title": "Dos navs paralelas", "priority": "media" },
-    { "id": "B3", "title": "archivo-lecturas huérfana", "priority": "media" },
+    { "id": "B2", "title": "Dos navs paralelas", "priority": "media", "estado": "resuelto", "nota": "site-header legado removido; shell unificado + CSS 2026-06-21" },
+    { "id": "B3", "title": "archivo-lecturas huérfana", "priority": "media", "estado": "resuelto", "nota": "En nav unificada + archivo.html + privado-login redirect 2026-06-21" },
     { "id": "B4", "title": "Fichas C03/C04 sin indexar", "priority": "media", "estado": "resuelto", "nota": "archivo-index.json actualizado 2026-06-20" },
     { "id": "B5", "title": "Sitemap triplica home", "priority": "baja", "estado": "resuelto", "nota": "Solo / e index.html canónico; landing eliminado" },
     { "id": "B6", "title": "manifest start_url", "priority": "baja" },
@@ -281,7 +281,7 @@
       "estado": "parcial",
       "doc": "docs/VALOR_NARRATIVO_PAPELERA.md",
       "rescue_ids": ["N1", "N2", "N3", "N4"],
-      "nota": "N1+N2+N4 en v2#leer; N3 pendiente modo Explorar"
+      "nota": "N1+N2+N3 en leer.html vía narrativa-rescatada.json; N4 artículo etnográfico"
     },
     {
       "id": "B9",

@@ -208,7 +208,12 @@ body{display:flex;flex-direction:column;align-items:center;padding:0 24px;min-he
   var HASH = '08e45c25008c7c94e33dc9ad18ee8013b5c32746b8ab3f1520f4e45721fbfd9a';
   var SESSION_KEY = 'ca_passkey_session';
   var REDIRECT_DELAY = 1500;
-  var REDIRECT_URL = 'privado.html';
+  var REDIRECT_URL = (function () {
+    var params = new URLSearchParams(window.location.search);
+    var target = params.get('redirect');
+    if (target && /^[a-z0-9./_-]+\.html$/i.test(target)) return target;
+    return 'privado.html';
+  })();
 
   var stateIds = ['state-initial', 'state-registering', 'state-authenticating', 'state-error', 'state-success'];
   var btnLogin = document.getElementById('btn-login');

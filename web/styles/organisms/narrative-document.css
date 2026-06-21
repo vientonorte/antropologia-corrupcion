@@ -21,6 +21,19 @@
     color: var(--text);
 }
 
+.ca-narrative__h4 {
+    font-family: 'Newsreader', Georgia, serif;
+    font-size: 1.05rem;
+    margin: var(--sp-4) 0 var(--sp-2);
+    color: var(--text);
+}
+
+.ca-narrative__triada {
+    display: grid;
+    gap: var(--sp-4);
+    margin: var(--sp-4) 0;
+}
+
 .ca-narrative__p {
     font-size: 16px;
     line-height: 1.75;

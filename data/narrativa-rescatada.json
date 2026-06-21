@@ -91,5 +91,36 @@
     "fichas_url": "docs/fichas/",
     "rescate": "N2",
     "fuente": "_papelera_duplicados/EA_index.html §05"
+  },
+  "friccion_p3": {
+    "titulo": "Hipótesis P3 — Interfaz de fricción",
+    "epigrafe": "La verdad emerge como fricción, no como síntesis.",
+    "triada": [
+      { "capa": "Ética situada", "desc": "Testimonio, memoria y vocabulario de quienes no figuran en el registro oficial." },
+      { "capa": "Registro institucional", "desc": "Lo que el Estado y las corporaciones declaran, miden y archivan." },
+      { "capa": "Materialidad histórica", "desc": "Territorio, capital y cuerpos donde la traducción falla con violencia." }
+    ],
+    "zonas": [
+      {
+        "id": "datos-gobernanza",
+        "titulo": "Gobernanza de datos y mercados financieros",
+        "caso": "sura-gobernanza-datos",
+        "lectura": "El perfil de riesgo como traducción obligatoria del sujeto pensionado al lenguaje del mercado."
+      },
+      {
+        "id": "territorio-indigena",
+        "titulo": "Territorio y consulta previa",
+        "caso": "oit169-consulta-previa",
+        "lectura": "La consulta como ritual de traducción donde el derecho internacional choca con la práctica administrativa."
+      },
+      {
+        "id": "periodismo-evidencia",
+        "titulo": "Periodismo de datos y archivo público",
+        "caso": "periodismo-datos-chile",
+        "lectura": "La evidencia mediática como tercer régimen de verdad que expone la distancia entre norma y hecho."
+      }
+    ],
+    "rescate": "N3",
+    "fuente": "_papelera_duplicados/EA_contra-archivo-v1-DEPRECATED.html §10"
   }
 }

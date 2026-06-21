@@ -25,6 +25,11 @@
         return 'ca-bases__readiness--' + (readiness || 'planificado');
     }
 
+    function buscadorFuenteUrl(sourceId) {
+        var base = window.location.pathname.replace(/\/[^/]*$/, '/');
+        return base + 'buscador.html?fuente=' + encodeURIComponent(sourceId);
+    }
+
     function renderSprintDots(sprint) {
         if (!sprint || !sprint.checklist) return '';
         return sprint.checklist
@@ -192,18 +197,28 @@
         return activas
             .slice(0, 8)
             .map(function (e) {
+                var href = buscadorFuenteUrl(e.id);
+                var title =
+                    escapeHtml(e.label) +
+                    ' — ' +
+                    escapeHtml(e.readinessLabel) +
+                    (e.records ? ' · ' + e.records + ' registros' : '');
                 return (
-                    '<span class="ca-bases-chip" data-source-id="' +
+                    '<a class="ca-bases-chip" href="' +
+                    escapeHtml(href) +
+                    '" data-source-id="' +
                     escapeHtml(e.id) +
                     '" style="--chip-color:' +
                     escapeHtml(e.color) +
+                    '" title="' +
+                    title +
                     '">' +
                     '<span class="ca-bases-chip__dot ' +
                     readinessClass(e.readiness) +
                     '" aria-hidden="true"></span>' +
                     escapeHtml(e.label) +
                     (e.records ? ' (' + e.records + ')' : '') +
-                    '</span>'
+                    '</a>'
                 );
             })
             .join('<span class="ca-bases-chip-sep" aria-hidden="true"> · </span>');

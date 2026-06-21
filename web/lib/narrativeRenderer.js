@@ -51,7 +51,23 @@
             });
             html += '</dl>';
         }
-        return '<article class="ca-narrative__block">' + html + '</article>';
+
+        if (block.matriz_tensiones) {
+            html += '<h3 class="ca-narrative__h3">Matriz de tensiones</h3>';
+            html += '<table class="ca-narrative__table"><caption class="sr-only">Tensiones por eje analítico</caption>';
+            html += '<thead><tr><th scope="col">Eje</th><th scope="col">Norma</th><th scope="col">Infraestructura</th><th scope="col">Territorio</th><th scope="col">Archivo</th></tr></thead><tbody>';
+            block.matriz_tensiones.forEach(function (row) {
+                html +=
+                    '<tr><td>' + dom.escapeHtml(row.eje) + '</td>' +
+                    '<td>' + dom.escapeHtml(String(row.norma)) + '</td>' +
+                    '<td>' + dom.escapeHtml(String(row.infraestructura)) + '</td>' +
+                    '<td>' + dom.escapeHtml(String(row.territorio)) + '</td>' +
+                    '<td>' + dom.escapeHtml(String(row.archivo)) + '</td></tr>';
+            });
+            html += '</tbody></table>';
+        }
+
+        return '<article class="ca-narrative__block" id="presentacion-00">' + html + '</article>';
     }
 
     function renderProtocolo(block) {
@@ -62,6 +78,16 @@
             lead: block.epigrafe,
         });
         html += '<p class="ca-narrative__output">' + dom.escapeHtml(block.output || '') + '</p>';
+
+        if (block.umbrales) {
+            html += '<h3 class="ca-narrative__h3">Umbrales de fricción</h3><ul class="ca-narrative__list">';
+            block.umbrales.forEach(function (u) {
+                html +=
+                    '<li><strong>' + dom.escapeHtml(String(u.valor)) + '</strong> — ' +
+                    dom.escapeHtml(u.lectura) + '</li>';
+            });
+            html += '</ul>';
+        }
 
         if (block.codigos) {
             html += '<table class="ca-narrative__table"><caption class="sr-only">Códigos de fricción</caption>' +
@@ -74,7 +100,44 @@
             });
             html += '</tbody></table>';
         }
-        return '<article class="ca-narrative__block">' + html + '</article>';
+        return '<article class="ca-narrative__block" id="protocolo-traduccion">' + html + '</article>';
+    }
+
+    function renderFriccionP3(block) {
+        if (!block) return '';
+        var html = sectionHeader.render({
+            kicker: 'P3 · Instrumento',
+            title: block.titulo || 'Interfaz de fricción',
+            lead: block.epigrafe,
+        });
+        html += badge.render('inferencia');
+
+        if (block.triada) {
+            html += '<div class="ca-narrative__triada">';
+            block.triada.forEach(function (t) {
+                html +=
+                    '<section class="ca-narrative__arg">' +
+                    '<h3 class="ca-narrative__h3">' + dom.escapeHtml(t.capa) + '</h3>' +
+                    '<p class="ca-narrative__p">' + dom.escapeHtml(t.desc) + '</p>' +
+                    '</section>';
+            });
+            html += '</div>';
+        }
+
+        if (block.zonas) {
+            html += '<h3 class="ca-narrative__h3">Zonas de fricción documentadas</h3>';
+            block.zonas.forEach(function (z) {
+                var casoHref = z.caso ? 'index.html?caso=' + encodeURIComponent(z.caso) : 'index.html#tesis';
+                html +=
+                    '<section class="ca-narrative__arg">' +
+                    '<h4 class="ca-narrative__h4">' + dom.escapeHtml(z.titulo) + '</h4>' +
+                    '<p class="ca-narrative__p">' + dom.escapeHtml(z.lectura) + '</p>' +
+                    '<p><a href="' + dom.escapeHtml(casoHref) + '">Ver caso en el grafo →</a></p>' +
+                    '</section>';
+            });
+        }
+
+        return '<article class="ca-narrative__block" id="friccion-p3">' + html + '</article>';
     }
 
     function renderEnsayo(block) {
@@ -138,6 +201,7 @@
                 var html = '<div class="ca-narrative">';
                 html += renderPresentacion(narrativa.presentacion_00);
                 html += renderProtocolo(narrativa.protocolo_traduccion);
+                html += renderFriccionP3(narrativa.friccion_p3);
                 html += renderEnsayo(narrativa.ensayo_argumentos);
                 html += renderArticulo(articulo);
                 html +=

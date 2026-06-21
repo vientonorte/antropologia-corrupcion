@@ -1,0 +1,81 @@
+{
+  "_meta": {
+    "schema": "contra-archivo/libros-clave-b",
+    "version": 1,
+    "updated_at": "2026-06-21",
+    "protocolo": "Clave B — bujo-ro",
+    "doc": "docs/skills/BASES_CONSULTADAS.md"
+  },
+  "libros": [
+    {
+      "id": "zuboff-vigilancia",
+      "autor": "Shoshana Zuboff",
+      "titulo": "La era del capitalismo de la vigilancia",
+      "anio": 2019,
+      "clave": "B",
+      "estado": "en-curso",
+      "capturas_objetivo": 0,
+      "notas": "Caso SURA / gobernanza de datos"
+    },
+    {
+      "id": "stoler-archivo",
+      "autor": "Ann Laura Stoler",
+      "titulo": "Along the Archival Grain",
+      "anio": 2009,
+      "clave": "B",
+      "estado": "pendiente",
+      "capturas_objetivo": 0,
+      "notas": "Archivo imperial · grain epistémico"
+    },
+    {
+      "id": "taussig-terror",
+      "autor": "Michael Taussig",
+      "titulo": "Shamanism, Colonialism, and the Wild Man",
+      "anio": 1987,
+      "clave": "B",
+      "estado": "pendiente",
+      "capturas_objetivo": 0,
+      "notas": "Terror · mimesis · sujeto colonial"
+    },
+    {
+      "id": "riles-documentos",
+      "autor": "Annelise Riles",
+      "titulo": "Documents: Artifacts of Modern Knowledge",
+      "anio": 2006,
+      "clave": "B",
+      "estado": "pendiente",
+      "capturas_objetivo": 0,
+      "notas": "Documentos como artefactos · traducción normativa"
+    },
+    {
+      "id": "tsing-friccion",
+      "autor": "Anna Lowenhaupt Tsing",
+      "titulo": "Friction: An Ethnography of Global Connection",
+      "anio": 2005,
+      "clave": "B",
+      "estado": "pendiente",
+      "capturas_objetivo": 0,
+      "notas": "Fricción global · La Negra"
+    },
+    {
+      "id": "rivera-ch-ixi",
+      "autor": "Silvia Rivera Cusicanqui",
+      "titulo": "Ch'ixinakax utxiwa / Un texto en torno a los modos de producción",
+      "anio": 2010,
+      "clave": "B",
+      "estado": "pendiente",
+      "capturas_objetivo": 0,
+      "notas": "Epistemicidio · traducción de saberes"
+    },
+    {
+      "id": "adler-redes",
+      "autor": "Larissa Adler-Lomnitz",
+      "titulo": "Redes sociales, cultura y poder",
+      "anio": 2000,
+      "clave": "B",
+      "estado": "pendiente",
+      "capturas_objetivo": 0,
+      "notas": "Redes informales · corrupción estructural"
+    }
+  ]
+}

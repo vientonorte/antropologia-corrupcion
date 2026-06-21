@@ -118,8 +118,31 @@
         });
     }
 
+    function applyFuenteFilterFromUrl() {
+        var params = new URLSearchParams(window.location.search);
+        var fuenteId = params.get('fuente');
+        if (!fuenteId || !sourceCheckboxes.length) return false;
+
+        var found = false;
+        sourceCheckboxes.forEach(function(cb) {
+            var match = cb.value === fuenteId;
+            cb.checked = match;
+            if (match) found = true;
+        });
+        if (!found) {
+            sourceCheckboxes.forEach(function(cb) {
+                cb.checked = true;
+            });
+            return false;
+        }
+        syncSourceFilter();
+        return true;
+    }
+
     function applyDeepLinkFromUrl() {
         var params = new URLSearchParams(window.location.search);
+        applyFuenteFilterFromUrl();
+
         var casoId = params.get('caso');
         if (!casoId) return;
         activeCat = 'I';
@@ -716,7 +739,9 @@
             $btnExportCSV.addEventListener('click', function() {
                 var filtered = getFiltered();
                 if (window.categoryExport && window.categoryExport.exportCategoryResults) {
-                    window.categoryExport.exportCategoryResults(activeCat, filtered);
+                    window.categoryExport.exportCategoryResults(activeCat, filtered, {
+                        sourceReport: sourceReport,
+                    });
                 }
             });
         }
