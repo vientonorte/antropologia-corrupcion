@@ -15,27 +15,27 @@
       "clave": "B",
       "estado": "en-curso",
       "capturas_objetivo": 0,
-      "notas": "Caso SURA / gobernanza de datos"
+      "notas": "Ed. Paidós · Caso SURA / gobernanza de datos · corpus zuboff-citas.json"
     },
     {
       "id": "stoler-archivo",
       "autor": "Ann Laura Stoler",
-      "titulo": "Along the Archival Grain",
+      "titulo": "Along the Archival Grain: Epistemic Anxieties and Colonial Common Sense",
       "anio": 2009,
       "clave": "B",
       "estado": "pendiente",
       "capturas_objetivo": 0,
-      "notas": "Archivo imperial · grain epistémico"
+      "notas": "Princeton UP · archivo imperial · grain epistémico · C01/C02"
     },
     {
       "id": "taussig-terror",
       "autor": "Michael Taussig",
-      "titulo": "Shamanism, Colonialism, and the Wild Man",
+      "titulo": "Chamanismo, colonialismo y el hombre salvaje: un estudio sobre el terror y la curación",
       "anio": 1987,
       "clave": "B",
       "estado": "pendiente",
       "capturas_objetivo": 0,
-      "notas": "Terror · mimesis · sujeto colonial"
+      "notas": "Siglo XXI · terror · mimesis · sujeto colonial · C05"
     },
     {
       "id": "riles-documentos",
@@ -45,37 +45,37 @@
       "clave": "B",
       "estado": "pendiente",
       "capturas_objetivo": 0,
-      "notas": "Documentos como artefactos · traducción normativa"
+      "notas": "Princeton UP · documentos como artefactos · ensayo D4"
     },
     {
       "id": "tsing-friccion",
       "autor": "Anna Lowenhaupt Tsing",
-      "titulo": "Friction: An Ethnography of Global Connection",
+      "titulo": "Fricción: una etnografía de la conexión global",
       "anio": 2005,
       "clave": "B",
       "estado": "pendiente",
       "capturas_objetivo": 0,
-      "notas": "Fricción global · La Negra"
+      "notas": "Traficantes de Sueños / Virus Editorial · La Negra · ensayo D4"
     },
     {
       "id": "rivera-ch-ixi",
       "autor": "Silvia Rivera Cusicanqui",
-      "titulo": "Ch'ixinakax utxiwa / Un texto en torno a los modos de producción",
+      "titulo": "Ch'ixinakax utxiwa: una reflexión sobre prácticas y discursos descolonizadores",
       "anio": 2010,
       "clave": "B",
       "estado": "pendiente",
       "capturas_objetivo": 0,
-      "notas": "Epistemicidio · traducción de saberes"
+      "notas": "Tinta Limón · epistemicidio · traducción de saberes · ensayo D4"
     },
     {
       "id": "adler-redes",
       "autor": "Larissa Adler-Lomnitz",
-      "titulo": "Redes sociales, cultura y poder",
+      "titulo": "Redes sociales, cultura y poder: ensayos de antropología latinoamericana",
       "anio": 2000,
       "clave": "B",
       "estado": "pendiente",
       "capturas_objetivo": 0,
-      "notas": "Redes informales · corrupción estructural"
+      "notas": "FCE · redes informales · corrupción estructural"
     }
   ]
 }
