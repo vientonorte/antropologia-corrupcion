@@ -126,7 +126,7 @@ Contra-Archivo
 | `casos.json` | Grafo, buscador, landing, privado | 6 casos + nodos + 4 enlaces transversales |
 | `fuentes-oficiales.json` | buscador, landing, export | 37 registros fuentes chilenas |
 | `bcn-legislativo.json` | Búsqueda cat. H | Boletines BCN |
-| `fuentes-config.json` | Tests, registry | Endpoints y normalizadores MVP |
+| `fuentes-config.json` | Tests, registry, **bases consultadas UI** | Endpoints, pipeline mvp/fase-2, normalizadores |
 | `archivo-index.json` | `archivo.html` | 6 entradas editoriales |
 | `zuboff-citas.json` | zuboff-archivo | Citas Zuboff (ids 1001+) |
 | `attac-citas.json` | zuboff-archivo | Citas ATTAC (ids 2001+) |

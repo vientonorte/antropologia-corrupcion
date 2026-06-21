@@ -10,9 +10,14 @@ Unificar las fuentes del buscador en un esquema canónico para que la UX pueda d
   - `label`
   - `icon`
   - `color`
-  - `tipo` (`oficial` | `academica`)
-  - `url_base`
-  - `activa`
+  - `tipo` (`oficial` | `academica` | `periodistica`)
+  - `estado` (`mvp` | `fase-2`) — pipeline DevOps
+  - `activa` — si la fuente participa del corpus público actual
+  - `endpoint`, `url_base`, `normalizador`, `prioridad`, `criticidad`
+
+### UI pública — Bases consultadas
+
+El sitio consume `fuentes-config.json` vía `CADataLoader` y calcula readiness Scrum en `web/lib/sourceRegistry.js`. Panel y badges: ver [`BASES_CONSULTADAS.md`](BASES_CONSULTADAS.md).
 
 ## Esquema canónico de registro
 - `id`
@@ -32,6 +37,8 @@ Unificar las fuentes del buscador en un esquema canónico para que la UX pueda d
 - `verificado`
 - `official_score`
 - `evidencia_tipo`
+- `estado_verificacion` (BCN: `curado-manual`, `derivado-ley-vigente`, …)
+- `etapa_actual` (BCN: etapa legislativa)
 
 ## Normalizadores implementados
 Archivo: `src/sourceNormalizers.js`

@@ -38,6 +38,11 @@ export const CRITICAL_PATHS = [
   '/src/tokens.js',
   '/src/socialField.js',
   '/vendor/d3.min.js',
+  '/lib/sourceRegistry.js',
+  '/lib/basesConsultadas.js',
+  '/lib/dataLoader.js',
+  '/styles/molecules/bases-consultadas.css',
+  '/data/fuentes-config.json',
   '/terraza/',
   '/404.html',
   '/xml/sitemap.xml',
@@ -55,11 +60,15 @@ export const HTML_HEURISTICS = {
     { id: 'no-landing', test: (h) => !/landing\.html/i.test(h), hint: 'sin landing obsoleta' },
     { id: 'canonical', test: (h) => /rel=["']canonical["']/i.test(h), hint: 'SEO canonical' },
     { id: 'viewport', test: (h) => /name=["']viewport["']/i.test(h), hint: 'mobile viewport' },
+    { id: 'bases-consultadas', test: (h) => /sourceRegistry\.js/i.test(h) && /basesConsultadas\.js/i.test(h), hint: 'estados fuentes onboarding' },
+    { id: 'bases-css', test: (h) => /bases-consultadas\.css/i.test(h), hint: 'estilos bases consultadas' },
   ],
   'buscador.html': [
     { id: 'huella-lib', test: (h) => /huellaDigital\.js/i.test(h), hint: 'circuito huella' },
     { id: 'buscador-boot', test: (h) => /buscador-boot\.js/i.test(h), hint: 'boot deep-links' },
     { id: 'no-meta-refresh', test: (h) => !/http-equiv=["']refresh/i.test(h), hint: 'página real, no stub' },
+    { id: 'bases-panel', test: (h) => /basesConsultadasPanel/i.test(h) && /sourceRegistry\.js/i.test(h), hint: 'panel bases consultadas' },
+    { id: 'bases-css', test: (h) => /bases-consultadas\.css/i.test(h), hint: 'estilos bases consultadas' },
   ],
   'contra-archivo-v2.html': [
     { id: 'instrumento-boot', test: (h) => /instrumento-boot\.js/i.test(h), hint: 'instrumento grafo' },
@@ -98,6 +107,19 @@ export const JSON_HEURISTICS = {
     const issues = [];
     if (!data?.presentacion_00) issues.push('falta presentacion_00 (N1)');
     if (!data?.protocolo_traduccion) issues.push('falta protocolo_traduccion (N2)');
+    return issues;
+  },
+  'fuentes-config.json': (data) => {
+    const issues = [];
+    const sources = data?.sources;
+    if (!Array.isArray(sources) || sources.length === 0) issues.push('sources vacío');
+    else {
+      const mvp = sources.filter((s) => s.estado === 'mvp' && s.activa !== false);
+      if (mvp.length < 5) issues.push('pocas fuentes mvp activas');
+      for (const s of sources) {
+        if (!s.estado) issues.push(`fuente ${s.id || '?'} sin estado pipeline`);
+      }
+    }
     return issues;
   },
 };

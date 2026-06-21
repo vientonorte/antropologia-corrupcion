@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## [2026-06-21] Bases consultadas — estados DevOps/Scrum en UI pública
+
+| Área | Cambio |
+|---|---|
+| **sourceRegistry.js** | Readiness, pipeline MVP/fase-2, sprint checklist por fuente |
+| **basesConsultadas.js** | Panel sidebar, chips onboarding, pills en resultados y huella |
+| **dataLoader** | Carga `fuentes-config.json` en bundle público |
+| **buscador / index / huella** | Estados de verificación visibles en toda la superficie de búsqueda |
+| **docs** | `docs/skills/BASES_CONSULTADAS.md` — QA checklist + API |
+| **tests** | +12 en `sourceRegistry.test.js` (504 total) |
+
 ## [2026-05-27] Categoría Poesía — primer poema Colectivo Viento Norte
 
 | Área | Cambio |

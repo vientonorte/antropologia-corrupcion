@@ -32,6 +32,13 @@ module.exports = function (describe, it, assert, assertEqual) {
     it('tiene landmark principal para skip link', function () {
       assert(/id=["']main-content["']|id=["']main["']/i.test(html), 'falta #main-content');
     });
+
+    it('carga módulos bases consultadas', function () {
+      assert(/sourceRegistry\.js/i.test(html), 'falta sourceRegistry');
+      assert(/basesConsultadas\.js/i.test(html), 'falta basesConsultadas');
+      assert(/bases-consultadas\.css/i.test(html), 'falta CSS bases consultadas');
+      assert(/id=["']search-sources["']/i.test(html), 'falta #search-sources');
+    });
   });
 
   describe('QA live — circuito buscador / instrumento / narrativa', function () {
@@ -39,6 +46,13 @@ module.exports = function (describe, it, assert, assertEqual) {
       var html = readWeb('buscador.html');
       assert(/huellaDigital\.js/i.test(html), 'falta huellaDigital');
       assert(/buscador-boot\.js/i.test(html), 'falta buscador-boot');
+    });
+
+    it('buscador.html monta panel bases consultadas', function () {
+      var html = readWeb('buscador.html');
+      assert(/basesConsultadasPanel/i.test(html), 'falta mount panel');
+      assert(/sourceRegistry\.js/i.test(html), 'falta sourceRegistry');
+      assert(/bases-consultadas\.css/i.test(html), 'falta CSS');
     });
 
     it('contra-archivo-v2.html es instrumento real', function () {

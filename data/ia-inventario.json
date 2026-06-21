@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": "2026-06-20",
+    "version": "2026-06-21",
     "description": "Inventario machine-readable para arquitectura de información del Contra-Archivo",
     "doc": "docs/INVENTARIO_CONTENIDOS_IA.md",
     "site": "https://vientonorte.github.io/antropologia-corrupcion/"
@@ -28,8 +28,8 @@
       "sitemap": true,
       "priority": 1.0,
       "canonical": true,
-      "data": ["fuentes-oficiales.json", "casos.json", "bcn-legislativo.json", "archivo-index.json", "narrativa-rescatada.json", "ia-inventario.json"],
-      "modules": ["graphBootstrap.js", "graph.js", "socialField.js", "frictionEngine.js", "siteSurface.js"],
+      "data": ["fuentes-oficiales.json", "casos.json", "bcn-legislativo.json", "fuentes-config.json", "archivo-index.json", "narrativa-rescatada.json", "ia-inventario.json"],
+      "modules": ["graphBootstrap.js", "graph.js", "socialField.js", "frictionEngine.js", "siteSurface.js", "dataLoader.js", "sourceRegistry.js", "basesConsultadas.js"],
       "anchors": ["#tesis"]
     },
     {
@@ -43,8 +43,10 @@
       "nav_primary": true,
       "sitemap": true,
       "priority": 0.85,
-      "data": ["fuentes-oficiales.json", "casos.json", "bcn-legislativo.json", "huella-digital-publica.json"],
-      "views": ["registros", "huella"]
+      "data": ["fuentes-oficiales.json", "casos.json", "bcn-legislativo.json", "fuentes-config.json", "huella-digital-publica.json"],
+      "modules": ["dataLoader.js", "sourceRegistry.js", "basesConsultadas.js", "buscadorAvanzado.js", "huellaDigital.js"],
+      "views": ["registros", "huella", "bases-consultadas"],
+      "doc": "docs/skills/BASES_CONSULTADAS.md"
     },
     {
       "id": "P04",
