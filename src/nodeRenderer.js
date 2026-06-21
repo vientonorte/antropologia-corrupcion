@@ -320,7 +320,44 @@ class NodeRenderer {
         </div>
       </div>
 
+      ${this._renderActions(node)}
       ${node.bs ? this._renderBS(node.bs) : ''}
+    `;
+  }
+
+  _resolveBasePath() {
+    return window.location.pathname.replace(/\/[^/]*$/, '/');
+  }
+
+  _buscadorHref(params) {
+    if (window.CAHuellaDigital && window.CAHuellaDigital.buildBuscadorUrl) {
+      return window.CAHuellaDigital.buildBuscadorUrl(params);
+    }
+    const q = new URLSearchParams(params);
+    return this._resolveBasePath() + 'buscador.html?' + q.toString();
+  }
+
+  _renderActions(node) {
+    const casoId = node.id || '';
+    const titulo = node.titulo || casoId;
+    const fuentesHref = this._buscadorHref({ caso: casoId, cat: 'I' });
+    const huellaHref = this._buscadorHref({ caso: casoId, huella: '1' });
+
+    return `
+      <nav class="ca-panel__actions" aria-label="Acciones de profundización">
+        <a class="ca-panel__action" href="${this._esc(fuentesHref)}">
+          Consultar fuentes vinculadas →
+        </a>
+        <a class="ca-panel__action ca-panel__action--huella" href="${this._esc(huellaHref)}">
+          Huella digital pública →
+        </a>
+        <a class="ca-panel__action ca-panel__action--leer" href="${this._resolveBasePath()}leer.html">
+          Leer marco narrativo →
+        </a>
+      </nav>
+      <p class="ca-panel__action-note">
+        Caso: <span class="ca-panel__action-caso">${this._esc(titulo)}</span>
+      </p>
     `;
   }
 

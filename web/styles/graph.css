@@ -1805,3 +1805,44 @@
         gap: 12px;
     }
 }
+
+/* Panel — acciones deep-link a buscador / leer */
+
+.ca-panel__actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 1.25rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--color-border, #2e2e2e);
+}
+
+.ca-panel__action {
+    display: inline-flex;
+    align-items: center;
+    font-family: var(--font-mono, monospace);
+    font-size: 0.72rem;
+    letter-spacing: 0.04em;
+    color: var(--ca-color-etica, #c8a96e);
+    text-decoration: none;
+    padding: 0.35rem 0;
+}
+
+.ca-panel__action:hover {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.ca-panel__action--huella {
+    color: var(--ca-color-institucional, #4a7fa5);
+}
+
+.ca-panel__action-note {
+    font-size: 0.68rem;
+    color: var(--color-text-muted, #9e9484);
+    margin-top: 0.5rem;
+}
+
+.ca-panel__action-caso {
+    color: var(--color-text, #e8e0d0);
+}

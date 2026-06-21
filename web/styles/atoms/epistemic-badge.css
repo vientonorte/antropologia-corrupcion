@@ -1,0 +1,36 @@
+.ca-epistemic {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 4px;
+    border: 1px solid var(--border);
+    margin-right: 6px;
+    vertical-align: middle;
+}
+
+.ca-epistemic--hecho {
+    color: var(--mat);
+    border-color: rgba(122, 158, 110, 0.4);
+}
+
+.ca-epistemic--hipotesis {
+    color: var(--warn);
+    border-color: rgba(232, 184, 75, 0.4);
+}
+
+.ca-epistemic--inferencia {
+    color: var(--etica);
+    border-color: rgba(200, 169, 110, 0.4);
+}
+
+.ca-kicker {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: var(--sp-3);
+}

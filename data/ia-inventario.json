@@ -18,31 +18,19 @@
   "surfaces": [
     {
       "id": "P01",
-      "file": "web/landing.html",
-      "path": "landing.html",
+      "file": "web/index.html",
+      "path": "index.html",
       "title": "Contra-Archivo — Antropología de la Corrupción",
       "taxonomy": "entrada",
       "audience": "publico",
       "nav_label": "Inicio",
       "nav_primary": true,
       "sitemap": true,
-      "priority": 0.95,
+      "priority": 1.0,
       "canonical": true,
-      "data": ["fuentes-oficiales.json", "casos.json", "bcn-legislativo.json"]
-    },
-    {
-      "id": "P02",
-      "file": "web/index.html",
-      "path": "index.html",
-      "title": "Contra-Archivo (duplicado landing)",
-      "taxonomy": "entrada",
-      "audience": "publico",
-      "nav_label": "Inicio (alias)",
-      "nav_primary": false,
-      "sitemap": false,
-      "priority": 0.5,
-      "canonical": false,
-      "canonical_to": "landing.html"
+      "data": ["fuentes-oficiales.json", "casos.json", "bcn-legislativo.json", "archivo-index.json", "narrativa-rescatada.json", "ia-inventario.json"],
+      "modules": ["graphBootstrap.js", "graph.js", "socialField.js", "frictionEngine.js", "siteSurface.js"],
+      "anchors": ["#tesis"]
     },
     {
       "id": "P03",
@@ -55,7 +43,8 @@
       "nav_primary": true,
       "sitemap": true,
       "priority": 0.85,
-      "data": ["fuentes-oficiales.json", "casos.json", "bcn-legislativo.json"]
+      "data": ["fuentes-oficiales.json", "casos.json", "bcn-legislativo.json", "huella-digital-publica.json"],
+      "views": ["registros", "huella"]
     },
     {
       "id": "P04",
@@ -72,18 +61,16 @@
     },
     {
       "id": "P05",
-      "file": "web/contra-archivo-v2.html",
-      "path": "contra-archivo-v2.html",
-      "title": "Negra Colorá — Contra-archivo",
+      "file": "web/leer.html",
+      "path": "leer.html",
+      "title": "Leer — Marco y narrativa",
       "taxonomy": "instrumento",
       "audience": "publico",
-      "nav_label": "Contra-archivo",
+      "nav_label": "Leer",
       "nav_primary": true,
-      "nav_contextual": ["#leer", "#explorar", "#consultar"],
       "sitemap": true,
-      "priority": 0.9,
-      "data": ["casos.json"],
-      "modules": ["main.js", "graph.js", "socialField.js", "frictionEngine.js"]
+      "priority": 0.88,
+      "data": ["narrativa-rescatada.json", "articulo-etnografico.json"]
     },
     {
       "id": "P06",
@@ -220,7 +207,6 @@
   ],
   "redirects": [
     { "from": "login.html", "to": "privado-login.html" },
-    { "from": "contra-archivo.html", "to": "index.html" },
     { "from": "citas-attac.html", "to": "zuboff-archivo.html" },
     { "from": "zuboff-citas.html", "to": "zuboff-archivo.html" },
     { "from": "Poemarios/index.html", "to": "Poemarios/poemas.html" }
@@ -279,11 +265,11 @@
     }
   ],
   "ia_debt": [
-    { "id": "B1", "title": "index ≠ instrumento", "priority": "alta", "estado": "resuelto", "nota": "Instrumento → contra-archivo-v2.html; index.html alias de landing" },
+    { "id": "B1", "title": "index ≠ instrumento", "priority": "alta", "estado": "resuelto", "nota": "Home canónica en index.html; instrumento en #tesis y contra-archivo-v2.html" },
     { "id": "B2", "title": "Dos navs paralelas", "priority": "media" },
     { "id": "B3", "title": "archivo-lecturas huérfana", "priority": "media" },
     { "id": "B4", "title": "Fichas C03/C04 sin indexar", "priority": "media", "estado": "resuelto", "nota": "archivo-index.json actualizado 2026-06-20" },
-    { "id": "B5", "title": "Sitemap triplica home", "priority": "baja" },
+    { "id": "B5", "title": "Sitemap triplica home", "priority": "baja", "estado": "resuelto", "nota": "Solo / e index.html canónico; landing eliminado" },
     { "id": "B6", "title": "manifest start_url", "priority": "baja" },
     { "id": "B7", "title": "README anchors obsoletos", "priority": "baja" },
     {
@@ -314,16 +300,17 @@
     "deploy": false,
     "textos_canonicos": "docs/Ensayo Traducción de Saberes/textos-canonicos/",
     "rutas_web": {
-      "articulo_resumen": "contra-archivo-v2.html#eje-1",
-      "ensayo_teorico": "contra-archivo-v2.html#eje-4",
+      "articulo_resumen": "leer.html#articulo-etnografico",
+      "ensayo_teorico": "leer.html",
       "biblioteca": "articulo-fabricar-enemigos.html",
       "archivo": "archivo.html"
     }
   },
   "nav_proposed": [
-    { "label": "Inicio", "path": "landing.html", "surface": "P01" },
+    { "label": "Inicio", "path": "index.html", "surface": "P01" },
+    { "label": "Tesis (grafo)", "path": "index.html#tesis", "surface": "P01" },
+    { "label": "Leer", "path": "leer.html", "surface": "P05" },
     { "label": "Explorar datos", "path": "buscador.html", "surface": "P03" },
-    { "label": "Contra-archivo", "path": "contra-archivo-v2.html#leer", "surface": "P05" },
     { "label": "Archivo", "path": "archivo.html", "surface": "P04" },
     { "label": "Corpus citas", "path": "zuboff-archivo.html", "surface": "P06" },
     { "label": "Biblioteca", "path": "tesis.html", "surface": "P07" },

@@ -10,10 +10,10 @@
   nav.id = 'main-nav';
 
   // ── aria-current ──
-  const page = location.pathname.split('/').pop() || 'landing.html';
+  const page = location.pathname.split('/').pop() || 'index.html';
   nav.querySelectorAll('a').forEach(function (a) {
     const href = a.getAttribute('href');
-    if (href === page || (page === '' && href === 'landing.html')) {
+    if (href === page || (page === '' && href === 'index.html')) {
       a.setAttribute('aria-current', 'page');
     }
   });

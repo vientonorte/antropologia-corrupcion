@@ -9,15 +9,19 @@
     <meta property="og:title" content="Contra-Archivo — Antropología de la Corrupción en Chile">
     <meta property="og:description" content="Investigación doctoral sobre corrupción en Chile como práctica estructural mediada por mistraducción institucional.">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://vientonorte.github.io/antropologia-corrupcion/landing.html">
-    <meta property="og:image" content="https://vientonorte.github.io/antropologia-corrupcion/img/t-tulos-de-merced-distribuci-n-territorial-del-r.jpg">
+    <meta property="og:url" content="https://vientonorte.github.io/antropologia-corrupcion/">
+    <meta property="og:image" content="https://vientonorte.github.io/antropologia-corrupcion/img/reconstrucci-n-de-los-hechos-infograf-a-de-inves.jpg">
     <meta name="theme-color" content="#0c0c0c">
-    <link rel="canonical" href="https://vientonorte.github.io/antropologia-corrupcion/landing.html">
+    <link rel="canonical" href="https://vientonorte.github.io/antropologia-corrupcion/">
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⊘</text></svg>">
     <link rel="manifest" href="manifest.json">
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=newsreader:400,400i,600|inter:400,500,600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles/shared.css?v=20260419">
+    <link rel="stylesheet" href="styles/shared.css?v=20260620">
+    <link rel="stylesheet" href="styles/graph.css?v=20260620">
+    <link rel="stylesheet" href="styles/atoms/epistemic-badge.css?v=20260620">
+    <link rel="stylesheet" href="styles/molecules/section-header.css?v=20260620">
+    <link rel="stylesheet" href="styles/organisms/thesis-graph.css?v=20260620">
     <style>
         body {
             line-height: 1.65;
@@ -47,22 +51,6 @@
             padding: 64px 24px 48px;
             text-align: center;
             min-height: 60vh;
-            position: relative;
-            overflow: hidden;
-        }
-
-        #hero-canvas {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            opacity: 0.38;
-        }
-
-        .hero > *:not(#hero-canvas) {
-            position: relative;
-            z-index: 1;
         }
 
         .hero-eyebrow {
@@ -392,6 +380,92 @@
             font-size: 12px;
         }
 
+        .narrative-teaser__inner {
+            background: var(--s1);
+            border: 1px solid var(--border);
+            border-radius: var(--r);
+            padding: 24px;
+        }
+
+        .narrative-teaser__title {
+            font-size: 22px;
+            margin-bottom: 12px;
+            color: var(--text);
+        }
+
+        .narrative-teaser__tesis,
+        .narrative-teaser__abstract {
+            font-size: 14px;
+            color: var(--muted);
+            line-height: 1.6;
+            margin-bottom: 14px;
+        }
+
+        .narrative-teaser__epigrafe {
+            font-family: var(--font-mono);
+            font-size: 13px;
+            color: var(--etica);
+            border-left: 3px solid rgba(200, 169, 110, .45);
+            padding-left: 14px;
+            margin: 0 0 14px;
+        }
+
+        .narrative-teaser__actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .casos-strip__title {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: var(--text);
+        }
+
+        .casos-strip__copy {
+            font-size: 14px;
+            color: var(--muted);
+            margin-bottom: 16px;
+            max-width: 70ch;
+        }
+
+        .casos-strip__grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 12px;
+        }
+
+        .caso-chip {
+            display: block;
+            background: var(--s1);
+            border: 1px solid var(--border);
+            border-radius: var(--r);
+            padding: 14px 16px;
+            text-decoration: none;
+            transition: border-color .2s;
+        }
+
+        .caso-chip:hover {
+            border-color: rgba(200, 169, 110, .45);
+        }
+
+        .caso-chip__title {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 6px;
+            line-height: 1.35;
+        }
+
+        .caso-chip__meta {
+            display: block;
+            font-size: 11px;
+            font-family: var(--font-mono);
+            color: var(--dim);
+            line-height: 1.45;
+        }
+
         @media (max-width: 600px) {
             .site-header {
                 padding: 12px 16px;
@@ -432,22 +506,22 @@
 <body>
     <a href="#main-content" class="skip-link">Saltar al contenido</a>
     <header class="site-header">
-        <a href="landing.html" class="site-logo"><span>⊘</span> Contra-Archivo</a>
+        <a href="index.html" class="site-logo"><span>⊘</span> Contra-Archivo</a>
         <nav class="site-nav" aria-label="Navegación principal">
-            <a href="landing.html">Inicio</a>
+            <a href="index.html">Inicio</a>
             <a href="buscador.html">Búsqueda</a>
-            <a href="contra-archivo-v2.html">Instrumento</a>
+            <a href="index.html#tesis">Tesis</a>
+            <a href="leer.html">Leer</a>
             <a href="archivo.html">Archivo</a>
             <a href="tesis.html">Biblioteca</a>
-            <a href="login.html" class="nav-cta">Acceder →</a>
+            <a href="privado-login.html" class="nav-cta">Acceder →</a>
         </nav>
     </header>
 
     <main class="hero" id="main-content">
-        <canvas id="hero-canvas" aria-hidden="true"></canvas>
         <p class="hero-eyebrow">Inicio público · Colectivo Viento Norte</p>
         <h1 class="hero-title">¿Quién es?</h1>
-        <p class="hero-subtitle">Punto de entrada rápido del Contra-Archivo. Inicia aquí la búsqueda y luego profundiza en Búsqueda Avanzada o Instrumento.</p>
+        <p class="hero-subtitle">Contra-archivo del Colectivo Viento Norte: la institución traduce; la traducción falla; el fallo es el sistema. Explora la tesis en el grafo, lee el marco narrativo o inicia una búsqueda.</p>
         <p style="font-size:12px;color:var(--dim);font-family:var(--font-mono);max-width:480px;line-height:1.6;margin-bottom:32px;margin-top:-20px">
             Fricción institucional: la distancia entre lo que una institución declara y lo que los datos oficiales registran.
         </p>
@@ -461,6 +535,8 @@
         <p id="data-status" style="font-size:11px;font-family:var(--font-mono);color:var(--dim);margin-top:8px;display:none" aria-live="polite"></p>
     </main>
 
+    <div id="ca-thesis-placeholder"></div>
+
     <section class="results-section" id="results-section">
         <div class="results-header">
             <div class="results-title">Resultados de onboarding: <strong id="results-count">0</strong></div>
@@ -473,357 +549,40 @@
         </div>
     </section>
 
+    <section id="ca-narrative-teaser" class="public-resources narrative-teaser" aria-labelledby="narrative-teaser-title">
+        <p class="resource-meta">Cargando marco narrativo…</p>
+    </section>
+
     <section class="public-resources" aria-labelledby="public-resources-title">
         <h2 id="public-resources-title">Fichas y archivo de citas</h2>
-        <p>Acceso directo a materiales de investigación ya presentes en el repositorio público. Este bloque hace visibles fichas y archivos documentales que antes no aparecían en la navegación del sitio.</p>
-        <div class="resource-grid">
-            <a class="resource-card" href="https://github.com/vientonorte/antropologia-corrupcion/blob/main/docs/fichas/C01-nucleo-margen.md">
-                <span class="resource-kicker">Ficha conceptual</span>
-                <span class="resource-title">C01 — El núcleo y el margen</span>
-                <span class="resource-meta">Concentración infraestructural de datos personales como dispositivo de opacidad.</span>
-            </a>
-            <a class="resource-card" href="https://github.com/vientonorte/antropologia-corrupcion/blob/main/docs/fichas/C02-sistema-pensiones-archivo.md">
-                <span class="resource-kicker">Ficha de sistema</span>
-                <span class="resource-title">C02 — La cuenta y el núcleo</span>
-                <span class="resource-meta">Sistema de pensiones chileno como archivo previsional privatizado y su arquitectura de datos.</span>
-            </a>
-            <a class="resource-card" href="zuboff-archivo.html">
-                <span class="resource-kicker">Corpus de citas</span>
-                <span class="resource-title">Zuboff + ATTAC + libros físicos</span>
-                <span class="resource-meta">Archivo canónico con Clave B, export JSON/CSV y corpus editorial en data/.</span>
-            </a>
-            <a class="resource-card" href="contra-archivo-v2.html">
-                <span class="resource-kicker">Negra Colorá</span>
-                <span class="resource-title">Contra-archivo etnográfico</span>
-                <span class="resource-meta">Cuatro ejes de investigación: seguridad, finanzas, territorio y metodología.</span>
-            </a>
+        <p>Recursos publicables desde <code>archivo-index.json</code> e inventario de superficies. El grid evoluciona con el corpus editorial sin duplicar HTML.</p>
+        <div class="resource-grid" id="ca-resource-mount">
+            <p class="resource-meta">Cargando índice editorial…</p>
         </div>
     </section>
 
+    <section id="ca-casos-strip" class="public-resources casos-strip" aria-labelledby="casos-strip-title"></section>
+
     <footer class="site-footer">
-        © 2026 Colectivo Viento Norte · Tesis Doctoral en Antropología&nbsp;&nbsp;·&nbsp;&nbsp;<a href="contra-archivo-v2.html">Ir al instrumento</a>
+        © 2026 Colectivo Viento Norte · Tesis Doctoral en Antropología&nbsp;&nbsp;·&nbsp;&nbsp;<a href="index.html#tesis">Tesis (grafo)</a> · <a href="leer.html">Leer</a>
     </footer>
 
-    <script defer src="src/frictionEngine.js?v=20260419"></script>
-    <script defer src="src/searchEngine.js?v=20260419"></script>
-    <script>
-        (function() {
-            'use strict';
-
-            var registros = [];
-            var casos = [];
-            var bcnRegistros = [];
-            var suggestionIndex = [];
-            var debounceTimer = null;
-            var selectedSuggest = -1;
-            var searchEngine = null;
-
-            var FUENTE_COLORS_LOCAL = {
-                bcn: '#6f8fcb',
-                infolobby: '#e8b84b',
-                transparencia: '#5ba3d9',
-                leychile: '#c8a96e',
-                seia: '#7a9e6e',
-                compraspublicas: '#d97b5b',
-                cmf: '#4a7fa5'
-            };
-
-            var FUENTE_LABELS_LOCAL = {
-                bcn: 'BCN',
-                infolobby: 'InfoLobby',
-                transparencia: 'Transparencia',
-                leychile: 'LeyChile',
-                seia: 'SEIA',
-                compraspublicas: 'ComprasPúblicas',
-                cmf: 'CMF'
-            };
-
-            var MAX_PUBLIC_RESULTS = 3;
-            var MAX_SUGGESTIONS = 8;
-
-            var input = document.getElementById('search-input');
-            var dropdown = document.getElementById('suggest-dropdown');
-            var resultsSection = document.getElementById('results-section');
-            var resultsList = document.getElementById('results-list');
-            var resultsCount = document.getElementById('results-count');
-            var resultsQuery = document.getElementById('results-query');
-            var moreResults = document.getElementById('more-results');
-            var dataStatus = document.getElementById('data-status');
-
-            function setStatus(msg) {
-                if (dataStatus) {
-                    dataStatus.textContent = msg;
-                    dataStatus.style.display = msg ? 'block' : 'none';
-                }
-            }
-
-            function loadData() {
-                setStatus('Cargando fuentes para onboarding…');
-                Promise.all([
-                    fetch('data/fuentes-oficiales.json').then(function(r) { return r.json(); }),
-                    fetch('data/casos.json').then(function(r) { return r.json(); }),
-                    fetch('data/bcn-legislativo.json').then(function(r) { return r.json(); })
-                ]).then(function(results) {
-                    registros = Array.isArray(results[0]) ? results[0] : [];
-                    var casosData = results[1];
-                    casos = casosData && casosData.casos ? casosData.casos : [];
-
-                    var bcnData = results[2];
-                    if (typeof window.normalizeBcnDataset === 'function') {
-                        bcnRegistros = window.normalizeBcnDataset(bcnData);
-                    } else {
-                        var boletines = bcnData && bcnData.boletines ? bcnData.boletines : [];
-                        bcnRegistros = boletines.map(function(b) {
-                            return {
-                                id: b.id,
-                                fuente: 'bcn',
-                                titulo: b.titulo,
-                                fecha: b.fecha_ingreso,
-                                url: b.url,
-                                institucion: (b.autores || []).join(', '),
-                                materia: (b.materias || []).join(', '),
-                                keywords: (b.materias || []).concat(b.actores_clave || []),
-                                capa_oficial: b.capa_oficial || b.resumen || '',
-                                friccion_con: b.friccion_con || '',
-                                tipo_friccion: b.tipo_friccion || '',
-                                tags: b.tags || [],
-                                actores_lobby: b.actores_clave || []
-                            };
-                        });
-                    }
-
-                    if (typeof window.FrictionSearchEngine === 'function') {
-                        searchEngine = new window.FrictionSearchEngine({
-                            registros: registros.concat(bcnRegistros),
-                            casos: casos
-                        });
-                    }
-
-                    buildSuggestionIndex();
-                    setStatus('');
-                }).catch(function(err) {
-                    console.error('Error cargando datos:', err);
-                    setStatus('Error al cargar las fuentes de onboarding. Intenta recargar la página.');
-                });
-            }
-
-            function buildSuggestionIndex() {
-                var seen = {};
-
-                function addEntry(name, source, sourceColor) {
-                    var key = (name || '').toLowerCase().trim();
-                    if (!key || key.length < 2 || seen[key]) return;
-                    seen[key] = true;
-                    suggestionIndex.push({ name: name.trim(), source: source, color: sourceColor });
-                }
-
-                casos.forEach(function(c) {
-                    (c.actores || []).forEach(function(a) { addEntry(a, 'caso', '#c8a96e'); });
-                    (c.instituciones || []).forEach(function(i) { addEntry(i, 'caso', '#4a7fa5'); });
-                    addEntry(c.titulo, 'caso', '#c8a96e');
-                });
-
-                registros.forEach(function(r) {
-                    addEntry(r.titulo, FUENTE_LABELS_LOCAL[r.fuente] || r.fuente, FUENTE_COLORS_LOCAL[r.fuente] || '#888');
-                    if (r.institucion) addEntry(r.institucion, FUENTE_LABELS_LOCAL[r.fuente] || r.fuente, FUENTE_COLORS_LOCAL[r.fuente] || '#888');
-                    (r.actores_lobby || []).forEach(function(a) {
-                        addEntry(a, FUENTE_LABELS_LOCAL[r.fuente] || r.fuente, FUENTE_COLORS_LOCAL[r.fuente] || '#888');
-                    });
-                });
-
-                bcnRegistros.forEach(function(r) {
-                    addEntry(r.titulo, 'BCN', FUENTE_COLORS_LOCAL.bcn);
-                    (r.actores_lobby || []).forEach(function(a) { addEntry(a, 'BCN', FUENTE_COLORS_LOCAL.bcn); });
-                });
-            }
-
-            function normalize(str) {
-                return (str || '')
-                    .toLowerCase()
-                    .normalize('NFD')
-                    .replace(/[\u0300-\u036f]/g, '')
-                    .replace(/[^a-z0-9\s]/g, ' ')
-                    .trim();
-            }
-
-            function filterSuggestions(query) {
-                var q = normalize(query);
-                if (q.length < 2) return [];
-                var tokens = q.split(/\s+/);
-                return suggestionIndex.filter(function(item) {
-                    var norm = normalize(item.name);
-                    return tokens.every(function(t) { return norm.indexOf(t) !== -1; });
-                }).slice(0, MAX_SUGGESTIONS);
-            }
-
-            function renderSuggestions(items) {
-                selectedSuggest = -1;
-                if (!items.length) {
-                    dropdown.classList.remove('active');
-                    dropdown.innerHTML = '';
-                    return;
-                }
-
-                dropdown.innerHTML = items.map(function(item, i) {
-                    return '<div class="suggest-item" data-index="' + i + '">' +
-                        '<span class="suggest-item-name">' + escapeHtml(item.name) + '</span>' +
-                        '<span class="suggest-badge" style="background:' + item.color + '">' + escapeHtml(item.source) + '</span>' +
-                        '</div>';
-                }).join('');
-                dropdown.classList.add('active');
-            }
-
-            function escapeHtml(str) {
-                var div = document.createElement('div');
-                div.textContent = str;
-                return div.innerHTML;
-            }
-
-            function performSearch(query) {
-                dropdown.classList.remove('active');
-                if (!query || query.trim().length < 2) {
-                    resultsSection.classList.remove('active');
-                    return;
-                }
-
-                var scored;
-                if (searchEngine) {
-                    var engineResults = searchEngine.search({ query: query, fuente: 'all', caso: 'all', tipo: 'all' });
-                    scored = engineResults.map(function(r) {
-                        return {
-                            registro: r.registro,
-                            caso: r.caso || null,
-                            textScore: r.relevance || 0,
-                            frictionScore: r.frictionScore || 0,
-                            combinedScore: r.score || 0
-                        };
-                    });
-                } else {
-                    scored = [];
-                }
-
-                scored.sort(function(a, b) { return b.frictionScore - a.frictionScore; });
-                renderResults(scored, query);
-            }
-
-            function renderResults(scored, query) {
-                resultsSection.classList.add('active');
-                resultsCount.textContent = scored.length;
-                resultsQuery.textContent = '«' + query + '»';
-                resultsList.innerHTML = '';
-
-                if (scored.length === 0) {
-                    resultsList.innerHTML = '<p style="color:var(--dim);font-size:14px;font-family:var(--font-mono);padding:24px 0">Sin resultados para «' + escapeHtml(query) + '» en onboarding.</p>';
-                    moreResults.classList.remove('active');
-                    return;
-                }
-
-                scored.slice(0, MAX_PUBLIC_RESULTS).forEach(function(item) {
-                    var reg = item.registro;
-                    var fs = item.frictionScore;
-                    var color = frictionColor(fs);
-                    var fuente = reg.fuente || 'desconocida';
-                    var badgeColor = FUENTE_COLORS_LOCAL[fuente] || '#888';
-                    var label = FUENTE_LABELS_LOCAL[fuente] || fuente;
-                    var desc = (reg.capa_oficial || '').length > 150 ? reg.capa_oficial.substring(0, 150) + '…' : (reg.capa_oficial || '—');
-
-                    var card = document.createElement('div');
-                    card.className = 'result-card';
-                    card.innerHTML =
-                        '<div class="result-card-top">' +
-                        '<div class="result-card-title">' + escapeHtml(reg.titulo) + '</div>' +
-                        '<span class="result-fuente-badge" style="background:' + badgeColor + '">' + escapeHtml(label) + '</span>' +
-                        '</div>' +
-                        '<div class="friction-row">' +
-                        '<span class="friction-label">Fricción</span>' +
-                        '<div class="friction-track"><div class="friction-fill" style="width:' + (fs * 100) + '%;background:' + color + '"></div></div>' +
-                        '<span class="friction-value">' + fs.toFixed(2) + '</span>' +
-                        '</div>' +
-                        '<p class="result-description">' + escapeHtml(desc) + '</p>' +
-                        '<a class="result-cta" href="buscador.html">Profundizar en búsqueda avanzada →</a>';
-
-                    resultsList.appendChild(card);
-                });
-
-                moreResults.classList.toggle('active', scored.length > MAX_PUBLIC_RESULTS);
-                resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
-
-            function frictionColor(score) {
-                if (score >= 0.85) return '#c85f4a';
-                if (score >= 0.70) return '#e8b84b';
-                if (score >= 0.45) return '#c8a96e';
-                return '#4a7fa5';
-            }
-
-            input.addEventListener('input', function() {
-                var val = input.value;
-                clearTimeout(debounceTimer);
-                debounceTimer = setTimeout(function() {
-                    renderSuggestions(filterSuggestions(val));
-                }, 300);
-            });
-
-            input.addEventListener('keydown', function(e) {
-                var items = dropdown.querySelectorAll('.suggest-item');
-                if (!items.length) {
-                    if (e.key === 'Enter') {
-                        e.preventDefault();
-                        performSearch(input.value);
-                    }
-                    return;
-                }
-
-                if (e.key === 'ArrowDown') {
-                    e.preventDefault();
-                    selectedSuggest = Math.min(selectedSuggest + 1, items.length - 1);
-                    updateSelected(items);
-                } else if (e.key === 'ArrowUp') {
-                    e.preventDefault();
-                    selectedSuggest = Math.max(selectedSuggest - 1, -1);
-                    updateSelected(items);
-                } else if (e.key === 'Enter') {
-                    e.preventDefault();
-                    if (selectedSuggest >= 0 && items[selectedSuggest]) {
-                        var name = items[selectedSuggest].querySelector('.suggest-item-name').textContent;
-                        input.value = name;
-                        performSearch(name);
-                    } else {
-                        performSearch(input.value);
-                    }
-                } else if (e.key === 'Escape') {
-                    dropdown.classList.remove('active');
-                    selectedSuggest = -1;
-                }
-            });
-
-            function updateSelected(items) {
-                for (var i = 0; i < items.length; i++) {
-                    items[i].classList.toggle('selected', i === selectedSuggest);
-                }
-            }
-
-            dropdown.addEventListener('click', function(e) {
-                var item = e.target.closest('.suggest-item');
-                if (!item) return;
-                var name = item.querySelector('.suggest-item-name').textContent;
-                input.value = name;
-                performSearch(name);
-            });
-
-            document.addEventListener('click', function(e) {
-                if (!e.target.closest('#search-wrap')) {
-                    dropdown.classList.remove('active');
-                }
-            });
-
-            if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', loadData);
-            } else {
-                loadData();
-            }
-        })();
-    </script>
+    <script defer src="src/frictionEngine.js?v=20260621"></script>
+    <script defer src="src/searchEngine.js?v=20260621"></script>
+    <script defer src="lib/dataLoader.js?v=20260621"></script>
+    <script defer src="src/socialField.js?v=20260620"></script>
+    <script defer src="src/fieldPhysics.js?v=20260621"></script>
+    <script defer src="src/graph.js?v=20260621"></script>
+    <script defer src="src/nodeRenderer.js?v=20260621"></script>
+    <script defer src="lib/huellaDigital.js?v=20260621"></script>
+    <script defer src="src/graphBootstrap.js?v=20260621"></script>
+    <script defer src="components/atoms/dom.js?v=20260621"></script>
+    <script defer src="components/atoms/kicker.js?v=20260620"></script>
+    <script defer src="components/molecules/section-header.js?v=20260620"></script>
+    <script defer src="components/organisms/thesis-section.js?v=20260620"></script>
+    <script defer src="lib/siteSurface.js?v=20260621"></script>
+    <script defer src="pages/onboarding-search.js?v=20260621"></script>
+    <script defer src="pages/home-boot.js?v=20260621"></script>
     <script>
         (function() {
             if (window.__CA_UNIFIED_SHELL_LOADER__) return;
@@ -835,162 +594,7 @@
             document.head.appendChild(s);
         }());
     </script>
-    <script>
-    (function () {
-        'use strict';
-        var canvas = document.getElementById('hero-canvas');
-        if (!canvas) return;
-        var ctx = canvas.getContext('2d');
-
-        // Top 15 nodes by connections — one per eje for diversity
-        var EJE_COLORS = { 1: '#c92020', 2: '#c97a1a', 3: '#2e7d4f', 4: '#2e62a8' };
-        var NODES = [
-            { id: 'huracán',           eje: 1, c: 8 },
-            { id: 'catrillanca',       eje: 1, c: 7 },
-            { id: 'uioe',              eje: 1, c: 6 },
-            { id: 'estrategia-gaona',  eje: 2, c: 10 },
-            { id: 'tecno-feudalismo',  eje: 2, c: 9 },
-            { id: 'sura-vertical',     eje: 2, c: 8 },
-            { id: 'dl3500',            eje: 2, c: 7 },
-            { id: 'captura-regulatoria', eje: 2, c: 5 },
-            { id: 'titulos-merced',    eje: 3, c: 5 },
-            { id: 'forestales',        eje: 3, c: 6 },
-            { id: 'comunidad-lafkenche', eje: 3, c: 9 },
-            { id: 'convenio-oit169',   eje: 3, c: 9 },
-            { id: 'oit169',            eje: 3, c: 4 },
-            { id: 'colonialidad-poder', eje: 4, c: 5 },
-            { id: 'infrapolítica',     eje: 4, c: 4 }
-        ];
-        var LINKS = [
-            [0,1],[0,2],[1,2],[3,4],[3,5],[4,5],[4,6],[5,6],[6,7],
-            [8,9],[8,11],[9,11],[10,11],[11,12],[10,8],
-            [3,6],[0,3],[8,12],[10,12],[11,1],[4,7],[13,14],[13,3],[14,8]
-        ];
-
-        var W, H, nodes, animId;
-
-        function resize() {
-            W = canvas.offsetWidth;
-            H = canvas.offsetHeight;
-            canvas.width = W * devicePixelRatio;
-            canvas.height = H * devicePixelRatio;
-            ctx.scale(devicePixelRatio, devicePixelRatio);
-        }
-
-        function initNodes() {
-            nodes = NODES.map(function (n, i) {
-                var angle = (i / NODES.length) * Math.PI * 2;
-                var r = Math.min(W, H) * 0.32;
-                return {
-                    x: W / 2 + Math.cos(angle) * r * (0.5 + Math.random() * 0.5),
-                    y: H / 2 + Math.sin(angle) * r * (0.5 + Math.random() * 0.5),
-                    vx: (Math.random() - 0.5) * 0.3,
-                    vy: (Math.random() - 0.5) * 0.3,
-                    r: 3 + n.c * 0.6,
-                    color: EJE_COLORS[n.eje] || '#707070'
-                };
-            });
-        }
-
-        function tick() {
-            var i, j, dx, dy, d, f, ax, ay, na, nb;
-            // repulsion
-            for (i = 0; i < nodes.length; i++) {
-                ax = 0; ay = 0;
-                for (j = 0; j < nodes.length; j++) {
-                    if (i === j) continue;
-                    dx = nodes[i].x - nodes[j].x;
-                    dy = nodes[i].y - nodes[j].y;
-                    d = Math.sqrt(dx * dx + dy * dy) || 1;
-                    f = 800 / (d * d);
-                    ax += dx / d * f;
-                    ay += dy / d * f;
-                }
-                nodes[i].vx += ax * 0.016;
-                nodes[i].vy += ay * 0.016;
-            }
-            // link attraction
-            for (i = 0; i < LINKS.length; i++) {
-                na = nodes[LINKS[i][0]]; nb = nodes[LINKS[i][1]];
-                dx = nb.x - na.x; dy = nb.y - na.y;
-                d = Math.sqrt(dx * dx + dy * dy) || 1;
-                f = (d - 90) * 0.012;
-                na.vx += dx / d * f; na.vy += dy / d * f;
-                nb.vx -= dx / d * f; nb.vy -= dy / d * f;
-            }
-            // center gravity
-            for (i = 0; i < nodes.length; i++) {
-                nodes[i].vx += (W / 2 - nodes[i].x) * 0.0015;
-                nodes[i].vy += (H / 2 - nodes[i].y) * 0.0015;
-                nodes[i].vx *= 0.92;
-                nodes[i].vy *= 0.92;
-                nodes[i].x += nodes[i].vx;
-                nodes[i].y += nodes[i].vy;
-                // clamp to canvas
-                nodes[i].x = Math.max(nodes[i].r, Math.min(W - nodes[i].r, nodes[i].x));
-                nodes[i].y = Math.max(nodes[i].r, Math.min(H - nodes[i].r, nodes[i].y));
-            }
-        }
-
-        function draw() {
-            ctx.clearRect(0, 0, W, H);
-            var i, na, nb, dx, dy, d;
-            // links
-            for (i = 0; i < LINKS.length; i++) {
-                na = nodes[LINKS[i][0]]; nb = nodes[LINKS[i][1]];
-                dx = nb.x - na.x; dy = nb.y - na.y;
-                d = Math.sqrt(dx * dx + dy * dy) || 1;
-                var alpha = Math.max(0.04, 0.22 - d / 900);
-                ctx.beginPath();
-                ctx.moveTo(na.x, na.y);
-                ctx.lineTo(nb.x, nb.y);
-                ctx.strokeStyle = 'rgba(200,169,110,' + alpha + ')';
-                ctx.lineWidth = 0.8;
-                ctx.stroke();
-            }
-            // nodes
-            for (i = 0; i < nodes.length; i++) {
-                ctx.beginPath();
-                ctx.arc(nodes[i].x, nodes[i].y, nodes[i].r, 0, Math.PI * 2);
-                ctx.fillStyle = nodes[i].color;
-                ctx.globalAlpha = 0.75;
-                ctx.fill();
-                ctx.globalAlpha = 1;
-            }
-        }
-
-        function loop() {
-            tick();
-            draw();
-            animId = requestAnimationFrame(loop);
-        }
-
-        function start() {
-            resize();
-            initNodes();
-            if (animId) cancelAnimationFrame(animId);
-            loop();
-        }
-
-        var resizeTimer;
-        window.addEventListener('resize', function () {
-            clearTimeout(resizeTimer);
-            resizeTimer = setTimeout(start, 200);
-        });
-
-        // pause when hero is not visible to save CPU
-        if ('IntersectionObserver' in window) {
-            var obs = new IntersectionObserver(function (entries) {
-                if (entries[0].isIntersecting) { start(); }
-                else { if (animId) cancelAnimationFrame(animId); }
-            }, { threshold: 0.1 });
-            obs.observe(canvas);
-        } else {
-            start();
-        }
-    }());
-    </script>
-    <script src="js/nav.js"></script>
+    <script src="js/nav.js?v=20260419"></script>
 </body>
 
 </html>

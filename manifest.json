@@ -2,7 +2,7 @@
     "name": "Contra-Archivo — Antropología y Corrupción",
     "short_name": "Contra-Archivo",
     "description": "Instrumento cualitativo de análisis multi-situado para cuantificar tensiones de mistranslation institucional.",
-    "start_url": "/antropologia-corrupcion/",
+    "start_url": "/antropologia-corrupcion/index.html",
     "scope": "/antropologia-corrupcion/",
     "display": "standalone",
     "background_color": "#0c0c0c",

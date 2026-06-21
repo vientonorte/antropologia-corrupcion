@@ -18,13 +18,12 @@ const WEB = DEPLOYED ? ROOT : path.join(ROOT, 'web');
 
 const SEED_PATHS = [
   '/',
-  '/landing.html',
   '/index.html',
   '/buscador.html',
   '/archivo.html',
   '/tesis.html',
   '/contra-archivo.html',
-  '/contra-archivo-v2.html',
+  '/leer.html',
   '/zuboff-archivo.html',
   '/zuboff-citas.html',
   '/citas-attac.html',

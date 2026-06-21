@@ -83,6 +83,7 @@ Estado del Arte/Proyectos/**/*.webp
 # === BUILD & DEPENDENCIAS ===
 dist/
 node_modules/
+.node-portable/
 *.tsbuildinfo
 
 # === DUPLICADOS iCLOUD (archivos con " 2" sufijo) ===

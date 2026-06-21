@@ -17,7 +17,9 @@
     <link rel="manifest" href="manifest.json">
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=inter:400,500,600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles/shared.css?v=20260419">
+    <link rel="stylesheet" href="styles/shared.css?v=20260620">
+    <link rel="stylesheet" href="styles/atoms/epistemic-badge.css?v=20260620">
+    <link rel="stylesheet" href="styles/organisms/huella-panel.css?v=20260620">
     <style>
         /* ── Page-specific overrides ── */
         
@@ -780,11 +782,12 @@
     <a href="#main-content" class="skip-link">Saltar al contenido</a>
     <!-- Nav -->
     <header class="site-header">
-        <a href="landing.html" class="site-logo"><span>⊘</span> Contra-Archivo</a>
+        <a href="index.html" class="site-logo"><span>⊘</span> Contra-Archivo</a>
         <nav class="site-nav" aria-label="Navegación principal">
-            <a href="landing.html">Inicio</a>
+            <a href="index.html">Inicio</a>
             <a href="buscador.html">Búsqueda</a>
-            <a href="contra-archivo-v2.html">Instrumento</a>
+            <a href="index.html#tesis">Tesis</a>
+            <a href="leer.html">Leer</a>
             <a href="archivo.html">Archivo</a>
             <a href="tesis.html">Biblioteca</a>
             <a href="login.html" class="nav-cta">Acceder →</a>
@@ -797,13 +800,24 @@
             <!-- Search Header -->
             <section class="search-header">
                 <h1>Búsqueda Avanzada</h1>
-                <p>Exploración profunda en 5 categorías de fuentes oficiales chilenas. El autosuggest se adapta a la categoría activa para acelerar la trazabilidad.</p>
+                <p>Exploración profunda en fuentes oficiales chilenas y <strong>huella digital pública</strong> — cruce curado entre registros tributarios, transparencia, mercado y archivo crítico.</p>
                 <div class="search-box">
                     <span class="search-icon">⌕</span>
                     <input type="text" class="search-input" id="searchInput" placeholder="Buscar en profundidad: registros, actores, instituciones…" autocomplete="off">
                     <div class="suggest-list" id="suggestList"></div>
                 </div>
             </section>
+
+            <div class="ca-view-tabs" role="tablist" aria-label="Modo de exploración">
+                <button type="button" class="ca-view-tab is-active" data-view="registros" role="tab" aria-selected="true" aria-controls="registros-block">Registros</button>
+                <button type="button" class="ca-view-tab" data-view="huella" role="tab" aria-selected="false" aria-controls="huella-section">Huella digital</button>
+            </div>
+
+            <section id="huella-section" class="ca-huella-section" hidden aria-label="Seguimiento de huella digital pública">
+                <div id="huella-mount"></div>
+            </section>
+
+            <div id="registros-block">
 
             <!-- Category Tabs -->
             <div class="cat-tabs" id="catTabs" role="tablist" aria-label="Categorías de fuentes">
@@ -855,6 +869,8 @@
                 <div id="noResultsMsg">Sin resultados en búsqueda avanzada para este criterio.</div>
             </div>
 
+            </div><!-- /registros-block -->
+
         </main>
 
         <!-- Filter sidebar -->
@@ -877,6 +893,9 @@
                 <div class="filter-label">Tipo de fuente</div>
                 <div id="sourceChecks"></div>
             </div>
+            <div class="filter-section" id="huellaSidebarSection" hidden>
+                <div id="huellaSidebarPreview" aria-live="polite"></div>
+            </div>
         </aside>
     </div>
 
@@ -886,708 +905,16 @@
 
     <!-- Footer -->
     <footer class="site-footer">
-        © 2026 Colectivo Viento Norte · Tesis Doctoral en Antropología&nbsp;&nbsp;·&nbsp;&nbsp;<a href="contra-archivo-v2.html">Ir al instrumento</a>
+        © 2026 Colectivo Viento Norte · Tesis Doctoral en Antropología&nbsp;&nbsp;·&nbsp;&nbsp;<a href="index.html#tesis">Tesis (grafo)</a>
     </footer>
 
-    <script defer src="src/frictionEngine.js?v=20260419"></script>
-    <script defer src="src/searchEngine.js?v=20260419"></script>
-    <script defer src="src/categoryExport.js?v=20260520"></script>
-    <script>
-        (function() {
-            'use strict';
-
-            /* ── State ── */
-            var allRecords = [];
-            var casos = [];
-            var activeCat = 'E';
-            var query = '';
-            var visibleCount = 5;
-            var debounceTimer = null;
-            var openDossierId = null;
-
-            var CAT_META = {
-                E: {
-                    desc: 'Registros de transparencia, SEIA y otras instituciones públicas con deber de publicación activa.',
-                    desc_extendida: 'Capa institucional: lo que el Estado hace visible. Respuestas a solicitudes de transparencia, expedientes SEIA, resoluciones. El registro oficial como primera traducción de conflictos políticos a lenguaje administrativo.',
-                    fuentes: ['transparencia', 'seia'],
-                    ejemplos: ['Solicitud AFP carteras', 'Expediente consulta indígena', 'Resolución territorial'],
-                    filterFn: function(r) {
-                        return r.fuente === 'transparencia' || r.fuente === 'seia' || (r.institucion && r.tipo_friccion);
-                    }
-                },
-                F: {
-                    desc: 'Registros de lobby, audiencias con funcionarios y actores vinculados a la Comisión para el Mercado Financiero.',
-                    desc_extendida: 'Trazabilidad de actores: quién habla con quién. Audiencias de lobby, reuniones con reguladores, actores corporativos. El registro oficial de influencia que documenta qué voces tienen acceso institucional.',
-                    fuentes: ['infolobby', 'cmf'],
-                    ejemplos: ['Audiencia SURA-CMF', 'Lobby forestal-CONADI', 'Reunión SEA-energéticas'],
-                    filterFn: function(r) {
-                        return r.fuente === 'infolobby' || r.fuente === 'cmf' || (r.actores_lobby && r.actores_lobby.length > 0);
-                    }
-                },
-                G: {
-                    desc: 'Compras públicas, licitaciones y regulación financiera: trazabilidad de recursos estatales y mercados.',
-                    desc_extendida: 'Flujos de capital: cómo se mueve el dinero público y regulado. Licitaciones, adquisiciones, marcos regulatorios financieros. El registro contable que traduce decisiones políticas a transacciones.',
-                    fuentes: ['compraspublicas', 'cmf'],
-                    ejemplos: ['Licitación municipal', 'Regulación multifondos', 'Adquisición tecnológica'],
-                    filterFn: function(r) {
-                        return r.fuente === 'compraspublicas' || r.fuente === 'cmf';
-                    }
-                },
-                H: {
-                    desc: 'Boletines legislativos y leyes vigentes: historial normativo con trazabilidad parlamentaria.',
-                    desc_extendida: 'Genealogía normativa: cómo se construye la ley. Boletines en tramitación, leyes vigentes, decretos. El archivo jurídico que registra negociaciones parlamentarias y produce el marco legal que después se aplica con fricción.',
-                    fuentes: ['bcn', 'leychile'],
-                    ejemplos: ['Ley OIT 169', 'DS 66 consulta', 'Tramitación multifondos'],
-                    filterFn: function(r) {
-                        return r.fuente === 'bcn' || r.fuente === 'leychile';
-                    }
-                },
-                I: {
-                    desc: 'Registros vinculados a los 4 campos etnográficos de la tesis: SURA, La Negra, periodismo de datos y OIT 169.',
-                    desc_extendida: 'Punto de entrada analítico: registros oficiales que conectan directamente con los 4 casos etnográficos de la tesis doctoral. Evidencia documentada de mistranslation entre capas ética, institucional y material.',
-                    fuentes: [],
-                    ejemplos: ['Audiencias SURA con CMF', 'Solicitud transparencia territorios mapuche', 'SEIA con consulta previa'],
-                    filterFn: function(r) {
-                        // Filtrar por friccion_con apuntando a cualquier caso etnográfico
-                        var casoIds = ['sura-gobernanza-datos', 'la-negra-territorio-mapuche', 'periodismo-datos-chile', 'oit169-consulta-previa'];
-                        return r.friccion_con && casoIds.indexOf(r.friccion_con) !== -1;
-                    }
-                }
-            };
-
-            var FUENTE_LABELS = {
-                bcn: 'BCN Tramitación',
-                infolobby: 'InfoLobby',
-                transparencia: 'Transparencia',
-                leychile: 'LeyChile',
-                seia: 'SEIA',
-                compraspublicas: 'ComprasPúblicas',
-                cmf: 'CMF',
-                'etnografia-directa': 'Etnografía'
-            };
-
-            /* ── DOM refs ── */
-            var $input = document.getElementById('searchInput');
-            var $suggestList = document.getElementById('suggestList');
-            var $catTabs = document.getElementById('catTabs');
-            var $catDesc = document.getElementById('catDesc');
-            var $resultsList = document.getElementById('resultsList');
-            var $resultsStatus = document.getElementById('resultsStatus');
-            var $btnMore = document.getElementById('btnMore');
-            var $noResults = document.getElementById('noResults');
-            var $filterYear = document.getElementById('filterYear');
-            var $filterFriction = document.getElementById('filterFriction');
-            var $frictionVal = document.getElementById('frictionVal');
-            var $sourceChecks = document.getElementById('sourceChecks');
-            var $filterToggle = document.getElementById('filterToggle');
-            var $filterSidebar = document.getElementById('filterSidebar');
-            var $filterOverlay = document.getElementById('filterOverlay');
-            var $filterClose = document.getElementById('filterClose');
-            var $loadingState = document.getElementById('loadingState');
-            var $noResultsMsg = document.getElementById('noResultsMsg');
-            var $btnExportCSV = document.getElementById('btnExportCSV');
-            var suggestActiveIdx = -1;
-
-            /* ── Data loading ── */
-            function init() {
-                $loadingState.style.display = 'block';
-                Promise.all([
-                    fetch('data/fuentes-oficiales.json').then(function(r) {
-                        return r.json();
-                    }),
-                    fetch('data/casos.json').then(function(r) {
-                        return r.json();
-                    }),
-                    fetch('data/bcn-legislativo.json').then(function(r) {
-                        return r.json();
-                    })
-                ]).then(function(data) {
-                    var fuentesData = data[0];
-                    var casosData = data[1];
-                    var bcnData = data[2];
-
-                    casos = casosData.casos || casosData;
-                    var registros = fuentesData.registros || fuentesData.fuentes || fuentesData;
-                    if (!Array.isArray(registros)) {
-                        var keys = Object.keys(fuentesData);
-                        for (var k = 0; k < keys.length; k++) {
-                            if (Array.isArray(fuentesData[keys[k]]) && keys[k] !== '_meta') {
-                                registros = fuentesData[keys[k]];
-                                break;
-                            }
-                        }
-                    }
-
-                    // Normalize BCN
-                    var bcnNorm = [];
-                    if (typeof window.normalizeBcnDataset === 'function') {
-                        bcnNorm = window.normalizeBcnDataset(bcnData);
-                    } else {
-                        var boletines = bcnData.boletines || bcnData;
-                        if (Array.isArray(boletines)) {
-                            bcnNorm = boletines.map(function(b) {
-                                return {
-                                    id: b.id || b.boletin,
-                                    fuente: 'bcn',
-                                    titulo: b.titulo,
-                                    fecha: b.fecha_ingreso || b.fecha_actualizacion || '',
-                                    url: b.url || '',
-                                    institucion: b.camara_origen || 'Congreso Nacional',
-                                    keywords: (b.materias || []).concat(b.tags || []),
-                                    capa_oficial: b.capa_oficial || b.resumen || '',
-                                    friccion_con: b.friccion_con || '',
-                                    tipo_friccion: b.tipo_friccion || 'tecnica',
-                                    tags: b.tags || []
-                                };
-                            });
-                        }
-                    }
-
-                    allRecords = (Array.isArray(registros) ? registros : []).concat(bcnNorm);
-
-                    // Build "I" category filter using caso keywords
-                    var casoKeywords = [];
-                    casos.forEach(function(c) {
-                        ['etica', 'institucional', 'material'].forEach(function(layer) {
-                            if (c[layer] && c[layer].keywords) {
-                                casoKeywords = casoKeywords.concat(c[layer].keywords);
-                            }
-                        });
-                        if (c.tags) casoKeywords = casoKeywords.concat(c.tags);
-                    });
-                    var kwSet = {};
-                    casoKeywords.forEach(function(kw) {
-                        kwSet[kw.toLowerCase()] = true;
-                    });
-
-                    CAT_META.I.filterFn = function(r) {
-                        var rKw = (r.keywords || []).concat(r.tags || []);
-                        for (var i = 0; i < rKw.length; i++) {
-                            if (kwSet[rKw[i].toLowerCase()]) return true;
-                        }
-                        return !!r.friccion_con;
-                    };
-
-                    computeScores();
-                    buildYearFilter();
-                    buildSourceFilter();
-                    updateCategoryCounts();
-                    $loadingState.style.display = 'none';
-                    render();
-                }).catch(function(err) {
-                    console.error('Error cargando datos:', err);
-                    $loadingState.style.display = 'none';
-                    $noResultsMsg.textContent = 'Error al cargar las fuentes de búsqueda avanzada. Intenta recargar la página.';
-                    $noResults.classList.remove('hidden');
-                });
-            }
-
-            /* ── Friction scores ── */
-            function computeScores() {
-                var casosMap = {};
-                casos.forEach(function(c) {
-                    casosMap[c.id] = c;
-                });
-
-                allRecords.forEach(function(r) {
-                    if (r._frictionScore !== undefined) return;
-                    var linked = r.friccion_con ? casosMap[r.friccion_con] : null;
-                    if (linked && typeof window.FrictionSearchEngine !== 'undefined') {
-                        try {
-                            var eng = new window.FrictionSearchEngine({
-                                registros: [r],
-                                casos: [linked]
-                            });
-                            var res = eng.search({
-                                query: '',
-                                fuente: 'all',
-                                caso: 'all',
-                                tipo: 'all'
-                            });
-                            r._frictionScore = res.length > 0 ? (res[0].frictionScore || 0) : 0;
-                            r._frictionAudit = res.length > 0 ? res[0].frictionAudit : null;
-                        } catch (e) {
-                            r._frictionScore = 0;
-                        }
-                    } else if (linked && window.frictionEngine && window.frictionEngine.explainRecordFriction) {
-                        try {
-                            var expl = window.frictionEngine.explainRecordFriction(r, linked);
-                            r._frictionScore = expl.score || 0;
-                            r._frictionAudit = expl;
-                        } catch (e) {
-                            r._frictionScore = 0;
-                        }
-                    } else {
-                        r._frictionScore = 0;
-                    }
-                    r._linkedCaso = linked || null;
-                });
-            }
-
-            /* ── Filtering ── */
-            function getFiltered() {
-                var catFilter = CAT_META[activeCat].filterFn;
-                var yearVal = $filterYear.value;
-                var frictionMin = parseInt($filterFriction.value, 10) / 100;
-                var checkedSources = {};
-                var checks = $sourceChecks.querySelectorAll('input[type="checkbox"]');
-                checks.forEach(function(cb) {
-                    if (cb.checked) checkedSources[cb.value] = true;
-                });
-                var hasSourceFilter = Object.keys(checkedSources).length > 0 && Object.keys(checkedSources).length < checks.length;
-                var q = query.trim().toLowerCase();
-
-                return allRecords.filter(function(r) {
-                    if (catFilter && !catFilter(r)) return false;
-                    if (yearVal !== 'all') {
-                        var rYear = (r.fecha || '').substring(0, 4);
-                        if (rYear !== yearVal) return false;
-                    }
-                    if (r._frictionScore < frictionMin) return false;
-                    if (hasSourceFilter && !checkedSources[r.fuente]) return false;
-                    if (q) {
-                        var haystack = [r.titulo, r.institucion, r.capa_oficial, (r.keywords || []).join(' '), (r.tags || []).join(' ')].join(' ').toLowerCase();
-                        if (haystack.indexOf(q) === -1) return false;
-                    }
-                    return true;
-                }).sort(function(a, b) {
-                    return (b._frictionScore || 0) - (a._frictionScore || 0);
-                });
-            }
-
-            /* ── Render ── */
-            function render() {
-                var filtered = getFiltered();
-                visibleCount = 5;
-                renderResults(filtered);
-            }
-
-            function renderResults(filtered) {
-                var showing = filtered.slice(0, visibleCount);
-                $resultsList.innerHTML = '';
-
-                if (filtered.length === 0) {
-                    $noResults.classList.remove('hidden');
-                    $resultsStatus.textContent = '';
-                    $btnMore.classList.add('hidden');
-                    if ($btnExportCSV) $btnExportCSV.style.display = 'none';
-                    return;
-                }
-                $noResults.classList.add('hidden');
-                $resultsStatus.textContent = filtered.length + ' resultado' + (filtered.length !== 1 ? 's' : '') + ' en búsqueda avanzada';
-                if ($btnExportCSV) $btnExportCSV.style.display = 'block';
-
-                showing.forEach(function(r, i) {
-                    var item = document.createElement('div');
-                    item.className = 'result-item';
-                    item.setAttribute('data-id', r.id);
-
-                    var score = r._frictionScore || 0;
-                    var pillClass = score >= 0.7 ? 'high' : score >= 0.4 ? 'mid' : 'low';
-                    var fecha = r.fecha || '—';
-                    var inst = r.institucion || FUENTE_LABELS[r.fuente] || r.fuente || '';
-                    var cat = getRecordCategory(r);
-                    var catBadge = '<span class="cat-badge cat-' + cat + '" aria-label="Categoría ' + cat + '">' + cat + '</span>';
-
-                    var dossierId = 'dossier-' + esc(r.id);
-                    item.innerHTML =
-                        '<div class="result-row" role="button" tabindex="0" aria-expanded="false" aria-controls="' + dossierId + '">' +
-                        '<span class="result-idx">' + (i + 1) + '</span>' +
-                        '<span class="result-title">' + esc(r.titulo || r.id) + '</span>' +
-                        '<div class="result-meta">' +
-                        catBadge +
-                        '<span class="result-inst">' + esc(inst) + '</span>' +
-                        '<span class="friction-pill ' + pillClass + '">' + score.toFixed(2) + '</span>' +
-                        '<span class="result-date">' + esc(fecha) + '</span>' +
-                        '</div>' +
-                        '</div>' +
-                        '<div class="dossier" id="' + dossierId + '" role="region" aria-label="Dossier ' + esc(r.titulo || r.id) + '">' + buildDossier(r) + '</div>';
-
-                    var row = item.querySelector('.result-row');
-
-                    function makeToggle(rid, rowEl) {
-                        return function() {
-                            var expanded = rowEl.getAttribute('aria-expanded') === 'true';
-                            rowEl.setAttribute('aria-expanded', expanded ? 'false' : 'true');
-                            toggleDossier(rid);
-                        };
-                    }
-                    var handler = makeToggle(r.id, row);
-                    row.addEventListener('click', handler);
-                    row.addEventListener('keydown', function(e) {
-                        if (e.key === 'Enter' || e.key === ' ') {
-                            e.preventDefault();
-                            handler();
-                        }
-                    });
-
-                    $resultsList.appendChild(item);
-                });
-
-                if (openDossierId) {
-                    var d = document.getElementById('dossier-' + openDossierId);
-                    if (d) d.classList.add('open');
-                }
-
-                if (filtered.length > visibleCount) {
-                    $btnMore.classList.remove('hidden');
-                    $btnMore.textContent = 'Mostrar más resultados (' + (filtered.length - visibleCount) + ' restantes)';
-                } else {
-                    $btnMore.classList.add('hidden');
-                }
-            }
-
-            function buildDossier(r) {
-                var c = r._linkedCaso;
-                if (!c) {
-                    return '<div style="color:var(--dim);font-size:13px;padding:8px 0;">Sin caso vinculado para desplegar capas en búsqueda avanzada.</div>';
-                }
-
-                var layers = ['etica', 'institucional', 'material'];
-                var layerLabels = {
-                    etica: 'Ética',
-                    institucional: 'Institucional',
-                    material: 'Material'
-                };
-                var layerColors = {
-                    etica: 'var(--etica)',
-                    institucional: 'var(--inst)',
-                    material: 'var(--mat)'
-                };
-                var layerClass = {
-                    etica: 'etica',
-                    institucional: 'inst',
-                    material: 'mat'
-                };
-
-                var grid = '<div class="dossier-grid">';
-                layers.forEach(function(l) {
-                    var data = c[l] || {};
-                    var kws = data.keywords || [];
-                    var kwHtml = kws.map(function(k) {
-                        return '<span class="kw-pill ' + layerClass[l] + '">' + esc(k) + '</span>';
-                    }).join('');
-
-                    grid +=
-                        '<div class="capa-col">' +
-                        '<div class="capa-header"><span class="capa-dot" style="background:' + layerColors[l] + '"></span>' + layerLabels[l] + '</div>' +
-                        '<div class="capa-text">' + esc(data.descripcion || data.titulo || '—') + '</div>' +
-                        '<div class="capa-keywords">' + kwHtml + '</div>' +
-                        '</div>';
-                });
-                grid += '</div>';
-
-                // Friction breakdown
-                var score = r._frictionScore || 0;
-                var audit = r._frictionAudit || {};
-                var friction =
-                    '<div class="dossier-friction">' +
-                    '<div class="df-score">' + score.toFixed(2) + '</div>' +
-                    '<div class="df-breakdown">' +
-                    'overlap: ' + ((audit.overlap !== undefined ? audit.overlap : '—')) +
-                    ' · marker: ' + ((audit.markerMatch !== undefined ? audit.markerMatch : (audit.marker !== undefined ? audit.marker : '—'))) +
-                    ' · tipo: ' + esc(r.tipo_friccion || c.friccion.tipo || '—') +
-                    '</div>' +
-                    '</div>';
-
-                var actions =
-                    '<div class="dossier-actions">' +
-                    '<a href="index.html#campos">Ver caso: ' + esc(c.titulo || c.id) + '</a>' +
-                    '<a href="login.html" class="btn-follow">Seguir actor →</a>' +
-                    '</div>';
-
-                return grid + friction + actions;
-            }
-
-            function toggleDossier(id) {
-                if (openDossierId === id) {
-                    var d = document.getElementById('dossier-' + id);
-                    if (d) d.classList.remove('open');
-                    openDossierId = null;
-                } else {
-                    // close previous
-                    if (openDossierId) {
-                        var prev = document.getElementById('dossier-' + openDossierId);
-                        if (prev) prev.classList.remove('open');
-                    }
-                    var el = document.getElementById('dossier-' + id);
-                    if (el) el.classList.add('open');
-                    openDossierId = id;
-                }
-            }
-
-            /* ── Autosuggest ── */
-            function updateSuggest() {
-                var q = $input.value.trim().toLowerCase();
-                if (q.length < 2) {
-                    $suggestList.classList.remove('open');
-                    return;
-                }
-
-                var catFilter = CAT_META[activeCat].filterFn;
-                var pool = allRecords.filter(function(r) {
-                    return !catFilter || catFilter(r);
-                });
-
-                var matches = [];
-                for (var i = 0; i < pool.length && matches.length < 8; i++) {
-                    var haystack = [pool[i].titulo, pool[i].institucion, (pool[i].keywords || []).join(' ')].join(' ').toLowerCase();
-                    if (haystack.indexOf(q) !== -1) matches.push(pool[i]);
-                }
-
-                if (matches.length === 0) {
-                    $suggestList.classList.remove('open');
-                    return;
-                }
-
-                $suggestList.innerHTML = matches.map(function(m) {
-                    return '<div class="suggest-item" data-titulo="' + esc(m.titulo || m.id) + '">' +
-                        '<span>' + esc(m.titulo || m.id) + '</span>' +
-                        '<span class="sg-fuente">' + esc(FUENTE_LABELS[m.fuente] || m.fuente || '') + '</span>' +
-                        '</div>';
-                }).join('');
-                $suggestList.classList.add('open');
-            }
-
-            /* ── Filters ── */
-            function buildYearFilter() {
-                var years = {};
-                allRecords.forEach(function(r) {
-                    var y = (r.fecha || '').substring(0, 4);
-                    if (y && y.length === 4) years[y] = true;
-                });
-                var sorted = Object.keys(years).sort().reverse();
-                $filterYear.innerHTML = '<option value="all">Todos</option>';
-                sorted.forEach(function(y) {
-                    var opt = document.createElement('option');
-                    opt.value = y;
-                    opt.textContent = y;
-                    $filterYear.appendChild(opt);
-                });
-            }
-
-            function buildSourceFilter() {
-                var fuenteSet = {};
-                allRecords.forEach(function(r) {
-                    if (r.fuente) fuenteSet[r.fuente] = true;
-                });
-                var keys = Object.keys(fuenteSet).sort();
-                $sourceChecks.innerHTML = '';
-                keys.forEach(function(f) {
-                    var label = document.createElement('label');
-                    label.className = 'filter-check';
-                    label.innerHTML = '<input type="checkbox" value="' + esc(f) + '" checked> ' + esc(FUENTE_LABELS[f] || f);
-                    $sourceChecks.appendChild(label);
-                });
-            }
-
-            /* ── Category counts ── */
-            function updateCategoryCounts() {
-                var cats = ['E', 'F', 'G', 'H', 'I'];
-                cats.forEach(function(cat) {
-                    var filterFn = CAT_META[cat].filterFn;
-                    var count = 0;
-                    if (filterFn) {
-                        count = allRecords.filter(filterFn).length;
-                    }
-                    var tab = $catTabs.querySelector('[data-cat="' + cat + '"]');
-                    if (tab) {
-                        var countEl = tab.querySelector('.cat-count');
-                        if (countEl) {
-                            countEl.textContent = count;
-                        }
-                        // Update aria-label
-                        var desc = CAT_META[cat].desc;
-                        tab.setAttribute('aria-label', 'Categoría ' + cat + ': ' + desc.substring(0, 50) + '... - ' + count + ' resultados');
-                    }
-                });
-            }
-
-            function getRecordCategory(r) {
-                // Determine primary category for a record
-                // Order matters: I > F > E > G > H
-                if (CAT_META.I.filterFn && CAT_META.I.filterFn(r)) return 'I';
-                if (CAT_META.F.filterFn && CAT_META.F.filterFn(r)) return 'F';
-                if (CAT_META.E.filterFn && CAT_META.E.filterFn(r)) return 'E';
-                if (CAT_META.G.filterFn && CAT_META.G.filterFn(r)) return 'G';
-                if (CAT_META.H.filterFn && CAT_META.H.filterFn(r)) return 'H';
-                return 'E'; // default
-            }
-
-            /* ── Escape HTML ── */
-            function esc(s) {
-                if (!s) return '';
-                var d = document.createElement('div');
-                d.appendChild(document.createTextNode(s));
-                return d.innerHTML;
-            }
-
-            /* ── Events ── */
-            function attachEvents() {
-                // Search input with debounce
-                $input.addEventListener('input', function() {
-                    clearTimeout(debounceTimer);
-                    debounceTimer = setTimeout(function() {
-                        query = $input.value;
-                        openDossierId = null;
-                        render();
-                    }, 300);
-                    updateSuggest();
-                });
-
-                // Suggest click
-                $suggestList.addEventListener('click', function(e) {
-                    var item = e.target.closest('.suggest-item');
-                    if (!item) return;
-                    $input.value = item.getAttribute('data-titulo');
-                    query = $input.value;
-                    $suggestList.classList.remove('open');
-                    openDossierId = null;
-                    render();
-                });
-
-                // Close suggest on blur
-                document.addEventListener('click', function(e) {
-                    if (!e.target.closest('.search-box')) $suggestList.classList.remove('open');
-                });
-
-                // Category tabs
-                $catTabs.addEventListener('click', function(e) {
-                    var tab = e.target.closest('.cat-tab');
-                    if (!tab) return;
-                    $catTabs.querySelectorAll('.cat-tab').forEach(function(t) {
-                        t.classList.remove('active');
-                        t.setAttribute('aria-selected', 'false');
-                    });
-                    tab.classList.add('active');
-                    tab.setAttribute('aria-selected', 'true');
-                    activeCat = tab.getAttribute('data-cat');
-                    $catDesc.textContent = CAT_META[activeCat].desc;
-                    openDossierId = null;
-                    render();
-                });
-
-                // Keyboard navigation for category tabs (Arrow keys)
-                $catTabs.addEventListener('keydown', function(e) {
-                    var tab = e.target.closest('.cat-tab');
-                    if (!tab) return;
-                    
-                    var tabs = Array.from($catTabs.querySelectorAll('.cat-tab'));
-                    var currentIdx = tabs.indexOf(tab);
-                    var nextIdx = -1;
-
-                    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
-                        e.preventDefault();
-                        nextIdx = (currentIdx + 1) % tabs.length;
-                    } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
-                        e.preventDefault();
-                        nextIdx = (currentIdx - 1 + tabs.length) % tabs.length;
-                    } else {
-                        return;
-                    }
-
-                    tabs[nextIdx].focus();
-                    tabs[nextIdx].click();
-                });
-
-                // Show more
-                $btnMore.addEventListener('click', function() {
-                    visibleCount += 5;
-                    var filtered = getFiltered();
-                    renderResults(filtered);
-                });
-
-                // Export CSV
-                if ($btnExportCSV) {
-                    $btnExportCSV.addEventListener('click', function() {
-                        var filtered = getFiltered();
-                        if (window.categoryExport && window.categoryExport.exportCategoryResults) {
-                            window.categoryExport.exportCategoryResults(activeCat, filtered);
-                        }
-                    });
-                }
-
-                // Filters
-                $filterYear.addEventListener('change', function() {
-                    openDossierId = null;
-                    render();
-                });
-                $filterFriction.addEventListener('input', function() {
-                    $frictionVal.textContent = (parseInt($filterFriction.value, 10) / 100).toFixed(2);
-                    openDossierId = null;
-                    render();
-                });
-                $sourceChecks.addEventListener('change', function() {
-                    openDossierId = null;
-                    render();
-                });
-
-                // Mobile filter toggle + close
-                function openFilters() {
-                    $filterSidebar.classList.add('open');
-                    $filterOverlay.classList.add('open');
-                    if ($filterClose) $filterClose.style.display = 'block';
-                    $filterToggle.setAttribute('aria-expanded', 'true');
-                }
-
-                function closeFilters() {
-                    $filterSidebar.classList.remove('open');
-                    $filterOverlay.classList.remove('open');
-                    if ($filterClose) $filterClose.style.display = 'none';
-                    $filterToggle.setAttribute('aria-expanded', 'false');
-                }
-                $filterToggle.setAttribute('aria-expanded', 'false');
-                $filterToggle.addEventListener('click', function() {
-                    $filterSidebar.classList.contains('open') ? closeFilters() : openFilters();
-                });
-                $filterOverlay.addEventListener('click', closeFilters);
-                if ($filterClose) $filterClose.addEventListener('click', closeFilters);
-
-                // Keyboard nav en autosuggest
-                $input.addEventListener('keydown', function(e) {
-                    var items = $suggestList.querySelectorAll('.suggest-item');
-                    if (!$suggestList.classList.contains('open') || !items.length) return;
-                    if (e.key === 'ArrowDown') {
-                        e.preventDefault();
-                        suggestActiveIdx = Math.min(suggestActiveIdx + 1, items.length - 1);
-                        items.forEach(function(it, i) {
-                            it.classList.toggle('active', i === suggestActiveIdx);
-                        });
-                    } else if (e.key === 'ArrowUp') {
-                        e.preventDefault();
-                        suggestActiveIdx = Math.max(suggestActiveIdx - 1, -1);
-                        items.forEach(function(it, i) {
-                            it.classList.toggle('active', i === suggestActiveIdx);
-                        });
-                    } else if (e.key === 'Enter' && suggestActiveIdx >= 0) {
-                        e.preventDefault();
-                        var chosen = items[suggestActiveIdx];
-                        if (chosen) {
-                            $input.value = chosen.getAttribute('data-titulo');
-                            query = $input.value;
-                            $suggestList.classList.remove('open');
-                            suggestActiveIdx = -1;
-                            openDossierId = null;
-                            render();
-                        }
-                    } else if (e.key === 'Escape') {
-                        $suggestList.classList.remove('open');
-                        suggestActiveIdx = -1;
-                    }
-                });
-            }
-
-            /* ── Boot ── */
-            if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', function() {
-                    attachEvents();
-                    init();
-                });
-            } else {
-                attachEvents();
-                init();
-            }
-        })();
+    <script defer src="src/frictionEngine.js?v=20260620"></script>
+    <script defer src="src/searchEngine.js?v=20260620"></script>
+    <script defer src="src/categoryExport.js?v=20260620"></script>
+    <script defer src="lib/dataLoader.js?v=20260621"></script>
+    <script defer src="lib/huellaDigital.js?v=20260621"></script>
+    <script defer src="pages/buscador-boot.js?v=20260621"></script>
+    <script defer src="lib/buscadorAvanzado.js?v=20260621"></script>
     </script>
     <script>
         (function() {

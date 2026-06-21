@@ -47,7 +47,7 @@
       "marco_teorico": ["Taussig", "Stoler"],
       "casos_vinculados": ["operacion-huracan", "catrillanca", "michillanca"],
       "rutas_web": {
-        "resumen": "contra-archivo-v2.html#eje-1",
+        "resumen": "leer.html#articulo-etnografico",
         "grafo_nodo": "La máquina de fabricar enemigos",
         "publicacion": "articulo-fabricar-enemigos.html"
       },
@@ -67,11 +67,11 @@
       "argumentos": 4,
       "rutas_web": {
         "resumen": "Estado del Arte/Ensayo Traducción de Saberes/README.md",
-        "destino": "contra-archivo-v2.html#eje-4",
+        "destino": "leer.html",
         "json": "data/narrativa-rescatada.json#ensayo_argumentos"
       },
       "estado": "publicable_resumen",
-      "en_web": "contra-archivo-v2.html#eje-4"
+      "en_web": "leer.html"
     },
     {
       "id": "etnografia-audiovisual-traduciendo-saberes",
@@ -83,7 +83,7 @@
       "canonical_pdf": "docs/Ensayo Traducción de Saberes/textos-canonicos/etnografia-audiovisual-traduciendo-saberes.pdf",
       "rutas_web": {
         "destino": "tesis.html#etnografia-audiovisual",
-        "eje": "contra-archivo-v2.html#eje-4"
+        "eje": "leer.html"
       },
       "estado": "investigador",
       "en_web": false

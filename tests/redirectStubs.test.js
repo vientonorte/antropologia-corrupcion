@@ -34,6 +34,28 @@ module.exports = function (describe, it, assert, assertEqual) {
       });
     });
 
+    it('index.html es home canónica, no redirect', function () {
+      var html = fs.readFileSync(path.join(web, 'index.html'), 'utf8');
+      assert(html.indexOf('http-equiv="refresh"') === -1, 'index no debe redirigir');
+      assert(html.indexOf('graphBootstrap.js') !== -1, 'index monta grafo');
+      assert(html.indexOf('siteSurface.js') !== -1, 'index carga superficies JSON');
+      assert(html.indexOf('ca-resource-mount') !== -1, 'mount de recursos editorial');
+    });
+
+    it('contra-archivo-v2.html es instrumento con contenido, no redirect', function () {
+      var html = fs.readFileSync(path.join(web, 'contra-archivo-v2.html'), 'utf8');
+      assert(html.indexOf('http-equiv="refresh"') === -1, 'no redirect');
+      assert(html.indexOf('instrumento-boot.js') !== -1, 'boot de grafo');
+      assert(html.indexOf('ca-thesis-placeholder') !== -1, 'monta organismo tesis');
+    });
+
+    it('contra-archivo.html renderiza narrativa, no redirect', function () {
+      var html = fs.readFileSync(path.join(web, 'contra-archivo.html'), 'utf8');
+      assert(html.indexOf('http-equiv="refresh"') === -1, 'no redirect');
+      assert(html.indexOf('narrativeRenderer.js') !== -1, 'renderer JSON');
+      assert(html.indexOf('narrative-root') !== -1, 'mount narrativa');
+    });
+
     it('archivo-index.json apunta al canónico zuboff-archivo.html', function () {
       var index = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data', 'archivo-index.json'), 'utf8'));
       var corpus = (index.entries || []).find(function (e) { return e.id === 'corpus-citas-archivo'; });

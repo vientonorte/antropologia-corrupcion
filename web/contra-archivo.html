@@ -3,13 +3,81 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="refresh" content="0;url=landing.html">
-    <title>Redirigiendo — Contra-Archivo</title>
-    <link rel="canonical" href="landing.html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marco narrativo rescate — Contra-Archivo</title>
+    <meta name="description" content="Presentación doctoral, protocolo de traducción y núcleo argumentativo del Contra-Archivo, renderizados desde narrativa-rescatada.json.">
+    <link rel="canonical" href="https://vientonorte.github.io/antropologia-corrupcion/contra-archivo.html">
+    <meta name="theme-color" content="#0c0c0c">
+    <link rel="stylesheet" href="styles/shared.css?v=20260620">
+    <link rel="stylesheet" href="styles/atoms/epistemic-badge.css?v=20260620">
+    <link rel="stylesheet" href="styles/molecules/section-header.css?v=20260620">
+    <link rel="stylesheet" href="styles/organisms/narrative-document.css?v=20260620">
+    <style>
+        .legacy-intro {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 32px 24px 0;
+        }
+
+        .legacy-intro p {
+            color: var(--muted);
+            line-height: 1.6;
+            max-width: 72ch;
+        }
+
+        .legacy-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            margin-top: 14px;
+            font-family: var(--font-mono);
+            font-size: 12px;
+        }
+
+        .legacy-links a {
+            color: var(--etica);
+        }
+
+        #narrative-root {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 24px 24px 64px;
+        }
+    </style>
 </head>
 
 <body>
-    <noscript><p>Redirigiendo a <a href="landing.html">Inicio</a>…</p></noscript>
+    <a href="#main-content" class="skip-link">Saltar al contenido</a>
+    <main id="main-content">
+        <section class="legacy-intro" aria-labelledby="legacy-title">
+            <p class="hero-eyebrow" style="font-family:var(--font-mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)">Superficie histórica · narrativa rescate</p>
+            <h1 id="legacy-title">Contra-archivo — marco y protocolo</h1>
+            <p>Esta URL conserva el rescate narrativo de la versión v1. El contenido se genera desde JSON; para lectura extendida y artículo etnográfico, usa <a href="leer.html">leer.html</a>.</p>
+            <div class="legacy-links">
+                <a href="index.html#tesis">Instrumento (grafo)</a>
+                <a href="index.html">Inicio</a>
+                <a href="archivo.html">Archivo editorial</a>
+            </div>
+        </section>
+        <div id="narrative-root" aria-live="polite"></div>
+    </main>
+
+    <script defer src="components/atoms/dom.js?v=20260621"></script>
+    <script defer src="components/atoms/epistemic-badge.js?v=20260620"></script>
+    <script defer src="components/molecules/section-header.js?v=20260620"></script>
+    <script defer src="lib/narrativeRenderer.js?v=20260621"></script>
+    <script defer src="pages/leer-boot.js?v=20260621"></script>
+    <script>
+        (function() {
+            if (window.__CA_UNIFIED_SHELL_LOADER__) return;
+            window.__CA_UNIFIED_SHELL_LOADER__ = true;
+            var s = document.createElement('script');
+            var b = location.pathname.indexOf('/antropologia-corrupcion/') === 0 ? '/antropologia-corrupcion/' : '/';
+            s.src = b + 'shared-shell.js';
+            s.defer = true;
+            document.head.appendChild(s);
+        }());
+    </script>
 </body>
 
 </html>

@@ -105,6 +105,13 @@ global.IntersectionObserver = function() {
     this.disconnect = function() {};
 };
 
+/* ─── LOCATION MOCK (huellaDigital.js buildBuscadorUrl) ─── */
+
+global.location = {
+    pathname: '/antropologia-corrupcion/web/buscador.html',
+    search: '',
+};
+
 /* ─── WINDOW.OPEN MOCK (for exportPipeline.js) ─── */
 
 global.window.open = function() {
@@ -251,6 +258,9 @@ require('../src/sourceNormalizers.js');
 // exportPipeline.js exposes via window.exportPipeline
 require('../src/exportPipeline.js');
 
+// huellaDigital.js exposes via window.CAHuellaDigital
+require('../web/lib/huellaDigital.js');
+
 /* ─── LOAD DATA ─── */
 
 var fs = require('fs');
@@ -280,6 +290,8 @@ require('./blackScholes.test.js')(describe, it, assert, assertEqual, assertDeepE
 require('./sourceNormalizers.test.js')(describe, it, assert, assertEqual, assertDeepEqual, assertApprox, assertGreaterThan, assertLessThan, assertArrayIncludes);
 require('./exportPipeline.test.js')(describe, it, assert, assertEqual, assertDeepEqual, assertApprox, assertGreaterThan, assertLessThan, assertArrayIncludes, casosData, fuentesData);
 require('./publishGate.test.js')(describe, it, assert, assertEqual);
+require('./huellaDigitalLib.test.js')(describe, it, assert, assertEqual, assertDeepEqual, assertApprox, assertGreaterThan, assertArrayIncludes, casosData, fuentesData, bcnData, huellaData);
+require('./circuitDeepLink.test.js')(describe, it, assert, assertEqual);
 
 /* ─── SUMMARY ─── */
 

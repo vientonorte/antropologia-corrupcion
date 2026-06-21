@@ -1172,4 +1172,13 @@ if (typeof window !== 'undefined') {
     window.initSearchUI = initSearchUI;
     window.normalizeBcnDataset = normalizeBcnDataset;
     window.buildSourceCatalog = buildSourceCatalog;
+    window.FUENTE_LABELS = FUENTE_LABELS;
+    window.FUENTE_COLORS = FUENTE_COLORS;
+    window.FUENTE_ICONS = FUENTE_ICONS;
+    window.CASourceCatalog = {
+        labels: FUENTE_LABELS,
+        colors: FUENTE_COLORS,
+        icons: FUENTE_ICONS,
+        default: DEFAULT_SOURCE_CATALOG,
+    };
 }

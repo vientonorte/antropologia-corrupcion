@@ -181,6 +181,69 @@
             '    flex-direction: column;',
             '    align-items: flex-start;',
             '  }',
+            '}',
+            '.ca-bottom-nav {',
+            '  display: none;',
+            '  position: fixed;',
+            '  bottom: 0;',
+            '  left: 0;',
+            '  right: 0;',
+            '  z-index: 3900;',
+            '  background: rgba(13, 13, 13, 0.95);',
+            '  backdrop-filter: blur(10px);',
+            '  -webkit-backdrop-filter: blur(10px);',
+            '  border-top: 1px solid rgba(200, 169, 110, 0.18);',
+            '  padding: 4px 6px calc(4px + env(safe-area-inset-bottom));',
+            '  justify-content: space-around;',
+            '  align-items: stretch;',
+            '  gap: 2px;',
+            '}',
+            '.ca-bottom-nav__link {',
+            '  display: flex;',
+            '  flex-direction: column;',
+            '  align-items: center;',
+            '  justify-content: center;',
+            '  gap: 2px;',
+            '  flex: 1 1 0;',
+            '  min-height: 44px;',
+            '  padding: 6px 2px 4px;',
+            '  color: #9e9484;',
+            '  text-decoration: none;',
+            '  font-size: 9px;',
+            '  letter-spacing: 0.04em;',
+            '  text-transform: uppercase;',
+            '  border-radius: 8px;',
+            '  -webkit-tap-highlight-color: transparent;',
+            '  position: relative;',
+            '}',
+            '.ca-bottom-nav__link:active {',
+            '  transform: scale(0.94);',
+            '}',
+            '.ca-bottom-nav__icon {',
+            '  font-size: 16px;',
+            '  line-height: 1;',
+            '}',
+            '.ca-bottom-nav__link.is-active {',
+            '  color: #c8a96e;',
+            '}',
+            '.ca-bottom-nav__link.is-active::after {',
+            '  content: "";',
+            '  position: absolute;',
+            '  top: 2px;',
+            '  left: 50%;',
+            '  transform: translateX(-50%);',
+            '  width: 4px;',
+            '  height: 4px;',
+            '  border-radius: 50%;',
+            '  background: #c8a96e;',
+            '}',
+            'body.ca-has-bottom-nav {',
+            '  padding-bottom: calc(68px + env(safe-area-inset-bottom));',
+            '}',
+            '@media (max-width: 768px) {',
+            '  .ca-bottom-nav {',
+            '    display: flex;',
+            '  }',
             '}'
         ].join('\n');
 
@@ -190,11 +253,12 @@
     function buildNav(basePath) {
         var currentPath = window.location.pathname;
         var links = [
-            { href: basePath + 'landing.html', label: 'Inicio' },
-            { href: basePath + 'contra-archivo-v2.html', label: 'Instrumento' },
-            { href: basePath + 'archivo.html', label: 'Archivo' },
-            { href: basePath + 'poemas.html', label: 'Poemas' },
+            { href: basePath + 'index.html', label: 'Inicio' },
+            { href: basePath + 'index.html#tesis', label: 'Tesis' },
+            { href: basePath + 'leer.html', label: 'Leer' },
             { href: basePath + 'buscador.html', label: 'Búsqueda' },
+            { href: basePath + 'archivo.html', label: 'Archivo' },
+            { href: basePath + 'tesis.html', label: 'Biblioteca' },
             { href: basePath + 'privado-login.html', label: 'Acceso privado' }
         ];
 
@@ -208,7 +272,7 @@
 
         var brand = document.createElement('a');
         brand.className = 'ca-unified-nav__brand';
-        brand.href = basePath + 'landing.html';
+        brand.href = basePath + 'index.html';
         brand.textContent = 'Contra-Archivo';
 
         var toggle = document.createElement('button');
@@ -285,8 +349,9 @@
 
         var right = document.createElement('div');
         right.innerHTML =
-            '<a href="' + basePath + 'landing.html">Inicio</a> · ' +
-            '<a href="' + basePath + 'contra-archivo-v2.html">Instrumento</a> · ' +
+            '<a href="' + basePath + 'index.html">Inicio</a> · ' +
+            '<a href="' + basePath + 'index.html#tesis">Tesis</a> · ' +
+            '<a href="' + basePath + 'leer.html">Leer</a> · ' +
             '<a href="' + basePath + 'archivo.html">Archivo</a> · ' +
             '<a href="' + basePath + 'poemas.html">Poemas</a> · ' +
             '<a href="' + basePath + 'privado-login.html">Acceso privado</a>';
@@ -295,6 +360,47 @@
         footer.appendChild(right);
 
         return footer;
+    }
+
+    function buildBottomNav(basePath) {
+        var currentPath = window.location.pathname;
+        var currentHash = window.location.hash;
+        var links = [
+            { href: basePath + 'index.html', label: 'Inicio', icon: '⊘' },
+            { href: basePath + 'index.html#tesis', label: 'Tesis', icon: '◎' },
+            { href: basePath + 'buscador.html', label: 'Buscar', icon: '⌕' },
+            { href: basePath + 'leer.html', label: 'Leer', icon: '¶' },
+            { href: basePath + 'archivo.html', label: 'Archivo', icon: '▣' },
+        ];
+
+        var nav = document.createElement('nav');
+        nav.className = 'ca-bottom-nav';
+        nav.setAttribute('aria-label', 'Navegación móvil del sitio');
+        nav.setAttribute('data-ca-bottom-nav', 'true');
+
+        links.forEach(function(item) {
+            var a = document.createElement('a');
+            a.className = 'ca-bottom-nav__link';
+            a.href = item.href;
+            var itemUrl = new URL(item.href, window.location.origin);
+            var isActive =
+                currentPath === itemUrl.pathname &&
+                (!itemUrl.hash || itemUrl.hash === currentHash);
+            if (isActive) {
+                a.className += ' is-active';
+                a.setAttribute('aria-current', 'page');
+            }
+            a.innerHTML =
+                '<span class="ca-bottom-nav__icon" aria-hidden="true">' +
+                item.icon +
+                '</span>' +
+                '<span>' +
+                item.label +
+                '</span>';
+            nav.appendChild(a);
+        });
+
+        return nav;
     }
 
     function isLegacyPrimaryNav(node) {
@@ -415,10 +521,16 @@
             node.setAttribute('aria-hidden', 'true');
         });
 
-        var textualReaderPanels = document.querySelectorAll('aside, section, div');
-        Array.prototype.forEach.call(textualReaderPanels, function(node) {
+        var legacyReaderMarkers = document.querySelectorAll(
+            '[data-reader-mode], .reader-mode, .reader-mode-panel, #reader-mode, #reader-mode-panel'
+        );
+        Array.prototype.forEach.call(legacyReaderMarkers, function(node) {
             var txt = (node.textContent || '').toUpperCase();
-            if (txt.indexOf('MODO LECTOR ACTIVO') !== -1 || txt.indexOf('SESIÓN DE LECTORA') !== -1 || txt.indexOf('NOTAS DE LECTURA') !== -1) {
+            if (
+                txt.indexOf('MODO LECTOR ACTIVO') !== -1 ||
+                txt.indexOf('SESIÓN DE LECTORA') !== -1 ||
+                txt.indexOf('NOTAS DE LECTURA') !== -1
+            ) {
                 node.style.display = 'none';
                 node.setAttribute('data-ca-reader-mode-deprecated', 'true');
                 node.setAttribute('aria-hidden', 'true');
@@ -449,6 +561,11 @@
 
         if (!document.querySelector('[data-ca-unified-footer]')) {
             document.body.appendChild(buildFooter(resolveBasePath()));
+        }
+
+        if (!document.querySelector('[data-ca-bottom-nav]')) {
+            document.body.appendChild(buildBottomNav(resolveBasePath()));
+            document.body.classList.add('ca-has-bottom-nav');
         }
     }
 

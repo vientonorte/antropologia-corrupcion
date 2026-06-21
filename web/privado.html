@@ -15,6 +15,7 @@
     <link rel="manifest" href="manifest.json">
     <link rel="stylesheet" href="styles/shared.css?v=20260419c">
     <link rel="stylesheet" href="styles/ui-kit.css?v=20260419c">
+    <link rel="stylesheet" href="styles/organisms/huella-panel.css?v=20260620">
     <style>
         /* ══════════════════════════════════════════
    privado.html — Mobile-First Styles
@@ -1028,7 +1029,7 @@
         <div class="pv-nav-links">
             <a href="#" id="nav-seg-btn">Panel</a>
             <a href="index.html">Simulación</a>
-            <a href="landing.html">Noticias / cruces</a>
+            <a href="index.html">Noticias / cruces</a>
             <a href="tesis.html">Tesis / documentos</a>
             <button class="btn-salir" id="logout-btn">Salir</button>
         </div>
@@ -1174,6 +1175,7 @@
     <script defer src="src/ciperFeed.js?v=20260419c"></script>
     <script defer src="src/graph.js?v=20260419c"></script>
     <script defer src="src/fieldPhysics.js?v=20260419c"></script>
+    <script defer src="lib/huellaDigital.js?v=20260620"></script>
     <script>
         (function() {
             'use strict';
@@ -1452,7 +1454,7 @@
                 $('logout-btn').addEventListener('click', function(e) {
                     e.preventDefault();
                     if (window.PasskeyAuth) window.PasskeyAuth.logout();
-                    window.location.href = 'landing.html';
+                    window.location.href = 'index.html';
                 });
             }
 
@@ -2276,158 +2278,25 @@
                 huellaTab.setAttribute('tabindex', '0');
                 $('panel-huella').classList.add('active');
 
-                var al = actorName.toLowerCase();
-                var events = [];
-
-                FUENTES.forEach(function(f) {
-                    var match = false;
-                    if (f.titulo && f.titulo.toLowerCase().indexOf(al) !== -1) match = true;
-                    if (f.capa_oficial && f.capa_oficial.toLowerCase().indexOf(al) !== -1) match = true;
-                    if (f.actores_lobby && f.actores_lobby.some(function(a) {
-                            return a.toLowerCase().indexOf(al) !== -1;
-                        })) match = true;
-                    if (f.keywords && f.keywords.some(function(k) {
-                            return k.toLowerCase().indexOf(al) !== -1;
-                        })) match = true;
-                    if (f.institucion && f.institucion.toLowerCase().indexOf(al) !== -1) match = true;
-                    if (f.tags && f.tags.some(function(t) {
-                            return t.toLowerCase().indexOf(al) !== -1;
-                        })) match = true;
-                    if (match) events.push({
-                        date: f.fecha || '',
-                        source: f.fuente || 'desconocida',
-                        title: f.titulo || f.id,
-                        desc: f.capa_oficial || '',
-                        friction: f.tipo_friccion || '',
-                        id: f.id
-                    });
-                });
-
-                BCN.forEach(function(b) {
-                    var match = false;
-                    if (b.titulo && b.titulo.toLowerCase().indexOf(al) !== -1) match = true;
-                    if (b.descripcion && b.descripcion.toLowerCase().indexOf(al) !== -1) match = true;
-                    if (b.keywords && b.keywords.some(function(k) {
-                            return k.toLowerCase().indexOf(al) !== -1;
-                        })) match = true;
-                    if (b.tags && b.tags.some(function(t) {
-                            return t.toLowerCase().indexOf(al) !== -1;
-                        })) match = true;
-                    if (match) events.push({
-                        date: b.fecha || '',
-                        source: 'bcn',
-                        title: b.titulo || b.id,
-                        desc: b.descripcion || b.capa_oficial || '',
-                        friction: b.tipo_friccion || '',
-                        id: b.id
-                    });
-                });
-
-                events.sort(function(a, b) {
-                    return (b.date || '').localeCompare(a.date || '');
-                });
-
-                var avgFriction = 0;
-                if (events.length) {
-                    var frictionCount = 0;
-                    events.forEach(function(e) {
-                        var matchFuente = FUENTES.find(function(f) {
-                            return f.id === e.id;
-                        });
-                        if (matchFuente && typeof matchFuente.friction_score === 'number') {
-                            avgFriction += matchFuente.friction_score;
-                            frictionCount++;
-                        }
-                    });
-                    if (frictionCount) avgFriction = avgFriction / frictionCount;
-                }
-
                 var content = $('huella-content');
-                if (!events.length) {
-                    content.innerHTML = '<div class="huella-empty"><div class="icon">📭</div>' +
-                        '<p>No se encontraron registros para «' + esc(actorName) + '» en las fuentes oficiales.</p></div>';
+                if (!window.CAHuellaDigital || !window.CAHuellaDigital.renderFromData) {
+                    content.innerHTML =
+                        '<div class="huella-empty" role="alert"><div class="icon">⚠</div>' +
+                        '<p>Módulo de huella digital no disponible.</p></div>';
                     return;
                 }
 
-                /* Buscar entidad en huella-digital-publica.json */
-                var entidad = null;
-                if (HUELLA.entidades) {
-                    entidad = HUELLA.entidades.find(function(e) {
-                        if (e.nombre && e.nombre.toLowerCase().indexOf(al) !== -1) return true;
-                        if (e.aliases && e.aliases.some(function(a) {
-                                return a.toLowerCase().indexOf(al) !== -1;
-                            })) return true;
-                        return false;
-                    });
-                }
+                var rendered = window.CAHuellaDigital.renderFromData(
+                    {
+                        huella: HUELLA,
+                        fuentes: FUENTES,
+                        bcn: BCN,
+                        casos: CASOS,
+                    },
+                    { query: actorName },
+                );
 
-                var scoreColor = avgFriction > 0.7 ? 'var(--crit)' : avgFriction > 0.4 ? 'var(--etica)' : 'var(--mat)';
-                var html = '<div class="huella-header">';
-                html += '<h2>Huella Digital: ' + esc(actorName) + '</h2>';
-                if (entidad) {
-                    html += '<div style="font-size:.78rem;color:var(--dim);margin-bottom:4px">' + esc(entidad.tipo.replace(/_/g, ' ')) +
-                        ' · Fricción: <strong style="color:' + (entidad.nivel_friccion === 'critico' ? 'var(--crit)' : 'var(--etica)') + '">' + esc(entidad.nivel_friccion) + '</strong></div>';
-                    if (entidad.atributos_huella && entidad.atributos_huella.length) {
-                        html += '<div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px">';
-                        entidad.atributos_huella.forEach(function(a) {
-                            html += '<span class="seg-tag">' + esc(a) + '</span>';
-                        });
-                        html += '</div>';
-                    }
-                }
-                html += '<div style="font-size:.82rem;color:var(--muted)">' + events.length + ' registros en ' + countSources(events) + ' fuentes</div>';
-                if (avgFriction > 0) {
-                    html += '<div class="huella-score"><span>Fricción agregada:</span>' +
-                        '<div class="score-bar"><div class="score-fill" style="width:' + (avgFriction * 100) + '%;background:' + scoreColor + '"></div></div>' +
-                        '<span style="font-family:var(--font-mono);font-size:.78rem">' + avgFriction.toFixed(2) + '</span></div>';
-                }
-                html += '</div>';
-
-                html += '<div class="huella-timeline">';
-                events.forEach(function(ev) {
-                    html += '<div class="huella-event">';
-                    html += '<span class="ev-date">' + fmtDate(ev.date) + '</span>';
-                    html += '<span class="ev-source source-' + esc(ev.source) + '">' + esc(ev.source) + '</span>';
-                    html += '<h4>' + esc(ev.title) + '</h4>';
-                    if (ev.desc) html += '<p>' + esc(ev.desc.substring(0, 300)) + '</p>';
-                    if (ev.friction) html += '<span style="font-size:.7rem;color:var(--dim);font-family:var(--font-mono)">tipo: ' + esc(ev.friction) + '</span>';
-                    html += '</div>';
-                });
-                html += '</div>';
-
-                /* Trazas de investigación desde huella-digital-publica.json */
-                if (entidad && HUELLA.trazas) {
-                    var trazasRel = HUELLA.trazas.filter(function(t) {
-                        return t.entidades && t.entidades.indexOf(entidad.id) !== -1;
-                    });
-                    if (trazasRel.length) {
-                        html += '<div style="margin-top:24px;padding:16px;border:1px solid var(--border);border-radius:var(--r);background:var(--s1)">';
-                        html += '<div style="font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--dim);margin-bottom:8px">Trazas de investigación</div>';
-                        trazasRel.forEach(function(t) {
-                            html += '<div style="margin-bottom:12px">';
-                            html += '<p style="font-size:.85rem;color:var(--muted);margin-bottom:6px">' + esc(t.descripcion) + '</p>';
-                            if (t.pasos_llm && t.pasos_llm.length) {
-                                html += '<ol style="padding-left:20px;font-size:.78rem;color:var(--dim)">';
-                                t.pasos_llm.forEach(function(p) {
-                                    html += '<li>' + esc(p) + '</li>';
-                                });
-                                html += '</ol>';
-                            }
-                            html += '</div>';
-                        });
-                        html += '</div>';
-                    }
-                }
-
-                content.innerHTML = html;
-            }
-
-            function countSources(events) {
-                var s = {};
-                events.forEach(function(e) {
-                    s[e.source] = true;
-                });
-                return Object.keys(s).length;
+                content.innerHTML = rendered.html;
             }
 
             /* ── Boot ── */

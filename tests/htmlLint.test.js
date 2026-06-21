@@ -20,7 +20,6 @@ module.exports = function (describe, it, assert, assertEqual) {
     /* HTML files to audit */
     var htmlFiles = [
         'index.html',
-        'landing.html',
         'archivo.html',
         'buscador.html',
         'login.html',
@@ -130,7 +129,7 @@ module.exports = function (describe, it, assert, assertEqual) {
 
     describe('HTML lint — cache-bust params on external resources', function () {
 
-        var pagesWithExternal = ['landing.html', 'archivo.html', 'buscador.html', 'login.html', 'privado.html', 'tesis.html', 'contra-archivo-v2.html'];
+        var pagesWithExternal = ['index.html', 'archivo.html', 'buscador.html', 'login.html', 'privado.html', 'tesis.html', 'contra-archivo-v2.html'];
 
         pagesWithExternal.forEach(function (file) {
             var filePath = path.join(webRoot, file);
