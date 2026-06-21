@@ -30,6 +30,10 @@
             return;
         }
 
+        if (document.querySelector('link[rel="stylesheet"][href*="shared.css"]')) {
+            return;
+        }
+
         var style = document.createElement('style');
         style.id = 'ca-unified-shell-styles';
         style.textContent = [
@@ -71,9 +75,10 @@
             '  font-size: 11px;',
             '  letter-spacing: 0.04em;',
             '}',
-            '.ca-unified-nav__link:hover, .ca-unified-nav__link.is-active {',
+            '.ca-unified-nav__link:hover, .ca-unified-nav__link:focus-visible, .ca-unified-nav__link.is-active {',
             '  border-color: rgba(200, 169, 110, 0.5);',
             '  color: #c8a96e;',
+            '  text-decoration: none;',
             '}',
             '.ca-unified-footer {',
             '  margin-top: 24px;',
@@ -125,8 +130,8 @@
             '  display: flex;',
             '  align-items: center;',
             '  justify-content: space-between;',
-            '  width: 100%;',
             '  gap: 12px;',
+            '  flex-shrink: 0;',
             '}',
             '.ca-unified-nav__toggle {',
             '  display: none;',
@@ -168,6 +173,9 @@
             '  .ca-unified-nav {',
             '    flex-direction: column;',
             '    align-items: stretch;',
+            '  }',
+            '  .ca-unified-nav__row {',
+            '    width: 100%;',
             '  }',
             '  .ca-unified-nav__toggle {',
             '    display: flex;',

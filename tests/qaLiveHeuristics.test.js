@@ -56,6 +56,14 @@ module.exports = function (describe, it, assert, assertEqual) {
       var js = readWeb('shared-shell.js');
       assert(/bottom-nav|ca-bottom-nav/i.test(js), 'falta bottom nav móvil');
     });
+
+    it('nav unificado no fuerza width 100% en desktop', function () {
+      var css = fs.readFileSync(path.join(root, 'web', 'styles', 'shared.css'), 'utf8');
+      var shell = readWeb('shared-shell.js');
+      assert(css.indexOf('.ca-unified-nav__row {') !== -1, 'shared.css define fila del nav');
+      assert(css.indexOf('width: 100%') === -1 || /@media \(max-width: 640px\)[\s\S]*\.ca-unified-nav__row[\s\S]*width: 100%/.test(css), 'width 100% solo en móvil');
+      assert(shell.indexOf("'  width: 100%;',") === -1, 'shared-shell sin width 100% global en row');
+    });
   });
 
   describe('QA live — manifest y sitemap', function () {
