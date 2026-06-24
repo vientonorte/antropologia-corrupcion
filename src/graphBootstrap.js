@@ -126,7 +126,7 @@ const GraphBootstrap = (function () {
         section.setAttribute('aria-label', 'Instrumento de fricción epistemológica — Colectivo Viento Norte');
 
         if (options.embedded) {
-            section.classList.add('ca-graph--embedded', 'ca-active');
+            section.classList.add('ca-graph--embedded', 'ca-graph--v3', 'ca-active');
             section.setAttribute('aria-hidden', 'false');
         } else {
             section.setAttribute('aria-hidden', 'true');

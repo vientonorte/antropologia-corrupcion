@@ -7,6 +7,40 @@
     border-top: 1px solid var(--border);
 }
 
+/* ── v3: prosa contenida + instrumento full-bleed ── */
+
+.ca-thesis--v3 {
+    max-width: none;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid var(--border);
+}
+
+.ca-thesis--v3 .ca-thesis__prose {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: var(--sp-8) var(--sp-6) var(--sp-4);
+}
+
+.ca-thesis--v3 .ca-thesis__prose--footer {
+    padding-top: var(--sp-4);
+    padding-bottom: var(--sp-8);
+}
+
+.ca-thesis--v3 .ca-thesis__instrument {
+    width: 100vw;
+    max-width: 100%;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+}
+
+.ca-thesis--v3 .ca-thesis__mount {
+    border-radius: 0;
+    width: 100%;
+    min-height: clamp(480px, 82vh, 920px);
+}
+
 .ca-thesis__formula {
     font-family: var(--font-mono);
     font-size: 12px;
@@ -87,13 +121,49 @@
     border-radius: var(--r-lg);
 }
 
+#graph-mode-section.ca-graph--embedded.ca-graph--v3 {
+    width: 100%;
+    min-height: clamp(480px, 82vh, 920px);
+    max-height: none;
+    border-radius: 0;
+    border-top: 1px solid var(--color-border, #2e2e2e);
+    border-bottom: 1px solid var(--color-border, #2e2e2e);
+}
+
+#graph-mode-section.ca-graph--v3 .ca-toolbar {
+    width: 100%;
+    padding-left: clamp(var(--sp-4), 3vw, var(--sp-8));
+    padding-right: clamp(var(--sp-4), 3vw, var(--sp-8));
+}
+
 #graph-mode-section.ca-graph--embedded .ca-graph-area {
     flex: 1;
     min-height: 0;
+    width: 100%;
+}
+
+#graph-mode-section.ca-graph--v3 .ca-graph-area {
+    min-height: clamp(400px, 72vh, 840px);
 }
 
 #graph-mode-section.ca-graph--embedded .ca-graph-canvas {
     min-height: 420px;
+}
+
+#graph-mode-section.ca-graph--v3 .ca-graph-canvas {
+    flex: 1;
+    min-height: 0;
+    width: 100%;
+}
+
+@media (min-width: 1024px) {
+    #graph-mode-section.ca-graph--v3 .ca-toolbar__row--filters {
+        flex-wrap: nowrap;
+    }
+
+    #graph-mode-section.ca-graph--v3 .ca-toolbar__row--field .ca-field-filter {
+        flex-wrap: nowrap;
+    }
 }
 
 @media (max-width: 768px) {
@@ -101,9 +171,23 @@
         padding: var(--sp-6) var(--sp-4);
     }
 
+    .ca-thesis--v3 .ca-thesis__prose,
+    .ca-thesis--v3 .ca-thesis__prose--footer {
+        padding-left: var(--sp-4);
+        padding-right: var(--sp-4);
+    }
+
+    .ca-thesis--v3 .ca-thesis__mount {
+        min-height: 65vh;
+    }
+
     #graph-mode-section.ca-graph--embedded {
         min-height: 65vh;
         max-height: none;
+    }
+
+    #graph-mode-section.ca-graph--embedded.ca-graph--v3 {
+        min-height: 65vh;
     }
 
     #graph-mode-section.ca-graph--embedded .ca-toolbar {
