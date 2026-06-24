@@ -22,9 +22,16 @@ module.exports = function (describe, it, assert, assertEqual) {
     });
 
     it('monta grafo y superficies JSON', function () {
-      assert(/graphBootstrap\.js/i.test(html), 'falta graphBootstrap');
+      var hasGraphBoot = /graphBootstrap\.js/i.test(html) || /graphChunk\.js/i.test(html);
+      assert(hasGraphBoot, 'falta graphBootstrap o graphChunk');
       assert(/tokens\.js/i.test(html), 'falta tokens.js para canvas de entropía');
-      assert(/socialField\.js/i.test(html), 'falta socialField');
+      if (/graphChunk\.js/i.test(html)) {
+        var chunk = readWeb('lib/graphChunk.js');
+        assert(/socialField\.js/i.test(chunk), 'graphChunk debe incluir socialField');
+        assert(/graphBootstrap\.js/i.test(chunk), 'graphChunk debe incluir graphBootstrap');
+      } else {
+        assert(/socialField\.js/i.test(html), 'falta socialField');
+      }
       assert(/siteSurface\.js/i.test(html), 'falta siteSurface');
       assert(/shared-shell\.js/i.test(html), 'falta shared-shell');
     });

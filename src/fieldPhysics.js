@@ -118,9 +118,11 @@ class FrictionField {
         this.animFrame = null;
         this.visible = true;
         this.activeLayer = 'all';
-        this.showStreamlines = true;
-        this.showParticles = true;
+        this.showStreamlines = false;
+        this.showParticles = false;
         this.showField = true;
+        this._fieldOffscreen = null;
+        this._fieldOffscreenReady = false;
         this.fieldImageData = null;
         this._needsFieldUpdate = true;
         this._frameCount = 0;
@@ -156,14 +158,18 @@ class FrictionField {
         // alpha:true necesario para transparencia del heatmap sobre fondo oscuro
         this.ctx = this.canvas.getContext('2d', { alpha: true });
 
-        // Inicializar partículas
         this._initParticles();
 
-        // Primer render del campo estático
-        this._computeField();
-
-        // Arrancar loop de animación
-        this._animate();
+        var self = this;
+        var bootField = function () {
+            self._computeField();
+            self._animate();
+        };
+        if (typeof requestIdleCallback === 'function') {
+            requestIdleCallback(bootField, { timeout: 900 });
+        } else {
+            setTimeout(bootField, 60);
+        }
 
         // Pausar cuando offscreen
         this._io = new IntersectionObserver(entries => {
@@ -298,66 +304,48 @@ class FrictionField {
         if (!this.showField || !this.visible) return;
 
         this._computePotentialGrid();
-        const res = this._gridRes;
         const gw = this._gridW;
         const gh = this._gridH;
         const grid = this._potentialGrid;
         const maxPhi = this._potentialMax;
 
-        // Crear ImageData a resolución completa
-        const imgData = this.ctx.createImageData(this.width, this.height);
+        if (!this._fieldOffscreen) {
+            this._fieldOffscreen = document.createElement('canvas');
+        }
+        const oc = this._fieldOffscreen;
+        oc.width = gw;
+        oc.height = gh;
+        const octx = oc.getContext('2d', { alpha: true });
+        const imgData = octx.createImageData(gw, gh);
         const data = imgData.data;
         const maxOpacity = FIELD_CONFIG.FIELD_MAX_OPACITY * 255;
-
-        // Normalizar y mapear a paleta
         const invMax = maxPhi > 0 ? 1 / maxPhi : 0;
 
-        for (let py = 0; py < this.height; py++) {
-            for (let px = 0; px < this.width; px++) {
-                // Interpolación bilineal desde grid
-                const gxf = px / res - 0.5;
-                const gyf = py / res - 0.5;
-                const gx0 = Math.max(0, Math.min(gw - 1, Math.floor(gxf)));
-                const gy0 = Math.max(0, Math.min(gh - 1, Math.floor(gyf)));
-                const gx1 = Math.min(gw - 1, gx0 + 1);
-                const gy1 = Math.min(gh - 1, gy0 + 1);
-                const fx = gxf - gx0;
-                const fy = gyf - gy0;
-
-                const v00 = grid[gy0 * gw + gx0];
-                const v10 = grid[gy0 * gw + gx1];
-                const v01 = grid[gy1 * gw + gx0];
-                const v11 = grid[gy1 * gw + gx1];
-
-                const phi = v00 * (1 - fx) * (1 - fy) + v10 * fx * (1 - fy) +
-                    v01 * (1 - fx) * fy + v11 * fx * fy;
-
-                // Normalizar a 0-1 con curva gamma (realza energías medias)
+        for (let gy = 0; gy < gh; gy++) {
+            for (let gx = 0; gx < gw; gx++) {
+                const phi = grid[gy * gw + gx];
                 const norm = Math.pow(Math.min(phi * invMax, 1), 0.6);
                 const idx = Math.min(255, Math.round(norm * 255));
-
-                const pIdx = (py * this.width + px) * 4;
+                const pIdx = (gy * gw + gx) * 4;
 
                 if (this.activeLayer !== 'all' && LAYER_PALETTES[this.activeLayer]) {
-                    // Modo capa: teñir con color de capa
                     const lp = LAYER_PALETTES[this.activeLayer];
-                    const bright = norm;
-                    data[pIdx] = Math.round(lp.r * bright);
-                    data[pIdx + 1] = Math.round(lp.g * bright);
-                    data[pIdx + 2] = Math.round(lp.b * bright);
+                    data[pIdx] = Math.round(lp.r * norm);
+                    data[pIdx + 1] = Math.round(lp.g * norm);
+                    data[pIdx + 2] = Math.round(lp.b * norm);
                 } else {
-                    // Modo general: usar paleta friction
                     data[pIdx] = FIELD_PALETTE[idx * 3];
                     data[pIdx + 1] = FIELD_PALETTE[idx * 3 + 1];
                     data[pIdx + 2] = FIELD_PALETTE[idx * 3 + 2];
                 }
 
-                // Alpha: transparente en zonas de bajo potencial, más opaco en altas
                 data[pIdx + 3] = Math.round(norm * maxOpacity);
             }
         }
 
-        this.fieldImageData = imgData;
+        octx.putImageData(imgData, 0, 0);
+        this._fieldOffscreenReady = true;
+        this.fieldImageData = null;
         this._needsFieldUpdate = false;
     }
 
@@ -521,9 +509,13 @@ class FrictionField {
         const ctx = this.ctx;
         ctx.clearRect(0, 0, this.width, this.height);
 
-        // 1. Campo escalar de fondo (heatmap)
-        if (this.fieldImageData && this.showField) {
-            ctx.putImageData(this.fieldImageData, 0, 0);
+        if (this._fieldOffscreenReady && this.showField && this._fieldOffscreen) {
+            ctx.imageSmoothingEnabled = true;
+            ctx.drawImage(
+                this._fieldOffscreen,
+                0, 0, this._fieldOffscreen.width, this._fieldOffscreen.height,
+                0, 0, this.width, this.height,
+            );
         }
 
         // 2. Streamlines (solo recalcular cuando dirty)

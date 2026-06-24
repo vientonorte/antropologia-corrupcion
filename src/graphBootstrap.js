@@ -52,11 +52,11 @@ const GraphBootstrap = (function () {
         <div class="ca-toolbar__group ca-field-controls">
           <span class="ca-toolbar__label" id="ca-field-label">Campo</span>
           <div class="ca-field-filter" role="group" aria-labelledby="ca-field-label">
-            <button class="ca-field-btn active" data-field="all" aria-pressed="true" aria-label="Mostrar todo el campo">⊕ Todo</button>
+            <button class="ca-field-btn" data-field="all" aria-pressed="false" aria-label="Mostrar todo el campo">⊕ Todo</button>
             <button class="ca-field-btn active" data-field="potential" aria-pressed="true" aria-label="Campo de potencial">Φ Potencial</button>
-            <button class="ca-field-btn active" data-field="streamlines" aria-pressed="true" aria-label="Líneas de flujo">∇ Líneas</button>
-            <button class="ca-field-btn active" data-field="particles" aria-pressed="true" aria-label="Partículas de energía">⚡ Energía</button>
-            <button class="ca-field-btn active" data-field="entropy" aria-pressed="true" aria-label="Entropía social">S Entropía</button>
+            <button class="ca-field-btn" data-field="streamlines" aria-pressed="false" aria-label="Líneas de flujo">∇ Líneas</button>
+            <button class="ca-field-btn" data-field="particles" aria-pressed="false" aria-label="Partículas de energía">⚡ Energía</button>
+            <button class="ca-field-btn" data-field="entropy" aria-pressed="false" aria-label="Entropía social">S Entropía</button>
           </div>
         </div>
       </div>
@@ -397,6 +397,11 @@ const GraphBootstrap = (function () {
                 },
             });
 
+            if (STATE.graph.field) {
+                STATE.graph.field.toggleStreamlines(false);
+                STATE.graph.field.toggleParticles(false);
+            }
+
             STATE.renderer = new window.NodeRenderer({
                 panel: document.getElementById('ca-panel'),
                 previewEl: document.getElementById('ca-preview'),
@@ -423,8 +428,8 @@ const GraphBootstrap = (function () {
                         fuentes,
                     });
 
-                    STATE.socialField.setVisible(inView);
-                    syncEntropyUi(true);
+                    STATE.socialField.setVisible(false);
+                    syncEntropyUi(false);
                     if (prefersReducedMotion) {
                         STATE.socialField.renderFrame();
                     }

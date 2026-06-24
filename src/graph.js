@@ -22,7 +22,7 @@ class ForceSimulation {
         this.height = height;
         this.margin = 80;
         this.alpha = 1;
-        this.alphaDecay = 0.0228;
+        this.alphaDecay = 0.038;
         this.alphaMin = 0.001;
         this.velocityDecay = 0.4;
         this.gravityStrength = 0.06;

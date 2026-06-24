@@ -67,7 +67,10 @@ module.exports = function (describe, it, assert, assertEqual) {
         it('index.html is canonical home with content-driven mounts', function () {
             var html = fs.readFileSync(path.join(web, 'index.html'), 'utf8');
             assert(html.indexOf('http-equiv="refresh"') === -1, 'no redirect stub');
-            assert(html.indexOf('graphBootstrap.js') !== -1, 'graph bootstrap');
+            assert(
+                html.indexOf('graphBootstrap.js') !== -1 || html.indexOf('graphChunk.js') !== -1,
+                'graph bootstrap o chunk lazy',
+            );
             assert(html.indexOf('type="module"') === -1, 'no module race on graph deps');
             assert(html.indexOf('onboarding-search.js') !== -1, 'extracted onboarding search');
             assert(html.indexOf('siteSurface.js') !== -1, 'JSON-driven surfaces');

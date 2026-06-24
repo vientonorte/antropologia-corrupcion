@@ -67,7 +67,10 @@ module.exports = function (describe, it, assert, assertEqual) {
     it('index.html es home canónica, no redirect', function () {
       var html = fs.readFileSync(path.join(web, 'index.html'), 'utf8');
       assert(html.indexOf('http-equiv="refresh"') === -1, 'index no debe redirigir');
-      assert(html.indexOf('graphBootstrap.js') !== -1, 'index monta grafo');
+      assert(
+        html.indexOf('graphBootstrap.js') !== -1 || html.indexOf('graphChunk.js') !== -1,
+        'index monta grafo (directo o lazy)',
+      );
       assert(html.indexOf('siteSurface.js') !== -1, 'index carga superficies JSON');
       assert(html.indexOf('ca-resource-mount') !== -1, 'mount de recursos editorial');
     });

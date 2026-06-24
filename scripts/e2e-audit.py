@@ -17,7 +17,7 @@ WEB = ROOT / "web"
 PUBLIC_JOURNEY = [
     ("P1 Inicio", "web/index.html", [
         ("boot", r"home-boot\.js"),
-        ("grafo", r"graphBootstrap\.js"),
+        ("grafo", r"graphBootstrap\.js|graphChunk\.js"),
         ("main landmark", r'<main[^>]+id="main-content"'),
         ("skip-link", r"skip-link"),
         ("tesis mount", r"ca-thesis-placeholder"),

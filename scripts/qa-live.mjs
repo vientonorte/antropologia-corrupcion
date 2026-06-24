@@ -52,7 +52,7 @@ export const CRITICAL_PATHS = [
 export const HTML_HEURISTICS = {
   'index.html': [
     { id: 'no-meta-refresh', test: (h) => !/http-equiv=["']refresh/i.test(h), hint: 'home canónica, no redirect' },
-    { id: 'grafo-boot', test: (h) => /graphBootstrap\.js/i.test(h), hint: 'monta Grafo B' },
+    { id: 'grafo-boot', test: (h) => /graphBootstrap\.js|graphChunk\.js/i.test(h), hint: 'monta Grafo B' },
     { id: 'json-surfaces', test: (h) => /siteSurface\.js/i.test(h), hint: 'superficies desde JSON' },
     { id: 'shared-shell', test: (h) => /shared-shell\.js/i.test(h), hint: 'nav unificada' },
     { id: 'main-landmark', test: (h) => /id=["']main-content["']|id=["']main["']/i.test(h), hint: 'skip link / landmark' },
