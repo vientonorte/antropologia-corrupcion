@@ -204,8 +204,8 @@ function logisticR(entropy) {
  */
 function logisticRegime(r) {
     if (r < 3.0)    return 'ESTABLE';
-    if (r < 3.449)  return 'BIFURCACIÓN×2';
-    if (r < 3.544)  return 'BIFURCACIÓN×4';
+    if (r < 3.449)  return 'BIFURCACIÓN ×2';
+    if (r < 3.544)  return 'BIFURCACIÓN ×4';
     if (r < 3.57)   return 'CASCADA';
     return 'CAOS';
 }
@@ -1141,7 +1141,10 @@ class SocialField {
                 '<span class="sf-value" id="sf-m-status"></span>' +
               '</div>' +
               '<div class="sf-metric sf-metric--logistic">' +
-                '<span class="sf-label">MAPA LOG\u00CDSTICOx<sub>n+1</sub>=rx<sub>n</sub>(1\u2212x<sub>n</sub>)</span>' +
+                '<span class="sf-label">Mapa log\u00edstico</span>' +
+                '<span class="sf-formula" aria-label="x sub n m\u00e1s uno igual r por x sub n por uno menos x sub n">' +
+                  'x<sub>n+1</sub> = r\u00b7x<sub>n</sub>(1\u2212x<sub>n</sub>)' +
+                '</span>' +
                 '<span class="sf-value" id="sf-m-log-r"></span>' +
                 '<span class="sf-sub" id="sf-m-log-regime"></span>' +
               '</div>' +

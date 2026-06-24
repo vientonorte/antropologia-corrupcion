@@ -19,7 +19,7 @@
     <link href="https://fonts.bunny.net/css?family=newsreader:400,400i,600|inter:400,500,600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles/shared.css?v=20260621e">
     <link rel="stylesheet" href="styles/molecules/bases-consultadas.css?v=20260621">
-    <link rel="stylesheet" href="styles/graph.css?v=20260623">
+    <link rel="stylesheet" href="styles/graph.css?v=20260625">
     <link rel="stylesheet" href="styles/atoms/epistemic-badge.css?v=20260620">
     <link rel="stylesheet" href="styles/molecules/section-header.css?v=20260620">
     <link rel="stylesheet" href="styles/organisms/thesis-graph.css?v=20260620">
@@ -29,6 +29,13 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+        }
+
+        .home-main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
         }
 
         a:hover {
@@ -505,7 +512,9 @@
 </head>
 
 <body>
-    <main class="hero" id="main-content">
+    <a href="#main-content" class="skip-link">Saltar al contenido</a>
+    <main id="main-content" class="home-main">
+    <section class="hero" aria-label="Búsqueda pública">
         <p class="hero-eyebrow">Inicio público · Colectivo Viento Norte</p>
         <h1 class="hero-title">¿Quién es?</h1>
         <p class="hero-subtitle">Contra-archivo del Colectivo Viento Norte: la institución traduce; la traducción falla; el fallo es el sistema. Explora la tesis en el grafo, lee el marco narrativo o inicia una búsqueda.</p>
@@ -520,7 +529,7 @@
 
         <p class="search-sources ca-bases-line" id="search-sources" aria-label="Bases consultadas">Cargando fuentes…</p>
         <p id="data-status" style="font-size:11px;font-family:var(--font-mono);color:var(--dim);margin-top:8px;display:none" aria-live="polite"></p>
-    </main>
+    </section>
 
     <div id="ca-thesis-placeholder"></div>
 
@@ -549,6 +558,7 @@
     </section>
 
     <section id="ca-casos-strip" class="public-resources casos-strip" aria-labelledby="casos-strip-title"></section>
+    </main>
 
     <footer class="site-footer">
         © 2026 Colectivo Viento Norte · Tesis Doctoral en Antropología&nbsp;&nbsp;·&nbsp;&nbsp;<a href="index.html#tesis">Tesis (grafo)</a> · <a href="leer.html">Leer</a>
@@ -561,13 +571,13 @@
     <script defer src="lib/sourceRegistry.js?v=20260621"></script>
     <script defer src="lib/basesConsultadas.js?v=20260621"></script>
     <script defer src="src/tokens.js?v=20260623"></script>
-    <script defer src="src/socialField.js?v=20260623"></script>
+    <script defer src="src/socialField.js?v=20260624"></script>
     <script defer src="vendor/d3.min.js?v=7.9.0"></script>
     <script defer src="src/fieldPhysics.js?v=20260623"></script>
     <script defer src="src/graph.js?v=20260622"></script>
     <script defer src="src/nodeRenderer.js?v=20260621d"></script>
     <script defer src="lib/huellaDigital.js?v=20260621"></script>
-    <script defer src="src/graphBootstrap.js?v=20260623"></script>
+    <script defer src="src/graphBootstrap.js?v=20260625"></script>
     <script defer src="components/atoms/dom.js?v=20260621"></script>
     <script defer src="components/atoms/kicker.js?v=20260620"></script>
     <script defer src="components/molecules/section-header.js?v=20260620"></script>
@@ -586,7 +596,6 @@
             document.head.appendChild(s);
         }());
     </script>
-    <script src="js/nav.js?v=20260419"></script>
 </body>
 
 </html>

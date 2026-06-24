@@ -109,19 +109,36 @@
 
 .ca-toolbar {
     display: flex;
-    align-items: center;
-    gap: 1rem;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.5rem;
     padding: 0.75rem 1.5rem;
     border-bottom: 1px solid var(--color-border);
     background: var(--color-bg);
-    flex-wrap: wrap;
     flex-shrink: 0;
+}
+
+.ca-toolbar__row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.ca-toolbar__row--field {
+    padding-top: 0.5rem;
+    border-top: 1px solid var(--color-border);
+}
+
+.ca-toolbar__row--field .ca-field-controls {
+    width: 100%;
 }
 
 .ca-toolbar__group {
     display: flex;
     align-items: center;
     gap: 0.5rem;
+    flex-wrap: wrap;
 }
 
 .ca-toolbar__label {
@@ -143,20 +160,29 @@
 
 .ca-layer-btn {
     font-family: var(--font-mono);
-    font-size: 0.6rem;
+    font-size: 0.65rem;
     letter-spacing: 0.1em;
     text-transform: uppercase;
     border: 1px solid var(--color-border);
     background: transparent;
     color: var(--color-text-muted);
-    padding: 0.3rem 0.65rem;
+    min-height: var(--touch-min, 44px);
+    padding: 10px 14px;
     cursor: pointer;
     transition: all var(--ca-transition);
     white-space: nowrap;
+    border-radius: 4px;
 }
 
 .ca-layer-btn:hover {
     color: var(--color-text);
+}
+
+.ca-layer-btn:focus-visible,
+.ca-friction-btn:focus-visible,
+.ca-field-btn:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
 }
 
 .ca-layer-btn[data-layer="etica"].active {
@@ -192,15 +218,17 @@
 
 .ca-friction-btn {
     font-family: var(--font-mono);
-    font-size: 0.58rem;
+    font-size: 0.65rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
     border: 1px solid var(--color-border);
     background: transparent;
     color: var(--color-text-muted);
-    padding: 0.3rem 0.6rem;
+    min-height: var(--touch-min, 44px);
+    padding: 10px 14px;
     cursor: pointer;
     transition: all var(--ca-transition);
+    border-radius: 4px;
 }
 
 .ca-friction-btn:hover {
@@ -1203,15 +1231,33 @@
         --ca-panel-width: 100%;
     }
     .ca-toolbar {
-        padding: 0.6rem 1rem;
-        gap: 0.5rem;
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-        scrollbar-width: none;
-        flex-wrap: nowrap;
+        padding: 0.75rem 1rem;
+        gap: 0.65rem;
     }
-    .ca-toolbar::-webkit-scrollbar {
-        display: none;
+    .ca-toolbar__row {
+        width: 100%;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.5rem;
+    }
+    .ca-toolbar__row--field {
+        padding-top: 0.65rem;
+    }
+    .ca-toolbar__group {
+        width: 100%;
+        flex-wrap: wrap;
+        align-items: flex-start;
+        gap: 0.4rem;
+    }
+    .ca-toolbar__label {
+        flex: 0 0 100%;
+    }
+    .ca-layer-filter,
+    .ca-friction-filter,
+    .ca-field-filter {
+        flex: 1 1 100%;
+        flex-wrap: wrap;
+        gap: 6px;
     }
     .ca-toolbar__sep {
         display: none;
@@ -1327,7 +1373,9 @@
     .ca-panel,
     .ca-preview,
     .ca-layer-circle,
-    .ca-link {
+    .ca-link,
+    .sf-hud-dock,
+    .sf-hud {
         transition: none !important;
     }
     .friction-field-canvas {
@@ -1352,17 +1400,25 @@
     gap: 2px;
 }
 
+.ca-field-filter {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+
 .ca-field-btn {
     font-family: var(--font-mono);
-    font-size: 0.56rem;
+    font-size: 0.65rem;
     letter-spacing: 0.06em;
     border: 1px solid var(--color-border);
     background: transparent;
     color: var(--color-text-muted);
-    padding: 0.25rem 0.5rem;
+    min-height: var(--touch-min, 44px);
+    padding: 10px 14px;
     cursor: pointer;
     transition: all var(--ca-transition);
     white-space: nowrap;
+    border-radius: 4px;
 }
 
 .ca-field-btn:hover {
@@ -1673,13 +1729,26 @@
     pointer-events: none;
 }
 
-/* Panel de métricas termodinámicas (HUD) — esquina inferior izquierda */
-.sf-hud {
+/* Panel de métricas termodinámicas (HUD) */
+.sf-hud-dock {
     position: absolute;
-    left: 0.75rem;
-    bottom: 0.75rem;
+    left: 0.5rem;
+    right: 0.5rem;
+    bottom: 0.5rem;
     z-index: 4;
-    max-width: min(90%, 560px);
+    pointer-events: none;
+}
+
+.sf-hud-dock__toggle {
+    display: none;
+}
+
+.sf-hud {
+    position: relative;
+    left: auto;
+    bottom: auto;
+    z-index: 4;
+    max-width: 100%;
     padding: 0.6rem 0.85rem;
     background: rgba(10, 12, 14, 0.78);
     backdrop-filter: blur(4px);
@@ -1765,8 +1834,22 @@
     transition: width 0.6s ease, background 0.6s ease;
 }
 
+.sf-metric--logistic {
+    min-width: 140px;
+}
+
 .sf-metric--logistic .sf-label {
-    font-size: 0.6rem;
+    font-size: 9px;
+    letter-spacing: 0.08em;
+}
+
+.sf-formula {
+    font-family: var(--font-mono), "SF Mono", "Fira Code", monospace;
+    font-size: 11px;
+    line-height: 1.4;
+    color: rgba(200, 169, 110, 0.55);
+    margin-top: 2px;
+    word-break: break-word;
 }
 
 .sf-status--stable {
@@ -1796,15 +1879,154 @@
     }
 }
 
+/* Desktop — panel lateral colapsable */
+@media (min-width: 769px) {
+    .sf-hud-dock {
+        left: 0;
+        right: auto;
+        top: 0;
+        bottom: 0;
+        width: 248px;
+        display: flex;
+        flex-direction: row;
+        align-items: stretch;
+        pointer-events: auto;
+        transition: width var(--ca-transition);
+        background: rgba(10, 12, 14, 0.55);
+        border-right: 1px solid rgba(200, 169, 110, 0.14);
+        backdrop-filter: blur(6px);
+    }
+
+    .sf-hud-dock.is-collapsed {
+        width: 48px;
+    }
+
+    .sf-hud-dock__toggle {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 6px;
+        flex-shrink: 0;
+        width: 48px;
+        min-height: var(--touch-min, 44px);
+        padding: 12px 6px;
+        border: none;
+        border-right: 1px solid rgba(200, 169, 110, 0.12);
+        background: rgba(200, 169, 110, 0.06);
+        color: rgba(200, 169, 110, 0.85);
+        font-family: var(--font-mono);
+        font-size: 0.58rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: background var(--ca-transition), color var(--ca-transition);
+    }
+
+    .sf-hud-dock__toggle:hover {
+        background: rgba(200, 169, 110, 0.12);
+        color: var(--color-accent);
+    }
+
+    .sf-hud-dock__toggle:focus-visible {
+        outline: 2px solid var(--color-accent);
+        outline-offset: -2px;
+    }
+
+    .sf-hud-dock__toggle-icon {
+        font-size: 1rem;
+        line-height: 1;
+    }
+
+    .sf-hud-dock__toggle-text {
+        writing-mode: vertical-rl;
+        text-orientation: mixed;
+        transform: rotate(180deg);
+    }
+
+    .sf-hud-dock.is-collapsed .sf-hud-dock__toggle-text {
+        display: none;
+    }
+
+    .sf-hud {
+        flex: 1;
+        min-width: 0;
+        max-width: none;
+        overflow-y: auto;
+        overflow-x: hidden;
+        border: none;
+        border-radius: 0;
+        background: transparent;
+        pointer-events: auto;
+        opacity: 1;
+        transition: opacity var(--ca-transition);
+    }
+
+    .sf-hud-dock.is-collapsed .sf-hud {
+        opacity: 0;
+        visibility: hidden;
+        overflow: hidden;
+        width: 0;
+        padding: 0;
+    }
+
+    .sf-metrics--enhanced {
+        flex-direction: column;
+        gap: 14px;
+    }
+
+    .sf-metric {
+        min-width: 0;
+    }
+
+    .sf-metric--entropy {
+        min-width: 0;
+    }
+
+    .ca-legend {
+        bottom: auto;
+        top: 0.75rem;
+        left: auto;
+        right: 0.75rem;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        align-items: center;
+        padding: 0.5rem 0.75rem;
+    }
+
+    .ca-legend__title {
+        margin-bottom: 0;
+        margin-right: 0.25rem;
+    }
+
+    .ca-legend__item {
+        margin-bottom: 0;
+    }
+}
+
 @media (max-width: 768px) {
     .sf-hud {
-        left: 0.5rem;
-        right: 0.5rem;
-        bottom: 0.5rem;
-        max-width: none;
+        padding: 0.5rem 0.65rem;
     }
-    .sf-metrics {
-        gap: 12px;
+    .sf-metrics--enhanced {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px 12px;
+    }
+    .sf-metric--entropy,
+    .sf-metric--logistic {
+        grid-column: 1 / -1;
+    }
+    .sf-metric {
+        min-width: 0;
+    }
+    .sf-value {
+        font-size: 16px;
+    }
+    .sf-formula {
+        font-size: 10px;
     }
 }
 

@@ -21,40 +21,43 @@ const GraphBootstrap = (function () {
 
     const GRAPH_SHELL_HTML = `
     <div class="ca-toolbar" role="toolbar" aria-label="Controles del grafo de fricción">
-      <div class="ca-toolbar__group">
-        <span class="ca-toolbar__label" id="ca-layer-label">Capa</span>
-        <div class="ca-layer-filter" role="group" aria-labelledby="ca-layer-label">
-          <button class="ca-layer-btn active" data-layer="all" aria-pressed="true">Todas</button>
-          <button class="ca-layer-btn" data-layer="etica" aria-pressed="false">◎ Ética</button>
-          <button class="ca-layer-btn" data-layer="institucional" aria-pressed="false">▣ Institucional</button>
-          <button class="ca-layer-btn" data-layer="material" aria-pressed="false">◈ Material</button>
+      <div class="ca-toolbar__row ca-toolbar__row--filters">
+        <div class="ca-toolbar__group">
+          <span class="ca-toolbar__label" id="ca-layer-label">Capa</span>
+          <div class="ca-layer-filter" role="group" aria-labelledby="ca-layer-label">
+            <button class="ca-layer-btn active" data-layer="all" aria-pressed="true">Todas</button>
+            <button class="ca-layer-btn" data-layer="etica" aria-pressed="false">◎ Ética</button>
+            <button class="ca-layer-btn" data-layer="institucional" aria-pressed="false">▣ Institucional</button>
+            <button class="ca-layer-btn" data-layer="material" aria-pressed="false">◈ Material</button>
+          </div>
+        </div>
+        <div class="ca-toolbar__sep" aria-hidden="true"></div>
+        <div class="ca-toolbar__group">
+          <span class="ca-toolbar__label" id="ca-friction-label">Fricción</span>
+          <div class="ca-friction-filter" role="group" aria-labelledby="ca-friction-label">
+            <button class="ca-friction-btn active" data-tipo="all" aria-pressed="true">Todas</button>
+            <button class="ca-friction-btn" data-tipo="politica" aria-pressed="false">Política</button>
+            <button class="ca-friction-btn" data-tipo="semantica" aria-pressed="false">Semántica</button>
+            <button class="ca-friction-btn" data-tipo="tecnica" aria-pressed="false">Técnica</button>
+          </div>
+        </div>
+        <div class="ca-toolbar__sep" aria-hidden="true"></div>
+        <div class="ca-intensity-legend" aria-label="Leyenda de intensidad de fricción">
+          <span class="ca-intensity-legend__label">baja</span>
+          <div class="ca-intensity-legend__bar" aria-hidden="true"></div>
+          <span class="ca-intensity-legend__label">crítica</span>
         </div>
       </div>
-      <div class="ca-toolbar__sep" aria-hidden="true"></div>
-      <div class="ca-toolbar__group">
-        <span class="ca-toolbar__label" id="ca-friction-label">Fricción</span>
-        <div class="ca-friction-filter" role="group" aria-labelledby="ca-friction-label">
-          <button class="ca-friction-btn active" data-tipo="all" aria-pressed="true">Todas</button>
-          <button class="ca-friction-btn" data-tipo="politica" aria-pressed="false">Política</button>
-          <button class="ca-friction-btn" data-tipo="semantica" aria-pressed="false">Semántica</button>
-          <button class="ca-friction-btn" data-tipo="tecnica" aria-pressed="false">Técnica</button>
-        </div>
-      </div>
-      <div class="ca-toolbar__sep" aria-hidden="true"></div>
-      <div class="ca-intensity-legend" aria-label="Leyenda de intensidad de fricción">
-        <span class="ca-intensity-legend__label">baja</span>
-        <div class="ca-intensity-legend__bar" aria-hidden="true"></div>
-        <span class="ca-intensity-legend__label">crítica</span>
-      </div>
-      <div class="ca-toolbar__sep" aria-hidden="true"></div>
-      <div class="ca-toolbar__group ca-field-controls">
-        <span class="ca-toolbar__label" id="ca-field-label">Campo</span>
-        <div role="group" aria-labelledby="ca-field-label">
-          <button class="ca-field-btn active" data-field="all" aria-pressed="true">⊕ Todo</button>
-          <button class="ca-field-btn active" data-field="potential" aria-pressed="true">Φ Potencial</button>
-          <button class="ca-field-btn active" data-field="streamlines" aria-pressed="true">∇ Líneas</button>
-          <button class="ca-field-btn active" data-field="particles" aria-pressed="true">⚡ Energía</button>
-          <button class="ca-field-btn active" data-field="entropy" aria-pressed="true">S Entropía</button>
+      <div class="ca-toolbar__row ca-toolbar__row--field">
+        <div class="ca-toolbar__group ca-field-controls">
+          <span class="ca-toolbar__label" id="ca-field-label">Campo</span>
+          <div class="ca-field-filter" role="group" aria-labelledby="ca-field-label">
+            <button class="ca-field-btn active" data-field="all" aria-pressed="true" aria-label="Mostrar todo el campo">⊕ Todo</button>
+            <button class="ca-field-btn active" data-field="potential" aria-pressed="true" aria-label="Campo de potencial">Φ Potencial</button>
+            <button class="ca-field-btn active" data-field="streamlines" aria-pressed="true" aria-label="Líneas de flujo">∇ Líneas</button>
+            <button class="ca-field-btn active" data-field="particles" aria-pressed="true" aria-label="Partículas de energía">⚡ Energía</button>
+            <button class="ca-field-btn active" data-field="entropy" aria-pressed="true" aria-label="Entropía social">S Entropía</button>
+          </div>
         </div>
       </div>
     </div>
@@ -75,8 +78,16 @@ const GraphBootstrap = (function () {
             <div class="ca-legend__dot" style="background:#7a9e6e"></div><span>Material</span>
           </div>
         </aside>
-        <div class="sf-hud" id="ca-sf-hud" role="status" aria-live="polite" aria-atomic="false"
-          aria-label="Métricas termodinámicas del campo de entropía social"></div>
+        <aside class="sf-hud-dock" id="ca-sf-hud-dock" aria-label="Panel de métricas termodinámicas">
+          <button type="button" class="sf-hud-dock__toggle" id="ca-sf-hud-toggle"
+            aria-expanded="true" aria-controls="ca-sf-hud"
+            aria-label="Mostrar u ocultar panel de entropía">
+            <span class="sf-hud-dock__toggle-icon" aria-hidden="true">S</span>
+            <span class="sf-hud-dock__toggle-text">Entropía</span>
+          </button>
+          <div class="sf-hud" id="ca-sf-hud" role="status" aria-live="polite" aria-atomic="false"
+            aria-label="Métricas termodinámicas del campo de entropía social"></div>
+        </aside>
       </div>
       <aside class="ca-panel" id="ca-panel" aria-label="Detalle del caso" aria-hidden="true"></aside>
     </div>`;
@@ -144,8 +155,34 @@ const GraphBootstrap = (function () {
             entropyBtn.classList.toggle('active', visible);
             entropyBtn.setAttribute('aria-pressed', visible ? 'true' : 'false');
         }
-        const hud = document.getElementById('ca-sf-hud');
-        if (hud) hud.style.display = visible ? '' : 'none';
+        const dock = document.getElementById('ca-sf-hud-dock');
+        if (dock) dock.style.display = visible ? '' : 'none';
+    }
+
+    function setupHudDock() {
+        const dock = document.getElementById('ca-sf-hud-dock');
+        const toggle = document.getElementById('ca-sf-hud-toggle');
+        if (!dock || !toggle) return;
+
+        let collapsed = false;
+        try {
+            collapsed = sessionStorage.getItem('ca-sf-hud-collapsed') === '1';
+        } catch (_) {
+            collapsed = false;
+        }
+
+        if (collapsed) {
+            dock.classList.add('is-collapsed');
+            toggle.setAttribute('aria-expanded', 'false');
+        }
+
+        toggle.addEventListener('click', () => {
+            const isCollapsed = dock.classList.toggle('is-collapsed');
+            toggle.setAttribute('aria-expanded', isCollapsed ? 'false' : 'true');
+            try {
+                sessionStorage.setItem('ca-sf-hud-collapsed', isCollapsed ? '1' : '0');
+            } catch (_) {}
+        });
     }
 
     function setupControls() {
@@ -394,6 +431,7 @@ const GraphBootstrap = (function () {
             }
 
             setupControls();
+            setupHudDock();
 
             if (options.showModeToggle) {
                 setupModeToggle();

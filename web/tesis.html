@@ -64,7 +64,8 @@
 }
 
 .tesis-filter-btn {
-  padding: 6px 14px;
+  min-height: var(--touch-min, 44px);
+  padding: 10px 16px;
   border-radius: 20px;
   font-size: 12px;
   font-family: var(--font-mono);
@@ -211,7 +212,8 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 8px 16px;
+  min-height: var(--touch-min, 44px);
+  padding: 10px 20px;
   background: var(--etica);
   color: #000;
   font-size: 13px;
@@ -248,6 +250,9 @@
 </head>
 <body>
 
+<a href="#main-content" class="skip-link">Saltar al contenido</a>
+
+<main id="main-content">
 <!-- ════════════════════ HERO ════════════════════ -->
 <section class="tesis-hero">
   <p class="tesis-eyebrow">Colectivo Viento Norte · 2024–2026</p>
@@ -259,7 +264,7 @@
 <div class="access-banner" id="access-banner">
   <div class="access-card">
     <p class="access-info">Navegas como <strong>visitante</strong>. Inicia sesión para desbloquear el acceso completo a las publicaciones.</p>
-    <a href="login.html" class="access-cta">Acceder con Passkey →</a>
+    <a href="privado-login.html" class="access-cta">Acceder con Passkey →</a>
   </div>
 </div>
 
@@ -275,13 +280,14 @@
 </div>
 
 <!-- ════════════════════ GRID ════════════════════ -->
-<main class="tesis-main" id="main-content">
+<div class="tesis-main">
   <div class="pub-grid" id="pub-grid">
     <!-- Loading skeleton -->
     <div class="pub-loading" id="pub-loading" aria-live="polite">
       <p style="color:var(--muted);text-align:center;padding:48px 0;font-size:14px">Cargando publicaciones…</p>
     </div>
   </div>
+</div>
 </main>
 
 <!-- ════════════════════ FOOTER ════════════════════ -->
@@ -334,7 +340,7 @@
     grid.innerHTML = filtered.map(function (p) {
       var locked = !isAuthenticated && p.nivel !== 'publico';
       var unavail = p.disponible === false;
-      var href = locked ? 'login.html' : (unavail ? '#' : p.href);
+      var href = locked ? 'privado-login.html' : (unavail ? '#' : p.href);
       var actionText = locked ? 'Requiere acceso →' : (unavail ? 'Próximamente' : 'Abrir →');
       var ariaLabel = locked ? ' aria-label="' + esc(p.titulo) + ' — requiere autenticación"'
         : unavail ? ' aria-label="' + esc(p.titulo) + ' — próximamente disponible"' : '';
@@ -437,6 +443,5 @@
 })();
 </script>
 <script>(function(){if(window.__CA_UNIFIED_SHELL_LOADER__){return;}window.__CA_UNIFIED_SHELL_LOADER__=true;var s=document.createElement('script');var b=location.pathname.indexOf('/antropologia-corrupcion/')===0?'/antropologia-corrupcion/':'/';s.src=b+'shared-shell.js';s.defer=true;document.head.appendChild(s);}());</script>
-<script src="js/nav.js?v=20260419"></script>
 </body>
 </html>

@@ -568,7 +568,7 @@
 
         pruneLegacyShell();
 
-        if (!document.querySelector('.ca-skip-link')) {
+        if (!document.querySelector('.ca-skip-link') && !document.querySelector('.skip-link')) {
             var skip = document.createElement('a');
             skip.className = 'ca-skip-link';
             skip.href = '#main-content';
