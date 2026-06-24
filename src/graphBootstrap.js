@@ -404,23 +404,36 @@ const GraphBootstrap = (function () {
             });
 
             if (window.SocialField && container) {
-                const fuentes = await loadFuentes();
                 const hudEl = document.getElementById('ca-sf-hud');
                 const prefersReducedMotion =
                     window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+                const canvasEl = document.getElementById('ca-graph-canvas');
+                const canvasRect = canvasEl ? canvasEl.getBoundingClientRect() : null;
+                const inView = canvasRect
+                    && canvasRect.top < window.innerHeight
+                    && canvasRect.bottom > 0;
 
-                STATE.socialField = new window.SocialField({
-                    container,
-                    nodes: STATE.graph.sim.nodes,
-                    links: STATE.graph.sim.links,
-                    metricsEl: hudEl,
-                    fuentes,
-                });
+                const attachSocialField = async function () {
+                    const fuentes = await loadFuentes();
+                    STATE.socialField = new window.SocialField({
+                        container,
+                        nodes: STATE.graph.sim.nodes,
+                        links: STATE.graph.sim.links,
+                        metricsEl: hudEl,
+                        fuentes,
+                    });
 
-                STATE.socialField.setVisible(true);
-                syncEntropyUi(true);
-                if (prefersReducedMotion) {
-                    STATE.socialField.renderFrame();
+                    STATE.socialField.setVisible(inView);
+                    syncEntropyUi(true);
+                    if (prefersReducedMotion) {
+                        STATE.socialField.renderFrame();
+                    }
+                };
+
+                if (typeof requestIdleCallback === 'function') {
+                    requestIdleCallback(function () { attachSocialField(); }, { timeout: 1200 });
+                } else {
+                    setTimeout(attachSocialField, 80);
                 }
 
                 let resizeRaf = null;

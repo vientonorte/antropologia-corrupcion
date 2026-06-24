@@ -22,7 +22,8 @@
     <link rel="stylesheet" href="styles/graph.css?v=20260625">
     <link rel="stylesheet" href="styles/atoms/epistemic-badge.css?v=20260620">
     <link rel="stylesheet" href="styles/molecules/section-header.css?v=20260620">
-    <link rel="stylesheet" href="styles/organisms/thesis-graph.css?v=20260626">
+    <link rel="stylesheet" href="styles/organisms/home-surface.css?v=20260627">
+    <link rel="stylesheet" href="styles/organisms/thesis-graph.css?v=20260627">
     <style>
         body {
             line-height: 1.65;
@@ -50,15 +51,8 @@
             opacity: 1;
         }
 
-        .hero {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 64px 24px 48px;
-            text-align: center;
-            min-height: 60vh;
+        #ca-thesis-placeholder {
+            width: 100%;
         }
 
         .hero-eyebrow {
@@ -160,10 +154,6 @@
 
         .results-section {
             display: none;
-            max-width: 720px;
-            width: 100%;
-            margin: 0 auto;
-            padding: 0 24px 64px;
         }
 
         .results-section.active {
@@ -316,26 +306,6 @@
             font-size: 13px;
         }
 
-        .public-resources {
-            max-width: 960px;
-            width: 100%;
-            margin: 0 auto 64px;
-            padding: 0 24px;
-        }
-
-        .public-resources h2 {
-            font-size: 20px;
-            margin-bottom: 10px;
-            color: var(--text);
-        }
-
-        .public-resources p {
-            font-size: 14px;
-            color: var(--muted);
-            margin-bottom: 20px;
-            max-width: 70ch;
-        }
-
         .resource-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -484,11 +454,6 @@
                 font-size: 12px;
             }
 
-            .hero {
-                padding: 48px 16px 32px;
-                min-height: 50vh;
-            }
-
             .hero-subtitle {
                 font-size: 15px;
             }
@@ -496,12 +461,6 @@
             .search-input {
                 font-size: 16px;
                 padding: 14px 16px;
-            }
-
-            .results-section,
-            .public-resources {
-                padding-left: 16px;
-                padding-right: 16px;
             }
 
             .result-card {
@@ -514,50 +473,54 @@
 <body>
     <a href="#main-content" class="skip-link">Saltar al contenido</a>
     <main id="main-content" class="home-main">
-    <section class="hero" aria-label="Búsqueda pública">
-        <p class="hero-eyebrow">Inicio público · Colectivo Viento Norte</p>
-        <h1 class="hero-title">¿Quién es?</h1>
-        <p class="hero-subtitle">Contra-archivo del Colectivo Viento Norte: la institución traduce; la traducción falla; el fallo es el sistema. Explora la tesis en el grafo, lee el marco narrativo o inicia una búsqueda.</p>
-        <p style="font-size:12px;color:var(--dim);font-family:var(--font-mono);max-width:480px;line-height:1.6;margin-bottom:32px;margin-top:-20px">
-            Fricción institucional: la distancia entre lo que una institución declara y lo que los datos oficiales registran.
-        </p>
+    <section class="ca-surface ca-surface--hero" aria-label="Búsqueda pública">
+        <div class="ca-surface__prose">
+            <p class="hero-eyebrow">Inicio público · Colectivo Viento Norte</p>
+            <h1 class="hero-title">¿Quién es?</h1>
+            <p class="hero-subtitle">Contra-archivo del Colectivo Viento Norte: la institución traduce; la traducción falla; el fallo es el sistema. Explora la tesis en el grafo, lee el marco narrativo o inicia una búsqueda.</p>
+            <p class="hero-lead">Fricción institucional: la distancia entre lo que una institución declara y lo que los datos oficiales registran.</p>
 
-        <div class="search-wrap" id="search-wrap">
-            <input type="text" class="search-input" id="search-input" placeholder="Nombre, institución o ley para iniciar..." autocomplete="off" spellcheck="false" aria-label="Iniciar búsqueda pública">
-            <div class="suggest-dropdown" id="suggest-dropdown"></div>
+            <div class="search-wrap" id="search-wrap">
+                <input type="text" class="search-input" id="search-input" placeholder="Nombre, institución o ley para iniciar..." autocomplete="off" spellcheck="false" aria-label="Iniciar búsqueda pública">
+                <div class="suggest-dropdown" id="suggest-dropdown"></div>
+            </div>
+
+            <p class="search-sources ca-bases-line" id="search-sources" aria-label="Bases consultadas">Cargando fuentes…</p>
+            <p id="data-status" style="font-size:11px;font-family:var(--font-mono);color:var(--dim);margin-top:8px;display:none" aria-live="polite"></p>
         </div>
-
-        <p class="search-sources ca-bases-line" id="search-sources" aria-label="Bases consultadas">Cargando fuentes…</p>
-        <p id="data-status" style="font-size:11px;font-family:var(--font-mono);color:var(--dim);margin-top:8px;display:none" aria-live="polite"></p>
     </section>
 
     <div id="ca-thesis-placeholder"></div>
 
-    <section class="results-section" id="results-section">
-        <div class="results-header">
-            <div class="results-title">Resultados de onboarding: <strong id="results-count">0</strong></div>
-            <div class="results-query" id="results-query"></div>
-        </div>
-        <div id="results-list"></div>
-        <div class="more-results" id="more-results">
-            <p>Hay más resultados disponibles para profundizar en búsqueda avanzada.</p>
-            <a href="buscador.html">Ir a búsqueda avanzada →</a>
+    <section class="ca-surface ca-surface--results results-section" id="results-section">
+        <div class="ca-surface__prose">
+            <div class="results-header">
+                <div class="results-title">Resultados de onboarding: <strong id="results-count">0</strong></div>
+                <div class="results-query" id="results-query"></div>
+            </div>
+            <div id="results-list"></div>
+            <div class="more-results" id="more-results">
+                <p>Hay más resultados disponibles para profundizar en búsqueda avanzada.</p>
+                <a href="buscador.html">Ir a búsqueda avanzada →</a>
+            </div>
         </div>
     </section>
 
-    <section id="ca-narrative-teaser" class="public-resources narrative-teaser" aria-labelledby="narrative-teaser-title">
+    <section id="ca-narrative-teaser" class="ca-surface ca-surface--band narrative-teaser" aria-labelledby="narrative-teaser-title">
         <p class="resource-meta">Cargando marco narrativo…</p>
     </section>
 
-    <section class="public-resources" aria-labelledby="public-resources-title">
-        <h2 id="public-resources-title">Fichas y archivo de citas</h2>
-        <p>Recursos publicables desde <code>archivo-index.json</code> e inventario de superficies. El grid evoluciona con el corpus editorial sin duplicar HTML.</p>
-        <div class="resource-grid" id="ca-resource-mount">
-            <p class="resource-meta">Cargando índice editorial…</p>
+    <section class="ca-surface ca-surface--band" aria-labelledby="public-resources-title">
+        <div class="ca-surface__prose">
+            <h2 id="public-resources-title">Fichas y archivo de citas</h2>
+            <p class="section-lead">Recursos publicables desde <code>archivo-index.json</code> e inventario de superficies. El grid evoluciona con el corpus editorial sin duplicar HTML.</p>
+            <div class="resource-grid" id="ca-resource-mount">
+                <p class="resource-meta">Cargando índice editorial…</p>
+            </div>
         </div>
     </section>
 
-    <section id="ca-casos-strip" class="public-resources casos-strip" aria-labelledby="casos-strip-title"></section>
+    <section id="ca-casos-strip" class="ca-surface ca-surface--band casos-strip" aria-labelledby="casos-strip-title"></section>
     </main>
 
     <footer class="site-footer">
@@ -571,20 +534,20 @@
     <script defer src="lib/sourceRegistry.js?v=20260621"></script>
     <script defer src="lib/basesConsultadas.js?v=20260621"></script>
     <script defer src="src/tokens.js?v=20260623"></script>
-    <script defer src="src/socialField.js?v=20260624"></script>
+    <script defer src="src/socialField.js?v=20260627"></script>
     <script defer src="vendor/d3.min.js?v=7.9.0"></script>
-    <script defer src="src/fieldPhysics.js?v=20260623"></script>
+    <script defer src="src/fieldPhysics.js?v=20260627"></script>
     <script defer src="src/graph.js?v=20260622"></script>
     <script defer src="src/nodeRenderer.js?v=20260621d"></script>
     <script defer src="lib/huellaDigital.js?v=20260621"></script>
-    <script defer src="src/graphBootstrap.js?v=20260626"></script>
+    <script defer src="src/graphBootstrap.js?v=20260627"></script>
     <script defer src="components/atoms/dom.js?v=20260621"></script>
     <script defer src="components/atoms/kicker.js?v=20260620"></script>
     <script defer src="components/molecules/section-header.js?v=20260620"></script>
-    <script defer src="components/organisms/thesis-section.js?v=20260626"></script>
-    <script defer src="lib/siteSurface.js?v=20260621c"></script>
+    <script defer src="components/organisms/thesis-section.js?v=20260627"></script>
+    <script defer src="lib/siteSurface.js?v=20260627"></script>
     <script defer src="pages/onboarding-search.js?v=20260621"></script>
-    <script defer src="pages/home-boot.js?v=20260621"></script>
+    <script defer src="pages/home-boot.js?v=20260627"></script>
     <script>
         (function() {
             if (window.__CA_UNIFIED_SHELL_LOADER__) return;

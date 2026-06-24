@@ -42,7 +42,11 @@
     function onReady() {
         injectThesisSection();
         bootGraph();
-        bootSurfaces();
+        if (typeof requestIdleCallback === 'function') {
+            requestIdleCallback(bootSurfaces, { timeout: 2000 });
+        } else {
+            setTimeout(bootSurfaces, 120);
+        }
     }
 
     if (document.readyState === 'loading') {

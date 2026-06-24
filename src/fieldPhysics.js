@@ -413,9 +413,18 @@ class FrictionField {
 
     /* ─── PARTÍCULAS DE ENERGÍA ─── */
 
+    _computePerfScale() {
+        const area = this.width * this.height;
+        if (area > 1600000) return 0.45;
+        if (area > 1000000) return 0.6;
+        if (area > 700000) return 0.75;
+        return 1;
+    }
+
     _initParticles() {
         this.particles = [];
-        for (let i = 0; i < FIELD_CONFIG.PARTICLE_COUNT; i++) {
+        const count = Math.max(12, Math.round(FIELD_CONFIG.PARTICLE_COUNT * this._computePerfScale()));
+        for (let i = 0; i < count; i++) {
             this.particles.push(this._resetParticle({}));
         }
     }

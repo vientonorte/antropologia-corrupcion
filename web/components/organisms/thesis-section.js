@@ -12,7 +12,7 @@
             '<div class="ca-thesis__prose">' +
             sectionHeader.render({
                 id: 'tesis-title',
-                kicker: 'Colectivo Viento Norte · Instrumento analítico · v3',
+                kicker: 'Colectivo Viento Norte · Instrumento analítico · v3.1',
                 title: 'La tesis en movimiento',
                 lead:
                     'Fricción epistemológica modelada sobre casos reales: I = V/R, entropía social y transacciones entre capas ética, institucional y material. El motor no resuelve contradicciones — las hace explorables.',

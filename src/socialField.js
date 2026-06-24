@@ -324,8 +324,8 @@ class SocialField {
         // Pre-semillar entropía desde datos reales de fuentes-oficiales
         if (this._fuentes.length > 0) this._preSeedFromFuentes();
 
-        // Inicializar agentes (reduce en pantallas pequeñas para perf)
-        this._agentScale = this.width < 500 ? 0.5 : 1;
+        // Inicializar agentes (escala por área de canvas — menos carga en desktop ancho)
+        this._agentScale = this._computeAgentScale();
         this._initAgents();
 
         // Loop
@@ -431,6 +431,15 @@ class SocialField {
     }
 
     /* ─── AGENTES (ciudadanos/trámites) ─── */
+
+    _computeAgentScale() {
+        const area = this.width * this.height;
+        if (area > 1600000) return 0.4;
+        if (area > 1000000) return 0.55;
+        if (area > 700000) return 0.7;
+        if (this.width < 500) return 0.5;
+        return 0.85;
+    }
 
     _initAgents() {
         this.agents = [];
@@ -767,8 +776,8 @@ class SocialField {
 
             this._render();
 
-            // Actualizar métricas cada 20 frames
-            if (this._frameCount % 30 === 0) this._updateMetrics();
+            // Actualizar métricas (throttle — DOM + sparkline)
+            if (this._frameCount % 45 === 0) this._updateMetrics();
 
             this.animFrame = requestAnimationFrame(frame);
         };
