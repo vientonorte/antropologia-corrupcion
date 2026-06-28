@@ -308,6 +308,7 @@ require('./huellaDigitalLib.test.js')(describe, it, assert, assertEqual, assertD
 require('./circuitDeepLink.test.js')(describe, it, assert, assertEqual);
 require('./qaLiveHeuristics.test.js')(describe, it, assert, assertEqual);
 require('./homePublicE2E.test.js')(describe, it, assert, assertEqual);
+require('./sprintGatesQA.test.js')(describe, it, assert, assertEqual);
 require('./atomicDesign.test.js')(describe, it, assert, assertEqual);
 require('./archivoIndex.test.js')(describe, it, assert, assertEqual);
 require('./casoPublico.test.js')(describe, it, assert, assertEqual);

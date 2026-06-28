@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "version": "2026-06-21",
+    "version": "2026-06-28",
     "description": "Registro evolutivo Atomic Design + gates DevOps E2E del sitio público",
     "doc": "docs/INVENTARIO_CONTENIDOS_IA.md",
     "ia_inventario": "data/ia-inventario.json"
