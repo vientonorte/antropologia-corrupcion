@@ -32,7 +32,8 @@
             'aria-label="Ir a la búsqueda pública">' +
             '<span class="ca-hero-paths__kicker">Exploración</span>' +
             '<span class="ca-hero-paths__title">Buscar actor o ley</span>' +
-            '<span class="ca-hero-paths__meta">Fuentes oficiales chilenas · score de fricción</span>' +
+            '<span class="ca-hero-paths__meta">Fuentes oficiales chilenas · score de fricción · ' +
+            '<a href="buscador.html" class="ca-hero-paths__link">avanzada</a></span>' +
             '</button>' +
             '</nav>'
         );
@@ -43,7 +44,8 @@
 
         var buscarBtn = container.querySelector('[data-ca-path="buscar"]');
         if (buscarBtn) {
-            buscarBtn.addEventListener('click', function () {
+            buscarBtn.addEventListener('click', function (e) {
+                if (e.target && e.target.closest && e.target.closest('.ca-hero-paths__link')) return;
                 var input = document.getElementById('search-input');
                 if (input) {
                     input.focus({ preventScroll: false });
@@ -51,6 +53,12 @@
                 }
             });
         }
+
+        container.querySelectorAll('.ca-hero-paths__link').forEach(function (link) {
+            link.addEventListener('click', function (e) {
+                e.stopPropagation();
+            });
+        });
 
         var grafoLink = container.querySelector('[data-ca-path="grafo"]');
         if (grafoLink) {

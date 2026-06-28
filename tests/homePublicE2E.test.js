@@ -78,11 +78,13 @@ module.exports = function (describe, it, assert, assertEqual) {
             assert(!/http-equiv=["']refresh/i.test(html), 'leer no es redirect');
         });
 
-        it('buscador.html recibe deep-link desde chips y demo', function () {
+        it('buscador.html recibe deep-link desde chips, demo y onboarding', function () {
             var bases = readWeb('lib/basesConsultadas.js');
             var demo = readWeb('components/organisms/friction-demo.js');
+            var onboarding = readWeb('pages/onboarding-search.js');
             assert(bases.indexOf('buscador.html?fuente=') !== -1, 'chip → buscador fuente');
             assert(demo.indexOf('buscador.html?q=') !== -1, 'demo → buscador query');
+            assert(onboarding.indexOf('buscador.html?q=') !== -1, 'onboarding → buscador query');
         });
     });
 

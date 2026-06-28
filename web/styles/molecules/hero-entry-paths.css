@@ -59,6 +59,16 @@
     line-height: 1.45;
 }
 
+.ca-hero-paths__link {
+    color: var(--etica);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+
+.ca-hero-paths__link:hover {
+    opacity: 0.85;
+}
+
 @media (max-width: 720px) {
     .ca-hero-paths {
         grid-template-columns: 1fr;

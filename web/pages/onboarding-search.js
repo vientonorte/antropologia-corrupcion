@@ -280,10 +280,17 @@
                 '<p class="result-description">' +
                 escapeHtml(desc) +
                 '</p>' +
-                '<a class="result-cta" href="buscador.html">Profundizar en búsqueda avanzada →</a>';
+                '<a class="result-cta" href="buscador.html?q=' +
+                encodeURIComponent(reg.titulo || query) +
+                '">Profundizar en búsqueda avanzada →</a>';
 
             resultsList.appendChild(card);
         });
+
+        var moreLink = moreResults ? moreResults.querySelector('a') : null;
+        if (moreLink) {
+            moreLink.href = 'buscador.html?q=' + encodeURIComponent(query);
+        }
 
         moreResults.classList.toggle('active', scored.length > MAX_PUBLIC_RESULTS);
         resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });

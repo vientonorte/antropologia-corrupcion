@@ -25,7 +25,7 @@
     <link rel="stylesheet" href="styles/graph.css?v=20260628">
     <link rel="stylesheet" href="styles/atoms/epistemic-badge.css?v=20260620">
     <link rel="stylesheet" href="styles/molecules/section-header.css?v=20260620">
-    <link rel="stylesheet" href="styles/organisms/home-surface.css?v=20260627">
+    <link rel="stylesheet" href="styles/organisms/home-surface.css?v=20260628b">
     <link rel="stylesheet" href="styles/organisms/thesis-graph.css?v=20260627">
     <style>
         body {
@@ -407,6 +407,33 @@
             gap: 12px;
         }
 
+        .casos-strip__grid--extra {
+            margin-top: 12px;
+        }
+
+        .casos-strip__toggle {
+            display: block;
+            width: 100%;
+            margin-top: 14px;
+            padding: 12px 16px;
+            background: transparent;
+            border: 1px dashed var(--border);
+            border-radius: var(--r);
+            color: var(--muted);
+            font-size: 13px;
+            font-family: var(--font-sans);
+            cursor: pointer;
+            text-align: left;
+            transition: border-color 0.2s, color 0.2s;
+        }
+
+        .casos-strip__toggle:hover,
+        .casos-strip__toggle:focus-visible {
+            border-color: rgba(200, 169, 110, 0.45);
+            color: var(--text);
+            outline: none;
+        }
+
         .caso-chip {
             display: block;
             background: var(--s1);
@@ -475,11 +502,12 @@
             <p class="hero-definition">Fricción institucional: la distancia entre lo que una institución declara y lo que los datos oficiales registran.</p>
 
             <div id="ca-hero-entry-paths" aria-label="Rutas de exploración"></div>
-            <div id="ca-corpus-stats" aria-live="polite"></div>
             <div id="ca-friction-demo" hidden></div>
+            <div id="ca-corpus-stats" aria-live="polite"></div>
 
             <div class="hero-search">
-                <label for="search-input" class="hero-search__label">Iniciar búsqueda</label>
+                <label for="search-input" class="hero-search__label">Iniciar búsqueda preliminar</label>
+                <p class="hero-search__hint">Hasta 3 resultados aquí · <a href="buscador.html">búsqueda avanzada</a> (categorías E–I, huella digital)</p>
                 <div class="search-wrap" id="search-wrap">
                     <input type="text" class="search-input" id="search-input" placeholder="Nombre, institución o ley…" autocomplete="off" spellcheck="false">
                     <div class="suggest-dropdown" id="suggest-dropdown"></div>
@@ -540,12 +568,12 @@
     <script defer src="components/atoms/dom.js?v=20260621"></script>
     <script defer src="components/atoms/kicker.js?v=20260620"></script>
     <script defer src="components/molecules/section-header.js?v=20260620"></script>
-    <script defer src="components/molecules/hero-entry-paths.js?v=20260628"></script>
+    <script defer src="components/molecules/hero-entry-paths.js?v=20260628b"></script>
     <script defer src="components/organisms/thesis-section.js?v=20260627"></script>
-    <script defer src="components/organisms/friction-demo.js?v=20260628"></script>
+    <script defer src="components/organisms/friction-demo.js?v=20260628b"></script>
     <script defer src="lib/corpusStats.js?v=20260628"></script>
-    <script defer src="lib/siteSurface.js?v=20260628"></script>
-    <script defer src="pages/onboarding-search.js?v=20260628"></script>
+    <script defer src="lib/siteSurface.js?v=20260628b"></script>
+    <script defer src="pages/onboarding-search.js?v=20260628b"></script>
     <script defer src="pages/home-boot.js?v=20260628"></script>
     <script>
         (function() {

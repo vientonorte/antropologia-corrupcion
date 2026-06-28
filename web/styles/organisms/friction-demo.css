@@ -110,12 +110,23 @@
     margin-bottom: 12px;
 }
 
+.ca-friction-demo__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 16px;
+    margin-top: 4px;
+}
+
 .ca-friction-demo__cta {
     display: inline-block;
     font-size: 13px;
     font-family: var(--font-mono);
     color: var(--etica);
     text-decoration: none;
+}
+
+.ca-friction-demo__cta--secondary {
+    color: var(--muted);
 }
 
 .ca-friction-demo__cta:hover {

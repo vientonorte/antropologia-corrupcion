@@ -75,9 +75,18 @@ module.exports = function (describe, it, assert, assertEqual) {
             assert(c05 && c05.grafo_url, 'C05 grafo_url');
         });
 
-        it('siteSurface renderiza todos los casos en strip', function () {
+        it('siteSurface casos strip progresivo preserva 7 casos', function () {
             var js = readWeb('lib/siteSurface.js');
-            assert(js.indexOf('list.slice(0, 4)') === -1, 'sin límite de 4 casos');
+            assert(js.indexOf('CASOS_STRIP_VISIBLE') !== -1, 'límite visible inicial');
+            assert(js.indexOf('data-casos-extra') !== -1, 'casos extra colapsables');
+        });
+
+        it('embudo onboarding preserva query hacia buscador', function () {
+            var onboarding = readWeb('pages/onboarding-search.js');
+            assert(onboarding.indexOf("buscador.html?q=") !== -1, 'CTA con deep-link');
+            var demo = readWeb('components/organisms/friction-demo.js');
+            assert(demo.indexOf('ca-friction-demo__actions') !== -1, 'demo dual CTA');
+            assert(demo.indexOf('index.html?caso=') !== -1, 'demo enlace grafo');
         });
     });
 

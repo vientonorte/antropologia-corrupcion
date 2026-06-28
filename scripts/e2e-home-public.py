@@ -134,6 +134,7 @@ def check_circuit_links() -> None:
     for name, content, needle in [
         ("chip → buscador?fuente=", bases, "buscador.html?fuente="),
         ("demo → buscador?q=", demo, "buscador.html?q="),
+        ("onboarding → buscador?q=", read_text(WEB / "pages/onboarding-search.js"), "buscador.html?q="),
         ("CTA grafo #tesis", paths, "index.html#tesis"),
         ("CTA leer", paths, "leer.html"),
     ]:

@@ -17,6 +17,14 @@
 
     var SECCION_ORDER = { fichas: 0, citas: 1, poemarios: 2, biblioteca: 3 };
 
+    var PRIORITY_CASO_IDS = [
+        'sura-gobernanza-datos',
+        'la-negra-territorio-mapuche',
+        'periodismo-datos-chile',
+        'oit169-consulta-previa',
+    ];
+    var CASOS_STRIP_VISIBLE = 4;
+
     function esc(value) {
         return String(value || '')
             .replace(/&/g, '&amp;')
@@ -137,43 +145,95 @@
             '</div></div>';
     }
 
+    function sortCasosForStrip(casos) {
+        var list = (casos || []).slice();
+        list.sort(function (a, b) {
+            var pa = PRIORITY_CASO_IDS.indexOf(a.id);
+            var pb = PRIORITY_CASO_IDS.indexOf(b.id);
+            var ra = pa === -1 ? 99 : pa;
+            var rb = pb === -1 ? 99 : pb;
+            if (ra !== rb) return ra - rb;
+            return String(a.titulo || '').localeCompare(String(b.titulo || ''), 'es');
+        });
+        return list;
+    }
+
+    function renderCasoChip(caso) {
+        var href = 'index.html?caso=' + encodeURIComponent(caso.id);
+        var label = window.CACasoPublico
+            ? window.CACasoPublico.getPublicLabel(caso)
+            : { titulo: caso.titulo || caso.id, actores: caso.actores || [] };
+        var actors = (label.actores || []).slice(0, 3).join(' · ');
+        return (
+            '<a class="caso-chip" href="' +
+            esc(href) +
+            '">' +
+            '<span class="caso-chip__title">' +
+            esc(label.titulo || caso.id) +
+            '</span>' +
+            '<span class="caso-chip__meta">' +
+            esc(String(caso.anio || '')) +
+            (actors ? ' · ' + esc(actors) : '') +
+            '</span>' +
+            '</a>'
+        );
+    }
+
+    function wireCasosStripToggle(mount) {
+        if (!mount) return;
+        var btn = mount.querySelector('[data-casos-toggle]');
+        var extra = mount.querySelector('[data-casos-extra]');
+        if (!btn || !extra) return;
+
+        btn.addEventListener('click', function () {
+            var expanded = btn.getAttribute('aria-expanded') === 'true';
+            btn.setAttribute('aria-expanded', expanded ? 'false' : 'true');
+            extra.hidden = expanded;
+            btn.textContent = expanded
+                ? btn.getAttribute('data-label-expand') || 'Ver más casos'
+                : btn.getAttribute('data-label-collapse') || 'Ver menos';
+        });
+    }
+
     function renderCasosStrip(casos, mount) {
         if (!mount) return;
 
-        var list = Array.isArray(casos) ? casos : [];
+        var list = sortCasosForStrip(casos);
         if (!list.length) {
             mount.style.display = 'none';
             return;
         }
 
-        var cards = list.map(function (caso) {
-            var href = 'index.html?caso=' + encodeURIComponent(caso.id);
-            var label = window.CACasoPublico
-                ? window.CACasoPublico.getPublicLabel(caso)
-                : { titulo: caso.titulo || caso.id, actores: caso.actores || [] };
-            var actors = (label.actores || []).slice(0, 3).join(' · ');
-            return (
-                '<a class="caso-chip" href="' +
-                esc(href) +
-                '">' +
-                '<span class="caso-chip__title">' +
-                esc(label.titulo || caso.id) +
-                '</span>' +
-                '<span class="caso-chip__meta">' +
-                esc(String(caso.anio || '')) +
-                (actors ? ' · ' + esc(actors) : '') +
-                '</span>' +
-                '</a>'
-            );
-        });
+        var primary = list.slice(0, CASOS_STRIP_VISIBLE);
+        var extra = list.slice(CASOS_STRIP_VISIBLE);
+        var toggleHtml = '';
+
+        if (extra.length) {
+            toggleHtml =
+                '<button type="button" class="casos-strip__toggle" data-casos-toggle ' +
+                'aria-expanded="false" aria-controls="casos-strip-extra" ' +
+                'data-label-expand="Ver ' +
+                extra.length +
+                ' casos más (D4 · territorio · banca)" ' +
+                'data-label-collapse="Ver menos">Ver ' +
+                extra.length +
+                ' casos más (D4 · territorio · banca)</button>' +
+                '<div id="casos-strip-extra" class="casos-strip__grid casos-strip__grid--extra" data-casos-extra hidden>' +
+                extra.map(renderCasoChip).join('') +
+                '</div>';
+        }
 
         mount.innerHTML =
             '<div class="ca-surface__prose">' +
             '<h2 id="casos-strip-title" class="casos-strip__title">Casos etnográficos en el grafo</h2>' +
-            '<p class="casos-strip__copy section-lead">Cada enlace abre el instrumento con el caso precargado en el grafo de tesis.</p>' +
+            '<p class="casos-strip__copy section-lead">Cuatro campos de la tesis + casos ampliados. Cada enlace precarga el grafo.</p>' +
             '<div class="casos-strip__grid">' +
-            cards.join('') +
-            '</div></div>';
+            primary.map(renderCasoChip).join('') +
+            '</div>' +
+            toggleHtml +
+            '</div>';
+
+        wireCasosStripToggle(mount);
     }
 
     function mountHomeSurfaces() {

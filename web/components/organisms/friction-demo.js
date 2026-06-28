@@ -76,6 +76,13 @@
 
         var buscadorHref =
             'buscador.html?q=' + encodeURIComponent(reg.titulo || '');
+        var grafoHref = '';
+        if (item.casoVinculado && item.casoVinculado.id) {
+            grafoHref =
+                'index.html?caso=' +
+                encodeURIComponent(item.casoVinculado.id) +
+                '#tesis';
+        }
 
         return (
             '<article class="ca-friction-demo__card">' +
@@ -108,9 +115,16 @@
             esc(desc) +
             '</p>' +
             casoLabel +
+            '<div class="ca-friction-demo__actions">' +
             '<a class="ca-friction-demo__cta" href="' +
             esc(buscadorHref) +
-            '">Ver en búsqueda avanzada →</a>' +
+            '">Profundizar en buscador →</a>' +
+            (grafoHref
+                ? '<a class="ca-friction-demo__cta ca-friction-demo__cta--secondary" href="' +
+                  esc(grafoHref) +
+                  '">Ver caso en el grafo →</a>'
+                : '') +
+            '</div>' +
             '</article>'
         );
     }
