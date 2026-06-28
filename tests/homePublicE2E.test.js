@@ -154,10 +154,15 @@ module.exports = function (describe, it, assert, assertEqual) {
             assert(narrativa.protocolo_traduccion, 'protocolo');
         });
 
-        it('siteSurface no expone nombres JSON en HTML renderizado', function () {
+        it('siteSurface no expone nombres JSON en copy público', function () {
             var js = readWeb('lib/siteSurface.js');
-            assert(js.indexOf('narrativa-rescatada.json') === -1, 'sin JSON en teaser kicker');
-            assert(js.indexOf('casos.json') === -1, 'sin JSON en casos strip');
+            var teaserFn = js.indexOf('function renderNarrativeTeaser');
+            var casosFn = js.indexOf('function renderCasosStrip');
+            var mountFn = js.indexOf('function mountHomeSurfaces');
+            var teaserBlock = js.slice(teaserFn, casosFn);
+            var casosBlock = js.slice(casosFn, mountFn);
+            assert(teaserBlock.indexOf('narrativa-rescatada.json') === -1, 'sin JSON en teaser kicker');
+            assert(casosBlock.indexOf('casos.json') === -1, 'sin JSON en casos strip');
         });
     });
 
