@@ -28,8 +28,9 @@
       "sitemap": true,
       "priority": 1.0,
       "canonical": true,
+      "purpose": "Portal de descubrimiento: rutas grafo/leer/buscar, demo de fricción precargada, métricas del corpus y búsqueda preliminar",
       "data": ["fuentes-oficiales.json", "casos.json", "bcn-legislativo.json", "fuentes-config.json", "archivo-index.json", "narrativa-rescatada.json", "ia-inventario.json"],
-      "modules": ["graphBootstrap.js", "graph.js", "socialField.js", "frictionEngine.js", "siteSurface.js", "dataLoader.js", "sourceRegistry.js", "basesConsultadas.js"],
+      "modules": ["graphBootstrap.js", "graph.js", "socialField.js", "frictionEngine.js", "siteSurface.js", "dataLoader.js", "sourceRegistry.js", "basesConsultadas.js", "corpusStats.js", "hero-entry-paths.js", "friction-demo.js"],
       "anchors": ["#tesis"]
     },
     {

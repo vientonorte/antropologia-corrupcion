@@ -1,0 +1,24 @@
+/* Molecule: métricas del corpus — inicio público */
+
+.ca-corpus-stats {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    max-width: 640px;
+    margin: 0 auto 24px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--dim);
+    letter-spacing: 0.02em;
+}
+
+.ca-corpus-stats__item strong {
+    color: var(--text);
+    font-weight: 600;
+}
+
+.ca-corpus-stats__sep {
+    color: var(--border);
+}

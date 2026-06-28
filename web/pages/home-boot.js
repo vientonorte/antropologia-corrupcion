@@ -64,7 +64,9 @@
 
         var observer = new IntersectionObserver(
             function (entries) {
-                if (entries.some(function (e) { return e.isIntersecting; })) {
+                if (entries.some(function (e) {
+                    return e.isIntersecting;
+                })) {
                     observer.disconnect();
                     run();
                 }
@@ -74,15 +76,46 @@
         observer.observe(mount);
     }
 
+    function bootHeroPaths() {
+        if (window.CAMolecules && window.CAMolecules.heroEntryPaths) {
+            window.CAMolecules.heroEntryPaths.mount('ca-hero-entry-paths');
+        }
+    }
+
+    function bootPublicMetrics() {
+        if (!window.CADataLoader) return Promise.resolve();
+
+        return window.CADataLoader.loadCorpusBundle({ includeHuella: false })
+            .then(function (bundle) {
+                var report =
+                    window.CABasesConsultadas && window.CABasesConsultadas.buildFromBundle
+                        ? window.CABasesConsultadas.buildFromBundle(bundle)
+                        : null;
+
+                if (window.CACorpusStats) {
+                    window.CACorpusStats.mount('ca-corpus-stats', bundle, report);
+                }
+                if (window.CAOrganisms && window.CAOrganisms.frictionDemo) {
+                    window.CAOrganisms.frictionDemo.mount('ca-friction-demo', bundle);
+                }
+            })
+            .catch(function () {
+                /* onboarding-search reporta errores de carga */
+            });
+    }
+
     function bootSurfaces() {
         if (window.CASiteSurface && window.CASiteSurface.mountHomeSurfaces) {
-            window.CASiteSurface.mountHomeSurfaces();
+            return window.CASiteSurface.mountHomeSurfaces();
         }
+        return Promise.resolve();
     }
 
     function onReady() {
         injectThesisSection();
+        bootHeroPaths();
         scheduleGraphBoot();
+        bootPublicMetrics();
         if (typeof requestIdleCallback === 'function') {
             requestIdleCallback(bootSurfaces, { timeout: 2000 });
         } else {

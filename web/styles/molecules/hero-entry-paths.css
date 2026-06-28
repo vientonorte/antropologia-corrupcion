@@ -1,0 +1,67 @@
+/* Molecule: rutas de entrada — inicio público */
+
+.ca-hero-paths {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+    width: 100%;
+    max-width: 720px;
+    margin: 0 auto 28px;
+}
+
+.ca-hero-paths__card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    gap: 6px;
+    padding: 16px;
+    background: var(--s1);
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+    font: inherit;
+    transition: border-color 0.2s, transform 0.2s;
+    min-height: var(--touch-min);
+}
+
+.ca-hero-paths__card:hover,
+.ca-hero-paths__card:focus-visible {
+    border-color: rgba(200, 169, 110, 0.45);
+    transform: translateY(-1px);
+    outline: none;
+}
+
+.ca-hero-paths__card--action {
+    width: 100%;
+}
+
+.ca-hero-paths__kicker {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--etica);
+}
+
+.ca-hero-paths__title {
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.35;
+    color: var(--text);
+}
+
+.ca-hero-paths__meta {
+    font-size: 11px;
+    color: var(--muted);
+    line-height: 1.45;
+}
+
+@media (max-width: 720px) {
+    .ca-hero-paths {
+        grid-template-columns: 1fr;
+        max-width: 480px;
+    }
+}

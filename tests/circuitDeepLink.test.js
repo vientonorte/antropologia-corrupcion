@@ -76,6 +76,10 @@ module.exports = function (describe, it, assert, assertEqual) {
             assert(html.indexOf('siteSurface.js') !== -1, 'JSON-driven surfaces');
             assert(html.indexOf('ca-narrative-teaser') !== -1, 'narrative teaser mount');
             assert(html.indexOf('ca-casos-strip') !== -1, 'casos strip mount');
+            assert(html.indexOf('hero-entry-paths.js') !== -1, 'rutas portal Sprint P01');
+            assert(html.indexOf('friction-demo.js') !== -1, 'demo fricción Sprint P01');
+            assert(html.indexOf('ca-hero-entry-paths') !== -1, 'mount rutas');
+            assert(html.indexOf('ca-friction-demo') !== -1, 'mount demo');
         });
 
         it('siteSurface.js renders home from archivo and narrativa JSON', function () {

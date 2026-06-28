@@ -271,6 +271,7 @@ require('../web/lib/huellaDigital.js');
 // sourceRegistry.js + basesConsultadas.js
 require('../web/lib/sourceRegistry.js');
 require('../web/lib/basesConsultadas.js');
+require('../web/lib/corpusStats.js');
 require('../src/categoryExport.js');
 
 /* ─── LOAD DATA ─── */
@@ -306,6 +307,7 @@ require('./publishGate.test.js')(describe, it, assert, assertEqual);
 require('./huellaDigitalLib.test.js')(describe, it, assert, assertEqual, assertDeepEqual, assertApprox, assertGreaterThan, assertArrayIncludes, casosData, fuentesData, bcnData, huellaData);
 require('./circuitDeepLink.test.js')(describe, it, assert, assertEqual);
 require('./qaLiveHeuristics.test.js')(describe, it, assert, assertEqual);
+require('./homePublicE2E.test.js')(describe, it, assert, assertEqual);
 require('./atomicDesign.test.js')(describe, it, assert, assertEqual);
 require('./archivoIndex.test.js')(describe, it, assert, assertEqual);
 require('./casoPublico.test.js')(describe, it, assert, assertEqual);

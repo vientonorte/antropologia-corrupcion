@@ -46,6 +46,19 @@ module.exports = function (describe, it, assert, assertEqual) {
       assert(/bases-consultadas\.css/i.test(html), 'falta CSS bases consultadas');
       assert(/id=["']search-sources["']/i.test(html), 'falta #search-sources');
     });
+
+    it('portal público Sprint P01 — rutas, demo y copy sin JSON', function () {
+      assert(/hero-entry-paths\.js/i.test(html), 'falta hero-entry-paths');
+      assert(/friction-demo\.js/i.test(html), 'falta friction-demo');
+      assert(/corpusStats\.js/i.test(html), 'falta corpusStats');
+      assert(/id=["']ca-hero-entry-paths["']/i.test(html), 'falta mount rutas');
+      assert(/id=["']ca-friction-demo["']/i.test(html), 'falta mount demo fricción');
+      assert(/id=["']ca-corpus-stats["']/i.test(html), 'falta mount stats');
+      assert(/Contra-archivo/i.test(html), 'falta H1 Contra-archivo');
+      assert(html.indexOf('¿Quién es?') === -1, 'no debe usar H1 ¿Quién es?');
+      assert(/Resultados preliminares/i.test(html), 'falta copy resultados preliminares');
+      assert(/archivo-index\.json/i.test(html) === false, 'copy público sin archivo-index.json');
+    });
   });
 
   describe('QA live — circuito buscador / instrumento / narrativa', function () {

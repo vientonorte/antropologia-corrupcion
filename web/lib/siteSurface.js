@@ -117,7 +117,7 @@
         mount.innerHTML =
             '<div class="ca-surface__prose">' +
             '<div class="narrative-teaser__inner">' +
-            '<span class="resource-kicker">Marco narrativo · narrativa-rescatada.json</span>' +
+            '<span class="resource-kicker">Marco narrativo</span>' +
             '<h2 id="narrative-teaser-title" class="narrative-teaser__title">' +
             esc(pres.titulo || 'Presentación del proyecto') +
             '</h2>' +
@@ -170,7 +170,7 @@
         mount.innerHTML =
             '<div class="ca-surface__prose">' +
             '<h2 id="casos-strip-title" class="casos-strip__title">Casos etnográficos en el grafo</h2>' +
-            '<p class="casos-strip__copy section-lead">Selección desde <code>casos.json</code> — cada enlace abre el instrumento con el caso precargado.</p>' +
+            '<p class="casos-strip__copy section-lead">Cada enlace abre el instrumento con el caso precargado en el grafo de tesis.</p>' +
             '<div class="casos-strip__grid">' +
             cards.join('') +
             '</div></div>';

@@ -51,6 +51,11 @@ jobs:
       - name: Ejecutar suite de tests
         run: node tests/runner.js
 
+      - name: E2E inicio público (Sprint P01)
+        run: |
+          node scripts/qa-live.mjs --local
+          python3 scripts/e2e-home-public.py --serve
+
       - name: Auditoría Atomic Design
         run: node scripts/atomic-audit.mjs --local
 

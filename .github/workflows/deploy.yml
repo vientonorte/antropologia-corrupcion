@@ -32,6 +32,11 @@ jobs:
       - name: Run test suite
         run: node tests/runner.js
 
+      - name: E2E inicio público (Sprint P01)
+        run: |
+          node scripts/qa-live.mjs --local
+          python3 scripts/e2e-home-public.py --serve
+
       - name: QA enlaces locales (web + data + img)
         run: node scripts/qa-links.mjs --local
 
@@ -85,6 +90,9 @@ jobs:
           test -f lib/imagePrepare.js || { echo "❌ lib/imagePrepare.js faltante"; exit 1; }
           test -f vendor/heic2any.min.js || { echo "❌ vendor/heic2any.min.js faltante"; exit 1; }
           test -f vendor/heic-to.js || { echo "❌ vendor/heic-to.js faltante"; exit 1; }
+          test -f components/molecules/hero-entry-paths.js || { echo "❌ hero-entry-paths.js faltante"; exit 1; }
+          test -f components/organisms/friction-demo.js || { echo "❌ friction-demo.js faltante"; exit 1; }
+          test -f lib/corpusStats.js || { echo "❌ corpusStats.js faltante"; exit 1; }
           node scripts/qa-links.mjs --deployed
           echo "✅ Assets críticos presentes"
 

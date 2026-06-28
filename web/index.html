@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contra-Archivo — Antropología de la Corrupción en Chile</title>
-    <meta name="description" content="Contra-Archivo: investigación doctoral sobre corrupción en Chile como práctica estructural. Explora casos, actores y fricciones institucionales.">
+    <meta name="description" content="Contra-archivo del Colectivo Viento Norte: la institución traduce; la traducción falla; el fallo es el sistema. Grafo de tesis, marco narrativo y búsqueda en fuentes oficiales chilenas.">
     <meta property="og:title" content="Contra-Archivo — Antropología de la Corrupción en Chile">
     <meta property="og:description" content="Investigación doctoral sobre corrupción en Chile como práctica estructural mediada por mistraducción institucional.">
     <meta property="og:type" content="website">
@@ -17,8 +17,11 @@
     <link rel="manifest" href="manifest.json">
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=newsreader:400,400i,600|inter:400,500,600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles/shared.css?v=20260621e">
-    <link rel="stylesheet" href="styles/molecules/bases-consultadas.css?v=20260621">
+    <link rel="stylesheet" href="styles/shared.css?v=20260628">
+    <link rel="stylesheet" href="styles/molecules/bases-consultadas.css?v=20260628">
+    <link rel="stylesheet" href="styles/molecules/hero-entry-paths.css?v=20260628">
+    <link rel="stylesheet" href="styles/molecules/corpus-stats.css?v=20260628">
+    <link rel="stylesheet" href="styles/organisms/friction-demo.css?v=20260628">
     <link rel="stylesheet" href="styles/graph.css?v=20260628">
     <link rel="stylesheet" href="styles/atoms/epistemic-badge.css?v=20260620">
     <link rel="stylesheet" href="styles/molecules/section-header.css?v=20260620">
@@ -73,18 +76,9 @@
             color: var(--text);
         }
 
-        .hero-subtitle {
-            max-width: 560px;
-            font-size: 16px;
-            color: var(--muted);
-            line-height: 1.6;
-            margin-bottom: 40px;
-        }
-
         .search-wrap {
             position: relative;
             width: 100%;
-            max-width: 600px;
         }
 
         .search-input {
@@ -454,8 +448,8 @@
                 font-size: 12px;
             }
 
-            .hero-subtitle {
-                font-size: 15px;
+            .ca-surface--hero .hero-lead {
+                font-size: 16px;
             }
 
             .search-input {
@@ -473,29 +467,38 @@
 <body>
     <a href="#main-content" class="skip-link">Saltar al contenido</a>
     <main id="main-content" class="home-main">
-    <section class="ca-surface ca-surface--hero" aria-label="Búsqueda pública">
+    <section class="ca-surface ca-surface--hero" aria-labelledby="hero-title">
         <div class="ca-surface__prose">
             <p class="hero-eyebrow">Inicio público · Colectivo Viento Norte</p>
-            <h1 class="hero-title">¿Quién es?</h1>
-            <p class="hero-subtitle">Contra-archivo del Colectivo Viento Norte: la institución traduce; la traducción falla; el fallo es el sistema. Explora la tesis en el grafo, lee el marco narrativo o inicia una búsqueda.</p>
-            <p class="hero-lead">Fricción institucional: la distancia entre lo que una institución declara y lo que los datos oficiales registran.</p>
+            <h1 id="hero-title" class="hero-title">Contra-archivo</h1>
+            <p class="hero-lead">La institución traduce; la traducción falla; el fallo es el sistema.</p>
+            <p class="hero-definition">Fricción institucional: la distancia entre lo que una institución declara y lo que los datos oficiales registran.</p>
 
-            <div class="search-wrap" id="search-wrap">
-                <input type="text" class="search-input" id="search-input" placeholder="Nombre, institución o ley para iniciar..." autocomplete="off" spellcheck="false" aria-label="Iniciar búsqueda pública">
-                <div class="suggest-dropdown" id="suggest-dropdown"></div>
+            <div id="ca-hero-entry-paths" aria-label="Rutas de exploración"></div>
+            <div id="ca-corpus-stats" aria-live="polite"></div>
+            <div id="ca-friction-demo" hidden></div>
+
+            <div class="hero-search">
+                <label for="search-input" class="hero-search__label">Iniciar búsqueda</label>
+                <div class="search-wrap" id="search-wrap">
+                    <input type="text" class="search-input" id="search-input" placeholder="Nombre, institución o ley…" autocomplete="off" spellcheck="false">
+                    <div class="suggest-dropdown" id="suggest-dropdown"></div>
+                </div>
             </div>
 
-            <p class="search-sources ca-bases-line" id="search-sources" aria-label="Bases consultadas">Cargando fuentes…</p>
+            <div id="search-sources" aria-label="Fuentes consultadas">
+                <p class="resource-meta" style="font-size:11px;margin-top:14px">Cargando fuentes…</p>
+            </div>
             <p id="data-status" style="font-size:11px;font-family:var(--font-mono);color:var(--dim);margin-top:8px;display:none" aria-live="polite"></p>
         </div>
     </section>
 
     <div id="ca-thesis-placeholder"></div>
 
-    <section class="ca-surface ca-surface--results results-section" id="results-section">
+    <section class="ca-surface ca-surface--results results-section" id="results-section" aria-labelledby="results-section-title">
         <div class="ca-surface__prose">
             <div class="results-header">
-                <div class="results-title">Resultados de onboarding: <strong id="results-count">0</strong></div>
+                <div class="results-title" id="results-section-title">Resultados preliminares: <strong id="results-count">0</strong></div>
                 <div class="results-query" id="results-query"></div>
             </div>
             <div id="results-list"></div>
@@ -513,7 +516,7 @@
     <section class="ca-surface ca-surface--band" aria-labelledby="public-resources-title">
         <div class="ca-surface__prose">
             <h2 id="public-resources-title">Fichas y archivo de citas</h2>
-            <p class="section-lead">Recursos publicables desde <code>archivo-index.json</code> e inventario de superficies. El grid evoluciona con el corpus editorial sin duplicar HTML.</p>
+            <p class="section-lead">Recursos editoriales publicables: fichas analíticas, corpus de citas, ensayos y poemarios. El grid se actualiza con el archivo curado.</p>
             <div class="resource-grid" id="ca-resource-mount">
                 <p class="resource-meta">Cargando índice editorial…</p>
             </div>
@@ -522,7 +525,6 @@
 
     <section id="ca-casos-strip" class="ca-surface ca-surface--band casos-strip" aria-labelledby="casos-strip-title"></section>
     </main>
-
     <footer class="site-footer">
         © 2026 Colectivo Viento Norte · Tesis Doctoral en Antropología&nbsp;&nbsp;·&nbsp;&nbsp;<a href="index.html#tesis">Tesis (grafo)</a> · <a href="leer.html">Leer</a>
     </footer>
@@ -538,9 +540,12 @@
     <script defer src="components/atoms/dom.js?v=20260621"></script>
     <script defer src="components/atoms/kicker.js?v=20260620"></script>
     <script defer src="components/molecules/section-header.js?v=20260620"></script>
+    <script defer src="components/molecules/hero-entry-paths.js?v=20260628"></script>
     <script defer src="components/organisms/thesis-section.js?v=20260627"></script>
-    <script defer src="lib/siteSurface.js?v=20260627"></script>
-    <script defer src="pages/onboarding-search.js?v=20260621"></script>
+    <script defer src="components/organisms/friction-demo.js?v=20260628"></script>
+    <script defer src="lib/corpusStats.js?v=20260628"></script>
+    <script defer src="lib/siteSurface.js?v=20260628"></script>
+    <script defer src="pages/onboarding-search.js?v=20260628"></script>
     <script defer src="pages/home-boot.js?v=20260628"></script>
     <script>
         (function() {

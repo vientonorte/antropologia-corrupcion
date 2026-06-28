@@ -1,0 +1,135 @@
+/* Organism: demo de fricción — inicio público */
+
+.ca-friction-demo {
+    width: 100%;
+    max-width: 640px;
+    margin: 0 auto 32px;
+    text-align: left;
+}
+
+.ca-friction-demo__lead {
+    font-size: 12px;
+    font-family: var(--font-mono);
+    color: var(--dim);
+    margin-bottom: 12px;
+    text-align: center;
+}
+
+.ca-friction-demo__card {
+    background: var(--s1);
+    border: 1px solid rgba(200, 169, 110, 0.22);
+    border-radius: var(--r);
+    padding: 20px;
+}
+
+.ca-friction-demo__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.ca-friction-demo__kicker {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--etica);
+}
+
+.ca-friction-demo__badge {
+    font-size: 10px;
+    font-family: var(--font-mono);
+    padding: 3px 9px;
+    border-radius: 10px;
+    color: #fff;
+    white-space: nowrap;
+    letter-spacing: 0.03em;
+}
+
+.ca-friction-demo__title {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 1.4;
+    margin-bottom: 12px;
+    color: var(--text);
+}
+
+.ca-friction-demo__row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.ca-friction-demo__row-label {
+    font-size: 11px;
+    font-family: var(--font-mono);
+    color: var(--dim);
+    white-space: nowrap;
+}
+
+.ca-friction-demo__track {
+    flex: 1;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.ca-friction-demo__fill {
+    height: 100%;
+    border-radius: 2px;
+    transition: width 0.4s ease;
+}
+
+.ca-friction-demo__value {
+    font-size: 11px;
+    font-family: var(--font-mono);
+    color: var(--muted);
+    min-width: 32px;
+    text-align: right;
+}
+
+.ca-friction-demo__badges {
+    margin-bottom: 10px;
+}
+
+.ca-friction-demo__desc {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.55;
+    margin-bottom: 10px;
+}
+
+.ca-friction-demo__caso {
+    font-size: 11px;
+    font-family: var(--font-mono);
+    color: var(--dim);
+    margin-bottom: 12px;
+}
+
+.ca-friction-demo__cta {
+    display: inline-block;
+    font-size: 13px;
+    font-family: var(--font-mono);
+    color: var(--etica);
+    text-decoration: none;
+}
+
+.ca-friction-demo__cta:hover {
+    opacity: 0.75;
+}
+
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}

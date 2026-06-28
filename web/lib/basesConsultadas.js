@@ -202,7 +202,8 @@
                     escapeHtml(e.label) +
                     ' — ' +
                     escapeHtml(e.readinessLabel) +
-                    (e.records ? ' · ' + e.records + ' registros' : '');
+                    (e.records ? ' · ' + e.records + ' registros' : '') +
+                    '. Clic para filtrar en búsqueda avanzada.';
                 return (
                     '<a class="ca-bases-chip" href="' +
                     escapeHtml(href) +
@@ -222,6 +223,28 @@
                 );
             })
             .join('<span class="ca-bases-chip-sep" aria-hidden="true"> · </span>');
+    }
+
+    function renderCompactStrip(report) {
+        var line = renderCompactLine(report);
+        if (!line) return '';
+
+        var summary = (report && report.summary) || {};
+        var hint =
+            (summary.operativas || 0) +
+            ' operativas · corpus curado, no scraping en vivo';
+
+        return (
+            '<div class="ca-bases-strip">' +
+            '<p class="ca-bases-strip__label">Fuentes consultadas</p>' +
+            '<p class="ca-bases-strip__hint">' +
+            escapeHtml(hint) +
+            ' · punto = estado de cobertura</p>' +
+            '<div class="ca-bases-strip__chips search-sources ca-bases-line">' +
+            line +
+            '</div>' +
+            '</div>'
+        );
     }
 
     function renderRecordBadges(record, report) {
@@ -289,6 +312,16 @@
         }
     }
 
+    function mountCompactStrip(containerId, report) {
+        var el = document.getElementById(containerId);
+        if (!el || !report) return;
+        var html = renderCompactStrip(report);
+        if (html) {
+            el.innerHTML = html;
+            el.setAttribute('aria-label', 'Fuentes consultadas con estado de cobertura');
+        }
+    }
+
     function buildFromBundle(bundle) {
         var R = registry();
         if (!R || !bundle) return null;
@@ -298,9 +331,11 @@
     window.CABasesConsultadas = {
         renderPanel: renderPanel,
         renderCompactLine: renderCompactLine,
+        renderCompactStrip: renderCompactStrip,
         renderRecordBadges: renderRecordBadges,
         mountPanel: mountPanel,
         mountCompactLine: mountCompactLine,
+        mountCompactStrip: mountCompactStrip,
         buildFromBundle: buildFromBundle,
     };
 })();

@@ -65,7 +65,21 @@
                 buildSuggestionIndex(casos, registros, bcnRegistros);
                 if (window.CABasesConsultadas && window.CABasesConsultadas.buildFromBundle) {
                     var report = window.CABasesConsultadas.buildFromBundle(bundle);
-                    window.CABasesConsultadas.mountCompactLine('search-sources', report);
+                    if (window.CABasesConsultadas.mountCompactStrip) {
+                        window.CABasesConsultadas.mountCompactStrip('search-sources', report);
+                    } else {
+                        window.CABasesConsultadas.mountCompactLine('search-sources', report);
+                    }
+                }
+                if (window.CACorpusStats && window.CACorpusStats.mount) {
+                    window.CACorpusStats.mount(
+                        'ca-corpus-stats',
+                        bundle,
+                        window.CABasesConsultadas.buildFromBundle(bundle),
+                    );
+                }
+                if (window.CAOrganisms && window.CAOrganisms.frictionDemo) {
+                    window.CAOrganisms.frictionDemo.mount('ca-friction-demo', bundle);
                 }
                 setStatus('');
             })
@@ -208,7 +222,7 @@
             resultsList.innerHTML =
                 '<p style="color:var(--dim);font-size:14px;font-family:var(--font-mono);padding:24px 0">Sin resultados para «' +
                 escapeHtml(query) +
-                '» en onboarding.</p>';
+                '» en búsqueda preliminar.</p>';
             moreResults.classList.remove('active');
             return;
         }

@@ -152,6 +152,36 @@
     font-size: 10px;
 }
 
+/* Franja compacta (inicio público) */
+
+.ca-bases-strip {
+    width: 100%;
+    max-width: 640px;
+    margin: 16px auto 0;
+    text-align: center;
+}
+
+.ca-bases-strip__label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 0 0 4px;
+}
+
+.ca-bases-strip__hint {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--dim);
+    margin: 0 0 10px;
+    line-height: 1.45;
+}
+
+.ca-bases-strip__chips {
+    justify-content: center;
+}
+
 /* Chips compactos (onboarding) */
 
 .search-sources.ca-bases-line {
