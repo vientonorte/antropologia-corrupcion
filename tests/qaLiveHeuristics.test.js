@@ -75,6 +75,32 @@ module.exports = function (describe, it, assert, assertEqual) {
       assert(/bases-consultadas\.css/i.test(html), 'falta CSS');
     });
 
+    it('leer.html — narrativa canónica', function () {
+      var html = readWeb('leer.html');
+      assert(/leer-boot\.js/i.test(html), 'boot leer');
+      assert(/narrativeRenderer\.js/i.test(html), 'renderer');
+      assert(/skip-link/i.test(html), 'skip link');
+    });
+
+    it('archivo.html — hub editorial', function () {
+      var html = readWeb('archivo.html');
+      assert(/archivo-index\.json/i.test(html), 'índice');
+      assert(/corpus-citas\.html/i.test(html), 'corpus');
+      assert(/estado-legend/i.test(html), 'leyenda');
+    });
+
+    it('tesis.html — biblioteca', function () {
+      var html = readWeb('tesis.html');
+      assert(/bibliotecaLoader\.js/i.test(html), 'loader');
+      assert(/passkey\.js/i.test(html), 'passkey');
+    });
+
+    it('404.html — recuperación', function () {
+      var html = readWeb('404.html');
+      assert(/index\.html/i.test(html));
+      assert(/buscador\.html/i.test(html));
+    });
+
     it('buscador.html Sprint P02 — strip, stats y deep-link ?q=', function () {
       var html = readWeb('buscador.html');
       assert(/ca-buscador-bases-strip/i.test(html), 'strip sobre el pliegue');

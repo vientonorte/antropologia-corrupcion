@@ -51,11 +51,12 @@ jobs:
       - name: Ejecutar suite de tests
         run: node tests/runner.js
 
-      - name: E2E inicio público + gates sprint (P01–P03)
+      - name: E2E + QA Design Thinking (todas las páginas)
         run: |
           node scripts/qa-live.mjs --local
+          node scripts/qa-design-thinking.mjs --local
           python3 scripts/e2e-home-public.py --serve
-          node scripts/qa-sprint-protocol.mjs --base=http://127.0.0.1:8000
+          node scripts/qa-design-thinking.mjs --protocol
 
       - name: Auditoría Atomic Design
         run: node scripts/atomic-audit.mjs --local

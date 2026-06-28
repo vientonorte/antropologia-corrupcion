@@ -1,0 +1,235 @@
+{
+  "_meta": {
+    "version": "2026-06-28",
+    "framework": "design-thinking",
+    "phases": ["empatizar", "definir", "idear", "prototipar", "testear"],
+    "doc": "scripts/qa-design-thinking.mjs"
+  },
+  "personas": [
+    { "id": "visitante", "label": "Visitante público", "goal": "Entender qué es el contra-archivo y encontrar una ruta en <5 min" },
+    { "id": "investigador", "label": "Investigador de datos", "goal": "Profundizar en fuentes oficiales con trazabilidad y fricción" },
+    { "id": "comite", "label": "Comité académico", "goal": "Evaluar marco teórico, casos y archivo editorial" },
+    { "id": "investigador_auth", "label": "Investigadora autenticada", "goal": "Acceder al espacio privado sin fricción de login" }
+  ],
+  "journeys": [
+    {
+      "id": "J01",
+      "taxonomy": "entrada",
+      "persona": "visitante",
+      "title": "Portal — descubrimiento y embudo",
+      "empatizar": "Llega sin vocabulario de fricción; abandona si no ve valor antes del input",
+      "definir": "Completar ruta grafo · leer · buscar con query preservada hacia buscador",
+      "duration_min": 5,
+      "pages": ["index.html"],
+      "circuit": [
+        { "label": "demo antes de búsqueda", "page": "index.html", "needle": "ca-friction-demo", "before": "hero-search" },
+        { "label": "embudo ?q=", "file": "web/pages/onboarding-search.js", "needle": "buscador.html?q=" },
+        { "label": "demo dual CTA", "file": "web/components/organisms/friction-demo.js", "needle": "ca-friction-demo__actions" },
+        { "label": "rutas hero", "file": "web/components/molecules/hero-entry-paths.js", "needle": "ca-hero-paths" }
+      ],
+      "manual": [
+        "Abrir index — ver demo de fricción sin escribir",
+        "Buscar «transparencia» — CTA lleva ?q= al buscador",
+        "Tarjeta Grafo — scroll a #tesis con grafo cargado"
+      ]
+    },
+    {
+      "id": "J02",
+      "taxonomy": "exploracion",
+      "persona": "investigador",
+      "title": "Búsqueda avanzada — registros y huella",
+      "empatizar": "Necesita filtros y contexto de fuente sin abrir sidebar en móvil",
+      "definir": "Deep-links ?q= / ?fuente= / ?caso= con strip visible y pestaña correcta",
+      "duration_min": 5,
+      "pages": ["buscador.html"],
+      "circuit": [
+        { "label": "?q= no fuerza huella", "file": "web/pages/buscador-boot.js", "needle": "params.huella || params.casoId", "must_not_contain": "params.huella || params.casoId || params.query" },
+        { "label": "strip sobre pliegue", "page": "buscador.html", "needle": "ca-buscador-bases-strip" },
+        { "label": "deep-link query", "file": "web/lib/buscadorAvanzado.js", "needle": "get('q')" }
+      ],
+      "manual": [
+        "buscador.html?q=transparencia — registros activos, no huella",
+        "Chip fuente → ?fuente= filtra resultados",
+        "Pestaña huella solo con ?caso= o ?huella=1"
+      ]
+    },
+    {
+      "id": "J03",
+      "taxonomy": "instrumento",
+      "persona": "comite",
+      "title": "Leer — marco doctoral y D4",
+      "empatizar": "Busca ensayo y protocolo sin nombres de archivos JSON en copy",
+      "definir": "Narrativa desde JSON con badges epistémicos y ancla artículo",
+      "duration_min": 5,
+      "pages": ["leer.html", "contra-archivo.html"],
+      "circuit": [
+        { "label": "boot narrativa", "page": "leer.html", "needle": "leer-boot.js" },
+        { "label": "renderer JSON", "page": "leer.html", "needle": "narrativeRenderer.js" },
+        { "label": "puente leer", "page": "contra-archivo.html", "needle": "leer.html" }
+      ],
+      "manual": [
+        "leer.html — presentación y protocolo C.01–C.04",
+        "Ancla #articulo-etnografico alcanzable",
+        "contra-archivo.html — enlace explícito a leer.html"
+      ]
+    },
+    {
+      "id": "J04",
+      "taxonomy": "instrumento",
+      "persona": "comite",
+      "title": "Instrumento v2 — grafo embebido",
+      "empatizar": "Confunde instrumento legacy con portal canónico",
+      "definir": "Superficie real con boot de grafo, sin meta-refresh",
+      "duration_min": 4,
+      "pages": ["contra-archivo-v2.html", "index.html"],
+      "circuit": [
+        { "label": "instrumento boot", "page": "contra-archivo-v2.html", "needle": "instrumento-boot.js" },
+        { "label": "portal canónico", "page": "index.html", "needle": "Contra-archivo" }
+      ],
+      "manual": [
+        "contra-archivo-v2.html carga sin redirect",
+        "index.html#tesis es ruta canónica al grafo"
+      ]
+    },
+    {
+      "id": "J05",
+      "taxonomy": "archivo",
+      "persona": "comite",
+      "title": "Archivo editorial — fichas y corpus",
+      "empatizar": "No distingue publicable vs en revisión",
+      "definir": "Hub desde archivo-index con leyenda de estados y enlace corpus",
+      "duration_min": 4,
+      "pages": ["archivo.html"],
+      "circuit": [
+        { "label": "índice JSON", "page": "archivo.html", "needle": "archivo-index.json" },
+        { "label": "corpus citas", "page": "archivo.html", "needle": "corpus-citas.html" },
+        { "label": "leyenda estados", "page": "archivo.html", "needle": "estado-legend" }
+      ],
+      "manual": [
+        "archivo.html lista fichas C01/C05 publicables",
+        "C04 visible como en revisión",
+        "Enlace a corpus-citas.html"
+      ]
+    },
+    {
+      "id": "J06",
+      "taxonomy": "corpus",
+      "persona": "investigador",
+      "title": "Corpus de citas — Zuboff y ATTAC",
+      "empatizar": "Temor a perder citas editadas localmente",
+      "definir": "Store unificado y datos en data/ accesibles",
+      "duration_min": 5,
+      "pages": ["corpus-citas.html"],
+      "circuit": [
+        { "label": "store corpus", "page": "corpus-citas.html", "needle": "corpusCitasStore.js" },
+        { "label": "fetch zuboff", "page": "corpus-citas.html", "needle": "zuboff-citas.json" },
+        { "label": "shell móvil", "page": "corpus-citas.html", "needle": "shared-shell.js" }
+      ],
+      "manual": [
+        "corpus-citas.html carga sin error de consola",
+        "Filtro por categoría responde",
+        "Enlace a privado-login para investigadoras"
+      ]
+    },
+    {
+      "id": "J07",
+      "taxonomy": "publicaciones",
+      "persona": "comite",
+      "title": "Biblioteca y publicaciones",
+      "empatizar": "Quiere PDF/título sin pasar por login innecesario",
+      "definir": "Catálogo desde bibliotecaLoader; poemarios alcanzables",
+      "duration_min": 4,
+      "pages": ["tesis.html", "Poemarios/poemas.html"],
+      "circuit": [
+        { "label": "biblioteca loader", "page": "tesis.html", "needle": "bibliotecaLoader.js" },
+        { "label": "passkey gate", "page": "tesis.html", "needle": "privado-login.html" },
+        { "label": "poemarios landmark", "page": "Poemarios/poemas.html", "needle": "main-content" }
+      ],
+      "manual": [
+        "tesis.html muestra catálogo filtrable",
+        "Poemarios/poemas.html — índice y ficha C04"
+      ]
+    },
+    {
+      "id": "J08",
+      "taxonomy": "publicaciones",
+      "persona": "comite",
+      "title": "Artículo D4 — redirect canónico",
+      "empatizar": "Bookmark antiguo articulo-fabricar-enemigos.html",
+      "definir": "Redirect a leer.html#articulo-etnografico",
+      "duration_min": 2,
+      "pages": ["articulo-fabricar-enemigos.html"],
+      "redirect": true,
+      "circuit": [
+        { "label": "redirect leer", "page": "articulo-fabricar-enemigos.html", "needle": "leer.html#articulo-etnografico" }
+      ],
+      "manual": ["articulo-fabricar-enemigos.html redirige a leer"]
+    },
+    {
+      "id": "J09",
+      "taxonomy": "investigador",
+      "persona": "investigador_auth",
+      "title": "Acceso privado — passkey",
+      "empatizar": "Ansiedad por seguridad y claridad del flujo WebAuthn",
+      "definir": "Login unificado con aria-live y sin rutas vault expuestas",
+      "duration_min": 3,
+      "pages": ["privado-login.html", "login.html"],
+      "circuit": [
+        { "label": "passkey lib", "page": "privado-login.html", "needle": "passkey.js" },
+        { "label": "aria-live estado", "page": "privado-login.html", "needle": "aria-live" },
+        { "label": "login consolidado", "page": "login.html", "needle": "privado-login.html" }
+      ],
+      "manual": [
+        "privado-login.html — skip link y botón passkey visible",
+        "login.html redirige a privado-login"
+      ]
+    },
+    {
+      "id": "J10",
+      "taxonomy": "entrada",
+      "persona": "visitante",
+      "title": "Recuperación — 404 y redirects",
+      "empatizar": "URL rota sin salida clara genera abandono total",
+      "definir": "404 con rutas de recuperación; stubs redirigen a canónico",
+      "duration_min": 2,
+      "pages": ["404.html", "zuboff-archivo.html", "citas-attac.html", "archivo-lecturas.html"],
+      "circuit": [
+        { "label": "404 recuperación", "page": "404.html", "needle": "index.html" },
+        { "label": "zuboff→corpus", "page": "zuboff-archivo.html", "needle": "corpus-citas.html" },
+        { "label": "attac→corpus", "page": "citas-attac.html", "needle": "corpus-citas.html" },
+        { "label": "lecturas→corpus", "page": "archivo-lecturas.html", "needle": "corpus-citas.html" }
+      ],
+      "manual": [
+        "404 enlaza inicio y buscador",
+        "URLs legacy de corpus redirigen a corpus-citas.html"
+      ]
+    },
+    {
+      "id": "J11",
+      "taxonomy": "entrada",
+      "persona": "visitante",
+      "title": "Grafo — casos etnográficos",
+      "empatizar": "Siete casos saturan móvil",
+      "definir": "4 casos tesis visibles + toggle expandible; deep-link ?caso= en grafo",
+      "duration_min": 4,
+      "pages": ["index.html"],
+      "circuit": [
+        { "label": "strip progresivo", "file": "web/lib/siteSurface.js", "needle": "data-casos-toggle" },
+        { "label": "7 casos corpus", "file": "data/casos.json", "needle": "\"id\": \"ensayo-traduccion-saberes\"" },
+        { "label": "grafo deep-link", "file": "src/graphBootstrap.js", "needle": "get('caso')" }
+      ],
+      "manual": [
+        "Strip muestra 4 casos + toggle 3 más",
+        "index.html?caso=michillanca-extractivismo-ley-anti#tesis precarga nodo"
+      ]
+    }
+  ],
+  "cross_nav": [
+    { "from": "index.html", "needle": "leer.html", "label": "portal → leer" },
+    { "from": "index.html", "needle": "buscador.html", "label": "portal → buscador" },
+    { "from": "leer.html", "needle": "index.html", "label": "leer → inicio" },
+    { "from": "archivo.html", "needle": "index.html", "label": "archivo → inicio" },
+    { "from": "buscador.html", "needle": "index.html", "label": "buscador → grafo/home" },
+    { "from": "privado-login.html", "needle": "buscador.html", "label": "login → buscador público" }
+  ]
+}

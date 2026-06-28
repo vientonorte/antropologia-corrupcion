@@ -51,6 +51,15 @@ export const CRITICAL_PATHS = [
   '/data/fuentes-config.json',
   '/terraza/',
   '/404.html',
+  '/leer.html',
+  '/archivo.html',
+  '/tesis.html',
+  '/corpus-citas.html',
+  '/privado-login.html',
+  '/articulo-fabricar-enemigos.html',
+  '/Poemarios/poemas.html',
+  '/Poemarios/trabajo-en-sura.html',
+  '/terraza-gateway.html',
   '/xml/sitemap.xml',
 ];
 
@@ -73,6 +82,13 @@ export const HTML_HEURISTICS = {
     { id: 'corpus-stats', test: (h) => /corpusStats\.js/i.test(h) && /ca-corpus-stats/i.test(h), hint: 'métricas corpus' },
     { id: 'no-json-copy', test: (h) => !/archivo-index\.json/i.test(h), hint: 'copy público sin nombres JSON' },
     { id: 'hero-title', test: (h) => /Contra-archivo/i.test(h) && !/¿Quién es\?/i.test(h), hint: 'H1 portal, no FAQ identidad' },
+    { id: 'funnel-hint', test: (h) => /hero-search__hint/i.test(h) && /buscador\.html/i.test(h), hint: 'hint embudo búsqueda avanzada' },
+    { id: 'demo-before-search', test: (h) => {
+      const demo = h.indexOf('ca-friction-demo');
+      const search = h.indexOf('hero-search');
+      return demo !== -1 && search !== -1 && demo < search;
+    }, hint: 'demo fricción antes del input (DT)' },
+    { id: 'onboarding-funnel', test: (h) => /onboarding-search\.js/i.test(h), hint: 'búsqueda preliminar' },
   ],
   'buscador.html': [
     { id: 'huella-lib', test: (h) => /huellaDigital\.js/i.test(h), hint: 'circuito huella' },
@@ -88,10 +104,74 @@ export const HTML_HEURISTICS = {
   'contra-archivo-v2.html': [
     { id: 'instrumento-boot', test: (h) => /instrumento-boot\.js/i.test(h), hint: 'instrumento grafo' },
     { id: 'no-meta-refresh', test: (h) => !/http-equiv=["']refresh/i.test(h), hint: 'no redirect' },
+    { id: 'skip-link', test: (h) => /skip-link/i.test(h) && /#main-content/i.test(h), hint: 'accesibilidad' },
+    { id: 'shared-shell', test: (h) => /shared-shell\.js/i.test(h), hint: 'nav unificada' },
   ],
   'contra-archivo.html': [
     { id: 'narrative-renderer', test: (h) => /narrativeRenderer\.js/i.test(h), hint: 'narrativa JSON' },
     { id: 'no-meta-refresh', test: (h) => !/http-equiv=["']refresh/i.test(h), hint: 'no redirect' },
+    { id: 'bridge-leer', test: (h) => /leer\.html/i.test(h), hint: 'puente a leer canónico' },
+    { id: 'skip-link', test: (h) => /skip-link/i.test(h), hint: 'accesibilidad' },
+  ],
+  'leer.html': [
+    { id: 'leer-boot', test: (h) => /leer-boot\.js/i.test(h), hint: 'boot narrativa' },
+    { id: 'narrative-renderer', test: (h) => /narrativeRenderer\.js/i.test(h), hint: 'renderer JSON' },
+    { id: 'epistemic-badge', test: (h) => /epistemic-badge/i.test(h), hint: 'badges epistémicos' },
+    { id: 'skip-link', test: (h) => /skip-link/i.test(h) && /#main-content/i.test(h), hint: 'accesibilidad' },
+    { id: 'canonical', test: (h) => /rel=["']canonical["']/i.test(h), hint: 'SEO' },
+    { id: 'no-json-copy', test: (h) => !/narrativa-rescatada\.json/i.test(h), hint: 'copy sin nombre JSON' },
+  ],
+  'archivo.html': [
+    { id: 'archivo-index', test: (h) => /archivo-index\.json/i.test(h), hint: 'índice editorial' },
+    { id: 'corpus-link', test: (h) => /corpus-citas\.html/i.test(h), hint: 'enlace corpus' },
+    { id: 'estado-legend', test: (h) => /estado-legend/i.test(h), hint: 'leyenda estados' },
+    { id: 'skip-link', test: (h) => /skip-link/i.test(h) && /#main-content/i.test(h), hint: 'accesibilidad' },
+    { id: 'shared-shell', test: (h) => /shared-shell\.js/i.test(h), hint: 'nav unificada' },
+  ],
+  'tesis.html': [
+    { id: 'biblioteca-loader', test: (h) => /bibliotecaLoader\.js/i.test(h), hint: 'catálogo dinámico' },
+    { id: 'passkey-gate', test: (h) => /passkey\.js/i.test(h) && /privado-login\.html/i.test(h), hint: 'acceso protegido' },
+    { id: 'skip-link', test: (h) => /skip-link/i.test(h) && /#main-content/i.test(h), hint: 'accesibilidad' },
+    { id: 'shared-shell', test: (h) => /shared-shell\.js/i.test(h), hint: 'nav unificada' },
+  ],
+  'corpus-citas.html': [
+    { id: 'corpus-store', test: (h) => /corpusCitasStore\.js/i.test(h), hint: 'store unificado' },
+    { id: 'zuboff-data', test: (h) => /zuboff-citas\.json/i.test(h), hint: 'corpus Zuboff' },
+    { id: 'shared-shell', test: (h) => /shared-shell\.js/i.test(h), hint: 'nav móvil' },
+    { id: 'privado-link', test: (h) => /privado-login\.html/i.test(h), hint: 'puente investigador' },
+  ],
+  'privado-login.html': [
+    { id: 'passkey-lib', test: (h) => /passkey\.js/i.test(h), hint: 'WebAuthn' },
+    { id: 'aria-live', test: (h) => /aria-live/i.test(h), hint: 'estado accesible' },
+    { id: 'main-landmark', test: (h) => /id=["']main-content["']/i.test(h), hint: 'landmark' },
+    { id: 'skip-access', test: (h) => /skip-to-content|skip-link/i.test(h), hint: 'skip link' },
+    { id: 'public-nav', test: (h) => /buscador\.html/i.test(h), hint: 'salida a público' },
+  ],
+  '404.html': [
+    { id: 'recovery-index', test: (h) => /index\.html/i.test(h), hint: 'recuperación inicio' },
+    { id: 'recovery-buscador', test: (h) => /buscador\.html/i.test(h), hint: 'recuperación buscador' },
+    { id: 'recovery-login', test: (h) => /privado-login\.html/i.test(h), hint: 'recuperación acceso' },
+    { id: 'shared-shell', test: (h) => /shared-shell\.js/i.test(h), hint: 'nav unificada' },
+  ],
+  'Poemarios/poemas.html': [
+    { id: 'main-landmark', test: (h) => /id=["']main-content["']/i.test(h), hint: 'landmark' },
+    { id: 'skip-link', test: (h) => /skip-link/i.test(h), hint: 'accesibilidad' },
+    { id: 'archivo-link', test: (h) => /archivo\.html|index\.html/i.test(h), hint: 'navegación archivo/inicio' },
+  ],
+  'login.html': [
+    { id: 'redirect-privado', test: (h) => /privado-login\.html/i.test(h), hint: 'consolidación login' },
+  ],
+  'zuboff-archivo.html': [
+    { id: 'redirect-corpus', test: (h) => /corpus-citas\.html/i.test(h), hint: 'redirect corpus' },
+  ],
+  'citas-attac.html': [
+    { id: 'redirect-corpus', test: (h) => /corpus-citas\.html/i.test(h), hint: 'redirect corpus' },
+  ],
+  'archivo-lecturas.html': [
+    { id: 'redirect-corpus', test: (h) => /corpus-citas\.html/i.test(h), hint: 'redirect corpus' },
+  ],
+  'articulo-fabricar-enemigos.html': [
+    { id: 'redirect-leer', test: (h) => /leer\.html#articulo-etnografico/i.test(h), hint: 'artículo en leer' },
   ],
 };
 
