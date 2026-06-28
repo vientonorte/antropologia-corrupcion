@@ -39,7 +39,8 @@
         "descripcion": "Ambos sujetos son formalmente protegidos por la ley y materialmente excluidos del poder de decisión sobre sus propias condiciones"
       }
     ],
-    "nota_nodos": "Los IDs en enlaces_transversales referencian nodos definidos en cada caso dentro del array casos. El grafo valida estas referencias al construir el índice de nodos."
+    "nota_nodos": "Los IDs en enlaces_transversales referencian nodos definidos en cada caso dentro del array casos. El grafo valida estas referencias al construir el índice de nodos.",
+    "nota_casos": "7 casos en corpus (2026-06-28): 4 campos etnográficos originales + banca-roles-opacidad-digital + michillanca-extractivismo-ley-anti + ensayo-traduccion-saberes (D4). Categoría I del buscador prioriza los 4 originales por friccion_con; ensayo y michillanca entran vía keywords/tags."
   },
   "casos": [
     {

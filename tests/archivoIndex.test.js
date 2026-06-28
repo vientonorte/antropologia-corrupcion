@@ -49,6 +49,13 @@ module.exports = function (describe, it, assert, assertEqual) {
       assert(c04.estado === 'en revisión', 'C04 debe estar en revisión');
     });
 
+    it('ensayo D4 enlaza al grafo con caso_id', function () {
+      var ensayo = find('ensayo-traduccion-teorico');
+      assert(ensayo, 'falta ensayo-traduccion-teorico');
+      assertEqual(ensayo.caso_id, 'ensayo-traduccion-saberes');
+      assert(ensayo.grafo_url.indexOf('ensayo-traduccion-saberes') !== -1);
+    });
+
     it('tesis.html carga catálogo desde bibliotecaLoader', function () {
       var html = fs.readFileSync(path.join(root, 'web', 'tesis.html'), 'utf8');
       assert(html.indexOf('bibliotecaLoader.js') !== -1, 'tesis usa bibliotecaLoader');

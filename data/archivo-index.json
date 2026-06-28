@@ -151,6 +151,8 @@
       "titulo": "Ensayo: Traducción de Saberes",
       "descripcion": "Núcleo argumentativo: mistranslation institucionalizada, marcos normativos, epistemicidio. Resumen en leer.html; JSON en narrativa-rescatada.json.",
       "url": "https://github.com/vientonorte/antropologia-corrupcion/blob/main/Estado%20del%20Arte/Ensayo%20Traducci%C3%B3n%20de%20Saberes/README.md",
+      "grafo_url": "index.html?caso=ensayo-traduccion-saberes#tesis",
+      "caso_id": "ensayo-traduccion-saberes",
       "estado": "publicable_resumen",
       "dimension": "D4"
     }

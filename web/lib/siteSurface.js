@@ -146,7 +146,7 @@
             return;
         }
 
-        var cards = list.slice(0, 4).map(function (caso) {
+        var cards = list.map(function (caso) {
             var href = 'index.html?caso=' + encodeURIComponent(caso.id);
             var label = window.CACasoPublico
                 ? window.CACasoPublico.getPublicLabel(caso)

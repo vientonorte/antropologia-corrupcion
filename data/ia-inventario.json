@@ -45,8 +45,9 @@
       "sitemap": true,
       "priority": 0.85,
       "data": ["fuentes-oficiales.json", "casos.json", "bcn-legislativo.json", "fuentes-config.json", "huella-digital-publica.json"],
-      "modules": ["dataLoader.js", "sourceRegistry.js", "basesConsultadas.js", "buscadorAvanzado.js", "huellaDigital.js"],
-      "views": ["registros", "huella", "bases-consultadas"],
+      "modules": ["dataLoader.js", "sourceRegistry.js", "basesConsultadas.js", "corpusStats.js", "buscadorAvanzado.js", "huellaDigital.js"],
+      "views": ["registros", "huella", "bases-consultadas", "bases-strip", "corpus-stats"],
+      "purpose": "Búsqueda avanzada E–I, deep-links ?q=/?fuente=/?caso=, strip de fuentes sobre el pliegue y huella digital",
       "doc": "docs/skills/BASES_CONSULTADAS.md"
     },
     {

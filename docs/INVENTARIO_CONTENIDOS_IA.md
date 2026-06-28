@@ -3,7 +3,7 @@
 > **Repositorio:** [vientonorte/antropologia-corrupcion](https://github.com/vientonorte/antropologia-corrupcion)  
 > **Sitio público:** https://vientonorte.github.io/antropologia-corrupcion/  
 > **Fuente de verdad del deploy:** `web/` (promovida a raíz vía `rsync` en CI)  
-> **Versión:** 2026-06-20 · **Mantenedor:** Colectivo Viento Norte
+> **Versión:** 2026-06-28 · **Mantenedor:** Colectivo Viento Norte
 
 Este documento es la **base angular** de la arquitectura de información (IA). Todo cambio de navegación, sitemap, card sorting o nueva superficie debe reconciliarse aquí antes de implementarse.
 
@@ -42,7 +42,7 @@ Este documento es la **base angular** de la arquitectura de información (IA). T
 
 ```
 Contra-Archivo
-├── 1. Entrada y descubrimiento      → landing / index («¿Quién es?»)
+├── 1. Entrada y descubrimiento      → index.html (portal Contra-archivo)
 ├── 2. Exploración de datos            → buscador (fuentes oficiales + fricción)
 ├── 3. Instrumento analítico           → contra-archivo-v2 (narrativa · grafo · biblioteca)
 ├── 4. Archivo editorial             → archivo (hub fichas · citas · poemarios)
@@ -69,9 +69,8 @@ Contra-Archivo
 
 | ID | Archivo | URL | Título | Propósito | Audiencia | Nav global | Sitemap |
 |---|---|---|---|---|---|---|---|
-| P01 | `web/landing.html` | `/landing.html` | Contra-Archivo | **Entrada canónica.** Hero «¿Quién es?», búsqueda onboarding (≤3 resultados), tarjetas a fichas, zuboff, v2 | Público | Inicio | 0.95 |
-| P02 | `web/index.html` | `/` | *(igual landing)* | Duplicado funcional + canvas hero; `canonical` → landing | Público | ⚠️ «Instrumento» | 0.9 |
-| P03 | `web/buscador.html` | `/buscador.html` | Búsqueda Avanzada | 5 categorías E–I, export CSV, autosuggest por fuente | Avanzado | Búsqueda | 0.85 |
+| P01 | `web/index.html` | `/` | Contra-archivo | **Portal canónico.** Rutas grafo/leer/buscar, demo fricción, métricas corpus, grafo lazy | Público | Inicio | 1.0 |
+| P03 | `web/buscador.html` | `/buscador.html` | Búsqueda Avanzada | 5 categorías E–I, deep-links `?q=`/`?fuente=`, strip fuentes, huella digital | Avanzado | Búsqueda | 0.85 |
 | P04 | `web/archivo.html` | `/archivo.html` | Archivo público | Hub desde `archivo-index.json`: fichas, citas, biblioteca, poemarios | Académico | Archivo | 0.85 |
 | P05 | `web/contra-archivo-v2.html` | `/contra-archivo-v2.html` | Negra Colorá | Instrumento: Leer · Explorar · Consultar; grafo 37 nodos | Público · comité | Secundaria | 0.9 |
 | P06 | `web/zuboff-archivo.html` | `/zuboff-archivo.html` | ⑤ Archivo de Citas | Corpus Zuboff+ATTAC, Clave B, OCR/IA, export | Metodológico | Desde archivo/v2 | 0.85 |
@@ -123,11 +122,11 @@ Contra-Archivo
 
 | Archivo | Alimenta | Contenido |
 |---|---|---|
-| `casos.json` | Grafo, buscador, landing, privado | 6 casos + nodos + 4 enlaces transversales |
-| `fuentes-oficiales.json` | buscador, landing, export | 37 registros fuentes chilenas |
+| `casos.json` | Grafo, buscador, index, privado | 7 casos + nodos + 4 enlaces transversales |
+| `fuentes-oficiales.json` | buscador, index, export | 38 registros fuentes oficiales (+ BCN normalizado) |
 | `bcn-legislativo.json` | Búsqueda cat. H | Boletines BCN |
 | `fuentes-config.json` | Tests, registry, **bases consultadas UI** | Endpoints, pipeline mvp/fase-2, normalizadores |
-| `archivo-index.json` | `archivo.html` | 6 entradas editoriales |
+| `archivo-index.json` | `archivo.html`, `index.html` (resource grid) | 10+ entradas editoriales publicables |
 | `zuboff-citas.json` | zuboff-archivo | Citas Zuboff (ids 1001+) |
 | `attac-citas.json` | zuboff-archivo | Citas ATTAC (ids 2001+) |
 | `corpus-categorias.json` | zuboff-archivo | Taxonomía temática |
@@ -144,8 +143,9 @@ Contra-Archivo
 2. `la-negra-territorio-mapuche` (2023)
 3. `periodismo-datos-chile` (2023)
 4. `oit169-consulta-previa` (2022)
-5. `banca-roles-opacidad-digital`
-6. `michillanca-extractivismo-ley-anti`
+5. `banca-roles-opacidad-digital` (2024)
+6. `michillanca-extractivismo-ley-anti` (2018)
+7. `ensayo-traduccion-saberes` (2026, D4)
 
 ---
 
@@ -156,7 +156,8 @@ Contra-Archivo
 | `C01-nucleo-margen.md` | Conceptual | publicable | ✅ | ✅ |
 | `C02-sistema-pensiones-archivo.md` | Sistema | publicable | ✅ | ✅ |
 | `C03-protocolo-documentacion.md` | Metodológica | investigador | README interno | ❌ |
-| `C04-bomba-viento-norte.md` | Caso/poética | sin indexar | ❌ | ❌ |
+| `C04-bomba-viento-norte.md` | Caso/poética | en revisión | ✅ | ✅ (poemario) |
+| `C05-michillanca-extractivismo-ley-anti.md` | Caso etnográfico | publicable | ✅ | ✅ |
 | `README.md` | Operación | investigador | ✅ (interno) | ❌ |
 
 > Las fichas viven en GitHub; no se despliegan como HTML en Pages. El hub público es `archivo.html` + enlaces raw.
@@ -183,7 +184,7 @@ Infografías de ejes I–III en `contra-archivo-v2.html`; `evidencia-reservada.s
 
 ```mermaid
 flowchart TD
-  landing["P01 landing / P02 index"]
+  index["P01 index — portal"]
   buscador["P03 buscador"]
   archivo["P04 archivo"]
   v2["P05 contra-archivo-v2"]
@@ -194,10 +195,10 @@ flowchart TD
   privado["R02 privado"]
   terraza["R05 terraza gateway"]
 
-  landing --> buscador
-  landing --> archivo
-  landing --> v2
-  landing --> login
+  index --> buscador
+  index --> archivo
+  index --> v2
+  index --> login
   archivo --> zuboff
   archivo --> tesis
   archivo --> poemas
@@ -210,7 +211,7 @@ flowchart TD
 
 | Hub | Rol IA |
 |---|---|
-| `landing.html` | **Home cognitivo** — onboarding, búsqueda rápida, tarjetas |
+| `index.html` | **Portal público** — rutas de entrada, demo fricción, búsqueda preliminar, grafo |
 | `archivo.html` | **Catálogo editorial** — fichas, corpus, biblioteca, poemarios |
 | `contra-archivo-v2.html` | **Instrumento** — narrativa + grafo + biblioteca embebida |
 
@@ -230,7 +231,7 @@ flowchart TD
 ### A. Público general
 
 ```
-landing → búsqueda «¿Quién es?» → buscador (profundizar)
+index → demo fricción / búsqueda preliminar → buscador (profundizar con `?q=`)
        → archivo (descubrir) → contra-archivo-v2 (narrativa/grafo)
        → tesis / Poemarios (lectura)
 ```
@@ -263,7 +264,7 @@ Esta es la **nav objetivo** derivada del inventario (no necesariamente implement
 
 | Label | Destino | Categoría IA |
 |---|---|---|
-| Inicio | `landing.html` | 1 |
+| Inicio | `index.html` | 1 |
 | Explorar datos | `buscador.html` | 2 |
 | Contra-archivo | `contra-archivo-v2.html#leer` | 3 |
 | Archivo | `archivo.html` | 4 |

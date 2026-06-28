@@ -20,10 +20,13 @@
       { "id": "epistemic-badge", "js": "web/components/atoms/epistemic-badge.js", "namespace": "CAAtoms.epistemicBadge", "css": "web/styles/atoms/epistemic-badge.css" }
     ],
     "molecules": [
-      { "id": "section-header", "js": "web/components/molecules/section-header.js", "namespace": "CAMolecules.sectionHeader", "css": "web/styles/molecules/section-header.css", "uses": ["dom", "kicker"] }
+      { "id": "section-header", "js": "web/components/molecules/section-header.js", "namespace": "CAMolecules.sectionHeader", "css": "web/styles/molecules/section-header.css", "uses": ["dom", "kicker"] },
+      { "id": "hero-entry-paths", "js": "web/components/molecules/hero-entry-paths.js", "namespace": "CAHeroEntryPaths", "css": "web/styles/molecules/hero-entry-paths.css", "surface": "P01" },
+      { "id": "corpus-stats", "js": "web/lib/corpusStats.js", "namespace": "CACorpusStats", "css": "web/styles/molecules/corpus-stats.css", "surfaces": ["P01", "P03"] }
     ],
     "organisms": [
       { "id": "thesis-section", "js": "web/components/organisms/thesis-section.js", "namespace": "CAOrganisms.thesisSection", "css": "web/styles/organisms/thesis-graph.css", "uses": ["section-header"] },
+      { "id": "friction-demo", "js": "web/components/organisms/friction-demo.js", "namespace": "CAFrictionDemo", "css": "web/styles/organisms/friction-demo.css", "surface": "P01" },
       { "id": "huella-panel", "js": null, "css": "web/styles/organisms/huella-panel.css", "uses": [], "debt": "JS organism pendiente — hoy lib/huellaDigital.js" },
       { "id": "narrative-document", "js": null, "css": "web/styles/organisms/narrative-document.css", "uses": [], "debt": "renderer en lib/narrativeRenderer.js" }
     ]
@@ -34,8 +37,15 @@
       "path": "web/index.html",
       "maturity": "partial",
       "wave": 2,
-      "required_scripts": ["components/atoms/dom.js", "components/organisms/thesis-section.js", "shared-shell.js"],
-      "required_styles": ["styles/atoms/", "styles/organisms/thesis-graph.css"],
+      "required_scripts": [
+        "components/atoms/dom.js",
+        "components/organisms/thesis-section.js",
+        "components/molecules/hero-entry-paths.js",
+        "components/organisms/friction-demo.js",
+        "lib/corpusStats.js",
+        "shared-shell.js"
+      ],
+      "required_styles": ["styles/atoms/", "styles/organisms/thesis-graph.css", "styles/molecules/hero-entry-paths.css", "styles/organisms/friction-demo.css", "styles/molecules/corpus-stats.css"],
       "boot": "web/pages/home-boot.js"
     },
     {
@@ -43,10 +53,10 @@
       "path": "web/buscador.html",
       "maturity": "partial",
       "wave": 3,
-      "required_scripts": ["shared-shell.js"],
-      "required_styles": ["styles/organisms/huella-panel.css"],
+      "required_scripts": ["shared-shell.js", "lib/corpusStats.js"],
+      "required_styles": ["styles/organisms/huella-panel.css", "styles/molecules/corpus-stats.css", "styles/molecules/bases-consultadas.css"],
       "boot": "web/pages/buscador-boot.js",
-      "libs": ["web/lib/huellaDigital.js", "web/lib/buscadorAvanzado.js"]
+      "libs": ["web/lib/huellaDigital.js", "web/lib/buscadorAvanzado.js", "web/lib/corpusStats.js"]
     },
     {
       "surface": "P05",

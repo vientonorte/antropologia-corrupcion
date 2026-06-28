@@ -90,6 +90,13 @@ module.exports = function (describe, it, assert, assertEqual) {
             assert(js.indexOf('index.html?caso=') !== -1, 'caso deep-links');
         });
 
+        it('siteSurface casos strip muestra los 7 casos del corpus (Sprint P03)', function () {
+            var js = fs.readFileSync(path.join(web, 'lib', 'siteSurface.js'), 'utf8');
+            assert(js.indexOf('list.slice(0, 4)') === -1, 'sin límite artificial de 4 casos');
+            var casos = JSON.parse(fs.readFileSync(path.join(root, 'data', 'casos.json'), 'utf8'));
+            assertEqual(casos.casos.length, 7, 'corpus declara 7 casos');
+        });
+
         it('buscador-boot handles ?huella=1 and ?caso=', function () {
             var js = fs.readFileSync(path.join(web, 'pages', 'buscador-boot.js'), 'utf8');
             assert(js.indexOf("get('huella')") !== -1, 'huella param');
