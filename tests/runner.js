@@ -309,6 +309,7 @@ require('./circuitDeepLink.test.js')(describe, it, assert, assertEqual);
 require('./qaLiveHeuristics.test.js')(describe, it, assert, assertEqual);
 require('./homePublicE2E.test.js')(describe, it, assert, assertEqual);
 require('./sprintGatesQA.test.js')(describe, it, assert, assertEqual);
+require('./instrumentoV2E2E.test.js')(describe, it, assert, assertEqual);
 require('./qaDesignThinking.test.js')(describe, it, assert, assertEqual);
 require('./atomicDesign.test.js')(describe, it, assert, assertEqual);
 require('./archivoIndex.test.js')(describe, it, assert, assertEqual);

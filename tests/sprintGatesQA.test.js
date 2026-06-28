@@ -90,6 +90,24 @@ module.exports = function (describe, it, assert, assertEqual) {
         });
     });
 
+    describe('QA Sprint — P04 instrumento v2 E2E', function () {
+        it('contra-archivo-v2.html superficie dedicada con graphChunk', function () {
+            var html = readWeb('contra-archivo-v2.html');
+            assert(html.indexOf('instrumento-boot.js') !== -1, 'boot');
+            assert(html.indexOf('graphChunk.js') !== -1, 'graphChunk');
+            assert(html.indexOf('ca-instrumento-corpus-stats') !== -1, 'stats mount');
+            assert(html.indexOf('casos.json') === -1, 'sin JSON en copy');
+            assert(html.indexOf('vendor/d3.min.js') === -1, 'd3 vía chunk');
+        });
+
+        it('instrumento-boot paridad con home (chunk + métricas)', function () {
+            var boot = readWeb('pages/instrumento-boot.js');
+            assert(boot.indexOf('CAGraphChunk.whenReady') !== -1, 'chunk loader');
+            assert(boot.indexOf('CACorpusStats.mount') !== -1, 'corpus stats');
+            assert(boot.indexOf('thesisSection.render') !== -1, 'organismo tesis');
+        });
+    });
+
     describe('QA Sprint — deuda conocida (wave 3)', function () {
         it('huella-panel organism JS sigue documentado como deuda', function () {
             var reg = readData('atomic-registry.json');

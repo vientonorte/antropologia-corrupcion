@@ -34,6 +34,22 @@
       "anchors": ["#tesis"]
     },
     {
+      "id": "P_INSTRUMENTO",
+      "file": "web/contra-archivo-v2.html",
+      "path": "contra-archivo-v2.html",
+      "title": "Instrumento — Grafo de tesis",
+      "taxonomy": "instrumento",
+      "audience": "publico_academico",
+      "nav_label": "Instrumento v2",
+      "nav_primary": false,
+      "sitemap": true,
+      "priority": 0.82,
+      "purpose": "Superficie dedicada al grafo B: vista completa del organismo de tesis, métricas corpus y deep-link ?caso=; portal canónico sigue en index.html#tesis",
+      "data": ["casos.json", "fuentes-oficiales.json", "bcn-legislativo.json", "fuentes-config.json"],
+      "modules": ["graphChunk.js", "graphBootstrap.js", "corpusStats.js", "dataLoader.js", "thesis-section.js"],
+      "related": ["P01", "P03", "P05"]
+    },
+    {
       "id": "P03",
       "file": "web/buscador.html",
       "path": "buscador.html",

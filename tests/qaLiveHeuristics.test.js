@@ -115,9 +115,12 @@ module.exports = function (describe, it, assert, assertEqual) {
       assert(/get\('q'\)/.test(avanzado), 'buscadorAvanzado lee ?q=');
     });
 
-    it('contra-archivo-v2.html es instrumento real', function () {
+    it('contra-archivo-v2.html es instrumento real Sprint v2', function () {
       var html = readWeb('contra-archivo-v2.html');
       assert(/instrumento-boot\.js/i.test(html), 'falta instrumento-boot');
+      assert(/graphChunk\.js/i.test(html), 'falta graphChunk');
+      assert(/ca-instrumento-corpus-stats/i.test(html), 'falta mount stats');
+      assert(html.indexOf('casos.json') === -1, 'sin JSON en copy');
       assert(html.indexOf('http-equiv="refresh"') === -1, 'no redirect');
     });
 

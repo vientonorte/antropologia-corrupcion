@@ -103,9 +103,14 @@ export const HTML_HEURISTICS = {
   ],
   'contra-archivo-v2.html': [
     { id: 'instrumento-boot', test: (h) => /instrumento-boot\.js/i.test(h), hint: 'instrumento grafo' },
+    { id: 'grafo-chunk', test: (h) => /graphChunk\.js/i.test(h), hint: 'carga diferida grafo' },
+    { id: 'corpus-stats', test: (h) => /corpusStats\.js/i.test(h) && /ca-instrumento-corpus-stats/i.test(h), hint: 'métricas corpus' },
+    { id: 'circuit-links', test: (h) => /buscador\.html/i.test(h) && /leer\.html/i.test(h) && /index\.html/i.test(h), hint: 'circuito E2E' },
+    { id: 'no-json-copy', test: (h) => !/casos\.json/i.test(h), hint: 'copy sin nombres JSON' },
     { id: 'no-meta-refresh', test: (h) => !/http-equiv=["']refresh/i.test(h), hint: 'no redirect' },
     { id: 'skip-link', test: (h) => /skip-link/i.test(h) && /#main-content/i.test(h), hint: 'accesibilidad' },
     { id: 'shared-shell', test: (h) => /shared-shell\.js/i.test(h), hint: 'nav unificada' },
+    { id: 'canonical', test: (h) => /rel=["']canonical["']/i.test(h), hint: 'SEO canonical' },
   ],
   'contra-archivo.html': [
     { id: 'narrative-renderer', test: (h) => /narrativeRenderer\.js/i.test(h), hint: 'narrativa JSON' },

@@ -69,9 +69,14 @@
     {
       "surface": "P_INSTRUMENTO",
       "path": "web/contra-archivo-v2.html",
-      "maturity": "partial",
-      "wave": 2,
-      "required_scripts": ["components/organisms/thesis-section.js"],
+      "maturity": "beta",
+      "wave": 4,
+      "required_scripts": [
+        "components/organisms/thesis-section.js",
+        "lib/graphChunk.js",
+        "lib/corpusStats.js",
+        "lib/dataLoader.js"
+      ],
       "boot": "web/pages/instrumento-boot.js"
     },
     {

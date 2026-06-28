@@ -77,18 +77,27 @@
       "id": "J04",
       "taxonomy": "instrumento",
       "persona": "comite",
-      "title": "Instrumento v2 — grafo embebido",
-      "empatizar": "Confunde instrumento legacy con portal canónico",
-      "definir": "Superficie real con boot de grafo, sin meta-refresh",
-      "duration_min": 4,
-      "pages": ["contra-archivo-v2.html", "index.html"],
+      "title": "Instrumento v2 — grafo dedicado E2E",
+      "empatizar": "Bookmark a v2 o llegada desde archivo legacy; espera grafo operativo sin pasar por hero del portal",
+      "definir": "Superficie dedicada con graphChunk, métricas corpus, circuito grafo→buscador→huella y ?caso= sin meta-refresh",
+      "duration_min": 5,
+      "pages": ["contra-archivo-v2.html", "index.html", "buscador.html"],
       "circuit": [
         { "label": "instrumento boot", "page": "contra-archivo-v2.html", "needle": "instrumento-boot.js" },
+        { "label": "graphChunk lazy", "page": "contra-archivo-v2.html", "needle": "graphChunk.js" },
+        { "label": "métricas corpus", "page": "contra-archivo-v2.html", "needle": "ca-instrumento-corpus-stats" },
+        { "label": "circuito buscador", "page": "contra-archivo-v2.html", "needle": "buscador.html" },
+        { "label": "sin JSON en copy", "page": "contra-archivo-v2.html", "must_not_contain": "casos.json" },
+        { "label": "deep-link ?caso=", "file": "src/graphBootstrap.js", "needle": "get('caso')" },
+        { "label": "panel → buscador", "file": "src/nodeRenderer.js", "needle": "buildBuscadorUrl" },
         { "label": "portal canónico", "page": "index.html", "needle": "Contra-archivo" }
       ],
       "manual": [
-        "contra-archivo-v2.html carga sin redirect",
-        "index.html#tesis es ruta canónica al grafo"
+        "contra-archivo-v2.html carga grafo sin redirect",
+        "Métricas corpus visibles bajo intro",
+        "Clic nodo → buscador con ?caso= o huella",
+        "contra-archivo-v2.html?caso=michillanca-extractivismo-ley-anti precarga nodo",
+        "index.html#tesis sigue siendo ruta canónica desde portal"
       ]
     },
     {
@@ -230,6 +239,9 @@
     { "from": "leer.html", "needle": "index.html", "label": "leer → inicio" },
     { "from": "archivo.html", "needle": "index.html", "label": "archivo → inicio" },
     { "from": "buscador.html", "needle": "index.html", "label": "buscador → grafo/home" },
+    { "from": "contra-archivo-v2.html", "needle": "buscador.html", "label": "instrumento → buscador" },
+    { "from": "contra-archivo-v2.html", "needle": "index.html", "label": "instrumento → portal" },
+    { "from": "contra-archivo-v2.html", "needle": "leer.html", "label": "instrumento → leer" },
     { "from": "privado-login.html", "needle": "buscador.html", "label": "login → buscador público" }
   ]
 }

@@ -25,7 +25,10 @@ PUBLIC_JOURNEY = [
     ]),
     ("P2 Instrumento", "web/contra-archivo-v2.html", [
         ("instrumento-boot", r"instrumento-boot\.js"),
-        ("grafo bust", r"graphBootstrap\.js\?v=20260624"),
+        ("graphChunk", r"graphChunk\.js"),
+        ("corpus-stats", r"ca-instrumento-corpus-stats"),
+        ("circuito", r"buscador\.html"),
+        ("no-json-copy", lambda h: "casos.json" not in h),
     ]),
     ("P3 Buscador", "web/buscador.html", [
         ("buscador-boot", r"buscador-boot\.js"),

@@ -79,6 +79,16 @@ module.exports = function (describe, it, assert, assertEqual) {
             assert(boot.indexOf('params.huella || params.casoId || params.query') === -1);
         });
 
+        it('J04 instrumento v2 — grafo dedicado E2E', function () {
+            var html = readWeb('contra-archivo-v2.html');
+            var boot = readWeb('pages/instrumento-boot.js');
+            assert(/graphChunk\.js/.test(html), 'graphChunk en página');
+            assert(/ca-instrumento-corpus-stats/.test(html), 'métricas corpus');
+            assert(html.indexOf('casos.json') === -1, 'sin JSON en copy');
+            assert(boot.indexOf('CAGraphChunk') !== -1, 'boot usa chunk');
+            assert(/buscador\.html/.test(html) && /leer\.html/.test(html), 'circuito navegación');
+        });
+
         it('J03 leer — narrativa sin copy JSON', function () {
             var html = readWeb('leer.html');
             assert(/leer-boot\.js/.test(html));
