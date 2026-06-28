@@ -99,6 +99,30 @@ module.exports = function (describe, it, assert, assertEqual) {
             assert(js.indexOf('refreshHuellaFromUrl') !== -1, 'defers huella boot until corpus loads');
         });
 
+        it('buscador-boot no fuerza huella solo con ?q= (Sprint P02)', function () {
+            var js = fs.readFileSync(path.join(web, 'pages', 'buscador-boot.js'), 'utf8');
+            assert(
+                js.indexOf('params.huella || params.casoId || params.query') === -1,
+                '?q= solo no abre pestaña huella',
+            );
+            assert(js.indexOf('params.huella || params.casoId') !== -1, 'huella solo con ?huella= o ?caso=');
+        });
+
+        it('buscador P02 monta strip y stats sobre el pliegue', function () {
+            var html = fs.readFileSync(path.join(web, 'buscador.html'), 'utf8');
+            assert(html.indexOf('id="ca-buscador-bases-strip"') !== -1, 'mount strip principal');
+            assert(html.indexOf('id="ca-buscador-corpus-stats"') !== -1, 'mount corpus stats');
+            assert(html.indexOf('corpusStats.js') !== -1, 'carga corpusStats');
+            assert(html.indexOf('ca-epistemic--hecho') !== -1, 'leyenda epistémica en toolbar');
+
+            var js = fs.readFileSync(path.join(web, 'lib', 'buscadorAvanzado.js'), 'utf8');
+            assert(js.indexOf("get('q')") !== -1, 'lee param ?q=');
+            assert(js.indexOf('applyDeepLinkFromUrl') !== -1, 'aplica deep-link query');
+            assert(js.indexOf('pickCategoryForQuery') !== -1, 'auto-selecciona categoría');
+            assert(js.indexOf('ca-buscador-bases-strip') !== -1, 'monta strip compacta');
+            assert(js.indexOf('ca-buscador-corpus-stats') !== -1, 'monta stats buscador');
+        });
+
         it('dataLoader caches corpus bundle', function () {
             var js = fs.readFileSync(path.join(web, 'lib', 'dataLoader.js'), 'utf8');
             assert(js.indexOf('loadCorpusBundle') !== -1, 'bundle loader');

@@ -139,25 +139,69 @@
         return true;
     }
 
+    function recordHaystack(r) {
+        return [r.titulo, r.institucion, r.capa_oficial, (r.keywords || []).join(' '), (r.tags || []).join(' ')]
+            .join(' ')
+            .toLowerCase();
+    }
+
+    function setActiveCategory(cat) {
+        activeCat = cat;
+        if (!$catTabs) return;
+        $catTabs.querySelectorAll('.cat-tab').forEach(function(tab) {
+            var isActive = tab.dataset.cat === cat;
+            tab.classList.toggle('active', isActive);
+            tab.setAttribute('aria-selected', isActive ? 'true' : 'false');
+        });
+        if ($catDesc && CAT_META[cat]) {
+            $catDesc.textContent = CAT_META[cat].desc;
+        }
+    }
+
+    function pickCategoryForQuery(q) {
+        var needle = (q || '').trim().toLowerCase();
+        if (!needle) return;
+
+        var bestCat = activeCat;
+        var bestCount = 0;
+        ['E', 'F', 'G', 'H', 'I'].forEach(function(cat) {
+            var filterFn = CAT_META[cat].filterFn;
+            var count = allRecords.filter(function(r) {
+                if (filterFn && !filterFn(r)) return false;
+                return recordHaystack(r).indexOf(needle) !== -1;
+            }).length;
+            if (count > bestCount) {
+                bestCount = count;
+                bestCat = cat;
+            }
+        });
+
+        if (bestCount > 0) {
+            setActiveCategory(bestCat);
+        }
+    }
+
     function applyDeepLinkFromUrl() {
         var params = new URLSearchParams(window.location.search);
         applyFuenteFilterFromUrl();
 
+        var qParam = params.get('q');
+        if (qParam && $input) {
+            query = decodeURIComponent(qParam.replace(/\+/g, ' ')).trim();
+            $input.value = query;
+            pickCategoryForQuery(query);
+        }
+
         var casoId = params.get('caso');
         if (!casoId) return;
-        activeCat = 'I';
-        document.querySelectorAll('.cat-tab').forEach(function(tab) {
-            var isI = tab.dataset.cat === 'I';
-            tab.classList.toggle('active', isI);
-            tab.setAttribute('aria-selected', isI ? 'true' : 'false');
-        });
-        var caso = casos.find(function(c) { return c.id === casoId; });
-        if (caso && $input && !$input.value) {
-            query = caso.titulo;
-            $input.value = caso.titulo;
-        }
-        if ($catDesc && CAT_META.I) {
-            $catDesc.textContent = CAT_META.I.desc;
+
+        setActiveCategory('I');
+        if (!qParam) {
+            var caso = casos.find(function(c) { return c.id === casoId; });
+            if (caso && $input) {
+                query = caso.titulo;
+                $input.value = caso.titulo;
+            }
         }
     }
 
@@ -183,7 +227,14 @@
                 window.CABuscadorSourceReport = sourceReport;
                 window.CABasesConsultadas.mountPanel('basesConsultadasPanel', sourceReport, {
                     onlyActivas: true,
+                    compact: true,
                 });
+                if (window.CABasesConsultadas.mountCompactStrip) {
+                    window.CABasesConsultadas.mountCompactStrip('ca-buscador-bases-strip', sourceReport);
+                }
+            }
+            if (window.CACorpusStats) {
+                window.CACorpusStats.mount('ca-buscador-corpus-stats', bundle, sourceReport);
             }
 
             // Build "I" category filter using caso keywords
@@ -270,8 +321,7 @@
             if (r._frictionScore < frictionMin) return false;
             if (hasSourceFilter && !checkedSources[r.fuente]) return false;
             if (q) {
-                var haystack = [r.titulo, r.institucion, r.capa_oficial, (r.keywords || []).join(' '), (r.tags || []).join(' ')].join(' ').toLowerCase();
-                if (haystack.indexOf(q) === -1) return false;
+                if (recordHaystack(r).indexOf(q) === -1) return false;
             }
             return true;
         }).sort(function(a, b) {
@@ -696,10 +746,7 @@
                 t.classList.remove('active');
                 t.setAttribute('aria-selected', 'false');
             });
-            tab.classList.add('active');
-            tab.setAttribute('aria-selected', 'true');
-            activeCat = tab.getAttribute('data-cat');
-            $catDesc.textContent = CAT_META[activeCat].desc;
+            setActiveCategory(tab.getAttribute('data-cat'));
             openDossierId = null;
             render();
         });

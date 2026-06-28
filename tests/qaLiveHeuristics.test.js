@@ -75,6 +75,20 @@ module.exports = function (describe, it, assert, assertEqual) {
       assert(/bases-consultadas\.css/i.test(html), 'falta CSS');
     });
 
+    it('buscador.html Sprint P02 — strip, stats y deep-link ?q=', function () {
+      var html = readWeb('buscador.html');
+      assert(/ca-buscador-bases-strip/i.test(html), 'strip sobre el pliegue');
+      assert(/ca-buscador-corpus-stats/i.test(html), 'stats corpus buscador');
+      assert(/corpusStats\.js/i.test(html), 'lib corpusStats');
+      var boot = readWeb('pages/buscador-boot.js');
+      assert(
+        boot.indexOf('params.huella || params.casoId || params.query') === -1,
+        '?q= no fuerza huella',
+      );
+      var avanzado = readWeb('lib/buscadorAvanzado.js');
+      assert(/get\('q'\)/.test(avanzado), 'buscadorAvanzado lee ?q=');
+    });
+
     it('contra-archivo-v2.html es instrumento real', function () {
       var html = readWeb('contra-archivo-v2.html');
       assert(/instrumento-boot\.js/i.test(html), 'falta instrumento-boot');

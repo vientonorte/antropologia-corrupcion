@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="styles/atoms/epistemic-badge.css?v=20260620">
     <link rel="stylesheet" href="styles/organisms/huella-panel.css?v=20260620">
     <link rel="stylesheet" href="styles/molecules/bases-consultadas.css?v=20260621">
+    <link rel="stylesheet" href="styles/molecules/corpus-stats.css?v=20260628">
     <style>
         /* ── Page-specific overrides ── */
         
@@ -388,11 +389,34 @@
             color: var(--crit);
         }
         
+        .buscador-context {
+            margin-bottom: 20px;
+        }
+
+        .buscador-context .ca-corpus-stats {
+            margin-bottom: 10px;
+        }
+
         .results-toolbar {
             display: flex;
             justify-content: space-between;
-            align-items: center;
+            align-items: flex-start;
+            gap: 12px;
             margin-bottom: 12px;
+            flex-wrap: wrap;
+        }
+
+        .results-toolbar__left {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .results-epistemic-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin: 6px 0 0;
+            font-size: 11px;
         }
 
         #btnExportCSV {
@@ -774,11 +798,18 @@
             .result-title {
                 white-space: normal;
             }
+            .buscador-context .ca-bases-strip {
+                margin-top: 0;
+            }
+            #basesConsultadasSection .ca-bases-strip {
+                display: none;
+            }
         }
     </style>
 </head>
 
 <body>
+    <a href="#main-content" class="skip-link">Saltar al contenido</a>
 
     <div class="page-wrap">
         <main class="main-col" id="main-content">
@@ -793,6 +824,11 @@
                     <div class="suggest-list" id="suggestList"></div>
                 </div>
             </section>
+
+            <div class="buscador-context" aria-label="Contexto del corpus consultado">
+                <div id="ca-buscador-corpus-stats" aria-live="polite"></div>
+                <div id="ca-buscador-bases-strip" aria-label="Fuentes consultadas"></div>
+            </div>
 
             <div class="ca-view-tabs" role="tablist" aria-label="Modo de exploración">
                 <button type="button" class="ca-view-tab is-active" data-view="registros" role="tab" aria-selected="true" aria-controls="registros-block">Registros</button>
@@ -844,7 +880,13 @@
 
             <!-- Results -->
             <div class="results-toolbar">
-                <div class="results-status" id="resultsStatus"></div>
+                <div class="results-toolbar__left">
+                    <div class="results-status" id="resultsStatus"></div>
+                    <p class="results-epistemic-legend" aria-label="Leyenda epistémica de resultados">
+                        <span class="ca-epistemic ca-epistemic--hecho">Hecho documentado</span>
+                        <span class="ca-epistemic ca-epistemic--inferencia">Readiness calculado</span>
+                    </p>
+                </div>
                 <button id="btnExportCSV">📥 Exportar CSV</button>
             </div>
             <div id="loadingState" style="display:none;padding:48px 0;text-align:center;color:var(--dim);font-size:13px;font-family:var(--font-mono)">Cargando fuentes para búsqueda avanzada…</div>
@@ -904,9 +946,10 @@
     <script defer src="lib/dataLoader.js?v=20260621e"></script>
     <script defer src="lib/sourceRegistry.js?v=20260621"></script>
     <script defer src="lib/basesConsultadas.js?v=20260621"></script>
+    <script defer src="lib/corpusStats.js?v=20260628"></script>
     <script defer src="lib/huellaDigital.js?v=20260621e"></script>
-    <script defer src="pages/buscador-boot.js?v=20260621"></script>
-    <script defer src="lib/buscadorAvanzado.js?v=20260621e"></script>
+    <script defer src="pages/buscador-boot.js?v=20260628"></script>
+    <script defer src="lib/buscadorAvanzado.js?v=20260628"></script>
     <script>
         (function() {
             if (window.__CA_UNIFIED_SHELL_LOADER__) {

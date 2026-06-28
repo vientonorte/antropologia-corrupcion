@@ -146,6 +146,21 @@ def check_circuit_links() -> None:
     else:
         fail("P01 no declarado canónico en ia-inventario")
 
+    buscador = read_text(WEB / "buscador.html")
+    boot = read_text(WEB / "pages/buscador-boot.js")
+    avanzado = read_text(WEB / "lib/buscadorAvanzado.js")
+    for name, content, needle in [
+        ("buscador strip mount", buscador, "ca-buscador-bases-strip"),
+        ("buscador stats mount", buscador, "ca-buscador-corpus-stats"),
+        ("buscador corpusStats.js", buscador, "corpusStats.js"),
+        ("buscador ?q= reader", avanzado, "get('q')"),
+    ]:
+        (ok if needle in content else fail)(name)
+    if "params.huella || params.casoId || params.query" in boot:
+        fail("?q= solo no debe forzar huella")
+    else:
+        ok("?q= no fuerza pestaña huella")
+
 
 def fetch(url: str, timeout: float = 8.0) -> tuple[int, str]:
     req = urllib.request.Request(url, headers={"User-Agent": "vn-e2e/1.0"})

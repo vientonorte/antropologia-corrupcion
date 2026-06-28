@@ -80,6 +80,10 @@ export const HTML_HEURISTICS = {
     { id: 'no-meta-refresh', test: (h) => !/http-equiv=["']refresh/i.test(h), hint: 'página real, no stub' },
     { id: 'bases-panel', test: (h) => /basesConsultadasPanel/i.test(h) && /sourceRegistry\.js/i.test(h), hint: 'panel bases consultadas' },
     { id: 'bases-css', test: (h) => /bases-consultadas\.css/i.test(h), hint: 'estilos bases consultadas' },
+    { id: 'bases-strip', test: (h) => /ca-buscador-bases-strip/i.test(h), hint: 'strip fuentes sobre el pliegue' },
+    { id: 'corpus-stats', test: (h) => /corpusStats\.js/i.test(h) && /ca-buscador-corpus-stats/i.test(h), hint: 'métricas corpus buscador' },
+    { id: 'epistemic-legend', test: (h) => /ca-epistemic--hecho/i.test(h), hint: 'leyenda epistémica resultados' },
+    { id: 'skip-link', test: (h) => /skip-link/i.test(h) && /#main-content/i.test(h), hint: 'accesibilidad skip link' },
   ],
   'contra-archivo-v2.html': [
     { id: 'instrumento-boot', test: (h) => /instrumento-boot\.js/i.test(h), hint: 'instrumento grafo' },

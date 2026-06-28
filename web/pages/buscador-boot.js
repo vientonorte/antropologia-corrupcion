@@ -50,7 +50,7 @@
         var mount = document.getElementById('huella-mount');
         if (!mount) return;
 
-        if (params.huella || params.casoId || params.query) {
+        if (params.huella || params.casoId) {
             setView('huella');
             loadHuella(mount, {
                 casoId: params.casoId,
