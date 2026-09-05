@@ -1377,116 +1377,44 @@
                 <span class="analyzer-toggle" id="analyzerToggleLabel">Cerrar</span>
             </div>
             <div class="analyzer-body">
-                <p style="font-size:11px;color:var(--neutral);margin:0 0 14px;line-height:1.6;">
-                    Sube una foto de página marcada (JPG o HEIC iPhone — incluso si el archivo dice <code>.jpg</code> pero es HEIC).
-                    El motor <strong>Clave B</strong> detecta colores, propone transcripciones con <strong>OCR local</strong> (reconocimiento óptico de caracteres en tu navegador) y codifica citas GTD para el corpus epistémico.
-                    Flujo: <strong>foto → escaneo automático → revisar cola → importar al archivo</strong>. El botón de transcripción manual es para corregir omisiones.
+                <p style="font-size:13px;color:var(--ink);margin:0 0 14px;line-height:1.5;">
+                    <strong>Digital:</strong> subí la página. Se detectan todos los marcadores.<br>
+                    <strong>Manual:</strong> solo si lo digital falla.
                 </p>
-
-                <div class="clave-b-legend" aria-label="Clave B — libros impresos">
-                    <span>🟥 Concepto clave</span>
-                    <span>⬛ Investigar</span>
-                    <span>🟨 Referencia</span>
-                    <span>🟩 Persona de interés</span>
-                    <span>🟦 Reflexión</span>
-                    <span>🟧 Compartir</span>
-                </div>
 
                 <div class="drop-zone" id="dropZone">
                     <input type="file" id="photoInput" accept="image/*,.heic,.heif,image/heic,image/heif" multiple onchange="handlePhotoSelect(event)">
                     <img class="drop-zone-preview" id="dropZonePreviewB" alt="Vista previa de la foto del libro">
                     <div class="drop-zone-icon">📖</div>
-                    <div class="drop-zone-label">Arrastra o selecciona foto del libro</div>
-                    <div class="drop-zone-sub">JPG · PNG · HEIC iPhone · varias fotos · hasta 20MB c/u</div>
-                    <p class="drop-zone-photo-tip" style="margin:8px 0 0;font-size:10px;line-height:1.5;color:var(--neutral);max-width:420px;margin-left:auto;margin-right:auto;">Subí la <strong>página completa</strong>. Cualquier cantidad de marcadores (1, 5, 12…) → <strong>un fragmento por trazo</strong>. No hay tope. Pestañas laterales se ignoran. Si omite uno → <strong>Seleccionar región</strong>.</p>
+                    <div class="drop-zone-label">Subí la foto de la página</div>
+                    <div class="drop-zone-sub">JPG · HEIC · varias · se detecta todo solo</div>
                     <p class="drop-zone-loading" id="dropZoneLoadingB" aria-live="polite">Preparando imagen…</p>
                 </div>
                 <p class="analyze-status" id="dropZoneStatusB" role="status" aria-live="polite" style="margin-top:10px;min-height:1.2em"></p>
 
                 <div class="clave-b-workspace" id="claveBWorkspace">
-                    <p class="clave-b-color-hint" id="claveBColorLabel">🟨 Referencia · referencia</p>
-                    <div class="clave-b-toolbar" id="claveBToolbar" role="toolbar" aria-label="Colores Clave B"></div>
-
-                    <nav class="clave-b-flow" aria-label="Flujo de captura Clave B">
+                    <p class="clave-b-color-hint" id="claveBColorLabel" hidden>🟨 Referencia · referencia</p>
+                    <div class="clave-b-toolbar" id="claveBToolbar" hidden></div>
+                    <nav class="clave-b-flow" hidden>
                         <ol>
-                            <li data-flow-step="1"><span class="clave-b-flow-n" aria-hidden="true">1</span> Foto</li>
-                            <li data-flow-step="2"><span class="clave-b-flow-n" aria-hidden="true">2</span> Escaneo</li>
-                            <li data-flow-step="3"><span class="clave-b-flow-n" aria-hidden="true">3</span> Revisión</li>
-                            <li data-flow-step="4"><span class="clave-b-flow-n" aria-hidden="true">4</span> Importar</li>
+                            <li data-flow-step="1"><span class="clave-b-flow-n">1</span> Foto</li>
+                            <li data-flow-step="2"><span class="clave-b-flow-n">2</span> Escaneo</li>
+                            <li data-flow-step="3"><span class="clave-b-flow-n">3</span> Revisión</li>
+                            <li data-flow-step="4"><span class="clave-b-flow-n">4</span> Importar</li>
                         </ol>
                     </nav>
-
-                    <p class="clave-b-photo-meta" id="claveBPhotoMeta" hidden aria-live="polite"></p>
-
+                    <p class="clave-b-photo-meta" id="claveBPhotoMeta" hidden></p>
                     <div class="clave-b-next-step" id="claveBNextStep" hidden>
                         <p id="claveBNextStepText"></p>
                         <button type="button" class="btn-secondary" id="claveBNextStepAction" hidden></button>
                     </div>
-
-                    <div class="clave-b-tools-panel">
-                        <section class="clave-b-tools-group clave-b-tools-group--primary" aria-labelledby="claveBScanLabel">
-                            <h3 id="claveBScanLabel" class="clave-b-tools-heading">Escaneo automático</h3>
-                            <p class="clave-b-tools-desc">Detecta todos los marcadores de color en la página y transcribe cada fragmento con OCR local. Omite pasajes ilegibles o incoherentes.</p>
-                            <button type="button" class="btn-primary" id="claveBAutoScan">⚡ Escanear marcadores Clave B</button>
-                        </section>
-                        <section class="clave-b-tools-group" aria-labelledby="claveBManualLabel">
-                            <h3 id="claveBManualLabel" class="clave-b-tools-heading">Corrección manual</h3>
-                            <p class="clave-b-tools-desc">Si el escaneo omitió un pasaje: activa <strong>Seleccionar región</strong>, arrastra un rectángulo sobre el texto y pide la transcripción.</p>
-                            <div class="clave-b-tools" role="group" aria-label="Herramientas de selección manual">
-                                <button type="button" class="btn-secondary active" data-clave-mode="eyedropper" aria-pressed="true" title="Clic en un marcador de color para detectar su categoría">Cuentagotas</button>
-                                <button type="button" class="btn-secondary" data-clave-mode="region" aria-pressed="false" title="Arrastra un rectángulo sobre el texto marcado">Seleccionar región</button>
-                                <button type="button" class="btn-secondary" id="claveBOcrRegion" disabled aria-describedby="claveBOcrHelp" title="Primero selecciona una región en la foto">Transcribir región</button>
-                            </div>
-                            <p class="clave-b-tools-micro" id="claveBOcrHelp">OCR convierte píxeles de la foto en texto editable — solo cuando tú lo pidas.</p>
-                        </section>
-                    </div>
-
-                    <details class="clave-b-ocr-guide">
-                        <summary>¿Qué es OCR y por qué es un botón?</summary>
-                        <div class="clave-b-ocr-guide-body">
-                            <p><strong>OCR</strong> (<em>Optical Character Recognition</em>, reconocimiento óptico de caracteres) es el proceso por el cual un programa lee una imagen — letra por letra — y propone texto que puedes editar. Aquí usamos <strong>Tesseract</strong>, que corre íntegramente en tu navegador: la foto no sale a ningún servidor.</p>
-                            <p>El <strong>escaneo automático</strong> ya aplica OCR a todos los marcadores que detecta. El botón <strong>Transcribir región</strong> existe para cuando necesitas precisión manual:</p>
-                            <ul>
-                                <li>El escaneo omitió un fragmento (marcador tenue, texto borroso).</li>
-                                <li>Quieres reintentar con un recorte más ajustado.</li>
-                                <li>El pasaje no tiene marcador de color y lo seleccionas a mano.</li>
-                            </ul>
-                            <p>No transcribe al subir la foto porque OCR es lento, puede fallar con ángulos o resaltados, y <strong>el corpus solo recibe transcripciones que tú revisas</strong>. Tú decides cuándo gastar ese procesamiento y qué entra al archivo.</p>
-                        </div>
-                    </details>
-
-                    <p class="clave-b-canvas-hint" id="claveBCanvasHint" aria-live="polite">Modo cuentaagotas — clic en un marcador de color para detectar su categoría.</p>
+                    <p class="clave-b-canvas-hint" id="claveBCanvasHint" hidden></p>
                     <div class="clave-b-canvas-wrap" id="claveBCanvasWrap">
-                        <canvas id="claveBCanvas" aria-label="Foto del libro para lectura cromática"></canvas>
-                    </div>
-
-                    <div class="clave-b-form">
-                        <label>Libro del registro físico
-                            <select id="claveBLibroSelect" aria-label="Seleccionar libro del registro Clave B">
-                                <option value="">— Seleccionar del registro —</option>
-                            </select>
-                        </label>
-                        <label>Título (editable)
-                            <input type="text" id="claveBLibro" placeholder="La era del capitalismo de la vigilancia">
-                        </label>
-                        <label>Autor
-                            <input type="text" id="claveBAutor" placeholder="Shoshana Zuboff">
-                        </label>
-                        <label>Página <span class="clave-b-form-hint">(requerida antes de importar)</span>
-                            <input type="number" id="claveBPagina" min="1" placeholder="23" required>
-                        </label>
-                        <label>Texto del fragmento (transcripción fiel)
-                            <textarea id="claveBTexto" placeholder="Transcribe el pasaje marcado…" aria-describedby="claveBTextoCount"></textarea>
-                            <span class="clave-b-form-hint" id="claveBTextoCount">0 caracteres</span>
-                        </label>
-                        <label>Notas Clave B (conexión con contra-archivo)
-                            <textarea id="claveBNotas" placeholder="Por qué importa este fragmento…"></textarea>
-                        </label>
+                        <canvas id="claveBCanvas" aria-label="Foto del libro"></canvas>
                     </div>
 
                     <div class="analyzer-actions">
-                        <button type="button" class="btn-primary" id="claveBAddFragment">+ Añadir fragmento</button>
-                        <button type="button" class="btn-secondary" id="clearPhotoBtn" onclick="clearPhoto()">Limpiar foto</button>
+                        <button type="button" class="btn-secondary" id="clearPhotoBtn" onclick="clearPhoto()">Otra foto</button>
                         <button type="button" class="btn-secondary" id="photoQueueNextB" onclick="nextQueuedPhotoB()" style="display:none;">Siguiente foto</button>
                         <span class="analyze-status" id="claveBStatus"></span>
                     </div>
@@ -1501,6 +1429,41 @@
                         </div>
                         <div id="claveBQueue"></div>
                     </div>
+
+                    <details class="clave-b-manual" id="claveBManual">
+                        <summary>Captura manual — si lo digital falló</summary>
+                        <p class="clave-b-tools-micro">Escribí el fragmento. Opcional: recorte sobre la foto.</p>
+                        <div class="clave-b-tools" role="group">
+                            <button type="button" class="btn-secondary" data-clave-mode="region" aria-pressed="false">Seleccionar región</button>
+                            <button type="button" class="btn-secondary" id="claveBOcrRegion" disabled>Transcribir región</button>
+                            <button type="button" class="btn-secondary" id="claveBAutoScan">Detectar de nuevo</button>
+                            <button type="button" class="btn-secondary active" data-clave-mode="eyedropper" aria-pressed="true" hidden>Cuentagotas</button>
+                        </div>
+                        <div class="clave-b-form">
+                            <label>Libro
+                                <select id="claveBLibroSelect" aria-label="Seleccionar libro del registro Clave B">
+                                    <option value="">— Registro —</option>
+                                </select>
+                            </label>
+                            <label>Título
+                                <input type="text" id="claveBLibro" placeholder="Título">
+                            </label>
+                            <label>Autor
+                                <input type="text" id="claveBAutor" placeholder="Autor">
+                            </label>
+                            <label>Página
+                                <input type="number" id="claveBPagina" min="1" placeholder="23">
+                            </label>
+                            <label>Texto
+                                <textarea id="claveBTexto" placeholder="Transcribí el pasaje marcado…"></textarea>
+                                <span class="clave-b-form-hint" id="claveBTextoCount">0 caracteres</span>
+                            </label>
+                            <label>Notas
+                                <textarea id="claveBNotas" placeholder="Opcional"></textarea>
+                            </label>
+                        </div>
+                        <button type="button" class="btn-primary" id="claveBAddFragment">Guardar fragmento</button>
+                    </details>
                 </div>
 
             </div>
@@ -1583,7 +1546,7 @@
         </div>
 
         <div class="archive-controls">
-            <button class="btn-primary" onclick="openCaptureModal()">+ CAPTURAR CITA</button>
+            <button class="btn-secondary" type="button" onclick="document.getElementById('claveBManual').open=true; document.getElementById('claveBManual').scrollIntoView({behavior:'smooth'});">Captura manual</button>
             <div class="filter-group">
                 <span class="filter-label">Filtrar por:</span>
                 <select class="filter-select" id="filterColor" onchange="filterCitations()">
@@ -1714,7 +1677,7 @@
     <script src="lib/corpusCitasStore.js?v=20260621"></script>
     <script src="lib/librosClaveB.js?v=20260621"></script>
     <script src="lib/imagePrepare.js?v=20260621i"></script>
-    <script src="js/lectura-clave-b.js?v=20260905p"></script>
+    <script src="js/lectura-clave-b.js?v=20260905r"></script>
     <script src="js/lectura-clave-a.js?v=20260621h"></script>
     <script>
         // Citation Archive Management — almacén unificado corpusCitas
@@ -2486,8 +2449,9 @@ Notas: Conexión directa con tu experiencia de expulsión a los 15. Lo que perdi
                 return reader.loadImage(prepared);
             }).then(function () {
                 setDropZoneLoading(false);
-                notifyCapture(reader, dropStatusId, 'Foto cargada — revisa la vista previa y pulsa Escanear marcadores Clave B.', 'success');
                 revealClaveBWorkspace();
+                var live = (reader.els && reader.els.status && reader.els.status.textContent) || '';
+                if (live) setDropStatus(dropStatusId, live, /omitid|Error|error/i.test(live) ? 'error' : 'success');
             }).catch(function (err) {
                 setDropZoneLoading(false);
                 clearDropPreviewB();

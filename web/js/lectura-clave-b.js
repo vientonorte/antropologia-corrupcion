@@ -153,6 +153,11 @@
     return legend >= 3 && strokes <= 1;
   }
 
+  function openManualCapture() {
+    const el = document.getElementById('claveBManual');
+    if (el) el.open = true;
+  }
+
   /**
    * Una foto completa puede tener N marcadores del mismo color.
    * El cluster espacial los pega en un bloque; separamos por renglón.
@@ -941,19 +946,13 @@
               const hint = photoQualityHint(self.imageMeta);
               self.updatePhotoMeta();
               self.updateFlowStep();
-              self.showNextStep(
-                'Paso 2: escanea marcadores automáticamente o usa Seleccionar región para captura manual.',
-                'Ir a captura manual',
-                function () {
-                  self.switchToRegionMode();
-                },
-              );
-              self.status(
-                'Foto cargada' + dim + '.' + hint,
-                hint ? '' : 'success',
-              );
+              self.status('Detectando todos los marcadores…' + dim, 'loading');
               self.updateOcrButton();
-              resolve();
+              self.autoScanFragments().then(function () {
+                resolve();
+              }).catch(function () {
+                resolve();
+              });
             } catch (err) {
               self.status('Error al dibujar la imagen: ' + err.message, 'error');
               reject(err);
@@ -1193,13 +1192,8 @@
         6,
       );
       if (!regions.length) {
-        this.status('No se detectaron marcadores de color. Usa cuentaagotas o selección manual.', 'error');
-        this.showNextStep(
-          'No hay marcadores detectables. Prueba captura manual: selecciona una región pequeña sobre el texto resaltado.',
-          'Activar selección manual',
-          () => this.switchToRegionMode(),
-          true,
-        );
+        this.status('Nada detectado. Usá captura manual.', 'error');
+        openManualCapture();
         this._scanning = false;
         this.setScanBusy(false);
         this.updateOcrButton();
@@ -1209,14 +1203,8 @@
       const canvasH = this.els.canvas.height;
       const photoHint = photoQualityHint(this.imageMeta);
       if (looksLikeLegendPage(regions, canvasW, canvasH)) {
-        const n = regions.length;
-        this.status(
-          'Portada / leyenda Clave B (post-its), no página subrayada. No hay citas de texto en esta foto. Subí una página con líneas resaltadas.',
-          'success',
-        );
-        this.showNextStep(
-          'Esta foto es la clave de colores del libro. Para extraer citas, subí una página completa con subrayado (N marcadores).',
-        );
+        this.status('Portada / leyenda — no es página subrayada. Usá captura manual o subí una página con subrayado.', 'success');
+        openManualCapture();
         this._scanning = false;
         this.setScanBusy(false);
         this.updateOcrButton();
@@ -1230,6 +1218,7 @@
       const libro = (this.els.libro?.value || '').trim() || this.opts.defaultLibro;
       const autor = (this.els.autor?.value || '').trim() || this.opts.defaultAutor;
       const pagina = parseInt(this.els.pagina?.value, 10) || null;
+
       let added = 0;
       let skipped = regions.length - scanList.length;
       const acceptedTexts = [];
@@ -1239,7 +1228,7 @@
           skipped += 1;
           continue;
         }
-        this.status(`OCR fragmento ${i + 1}/${scanList.length} · ${getClaveById(region.color).label}…`);
+        this.status(`OCR ${i + 1}/${scanList.length}…`);
         const ocr = await this.ocrRegion(region, worker, { strict: true });
         if (!ocr.ok) {
           skipped += 1;
@@ -1274,25 +1263,22 @@
           'error',
         );
         this.showNextStep(
-          'Esta página necesita captura manual: selecciona cada línea resaltada, transcribe y añade el fragmento.',
-          'Activar selección manual',
-          () => this.switchToRegionMode(),
-          true,
+          'Lo digital no sacó texto. Usá captura manual abajo.',
         );
+        const failManual = document.getElementById('claveBManual');
+        if (failManual) failManual.open = true;
       } else {
         const skipMsg = skipped
           ? ` · ${skipped} omitido${skipped !== 1 ? 's' : ''}`
           : '';
         this.status(
-          `${added} fragmento${added !== 1 ? 's' : ''} en cola${skipMsg}. Revisa, corrige si hace falta e importa.${photoHint}`,
+          `${added} marcador${added !== 1 ? 'es' : ''} detectado${added !== 1 ? 's' : ''}${skipMsg}. Revisá la cola e importá.${photoHint}`,
           photoHint ? '' : 'success',
         );
         this.showNextStep(
-          'Paso 3: revisa cada fragmento en la cola. Pulsa ✎ para corregir. Luego importa al archivo.',
-          'Ir a cola',
-          () => {
-            this.els.queue?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-          },
+          'Marcadores detectados. Corregí si hace falta y pulsá Importar.',
+          'Importar al archivo',
+          () => this.importQueue({ allowMissingPage: true }),
         );
         this.updateFlowStep();
         if (this.opts.onQueueChange) this.opts.onQueueChange(this.queue);
@@ -1440,13 +1426,14 @@
     this.status('Cola vaciada.', '');
   };
 
-  LecturaClaveB.prototype.importQueue = function () {
+  LecturaClaveB.prototype.importQueue = function (opts) {
+    const options = opts || {};
     if (!this.queue.length) {
       this.status('No hay fragmentos para importar.', 'error');
       return;
     }
     const sinPagina = this.queue.filter((f) => !f.pagina).length;
-    if (sinPagina) {
+    if (sinPagina && !options.allowMissingPage) {
       this.status(
         `Indica la página arriba antes de importar (${sinPagina} fragmento${sinPagina !== 1 ? 's' : ''} sin página).`,
         'error',
