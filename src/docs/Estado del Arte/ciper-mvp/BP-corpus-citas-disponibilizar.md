@@ -1,6 +1,6 @@
 # Buenas prácticas — disponiblizar citas en corpus-citas.html
 
-**Estado:** borrador 2026-09-05 (CIPER MVP). Gramsci = **1** cita editorial. Completar cuando entren capturas Salazar.
+**Estado:** borrador 2026-09-05 (CIPER MVP). Gramsci = **3** citas editoriales. Capturas nuevas: web corpus-citas (localStorage) o `ingest-tui-img.sh`. Completar Salazar.
 
 ## Principios
 

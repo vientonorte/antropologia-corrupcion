@@ -23,7 +23,7 @@
 |---------|---|-------|
 | `zuboff-citas.json` | 10 | ok · ids 1001+ |
 | `attac-citas.json` | 14 | ok · ids 2001+ |
-| `gramsci-citas.json` | **1** | id 3001 · p.5 concepto_clave · capturas 4 en carpeta |
+| `gramsci-citas.json` | **3** | ids 3001–3003 · p.3 proceso_cultural + p.5 proceso_cultural + p.5 concepto_clave |
 | `libros-clave-b.json` | 8 | `gramsci-reforma` = en-curso · `salazar-acumulacion` = pendiente |
 | `inbox-clave-a/…113…json` | 1 | plan CIPER |
 | `salazar-citas.json` | **NO** | gap · carpeta vacía · loader 404→[] |
@@ -33,7 +33,7 @@
 | Carpeta | n imgs | JSON |
 |---------|--------|------|
 | `Citas Attac/` | 21 | 14 editorial |
-| `Citas Gramsci/` | 4 HEIC | **1** cita |
+| `Citas Gramsci/` | 4 HEIC | **3** citas |
 | `Citas Salazar/` | 0 | — |
 
 ## Siguiente CIPER MVP
