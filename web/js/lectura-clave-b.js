@@ -122,10 +122,58 @@
     return w > canvasW * 0.82 && h > canvasH * 0.45;
   }
 
+  /**
+   * Una foto completa puede tener N marcadores del mismo color.
+   * El cluster espacial los pega en un bloque; separamos por renglón.
+   * Sin tope de cantidad.
+   */
+  function splitClusterByRows(points, rowGap) {
+    const gap = rowGap == null ? 15 : rowGap;
+    if (!points || !points.length) return [];
+    const sorted = points.slice().sort(function (a, b) {
+      return a.y - b.y || a.x - b.x;
+    });
+    const rows = [];
+    let row = [sorted[0]];
+    let rowMaxY = sorted[0].y;
+    for (let i = 1; i < sorted.length; i++) {
+      if (sorted[i].y - rowMaxY <= gap) {
+        row.push(sorted[i]);
+        if (sorted[i].y > rowMaxY) rowMaxY = sorted[i].y;
+      } else {
+        rows.push(row);
+        row = [sorted[i]];
+        rowMaxY = sorted[i].y;
+      }
+    }
+    rows.push(row);
+    return rows;
+  }
+
+  function boxesFromColorPoints(color, points, width, height) {
+    const maxW = width * 0.94;
+    const maxH = height * 0.28;
+    const boxes = [];
+    if (!points || points.length < 8) return boxes;
+    clusterPoints(points, 22).forEach(function (cluster) {
+      splitClusterByRows(cluster, 15).forEach(function (row) {
+        if (row.length < 6) return;
+        const box = boundingBox(row, 6);
+        if (box.w < 28 || box.h < 8) return;
+        if (isPageSized(box.w, box.h, width, height)) return;
+        if (box.w > maxW || box.h > maxH) return;
+        if (isMarginTab(box, width)) return;
+        const w = Math.min(box.w, width - box.x);
+        const h = Math.min(box.h, height - box.y);
+        if (w < 28 || h < 8) return;
+        boxes.push({ x: box.x, y: box.y, w: w, h: h, color: color });
+      });
+    });
+    return boxes;
+  }
+
   function detectMarkedRegions(ctx, width, height, stride) {
     const step = stride || 6;
-    const maxW = width * 0.92;
-    const maxH = height * 0.38;
     const byColor = {};
     const data = ctx.getImageData(0, 0, width, height).data;
     for (let y = 0; y < height; y += step) {
@@ -134,25 +182,16 @@
         const hit = classifyPixel(data[i], data[i + 1], data[i + 2]);
         if (!hit) continue;
         if (!byColor[hit]) byColor[hit] = [];
-        byColor[hit].push({ x, y });
+        byColor[hit].push({ x: x, y: y });
       }
     }
-    const boxes = [];
-    Object.entries(byColor).forEach(([color, points]) => {
-      if (points.length < 12) return;
-      clusterPoints(points, 22).forEach((cluster) => {
-        const box = boundingBox(cluster, 6);
-        if (box.w < 28 || box.h < 10) return;
-        if (isPageSized(box.w, box.h, width, height)) return;
-        if (box.w > maxW || box.h > maxH) return;
-        if (isMarginTab(box, width)) return;
-        const w = Math.min(box.w, width - box.x);
-        const h = Math.min(box.h, height - box.y);
-        if (w < 28 || h < 10) return;
-        boxes.push({ x: box.x, y: box.y, w, h, color });
-      });
+    let boxes = [];
+    Object.keys(byColor).forEach(function (color) {
+      boxes = boxes.concat(boxesFromColorPoints(color, byColor[color], width, height));
     });
-    return boxes.sort((a, b) => a.y - b.y || a.x - b.x);
+    return boxes.sort(function (a, b) {
+      return a.y - b.y || a.x - b.x;
+    });
   }
 
   const GTD_NOTA_PREFIX = {
@@ -1186,7 +1225,7 @@
           'error',
         );
         this.showNextStep(
-          'Esta página necesita captura manual: selecciona UNA línea resaltada, transcribe y añade al fragmento.',
+          'Esta página necesita captura manual: selecciona cada línea resaltada, transcribe y añade el fragmento.',
           'Activar selección manual',
           () => this.switchToRegionMode(),
           true,
@@ -1408,6 +1447,8 @@
     expandRegionForOcr,
     isMarginTab,
     isPageSized,
+    splitClusterByRows,
+    boxesFromColorPoints,
     spanishPlausibility,
     reasonLabel,
     photoQualityHint,

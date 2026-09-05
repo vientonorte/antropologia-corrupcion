@@ -1,5 +1,5 @@
 /**
- * lecturaClaveB.test.js — 3 marcadores en una página completa no son «página entera»
+ * lecturaClaveB.test.js — N marcadores en una foto de página completa
  */
 'use strict';
 
@@ -58,6 +58,34 @@ module.exports = function (describe, it, assert, assertEqual) {
       var almostCap = { x: 40, y: 200, w: 500, h: Math.round(H * 0.12), color: 'pink' };
       var out = LB.expandRegionForOcr(almostCap, W, H);
       assert(out, 'padding no debe anular un highlight del 12%');
+    });
+
+    it('N marcadores del mismo color en una página (sin tope de 3)', function () {
+      var n = 12;
+      var points = [];
+      for (var i = 0; i < n; i++) {
+        var y = 40 + i * 48;
+        for (var x = 80; x < 500; x += 8) {
+          points.push({ x: x, y: y });
+          points.push({ x: x, y: y + 4 });
+        }
+      }
+      var boxes = LB.boxesFromColorPoints('pink', points, W, H);
+      assert(boxes.length >= n, 'esperaba ≥' + n + ' cajas, hay ' + boxes.length);
+      boxes.forEach(function (b, idx) {
+        assert(!LB.isPageSized(b.w, b.h, W, H), 'caja ' + idx + ' no es página entera');
+      });
+    });
+
+    it('splitClusterByRows no recorta a 3', function () {
+      var points = [];
+      for (var i = 0; i < 9; i++) {
+        points.push({ x: 100, y: i * 40 });
+        points.push({ x: 180, y: i * 40 });
+        points.push({ x: 260, y: i * 40 });
+      }
+      var rows = LB.splitClusterByRows(points, 15);
+      assertEqual(rows.length, 9, '9 renglones');
     });
   });
 };
