@@ -184,7 +184,11 @@ function scanLocalStale() {
       if (ent.name === 'terraza' || ent.name.startsWith('.')) continue;
       const full = path.join(dir, ent.name);
       if (ent.isDirectory()) walkScan(full);
-      else if (/\.(html|js|json)$/i.test(ent.name)) scanFile(full, fs.readFileSync(full, 'utf8'));
+      else if (/\.(html|js|json)$/i.test(ent.name)) {
+        // qa-journeys intentionally names redirect stubs (citas-attac, zuboff-archivo, …)
+        if (ent.name === 'qa-journeys.json') continue;
+        scanFile(full, fs.readFileSync(full, 'utf8'));
+      }
     }
   }
   walkScan(WEB);
