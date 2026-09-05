@@ -11,7 +11,10 @@
 <body>
   <main class="login-card" style="max-width:440px;margin:48px auto;padding:32px;text-align:center">
     <p>Redirigiendo al acceso privado unificado…</p>
-    <p><a id="login-fallback" href="privado-login.html">privado-login.html</a></p>
+    <p><a href="privado-login.html" id="login-fallback">Continuar a acceso privado</a></p>
+    <noscript>
+      <p><a href="privado-login.html">Abrir acceso privado (sin JavaScript)</a></p>
+    </noscript>
   </main>
   <script>
     (function () {
