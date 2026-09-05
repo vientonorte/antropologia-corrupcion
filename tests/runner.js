@@ -298,6 +298,7 @@ require('./passkey.test.js')(describe, it, assert, assertEqual, assertDeepEqual,
 require('./htmlLint.test.js')(describe, it, assert, assertEqual);
 require('./redirectStubs.test.js')(describe, it, assert, assertEqual);
 require('./imagePrepare.test.js')(describe, it, assert, assertEqual);
+require('./lecturaClaveB.test.js')(describe, it, assert, assertEqual);
 require('./privadoChat.test.js')(describe, it, assert, assertEqual);
 require('./privadoChatValidation.test.js')(describe, it, assert, assertEqual);
 require('./blackScholes.test.js')(describe, it, assert, assertEqual, assertDeepEqual, assertApprox, assertGreaterThan, assertLessThan, assertArrayIncludes, casosData);

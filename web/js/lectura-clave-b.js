@@ -112,10 +112,20 @@
     };
   }
 
+  /** Pestaña de margen (alta y estrecha) ≠ línea resaltada (ancha y baja). */
+  function isMarginTab(box, canvasW) {
+    if (!box) return false;
+    return box.h > box.w * 1.35 && box.w < canvasW * 0.22;
+  }
+
+  function isPageSized(w, h, canvasW, canvasH) {
+    return w > canvasW * 0.82 && h > canvasH * 0.45;
+  }
+
   function detectMarkedRegions(ctx, width, height, stride) {
     const step = stride || 6;
-    const maxW = width * 0.68;
-    const maxH = height * 0.13;
+    const maxW = width * 0.92;
+    const maxH = height * 0.38;
     const byColor = {};
     const data = ctx.getImageData(0, 0, width, height).data;
     for (let y = 0; y < height; y += step) {
@@ -133,7 +143,9 @@
       clusterPoints(points, 22).forEach((cluster) => {
         const box = boundingBox(cluster, 6);
         if (box.w < 28 || box.h < 10) return;
+        if (isPageSized(box.w, box.h, width, height)) return;
         if (box.w > maxW || box.h > maxH) return;
+        if (isMarginTab(box, width)) return;
         const w = Math.min(box.w, width - box.x);
         const h = Math.min(box.h, height - box.y);
         if (w < 28 || h < 10) return;
@@ -196,8 +208,8 @@
   const OCR_MIN_WORD_CONFIDENCE = 48;
   const OCR_MIN_CHARS = 14;
   const OCR_MIN_WORDS = 3;
-  const OCR_AUTO_MAX_CHARS = 320;
-  const OCR_AUTO_MAX_WORDS = 48;
+  const OCR_AUTO_MAX_CHARS = 720;
+  const OCR_AUTO_MAX_WORDS = 110;
 
   const SPANISH_HINTS = new Set([
     'de', 'la', 'el', 'en', 'los', 'las', 'un', 'una', 'que', 'del', 'por', 'con', 'para', 'al',
@@ -359,11 +371,11 @@
     }
     const letters = (t.match(/[A-Za-zÀ-ÿ]/g) || []).length;
     const upper = (t.match(/[A-ZÁÉÍÓÚÜ]/g) || []).length;
-    if (letters > 16 && upper / letters > 0.17) {
+    if (letters > 16 && upper / letters > 0.48) {
       return { ok: false, reason: 'mayusculas_ocr' };
     }
     const digits = (t.match(/\d/g) || []).length;
-    if (digits / t.length > 0.04) {
+    if (digits / t.length > 0.12) {
       return { ok: false, reason: 'ruido' };
     }
     const garbled = words.filter(isGarbledWord).length;
@@ -455,18 +467,19 @@
     return out;
   }
 
-  /** Margen mínimo alrededor del marcador; rechaza regiones tamaño página. */
+  /** Margen mínimo alrededor del marcador; no tumba un párrafo por el padding. */
   function expandRegionForOcr(region, canvasW, canvasH) {
-    const maxW = canvasW * 0.68;
-    const maxH = canvasH * 0.13;
-    if (region.w > maxW || region.h > maxH) return null;
+    const maxW = canvasW * 0.94;
+    const maxH = canvasH * 0.42;
+    if (isPageSized(region.w, region.h, canvasW, canvasH)) return null;
     const padX = Math.max(4, Math.round(region.w * 0.03));
-    const padY = Math.max(6, Math.round(region.h * 0.2));
+    const padY = Math.max(6, Math.round(region.h * 0.18));
     const x = Math.max(0, region.x - padX);
     const y = Math.max(0, region.y - padY);
-    const w = Math.min(canvasW - x, region.w + padX * 2);
-    const h = Math.min(canvasH - y, region.h + padY * 2);
-    if (w > maxW || h > maxH) return null;
+    const w = Math.min(maxW, Math.min(canvasW - x, region.w + padX * 2));
+    const h = Math.min(maxH, Math.min(canvasH - y, region.h + padY * 2));
+    if (w < 28 || h < 10) return null;
+    if (isPageSized(w, h, canvasW, canvasH)) return null;
     return { x, y, w, h, color: region.color };
   }
 
@@ -1035,7 +1048,7 @@
     const fullH = region.h * inv;
     const imgW = this.image.naturalWidth || this.image.width;
     const imgH = this.image.naturalHeight || this.image.height;
-    if (fullW > imgW * 0.72 || fullH > imgH * 0.14) {
+    if ((fullW > imgW * 0.88 && fullH > imgH * 0.48) || fullH > imgH * 0.58) {
       return { text: '', confidence: 0, ok: false, reason: 'demasiado_largo' };
     }
     if (crop.width < 80 || crop.height < 24) {
@@ -1072,7 +1085,7 @@
     }
     this.status('OCR local en progreso…');
     try {
-      const ocr = await this.ocrRegion(this.selection, null, { strict: true });
+      const ocr = await this.ocrRegion(this.selection, null, { strict: false });
       if (this.els.texto) {
         this.els.texto.value = ocr.ok ? ocr.text : '';
       }
@@ -1393,6 +1406,8 @@
     isDuplicateText,
     enhanceCropForOcr,
     expandRegionForOcr,
+    isMarginTab,
+    isPageSized,
     spanishPlausibility,
     reasonLabel,
     photoQualityHint,
