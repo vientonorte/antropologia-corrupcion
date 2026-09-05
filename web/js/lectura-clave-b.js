@@ -153,6 +153,11 @@
     return legend >= 3 && strokes <= 1;
   }
 
+  function openManualCapture() {
+    const el = document.getElementById('claveBManual');
+    if (el) el.open = true;
+  }
+
   /**
    * Una foto completa puede tener N marcadores del mismo color.
    * El cluster espacial los pega en un bloque; separamos por renglón.
@@ -1187,13 +1192,8 @@
         6,
       );
       if (!regions.length) {
-        this.status('No se detectaron marcadores de color. Usa cuentaagotas o selección manual.', 'error');
-        this.showNextStep(
-          'No hay marcadores detectables. Prueba captura manual: selecciona una región pequeña sobre el texto resaltado.',
-          'Activar selección manual',
-          () => this.switchToRegionMode(),
-          true,
-        );
+        this.status('Nada detectado. Usá captura manual.', 'error');
+        openManualCapture();
         this._scanning = false;
         this.setScanBusy(false);
         this.updateOcrButton();
@@ -1203,14 +1203,8 @@
       const canvasH = this.els.canvas.height;
       const photoHint = photoQualityHint(this.imageMeta);
       if (looksLikeLegendPage(regions, canvasW, canvasH)) {
-        const n = regions.length;
-        this.status(
-          'Portada / leyenda Clave B (post-its), no página subrayada. No hay citas de texto en esta foto. Subí una página con líneas resaltadas.',
-          'success',
-        );
-        this.showNextStep(
-          'Esta foto es la clave de colores del libro. Para extraer citas, subí una página completa con subrayado (N marcadores).',
-        );
+        this.status('Portada / leyenda — no es página subrayada. Usá captura manual o subí una página con subrayado.', 'success');
+        openManualCapture();
         this._scanning = false;
         this.setScanBusy(false);
         this.updateOcrButton();
@@ -1224,6 +1218,7 @@
       const libro = (this.els.libro?.value || '').trim() || this.opts.defaultLibro;
       const autor = (this.els.autor?.value || '').trim() || this.opts.defaultAutor;
       const pagina = parseInt(this.els.pagina?.value, 10) || null;
+
       let added = 0;
       let skipped = regions.length - scanList.length;
       const acceptedTexts = [];
@@ -1233,7 +1228,7 @@
           skipped += 1;
           continue;
         }
-        this.status(`OCR fragmento ${i + 1}/${scanList.length} · ${getClaveById(region.color).label}…`);
+        this.status(`OCR ${i + 1}/${scanList.length}…`);
         const ocr = await this.ocrRegion(region, worker, { strict: true });
         if (!ocr.ok) {
           skipped += 1;
@@ -1268,11 +1263,10 @@
           'error',
         );
         this.showNextStep(
-          'Esta página necesita captura manual: selecciona cada línea resaltada, transcribe y añade el fragmento.',
-          'Activar selección manual',
-          () => this.switchToRegionMode(),
-          true,
+          'Lo digital no sacó texto. Usá captura manual abajo.',
         );
+        const failManual = document.getElementById('claveBManual');
+        if (failManual) failManual.open = true;
       } else {
         const skipMsg = skipped
           ? ` · ${skipped} omitido${skipped !== 1 ? 's' : ''}`

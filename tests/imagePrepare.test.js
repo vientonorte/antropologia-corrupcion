@@ -114,12 +114,12 @@ module.exports = function (describe, it, assert, assertEqual) {
       assert(code.indexOf('updateOcrButton') !== -1, 'botón OCR con estado');
     });
 
-    it('corpus-citas explica OCR en la UI', function () {
+    it('corpus-citas: digital por foto y manual si falla', function () {
       var html = fs.readFileSync(path.join(web, 'corpus-citas.html'), 'utf8');
-      assert(html.indexOf('¿Qué es OCR y por qué es un botón?') !== -1, 'guía OCR visible');
-      assert(html.indexOf('Transcribir región') !== -1, 'etiqueta clara del botón OCR');
-      assert(html.indexOf('claveBNextStep') !== -1, 'panel siguiente paso');
-      assert(html.indexOf('data-flow-step') !== -1, 'flujo con pasos activos');
+      assert(html.indexOf('photoInput') !== -1, 'captura digital');
+      assert(html.indexOf('claveBManual') !== -1, 'captura manual');
+      assert(html.indexOf('Captura manual') !== -1, 'etiqueta manual');
+      assert(html.indexOf('Transcribir región') !== -1, 'recorte si digital omite');
     });
 
     it('assessTranscription filtra nulos e incoherentes', function () {
