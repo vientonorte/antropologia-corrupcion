@@ -1393,12 +1393,12 @@
                 </div>
 
                 <div class="drop-zone" id="dropZone">
-                    <input type="file" id="photoInput" accept="image/*,.heic,.heif,image/heic,image/heif" onchange="handlePhotoSelect(event)">
+                    <input type="file" id="photoInput" accept="image/*,.heic,.heif,image/heic,image/heif" multiple onchange="handlePhotoSelect(event)">
                     <img class="drop-zone-preview" id="dropZonePreviewB" alt="Vista previa de la foto del libro">
                     <div class="drop-zone-icon">📖</div>
                     <div class="drop-zone-label">Arrastra o selecciona foto del libro</div>
-                    <div class="drop-zone-sub">JPG · PNG · HEIC iPhone · hasta 20MB</div>
-                    <p class="drop-zone-photo-tip" style="margin:8px 0 0;font-size:10px;line-height:1.5;color:var(--neutral);max-width:420px;margin-left:auto;margin-right:auto;">El escaneo lee <strong>marcadores pequeños</strong> (líneas resaltadas), no la página entera. Foto: luz uniforme, perpendicular, sin sombra. Si omite fragmentos o devuelve basura → <strong>Seleccionar región</strong> + transcribir manualmente.</p>
+                    <div class="drop-zone-sub">JPG · PNG · HEIC iPhone · varias fotos · hasta 20MB c/u</div>
+                    <p class="drop-zone-photo-tip" style="margin:8px 0 0;font-size:10px;line-height:1.5;color:var(--neutral);max-width:420px;margin-left:auto;margin-right:auto;">Subí la <strong>página completa</strong>. Cualquier cantidad de marcadores (1, 5, 12…) → <strong>un fragmento por trazo</strong>. No hay tope. Pestañas laterales se ignoran. Si omite uno → <strong>Seleccionar región</strong>.</p>
                     <p class="drop-zone-loading" id="dropZoneLoadingB" aria-live="polite">Preparando imagen…</p>
                 </div>
                 <p class="analyze-status" id="dropZoneStatusB" role="status" aria-live="polite" style="margin-top:10px;min-height:1.2em"></p>
@@ -1487,6 +1487,7 @@
                     <div class="analyzer-actions">
                         <button type="button" class="btn-primary" id="claveBAddFragment">+ Añadir fragmento</button>
                         <button type="button" class="btn-secondary" id="clearPhotoBtn" onclick="clearPhoto()">Limpiar foto</button>
+                        <button type="button" class="btn-secondary" id="photoQueueNextB" onclick="nextQueuedPhotoB()" style="display:none;">Siguiente foto</button>
                         <span class="analyze-status" id="claveBStatus"></span>
                     </div>
 
@@ -1713,7 +1714,7 @@
     <script src="lib/corpusCitasStore.js?v=20260621"></script>
     <script src="lib/librosClaveB.js?v=20260621"></script>
     <script src="lib/imagePrepare.js?v=20260621i"></script>
-    <script src="js/lectura-clave-b.js?v=20260621k"></script>
+    <script src="js/lectura-clave-b.js?v=20260905n"></script>
     <script src="js/lectura-clave-a.js?v=20260621h"></script>
     <script>
         // Citation Archive Management — almacén unificado corpusCitas
@@ -2298,6 +2299,8 @@ Notas: Conexión directa con tu experiencia de expulsión a los 15. Lo que perdi
         let claveAReader = null;
         let pendingPhotoB = null;
         let pendingPhotoA = null;
+        let photoQueueB = [];
+        let photoQueueIndexB = 0;
 
         function setDropStatus(id, msg, type) {
             const el = document.getElementById(id);
@@ -2399,12 +2402,59 @@ Notas: Conexión directa con tu experiencia de expulsión a los 15. Lo que perdi
         }
 
         function handlePhotoSelect(e) {
-            const file = e.target.files[0];
-            if (!file) return;
-            setDropStatus('dropZoneStatusB', 'Archivo seleccionado: ' + (file.name || 'sin nombre') + ' — iniciando…', 'loading');
-            setDropZoneLoading(true, 'Leyendo ' + (file.name || 'imagen') + '…');
+            const files = Array.prototype.slice.call(e.target.files || []);
+            if (!files.length) return;
+            enqueuePhotosB(files);
+        }
+
+        function enqueuePhotosB(fileList) {
+            const files = Array.prototype.slice.call(fileList || []).filter(function (f) {
+                return f && (!window.CAImagePrepare || CAImagePrepare.isSupportedImage(f));
+            });
+            if (!files.length) {
+                setDropStatus('dropZoneStatusB', 'Ningún archivo de imagen válido (JPG/PNG/HEIC).', 'error');
+                return;
+            }
+            photoQueueB = files;
+            photoQueueIndexB = 0;
             revealClaveBWorkspace();
+            loadQueuedPhotoB();
+        }
+
+        function updatePhotoQueueUiB() {
+            const btn = document.getElementById('photoQueueNextB');
+            if (!btn) return;
+            const n = photoQueueB.length;
+            const i = photoQueueIndexB + 1;
+            if (n <= 1) {
+                btn.style.display = 'none';
+                return;
+            }
+            btn.style.display = 'inline-block';
+            const last = photoQueueIndexB + 1 >= n;
+            btn.disabled = last;
+            btn.textContent = last ? ('Lote listo (' + n + ' fotos)') : ('Siguiente foto (' + i + '/' + n + ')');
+        }
+
+        function loadQueuedPhotoB() {
+            const file = photoQueueB[photoQueueIndexB];
+            if (!file) return;
+            const n = photoQueueB.length;
+            const i = photoQueueIndexB + 1;
+            setDropStatus('dropZoneStatusB', 'Foto ' + i + '/' + n + ': ' + (file.name || 'sin nombre') + ' — iniciando…', 'loading');
+            setDropZoneLoading(true, 'Leyendo ' + (file.name || 'imagen') + '…');
+            updatePhotoQueueUiB();
             loadPhoto(file);
+        }
+
+        function nextQueuedPhotoB() {
+            if (photoQueueIndexB + 1 >= photoQueueB.length) {
+                setDropStatus('dropZoneStatusB', 'Lote terminado (' + photoQueueB.length + ' fotos). Revisa la cola e importa.', 'success');
+                updatePhotoQueueUiB();
+                return;
+            }
+            photoQueueIndexB += 1;
+            loadQueuedPhotoB();
         }
 
         function notifyCapture(reader, dropStatusId, msg, type) {
@@ -2554,7 +2604,12 @@ Notas: Conexión directa con tu experiencia de expulsión a los 15. Lo que perdi
         dropZone.addEventListener('drop', e => {
             e.preventDefault();
             dropZone.classList.remove('drag-over');
-            const file = e.dataTransfer.files[0];
+            const files = e.dataTransfer.files;
+            if (files && files.length > 1) {
+                enqueuePhotosB(files);
+                return;
+            }
+            const file = files && files[0];
             if (file) {
                 setDropStatus('dropZoneStatusB', 'Archivo recibido: ' + (file.name || 'sin nombre') + ' — iniciando…', 'loading');
                 setDropZoneLoading(true, 'Leyendo ' + (file.name || 'imagen') + '…');
