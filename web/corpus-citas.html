@@ -1854,11 +1854,12 @@
         }
 
         async function loadServerCorpus() {
-            const [zuboff, attac] = await Promise.all([
+            const [zuboff, attac, gramsci] = await Promise.all([
                 fetchJson('data/zuboff-citas.json'),
-                fetchJson('data/attac-citas.json')
+                fetchJson('data/attac-citas.json'),
+                fetchJson('data/gramsci-citas.json').catch(() => [])
             ]);
-            return [...zuboff, ...attac].map(normalizeCitation);
+            return [...zuboff, ...attac, ...gramsci].map(normalizeCitation);
         }
 
         function populateCategorySelects() {

@@ -1,0 +1,41 @@
+[
+  {
+    "id": 3001,
+    "bookTitle": "Para la reforma moral e intelectual",
+    "author": "Antonio Gramsci (introducción Antonio A. Santucci)",
+    "pageNo": 3,
+    "text": "En los veinte años que siguieron a la edición crítica de los Quaderni del carcere, los estudios gramscianos conocieron una renovación intelectual profunda, atravesada por los acontecimientos de 1989 (Tiananmén, caída del Muro, disolución de la URSS, tránsito del PCI al PDS) que reconfiguraron el contexto tradicional de la contribución gramsciana.",
+    "color": "pink",
+    "category": "concepto_clave",
+    "notes": "Captura IMG_1211/1212 · post-it rosa «PROCESOS CULTURALES clave». Alineación CIPER/contra-archivo: procesos culturales como marco de mistranslation institucional. Transcripción condensada fiel al pasaje marcado; revisar contra foto si se cita en paper.",
+    "source_type": "libro",
+    "source_capture": "Citas Gramsci/IMG_1211.heic",
+    "timestamp": "2026-09-05T15:00:00.000Z"
+  },
+  {
+    "id": 3002,
+    "bookTitle": "Para la reforma moral e intelectual",
+    "author": "Antonio Gramsci (introducción Antonio A. Santucci)",
+    "pageNo": 5,
+    "text": "A partir de 1947, fecha de la primera edición de las Lettere dal carcere, y luego con la progresiva edición de los Quaderni, la figura de Gramsci deja de leerse solo desde la actividad directa como periodista y militante socialista, dirigente político y antifascista, para proyectarse como intelectual de alcance internacional.",
+    "color": "pink",
+    "category": "concepto_clave",
+    "notes": "Captura IMG_1213 · bandera rosa (publicar textos/escritos). Publicación como umbral epistémico — útil para contra-archivo: el archivo hace al sujeto público.",
+    "source_type": "libro",
+    "source_capture": "Citas Gramsci/IMG_1213.heic",
+    "timestamp": "2026-09-05T15:00:00.000Z"
+  },
+  {
+    "id": 3003,
+    "bookTitle": "Para la reforma moral e intelectual",
+    "author": "Antonio Gramsci (introducción Antonio A. Santucci)",
+    "pageNo": 5,
+    "text": "inspiradas o entrelazadas por conceptos típicamente gramscianos: hegemonía, filosofía de la praxis, nacional-popular, reforma intelectual y moral, revolución pasiva, guerra de posiciones, bloque histórico, etcétera.",
+    "color": "green",
+    "category": "persona_interes",
+    "notes": "Captura IMG_1213 · bandera verde «conceptos clave de Gramsci». Color Clave B = verde → persona_interes/investigar; semántica = lexema de conceptos. Ancla CIPER: reforma intelectual y moral / hegemonía.",
+    "source_type": "libro",
+    "source_capture": "Citas Gramsci/IMG_1213.heic",
+    "timestamp": "2026-09-05T15:00:00.000Z"
+  }
+]
