@@ -87,5 +87,32 @@ module.exports = function (describe, it, assert, assertEqual) {
       var rows = LB.splitClusterByRows(points, 15);
       assertEqual(rows.length, 9, '9 renglones');
     });
+
+    it('IMG_1461-like: 5 post-its de portada son leyenda, no citas', function () {
+      var posts = [
+        { x: 180, y: 160, w: 280, h: 70, color: 'blue' },
+        { x: 180, y: 250, w: 280, h: 68, color: 'green' },
+        { x: 180, y: 340, w: 280, h: 72, color: 'pink' },
+        { x: 180, y: 430, w: 280, h: 70, color: 'orange' },
+        { x: 160, y: 520, w: 300, h: 64, color: 'yellow' },
+      ];
+      assert(LB.looksLikeLegendPage(posts, W, H), 'portada leyenda');
+      posts.forEach(function (b, i) {
+        assert(LB.isLegendBlock(b, W, H), 'post-it ' + i);
+        assert(!LB.isHighlightStroke(b, W, H), 'no es subrayado ' + i);
+      });
+    });
+
+    it('página de texto con 3 líneas resaltadas NO es leyenda', function () {
+      var lines = [
+        { x: 80, y: 140, w: 420, h: 22, color: 'pink' },
+        { x: 80, y: 280, w: 390, h: 20, color: 'green' },
+        { x: 90, y: 430, w: 400, h: 24, color: 'blue' },
+      ];
+      assert(!LB.looksLikeLegendPage(lines, W, H), 'son subrayados');
+      lines.forEach(function (b) {
+        assert(LB.isHighlightStroke(b, W, H), 'stroke');
+      });
+    });
   });
 };

@@ -122,6 +122,37 @@
     return w > canvasW * 0.82 && h > canvasH * 0.45;
   }
 
+  /** Línea de subrayado en página de texto (ancha y baja). */
+  function isHighlightStroke(box, canvasW, canvasH) {
+    if (!box || !canvasW) return false;
+    const ratio = box.h / Math.max(1, box.w);
+    return box.w >= canvasW * 0.22 && ratio <= 0.16 && box.h < canvasH * 0.18;
+  }
+
+  /** Post-it / bloque de leyenda en portada (rectángulo grueso). */
+  function isLegendBlock(box, canvasW, canvasH) {
+    if (!box || !canvasW) return false;
+    const ratio = box.h / Math.max(1, box.w);
+    return (
+      box.w >= canvasW * 0.18 &&
+      box.h >= canvasH * 0.045 &&
+      ratio >= 0.2 &&
+      ratio <= 1.15 &&
+      box.h < canvasH * 0.28
+    );
+  }
+
+  function looksLikeLegendPage(boxes, canvasW, canvasH) {
+    if (!boxes || boxes.length < 3) return false;
+    let legend = 0;
+    let strokes = 0;
+    boxes.forEach(function (b) {
+      if (isHighlightStroke(b, canvasW, canvasH)) strokes += 1;
+      else if (isLegendBlock(b, canvasW, canvasH)) legend += 1;
+    });
+    return legend >= 3 && strokes <= 1;
+  }
+
   /**
    * Una foto completa puede tener N marcadores del mismo color.
    * El cluster espacial los pega en un bloque; separamos por renglón.
@@ -1174,23 +1205,41 @@
         this.updateOcrButton();
         return;
       }
+      const canvasW = this.els.canvas.width;
+      const canvasH = this.els.canvas.height;
+      const photoHint = photoQualityHint(this.imageMeta);
+      if (looksLikeLegendPage(regions, canvasW, canvasH)) {
+        const n = regions.length;
+        this.status(
+          'Portada / leyenda Clave B (post-its), no página subrayada. No hay citas de texto en esta foto. Subí una página con líneas resaltadas.',
+          'success',
+        );
+        this.showNextStep(
+          'Esta foto es la clave de colores del libro. Para extraer citas, subí una página completa con subrayado (N marcadores).',
+        );
+        this._scanning = false;
+        this.setScanBusy(false);
+        this.updateOcrButton();
+        return;
+      }
+      const toOcr = regions.filter(function (r) {
+        return isHighlightStroke(r, canvasW, canvasH);
+      });
+      const scanList = toOcr.length ? toOcr : regions;
       const worker = await ensureTesseractWorker();
       const libro = (this.els.libro?.value || '').trim() || this.opts.defaultLibro;
       const autor = (this.els.autor?.value || '').trim() || this.opts.defaultAutor;
       const pagina = parseInt(this.els.pagina?.value, 10) || null;
-      const canvasW = this.els.canvas.width;
-      const canvasH = this.els.canvas.height;
-      const photoHint = photoQualityHint(this.imageMeta);
       let added = 0;
-      let skipped = 0;
+      let skipped = regions.length - scanList.length;
       const acceptedTexts = [];
-      for (let i = 0; i < regions.length; i++) {
-        const region = expandRegionForOcr(regions[i], canvasW, canvasH);
+      for (let i = 0; i < scanList.length; i++) {
+        const region = expandRegionForOcr(scanList[i], canvasW, canvasH);
         if (!region) {
           skipped += 1;
           continue;
         }
-        this.status(`OCR fragmento ${i + 1}/${regions.length} · ${getClaveById(region.color).label}…`);
+        this.status(`OCR fragmento ${i + 1}/${scanList.length} · ${getClaveById(region.color).label}…`);
         const ocr = await this.ocrRegion(region, worker, { strict: true });
         if (!ocr.ok) {
           skipped += 1;
@@ -1447,6 +1496,9 @@
     expandRegionForOcr,
     isMarginTab,
     isPageSized,
+    isHighlightStroke,
+    isLegendBlock,
+    looksLikeLegendPage,
     splitClusterByRows,
     boxesFromColorPoints,
     spanishPlausibility,
