@@ -1719,7 +1719,7 @@
         // Citation Archive Management — almacén unificado corpusCitas
         const STORAGE_KEY = window.CorpusCitasStore ? CorpusCitasStore.STORAGE_KEY : 'corpusCitas';
         const LEGACY_STORAGE_KEY = 'zuboffCitations';
-        const CORPUS_SYNC_KEY = 'corpusSeedV2';
+        const CORPUS_SYNC_KEY = 'corpusSeedV3';
         let librosRegistry = null;
         const DEFAULT_BOOK_TITLE = 'Zuboff — La era del capitalismo de la vigilancia';
         const DEFAULT_AUTHOR = 'Shoshana Zuboff';
@@ -1929,11 +1929,17 @@
             await loadCategoryTaxonomy();
             await loadLibrosRegistry();
             const server = await loadServerCorpus();
-            const local = readLocalCitations();
-            const shouldMerge = forceResync || !local.length || localStorage.getItem(CORPUS_SYNC_KEY) !== 'v2';
+            const localRaw = readLocalCitations();
+            const serverIds = new Set(server.map((c) => String(c.id)));
+            const local = localRaw.filter((c) => {
+                const id = Number(c.id);
+                if (id >= 3001 && id < 4000 && !serverIds.has(String(c.id))) return false;
+                return true;
+            });
+            const shouldMerge = forceResync || !local.length || localStorage.getItem(CORPUS_SYNC_KEY) !== 'v3';
             citations = shouldMerge ? mergeCorpus(server, local, false) : mergeCorpus(server, local, true);
             persistCitations();
-            localStorage.setItem(CORPUS_SYNC_KEY, 'v2');
+            localStorage.setItem(CORPUS_SYNC_KEY, 'v3');
             corpusReady = true;
 
             populateCategorySelects();

@@ -3,45 +3,15 @@
     "id": 3001,
     "bookTitle": "Para la reforma moral e intelectual",
     "author": "Antonio Gramsci (introducción Antonio A. Santucci)",
-    "pageNo": 3,
-    "text": "a partir de la publicación de la edición crítica de los Quaderni del carcere, que abrió un importante período de renovación en los estudios gramscianos",
-    "color": "pink",
-    "category": "proceso_cultural",
-    "notes": "IMG_1211/1212 · post-it rosa «PROCESOS CULTURALES clave» sobre «renovación en los estudios gramscianos». Leyenda de este libro (IMG_1210): rosa = proceso cultural, no concepto_clave estándar. Alineación CIPER: el archivo publicado reconfigura el campo; contra-archivo como proceso cultural, no solo textual.",
-    "source_type": "libro",
-    "source_capture": "Citas Gramsci/IMG_1212.heic",
-    "libro_id": "gramsci-reforma",
-    "clave": "B",
-    "timestamp": "2026-09-05T15:30:00.000Z"
-  },
-  {
-    "id": 3002,
-    "bookTitle": "Para la reforma moral e intelectual",
-    "author": "Antonio Gramsci (introducción Antonio A. Santucci)",
-    "pageNo": 5,
-    "text": "Gramsci había atraído sobre sí una atención superior a la destinada a su actividad directa, como periodista y militante socialista, dirigente político y antifascista. A partir de 1947, fecha de la primera edición de las Lettere dal carcere, y luego con la progresiva edición de los Quaderni",
-    "color": "pink",
-    "category": "proceso_cultural",
-    "notes": "IMG_1213 · post-it rosa «Publicar textos / escritos». Publicación póstuma como umbral epistémico: el archivo hace al sujeto público. Rosa = proceso cultural (leyenda IMG_1210).",
-    "source_type": "libro",
-    "source_capture": "Citas Gramsci/IMG_1213.heic",
-    "libro_id": "gramsci-reforma",
-    "clave": "B",
-    "timestamp": "2026-09-05T15:30:00.000Z"
-  },
-  {
-    "id": 3003,
-    "bookTitle": "Para la reforma moral e intelectual",
-    "author": "Antonio Gramsci (introducción Antonio A. Santucci)",
     "pageNo": 5,
     "text": "en las investigaciones políticas, históricas, filosóficas, literarias y antropológicas, inspiradas o entrelazadas por conceptos típicamente gramscianos: hegemonía, filosofía de la praxis, nacional-popular, reforma intelectual y moral, revolución pasiva, guerra de posiciones, bloque histórico, etcétera",
     "color": "green",
     "category": "concepto_clave",
-    "notes": "IMG_1213 · resaltado verde + post-it «CONCEPTO CLAVE DE GRAMSCI». Leyenda de este libro (IMG_1210): verde = concepto clave (override de persona_interes estándar). Lexema CIPER: hegemonía / reforma intelectual y moral / bloque histórico. [PENDIENTE CALIBRACIÓN] par fricción hegemonía ↔ reforma intelectual y moral.",
+    "notes": "Única cita editorial Gramsci. IMG_1213 · verde «CONCEPTO CLAVE DE GRAMSCI». Leyenda de portada IMG_1210: verde=concepto_clave (override). Capturas 1210–1212 quedan en Citas Gramsci como evidencia, no como citas extra. [PENDIENTE CALIBRACIÓN] hegemonía ↔ reforma intelectual y moral.",
     "source_type": "libro",
     "source_capture": "Citas Gramsci/IMG_1213.heic",
     "libro_id": "gramsci-reforma",
     "clave": "B",
-    "timestamp": "2026-09-05T15:30:00.000Z"
+    "timestamp": "2026-09-05T16:00:00.000Z"
   }
 ]

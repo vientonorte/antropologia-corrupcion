@@ -23,7 +23,7 @@
         "pink": "proceso_cultural",
         "notas": "Override local de este volumen. Estándar Clave B: rosa=concepto_clave, verde=persona_interes. Aquí Rö etiquetó verde=CONCEPTO CLAVE y rosa=PROCESO CULTURAL."
       },
-      "notas": "Cuadernos · capa filosófica bujo-ro · hegemonía / sociedad civil · 2026-09-05: 4 capturas (1 portada-leyenda + 3 páginas); 3 citas fieles en data/gramsci-citas.json. Pestaña azul p.5 sin fragmento marcado = NO DATO."
+      "notas": "Cuadernos · capa filosófica bujo-ro. 4 capturas en Citas Gramsci (portada-leyenda + p.3 dup + p.5). Editorial = 1 cita (id 3001, p.5 concepto_clave). Rosa/azul de la leyenda no generan filas extra."
     },
     {
       "id": "salazar-acumulacion",

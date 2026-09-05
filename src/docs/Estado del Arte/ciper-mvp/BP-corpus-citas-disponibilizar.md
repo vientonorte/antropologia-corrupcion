@@ -1,6 +1,6 @@
 # Buenas prácticas — disponiblizar citas en corpus-citas.html
 
-**Estado:** borrador 2026-09-05 (CIPER MVP). Gramsci editorial fiel (3 citas). Completar cuando entren capturas Salazar.
+**Estado:** borrador 2026-09-05 (CIPER MVP). Gramsci = **1** cita editorial. Completar cuando entren capturas Salazar.
 
 ## Principios
 
@@ -13,14 +13,15 @@
 ## Flujo recomendado
 
 ```
-foto (chat o inbox)
-  → skill Clave A o B
-  → JSON revisado en data/inbox-* 
-  → merge a data/*-citas.json (o salazar-citas.json)
-  → actualizar libros-clave-b.json (estado / capturas)
+foto TUI Grok
+  → scripts/ingest-tui-img.sh --book <id> <img>
+       Clave B → src/docs/Estado del Arte/Citas <Libro>/
+       Clave A → src/docs/Estado del Arte/ciper-mvp/assets/inbox-clave-a/
+  → skill lectura-clave-b o bujo-ro
+  → UNA cita editorial por fragmento (leyenda/duplicado ≠ fila)
+  → data/*-citas.json + libros-clave-b.json
   → commit en branch (main protegido → PR)
   → smoke: corpus-citas.html → Resincronizar corpus
-  → export JSON/CSV backup opcional
 ```
 
 ## Campos mínimos (compatible store)
