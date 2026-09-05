@@ -1,43 +1,43 @@
 # INDEX corpus SSOT — antropologia-corrupcion
 
-**Fecha:** 2026-09-05 (rev rutas)  
-**Skill:** `/vn-agent` → `docs-vn`  
-**Layout canónico (Decider):** `src/` · `data/` · `web/` · docs de investigación en **`src/docs/Estado del Arte/`**  
+**Fecha:** 2026-09-05 (1 cita Gramsci + ingest TUI)  
+**Skill:** `/vn-agent` → `lectura-clave-b`  
+**Layout canónico (Decider):** `src/` · `data/` · `web/` · capturas en **`src/docs/Estado del Arte/`**  
 **Live:** https://vientonorte.io/antropologia-corrupcion/corpus-citas.html  
-**GitHub:** https://github.com/vientonorte/antropologia-corrupcion
+**GitHub:** https://github.com/vientonorte/antropologia-corrupcion  
+**Ingest TUI:** `scripts/ingest-tui-img.sh --book <id> <img>`
 
 ## Árbol relevante
 
 | Path | Rol |
 |------|-----|
-| `src/docs/Estado del Arte/` | Docs + capturas (Citas Attac, Citas Gramsci, CIPER, fichas, bujo-ro, lectura-clave-b) |
-| `src/docs/Estado del Arte/ciper-mvp/` | Plan CIPER + INDEX + assets Bullet Ro 113 |
-| `src/assets/` | Assets web (hoy `hero.png`) |
-| `data/` | Editorial JSON del corpus |
+| `src/docs/Estado del Arte/Citas <Libro>/` | Fotos Clave B (SSOT captura) |
+| `src/docs/Estado del Arte/ciper-mvp/assets/inbox-clave-a/` | Fotos Clave A |
+| `src/docs/Estado del Arte/_inbox/` | TUI sin libro asignado |
+| `data/*-citas.json` | Editorial (una fila = una cita) |
 | `web/corpus-citas.html` | UI Clave A/B |
 
 ## Editorial `data/`
 
 | Archivo | n | Notas |
 |---------|---|-------|
-| `zuboff-citas.json` | 10 | ok |
-| `attac-citas.json` | 14 | ok · fotos 21 en Citas Attac |
-| `libros-clave-b.json` | 8 | `salazar-acumulacion` + `gramsci-reforma` = pendiente |
+| `zuboff-citas.json` | 10 | ok · ids 1001+ |
+| `attac-citas.json` | 14 | ok · ids 2001+ |
+| `gramsci-citas.json` | **3** | ids 3001–3003 · p.3 proceso_cultural + p.5 proceso_cultural + p.5 concepto_clave |
+| `libros-clave-b.json` | 8 | `gramsci-reforma` = en-curso · `salazar-acumulacion` = pendiente |
 | `inbox-clave-a/…113…json` | 1 | plan CIPER |
-| `gramsci-citas.json` | **NO** | gap · 4 capturas físicas |
-| `salazar-citas.json` | **NO** | gap · **no hay carpeta Citas Salazar** |
+| `salazar-citas.json` | **NO** | gap · carpeta vacía · loader 404→[] |
 
-## Capturas en Estado del Arte
+## Capturas
 
 | Carpeta | n imgs | JSON |
 |---------|--------|------|
-| `…/Citas Attac/` | 21 | 14 editorial |
-| `…/Citas Gramsci/` | 4 (1 jpg + 3 heic) | 0 |
-| Citas Salazar | **NO DATO** | — |
+| `Citas Attac/` | 21 | 14 editorial |
+| `Citas Gramsci/` | 4 HEIC | **3** citas |
+| `Citas Salazar/` | 0 | — |
 
 ## Siguiente CIPER MVP
 
-1. Clave B → Gramsci (capturas ya en carpeta).
-2. Rö: carpeta/fotos Salazar → `…/Citas Salazar/` o chat.
-3. Merge `data/*-citas.json` + update `libros-clave-b.json`.
-4. Smoke corpus-citas · PR `gh` · ship solo con ok.
+1. Rö: fotos Salazar → TUI o `ingest-tui-img.sh --book salazar`.
+2. `lectura-clave-b` → `data/salazar-citas.json`.
+3. Smoke corpus-citas · PR · ship solo con ok.

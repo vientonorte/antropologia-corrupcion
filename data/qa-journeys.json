@@ -124,7 +124,7 @@
       "id": "J06",
       "taxonomy": "corpus",
       "persona": "investigador",
-      "title": "Corpus de citas — Zuboff y ATTAC",
+      "title": "Corpus de citas — Zuboff, ATTAC y Gramsci",
       "empatizar": "Temor a perder citas editadas localmente",
       "definir": "Store unificado y datos en data/ accesibles",
       "duration_min": 5,
@@ -132,6 +132,7 @@
       "circuit": [
         { "label": "store corpus", "page": "corpus-citas.html", "needle": "corpusCitasStore.js" },
         { "label": "fetch zuboff", "page": "corpus-citas.html", "needle": "zuboff-citas.json" },
+        { "label": "fetch gramsci", "page": "corpus-citas.html", "needle": "gramsci-citas.json" },
         { "label": "shell móvil", "page": "corpus-citas.html", "needle": "shared-shell.js" }
       ],
       "manual": [

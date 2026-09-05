@@ -2,7 +2,7 @@
   "_meta": {
     "schema": "contra-archivo/libros-clave-b",
     "version": 2,
-    "updated_at": "2026-06-21",
+    "updated_at": "2026-09-05",
     "protocolo": "Clave B — bujo-ro",
     "doc": "docs/skills/BASES_CONSULTADAS.md",
     "fuente": "Foto física Rö — 7 libros tesis.jpg (8 volúmenes, 2026-06-21)"
@@ -16,7 +16,14 @@
       "clave": "B",
       "estado": "en-curso",
       "capturas_objetivo": 4,
-      "notas": "Cuadernos · capa filosófica bujo-ro · hegemonía / sociedad civil · 2026-09-05: 4 capturas en src/docs/Estado del Arte/Citas Gramsci; 3 citas en data/gramsci-citas.json"
+      "leyenda_clave_b": {
+        "fuente": "Citas Gramsci/IMG_1210.jpg",
+        "blue": "reflexion",
+        "green": "concepto_clave",
+        "pink": "proceso_cultural",
+        "notas": "Override local de este volumen. Estándar Clave B: rosa=concepto_clave, verde=persona_interes. Aquí Rö etiquetó verde=CONCEPTO CLAVE y rosa=PROCESO CULTURAL."
+      },
+      "notas": "Cuadernos · capa filosófica bujo-ro. 4 capturas en Citas Gramsci. Editorial = 3 citas (3001–3003). Portada IMG_1210 = leyenda local."
     },
     {
       "id": "salazar-acumulacion",

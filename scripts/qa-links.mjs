@@ -39,6 +39,7 @@ const SEED_PATHS = [
   '/styles/molecules/bases-consultadas.css',
   '/data/zuboff-citas.json',
   '/data/attac-citas.json',
+  '/data/gramsci-citas.json',
   '/data/corpus-categorias.json',
   '/data/libros-clave-b.json',
   '/archivo-lecturas.html',
