@@ -941,19 +941,13 @@
               const hint = photoQualityHint(self.imageMeta);
               self.updatePhotoMeta();
               self.updateFlowStep();
-              self.showNextStep(
-                'Paso 2: escanea marcadores automáticamente o usa Seleccionar región para captura manual.',
-                'Ir a captura manual',
-                function () {
-                  self.switchToRegionMode();
-                },
-              );
-              self.status(
-                'Foto cargada' + dim + '.' + hint,
-                hint ? '' : 'success',
-              );
+              self.status('Detectando todos los marcadores…' + dim, 'loading');
               self.updateOcrButton();
-              resolve();
+              self.autoScanFragments().then(function () {
+                resolve();
+              }).catch(function () {
+                resolve();
+              });
             } catch (err) {
               self.status('Error al dibujar la imagen: ' + err.message, 'error');
               reject(err);
@@ -1284,15 +1278,13 @@
           ? ` · ${skipped} omitido${skipped !== 1 ? 's' : ''}`
           : '';
         this.status(
-          `${added} fragmento${added !== 1 ? 's' : ''} en cola${skipMsg}. Revisa, corrige si hace falta e importa.${photoHint}`,
+          `${added} marcador${added !== 1 ? 'es' : ''} detectado${added !== 1 ? 's' : ''}${skipMsg}. Revisá la cola e importá.${photoHint}`,
           photoHint ? '' : 'success',
         );
         this.showNextStep(
-          'Paso 3: revisa cada fragmento en la cola. Pulsa ✎ para corregir. Luego importa al archivo.',
-          'Ir a cola',
-          () => {
-            this.els.queue?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-          },
+          'Marcadores detectados. Corregí si hace falta y pulsá Importar.',
+          'Importar al archivo',
+          () => this.importQueue({ allowMissingPage: true }),
         );
         this.updateFlowStep();
         if (this.opts.onQueueChange) this.opts.onQueueChange(this.queue);
@@ -1440,13 +1432,14 @@
     this.status('Cola vaciada.', '');
   };
 
-  LecturaClaveB.prototype.importQueue = function () {
+  LecturaClaveB.prototype.importQueue = function (opts) {
+    const options = opts || {};
     if (!this.queue.length) {
       this.status('No hay fragmentos para importar.', 'error');
       return;
     }
     const sinPagina = this.queue.filter((f) => !f.pagina).length;
-    if (sinPagina) {
+    if (sinPagina && !options.allowMissingPage) {
       this.status(
         `Indica la página arriba antes de importar (${sinPagina} fragmento${sinPagina !== 1 ? 's' : ''} sin página).`,
         'error',
