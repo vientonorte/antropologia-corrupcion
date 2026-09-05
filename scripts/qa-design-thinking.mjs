@@ -27,7 +27,7 @@ const BASE_PAGE_RULES = [
 
 const REDIRECT_PAGE_RULES = [
   { id: 'has-target', test: (h, target) => target && h.includes(target), hint: 'destino redirect declarado' },
-  { id: 'noscript-fallback', test: (h) => /<noscript>|<a href=/i.test(h), hint: 'fallback sin JS' },
+  { id: 'noscript-fallback', test: (h) => /<noscript>|<a\s[^>]*href=/i.test(h), hint: 'fallback sin JS' },
 ];
 
 const REDIRECT_TARGETS = {
@@ -103,8 +103,14 @@ function runCircuitCheck(check) {
     return { pass: false, detail: `archivo no encontrado: ${content.path}` };
   }
 
-  if (check.must_not_contain && content.body.includes(check.must_not_contain)) {
-    return { pass: false, detail: `contiene prohibido: ${check.must_not_contain}` };
+  if (check.must_not_contain) {
+    if (content.body.includes(check.must_not_contain)) {
+      return { pass: false, detail: `contiene prohibido: ${check.must_not_contain}` };
+    }
+    // must_not_contain alone is a full check (no needle required)
+    if (!check.needle && !check.before) {
+      return { pass: true, detail: `sin ${check.must_not_contain}` };
+    }
   }
 
   if (check.before) {
