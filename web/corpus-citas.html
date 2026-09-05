@@ -1351,7 +1351,7 @@
         <a href="index.html" class="header-back">← Contra-Archivo</a>
         <div class="header-label">Módulo ⑤ · Corpus de Citas · Junio 2026</div>
         <h1>Corpus <em>de citas</em></h1>
-        <div class="header-sub">Clave A/B · Libros impresos · Zuboff + ATTAC · Sin pérdida de datos locales</div>
+        <div class="header-sub">Clave A/B · Libros impresos · Zuboff + ATTAC + Gramsci · Sin pérdida de datos locales</div>
     </div>
 
     <div class="panel">
@@ -1364,7 +1364,7 @@
         </div>
         <div class="archive-intro">
             <p><strong>Historial de citas codificadas</strong> — Motor <strong>100% local</strong>: detección cromática por píxel, selección de región y OCR (Tesseract) en tu navegador. Sin API keys, sin proxy, sin terceros. Clave B (libros) y Clave A (Bullet Ro). Cada cita archiva libro, autor, página, categoría y notas de alineación con la tesis de mistranslation institucional.</p>
-            <p style="margin-top:12px; font-size:11px; color:var(--neutral);">Base metodológica alineada a BJ_analisis_consolidado_D17_Intro. El corpus Zuboff + ATTAC se sincroniza desde <code>data/</code>; tus capturas y ediciones persisten en <code>localStorage</code> (<code>corpusCitas</code>). Las páginas <code>zuboff-archivo.html</code> y <code>archivo-lecturas.html</code> redirigen aquí y migran citas automáticamente. Investigadoras: <a href="privado-login.html" style="color:var(--zuboff);">espacio privado</a>.</p>
+            <p style="margin-top:12px; font-size:11px; color:var(--neutral);">Base metodológica alineada a BJ_analisis_consolidado_D17_Intro. El corpus Zuboff + ATTAC + Gramsci se sincroniza desde <code>data/</code> (Salazar entra cuando haya capturas); tus capturas y ediciones persisten en <code>localStorage</code> (<code>corpusCitas</code>). Las páginas <code>zuboff-archivo.html</code> y <code>archivo-lecturas.html</code> redirigen aquí y migran citas automáticamente. Investigadoras: <a href="privado-login.html" style="color:var(--zuboff);">espacio privado</a>.</p>
         </div>
 
         <!-- LECTURA CROMÁTICA CLAVE B (motor local) -->
@@ -1756,7 +1756,8 @@
             persona_interes: 'Clave B · Persona de interés',
             reflexion: 'Clave B · Reflexión',
             compartir: 'Clave B · Compartir',
-            investigar: 'Clave B · Investigar'
+            investigar: 'Clave B · Investigar',
+            proceso_cultural: 'Clave B · Proceso cultural'
         };
 
         function persistCitations() {
@@ -1854,12 +1855,14 @@
         }
 
         async function loadServerCorpus() {
-            const [zuboff, attac, gramsci] = await Promise.all([
-                fetchJson('data/zuboff-citas.json'),
-                fetchJson('data/attac-citas.json'),
-                fetchJson('data/gramsci-citas.json').catch(() => [])
-            ]);
-            return [...zuboff, ...attac, ...gramsci].map(normalizeCitation);
+            const files = [
+                'data/zuboff-citas.json',
+                'data/attac-citas.json',
+                'data/gramsci-citas.json',
+                'data/salazar-citas.json',
+            ];
+            const lists = await Promise.all(files.map((p) => fetchJson(p)));
+            return lists.flat().map(normalizeCitation);
         }
 
         function populateCategorySelects() {
@@ -1879,12 +1882,16 @@
                 const current = captureSel.value;
                 const zuboffKeys = categoryGroups.zuboff || Object.keys(FALLBACK_CATEGORY_LABELS).slice(0, 7);
                 const attacKeys = (categoryGroups.attac || []).filter((k) => !zuboffKeys.includes(k));
+                const claveBKeys = (categoryGroups.clave_b || []).filter((k) => !zuboffKeys.includes(k) && !attacKeys.includes(k));
                 captureSel.innerHTML = '<option value="">— Selecciona categoría</option>' +
                     '<optgroup label="Zuboff / tesis">' +
                     zuboffKeys.map((k) => `<option value="${k}">${escapeHtml(getCategoryLabel(k))}</option>`).join('') +
                     '</optgroup>' +
                     (attacKeys.length ? '<optgroup label="ATTAC / circuito financiero">' +
                         attacKeys.map((k) => `<option value="${k}">${escapeHtml(getCategoryLabel(k))}</option>`).join('') +
+                        '</optgroup>' : '') +
+                    (claveBKeys.length ? '<optgroup label="Clave B / libros físicos">' +
+                        claveBKeys.map((k) => `<option value="${k}">${escapeHtml(getCategoryLabel(k))}</option>`).join('') +
                         '</optgroup>' : '');
                 captureSel.value = current;
             }
@@ -1903,7 +1910,7 @@
                 }
                 if (status) status.textContent = 'Sesión investigadora activa. Corpus editorial + tus ediciones locales sincronizados.';
             } else if (status) {
-                status.textContent = 'Corpus editorial (Zuboff + ATTAC) cargado desde servidor. Inicia sesión para acceso integrado al espacio privado.';
+                status.textContent = 'Corpus editorial (Zuboff + ATTAC + Gramsci) cargado desde servidor. Inicia sesión para acceso integrado al espacio privado.';
             }
         }
 
@@ -2210,7 +2217,7 @@ Notas: Conexión directa con tu experiencia de expulsión a los 15. Lo que perdi
         }
 
         function clearArchive() {
-            if (confirm('¿Eliminar citas locales y restaurar solo el corpus editorial del servidor (Zuboff + ATTAC)?')) {
+            if (confirm('¿Eliminar citas locales y restaurar solo el corpus editorial del servidor (Zuboff + ATTAC + Gramsci)?')) {
                 if (window.CorpusCitasStore) CorpusCitasStore.clearLocal(true);
                 localStorage.removeItem(LEGACY_STORAGE_KEY);
                 localStorage.removeItem(CORPUS_SYNC_KEY);

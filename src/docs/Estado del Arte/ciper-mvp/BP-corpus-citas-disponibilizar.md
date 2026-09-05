@@ -1,6 +1,6 @@
 # Buenas prácticas — disponiblizar citas en corpus-citas.html
 
-**Estado:** borrador 2026-09-05 (CIPER MVP). Completar cuando entren capturas Salazar.
+**Estado:** borrador 2026-09-05 (CIPER MVP). Gramsci editorial fiel (3 citas). Completar cuando entren capturas Salazar.
 
 ## Principios
 

@@ -103,7 +103,7 @@
       "nav_primary": true,
       "sitemap": true,
       "priority": 0.85,
-      "data": ["zuboff-citas.json", "attac-citas.json", "corpus-categorias.json", "ai-proxy-config.json", "libros-clave-b.json"]
+      "data": ["zuboff-citas.json", "attac-citas.json", "gramsci-citas.json", "corpus-categorias.json", "ai-proxy-config.json", "libros-clave-b.json"]
     },
     {
       "id": "P07",

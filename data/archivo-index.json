@@ -89,8 +89,8 @@
       "id": "corpus-citas-archivo",
       "tipo": "dossier",
       "seccion": "citas",
-      "titulo": "Corpus de citas — Zuboff, ATTAC y libros físicos",
-      "descripcion": "Archivo canónico de citas del contra-archivo: corpus editorial Zuboff + ATTAC en data/, captura Clave A/B de libros impresos, OCR local, export JSON/CSV. URL canónica: corpus-citas.html (zuboff-archivo.html, archivo-lecturas.html, zuboff-citas.html y citas-attac.html redirigen aquí).",
+      "titulo": "Corpus de citas — Zuboff, ATTAC, Gramsci y libros físicos",
+      "descripcion": "Archivo canónico de citas del contra-archivo: corpus editorial Zuboff + ATTAC + Gramsci en data/ (Salazar cuando haya capturas), captura Clave A/B de libros impresos, OCR local, export JSON/CSV. URL canónica: corpus-citas.html (zuboff-archivo.html, archivo-lecturas.html, zuboff-citas.html y citas-attac.html redirigen aquí).",
       "url": "corpus-citas.html",
       "estado": "publicable"
     },
