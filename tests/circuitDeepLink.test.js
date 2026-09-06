@@ -37,6 +37,15 @@ module.exports = function (describe, it, assert, assertEqual) {
             var js = fs.readFileSync(path.join(web, 'lib', 'buscadorAvanzado.js'), 'utf8');
             assert(js.indexOf("get('fuente')") !== -1, 'fuente param reader');
             assert(js.indexOf('applyFuenteFilterFromUrl') !== -1, 'fuente filter applier');
+            assert(js.indexOf("setActiveCategory('all')") !== -1, 'fuente deep-link opens Todos');
+        });
+
+        it('buscador default category is Todos and folds accents', function () {
+            var html = fs.readFileSync(path.join(web, 'buscador.html'), 'utf8');
+            var js = fs.readFileSync(path.join(web, 'lib', 'buscadorAvanzado.js'), 'utf8');
+            assert(html.indexOf('data-cat="all"') !== -1, 'Todos tab');
+            assert(js.indexOf("var activeCat = 'all'") !== -1, 'default Todos');
+            assert(js.indexOf('recordMatchesQuery') !== -1, 'uses shared matcher');
         });
 
         it('onboarding chips link to buscador with fuente param', function () {

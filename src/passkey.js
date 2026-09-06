@@ -107,6 +107,14 @@
     }
   }
 
+  function hasStoredCredential() {
+    try {
+      return !!localStorage.getItem(CRED_KEY);
+    } catch (e) {
+      return false;
+    }
+  }
+
   /* ── Registration flow ─────────────────────────────────── */
 
   function register() {
@@ -162,7 +170,7 @@
     var storedId = getStoredCredentialId();
     if (!storedId) {
       return Promise.reject(new Error(
-        'No hay credencial registrada. Usa register() primero.'
+        'No hay passkey en este dispositivo. Ingresá con la clave de investigación o registrá un dispositivo (admin).'
       ));
     }
 
@@ -199,6 +207,7 @@
     login: login,
     logout: logout,
     isAuthenticated: isAuthenticated,
+    hasStoredCredential: hasStoredCredential,
     UNSUPPORTED_MSG: UNSUPPORTED_MSG
   };
 

@@ -43,6 +43,20 @@ module.exports = function (
             assert(report.summary.totalRecords > 0, 'should count records');
         });
 
+        it('counts curated records with URL as verified for readiness', function () {
+            var report = SR.buildSourceReport(fuentesConfig, allRecords());
+            assertGreaterThan(report.summary.operativas, 0, 'curated corpus should have operative sources');
+            var leychile = SR.getEntryById(report, 'leychile');
+            assert(leychile, 'leychile entry');
+            assertEqual(leychile.readiness, 'operativo');
+            assert(typeof SR.recordCountsAsVerified === 'function');
+            assertEqual(SR.recordCountsAsVerified({
+                titulo: 'Ley 20.730',
+                url: 'https://www.leychile.cl/n?i=1059961',
+            }), true);
+            assertEqual(SR.recordCountsAsVerified({ titulo: 'Sin URL' }), false);
+        });
+
         it('marks mvp activa with data as operativo or parcial', function () {
             var report = SR.buildSourceReport(fuentesConfig, allRecords());
             var infolobby = SR.getEntryById(report, 'infolobby');

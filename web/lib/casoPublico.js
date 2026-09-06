@@ -16,6 +16,28 @@
         [/FECU/gi, 'informe financiero regulado'],
     ];
 
+    /* Private names stay searchable on the public surface; display stays anonymized. */
+    var SEARCH_ALIAS_PHRASES = [
+        { needle: 'conglomerado regional de inversiones', aliases: 'sura sura investments' },
+        { needle: 'conglomerado regional', aliases: 'sura' },
+        { needle: 'administradora de fondos de pensiones', aliases: 'afp uno' },
+        { needle: 'regulador del mercado financiero', aliases: 'cmf comision para el mercado financiero' },
+        { needle: 'regulador financiero', aliases: 'cmf' },
+        { needle: 'custodio financiero transnacional', aliases: 'jp morgan jpmorgan' },
+        { needle: 'informe financiero regulado', aliases: 'fecu' },
+    ];
+
+    function expandSearchHaystack(text) {
+        var out = String(text || '');
+        var lower = out.toLowerCase();
+        for (var i = 0; i < SEARCH_ALIAS_PHRASES.length; i++) {
+            if (lower.indexOf(SEARCH_ALIAS_PHRASES[i].needle) !== -1) {
+                out += ' ' + SEARCH_ALIAS_PHRASES[i].aliases;
+            }
+        }
+        return out;
+    }
+
     var CASO_OVERRIDES = {
         'sura-gobernanza-datos': {
             titulo: 'Gobernanza de datos previsionales y custodia transnacional',
@@ -250,6 +272,7 @@
         sanitizeText: sanitizeText,
         sanitizeRecord: sanitizeRecord,
         sanitizeRecords: sanitizeRecords,
+        expandSearchHaystack: expandSearchHaystack,
         prepareHuella: prepareHuella,
         prepareCorpusBundle: prepareCorpusBundle,
         patchPublicGlobals: patchPublicGlobals,

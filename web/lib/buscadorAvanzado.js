@@ -10,7 +10,8 @@
     var huellaIndex = null;
     var registrosCache = [];
     var bcnNormCache = [];
-    var activeCat = 'E';
+    var activeCat = 'all';
+    var CAT_ORDER = ['all', 'E', 'F', 'G', 'H', 'I'];
     var query = '';
     var visibleCount = 5;
     var debounceTimer = null;
@@ -24,6 +25,15 @@
     var sourceReport = null;
 
     var CAT_META = {
+        all: {
+            desc: 'Todo el corpus curado: registros oficiales, académicos y de archivo, sin recorte por categoría.',
+            desc_extendida: 'Vista completa del contra-archivo. Usala para buscar por texto o filtrar por fuente; las categorías E–I recortan el mismo corpus.',
+            fuentes: [],
+            ejemplos: ['corrupción', 'AFP', 'lobby', 'consulta indígena'],
+            filterFn: function() {
+                return true;
+            }
+        },
         E: {
             desc: 'Registros de transparencia, SEIA y otras instituciones públicas con deber de publicación activa.',
             desc_extendida: 'Capa institucional: lo que el Estado hace visible. Respuestas a solicitudes de transparencia, expedientes SEIA, resoluciones. El registro oficial como primera traducción de conflictos políticos a lenguaje administrativo.',
@@ -140,9 +150,40 @@
     }
 
     function recordHaystack(r) {
-        return [r.titulo, r.institucion, r.capa_oficial, (r.keywords || []).join(' '), (r.tags || []).join(' ')]
-            .join(' ')
-            .toLowerCase();
+        var raw = [
+            r.titulo,
+            r.institucion,
+            r.capa_oficial,
+            r.materia,
+            (r.keywords || []).join(' '),
+            (r.tags || []).join(' '),
+            (r.actores_lobby || []).join(' '),
+        ].join(' ');
+        if (window.CACasoPublico && typeof window.CACasoPublico.expandSearchHaystack === 'function') {
+            raw = window.CACasoPublico.expandSearchHaystack(raw);
+        }
+        return raw;
+    }
+
+    function normalizeQuery(str) {
+        if (window.normalizeSearchText) return window.normalizeSearchText(str);
+        if (str == null) return '';
+        return String(str)
+            .toLowerCase()
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '')
+            .replace(/[^a-z0-9\s]/g, ' ')
+            .trim();
+    }
+
+    function matchesQuery(r, q) {
+        if (!q || !String(q).trim()) return true;
+        if (typeof window.recordMatchesQuery === 'function') {
+            return window.recordMatchesQuery(r, q);
+        }
+        var needle = normalizeQuery(q);
+        if (!needle) return true;
+        return normalizeQuery(recordHaystack(r)).indexOf(needle) !== -1;
     }
 
     function setActiveCategory(cat) {
@@ -159,16 +200,25 @@
     }
 
     function pickCategoryForQuery(q) {
-        var needle = (q || '').trim().toLowerCase();
+        var needle = (q || '').trim();
         if (!needle) return;
+        if (activeCat === 'all') return;
+
+        var currentFilter = CAT_META[activeCat] && CAT_META[activeCat].filterFn;
+        var currentCount = allRecords.filter(function(r) {
+            if (currentFilter && !currentFilter(r)) return false;
+            return matchesQuery(r, needle);
+        }).length;
+        if (currentCount > 0) return;
 
         var bestCat = activeCat;
         var bestCount = 0;
-        ['E', 'F', 'G', 'H', 'I'].forEach(function(cat) {
+        CAT_ORDER.forEach(function(cat) {
+            if (cat === 'all') return;
             var filterFn = CAT_META[cat].filterFn;
             var count = allRecords.filter(function(r) {
                 if (filterFn && !filterFn(r)) return false;
-                return recordHaystack(r).indexOf(needle) !== -1;
+                return matchesQuery(r, needle);
             }).length;
             if (count > bestCount) {
                 bestCount = count;
@@ -178,12 +228,17 @@
 
         if (bestCount > 0) {
             setActiveCategory(bestCat);
+        } else {
+            setActiveCategory('all');
         }
     }
 
     function applyDeepLinkFromUrl() {
         var params = new URLSearchParams(window.location.search);
-        applyFuenteFilterFromUrl();
+        var fuenteApplied = applyFuenteFilterFromUrl();
+        if (fuenteApplied) {
+            setActiveCategory('all');
+        }
 
         var qParam = params.get('q');
         if (qParam && $input) {
@@ -320,13 +375,30 @@
             }
             if (r._frictionScore < frictionMin) return false;
             if (hasSourceFilter && !checkedSources[r.fuente]) return false;
-            if (q) {
-                if (recordHaystack(r).indexOf(q) === -1) return false;
-            }
+            if (q && !matchesQuery(r, query)) return false;
             return true;
         }).sort(function(a, b) {
             return (b._frictionScore || 0) - (a._frictionScore || 0);
         });
+    }
+
+    function emptyResultsMessage() {
+        var q = (query || '').trim();
+        if (hasSourceFilter && Object.keys(checkedSourcesCache).length === 1) {
+            var srcId = Object.keys(checkedSourcesCache)[0];
+            var entry = sourceReport && window.CASourceRegistry
+                ? window.CASourceRegistry.getEntryById(sourceReport, srcId)
+                : null;
+            if (entry && entry.records === 0) {
+                return (entry.label || srcId) +
+                    ' está en pipeline: todavía no hay registros curados en el corpus.';
+            }
+        }
+        if (q) {
+            return 'Sin resultados para «' + q +
+                '». El corpus es curado (no scraping en vivo); probá otra grafía o la categoría Todos.';
+        }
+        return 'Sin resultados en búsqueda avanzada para este criterio.';
     }
 
     /* ── Render ── */
@@ -391,6 +463,7 @@
 
         if (filtered.length === 0) {
             $noResults.classList.remove('hidden');
+            if ($noResultsMsg) $noResultsMsg.textContent = emptyResultsMessage();
             $resultsStatus.textContent = '';
             $btnMore.classList.add('hidden');
             if ($btnExportCSV) $btnExportCSV.style.display = 'none';
@@ -580,15 +653,14 @@
             return;
         }
 
-        var catFilter = CAT_META[activeCat].filterFn;
+        var catFilter = CAT_META[activeCat] && CAT_META[activeCat].filterFn;
         var pool = allRecords.filter(function(r) {
             return !catFilter || catFilter(r);
         });
 
         var matches = [];
         for (var i = 0; i < pool.length && matches.length < 8; i++) {
-            var haystack = [pool[i].titulo, pool[i].institucion, (pool[i].keywords || []).join(' ')].join(' ').toLowerCase();
-            if (haystack.indexOf(q) !== -1) matches.push(pool[i]);
+            if (matchesQuery(pool[i], q)) matches.push(pool[i]);
         }
 
         if (matches.length === 0) {
@@ -665,15 +737,15 @@
 
     function buildCategoryCounts() {
         catCounts = {};
-        ['E', 'F', 'G', 'H', 'I'].forEach(function(cat) {
-            var filterFn = CAT_META[cat].filterFn;
+        CAT_ORDER.forEach(function(cat) {
+            var filterFn = CAT_META[cat] && CAT_META[cat].filterFn;
             catCounts[cat] = filterFn ? allRecords.filter(filterFn).length : 0;
         });
     }
 
     /* ── Category counts ── */
     function updateCategoryCounts() {
-        var cats = ['E', 'F', 'G', 'H', 'I'];
+        var cats = CAT_ORDER;
         cats.forEach(function(cat) {
             var count = catCounts[cat] || 0;
             var tab = $catTabs.querySelector('[data-cat="' + cat + '"]');
@@ -684,7 +756,8 @@
                 }
                 // Update aria-label
                 var desc = CAT_META[cat].desc;
-                tab.setAttribute('aria-label', 'Categoría ' + cat + ': ' + desc.substring(0, 50) + '... - ' + count + ' resultados');
+                var catName = cat === 'all' ? 'Todos' : ('Categoría ' + cat);
+                tab.setAttribute('aria-label', catName + ': ' + desc.substring(0, 50) + '... - ' + count + ' resultados');
             }
         });
     }

@@ -21,6 +21,7 @@ module.exports = function (describe, it, assert, assertEqual, assertDeepEqual, a
             assertEqual(typeof Auth.login, 'function');
             assertEqual(typeof Auth.logout, 'function');
             assertEqual(typeof Auth.isAuthenticated, 'function');
+            assertEqual(typeof Auth.hasStoredCredential, 'function');
         });
 
         it('exposes UNSUPPORTED_MSG constant', function () {
@@ -95,8 +96,10 @@ module.exports = function (describe, it, assert, assertEqual, assertDeepEqual, a
             var p = Auth.login();
             assert(typeof p.then === 'function', 'should return a promise');
             p.catch(function (err) {
-                assert(err.message.indexOf('credencial') !== -1,
-                    'should mention missing credential');
+                assert(
+                    err.message.indexOf('passkey') !== -1 || err.message.indexOf('credencial') !== -1,
+                    'should mention missing passkey/credential',
+                );
             });
             window.PublicKeyCredential = undefined;
         });
@@ -110,6 +113,17 @@ module.exports = function (describe, it, assert, assertEqual, assertDeepEqual, a
             localStorage.removeItem('ca_passkey_cred');
             var hasStored = localStorage.getItem('ca_passkey_cred');
             assertEqual(hasStored, null, 'should start with no credential');
+        });
+
+        it('hasStoredCredential is false without localStorage key', function () {
+            localStorage.removeItem('ca_passkey_cred');
+            assertEqual(Auth.hasStoredCredential(), false);
+        });
+
+        it('hasStoredCredential is true when a credential id is stored', function () {
+            localStorage.setItem('ca_passkey_cred', 'dGVzdA==');
+            assertEqual(Auth.hasStoredCredential(), true);
+            localStorage.removeItem('ca_passkey_cred');
         });
     });
 };

@@ -105,7 +105,8 @@ function _seFrictionTip(score) {
  * Normaliza string: lowercase, sin tildes, sin puntuación
  */
 function _seNormalize(str) {
-    return str
+    if (str == null) return '';
+    return String(str)
         .toLowerCase()
         .normalize('NFD')
         .replace(/[\u0300-\u036f]/g, '')
@@ -144,12 +145,21 @@ function _seTextMatch(registro, query) {
         (registro.actores_lobby || []).join(' ')
     ].join(' ');
 
+    if (window.CACasoPublico && typeof window.CACasoPublico.expandSearchHaystack === 'function') {
+        searchable = window.CACasoPublico.expandSearchHaystack(searchable);
+    }
+
     var normalSearchable = _seNormalize(searchable);
     var hits = 0;
     for (var i = 0; i < tokens.length; i++) {
         if (normalSearchable.indexOf(tokens[i]) !== -1) hits++;
     }
     return hits / tokens.length;
+}
+
+function recordMatchesQuery(registro, query) {
+    if (!query || !String(query).trim()) return true;
+    return _seTextMatch(registro, query) >= 0.3;
 }
 
 function _seCsvEscape(value) {
@@ -1171,6 +1181,8 @@ if (typeof window !== 'undefined') {
     window.FrictionSearchEngine = FrictionSearchEngine;
     window.initSearchUI = initSearchUI;
     window.normalizeBcnDataset = normalizeBcnDataset;
+    window.normalizeSearchText = _seNormalize;
+    window.recordMatchesQuery = recordMatchesQuery;
     window.buildSourceCatalog = buildSourceCatalog;
     window.FUENTE_LABELS = FUENTE_LABELS;
     window.FUENTE_COLORS = FUENTE_COLORS;

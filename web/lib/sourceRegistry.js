@@ -36,6 +36,16 @@
         };
     }
 
+    function recordCountsAsVerified(record) {
+        if (!record) return false;
+        if (record.verificado === true) return true;
+        var estado = record.estado_verificacion;
+        if (estado === 'curado-manual' || estado === 'derivado-ley-vigente') return true;
+        // Static curated corpus: a titled record with source URL is a documented fact.
+        if (record.url && record.titulo) return true;
+        return false;
+    }
+
     function bumpCount(map, key) {
         if (!key) return;
         map[key] = (map[key] || 0) + 1;
@@ -48,7 +58,7 @@
             if (!stats[src]) stats[src] = emptyStats();
             var s = stats[src];
             s.total += 1;
-            if (r.verificado === true) s.verificados += 1;
+            if (recordCountsAsVerified(r)) s.verificados += 1;
             if (typeof r.official_score === 'number') {
                 s.conScore += 1;
                 s.scoreSum += r.official_score;
@@ -68,7 +78,7 @@
         if (stats.total === 0) {
             return configItem.estado === 'mvp' ? 'pipeline' : 'planificado';
         }
-        if (stats.total >= 2 && stats.verificados / stats.total >= 0.5) return 'operativo';
+        if (stats.verificados > 0 && stats.verificados / stats.total >= 0.5) return 'operativo';
         return 'parcial';
     }
 
@@ -235,6 +245,7 @@
         PIPELINE_LABELS: PIPELINE_LABELS,
         VERIFICACION_LABELS: VERIFICACION_LABELS,
         aggregateRecordsBySource: aggregateRecordsBySource,
+        recordCountsAsVerified: recordCountsAsVerified,
         computeReadiness: computeReadiness,
         buildSourceReport: buildSourceReport,
         getEntryById: getEntryById,

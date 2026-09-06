@@ -843,7 +843,13 @@
 
             <!-- Category Tabs -->
             <div class="cat-tabs" id="catTabs" role="tablist" aria-label="Categorías de fuentes">
-                <button class="cat-tab active" data-cat="E" role="tab" aria-selected="true">
+                <button class="cat-tab active" data-cat="all" role="tab" aria-selected="true">
+          <span class="cat-icon" aria-hidden="true">⊕</span>
+          <span class="cat-letter" aria-hidden="true">*</span>
+          Todos
+          <span class="cat-count" aria-label="número de resultados">—</span>
+        </button>
+                <button class="cat-tab" data-cat="E" role="tab" aria-selected="false">
           <span class="cat-icon" aria-hidden="true">🏛</span>
           <span class="cat-letter" aria-hidden="true">E</span>
           Entidades públicas
@@ -876,7 +882,7 @@
             </div>
 
             <!-- Category description -->
-            <div class="cat-desc" id="catDesc" aria-live="polite">Registros de transparencia, SEIA y otras instituciones públicas con deber de publicación activa.</div>
+            <div class="cat-desc" id="catDesc" aria-live="polite">Todo el corpus curado: registros oficiales, académicos y de archivo, sin recorte por categoría.</div>
 
             <!-- Results -->
             <div class="results-toolbar">
@@ -939,17 +945,17 @@
         © 2026 Colectivo Viento Norte · Tesis Doctoral en Antropología&nbsp;&nbsp;·&nbsp;&nbsp;<a href="index.html#tesis">Tesis (grafo)</a>
     </footer>
 
-    <script defer src="lib/casoPublico.js?v=20260621d"></script>
+    <script defer src="lib/casoPublico.js?v=20260905"></script>
     <script defer src="src/frictionEngine.js?v=20260620"></script>
-    <script defer src="src/searchEngine.js?v=20260620"></script>
+    <script defer src="src/searchEngine.js?v=20260905"></script>
     <script defer src="src/categoryExport.js?v=20260620"></script>
     <script defer src="lib/dataLoader.js?v=20260621e"></script>
-    <script defer src="lib/sourceRegistry.js?v=20260621"></script>
+    <script defer src="lib/sourceRegistry.js?v=20260905"></script>
     <script defer src="lib/basesConsultadas.js?v=20260621"></script>
     <script defer src="lib/corpusStats.js?v=20260628"></script>
     <script defer src="lib/huellaDigital.js?v=20260621e"></script>
     <script defer src="pages/buscador-boot.js?v=20260628"></script>
-    <script defer src="lib/buscadorAvanzado.js?v=20260628"></script>
+    <script defer src="lib/buscadorAvanzado.js?v=20260905"></script>
     <script>
         (function() {
             if (window.__CA_UNIFIED_SHELL_LOADER__) {
