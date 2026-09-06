@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## [2026-09-06] Pipeline cromático automático
+
+| Área | Cambio |
+|---|---|
+| **scripts/ensure-editorial-stubs.mjs** | Salazar `[]` y clave-a array si faltan. No inventa citas. |
+| **scripts/merge-clave-a-export.mjs** | Merge Exportar JSON → `data/clave-a-citas.json` (solo clave A; skip clínico). |
+| **scripts/pipeline-cromatico.sh** | stubs + merge opcional + tests. |
+| **qa-live / qa-links** | `salazar-citas.json` y `clave-a-citas.json` son rutas críticas. |
+| **ingest-tui-img.sh** | Next step Clave A = export JSON + merge, no OCR. |
+
 ## [2026-09-06] Corpus editorial Clave A D6 + stub Salazar
 
 | Área | Cambio |

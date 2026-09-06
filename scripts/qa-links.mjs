@@ -40,6 +40,8 @@ const SEED_PATHS = [
   '/data/zuboff-citas.json',
   '/data/attac-citas.json',
   '/data/gramsci-citas.json',
+  '/data/salazar-citas.json',
+  '/data/clave-a-citas.json',
   '/data/corpus-categorias.json',
   '/data/libros-clave-b.json',
   '/archivo-lecturas.html',

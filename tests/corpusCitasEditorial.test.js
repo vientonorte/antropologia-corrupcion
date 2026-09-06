@@ -70,4 +70,13 @@ module.exports = function (describe, it, assert, assertEqual) {
             assert(/data\/clave-a-citas\.json/.test(html), 'loader lists Clave A editorial');
         });
     });
+
+    describe('QA seeds — pipeline cromático', function () {
+        it('qa-links and qa-live list editorial JSON', function () {
+            var links = fs.readFileSync(path.join(__dirname, '..', 'scripts/qa-links.mjs'), 'utf8');
+            var live = fs.readFileSync(path.join(__dirname, '..', 'scripts/qa-live.mjs'), 'utf8');
+            assert(/salazar-citas\.json/.test(links) && /clave-a-citas\.json/.test(links), 'qa-links seeds');
+            assert(/salazar-citas\.json/.test(live) && /clave-a-citas\.json/.test(live), 'qa-live critical');
+        });
+    });
 };

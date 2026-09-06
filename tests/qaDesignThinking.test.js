@@ -106,6 +106,8 @@ module.exports = function (describe, it, assert, assertEqual) {
             var html = readWeb('corpus-citas.html');
             assert(/corpusCitasStore\.js/.test(html));
             assert(/zuboff-citas\.json/.test(html));
+            assert(/clave-a-citas\.json/.test(html));
+            assert(/salazar-citas\.json/.test(html));
         });
 
         it('J07 tesis — biblioteca y passkey', function () {
