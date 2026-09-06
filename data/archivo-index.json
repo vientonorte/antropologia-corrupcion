@@ -90,7 +90,7 @@
       "tipo": "dossier",
       "seccion": "citas",
       "titulo": "Corpus de citas — Zuboff, ATTAC, Gramsci y libros físicos",
-      "descripcion": "Archivo canónico de citas del contra-archivo: corpus editorial Zuboff + ATTAC + Gramsci en data/ (Salazar cuando haya capturas), captura Clave A/B de libros impresos, OCR local, export JSON/CSV. URL canónica: corpus-citas.html (zuboff-archivo.html, archivo-lecturas.html, zuboff-citas.html y citas-attac.html redirigen aquí).",
+      "descripcion": "Archivo canónico de citas del contra-archivo: corpus editorial Zuboff + ATTAC + Gramsci + Clave A (Bullet Ro D6) en data/. Salazar = stub vacío hasta capturas. Captura Clave A/B, OCR local, export JSON/CSV. URL canónica: corpus-citas.html.",
       "url": "corpus-citas.html",
       "estado": "publicable"
     },

@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## [2026-09-06] Corpus editorial Clave A D6 + stub Salazar
+
+| Área | Cambio |
+|---|---|
+| **data/clave-a-citas.json** | 9 ítems D6 (laboral / Camila ops / referencias) desde Session 2026-09-06. Sin OCR. Sin Kit TLP clínico. Inbox JPG gitignored. |
+| **data/salazar-citas.json** | Stub `[]` — 200 en vez de 404. No inventa citas. |
+| **corpus-citas.html** | Loader incluye ambos JSON. |
+| **corpus-categorias.json** | Grupo `clave_a` (personal · vinculos · camila · laboral · referencias). |
+| **tests** | `corpusCitasEditorial.test.js` |
+
 ## [2026-06-21] Bases consultadas — estados DevOps/Scrum en UI pública
 
 | Área | Cambio |

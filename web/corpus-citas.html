@@ -1802,7 +1802,9 @@
             const res = await fetch(path);
             if (!res.ok) return [];
             const data = await res.json();
-            return Array.isArray(data) ? data : [];
+            if (Array.isArray(data)) return data;
+            if (Array.isArray(data && data.citas)) return data.citas;
+            return [];
         }
 
         async function loadCategoryTaxonomy() {
@@ -1824,6 +1826,7 @@
                 'data/attac-citas.json',
                 'data/gramsci-citas.json',
                 'data/salazar-citas.json',
+                'data/clave-a-citas.json',
             ];
             const lists = await Promise.all(files.map((p) => fetchJson(p)));
             return lists.flat().map(normalizeCitation);
@@ -1874,7 +1877,7 @@
                 }
                 if (status) status.textContent = 'Sesión investigadora activa. Corpus editorial + tus ediciones locales sincronizados.';
             } else if (status) {
-                status.textContent = 'Corpus editorial (Zuboff + ATTAC + Gramsci) cargado desde servidor. Inicia sesión para acceso integrado al espacio privado.';
+                status.textContent = 'Corpus editorial (Zuboff + ATTAC + Gramsci + Clave A D6; Salazar stub) cargado desde servidor. Inicia sesión para acceso integrado al espacio privado.';
             }
         }
 
