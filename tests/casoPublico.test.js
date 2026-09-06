@@ -103,6 +103,15 @@ module.exports = function (describe, it, assert, assertEqual) {
       assert(prepared.trazas[0].descripcion.indexOf('SURA') === -1);
     });
 
+    it('expandSearchHaystack restores SURA/CMF as search aliases', function () {
+      var CP = loadCasoPublico('/buscador.html');
+      var expanded = CP.expandSearchHaystack(
+        'conglomerado regional redefine estrategia ante el regulador financiero',
+      );
+      assert(expanded.toLowerCase().indexOf('sura') !== -1, 'alias sura');
+      assert(expanded.toLowerCase().indexOf('cmf') !== -1, 'alias cmf');
+    });
+
     it('sanitizeRecord limpia registros de fuentes oficiales', function () {
       var CP = loadCasoPublico('/buscador.html');
       var record = CP.sanitizeRecord({

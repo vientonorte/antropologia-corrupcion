@@ -131,6 +131,14 @@ module.exports = function (describe, it, assert, assertEqual, assertDeepEqual, a
             }
         });
 
+        it('matches queries without accents (corrupcion → corrupción)', function () {
+            var results = engine.search({ query: 'corrupcion' });
+            assertGreaterThan(results.length, 0, 'accent-folded query should hit corpus');
+            assert(typeof window.normalizeSearchText === 'function', 'normalizeSearchText exported');
+            assertEqual(window.normalizeSearchText('corrupción'), 'corrupcion');
+            assert(window.recordMatchesQuery({ titulo: 'corrupción pública' }, 'corrupcion'));
+        });
+
         it('filters by fuente', function () {
             var results = engine.search({ fuente: 'infolobby' });
             for (var i = 0; i < results.length; i++) {
