@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## [2026-09-06] Grok TUI Clave A OCR → 4010–4015
+
+| Área | Cambio |
+|---|---|
+| **data/clave-a-citas.json** | n=15. Grok TUI (bujo-ro) leyó inbox JPG. 4010–4015: preguntas D6, MA lunes, entrevistas, AFC, capital mercantil, feedback VN. |
+| **No publicado** | p.121–122 Kit; 🟥 personal; Anakaren. Destino AFC ≠ AFP. |
+| **inbox-clave-a/_*.json** | gitignored (export TUI local). JPG siguen gitignored. |
+| **tests** | 601 passed. Live Pages n=15. |
+
 ## [2026-09-06] Pipeline cromático automático
 
 | Área | Cambio |
