@@ -5,8 +5,10 @@
  *
  *   node scripts/merge-clave-a-export.mjs [export.json]
  *   node scripts/merge-clave-a-export.mjs --dry-run ~/Downloads/corpus-citas-2026-09-06.json
+ *   node scripts/merge-clave-a-export.mjs inbox-clave-a/_grok-tui-export.json
  *
  * Default: el corpus-citas-*.json más reciente en ~/Downloads
+ * Grok TUI (bujo-ro Clave A) puede escribir _grok-tui-export.json (gitignored).
  */
 import { readFileSync, writeFileSync, existsSync, readdirSync, statSync } from 'node:fs';
 import { dirname, join } from 'node:path';

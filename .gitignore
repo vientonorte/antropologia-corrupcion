@@ -67,6 +67,8 @@ Estado del Arte/Proyectos/**/*.webp
 *.png
 *.jpg
 *.jpeg
+# Grok TUI Clave A: export local, no commit OCR crudo (merge va a data/)
+src/docs/Estado del Arte/ciper-mvp/assets/inbox-clave-a/_*.json
 *.fig
 *.docx
 *.doc
