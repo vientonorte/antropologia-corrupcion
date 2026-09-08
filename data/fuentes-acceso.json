@@ -126,13 +126,14 @@
     {
       "id": "scielo",
       "config_access": "web",
-      "observed_access": ["blocked-cloudflare"],
+      "observed_access": ["html-conicyt-alphabetic", "blocked-cloudflare-scielo-cl"],
       "requires_credential": false,
       "live_in_search": false,
       "corpus_records": 1,
       "probes": [
         { "url": "https://www.scielo.cl/", "http": 403, "kind": "html", "note": "Cloudflare challenge" },
-        { "url": "https://www.scielo.cl/oai/scielo-oai.php?verb=Identify", "http": 403, "kind": "html" }
+        { "url": "https://www.scielo.cl/oai/scielo-oai.php?verb=Identify", "http": 403, "kind": "html" },
+        { "url": "https://scielo.conicyt.cl/scielo.php?script=sci_alphabetic&lng=es", "http": 200, "kind": "html", "note": "landing used by scielo-gobernanza-datos-afp-2025; not the invented 2025 article" }
       ]
     },
     {
@@ -141,10 +142,12 @@
       "observed_access": ["html", "rss"],
       "requires_credential": false,
       "live_in_search": false,
-      "corpus_records": 0,
+      "corpus_records": 2,
       "probes": [
         { "url": "https://www.ciperchile.cl/", "http": 200, "kind": "html" },
         { "url": "https://www.ciperchile.cl/feed/", "http": 200, "kind": "rss-xml" },
+        { "url": "https://www.ciperchile.cl/2026/09/05/un-humedal-que-nadie-usa-el-gran-concepcion-y-la-ilusion-del-terreno-vacio/", "http": 200, "kind": "html", "note": "fila curada ciper-humedal-concepcion-2026 (RSS live, no mock)" },
+        { "url": "https://www.ciperchile.cl/2026/09/07/radar-07-09-2026/", "http": 200, "kind": "html", "note": "fila curada ciper-radar-2026-09-07" },
         { "url": "https://www.ciperchile.cl/2025/11/03/sura-opacidad-regulatoria-cmf/", "http": 404, "kind": "html", "note": "ciperFeed MOCK_ARTICLES — not a document" }
       ]
     }

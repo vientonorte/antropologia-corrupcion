@@ -35,10 +35,10 @@ module.exports = function (describe, it, assert, assertEqual, assertGreaterThan,
             });
         });
 
-        it('records CIPER RSS as observed access and zero local rows', function () {
+        it('records CIPER RSS as observed access and two curated live rows', function () {
             var ciper = acceso.sources.filter(function (s) { return s.id === 'ciper'; })[0];
             assert(ciper, 'ciper entry');
-            assertEqual(ciper.corpus_records, 0);
+            assertEqual(ciper.corpus_records, 2);
             assertArrayIncludes(ciper.observed_access, 'rss');
         });
 

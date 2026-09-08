@@ -71,10 +71,10 @@ module.exports = function (
 
         it('marks fase-2 inactiva as planificado', function () {
             var report = SR.buildSourceReport(fuentesConfig, allRecords());
-            var uai = SR.getEntryById(report, 'repositorio-uai');
-            assert(uai, 'repositorio-uai entry');
-            assertEqual(uai.readiness, 'planificado');
-            assertEqual(uai.activa, false);
+            var scholar = SR.getEntryById(report, 'google-scholar');
+            assert(scholar, 'google-scholar entry');
+            assertEqual(scholar.readiness, 'planificado');
+            assertEqual(scholar.activa, false);
         });
 
         it('computes sprint checklist with 4 criteria', function () {
