@@ -33,6 +33,7 @@ Este `README.md` es la **fuente de verdad pública** para la visión del proyect
 | CI/CD y workflows | [`PIPELINE.md`](PIPELINE.md) |
 | Contexto privado de `terraza/` | [`CLAUDE.md`](CLAUDE.md) |
 | **Especificación epistemológica v0** | [`docs/EPISTEMIC_SPEC.md`](docs/EPISTEMIC_SPEC.md) — cómo se calcula (y cuándo no) una cifra de fricción |
+| Inventario de acceso fuentes MVP | [`docs/INVENTARIO_FUENTES_MVP.md`](docs/INVENTARIO_FUENTES_MVP.md) · [`data/fuentes-acceso.json`](data/fuentes-acceso.json) — GET observado, no conector |
 | Inventario de contenidos / IA | [`docs/INVENTARIO_CONTENIDOS_IA.md`](docs/INVENTARIO_CONTENIDOS_IA.md) · [`data/ia-inventario.json`](data/ia-inventario.json) |
 
 ## Tesis e instrumento

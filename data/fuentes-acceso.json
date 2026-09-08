@@ -1,0 +1,152 @@
+{
+  "_meta": {
+    "schema": "contra-archivo/source-access-inventory",
+    "version": 1,
+    "probed_at": "2026-09-08T18:40:00Z",
+    "method": "GET only, no auth, no write, no index change",
+    "against_config": "data/fuentes-config.json",
+    "against_commit": "3beef3c",
+    "note": "Observed access. Not a connector. Code wins if this file ages."
+  },
+  "sources": [
+    {
+      "id": "bcn",
+      "config_access": "web",
+      "observed_access": ["html", "api-sparql", "json-ld"],
+      "requires_credential": false,
+      "live_in_search": false,
+      "corpus_records": 5,
+      "probes": [
+        { "url": "https://www.bcn.cl/", "http": 200, "kind": "html" },
+        { "url": "https://datos.bcn.cl/", "http": 200, "kind": "html" },
+        { "url": "https://datos.bcn.cl/sparql?query=ASK%20%7B%20%3Fs%20%3Fp%20%3Fo%20%7D&format=json", "http": 200, "kind": "json", "note": "boolean true" },
+        { "url": "https://datos.bcn.cl/recurso/cl/ley/20730/datos.json", "http": 200, "kind": "json" }
+      ]
+    },
+    {
+      "id": "leychile",
+      "config_access": "web",
+      "observed_access": ["html-spa", "api-sparql-via-bcn"],
+      "requires_credential": false,
+      "live_in_search": false,
+      "corpus_records": 8,
+      "probes": [
+        { "url": "https://www.leychile.cl/", "http": 200, "kind": "html", "note": "JS redirect to bcn.cl/leychile" },
+        { "url": "https://www.bcn.cl/leychile", "http": 200, "kind": "html-spa" }
+      ]
+    },
+    {
+      "id": "infolobby",
+      "config_access": "web",
+      "observed_access": ["html"],
+      "requires_credential": false,
+      "live_in_search": false,
+      "corpus_records": 3,
+      "probes": [
+        { "url": "https://www.infolobby.cl/", "http": 200, "kind": "html" },
+        { "url": "https://www.leylobby.gob.cl/", "http": 200, "kind": "html" },
+        { "url": "https://www.leylobby.gob.cl/docs.html", "http": 200, "kind": "html", "note": "En Mantenimiento — API docs down" }
+      ]
+    },
+    {
+      "id": "sii",
+      "config_access": "web",
+      "observed_access": ["html"],
+      "requires_credential": false,
+      "live_in_search": false,
+      "corpus_records": 4,
+      "probes": [
+        { "url": "https://www.sii.cl/", "http": 200, "kind": "html", "note": "meta-refresh homer.sii.cl" },
+        { "url": "https://homer.sii.cl/", "http": 200, "kind": "html" }
+      ]
+    },
+    {
+      "id": "transparencia",
+      "config_access": "web",
+      "observed_access": ["html-blocked-or-cplt"],
+      "requires_credential": false,
+      "live_in_search": false,
+      "corpus_records": 7,
+      "probes": [
+        { "url": "https://www.portaltransparencia.cl/", "http": 403, "kind": "html" },
+        { "url": "https://www.consejotransparencia.cl/", "http": 200, "kind": "html" }
+      ]
+    },
+    {
+      "id": "seia",
+      "config_access": "web",
+      "observed_access": ["html-search"],
+      "requires_credential": false,
+      "live_in_search": false,
+      "corpus_records": 2,
+      "probes": [
+        { "url": "https://seia.sea.gob.cl/", "http": 200, "kind": "html" },
+        { "url": "https://seia.sea.gob.cl/busqueda/buscarProyectoAction.php", "http": 200, "kind": "html" }
+      ]
+    },
+    {
+      "id": "compraspublicas",
+      "config_access": "web",
+      "observed_access": ["html", "api-rest-ticket", "open-data-html"],
+      "requires_credential": true,
+      "credential_note": "API REST Mercado Público ticket via ClaveÚnica. OCDS/datos abiertos claimed ticketless; dump not downloaded.",
+      "live_in_search": false,
+      "corpus_records": 2,
+      "probes": [
+        { "url": "https://www.mercadopublico.cl/", "http": 200, "kind": "html", "note": "redirect /Home" },
+        { "url": "https://api.mercadopublico.cl/", "http": 200, "kind": "html" },
+        { "url": "https://datos-abiertos.chilecompra.cl/", "http": 200, "kind": "html" }
+      ]
+    },
+    {
+      "id": "cmf",
+      "config_access": "web",
+      "observed_access": ["html", "api-key"],
+      "requires_credential": true,
+      "credential_note": "api.cmfchile.cl bancos/indicadores; not shown to cover SURA sanctions.",
+      "live_in_search": false,
+      "corpus_records": 2,
+      "probes": [
+        { "url": "https://www.cmfchile.cl/", "http": 200, "kind": "html" },
+        { "url": "https://api.cmfchile.cl/", "http": 200, "kind": "html" }
+      ]
+    },
+    {
+      "id": "diariooficial",
+      "config_access": "web",
+      "observed_access": ["html", "pdf-editions"],
+      "requires_credential": false,
+      "live_in_search": false,
+      "corpus_records": 1,
+      "probes": [
+        { "url": "https://www.diariooficial.interior.gob.cl/", "http": 200, "kind": "html" },
+        { "url": "https://www.diariooficial.interior.gob.cl/edicionelectronica/", "http": 200, "kind": "html" }
+      ]
+    },
+    {
+      "id": "scielo",
+      "config_access": "web",
+      "observed_access": ["blocked-cloudflare"],
+      "requires_credential": false,
+      "live_in_search": false,
+      "corpus_records": 1,
+      "probes": [
+        { "url": "https://www.scielo.cl/", "http": 403, "kind": "html", "note": "Cloudflare challenge" },
+        { "url": "https://www.scielo.cl/oai/scielo-oai.php?verb=Identify", "http": 403, "kind": "html" }
+      ]
+    },
+    {
+      "id": "ciper",
+      "config_access": "rss",
+      "observed_access": ["html", "rss"],
+      "requires_credential": false,
+      "live_in_search": false,
+      "corpus_records": 0,
+      "probes": [
+        { "url": "https://www.ciperchile.cl/", "http": 200, "kind": "html" },
+        { "url": "https://www.ciperchile.cl/feed/", "http": 200, "kind": "rss-xml" },
+        { "url": "https://www.ciperchile.cl/2025/11/03/sura-opacidad-regulatoria-cmf/", "http": 404, "kind": "html", "note": "ciperFeed MOCK_ARTICLES — not a document" }
+      ]
+    }
+  ]
+}
