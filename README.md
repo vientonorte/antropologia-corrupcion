@@ -32,8 +32,8 @@ Este `README.md` es la **fuente de verdad pública** para la visión del proyect
 | Seguridad y privacidad | [`SECURITY.md`](SECURITY.md) |
 | CI/CD y workflows | [`PIPELINE.md`](PIPELINE.md) |
 | Contexto privado de `terraza/` | [`CLAUDE.md`](CLAUDE.md) |
-| Mapa editorial y triage completo de `.md` | [`docs/DOCUMENTATION_SYSTEM.md`](docs/DOCUMENTATION_SYSTEM.md) |
-| **Inventario de contenidos / arquitectura de información** | [`docs/INVENTARIO_CONTENIDOS_IA.md`](docs/INVENTARIO_CONTENIDOS_IA.md) · [`data/ia-inventario.json`](data/ia-inventario.json) |
+| **Especificación epistemológica v0** | [`docs/EPISTEMIC_SPEC.md`](docs/EPISTEMIC_SPEC.md) — cómo se calcula (y cuándo no) una cifra de fricción |
+| Inventario de contenidos / IA | [`docs/INVENTARIO_CONTENIDOS_IA.md`](docs/INVENTARIO_CONTENIDOS_IA.md) · [`data/ia-inventario.json`](data/ia-inventario.json) |
 
 ## Tesis e instrumento
 
@@ -45,7 +45,7 @@ El proyecto trabaja sobre tres capas irreductibles:
 | Institucional | Registro oficial, clasificación, distorsión normativa | `#4a7fa5` |
 | Material | Territorio, evidencia física, densidad histórica | `#7a9e6e` |
 
-La fricción entre capas se expresa como intensidad `0.0 → 1.0` y como tipo `política`, `semántica` o `técnica`.
+La fricción entre capas se expresa como intensidad `0.0 → 1.0` y como tipo `política`, `semántica` o `técnica`. El número publicado de un caso puede ser editorial (`source: json`) y no coincidir con el cálculo del motor (`source: engine`). Cómo se reconstruye, incluido el 0.82 de SURA: [`docs/EPISTEMIC_SPEC.md`](docs/EPISTEMIC_SPEC.md).
 
 ## Sitio estático (`web/`)
 

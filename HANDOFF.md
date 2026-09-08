@@ -4,10 +4,12 @@
 
 ## Actualización vigente
 
-- **Fecha:** 2026-05-07
+- **Fecha:** 2026-09-08
 - **Rama permanente:** `main`
+- **Commit de referencia:** `b9c607e` (PR #230)
 - **Validación base verificada:** `node tests/runner.js`
-- **Mapa documental vigente:** [`docs/DOCUMENTATION_SYSTEM.md`](docs/DOCUMENTATION_SYSTEM.md)
+- **SSOT epistemológica:** [`docs/EPISTEMIC_SPEC.md`](docs/EPISTEMIC_SPEC.md) (v0, descriptiva; el código gana si hay divergencia)
+- **Mapa documental `docs/DOCUMENTATION_SYSTEM.md`:** no existe en este commit (puntero histórico roto; no usar)
 
 ## Estado actual
 
@@ -26,11 +28,13 @@
 
 | Prioridad | Área | Ítem |
 |---|---|---|
-| P0 | Producto | Dossier de actor expandible (feature D) |
-| P0 | `terraza/` | Robustecer Admin APIs: retry/circuit + feedback operativo |
-| P1 | `terraza/` | Cierre técnico con lint/tests/build existentes |
-| P1 | CI/CD | Mejorar observabilidad y salidas de QA |
-| P2 | Documentación | Mantener sincronía entre documentos canónicos y archivos auxiliares |
+| P0 | Epistemología | Congelar y mantener `docs/EPISTEMIC_SPEC.md` v0. No nuevo score, no nuevo buscador. |
+| P1 | Tests | Contrato SURA: `source=json`, motor ≈ 0.432, publicado 0.82 (`tests/frictionEngine.test.js`) |
+| P1 | Documentación | Reemplazar punteros rotos (`DOCUMENTATION_SYSTEM.md`). CLAUDE.md live = `vientonorte.io`. |
+| P2 | Producto (parked) | Dossier de actor expandible (feature D) — no es el cuello de reproducibilidad |
+| P2 | `terraza/` (parked) | Robustecer Admin APIs — laboratorio, no oráculo |
+
+El backlog de 2026-05-07 (dossier + Admin APIs como P0) queda **histórico**. Ver spec §8 C13.
 
 ## Decisiones vigentes
 
@@ -58,6 +62,7 @@ python3 -m http.server 4321
 ### Dónde actualizar primero
 
 - visión pública → `README.md`
+- cómo se calcula una cifra de fricción → `docs/EPISTEMIC_SPEC.md`
 - estado y backlog → `HANDOFF.md`
 - contribución → `CONTRIBUTING.md`
 - seguridad → `SECURITY.md`
