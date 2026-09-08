@@ -337,6 +337,15 @@ require('./sourceRegistry.test.js')(
     bcnData,
     fuentesConfig,
 );
+require('./fuentesAcceso.test.js')(
+    describe,
+    it,
+    assert,
+    assertEqual,
+    assertGreaterThan,
+    assertArrayIncludes,
+    fuentesConfig,
+);
 
 /* ─── SUMMARY ─── */
 

@@ -312,7 +312,10 @@ module.exports = function (describe, it, assert, assertEqual, assertDeepEqual, a
                 'cmf',
                 'diario-financiero',
                 'repositorio-uai',
-                'repositorio-uchile'
+                'repositorio-uchile',
+                'ciper',
+                'scielo',
+                'diariooficial'
             ];
             for (var j = 0; j < expectedFuentes.length; j++) {
                 assert(fuentes[expectedFuentes[j]],
@@ -343,6 +346,16 @@ module.exports = function (describe, it, assert, assertEqual, assertDeepEqual, a
             assert(found, 'at least one BCN boletin should reference a caso');
         });
 
+        it('config sources with published rows are activa', function () {
+            var used = {};
+            for (var i = 0; i < fuentesData.length; i++) used[fuentesData[i].fuente] = true;
+            (fuentesConfig.sources || []).forEach(function (s) {
+                if (used[s.id]) {
+                    assert(s.activa !== false, s.id + ' has published rows and must be activa');
+                }
+            });
+        });
+
         it('all three friction types (politica, semantica, tecnica) appear in fuentes', function () {
             var tipos = {};
             for (var i = 0; i < fuentesData.length; i++) {
@@ -351,6 +364,56 @@ module.exports = function (describe, it, assert, assertEqual, assertDeepEqual, a
             assert(tipos.politica, 'should have politica registros');
             assert(tipos.semantica, 'should have semantica registros');
             assert(tipos.tecnica, 'should have tecnica registros');
+        });
+    });
+
+    function urlPath(url) {
+        var noProto = String(url || '').replace(/^https?:\/\//i, '');
+        var slash = noProto.indexOf('/');
+        if (slash === -1) return '/';
+        return noProto.slice(slash).split('?')[0].split('#')[0];
+    }
+
+    function isBareHomepage(url) {
+        var path = urlPath(url).replace(/\/+$/, '') || '/';
+        if (path === '/') return true;
+        if (/^\/[a-z]{2}$/i.test(path)) return true;
+        return false;
+    }
+
+    describe('data/fuentes-oficiales.json — URL viva (no homepage)', function () {
+        var validPrecision = ['document', 'landing', 'search'];
+
+        it('each registro has https url, url_precision and url_checked_at', function () {
+            for (var i = 0; i < fuentesData.length; i++) {
+                var r = fuentesData[i];
+                assert(/^https:\/\//.test(r.url || ''), r.id + ' needs https url');
+                assertArrayIncludes(validPrecision, r.url_precision,
+                    r.id + ' url_precision should be document|landing|search');
+                assert(/^\d{4}-\d{2}-\d{2}$/.test(r.url_checked_at || ''),
+                    r.id + ' url_checked_at should be YYYY-MM-DD');
+            }
+        });
+
+        it('published urls are not bare homepages', function () {
+            for (var i = 0; i < fuentesData.length; i++) {
+                var r = fuentesData[i];
+                assert(!isBareHomepage(r.url),
+                    r.id + ' still points at homepage: ' + r.url);
+            }
+        });
+    });
+
+    describe('data/bcn-legislativo.json — URL viva', function () {
+        it('boletines do not point at bare homepages or dead Historia de la Ley ids', function () {
+            for (var i = 0; i < bcnData.boletines.length; i++) {
+                var b = bcnData.boletines[i];
+                assert(/^https:\/\//.test(b.url || ''), b.id + ' needs https url');
+                assert(!isBareHomepage(b.url), b.id + ' homepage: ' + b.url);
+                assert(b.url.indexOf('/historia-de-la-ley/12017') === -1, b.id + ' 12017 historia 500');
+                assert(b.url.indexOf('/historia-de-la-ley/10526') === -1, b.id + ' 10526 historia 500');
+                assert(b.url.indexOf('/historia-de-la-ley/13588') === -1, b.id + ' 13588 historia 500');
+            }
         });
     });
 };

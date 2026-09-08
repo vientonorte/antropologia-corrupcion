@@ -6,7 +6,7 @@
 
 - **Fecha:** 2026-09-08
 - **Rama permanente:** `main`
-- **Commit de referencia:** `b9c607e` (PR #230)
+- **Commit de referencia:** `3beef3c` (PR #231 merge) · inventario fuentes MVP en curso
 - **Validación base verificada:** `node tests/runner.js`
 - **SSOT epistemológica:** [`docs/EPISTEMIC_SPEC.md`](docs/EPISTEMIC_SPEC.md) (v0, descriptiva; el código gana si hay divergencia)
 - **Mapa documental `docs/DOCUMENTATION_SYSTEM.md`:** no existe en este commit (puntero histórico roto; no usar)
@@ -28,8 +28,9 @@
 
 | Prioridad | Área | Ítem |
 |---|---|---|
-| P0 | Epistemología | Congelar y mantener `docs/EPISTEMIC_SPEC.md` v0. No nuevo score, no nuevo buscador. |
-| P1 | Tests | Contrato SURA: `source=json`, motor ≈ 0.432, publicado 0.82 (`tests/frictionEngine.test.js`) |
+| P0 | Recuperación | Inventario de acceso real de las 11 fuentes MVP. No conectar. Ver `docs/INVENTARIO_FUENTES_MVP.md`. |
+| P0 | Epistemología | `docs/EPISTEMIC_SPEC.md` v0 en `main` (PR #231). No nuevo score. |
+| P1 | Tests | Contrato SURA json/engine + contrato inventario 11 ids |
 | P1 | Documentación | Reemplazar punteros rotos (`DOCUMENTATION_SYSTEM.md`). CLAUDE.md live = `vientonorte.io`. |
 | P2 | Producto (parked) | Dossier de actor expandible (feature D) — no es el cuello de reproducibilidad |
 | P2 | `terraza/` (parked) | Robustecer Admin APIs — laboratorio, no oráculo |
@@ -63,6 +64,7 @@ python3 -m http.server 4321
 
 - visión pública → `README.md`
 - cómo se calcula una cifra de fricción → `docs/EPISTEMIC_SPEC.md`
+- acceso real de fuentes MVP → `docs/INVENTARIO_FUENTES_MVP.md`
 - estado y backlog → `HANDOFF.md`
 - contribución → `CONTRIBUTING.md`
 - seguridad → `SECURITY.md`
