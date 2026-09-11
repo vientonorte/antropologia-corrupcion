@@ -314,7 +314,7 @@ Clasificación pedida por el brief. No se “arreglan” aquí.
 | C6 | DEUDA DOCUMENTAL | HANDOFF 2026-05-07 vs PRs #227–#230. |
 | C7 | DEUDA DOCUMENTAL | `docs/DOCUMENTATION_SYSTEM.md` 404. |
 | C8 | DEUDA DOCUMENTAL | `CLAUDE.md` live = `vientonorte.github.io`; canónico FO = `vientonorte.io`. |
-| C9 | DEUDA UX | Home muestra 0.78 / 0.39 SIN VERIFICAR sin decir que no es `caso.friccion`. |
+| C9 | DEUDA UX | Home/buscador: score = registro↔caso, no `caso.friccion`. Copy 2026-09-11. |
 | C10 | DEUDA UX | Búsqueda preliminar «SURA» no recupera el caso `sura-gobernanza-datos`. |
 | C11 | DEUDA EPISTEMOLÓGICA | Tesis live: «la institución traduce; la traducción falla» + evidencia que solo ilustra la tesis. |
 | C12 | DEUDA ARQUITECTÓNICA | Varios lenguajes de cuantificación en el mismo archivo (`frictionEngine.js` + Zuboff). |
