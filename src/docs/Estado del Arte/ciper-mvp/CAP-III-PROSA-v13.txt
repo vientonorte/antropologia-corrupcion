@@ -1,0 +1,126 @@
+5. CAP III — Arquitectura tecnofeudal · etnografía multi-situada — PROSA v13 (2026-09-11)
+
+ESTADO: PROSA ENGROSADA ✓ · espina teórica TecnoFeudalismo Chile (archivo 2025-05-15) · 2º campo = La Negra · Clave B 8 vols · sin PII · OCR Varoufakis = 12 citas ingest (≤5 tejidas Cap III)
+TESIS LOCAL: Cap III no es solo teoría de plataformas. Es el capítulo donde la etnografía multi-situada (Marcus, 1995) muestra cómo la misma mistranslation opera en dos campos: (a) opacidad digital corporativa (SURA/AFP → prosa larga en Cap V) y (b) territorio mapuche-huilliche La Negra (memoria, merced, forestales). El tecnofeudalismo (Varoufakis, 2023) nombra la arquitectura que hace operables ambos campos —renta, cloud, archivo— sin abandonar el suelo de Los Ríos ni el de Los Molinos (Cap II).
+
+Nota de procedencia (SSOT teórico Cap III): la espina argumental de este capítulo integra el documento de trabajo TecnoFeudalismo Chile (archivo 2025-05-15), recibido por correo de Camila Napkin el 2025-05-15 y conservado también en iCloud `_tmp_tesis-cap1-img/`. Rutas canónicas en box: `/workspace/camila-tesis/Tesis_TecnoFeudalismo_Chile.txt` y `/workspace/camila-tesis/Tesis_TecnoFeudalismo_Chile_Ampliada.txt` (más versiones .docx homónimas). No se inventa autoría más allá de esa filiación de archivo; se cita aquí como documento de trabajo TecnoFeudalismo Chile (archivo 2025-05-15).
+
+Nota búsqueda «Atingente»: como nombre propio / carpeta = NO DATO en iCloud/box. Drive solo trajo el adjetivo «atingente» en actas UACh 2014–17 (ruido). Lo atingente a Cap III = inventario abajo (evidencia > memoria).
+
+### H1 — Dos campos, una mistranslation
+
+La arquitectura metodológica del Contra-Archivo (Etnografía Audiovisual / README Estado del Arte) organiza tres fases que Cap III teoriza sin adelantar la prosa de Cap V ni el motor de fricción de Cap VI. Fase 1: etnografía digital corporativa (actor-investigador; Cap V hereda la cronología SURA/AFP). Fase 2: trabajo de campo territorial La Negra (comunidades huilliche; títulos de merced; memoria oral). Fase 3: Contra-Archivo como dispositivo (Cap VI mide fricción). Cap III sostiene el puente: el «sistema nervioso» del Estado (Taussig) indexa territorio y datos con la misma lógica de enemigo/versión. La mistranslation no es un error de traducción puntual; es la operación reiterada que vuelve ilegible lo que la comunidad nombra como organismo vivo y lo que el afiliado experimenta como caja negra previsional.
+
+En ese sentido, Cap III responde al puente dejado por Cap II: si Cap. I describe la máquina que fabrica enemigos y Cap. II describe cómo se traduce saber con el cuerpo bajo esa máquina, este capítulo pregunta qué arquitectura tecnofeudal sostiene ambos —plataforma, renta y archivo— sin abandonar el suelo de Los Molinos ni el de Temucuicui / La Negra.
+
+### H2 — La Negra: ética, institucional, material (etnografía central Cap III)
+
+Título del caso (data/casos.json · id `la-negra-territorio-mapuche` · fricción 0.94 · sin_resolver: true): «La Negra — Memoria, Territorio y Resistencia Mapuche-Huilliche» (2023). En la arquitectura doctoral, La Negra es el segundo campo de la etnografía multi-situada: si SURA/AFP revela la mistranslation en flujos de datos corporativos, La Negra la documenta en la materialidad del territorio y la memoria oral (README Estado del Arte / La Negra). Cartografía SSOT de partida: `Distribución de titulos de merced en Región de los ríos.png` (repo).
+
+Ética — Memorias que el archivo no puede contener. Las comunidades de La Negra mantienen memorias territoriales que preceden al Estado-nación. Sus formas de nombrar el territorio, sus límites vivos, sus prácticas de cuidado del agua y el bosque no tienen equivalente en el sistema registral. El testimonio situado —voces de lonko y machi; memorias de usurpación durante la llamada «pacificación» (1860–1900); agua como práctica espiritual y productiva— es la evidencia de una soberanía que el derecho positivo no puede reconocer sin negar sus propios fundamentos (casos.json · capa ética). Docs ref. de campo: infografías Catrillanca en La Negra/inv. El archivo institucional captura polígonos; la ética del caso nombra relaciones. Esa asimetría es ya fricción semántica, no «falta de datos».
+
+Institucional — El catastro como borramiento. El Conservador de Bienes Raíces registra terrenos entregados a colonos tras la «pacificación». Los títulos de merced no coinciden con los límites que las comunidades reconocen. El D.L. 701 convirtió suelos mapuche en plantaciones reconocidas institucionalmente como «usos productivos». CONADI, Bienes Nacionales y SII operan como dispositivos de traducción: soberanía territorial → proceso administrativo de adquisición de parcelas; territorio vivo → predio agrícola / zona de amortiguación forestal / terreno baldío fiscal (casos.json · capa institucional). El proceso de radicación indígena mapuche (1884–1929) asignó títulos de merced que redujeron territorios ancestrales a polígonos mínimos; siguiendo a Rivera Cusicanqui (2010), esa traducción no es solo territorial sino epistémica: al imponer el catastro y la escritura como únicos registros válidos, el Estado invalidó sistemas de conocimiento territorial mapuche-huilliche.
+
+Material — Territorio como organismo histórico. La Negra no es un predio: es una red de relaciones entre cuerpos, agua, bosque nativo, animales y muertos. Las plantaciones de pino reemplazaron ecosistemas que tardaron milenios en formarse; las napas freáticas han descendido. Mapas de cambio de uso de suelo (1973–2023), fotografías aéreas de deforestación y registros de caudal antes/después de plantaciones concentran la evidencia menos admisible en juicio y, a la vez, la más densa etnográficamente (casos.json · capa material). Lo que el Conservador borra, el territorio sigue escribiendo en napa, en bosque y en cuerpo.
+
+Fricción semántica (intensidad 0.94): «territorio» tiene tres significados incompatibles —organismo vivo con historia propia (comunidad), superficie parcelable (catastro), factor de producción (empresa forestal)—. Ninguna puede aceptar a las otras sin destruirse. Tensión central abierta: ¿puede el derecho de propiedad chileno reconocer el territorio mapuche sin negarse a sí mismo? Nodos grafo citados (ej.): `comunidad-lafkenche` · `conadi-tierras` · `dl701-subsidio-forestal` · `predios-avaluos-sii` · `forestal-losrios` · `la-negra-territorio-mapuche`.
+
+### H2b — Puente Cap II: Michillanca ↔ La Negra (patrón, no clone)
+
+Michillanca (Merced 2340 / Ley 18.314) opera en Cap II como caso A1 de criminalización: el mismo Estado que produce el documento fundante lo vuelve inoperante y, cuando la comunidad lo hace valer con el cuerpo, fabrica enemigo. La Negra no duplica esa prosa; despliega el patrón estructural de borramiento catastral y renta forestal en Los Ríos. Donde Michillanca singulariza la restitución tipificada como terrorismo, La Negra muestra la escala: títulos de merced vs límites vivos; D.L. 701; CONADI como dispositivo; pino vs napa. El grafo Contra-Archivo ya conecta Michillanca a `la-negra-territorio-mapuche` y a `oit169-consulta-previa`. Cap III hereda ese vínculo como arquitectura —no como reescritura del ensayo Cap II ni del addendum de voces.
+
+### H3 — Campo 2017 + ensayo (herencia Cap II, no re-narrar)
+
+F1–F6 presencia (Wecheke / Koz Koz / Koliñir); M1 escaleta (URL NO DATO); ensayo Traduciendo Saberes. Cap III solo cita para anclar «traducción con el cuerpo» bajo arquitectura de renta: el saber que Cap II documenta en el encuentro se ejerce sobre un suelo ya indexado por merced, forestal y archivo. No se re-narra el ensayo.
+
+### H4 — Espina TecnoFeudalismo Chile (documento de trabajo, archivo 2025-05-15)
+
+El documento de trabajo TecnoFeudalismo Chile (archivo 2025-05-15) sostiene que el modelo económico actual en Chile —y en amplias zonas del Sur Global— muestra una regresión estructural: desde el capitalismo neoliberal hacia una forma contemporánea de tecno-feudalismo financiero. Los mecanismos de acumulación ya no dependen principalmente de la producción industrial y la reinversión del capital, sino de la extracción de valor mediante instrumentos financieros, deuda forzada y despojo territorial (Tesis_TecnoFeudalismo_Chile.txt).
+
+Cadena de mando de la renta (espina H4/H5). En la cúspide se sitúan organismos financieros internacionales como el Fondo Monetario Internacional (FMI), que imponen normas macroeconómicas desde una posición supranacional. A continuación, los bancos centrales operan como intermediarios nacionales encargados de aplicar políticas monetarias que favorecen la estabilidad macro y el atractivo para la inversión extranjera. Posteriormente, el mercado de capitales actúa como regulador local que canaliza inversiones hacia áreas específicas de valorización. Desde allí, la producción de valor se escinde en dos canales: el mercado de mercancías (bienes con valor agregado) y el mercado financiero (instrumentos fundados en deuda, especulación o rentismo). Esa dicotomía valora más la circulación y especulación del capital que la producción material directa.
+
+Base material y ahorro forzoso. El sistema encuentra su base material en el extractivismo territorializado, expresado en zonas de sacrificio socioambiental (Svampa, 2013). Estas regiones, generalmente periféricas y empobrecidas, funcionan como plataformas desde las cuales se extraen materias primas, recursos naturales y ahorro forzoso previsional (AFP), e imponen una deuda local como forma de disciplinamiento biopolítico y económico (documento de trabajo TecnoFeudalismo Chile, archivo 2025-05-15). Aquí Cap III ancla el puente al campo 1 (SURA/AFP): la AFP no es solo «sistema previsional»; es nodo de extracción de ahorro forzoso que articula territorio financiado y afiliado indexado —prosa larga de Cap V, arquitectura de Cap III.
+
+Elite rentista y acumulación por desposesión. Esta configuración dialoga con el diagnóstico de Gabriel Salazar (2009): la clase empresarial chilena no se originó mediante acumulación productiva, sino que se consolidó como elite rentista, subsidiada por el Estado y dependiente de recursos naturales y endeudamiento estructural. Asimismo actualiza la crítica marxista: la llamada acumulación originaria no desaparece, sino que se reinventa mediante nuevas tecnologías, instituciones financieras y procesos de desposesión permanente (Marx, 1867/2006; Harvey, 2004 — «acumulación por desposesión»). En el suelo de Los Ríos, D.L. 701 y el catastro son operadores locales de esa desposesión; en el cloud corporativo, la opacidad de carteras y clasificaciones ESG es su correlato digital.
+
+Pregunta que hereda la versión ampliada. La versión ampliada del mismo archivo (Tesis_TecnoFeudalismo_Chile_Ampliada.txt) formula la pregunta que Cap III hace etnográfica: ¿de qué manera el modelo económico chileno refleja una transición desde el capitalismo neoliberal hacia una forma de tecno-feudalismo financiero? Cap III responde situando esa mutación en dos campos observables —territorio La Negra y (más adelante) datos SURA/AFP— bajo la nomenclatura de Varoufakis (2023): plataformas e instituciones que, como nuevos «señores feudales», extraen rentas mediante control infraestructural en lugar de competencia productiva.
+
+### H5 — Arquitectura: plataforma · renta · archivo (Antorcha ↔ tecnofeudal)
+
+a) Plataforma / cloud de versiones. Cap I documenta que «Antorcha» nombra un software que no existió —coartada técnica para la implantación de mensajes (performatividad técnica; cf. Zuboff, 2019)—. Esa coartada es ya tecnofeudal en el sentido de Varoufakis (2023): no compite produciendo; renta controlando la infraestructura de versiones (quién indexa, quién borra, quién autentica el enemigo). La misma lógica escala: indexación de territorio (catastro / CONADI / merced) + indexación de afiliado (Cap V) + indexación policial de enemigo (Antorcha / UIOE / Jungla). El cloud no es metáfora: es el soporte donde la versión se vuelve más real que el suelo.
+
+b) Renta. Forestal D.L. 701 + extractivismo en zonas de sacrificio (Svampa, 2013) + ahorro forzoso AFP + renta de datos (Zuboff, 2019; Varoufakis, 2023 — cuando haya chunk OCR). La elite rentista (Salazar, 2009) y la acumulación por desposesión (Harvey, 2004) no son marcos decorativos: son el esqueleto que hace legible por qué el pino, el título de merced y el multifondo pertenecen al mismo régimen.
+
+c) Archivo. Lo que La Negra nombra y el Conservador borra = talón de Aquiles que Cap VI mide como fricción. El Contra-Archivo no «agrega transparencia»; produce un dispositivo que hace audible la incompatibilidad de las tres acepciones de territorio y la opacidad del afiliado-como-dato.
+
+### H5b — Citas Varoufakis (ingest HEIC)
+
+Los chunks siguientes anclan Cap III a páginas reales del libro (no a memoria):
+
+### H4b — Citas Varoufakis (ingest HEIC 2026-09-11 · ≤5 chunks)
+
+Fuente: Ediciones Deusto, trad. Marta Valdivieso; capturas Downloads `IMG_1461+` → `/workspace/tesis-evidencias/varoufakis-citas-v13.json` (también `antropologia-corrupcion/data/varoufakis-citas.json`). Solo texto visible en foto; `[ilegible]` donde sticky cubre. Lote actual = dualidad capital/trabajo, feudal→salario, atención, tecnoestructura — **definición madura de cloud capital = NO DATO** en este batch (faltan páginas posteriores).
+
+- (var-004 · p. 26) «Supongamos que descubro que poseo herramientas que tú necesitas para producir lo que tu familia precisa para sobrevivir, como la caña de pescar, el tractor o el servidor antes mencionados. De repente, tengo el poder de obligarte a hacer cosas, por ejemplo trabajar para mí, a cambio de utilizar mis herramientas. En resumen, el capital es tanto una cosa (capital mercantil) como una fuerza (capital de poder), del mismo modo que el trabajo se divide en trabajo mercantil y trabajo experiencial.» (Varoufakis, 2023).
+
+- (var-006 · p. 31) «Los terratenientes podían elegir arrendar la tierra por un precio que reflejara la cantidad de lana que ésta podía producir. Los siervos expulsados podían optar por ofrecer su trabajo a cambio de un salario. Por supuesto, en realidad, ser libre para elegir no era diferente de ser libre para perder. [...] A medida que el feudalismo retrocedía, llegaba la elección económica, pero era tan libre como la que ofrece un mafioso que, sonriendo, te dice: «Te haré una oferta que no podrás rechazar».» (Varoufakis, 2023).
+
+- (var-008 · p. 39) «para captar nuestra atención. Y luego venden nuestra atención a una entidad cuyo negocio consiste en mercantilizar algún valor experiencial que estaba escondido en nuestra alma, huyendo de la mercantilización. [...] ¿Cómo se podía conseguir que siguieran fluyendo los beneficios cuando parecía que ya se había mercantilizado todo? La respuesta de Draper: activando las emociones no mercantilizadas que se esconden en lo más profundo de nuestro ser.» (Varoufakis, 2023).
+
+- (var-011 · p. 45) «Si bien el capitalismo había nacido gracias a la transformación de las sociedades con mercados del feudalismo en sociedades de mercado descentralizadas, el auge de la tecnoestructura transformó el capitalismo estadounidense, que pasó de ser una sociedad de mercado descentralizada a una economía con mercados centralizada. Eso era precisamente lo que los planificadores soviéticos [ilegible] esperado conseguir, sin éxito.» (Varoufakis, 2023).
+
+- (var-001 · p. 25) «para extraer cualquier excedente, ya sea del trabajo muy cualificado o de tareas anodinas, repetitivas y robotizadas, deben pagar por el tiempo de sus trabajadores (trabajo mercantil), pero no pueden comprar su sudor ni su talento (trabajo experiencial).» (Varoufakis, 2023).
+
+páginas del libro.
+
+### H4b — Clave B · 8 volúmenes (foto 7 libros tesis.jpg · data/libros-clave-b.json)
+
+| id | obra | estado captura |
+|---|---|---|
+| gramsci-reforma | Para la reforma moral e intelectual | en-curso · 3 citas editoriales |
+| salazar-acumulacion | Historia de la acumulación capitalista en Chile (1985) | pendiente · carpeta Citas Salazar |
+| jara-pinera-offshore | Piñera Offshore | pendiente |
+| guzman-empresarios-zombis | Empresarios zombis (2022) | pendiente |
+| dussel-hipotesis | Hipótesis… Latinoamérica (1974) | pendiente |
+| marx-capital-i | El capital I | pendiente |
+| zuboff-vigilancia | Capitalismo de la vigilancia (2019) | en-curso · data/zuboff-citas.json (10) |
+| varoufakis-tecnofeudalismo | Tecnofeudalismo (2023) | pendiente · capturas IMG_1461–1500; ver H5b |
+
+### H6 — Cierre hacia Cap IV–V
+
+Cap IV = materialidad del archivo (soportes, merced map, QR, DOCX). Cap V = SURA/BD/despido (campo 1): prosa larga de opacidad previsional y gobernanza de datos; Cap III no adelanta finiquito art. 161 ni PII. Cap III deja formulada la pregunta de arquitectura sobre Los Ríos: ¿qué régimen de renta —FMI → bancos → mercado de capitales → mercancías/financiero; AFP como ahorro forzoso; zona de sacrificio; cloud de versiones— hace operable a la vez el borramiento catastral de La Negra y la caja negra del afiliado?
+
+### Referencias (APA · Cap III)
+
+Harvey, D. (2004). *El nuevo imperialismo*. Akal.
+Marcus, G. E. (1995). Ethnography in/of the world system: The emergence of multi-sited ethnography. *Annual Review of Anthropology, 24*, 95–117.
+Marx, K. (2006). *El capital. Crítica de la economía política* (Vol. 1). Fondo de Cultura Económica. (Original publicado en 1867).
+Rivera Cusicanqui, S. (2010). *Ch'ixinakax utxiwa: Una reflexión sobre prácticas y discursos descolonizadores*. Tinta Limón. [página citada en README La Negra; ficha completa = verificar en BIBLIO D4]
+Salazar, G. (2009). *En el nombre del poder popular constituyente*. LOM Ediciones.
+Svampa, M. (2013). Consenso de los commodities y lenguajes de valoración en América Latina. *Nueva Sociedad, (244)*, 30–46.
+Varoufakis, Y. (2023). *Technofeudalism: What killed capitalism*. Bodley Head. [ed. cast. citada en Cap I: *Tecnofeudalismo: Lo que mató al capitalismo*; páginas de citas literal = NO DATO hasta OCR IMG_1461+]
+Zuboff, S. (2019). *The age of surveillance capitalism*. PublicAffairs. [ed. cast. en Clave B: *Capitalismo de la vigilancia*]
+Documento de trabajo TecnoFeudalismo Chile (archivo 2025-05-15). Rutas SSOT: `/workspace/camila-tesis/Tesis_TecnoFeudalismo_Chile.txt`; `/workspace/camila-tesis/Tesis_TecnoFeudalismo_Chile_Ampliada.txt`.
+
+### DoD Cap III (mínimo prosa) — checklist v13
+
+• [x] 2–3 pp La Negra (ética/institucional/material) con nodos grafo citados
+• [x] 1 pp puente Michillanca↔La Negra (patrón, no clone)
+• [~] ≤N chunks reales Varoufakis + Zuboff + Salazar — Varoufakis OCR = PENDIENTE (H5b); Zuboff/Salazar = Clave B en-curso/pendiente; no inventar
+• [x] 1 pp Antorcha ↔ tecnofeudal (Cap I) en H5
+• [x] Espina TecnoFeudalismo integrada (FMI→bancos→mercado capitales→mercancías/financiero; AFP ahorro forzoso; Svampa; Salazar; Harvey; Varoufakis 2023)
+• [x] Procedencia explícita documento de trabajo TecnoFeudalismo Chile (archivo 2025-05-15)
+• [x] APA 8 vols Clave B; NO DATO marcado (OCR Varoufakis; URL M1; ficha Rivera si falta)
+• [x] Excluir: PII SURA; reescritura ensayo Cap II; prosa larga Michillanca; Clave A ops; finiquito art. 161 (Cap V); motor fricción completo (Cap VI)
+
+SSOT TecnoFeudalismo (Cap III):
+- `/workspace/camila-tesis/Tesis_TecnoFeudalismo_Chile.txt`
+- `/workspace/camila-tesis/Tesis_TecnoFeudalismo_Chile_Ampliada.txt`
+- Procedencia: mail Camila Napkin 2025-05-15; también iCloud `_tmp_tesis-cap1-img/`
+
+SSOT etnografía Cap III:
+- `/workspace/antropologia-corrupcion/data/casos.json` (id `la-negra-territorio-mapuche`)
+- `/workspace/antropologia-corrupcion/Estado del Arte/La Negra/README.md`
+- `/workspace/antropologia-corrupcion/data/libros-clave-b.json`
+
+EXCLUIDO: prosa larga Michillanca (casa Cap II); finiquito art. 161 (Cap V); motor fricción completo (Cap VI); conversión a Google Doc.
