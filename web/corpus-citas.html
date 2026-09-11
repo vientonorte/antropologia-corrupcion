@@ -1755,9 +1755,18 @@
         function normalizeCitation(c) {
             const out = { ...c };
             if (!out.text && out.texto) out.text = out.texto;
+            if (!out.text && out.quote) out.text = out.quote;
             if ((out.pageNo === undefined || out.pageNo === '') && out.pagina != null) out.pageNo = out.pagina;
+            if ((out.pageNo === undefined || out.pageNo === '') && out.page != null) out.pageNo = out.page;
             if (!out.category && out.categoria) out.category = out.categoria;
             if (!out.notes && out.notas) out.notes = out.notas;
+            if (String(out.id || '').indexOf('var-') === 0) {
+                out.author = out.author || 'Yanis Varoufakis';
+                out.bookTitle = out.bookTitle || 'Tecnofeudalismo';
+                out.libro_id = out.libro_id || 'varoufakis-tecnofeudalismo';
+                if (!out.category && Array.isArray(out.theme) && out.theme[0]) out.category = out.theme[0];
+                if (!out.notes && Array.isArray(out.theme)) out.notes = out.theme.join(', ');
+            }
             out.bookTitle = String(out.bookTitle || DEFAULT_BOOK_TITLE).trim();
             out.author = String(out.author || DEFAULT_AUTHOR).trim();
             out.text = String(out.text || '').trim();
@@ -1825,6 +1834,7 @@
                 'data/zuboff-citas.json',
                 'data/attac-citas.json',
                 'data/gramsci-citas.json',
+                'data/varoufakis-citas.json',
                 'data/salazar-citas.json',
                 'data/clave-a-citas.json',
             ];
