@@ -27,4 +27,6 @@ El cotizante (chileno o mapuche) paga el seguro; el mismo circuito puede aparece
 - `salazar-citas.json` = `[]`. No inventar página.
 - Informe Cap V no cubre Catrillanca; el **INDEX** sí articula los dos campos.
 
-Pegar este bloque en INDEX v13 §0 o tesis local Cap III. Agente Drive: `PROMPT-AGENTE-TESIS-DRIVE.md`.
+**Estrategia Gaona** (campo 1 UX en el holding + campo 2 archivo Wallmapu): lo fuerte de la etnografía multi-situada y su flanco militante. Evidencia en `archivo-privado/…/Estrategia Gaona/` (~5.2 GB Evidencia + ~206 MB borradores). **No** está en el repo público. Sin PII. Informe Cap V interno.
+
+Pegar este bloque en INDEX v13. Agente Drive: `PROMPT-AGENTE-TESIS-DRIVE.md`. Drive `1J2LCiCky…` a 11-sep 10:17 = **2.2 MB** vs local **11 MB** → re-subir Escritorio.
