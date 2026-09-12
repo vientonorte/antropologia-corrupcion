@@ -312,7 +312,7 @@ Esta es la **nav objetivo** derivada del inventario (no necesariamente implement
 
 | Pieza | Valor | Canónico | En `web/` |
 |---|---|---|---|
-| Artículo «La máquina de fabricar enemigos» | **Crítico** | `textos-canonicos/articulo_etnografico.docx` | Solo resumen en v2 `#eje-1` |
+| Satélite «Wallmapu · inteligencia policial, montaje y vida cotidiana» (ref. periodística «La máquina de fabricar enemigos»; byline NO DATO) | **Crítico** | `textos-canonicos/articulo_etnografico.docx` | Solo resumen en v2 `#eje-1` |
 | Ensayo teórico (mistranslation) | Alto | `Estado del Arte/…/README.md` | Parcial |
 | Etnografía audiovisual | Alto | `textos-canonicos/*.pdf` | No |
 | Corpus PDF (50+) | Medio–Alto | subcarpetas Marco/Bibliografía | Referenciado en grafo |

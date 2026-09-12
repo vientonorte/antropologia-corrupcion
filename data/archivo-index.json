@@ -138,11 +138,13 @@
       "id": "articulo-etnografico-huracan",
       "tipo": "articulo",
       "seccion": "biblioteca",
-      "titulo": "La máquina de fabricar enemigos",
-      "descripcion": "Artículo etnográfico mar 2026: vigilancia estatal, Operación Huracán, archivo La Negra 2018. Fuente: docs/Ensayo…/textos-canonicos/articulo_etnografico.docx",
+      "titulo": "Wallmapu · inteligencia policial, montaje y vida cotidiana",
+      "descripcion": "Satélite propio (Gaete Gaona, 2026): vigilancia estatal, Operación Huracán, archivo 2018. El titular «La máquina de fabricar enemigos» es artículo periodístico original (byline NO DATO), no el título propio.",
       "url": "articulo-fabricar-enemigos.html",
       "estado": "publicable",
-      "dimension": "D4"
+      "dimension": "D4",
+      "autor": "Gaete Gaona, R.",
+      "anio": 2026
     },
     {
       "id": "ensayo-traduccion-teorico",

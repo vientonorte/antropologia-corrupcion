@@ -164,9 +164,9 @@
     function renderArticulo(data) {
         if (!data || !data.sections) return '';
         var html = sectionHeader.render({
-            kicker: 'Artículo etnográfico',
-            title: 'La máquina de fabricar enemigos',
-            lead: 'Lectura etnográfica del archivo Huracán — desde JSON, no HTML estático.',
+            kicker: 'Satélite · Wallmapu',
+            title: 'Wallmapu · inteligencia policial, montaje y vida cotidiana',
+            lead: 'Gaete Gaona, 2026 — lectura etnográfica del archivo Huracán (JSON). El titular periodístico «La máquina de fabricar enemigos» es artículo periodístico original (byline NO DATO), no el título propio.',
         });
         html += badge.render('inferencia');
 

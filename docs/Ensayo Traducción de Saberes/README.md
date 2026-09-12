@@ -33,7 +33,7 @@ docs/Ensayo Traducción de Saberes/
 
 | Archivo | Rol | Versión canónica |
 |---|---|---|
-| `articulo_etnografico` | Artículo etnográfico «La máquina de fabricar enemigos» | **`.docx`** en `textos-canonicos/` |
+| `articulo_etnografico` | Satélite «Wallmapu · inteligencia policial, montaje y vida cotidiana» (Gaete Gaona, 2026); ref. periodística «La máquina de fabricar enemigos» (byline NO DATO) | **`.docx`** en `textos-canonicos/` |
 | `articulo_etnografico.pages` | Borrador Pages (anterior al docx) | `_archivo-borradores/` — no usar |
 | `etnografia audiovisaul…` | Typo histórico | Renombrado → `etnografia-audiovisual-traduciendo-saberes.*` |
 
@@ -52,7 +52,7 @@ Duplicados locales fuera del árbol canónico — marcar como `_deprecated` ment
 | ID | Título | Valor | Ruta web propuesta |
 |---|---|---|---|
 | D4-T1 | **Ensayo teórico** — mistranslation institucionalizada | Alto (marco doctoral) | `contra-archivo-v2.html#eje-4` + `archivo.html` |
-| D4-T2 | **Artículo etnográfico** — La máquina de fabricar enemigos | **Crítico** (texto completo no publicado) | `contra-archivo-v2.html#eje-1` → futuro `tesis.html` |
+| D4-T2 | **Satélite** — Wallmapu · inteligencia policial, montaje y vida cotidiana | **Crítico** (texto completo no publicado) | `contra-archivo-v2.html#eje-1` → futuro `tesis.html` |
 
 El artículo etnográfico **no** es el ensayo teórico: es la pieza empírica del Eje I (Seguridad / Operación Huracán) que el grafo de v2 ya referencia pero no enlaza al manuscrito.
 
@@ -63,7 +63,7 @@ El artículo etnográfico **no** es el ensayo teórico: es la pieza empírica de
 | Superficie | Enlace |
 |---|---|
 | Contra-archivo v2 · Leer | `#eje-1` (resumen) → artículo completo (pendiente HTML) |
-| Contra-archivo v2 · Grafo | nodo `La máquina de fabricar enemigos` |
+| Contra-archivo v2 · Grafo | nodo `Wallmapu · inteligencia policial, montaje y vida cotidiana` |
 | Biblioteca | `tesis.html` · entrada `articulo-etnografico-huracan` (pendiente) |
 | Archivo | `archivo.html` · entrada ensayo teórico (pendiente) |
 | Privado | tab Tesis · Ensayo Traducción de Saberes |
