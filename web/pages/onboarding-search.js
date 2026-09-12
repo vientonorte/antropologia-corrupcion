@@ -202,6 +202,7 @@
                     return {
                         registro: r.registro,
                         frictionScore: r.frictionScore || 0,
+                        casoVinculado: r.casoVinculado || null,
                     };
                 });
         }
@@ -264,7 +265,7 @@
                 '</span>' +
                 '</div>' +
                 '<div class="friction-row">' +
-                '<span class="friction-label">Fricción</span>' +
+                '<span class="friction-label">Match registro↔caso</span>' +
                 '<div class="friction-track"><div class="friction-fill" style="width:' +
                 fs * 100 +
                 '%;background:' +
@@ -274,15 +275,27 @@
                 fs.toFixed(2) +
                 '</span>' +
                 '</div>' +
+                '<p class="result-score-note">No es la intensidad del caso.</p>' +
                 (stateBadges
                     ? '<div style="margin:8px 0">' + stateBadges + '</div>'
                     : '') +
                 '<p class="result-description">' +
                 escapeHtml(desc) +
                 '</p>' +
-                '<a class="result-cta" href="buscador.html?q=' +
-                encodeURIComponent(reg.titulo || query) +
-                '">Profundizar en búsqueda avanzada →</a>';
+                (function () {
+                    var casoId = (item.casoVinculado && item.casoVinculado.id) || reg.friccion_con;
+                    var auditHref = casoId
+                        ? 'index.html?caso=' + encodeURIComponent(casoId) + '#tesis'
+                        : 'index.html#tesis';
+                    return (
+                        '<a class="result-cta" href="' +
+                        auditHref +
+                        '">Ver auditoría del caso</a>' +
+                        '<a class="result-cta" href="buscador.html?q=' +
+                        encodeURIComponent(reg.titulo || query) +
+                        '">Profundizar en búsqueda avanzada →</a>'
+                    );
+                })();
 
             resultsList.appendChild(card);
         });
