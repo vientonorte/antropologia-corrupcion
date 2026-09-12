@@ -1,7 +1,7 @@
 {
   "_meta": {
-    "version": "2026-06-21",
-    "description": "Índice editorial del archivo público con estados de publicación para fichas y dossier documental."
+    "version": "2026-09-09",
+    "description": "Índice editorial del archivo público. 2026-09-09: distinción tesis doctoral vs artículo Wallmapu; docs_url Google Docs SSOT."
   },
   "entries": [
     {
@@ -96,13 +96,15 @@
     },
     {
       "id": "tesis-doctoral-instrumento",
-      "tipo": "biblioteca",
+      "tipo": "tesis",
       "seccion": "biblioteca",
-      "titulo": "Contra-Archivo: Antropología y Corrupción",
-      "descripcion": "Tesis doctoral interactiva — instrumento de fricción epistemológica (Grafo B) y tres regímenes de verdad.",
-      "url": "index.html#tesis",
+      "titulo": "Contra-Archivo: tesis doctoral en movimiento (I = V/R)",
+      "descripcion": "Proyecto doctoral: fricción epistemológica modelada sobre casos reales (I=V/R), capas ética/institucional/material, mistranslation institucional. NO confundir con el artículo Wallmapu. SSOT estructural en Google Docs + EPISTEMIC_SPEC + casos.json.",
+      "url": "https://vientonorte.io/antropologia-corrupcion/",
       "estado": "publicable",
-      "anio": 2026
+      "anio": 2026,
+      "docs_url": "https://docs.google.com/document/d/1i5MFUeTYBhnH049Gpgh6NXJgKMiL5in8XPKM1LCAejs/edit",
+      "nota_editorial": "2026-09-09: SSOT tesis ≠ artículo etnográfico Huracán."
     },
     {
       "id": "poema-bomba-viento-norte",
@@ -138,11 +140,13 @@
       "id": "articulo-etnografico-huracan",
       "tipo": "articulo",
       "seccion": "biblioteca",
-      "titulo": "La máquina de fabricar enemigos",
-      "descripcion": "Artículo etnográfico mar 2026: vigilancia estatal, Operación Huracán, archivo La Negra 2018. Fuente: docs/Ensayo…/textos-canonicos/articulo_etnografico.docx",
-      "url": "articulo-fabricar-enemigos.html",
+      "titulo": "La máquina de fabricar enemigos (artículo etnográfico)",
+      "descripcion": "Artículo de investigación (Wallmapu / Operación Huracán). Satélite de la tesis, no el cuerpo doctoral. Firma Gaete; refs APA; dossier propio 2018–2026.",
+      "url": "https://vientonorte.io/antropologia-corrupcion/leer.html#articulo-etnografico",
       "estado": "publicable",
-      "dimension": "D4"
+      "dimension": "D4",
+      "docs_url": "https://docs.google.com/document/d/1BoYAFUbEFNl8bn3J78hJvJCkMdrautaQyXVXxYiL-J8/edit",
+      "nota_editorial": "2026-09-09: género = artículo; tesis = tesis-doctoral-instrumento."
     },
     {
       "id": "ensayo-traduccion-teorico",

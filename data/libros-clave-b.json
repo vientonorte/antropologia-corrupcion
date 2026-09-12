@@ -91,9 +91,10 @@
       "titulo": "Tecnofeudalismo",
       "anio": 2023,
       "clave": "B",
-      "estado": "pendiente",
+      "estado": "en-curso",
       "capturas_objetivo": 0,
-      "notas": "Capa económico-digital bujo-ro · D17 tecnofeudalismo"
+      "notas": "Capa económico-digital bujo-ro · D17 tecnofeudalismo",
+      "nota_ingest": "2026-09-11: 12 citas OCR → data/varoufakis-citas.json (lote IMG_1461+; cloud capital maduro NO DATO)"
     }
   ]
 }

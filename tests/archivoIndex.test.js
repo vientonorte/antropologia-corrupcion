@@ -63,4 +63,20 @@ module.exports = function (describe, it, assert, assertEqual) {
       assert(fs.existsSync(path.join(root, 'web', 'lib', 'bibliotecaLoader.js')));
     });
   });
+
+  describe('archivo-index — tesis vs articulo Docs SSOT', function () {
+    it('tesis-doctoral-instrumento apunta a Doc tesis', function () {
+      var e = find('tesis-doctoral-instrumento');
+      assert(e, 'falta tesis-doctoral-instrumento');
+      assertEqual(e.tipo, 'tesis');
+      assert(e.docs_url && e.docs_url.indexOf('1i5MFUeTYBhnH049Gpgh6NXJgKMiL5in8XPKM1LCAejs') !== -1);
+    });
+    it('articulo-etnografico-huracan apunta a Doc articulo', function () {
+      var e = find('articulo-etnografico-huracan');
+      assert(e, 'falta articulo-etnografico-huracan');
+      assertEqual(e.tipo, 'articulo');
+      assert(e.docs_url && e.docs_url.indexOf('1BoYAFUbEFNl8bn3J78hJvJCkMdrautaQyXVXxYiL-J8') !== -1);
+    });
+  });
+
 };
