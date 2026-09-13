@@ -1,7 +1,7 @@
 {
   "_meta": {
     "version": "2026-09-05",
-    "description": "Taxonomía unificada de categorías temáticas — corpus Zuboff + ATTAC + Gramsci + Clave B"
+    "description": "Taxonomía unificada de categorías temáticas — corpus Zuboff + ATTAC + Gramsci + Clave B + Clave A"
   },
   "labels": {
     "hogar": "Hogar / Nostos",
@@ -32,6 +32,11 @@
     "compartir": "Clave B · Compartir",
     "investigar": "Clave B · Investigar",
     "proceso_cultural": "Clave B · Proceso cultural",
+    "personal": "Clave A · Personal",
+    "vinculos": "Clave A · Vínculos",
+    "camila": "Clave A · Camila",
+    "laboral": "Clave A · Laboral",
+    "referencias": "Clave A · Referencias",
     "capitalismo-vigilancia": "Capitalismo de Vigilancia",
     "datos-comportamiento": "Datos de Comportamiento",
     "prediccion-modificacion": "Predicción y Modificación",
@@ -43,6 +48,7 @@
   "groups": {
     "zuboff": ["hogar", "vigilancia_inst", "poder_epistemico", "regimenes_verdad", "extraccion_datos", "democracia", "metodologia", "capitalismo-vigilancia", "datos-comportamiento", "prediccion-modificacion", "mercados-futuros", "poder-instrumental", "resistencia-autonomia", "instituciones-estado"],
     "attac": ["movimiento_social", "tasa_tobin", "chile_neoliberal", "privatizacion_afp", "genealogia_attac", "dispositivo_friccion", "neoliberalismo", "genealogia_tasa_tobin", "fiscalidad_capital", "especulador_institucional", "corrupcion_sistemica", "corrupcion_democracia", "estado_supranacional", "mundializacion_financiera"],
-    "clave_b": ["concepto_clave", "referencia", "persona_interes", "reflexion", "compartir", "investigar", "proceso_cultural"]
+    "clave_b": ["concepto_clave", "referencia", "persona_interes", "reflexion", "compartir", "investigar", "proceso_cultural"],
+    "clave_a": ["personal", "vinculos", "camila", "laboral", "referencias"]
   }
 }

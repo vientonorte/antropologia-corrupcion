@@ -85,6 +85,10 @@ module.exports = function (describe, it, assert, assertEqual) {
             assert(bases.indexOf('buscador.html?fuente=') !== -1, 'chip → buscador fuente');
             assert(demo.indexOf('buscador.html?q=') !== -1, 'demo → buscador query');
             assert(onboarding.indexOf('buscador.html?q=') !== -1, 'onboarding → buscador query');
+            assert(onboarding.indexOf('index.html?caso=') !== -1, 'onboarding → auditoría grafo');
+            assert(onboarding.indexOf('Match registro↔caso') !== -1, 'label Match, no Fricción');
+            assert(onboarding.indexOf('<span class="friction-label">Fricción</span>') === -1, 'home no pega Fricción al 0.xx de búsqueda');
+            assert(onboarding.indexOf('No es la intensidad del caso.') !== -1, 'nota corta');
         });
     });
 

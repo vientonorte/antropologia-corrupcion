@@ -21,7 +21,7 @@
             '<a class="ca-hero-paths__card" href="index.html#tesis" data-ca-path="grafo">' +
             '<span class="ca-hero-paths__kicker">Instrumento</span>' +
             '<span class="ca-hero-paths__title">Ver la tesis en el grafo</span>' +
-            '<span class="ca-hero-paths__meta">Fricción epistemológica · I = V/R · casos etnográficos</span>' +
+            '<span class="ca-hero-paths__meta">Grafo: intensidad de caso (source json|engine) · I=V/R es hermano</span>' +
             '</a>' +
             '<a class="ca-hero-paths__card" href="leer.html" data-ca-path="leer">' +
             '<span class="ca-hero-paths__kicker">Narrativa</span>' +

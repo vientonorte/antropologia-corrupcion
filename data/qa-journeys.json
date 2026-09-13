@@ -133,6 +133,7 @@
         { "label": "store corpus", "page": "corpus-citas.html", "needle": "corpusCitasStore.js" },
         { "label": "fetch zuboff", "page": "corpus-citas.html", "needle": "zuboff-citas.json" },
         { "label": "fetch gramsci", "page": "corpus-citas.html", "needle": "gramsci-citas.json" },
+        { "label": "fetch varoufakis", "page": "corpus-citas.html", "needle": "varoufakis-citas.json" },
         { "label": "shell móvil", "page": "corpus-citas.html", "needle": "shared-shell.js" }
       ],
       "manual": [

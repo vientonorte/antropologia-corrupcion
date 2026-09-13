@@ -1,0 +1,149 @@
+{
+  "libro": "Varoufakis (2023) Tecnofeudalismo",
+  "ingest": "2026-09-11",
+  "n": 12,
+  "citas": [
+    {
+      "id": "var-001",
+      "source_file": "IMG_1470.jpg",
+      "page": "25",
+      "quote": "para extraer cualquier excedente, ya sea del trabajo muy cualificado o de tareas anodinas, repetitivas y robotizadas, deben pagar por el tiempo de sus trabajadores (trabajo mercantil), pero no pueden comprar su sudor ni su talento (trabajo experiencial).",
+      "theme": [
+        "surplus",
+        "trabajo_mercantil",
+        "trabajo_experiencial",
+        "rent"
+      ]
+    },
+    {
+      "id": "var-002",
+      "source_file": "IMG_1470.jpg",
+      "page": "25",
+      "quote": "los capitalistas deben sus beneficios a una incapacidad, a la imposibilidad de comprar directamente el trabajo experiencial. Y, sin embargo, ¡qué bendición padecer tal incapacidad! Porque, al final, son ellos quienes se embolsan la diferencia entre el valor de cambio que pagan a los empleados a cuenta de su trabajo mercantil (los salarios) y el valor de cambio de las mercancías que es fruto del trabajo experiencial. En otras palabras, la doble naturaleza del trabajo es lo que da lugar al beneficio.",
+      "theme": [
+        "profit",
+        "trabajo_experiencial",
+        "doble_naturaleza",
+        "capitalism"
+      ]
+    },
+    {
+      "id": "var-003",
+      "source_file": "IMG_1470.jpg",
+      "page": "25",
+      "quote": "cuanto más pensaba en el capital, más convencido estaba de que, al igual que la luz y el trabajo, tenía dos naturalezas. Una es la del capital mercantil, por ejemplo una caña de pescar, un tractor, el servidor de una empresa o cualquier bien que",
+      "theme": [
+        "capital_mercantil",
+        "doble_naturaleza",
+        "cloud_capital"
+      ]
+    },
+    {
+      "id": "var-004",
+      "source_file": "IMG_1475.jpg",
+      "page": "26",
+      "quote": "Supongamos que descubro que poseo herramientas que tú necesitas para producir lo que tu familia precisa para sobrevivir, como la caña de pescar, el tractor o el servidor antes mencionados. De repente, tengo el poder de obligarte a hacer cosas, por ejemplo trabajar para mí, a cambio de utilizar mis herramientas. En resumen, el capital es tanto una cosa (capital mercantil) como una fuerza (capital de poder), del mismo modo que el trabajo se divide en trabajo mercantil y trabajo experiencial.",
+      "theme": [
+        "capital_poder",
+        "capital_mercantil",
+        "feudal_lords",
+        "cloud_capital"
+      ]
+    },
+    {
+      "id": "var-005",
+      "source_file": "IMG_1475.jpg",
+      "page": "26",
+      "quote": "Muchos años después encontré por casualidad esta frase escrita por el propio Einstein: «Es importante entender que la remuneración del trabajador no está determinada, ni siquiera en teoría, por el valor de su producto». Estaba en un artículo titulado «¿Por qué el socialismo?», publicado en mayo de 1949. Al leerlo, respiré aliviado. No, no me había tomado libertades con las ideas de Einstein. Él también creía que la esencia del capitalismo era la división del trabajo en dos naturalezas incongruentes.",
+      "theme": [
+        "trabajo",
+        "doble_naturaleza",
+        "einstein",
+        "capitalism"
+      ]
+    },
+    {
+      "id": "var-006",
+      "source_file": "IMG_1480.jpg",
+      "page": "31",
+      "quote": "Los terratenientes podían elegir arrendar la tierra por un precio que reflejara la cantidad de lana que ésta podía producir. Los siervos expulsados podían optar por ofrecer su trabajo a cambio de un salario. Por supuesto, en realidad, ser libre para elegir no era diferente de ser libre para perder. [...] A medida que el feudalismo retrocedía, llegaba la elección económica, pero era tan libre como la que ofrece un mafioso que, sonriendo, te dice: «Te haré una oferta que no podrás rechazar».",
+      "theme": [
+        "feudal_lords",
+        "rent",
+        "salario",
+        "libertad"
+      ]
+    },
+    {
+      "id": "var-007",
+      "source_file": "IMG_1480.jpg",
+      "page": "31",
+      "quote": "La moderna sociedad burguesa, que ha sabido hacer brotar como por encanto tan fabulosos medios de producción y de transporte, recuerda al brujo impotente para dominar los espíritus subterráneos que conjuró.",
+      "theme": [
+        "marx",
+        "medios_produccion",
+        "emancipacion"
+      ]
+    },
+    {
+      "id": "var-008",
+      "source_file": "IMG_1490.jpg",
+      "page": "39",
+      "quote": "para captar nuestra atención. Y luego venden nuestra atención a una entidad cuyo negocio consiste en mercantilizar algún valor experiencial que estaba escondido en nuestra alma, huyendo de la mercantilización. [...] ¿Cómo se podía conseguir que siguieran fluyendo los beneficios cuando parecía que ya se había mercantilizado todo? La respuesta de Draper: activando las emociones no mercantilizadas que se esconden en lo más profundo de nuestro ser.",
+      "theme": [
+        "attention",
+        "mercantilizacion",
+        "profit",
+        "cloud_capital"
+      ]
+    },
+    {
+      "id": "var-009",
+      "source_file": "IMG_1498.jpg",
+      "page": "47",
+      "quote": "El proyecto financiero del sistema de Bretton Woods era osado: «dolarizar» las monedas de Europa y de Japón vinculando las monedas europeas y el yen al dólar estadounidense con tipos de cambio fijos —de ahí los 30 dracmas por dólar cuya desaparición te inquietó en 1975, papá—. En esencia, se trataba de una unión monetaria global basada en el dólar.",
+      "theme": [
+        "bretton_woods",
+        "dollar_hegemony",
+        "capital_controls",
+        "rent"
+      ]
+    },
+    {
+      "id": "var-010",
+      "source_file": "IMG_1494.jpg",
+      "page": "45",
+      "quote": "Se había incorporado a la tecnoestructura un nuevo grupo de expertos: junto a los científicos, los analistas y los gestores profesionales, ahora había tipos creativos como Draper, así como una serie de estrategas e ingenieros que trabajaban en nuevas formas de [ilegible] mercantilizar nuestra atención.",
+      "theme": [
+        "tecnoestructura",
+        "attention",
+        "mercantilizacion",
+        "cloud_capital"
+      ]
+    },
+    {
+      "id": "var-011",
+      "source_file": "IMG_1494.jpg",
+      "page": "45",
+      "quote": "Si bien el capitalismo había nacido gracias a la transformación de las sociedades con mercados del feudalismo en sociedades de mercado descentralizadas, el auge de la tecnoestructura transformó el capitalismo estadounidense, que pasó de ser una sociedad de mercado descentralizada a una economía con mercados centralizada. Eso era precisamente lo que los planificadores soviéticos [ilegible] esperado conseguir, sin éxito.",
+      "theme": [
+        "tecnoestructura",
+        "feudal_lords",
+        "mercado_centralizado",
+        "capitalism"
+      ]
+    },
+    {
+      "id": "var-012",
+      "source_file": "IMG_1500.jpg",
+      "page": "49",
+      "quote": "vender bienes a los europeos y los japoneses era algo más que una consecuencia adicional: era la manera en que la tecnoestructura se aseguraba los nuevos y grandes mercados que necesitaba para mantener las industrias y que su economía siguiera creciendo. El sistema entero dependía íntegramente de este superávit, porque era lo que garantizaba que los dólares impresos por la Reserva Federal [...] acabaran volviendo a Estados Unidos a cambio de productos estadounidenses.",
+      "theme": [
+        "tecnoestructura",
+        "bretton_woods",
+        "dollar_hegemony",
+        "rent"
+      ]
+    }
+  ]
+}

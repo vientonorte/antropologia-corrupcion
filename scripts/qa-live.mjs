@@ -55,6 +55,8 @@ export const CRITICAL_PATHS = [
   '/archivo.html',
   '/tesis.html',
   '/corpus-citas.html',
+  '/data/salazar-citas.json',
+  '/data/clave-a-citas.json',
   '/privado-login.html',
   '/articulo-fabricar-enemigos.html',
   '/Poemarios/poemas.html',
@@ -142,6 +144,8 @@ export const HTML_HEURISTICS = {
   'corpus-citas.html': [
     { id: 'corpus-store', test: (h) => /corpusCitasStore\.js/i.test(h), hint: 'store unificado' },
     { id: 'zuboff-data', test: (h) => /zuboff-citas\.json/i.test(h), hint: 'corpus Zuboff' },
+    { id: 'clave-a-data', test: (h) => /clave-a-citas\.json/i.test(h), hint: 'corpus Clave A' },
+    { id: 'salazar-data', test: (h) => /salazar-citas\.json/i.test(h), hint: 'stub Salazar' },
     { id: 'shared-shell', test: (h) => /shared-shell\.js/i.test(h), hint: 'nav móvil' },
     { id: 'privado-link', test: (h) => /privado-login\.html/i.test(h), hint: 'puente investigador' },
   ],

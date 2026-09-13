@@ -4,7 +4,7 @@
     "fuente": "infolobby",
     "titulo": "Audiencias SURA Investments con CMF sobre regulación multifondos",
     "fecha": "2024-03-15",
-    "url": "https://www.infolobby.cl",
+    "url": "https://www.leylobby.gob.cl/visualizadores",
     "institucion": "Comisión para el Mercado Financiero",
     "actores_lobby": [
       "SURA Asset Management",
@@ -26,14 +26,16 @@
       "CMF",
       "lobby financiero",
       "ESG"
-    ]
+    ],
+    "url_precision": "landing",
+    "url_checked_at": "2026-09-08"
   },
   {
     "id": "lobby-forestal-conadi-2023",
     "fuente": "infolobby",
     "titulo": "Audiencias empresas forestales con CONADI sobre títulos de merced",
     "fecha": "2023-08-22",
-    "url": "https://www.infolobby.cl",
+    "url": "https://www.leylobby.gob.cl/visualizadores",
     "institucion": "CONADI",
     "actores_lobby": [
       "Arauco S.A."
@@ -53,7 +55,9 @@
       "CONADI",
       "territorio mapuche",
       "usurpación"
-    ]
+    ],
+    "url_precision": "landing",
+    "url_checked_at": "2026-09-08"
   },
   {
     "id": "lobby-sea-consulta-2022",
@@ -61,7 +65,7 @@
     "friccion_con": "oit169-consulta-previa",
     "titulo": "Audiencias empresas energéticas con SEA sobre proyectos en territorio indígena",
     "fecha": "2022-11-10",
-    "url": "https://www.infolobby.cl",
+    "url": "https://www.leylobby.gob.cl/visualizadores",
     "institucion": "Servicio de Evaluación Ambiental",
     "actores_lobby": [
       "Colbún S.A.",
@@ -82,14 +86,16 @@
       "consulta previa",
       "energía",
       "OIT169"
-    ]
+    ],
+    "url_precision": "landing",
+    "url_checked_at": "2026-09-08"
   },
   {
     "id": "transp-afp-carteras-2024",
     "fuente": "transparencia",
     "titulo": "Solicitud: detalle de inversiones AFP en territorios indígenas",
     "fecha": "2024-01-20",
-    "url": "https://www.consejotransparencia.cl",
+    "url": "https://www.consejotransparencia.cl/transparencia_activa/",
     "institucion": "Superintendencia de Pensiones",
     "materia": "Desglose de carteras de inversión AFP con exposición a sectores extractivos en territorio indígena",
     "keywords": [
@@ -107,14 +113,16 @@
       "AFP",
       "opacidad",
       "datos reservados"
-    ]
+    ],
+    "url_precision": "landing",
+    "url_checked_at": "2026-09-08"
   },
   {
     "id": "transp-conadi-tierras-2023",
     "fuente": "transparencia",
     "titulo": "Solicitud: avance del Fondo de Tierras CONADI en Región de Los Ríos",
     "fecha": "2023-05-14",
-    "url": "https://www.consejotransparencia.cl",
+    "url": "https://www.consejotransparencia.cl/transparencia_activa/",
     "institucion": "CONADI",
     "materia": "Estado de tramitación de solicitudes de compra de tierras Art. 20b Ley 19.253",
     "keywords": [
@@ -132,14 +140,16 @@
       "Fondo de Tierras",
       "espera",
       "territorio"
-    ]
+    ],
+    "url_precision": "landing",
+    "url_checked_at": "2026-09-08"
   },
   {
     "id": "transp-municipio-compras-2023",
     "fuente": "transparencia",
     "titulo": "Solicitud: contratos directos de municipalidad con empresas de concejales",
     "fecha": "2023-09-03",
-    "url": "https://www.consejotransparencia.cl",
+    "url": "https://www.consejotransparencia.cl/transparencia_activa/",
     "institucion": "Municipalidad (caso-tipo CIPER)",
     "materia": "Detalle de contratos por trato directo último trimestre con empresas vinculadas a concejales",
     "keywords": [
@@ -157,14 +167,16 @@
       "CIPER",
       "trato directo",
       "conflicto interés"
-    ]
+    ],
+    "url_precision": "landing",
+    "url_checked_at": "2026-09-08"
   },
   {
     "id": "transp-sp-beneficiarios-afp-2024",
     "fuente": "transparencia",
     "titulo": "Solicitud: beneficiarios finales y vehiculos de inversion vinculados a AFP",
     "fecha": "2024-03-08",
-    "url": "https://www.consejotransparencia.cl",
+    "url": "https://www.consejotransparencia.cl/transparencia_activa/",
     "institucion": "Superintendencia de Pensiones",
     "materia": "Detalle de sociedades vehiculo, administradoras y beneficiarios finales vinculados a carteras AFP con exposicion territorial",
     "keywords": [
@@ -182,14 +194,16 @@
       "AFP",
       "beneficiario final",
       "cadena societaria"
-    ]
+    ],
+    "url_precision": "landing",
+    "url_checked_at": "2026-09-08"
   },
   {
     "id": "transp-bienesnacionales-catastro-2024",
     "fuente": "transparencia",
     "titulo": "Solicitud: cartografia y catastro de predios fiscales superpuestos a titulos de merced",
     "fecha": "2024-02-11",
-    "url": "https://www.consejotransparencia.cl",
+    "url": "https://www.consejotransparencia.cl/transparencia_activa/",
     "institucion": "Ministerio de Bienes Nacionales",
     "materia": "Acceso a planos, roles y capas SIG de predios fiscales en zona con reclamacion mapuche-huilliche",
     "keywords": [
@@ -207,14 +221,16 @@
       "Bienes Nacionales",
       "catastro",
       "territorio fragmentado"
-    ]
+    ],
+    "url_precision": "landing",
+    "url_checked_at": "2026-09-08"
   },
   {
     "id": "transp-municipio-honorarios-2024",
     "fuente": "transparencia",
     "titulo": "Solicitud: honorarios, sociedades y parentesco de proveedores municipales recurrentes",
     "fecha": "2024-01-29",
-    "url": "https://www.consejotransparencia.cl",
+    "url": "https://www.consejotransparencia.cl/transparencia_activa/",
     "institucion": "Municipalidad (caso-tipo CIPER)",
     "materia": "Cruce entre contrataciones a honorarios, proveedores y participacion en sociedades de familiares de autoridades",
     "keywords": [
@@ -232,14 +248,16 @@
       "municipio",
       "honorarios",
       "red de proveedores"
-    ]
+    ],
+    "url_precision": "landing",
+    "url_checked_at": "2026-09-08"
   },
   {
     "id": "transp-consulta-cartografias-2024",
     "fuente": "transparencia",
     "titulo": "Solicitud: expedientes de consulta indigena, planos y minutas de trazado territorial",
     "fecha": "2024-02-26",
-    "url": "https://www.consejotransparencia.cl",
+    "url": "https://www.consejotransparencia.cl/transparencia_activa/",
     "institucion": "Servicio de Evaluacion Ambiental",
     "materia": "Entrega de minutas, planos y cartografias usadas para delimitar comunidades afectadas en procesos de consulta indigena",
     "keywords": [
@@ -257,14 +275,16 @@
       "consulta",
       "cartografia",
       "afectacion territorial"
-    ]
+    ],
+    "url_precision": "landing",
+    "url_checked_at": "2026-09-08"
   },
   {
     "id": "sii-sura-sociedades-relacionadas-2024",
     "fuente": "sii",
     "titulo": "Consulta SII: giros y sociedades relacionadas en estructura SURA / AFP",
     "fecha": "2024-03-21",
-    "url": "https://www.sii.cl",
+    "url": "https://www.sii.cl/servicios_online/",
     "institucion": "Servicio de Impuestos Internos",
     "materia": "Revision de giros economicos, sucursales y sociedades relacionadas usadas para vehiculos de inversion y administracion previsional",
     "keywords": [
@@ -282,14 +302,16 @@
       "SURA",
       "sociedades",
       "huella mercantil"
-    ]
+    ],
+    "url_precision": "landing",
+    "url_checked_at": "2026-09-08"
   },
   {
     "id": "sii-avaluos-predios-los-rios-2024",
     "fuente": "sii",
     "titulo": "Consulta SII: avaluos fiscales y roles de predios en Los Rios con reclamacion mapuche",
     "fecha": "2024-01-17",
-    "url": "https://www.sii.cl",
+    "url": "https://www.sii.cl/destacados/reavaluo/2024/index.html",
     "institucion": "Servicio de Impuestos Internos",
     "materia": "Cruce de roles de avaluo, destino de suelo y valuacion fiscal en predios superpuestos a memoria territorial mapuche-huilliche",
     "keywords": [
@@ -307,14 +329,16 @@
       "avaluos",
       "territorio mapuche",
       "rol de avaluo"
-    ]
+    ],
+    "url_precision": "landing",
+    "url_checked_at": "2026-09-08"
   },
   {
     "id": "sii-proveedores-municipales-2023",
     "fuente": "sii",
     "titulo": "Consulta SII: giros, socios y vigencia de proveedores municipales reiterados",
     "fecha": "2023-11-09",
-    "url": "https://www.sii.cl",
+    "url": "https://www.sii.cl/servicios_online/",
     "institucion": "Servicio de Impuestos Internos",
     "materia": "Revision de giro comercial, inicio de actividades y representantes de proveedores adjudicados por trato directo",
     "keywords": [
@@ -332,14 +356,16 @@
       "proveedores",
       "municipio",
       "giro y red societaria"
-    ]
+    ],
+    "url_precision": "landing",
+    "url_checked_at": "2026-09-08"
   },
   {
     "id": "sii-avaluos-predios-consulta-2022",
     "fuente": "sii",
     "titulo": "Consulta SII: roles de avaluo de predios incluidos en procesos de consulta indigena",
     "fecha": "2022-12-02",
-    "url": "https://www.sii.cl",
+    "url": "https://www.sii.cl/destacados/reavaluo/2024/index.html",
     "institucion": "Servicio de Impuestos Internos",
     "materia": "Identificacion de roles, clasificacion de suelo y avalúos de predios considerados en procesos de consulta previa",
     "keywords": [
@@ -357,7 +383,9 @@
       "consulta previa",
       "predios",
       "cartografia fiscal"
-    ]
+    ],
+    "url_precision": "landing",
+    "url_checked_at": "2026-09-08"
   },
   {
     "id": "ley-20730-lobby",
@@ -380,7 +408,9 @@
       "ley",
       "definición",
       "exclusión"
-    ]
+    ],
+    "url_precision": "document",
+    "url_checked_at": "2026-09-08"
   },
   {
     "id": "ley-20285-transparencia",
@@ -403,7 +433,9 @@
       "reserva",
       "acceso",
       "periodismo"
-    ]
+    ],
+    "url_precision": "document",
+    "url_checked_at": "2026-09-08"
   },
   {
     "id": "ley-19253-indigena",
@@ -427,7 +459,9 @@
       "CONADI",
       "tierra",
       "usurpación como compra"
-    ]
+    ],
+    "url_precision": "document",
+    "url_checked_at": "2026-09-08"
   },
   {
     "id": "ds66-consulta-indigena",
@@ -451,7 +485,9 @@
       "consulta",
       "decreto",
       "consentimiento como trámite"
-    ]
+    ],
+    "url_precision": "document",
+    "url_checked_at": "2026-09-08"
   },
   {
     "id": "dl701-fomento-forestal",
@@ -476,14 +512,16 @@
       "pino",
       "bosque nativo",
       "dictadura"
-    ]
+    ],
+    "url_precision": "document",
+    "url_checked_at": "2026-09-08"
   },
   {
     "id": "seia-central-osorno-2023",
     "fuente": "seia",
-    "titulo": "EIA: Central hidroeléctrica de pasada en Río Pilmaiquén, Región de Los Ríos",
+    "titulo": "EIA: Central Hidroeléctrica Los Lagos (río Pilmaiquén) — expediente SEIA 2203226",
     "fecha": "2023-06-12",
-    "url": "https://seia.sea.gob.cl",
+    "url": "https://seia.sea.gob.cl/expediente/ficha/fichaPrincipal.php?id_expediente=2203226&idExpediente=2203226",
     "institucion": "Servicio de Evaluación Ambiental",
     "keywords": [
       "hidroeléctrica",
@@ -501,14 +539,16 @@
       "río",
       "hidroeléctrica",
       "ontología"
-    ]
+    ],
+    "url_precision": "document",
+    "url_checked_at": "2026-09-08"
   },
   {
     "id": "seia-forestal-losrios-2022",
     "fuente": "seia",
     "titulo": "DIA: Proyecto de plantación forestal en predios con reclamación indígena",
     "fecha": "2022-04-18",
-    "url": "https://seia.sea.gob.cl",
+    "url": "https://seia.sea.gob.cl/busqueda/buscarProyectoAction.php",
     "institucion": "Servicio de Evaluación Ambiental",
     "keywords": [
       "plantación",
@@ -526,14 +566,16 @@
       "forestal",
       "reclamación",
       "suelo sin historia"
-    ]
+    ],
+    "url_precision": "search",
+    "url_checked_at": "2026-09-08"
   },
   {
     "id": "compras-conadi-consultoras-2023",
     "fuente": "compraspublicas",
     "titulo": "Licitación CONADI: estudio de pertinencia cultural para Fondo de Tierras",
     "fecha": "2023-07-20",
-    "url": "https://www.mercadopublico.cl",
+    "url": "https://www.mercadopublico.cl/Home/BusquedaLicitacion",
     "institucion": "CONADI",
     "keywords": [
       "pertinencia cultural",
@@ -549,14 +591,16 @@
       "ComprasPúblicas",
       "CONADI",
       "cultura como licitación"
-    ]
+    ],
+    "url_precision": "search",
+    "url_checked_at": "2026-09-08"
   },
   {
     "id": "compras-municipio-trato-directo-2023",
     "fuente": "compraspublicas",
     "titulo": "Trato directo: servicios de asesoría comunicacional a municipalidad",
     "fecha": "2023-10-05",
-    "url": "https://www.mercadopublico.cl",
+    "url": "https://www.mercadopublico.cl/Home/BusquedaLicitacion",
     "institucion": "Municipalidad (caso-tipo CIPER)",
     "keywords": [
       "trato directo",
@@ -573,14 +617,16 @@
       "municipio",
       "trato directo",
       "corrupción sistémica"
-    ]
+    ],
+    "url_precision": "search",
+    "url_checked_at": "2026-09-08"
   },
   {
     "id": "cmf-sancion-sura-2024",
     "fuente": "cmf",
     "titulo": "Resolución CMF: observaciones a SURA Asset Management por deficiencias en gobierno corporativo",
     "fecha": "2024-02-28",
-    "url": "https://www.cmfchile.cl",
+    "url": "https://www.cmfchile.cl/portal/principal/623/w4-propertyvalue-18554.html",
     "institucion": "Comisión para el Mercado Financiero",
     "keywords": [
       "gobierno corporativo",
@@ -597,14 +643,16 @@
       "SURA",
       "compliance",
       "sanción sin territorio"
-    ]
+    ],
+    "url_precision": "landing",
+    "url_checked_at": "2026-09-08"
   },
   {
     "id": "cmf-norma-esg-2023",
     "fuente": "cmf",
-    "titulo": "NCG N°461: Norma de reporte de sostenibilidad y gobierno corporativo",
+    "titulo": "NCG N°461 (12 nov 2021): memoria anual, sostenibilidad y gobierno corporativo",
     "fecha": "2023-11-20",
-    "url": "https://www.cmfchile.cl/normativa/ncg_461.pdf",
+    "url": "https://www.cmfchile.cl/normativa/ncg_461_2021.pdf",
     "institucion": "Comisión para el Mercado Financiero",
     "keywords": [
       "ESG",
@@ -622,14 +670,16 @@
       "ESG",
       "materialidad",
       "sostenibilidad invertida"
-    ]
+    ],
+    "url_precision": "document",
+    "url_checked_at": "2026-09-08"
   },
   {
     "id": "sbif-circular-roles-banca-digital-2021",
     "fuente": "leychile",
     "titulo": "Circular SBIF / CMF N°3.653 — Gestión de accesos y perfiles en banca digital",
     "fecha": "2021-07-14",
-    "url": "https://www.cmfchile.cl",
+    "url": "https://www.cmfchile.cl/institucional/legislacion_normativa/normativa2.php?tiponorma=NCG&numero=461",
     "institucion": "Comisión para el Mercado Financiero",
     "actores_lobby": [],
     "materia": "Definición de roles de acceso, segregación de funciones y trazabilidad en plataformas transaccionales para personas jurídicas",
@@ -649,14 +699,16 @@
       "acceso",
       "banca digital",
       "opacidad institucional"
-    ]
+    ],
+    "url_precision": "landing",
+    "url_checked_at": "2026-09-08"
   },
   {
     "id": "df-sura-multifondos-2024",
     "fuente": "diario-financiero",
     "titulo": "SURA redefine estrategia de inversión alternativa en multifondos",
     "fecha": "2024-06-10",
-    "url": "https://www.df.cl",
+    "url": "https://www.df.cl/mercados",
     "institucion": "Diario Financiero",
     "actores_lobby": [
       "SURA Asset Management",
@@ -680,14 +732,16 @@
       "SURA",
       "inversiones",
       "prensa financiera"
-    ]
+    ],
+    "url_precision": "landing",
+    "url_checked_at": "2026-09-08"
   },
   {
     "id": "df-lobby-energetico-2024",
     "fuente": "diario-financiero",
     "titulo": "Empresas energéticas intensifican reuniones con reguladores ante cambio de normativa",
     "fecha": "2024-04-22",
-    "url": "https://www.df.cl",
+    "url": "https://www.df.cl/empresas",
     "institucion": "Diario Financiero",
     "actores_lobby": [],
     "materia": "Cobertura sobre lobby energético y regulación ambiental en zonas de sacrificio",
@@ -706,14 +760,16 @@
       "lobby",
       "energía",
       "regulación ambiental"
-    ]
+    ],
+    "url_precision": "landing",
+    "url_checked_at": "2026-09-08"
   },
   {
     "id": "df-territorio-mapuche-inversion-2024",
     "fuente": "diario-financiero",
     "titulo": "Inversión forestal en La Araucanía: empresas apuestan por certificación FSC",
     "fecha": "2024-08-05",
-    "url": "https://www.df.cl",
+    "url": "https://www.df.cl/empresas",
     "institucion": "Diario Financiero",
     "actores_lobby": [],
     "materia": "Cobertura financiera de inversión forestal en territorio mapuche con enfoque de certificación",
@@ -734,14 +790,16 @@
       "territorio mapuche",
       "certificación",
       "inversión"
-    ]
+    ],
+    "url_precision": "landing",
+    "url_checked_at": "2026-09-08"
   },
   {
     "id": "tesis-uai-gobernanza-financiera-2023",
     "fuente": "repositorio-uai",
     "titulo": "Gobernanza corporativa y opacidad regulatoria en el mercado de AFP chileno",
     "fecha": "2023-12-01",
-    "url": "https://repositorio.uai.cl",
+    "url": "https://repositorio.uai.cl/discover?query=gobernanza+financiera+AFP",
     "institucion": "Universidad Adolfo Ibáñez — Escuela de Negocios",
     "actores_lobby": [],
     "materia": "Tesis de magíster que analiza mecanismos de gobernanza en AFP y su relación con marcos regulatorios CMF",
@@ -762,14 +820,16 @@
       "gobernanza",
       "AFP",
       "regulación financiera"
-    ]
+    ],
+    "url_precision": "search",
+    "url_checked_at": "2026-09-08"
   },
   {
     "id": "tesis-uai-esg-greenwashing-2024",
     "fuente": "repositorio-uai",
     "titulo": "ESG y greenwashing en fondos de inversión chilenos: una evaluación crítica",
     "fecha": "2024-03-01",
-    "url": "https://repositorio.uai.cl",
+    "url": "https://repositorio.uai.cl/discover?query=ESG+greenwashing",
     "institucion": "Universidad Adolfo Ibáñez — Escuela de Gobierno",
     "actores_lobby": [],
     "materia": "Tesis que evalúa métricas ESG en fondos chilenos y detecta prácticas de greenwashing en reportes corporativos",
@@ -789,14 +849,16 @@
       "ESG",
       "greenwashing",
       "inversiones"
-    ]
+    ],
+    "url_precision": "search",
+    "url_checked_at": "2026-09-08"
   },
   {
     "id": "tesis-uchile-territorio-mapuche-2023",
     "fuente": "repositorio-uchile",
     "titulo": "Despojo territorial y resistencia mapuche-huilliche en la provincia de Osorno (1973-2023)",
     "fecha": "2023-06-01",
-    "url": "https://repositorio.uchile.cl",
+    "url": "https://repositorio.uchile.cl/discover?query=despojo+mapuche",
     "institucion": "Universidad de Chile — Facultad de Ciencias Sociales",
     "actores_lobby": [],
     "materia": "Tesis doctoral que documenta procesos de despojo territorial y formas de resistencia en comunidades mapuche-huilliche",
@@ -818,14 +880,16 @@
       "despojo",
       "resistencia",
       "etnografía"
-    ]
+    ],
+    "url_precision": "search",
+    "url_checked_at": "2026-09-08"
   },
   {
     "id": "tesis-uchile-corrupcion-municipal-2024",
     "fuente": "repositorio-uchile",
     "titulo": "Redes de contratación pública y conflicto de intereses en municipios del sur de Chile",
     "fecha": "2024-01-01",
-    "url": "https://repositorio.uchile.cl",
+    "url": "https://repositorio.uchile.cl/discover?query=contratacion+publica+municipal",
     "institucion": "Universidad de Chile — Instituto de Asuntos Públicos",
     "actores_lobby": [],
     "materia": "Tesis de magíster que mapea redes de proveedores municipales y detecta patrones de conflicto de interés",
@@ -845,14 +909,16 @@
       "municipios",
       "contratación",
       "conflicto de intereses"
-    ]
+    ],
+    "url_precision": "search",
+    "url_checked_at": "2026-09-08"
   },
   {
     "id": "tesis-uchile-consulta-indigena-seia-2023",
     "fuente": "repositorio-uchile",
-    "titulo": "La consulta indígena en el SEIA: análisis crítico del cumplimiento del Convenio 169 de la OIT en proyectos energéticos",
+    "titulo": "Análisis de la consulta indígena en el sistema de evaluación de impacto ambiental (UChile, 2018)",
     "fecha": "2023-09-01",
-    "url": "https://repositorio.uchile.cl",
+    "url": "https://repositorio.uchile.cl/handle/2250/159524",
     "institucion": "Universidad de Chile — Facultad de Derecho",
     "actores_lobby": [],
     "materia": "Tesis que evalúa el cumplimiento efectivo de la consulta indígena en proyectos ingresados al SEIA",
@@ -874,7 +940,9 @@
       "OIT 169",
       "SEIA",
       "derecho"
-    ]
+    ],
+    "url_precision": "document",
+    "url_checked_at": "2026-09-08"
   },
   {
     "id": "diariooficial-consulta-indigena-2024",
@@ -886,7 +954,7 @@
     "verificado": true,
     "official_score": 0.94,
     "evidencia_tipo": "oficial",
-    "url": "https://www.diariooficial.interior.gob.cl",
+    "url": "https://www.diariooficial.interior.gob.cl/edicionelectronica/",
     "institucion": "Diario Oficial de la República de Chile",
     "materia": "Normativa publicada con efectos jurídicos sobre estándares de participación y consulta en tramitación ambiental.",
     "keywords": [
@@ -903,7 +971,9 @@
       "Diario Oficial",
       "normativa",
       "consulta previa"
-    ]
+    ],
+    "url_precision": "landing",
+    "url_checked_at": "2026-09-08"
   },
   {
     "id": "scielo-gobernanza-datos-afp-2025",
@@ -915,7 +985,7 @@
     "verificado": true,
     "official_score": 0.78,
     "evidencia_tipo": "academica",
-    "url": "https://www.scielo.cl",
+    "url": "https://scielo.conicyt.cl/scielo.php?script=sci_alphabetic&lng=es",
     "institucion": "SciELO Chile",
     "materia": "Artículo académico que analiza opacidad regulatoria y trazabilidad limitada en ecosistemas previsionales y financieros.",
     "keywords": [
@@ -932,14 +1002,16 @@
       "SciELO",
       "artículo",
       "gobernanza"
-    ]
+    ],
+    "url_precision": "landing",
+    "url_checked_at": "2026-09-08"
   },
   {
     "id": "michillanca-ley-antiterrorista-2014",
     "fuente": "leychile",
     "titulo": "Ley 18.314 (Ley Antiterrorista) aplicada a recuperación territorial Lof Michillanca, Valdivia, 2014",
     "fecha": "2014-01-01",
-    "url": "https://www.leychile.cl/Navegar?idNorma=29731",
+    "url": "https://www.bcn.cl/leychile/navegar?idNorma=29731",
     "institucion": "Ministerio del Interior / Ministerio Público",
     "actores_lobby": [
       "Familia Michillanca",
@@ -964,14 +1036,16 @@
       "dictadura",
       "usurpación",
       "CONADI"
-    ]
+    ],
+    "url_precision": "document",
+    "url_checked_at": "2026-09-08"
   },
   {
     "id": "ensayo-traduccion-marco-2026",
     "fuente": "leychile",
     "titulo": "Ley 19.974 — Sistema de Inteligencia del Estado (marco D4 / Operación Huracán)",
     "fecha": "2004-10-07",
-    "url": "https://www.leychile.cl/Navegar?idNorma=241195",
+    "url": "https://www.bcn.cl/leychile/navegar?idNorma=241195",
     "institucion": "Estado de Chile / Carabineros / ANI",
     "actores_lobby": [
       "Dirección de Inteligencia Policial",
@@ -994,6 +1068,68 @@
       "traducción",
       "seguridad",
       "archivo"
-    ]
+    ],
+    "url_precision": "document",
+    "url_checked_at": "2026-09-08"
+  },
+  {
+    "id": "ciper-humedal-concepcion-2026",
+    "fuente": "ciper",
+    "titulo": "“Un humedal que nadie usa”: el Gran Concepción y la ilusión del terreno vacío",
+    "fecha": "2026-09-05",
+    "url": "https://www.ciperchile.cl/2026/09/05/un-humedal-que-nadie-usa-el-gran-concepcion-y-la-ilusion-del-terreno-vacio/",
+    "url_precision": "document",
+    "url_checked_at": "2026-09-08",
+    "institucion": "CIPER Chile",
+    "materia": "Reportaje sobre humedales, suelo vacío y presión inmobiliaria en el Gran Concepción.",
+    "keywords": [
+      "humedal",
+      "territorio",
+      "Concepción",
+      "suelo",
+      "CIPER"
+    ],
+    "capa_oficial": "La cobertura periodística documenta un conflicto de uso de suelo; no sustituye expediente oficial ni sentencia.",
+    "friccion_con": "periodismo-datos-chile",
+    "tipo_friccion": "semantica",
+    "tags": [
+      "CIPER",
+      "territorio",
+      "humedal",
+      "prensa"
+    ],
+    "evidencia_tipo": "periodistica",
+    "verificado": true,
+    "published_at": "2026-09-05",
+    "fetched_at": "2026-09-08"
+  },
+  {
+    "id": "ciper-radar-2026-09-07",
+    "fuente": "ciper",
+    "titulo": "CIPER Radar 7 sep 2026",
+    "fecha": "2026-09-07",
+    "url": "https://www.ciperchile.cl/2026/09/07/radar-07-09-2026/",
+    "url_precision": "document",
+    "url_checked_at": "2026-09-08",
+    "institucion": "CIPER Chile",
+    "materia": "Resumen diario de CIPER (feed RSS live).",
+    "keywords": [
+      "CIPER",
+      "radar",
+      "prensa",
+      "Chile"
+    ],
+    "capa_oficial": "Agregado periodístico del día; no es registro oficial.",
+    "friccion_con": "periodismo-datos-chile",
+    "tipo_friccion": "semantica",
+    "tags": [
+      "CIPER",
+      "radar",
+      "prensa"
+    ],
+    "evidencia_tipo": "periodistica",
+    "verificado": true,
+    "published_at": "2026-09-07",
+    "fetched_at": "2026-09-08"
   }
 ]

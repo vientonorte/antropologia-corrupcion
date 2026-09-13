@@ -284,4 +284,25 @@ module.exports = function (describe, it, assert, assertEqual, assertDeepEqual, a
             assertLessThan(stats.markerActivationRate, 1.01);
         });
     });
+
+    describe('searchEngine.renderSearchCard honesty (C9)', function () {
+        it('labels score as registro↔caso and not caso.friccion', function () {
+            assertEqual(typeof window.renderSearchCard, 'function');
+            var html = window.renderSearchCard({
+                registro: {
+                    id: 't-c9',
+                    fuente: 'ciper',
+                    titulo: 'Test honesty',
+                    capa_oficial: 'nota',
+                    verificado: false
+                },
+                frictionScore: 0.39,
+                frictionAudit: { overlapScore: 0.4, markerScore: 0.2, tipoPenalty: 0.1, markers: [], weights: { overlap: 0.5, marker: 0.3, tipo: 0.2 } },
+                relevance: 0.5
+            }, { query: 'SURA', sourceCatalog: window.CASourceCatalog && window.CASourceCatalog.default });
+            assert(html.indexOf('Fricción registro') !== -1, 'label registro↔caso');
+            assert(html.indexOf('caso.friccion.intensidad') !== -1, 'disclaims caso.friccion');
+            assert(html.indexOf('Sin verificar') !== -1, 'unverified pill');
+        });
+    });
 };

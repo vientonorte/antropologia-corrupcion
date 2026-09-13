@@ -304,7 +304,16 @@ input:focus, select:focus, textarea:focus {
     font-size: 11px;
     font-family: var(--font-mono);
     color: var(--dim);
-    min-width: 42px;
+    min-width: 7.5em;
+    white-space: nowrap;
+}
+
+.result-score-note {
+    font-size: 11px;
+    font-family: var(--font-mono);
+    color: var(--dim);
+    margin: 6px 0 0;
+    line-height: 1.4;
 }
 
 .friction-track {

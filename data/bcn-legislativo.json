@@ -6,18 +6,20 @@
         "version": 2,
         "notes": [
             "Combina boletines de tramitación y trazas históricas derivadas de normas vigentes BCN.",
-            "Los registros marcados como derivado-ley-vigente requieren completar indicaciones y urgencias desde Historia de la Ley."
+            "Los registros marcados como derivado-ley-vigente requieren completar indicaciones y urgencias desde Historia de la Ley.",
+            "2026-09-08: historiadelaley/nc/historia-de-la-ley/{12017,10526,13588} HTTP 500; url viva = tramitación Senado del boletín. fuente_historia_ley = landing Historia de la Ley (200)."
         ]
     },
-    "boletines": [{
+    "boletines": [
+        {
             "id": "bcn-boletin-12017-12",
             "boletin": "12017-12",
             "tipo_registro": "boletin",
             "titulo": "Modifica el sistema de pensiones y fortalece gobierno previsional",
             "fecha_ingreso": "2018-08-14",
             "fecha_actualizacion": "2024-01-08",
-            "url": "https://www.bcn.cl/historiadelaley/nc/historia-de-la-ley/12017/",
-            "fuente_historia_ley": "https://www.bcn.cl/historiadelaley/nc/historia-de-la-ley/12017/",
+            "url": "https://tramitacion.senado.cl/appsenado/templates/tramitacion/index.php?boletin_ini=12017-12",
+            "fuente_historia_ley": "https://www.bcn.cl/historiadelaley/",
             "etapa_actual": "Segundo trámite constitucional",
             "camara_origen": "Senado",
             "camara_revisora": "Cámara de Diputadas y Diputados",
@@ -41,7 +43,8 @@
                 "Superintendencia de Pensiones",
                 "AFP"
             ],
-            "urgencias": [{
+            "urgencias": [
+                {
                     "tipo": "suma",
                     "fecha": "2023-12-18",
                     "camara": "Senado"
@@ -88,7 +91,9 @@
                 "reforma previsional",
                 "BCN",
                 "urgencia"
-            ]
+            ],
+            "url_precision": "document",
+            "url_checked_at": "2026-09-08"
         },
         {
             "id": "bcn-boletin-10526-06",
@@ -97,8 +102,8 @@
             "titulo": "Perfecciona el Sistema de Evaluación de Impacto Ambiental",
             "fecha_ingreso": "2016-03-15",
             "fecha_actualizacion": "2023-10-11",
-            "url": "https://www.bcn.cl/historiadelaley/nc/historia-de-la-ley/10526/",
-            "fuente_historia_ley": "https://www.bcn.cl/historiadelaley/nc/historia-de-la-ley/10526/",
+            "url": "https://tramitacion.senado.cl/appsenado/templates/tramitacion/index.php?boletin_ini=10526-06",
+            "fuente_historia_ley": "https://www.bcn.cl/historiadelaley/",
             "etapa_actual": "Primer trámite constitucional",
             "camara_origen": "Cámara de Diputadas y Diputados",
             "camara_revisora": "Senado",
@@ -122,11 +127,13 @@
                 "Ministerio del Medio Ambiente",
                 "comunidades indígenas"
             ],
-            "urgencias": [{
-                "tipo": "simple",
-                "fecha": "2023-08-24",
-                "camara": "Cámara de Diputadas y Diputados"
-            }],
+            "urgencias": [
+                {
+                    "tipo": "simple",
+                    "fecha": "2023-08-24",
+                    "camara": "Cámara de Diputadas y Diputados"
+                }
+            ],
             "indicaciones_total": 87,
             "indicaciones_clave": [
                 "Participación temprana en territorios indígenas",
@@ -162,7 +169,9 @@
                 "SEIA",
                 "consulta previa",
                 "certeza jurídica"
-            ]
+            ],
+            "url_precision": "document",
+            "url_checked_at": "2026-09-08"
         },
         {
             "id": "bcn-boletin-13588-07",
@@ -171,8 +180,8 @@
             "titulo": "Fortalece la protección de denunciantes en casos de corrupción pública",
             "fecha_ingreso": "2020-06-18",
             "fecha_actualizacion": "2025-03-22",
-            "url": "https://www.bcn.cl/historiadelaley/nc/historia-de-la-ley/13588/",
-            "fuente_historia_ley": "https://www.bcn.cl/historiadelaley/nc/historia-de-la-ley/13588/",
+            "url": "https://tramitacion.senado.cl/appsenado/templates/tramitacion/index.php?boletin_ini=13588-07",
+            "fuente_historia_ley": "https://www.bcn.cl/historiadelaley/",
             "etapa_actual": "Comisión Mixta",
             "camara_origen": "Cámara de Diputadas y Diputados",
             "camara_revisora": "Senado",
@@ -197,11 +206,13 @@
                 "Consejo para la Transparencia",
                 "funcionarios públicos"
             ],
-            "urgencias": [{
-                "tipo": "suma",
-                "fecha": "2024-11-07",
-                "camara": "Senado"
-            }],
+            "urgencias": [
+                {
+                    "tipo": "suma",
+                    "fecha": "2024-11-07",
+                    "camara": "Senado"
+                }
+            ],
             "indicaciones_total": 62,
             "indicaciones_clave": [
                 "Protección de identidad de la fuente",
@@ -239,7 +250,9 @@
                 "denuncia",
                 "fuente",
                 "corrupción"
-            ]
+            ],
+            "url_precision": "document",
+            "url_checked_at": "2026-09-08"
         },
         {
             "id": "bcn-historia-ley-20730",

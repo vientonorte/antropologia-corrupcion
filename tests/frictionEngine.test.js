@@ -342,6 +342,34 @@ module.exports = function (describe, it, assert, assertEqual, assertDeepEqual, a
             }
         });
 
+        it('SURA published 0.82 is JSON override, not engine output (EPISTEMIC_SPEC v0)', function () {
+            var result = fe.buildGraph(casosData.casos);
+            var sura = null;
+            for (var i = 0; i < result.nodes.length; i++) {
+                if (result.nodes[i].id === 'sura-gobernanza-datos') {
+                    sura = result.nodes[i];
+                    break;
+                }
+            }
+            assert(sura, 'sura-gobernanza-datos node should exist');
+            assertEqual(sura.audit.source, 'json');
+            assertEqual(sura.audit.explicitIntensity, 0.82);
+            assertEqual(sura.intensidad, 0.82);
+            assertApprox(sura.audit.calculatedIntensity, 0.432, 0.001,
+                'engine intensity for SURA keywords+markers');
+            assertApprox(sura.audit.deltaFromCalculated, 0.388, 0.001,
+                'JSON minus engine');
+        });
+
+        it('all published casos currently override the engine (EPISTEMIC_SPEC v0)', function () {
+            var result = fe.buildGraph(casosData.casos);
+            assertEqual(result.nodes.length, 7, 'corpus de referencia: 7 casos');
+            for (var i = 0; i < result.nodes.length; i++) {
+                assertEqual(result.nodes[i].audit.source, 'json',
+                    result.nodes[i].id + ' should publish JSON intensity');
+            }
+        });
+
         it('handles empty casos array', function () {
             var result = fe.buildGraph([]);
             assertEqual(result.nodes.length, 0);

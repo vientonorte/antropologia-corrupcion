@@ -15,7 +15,7 @@
                 kicker: 'Colectivo Viento Norte · Instrumento analítico · v3.1',
                 title: 'La tesis en movimiento',
                 lead:
-                    'Fricción epistemológica modelada sobre casos reales: I = V/R, entropía social y transacciones entre capas ética, institucional y material. El motor no resuelve contradicciones — las hace explorables.',
+                    'Fricción de caso (JSON u motor) ≠ I=V/R (campo social, hermano) ≠ score de búsqueda registro↔caso. El motor no resuelve contradicciones ni emite veredicto — las hace explorables.',
             }) +
             '<p class="ca-thesis__formula" aria-label="Ley de Ohm Social">' +
             '<span class="ca-thesis__formula-label">Ley de Ohm Social</span> ' +

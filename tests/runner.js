@@ -314,6 +314,7 @@ require('./instrumentoV2E2E.test.js')(describe, it, assert, assertEqual);
 require('./qaDesignThinking.test.js')(describe, it, assert, assertEqual);
 require('./atomicDesign.test.js')(describe, it, assert, assertEqual);
 require('./archivoIndex.test.js')(describe, it, assert, assertEqual);
+require('./corpusCitasEditorial.test.js')(describe, it, assert, assertEqual);
 require('./casoPublico.test.js')(describe, it, assert, assertEqual);
 require('./categoryExport.test.js')(
     describe,
@@ -334,6 +335,15 @@ require('./sourceRegistry.test.js')(
     assertArrayIncludes,
     fuentesData,
     bcnData,
+    fuentesConfig,
+);
+require('./fuentesAcceso.test.js')(
+    describe,
+    it,
+    assert,
+    assertEqual,
+    assertGreaterThan,
+    assertArrayIncludes,
     fuentesConfig,
 );
 

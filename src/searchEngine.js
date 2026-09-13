@@ -27,10 +27,10 @@ var DEFAULT_SOURCE_CATALOG = {
     cmf: { id: 'cmf', label: 'CMF', icon: '💹', color: '#a07acc', tipo: 'oficial', activa: true },
     diariooficial: { id: 'diariooficial', label: 'Diario Oficial', icon: '📰', color: '#7b8cde', tipo: 'oficial', activa: true },
     scielo: { id: 'scielo', label: 'SciELO', icon: '📚', color: '#d06f9c', tipo: 'academica', activa: true },
-    'repositorio-uai': { id: 'repositorio-uai', label: 'Repositorio UAI', icon: '🎓', color: '#7a9ec2', tipo: 'academica', activa: false },
-    'repositorio-uchile': { id: 'repositorio-uchile', label: 'Repositorio UChile', icon: '🎓', color: '#8e86c9', tipo: 'academica', activa: false },
+    'repositorio-uai': { id: 'repositorio-uai', label: 'Repositorio UAI', icon: '🎓', color: '#7a9ec2', tipo: 'academica', activa: true },
+    'repositorio-uchile': { id: 'repositorio-uchile', label: 'Repositorio UChile', icon: '🎓', color: '#8e86c9', tipo: 'academica', activa: true },
     ciper: { id: 'ciper', label: 'CIPER Chile', icon: '🗞', color: '#9a7ce8', tipo: 'periodistica', activa: true },
-    'diario-financiero': { id: 'diario-financiero', label: 'Diario Financiero', icon: '📰', color: '#6f7a8a', tipo: 'periodistica', activa: false },
+    'diario-financiero': { id: 'diario-financiero', label: 'Diario Financiero', icon: '📰', color: '#6f7a8a', tipo: 'periodistica', activa: true },
     'google-scholar': { id: 'google-scholar', label: 'Google Scholar', icon: '🎓', color: '#9b9b9b', tipo: 'academica', activa: false },
     'google-news': { id: 'google-news', label: 'Google News', icon: '📰', color: '#9b9b9b', tipo: 'periodistica', activa: false }
 };
@@ -580,7 +580,7 @@ function renderSearchCard(result, context) {
         weightsHtml +
         (sharedHtml ? '<div><span class="se-card-detail-kicker">Keywords compartidas</span><div class="se-card-shared-list">' + sharedHtml + '</div></div>' : '') +
         (markerExplainHtml ? '<div><span class="se-card-detail-kicker">Marcadores activados</span><div class="se-card-marker-list">' + markerExplainHtml + '</div></div>' : '') +
-        '<div class="se-card-detail-note">Este registro se ordena combinando distancia entre vocabularios, presencia de marcadores de conflicto y coincidencia con el tipo de fricción del caso.</div>' +
+        '<div class="se-card-detail-note">Este número es fricción <strong>registro↔caso</strong> (búsqueda). No es <code>caso.friccion.intensidad</code> ni I=V/R. «Sin verificar» = falta flag <code>verificado: true</code>, no «fricción no demostrada». NO DATO no se rellena aquí.</div>' +
         '</div>' +
         '</details>';
 
@@ -610,7 +610,7 @@ function renderSearchCard(result, context) {
         freshnessHtml +
         '<div class="se-card-meta">' +
         '<div class="se-card-score-wrap">' +
-        '<span class="se-card-score-label">Fricción</span>' +
+        '<span class="se-card-score-label">Fricción registro↔caso</span>' +
         '<div class="se-card-score-bar"><div class="se-card-score-fill" style="width:' + (score * 100) + '%;background:' + scoreColor + '"></div></div>' +
         '<span class="se-card-score-val friction-tip" tabindex="0" data-tip="' + _escHtml(_seFrictionTip(score)) + '" style="color:' + scoreColor + '">' + (score * 100).toFixed(0) + '%</span>' +
         '</div>' +
@@ -1180,6 +1180,7 @@ function initSearchUI(opts) {
 if (typeof window !== 'undefined') {
     window.FrictionSearchEngine = FrictionSearchEngine;
     window.initSearchUI = initSearchUI;
+    window.renderSearchCard = renderSearchCard;
     window.normalizeBcnDataset = normalizeBcnDataset;
     window.normalizeSearchText = _seNormalize;
     window.recordMatchesQuery = recordMatchesQuery;

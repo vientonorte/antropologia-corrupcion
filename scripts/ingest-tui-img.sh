@@ -93,4 +93,10 @@ for src in "$@"; do
 done
 
 echo "ingested copied=$copied skipped=$skipped clave=$CLAVE book=${BOOK:-_inbox}"
-echo "next: lectura-clave-b → data/*-citas.json (una cita por fragmento marcado; leyenda ≠ cita)"
+if [[ "$CLAVE" == "a" ]]; then
+  echo "next: corpus-citas.html → Exportar JSON → scripts/merge-clave-a-export.mjs <file>"
+  echo "      (no OCR automático; JPG gitignored). o: vn-cromatico editorial <file>"
+else
+  echo "next: lectura-clave-b → data/*-citas.json (una cita por fragmento marcado; leyenda ≠ cita)"
+  echo "      Salazar: stub data/salazar-citas.json [] hasta capturas. scripts/ensure-editorial-stubs.mjs"
+fi

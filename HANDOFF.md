@@ -4,13 +4,14 @@
 
 ## Actualización vigente
 
-- **Fecha:** 2026-09-12 (America/Santiago)
-- **Rama de trabajo:** `ca/wallmapu-spine-v17` → merge a `main` cuando pase PR
+- **Fecha:** 2026-09-13 (America/Santiago) — merge PR #235
+- **Rama:** `main` (desde `ca/wallmapu-spine-v17`)
 - **Validación base:** `node tests/runner.js`
 - **Mapa documental:** [`docs/DOCUMENTATION_SYSTEM.md`](docs/DOCUMENTATION_SYSTEM.md)
 - **Spine público:** [`web/tesis-spine.html`](web/tesis-spine.html)
 - **SSOT tesis (repo):** [`docs/TESIS-SSOT.md`](docs/TESIS-SSOT.md)
 - **Instrumento:** [`docs/INSTRUMENTO.md`](docs/INSTRUMENTO.md)
+- **SSOT epistemológica:** [`docs/EPISTEMIC_SPEC.md`](docs/EPISTEMIC_SPEC.md) (v0; el código gana si hay divergencia)
 
 ## Ship — INDEX v17
 
@@ -45,9 +46,13 @@
 | P0 | **Diego Zúñiga:** consent + paráfrasis; confirmar video extractivismo Drive `1sWrHfd0qzS7aktkKk588aMjHw26DK8Sz` |
 | P0 | Libro **Rati** para «La Oficina» |
 | P0 | **Cap V** H3–H4 privado (USO RESERVADO / no publicar); citar Estrategia Gaona textual |
+| P0 | Inventario acceso real 11 fuentes MVP (ver `docs/INVENTARIO_FUENTES_MVP.md`) — no conectar |
 | P1 | Alinear body satélite APA si aún muestra título viejo en intro (Drive title ya Wallmapu) |
 | P1 | Cap III engrossment local vs cuerpo Drive — decidir re-merge |
+| P1 | Tests contrato SURA json/engine + inventario 11 ids |
 | P2 | Dossier de actor expandible (feature D) · terraza Admin APIs |
+
+El backlog de 2026-05-07 (dossier + Admin APIs como P0) queda **histórico**. Ver EPISTEMIC_SPEC §8 C13.
 
 ## Decisiones vigentes (locked)
 
@@ -68,6 +73,8 @@ python3 -m http.server 4321
 ### Dónde actualizar primero
 
 - visión pública → `README.md`
+- cómo se calcula una cifra de fricción → `docs/EPISTEMIC_SPEC.md`
+- acceso real de fuentes MVP → `docs/INVENTARIO_FUENTES_MVP.md`
 - estado y backlog → `HANDOFF.md`
 - spine tesis → `web/tesis-spine.html` + `docs/TESIS-SSOT.md`
 - contribución → `CONTRIBUTING.md`
