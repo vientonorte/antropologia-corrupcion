@@ -12,7 +12,7 @@ import { fileURLToPath } from 'node:url';
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const LOCAL = process.argv.includes('--local');
 const BASE = process.argv.find((a) => a.startsWith('--base='))?.split('=')[1]
-  || 'https://vientonorte.github.io/antropologia-corrupcion';
+  || 'https://vientonorte.io/antropologia-corrupcion';
 
 function readJson(rel) {
   return JSON.parse(fs.readFileSync(path.join(ROOT, rel), 'utf8'));

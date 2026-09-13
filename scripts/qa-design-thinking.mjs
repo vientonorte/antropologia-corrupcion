@@ -4,7 +4,7 @@
  *
  *   node scripts/qa-design-thinking.mjs --local
  *   node scripts/qa-design-thinking.mjs --protocol   # imprime pasos manuales
- *   node scripts/qa-design-thinking.mjs --base=https://vientonorte.github.io/antropologia-corrupcion
+ *   node scripts/qa-design-thinking.mjs --base=https://vientonorte.io/antropologia-corrupcion
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -15,7 +15,7 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const LOCAL = process.argv.includes('--local') || !process.argv.some((a) => a.startsWith('--base='));
 const PROTOCOL = process.argv.includes('--protocol');
 const BASE = process.argv.find((a) => a.startsWith('--base='))?.split('=')[1]
-  || 'https://vientonorte.github.io/antropologia-corrupcion';
+  || 'https://vientonorte.io/antropologia-corrupcion';
 
 const journeys = JSON.parse(fs.readFileSync(path.join(ROOT, 'data', 'qa-journeys.json'), 'utf8'));
 

@@ -122,7 +122,7 @@ jobs:
         run: sleep 15
 
       - name: Auditoría live — paths, heurísticas y enlaces
-        run: node scripts/qa-live.mjs
+        run: node scripts/qa-live.mjs --base=https://vientonorte.io/antropologia-corrupcion
 
       - name: Atomic Design — verificación live superficies partial
-        run: node scripts/atomic-audit.mjs
+        run: node scripts/atomic-audit.mjs --base=https://vientonorte.io/antropologia-corrupcion
