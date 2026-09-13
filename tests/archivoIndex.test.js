@@ -69,6 +69,7 @@ module.exports = function (describe, it, assert, assertEqual) {
       var e = find('tesis-doctoral-instrumento');
       assert(e, 'falta tesis-doctoral-instrumento');
       assertEqual(e.tipo, 'tesis');
+      assert(e.titulo.indexOf('I = V/R') === -1, 'título sin analogía Ohm');
       assert(e.docs_url && e.docs_url.indexOf('1i5MFUeTYBhnH049Gpgh6NXJgKMiL5in8XPKM1LCAejs') !== -1);
     });
     it('articulo-etnografico-huracan apunta a Doc articulo', function () {

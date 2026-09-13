@@ -72,6 +72,13 @@ module.exports = function (describe, it, assert, assertEqual) {
             assert(js.indexOf('GraphBootstrap.boot') !== -1, 'eager grafo al clic');
         });
 
+        it('tesis: Ohm es nota hermana, no fórmula del hero', function () {
+            var thesis = readWeb('components/organisms/thesis-section.js');
+            assert(thesis.indexOf('ca-thesis__sibling-note') !== -1, 'nota de campo');
+            assert(thesis.indexOf('Ley de Ohm Social') === -1, 'sin label hero Ohm');
+            assert(thesis.indexOf('ca-thesis__formula-expr') === -1, 'sin I=V/R grande');
+        });
+
         it('leer.html es superficie narrativa alcanzable', function () {
             var html = readWeb('leer.html');
             assert(html.indexOf('narrativeRenderer') !== -1 || html.indexOf('leer-boot') !== -1, 'boot narrativa');

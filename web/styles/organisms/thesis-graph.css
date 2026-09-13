@@ -40,11 +40,13 @@
     min-height: clamp(420px, 75vh, 820px);
 }
 
-.ca-thesis__formula {
+.ca-thesis__formula,
+.ca-thesis__sibling-note {
     font-family: var(--font-mono);
     font-size: 12px;
     color: var(--muted);
     margin-bottom: var(--sp-4);
+    line-height: 1.45;
 }
 
 .ca-thesis__formula-expr {
