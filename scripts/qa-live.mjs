@@ -4,7 +4,7 @@
  *
  * Uso:
  *   node scripts/qa-live.mjs
- *   node scripts/qa-live.mjs --base=https://vientonorte.github.io/antropologia-corrupcion
+ *   node scripts/qa-live.mjs --base=https://vientonorte.io/antropologia-corrupcion
  *   node scripts/qa-live.mjs --local   # valida web/ sin red (pre-deploy)
  */
 import fs from 'node:fs';
@@ -15,7 +15,7 @@ import { spawnSync } from 'node:child_process';
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const LOCAL = process.argv.includes('--local');
 const BASE = process.argv.find((a) => a.startsWith('--base='))?.split('=')[1]
-  || 'https://vientonorte.github.io/antropologia-corrupcion';
+  || 'https://vientonorte.io/antropologia-corrupcion';
 const MAX_MS = Number(process.argv.find((a) => a.startsWith('--timeout='))?.split('=')[1] || 8000);
 
 /** Rutas críticas — 200 obligatorio */
@@ -54,6 +54,7 @@ export const CRITICAL_PATHS = [
   '/leer.html',
   '/archivo.html',
   '/tesis.html',
+  '/tesis-spine.html',
   '/corpus-citas.html',
   '/data/salazar-citas.json',
   '/data/clave-a-citas.json',

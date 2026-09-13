@@ -78,7 +78,7 @@ DATA_FILES = [
     "data/fuentes-config.json",
 ]
 
-LIVE_BASE = "https://vientonorte.github.io/antropologia-corrupcion"
+LIVE_BASE = "https://vientonorte.io/antropologia-corrupcion"
 LIVE_PATHS = [
     "/index.html",
     "/tesis.html",

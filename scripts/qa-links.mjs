@@ -3,7 +3,7 @@
  * QA de enlaces — antropologia-corrupcion
  * Uso:
  *   node scripts/qa-links.mjs --local
- *   node scripts/qa-links.mjs --base=https://vientonorte.github.io/antropologia-corrupcion
+ *   node scripts/qa-links.mjs --base=https://vientonorte.io/antropologia-corrupcion
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -12,7 +12,7 @@ import { fileURLToPath } from 'node:url';
 const LOCAL = process.argv.includes('--local');
 const DEPLOYED = process.argv.includes('--deployed');
 const BASE = process.argv.find((a) => a.startsWith('--base='))?.split('=')[1]
-  || 'https://vientonorte.github.io/antropologia-corrupcion';
+  || 'https://vientonorte.io/antropologia-corrupcion';
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const WEB = DEPLOYED ? ROOT : path.join(ROOT, 'web');
 
