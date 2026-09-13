@@ -3,4 +3,4 @@ Disallow: /privado.html
 Disallow: /admin.html
 Allow: /
 
-Sitemap: https://vientonorte.github.io/antropologia-corrupcion/sitemap.xml
+Sitemap: https://vientonorte.io/antropologia-corrupcion/sitemap.xml

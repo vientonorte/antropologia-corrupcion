@@ -12,7 +12,7 @@ authors:
     city: "Santiago"
     country: "CL"
 repository-code: "https://github.com/vientonorte/antropologia-corrupcion"
-url: "https://vientonorte.github.io/antropologia-corrupcion/"
+url: "https://vientonorte.io/antropologia-corrupcion/"
 license: CC-BY-NC-SA-4.0
 keywords:
   - antropología
@@ -38,7 +38,7 @@ preferred-citation:
     name: "Universidad de Chile"
   department: "Antropología"
   thesis-type: "Tesis Doctoral"
-  url: "https://vientonorte.github.io/antropologia-corrupcion/"
+  url: "https://vientonorte.io/antropologia-corrupcion/"
   keywords:
     - antropología de la corrupción
     - mistranslation institucional
