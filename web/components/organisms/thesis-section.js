@@ -17,10 +17,7 @@
                 lead:
                     'Fricción de caso (JSON u motor) ≠ I=V/R (campo social, hermano) ≠ score de búsqueda registro↔caso. El motor no resuelve contradicciones ni emite veredicto — las hace explorables.',
             }) +
-            '<p class="ca-thesis__formula" aria-label="Ley de Ohm Social">' +
-            '<span class="ca-thesis__formula-label">Ley de Ohm Social</span> ' +
-            '<span class="ca-thesis__formula-expr">I = V / R</span>' +
-            '</p>' +
+            '<p class="ca-thesis__sibling-note">I=V/R es metáfora del campo social (hermano), no la intensidad del caso ni el match de búsqueda.</p>' +
             '</div>' +
             '<div class="ca-thesis__instrument" aria-label="Instrumento a ancho completo">' +
             '<div class="ca-thesis__mount is-loading" id="ca-thesis-mount" ' +

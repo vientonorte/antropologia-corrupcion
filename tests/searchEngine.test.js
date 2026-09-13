@@ -300,7 +300,8 @@ module.exports = function (describe, it, assert, assertEqual, assertDeepEqual, a
                 frictionAudit: { overlapScore: 0.4, markerScore: 0.2, tipoPenalty: 0.1, markers: [], weights: { overlap: 0.5, marker: 0.3, tipo: 0.2 } },
                 relevance: 0.5
             }, { query: 'SURA', sourceCatalog: window.CASourceCatalog && window.CASourceCatalog.default });
-            assert(html.indexOf('Fricción registro') !== -1, 'label registro↔caso');
+            assert(html.indexOf('Match registro↔caso') !== -1, 'label Match, no Fricción');
+            assert(html.indexOf('Fricción registro↔caso') === -1, 'buscador no pega Fricción al score');
             assert(html.indexOf('caso.friccion.intensidad') !== -1, 'disclaims caso.friccion');
             assert(html.indexOf('Sin verificar') !== -1, 'unverified pill');
         });
