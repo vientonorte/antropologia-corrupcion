@@ -48,6 +48,14 @@ El proyecto trabaja sobre tres capas irreductibles:
 
 La fricción entre capas se expresa como intensidad `0.0 → 1.0` y como tipo `política`, `semántica` o `técnica`. El número publicado de un caso puede ser editorial (`source: json`) y no coincidir con el cálculo del motor (`source: engine`). Cómo se reconstruye, incluido el 0.82 de SURA: [`docs/EPISTEMIC_SPEC.md`](docs/EPISTEMIC_SPEC.md).
 
+
+## Instrumento (freeze)
+
+- `frictionEngine.js` = fricción epistemológica entre capas (ética / institucional / material).
+- `socialField.js` Ohm `I = V / R` = metáfora de campo — **no** sustituye las intensidades del frictionEngine.
+- Detalle: [`docs/INSTRUMENTO.md`](docs/INSTRUMENTO.md) · spine: [`web/tesis-spine.html`](web/tesis-spine.html) · SSOT: [`docs/TESIS-SSOT.md`](docs/TESIS-SSOT.md)
+
+
 ## Sitio estático (`web/`)
 
 La fuente de verdad del sitio público es **`web/`**. En deploy, `rsync web/ .` promueve esos archivos a la raíz del artefacto de GitHub Pages. No editar HTML duplicados en la raíz del repo — si reaparecen, son espejos obsoletos.

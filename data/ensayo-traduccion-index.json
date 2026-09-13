@@ -25,8 +25,8 @@
   "textos": [
     {
       "id": "articulo-etnografico-huracan",
-      "titulo": "La máquina de fabricar enemigos",
-      "subtitulo": "Inteligencia policial, montaje y vida cotidiana mapuche",
+      "titulo": "Wallmapu · inteligencia policial, montaje y vida cotidiana",
+      "subtitulo": "Satélite propio · Gaete Gaona, 2026",
       "tipo": "articulo_etnografico",
       "valor": "critico",
       "prioridad": "P0",
@@ -35,24 +35,58 @@
       "canonical": "docs/Ensayo Traducción de Saberes/textos-canonicos/articulo_etnografico.docx",
       "borrador": "docs/Ensayo Traducción de Saberes/_archivo-borradores/articulo_etnografico.borrador-2026-03-17.pages",
       "secciones": [
-        { "num": "I", "titulo": "El paisaje antes de la tormenta: Ercilla, 2015" },
-        { "num": "II", "titulo": "La arquitectura del montaje: una etnografía del organigrama" },
-        { "num": "III", "titulo": "Antorcha: el software que nunca existió" },
-        { "num": "IV", "titulo": "El cuerpo vigilado: la experiencia cotidiana de la inteligencia" },
-        { "num": "V", "titulo": "Los nombres detrás de los números: víctimas y racismo institucional" },
-        { "num": "VI", "titulo": "Catrillanca: el punto donde la estructura mata" },
-        { "num": "VII", "titulo": "Wallmapu, 2026: después del veredicto" },
-        { "num": "VIII", "titulo": "Nota metodológica: sobre el archivo como campo" }
+        {
+          "num": "I",
+          "titulo": "El paisaje antes de la tormenta: Ercilla, 2015"
+        },
+        {
+          "num": "II",
+          "titulo": "La arquitectura del montaje: una etnografía del organigrama"
+        },
+        {
+          "num": "III",
+          "titulo": "Antorcha: el software que nunca existió"
+        },
+        {
+          "num": "IV",
+          "titulo": "El cuerpo vigilado: la experiencia cotidiana de la inteligencia"
+        },
+        {
+          "num": "V",
+          "titulo": "Los nombres detrás de los números: víctimas y racismo institucional"
+        },
+        {
+          "num": "VI",
+          "titulo": "Catrillanca: el punto donde la estructura mata"
+        },
+        {
+          "num": "VII",
+          "titulo": "Wallmapu, 2026: después del veredicto"
+        },
+        {
+          "num": "VIII",
+          "titulo": "Nota metodológica: sobre el archivo como campo"
+        }
       ],
-      "marco_teorico": ["Taussig", "Stoler"],
-      "casos_vinculados": ["operacion-huracan", "catrillanca", "michillanca"],
+      "marco_teorico": [
+        "Taussig",
+        "Stoler"
+      ],
+      "casos_vinculados": [
+        "operacion-huracan",
+        "catrillanca",
+        "michillanca"
+      ],
       "rutas_web": {
         "resumen": "leer.html#articulo-etnografico",
-        "grafo_nodo": "La máquina de fabricar enemigos",
+        "grafo_nodo": "Wallmapu · inteligencia policial, montaje y vida cotidiana",
         "publicacion": "articulo-fabricar-enemigos.html"
       },
       "estado": "publicable",
-      "en_web": "articulo-fabricar-enemigos.html"
+      "en_web": "articulo-fabricar-enemigos.html",
+      "titulo_periodistico_ref": "La máquina de fabricar enemigos",
+      "byline_periodistico": "NO DATO",
+      "nota_atribucion": "artículo periodístico original; byline NO DATO — no es el título propio del satélite"
     },
     {
       "id": "ensayo-traduccion-teorico",
@@ -144,10 +178,31 @@
     }
   ],
   "rescue": [
-    { "id": "D4-R1", "bloque": "articulo_etnografico", "prioridad": "P0" },
-    { "id": "D4-R2", "bloque": "ensayo_teorico", "prioridad": "P0" },
-    { "id": "D4-R3", "bloque": "etnografia_audiovisual", "prioridad": "P1" },
-    { "id": "D4-R4", "bloque": "fotos_ensayo", "prioridad": "P2" },
-    { "id": "D4-R5", "bloque": "caso_casos_json", "prioridad": "P1", "nota": "requiere tests 6→7" }
+    {
+      "id": "D4-R1",
+      "bloque": "articulo_etnografico",
+      "prioridad": "P0"
+    },
+    {
+      "id": "D4-R2",
+      "bloque": "ensayo_teorico",
+      "prioridad": "P0"
+    },
+    {
+      "id": "D4-R3",
+      "bloque": "etnografia_audiovisual",
+      "prioridad": "P1"
+    },
+    {
+      "id": "D4-R4",
+      "bloque": "fotos_ensayo",
+      "prioridad": "P2"
+    },
+    {
+      "id": "D4-R5",
+      "bloque": "caso_casos_json",
+      "prioridad": "P1",
+      "nota": "requiere tests 6→7"
+    }
   ]
 }

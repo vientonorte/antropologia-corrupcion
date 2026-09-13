@@ -27,8 +27,9 @@
 
 | Campo | Valor |
 |---|---|
-| Título | La máquina de fabricar enemigos |
-| Subtítulo | Inteligencia policial, montaje y vida cotidiana mapuche |
+| Título | Wallmapu · inteligencia policial, montaje y vida cotidiana |
+| Titular periodístico (≠ propio) | «La máquina de fabricar enemigos» (byline NO DATO) |
+| Subtítulo | Gaete Gaona, 2026 · satélite propio Contra-Archivo |
 | Alcance | Etnografía de la vigilancia estatal en el Wallmapu (2015–2026) |
 | Fecha | Marzo 2026 |
 | Caracteres | ~18.439 |
@@ -56,7 +57,7 @@
 
 1. **Corto plazo:** entrada en `tesis.html` con passkey o resumen extendido
 2. **Medio:** HTML `web/articulo-fabricar-enemigos.html` enlazado desde `#eje-1`
-3. **Grafo:** nodo existente «La máquina de fabricar enemigos» → URL del manuscrito
+3. **Grafo:** nodo «Wallmapu · inteligencia policial, montaje y vida cotidiana» → URL del manuscrito
 
 **Relación con otras dimensiones:**
 

@@ -140,13 +140,15 @@
       "id": "articulo-etnografico-huracan",
       "tipo": "articulo",
       "seccion": "biblioteca",
-      "titulo": "La máquina de fabricar enemigos (artículo etnográfico)",
-      "descripcion": "Artículo de investigación (Wallmapu / Operación Huracán). Satélite de la tesis, no el cuerpo doctoral. Firma Gaete; refs APA; dossier propio 2018–2026.",
-      "url": "https://vientonorte.io/antropologia-corrupcion/leer.html#articulo-etnografico",
+      "titulo": "Wallmapu · inteligencia policial, montaje y vida cotidiana",
+      "descripcion": "Satélite propio (Gaete Gaona, 2026): vigilancia estatal, Operación Huracán, archivo 2018. El titular «La máquina de fabricar enemigos» es artículo periodístico original (byline NO DATO), no el título propio.",
+      "url": "articulo-fabricar-enemigos.html",
       "estado": "publicable",
       "dimension": "D4",
+      "autor": "Gaete Gaona, R.",
+      "anio": 2026,
       "docs_url": "https://docs.google.com/document/d/1BoYAFUbEFNl8bn3J78hJvJCkMdrautaQyXVXxYiL-J8/edit",
-      "nota_editorial": "2026-09-09: género = artículo; tesis = tesis-doctoral-instrumento."
+      "nota_editorial": "2026-09-09: género = artículo; tesis = tesis-doctoral-instrumento. Título propio Wallmapu (2026-09-12)."
     },
     {
       "id": "ensayo-traduccion-teorico",
