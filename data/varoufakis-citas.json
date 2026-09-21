@@ -1,7 +1,9 @@
 {
   "libro": "Varoufakis (2023) Tecnofeudalismo",
   "ingest": "2026-09-11",
-  "n": 12,
+  "ingest_clave_b": "2026-09-21",
+  "n": 23,
+  "cobertura": "prólogo + cap.1 + arranque cap.2 (pp. 19–49). Cap.3 El capital en la nube p.67 = NO DATO.",
   "citas": [
     {
       "id": "var-001",
@@ -144,6 +146,116 @@
         "dollar_hegemony",
         "rent"
       ]
+    },
+    {
+      "id": "var-013",
+      "source_file": "IMG_1464.jpg",
+      "page": "19",
+      "quote": "Hesíodo presagió que llegaría un día en el que Zeus no tendría más remedio que destruir a una humanidad incapaz de contener su propio poder, un poder inducido por la tecnología.",
+      "color": "pink",
+      "categoria": "concepto_clave",
+      "theme": ["tecnologia", "poder", "proceso_productivo"],
+      "notas_clave_b": "Tab 🟥 «hierro como motor de cambio / proceso productivo». Dualidad herramienta↔dominio; no es nube."
+    },
+    {
+      "id": "var-014",
+      "source_file": "IMG_1465.jpg",
+      "page": "20",
+      "quote": "Para papá, la doble naturaleza de la luz abría la posibilidad de reconocer el dualismo esencial que subyace en toda la naturaleza, y también en la sociedad.",
+      "color": "pink",
+      "categoria": "concepto_clave",
+      "theme": ["doble_naturaleza", "dualismo"],
+      "notas_clave_b": "Plantilla de dualidad que después nombra trabajo mercantil/experiencial y capital mercantil/poder."
+    },
+    {
+      "id": "var-015",
+      "source_file": "IMG_1466.jpg",
+      "page": "21",
+      "quote": "Las fuentes de riqueza recién descubiertas se convierten, por arte de un extraño maleficio, en fuentes de privaciones. Los triunfos del arte parecen adquirirse al precio de cualidades morales.",
+      "color": "pink",
+      "categoria": "concepto_clave",
+      "theme": ["marx", "contradiccion", "privacion"],
+      "notas_clave_b": "Marx, discurso People's Paper (nota 3). Tab 🟥 contradicción histórica / proceso productivo."
+    },
+    {
+      "id": "var-016",
+      "source_file": "IMG_1467.jpg",
+      "page": "22",
+      "quote": "depende de nosotros determinar colectivamente cuál de las dos cosas serán. Ahí es donde interviene la política.",
+      "color": "orange",
+      "categoria": "compartir",
+      "theme": ["politica", "tecnologia"],
+      "notas_clave_b": "Tab 🟧 «viene la política»."
+    },
+    {
+      "id": "var-017",
+      "source_file": "IMG_1468.jpg",
+      "page": "23",
+      "quote": "el trabajo se divide en trabajo mercantil (el tiempo de mi madre, que se compraba con su salario) y trabajo experiencial (el esfuerzo, la pasión y el talento que dedicaba a su trabajo).",
+      "color": "pink",
+      "categoria": "concepto_clave",
+      "theme": ["trabajo_mercantil", "trabajo_experiencial", "doble_naturaleza"],
+      "notas_clave_b": "Faltaba en el ingest 11-sep (var-001 empieza p.25). Cruza C.02: la cuenta cotiza tiempo, no sudor."
+    },
+    {
+      "id": "var-018",
+      "source_file": "IMG_1469.jpg",
+      "page": "24",
+      "quote": "Ahí reside el secreto del capitalismo: el sudor, el esfuerzo, la inspiración, la buena voluntad, el cuidado y las lágrimas de los empleados, que no se pueden mercantilizar, son lo que confieren valor de cambio a las mercancías que luego los empresarios venden a clientes impacientes.",
+      "color": "pink",
+      "categoria": "concepto_clave",
+      "theme": ["profit", "trabajo_experiencial", "doble_naturaleza"],
+      "notas_clave_b": "Tab 🟥 «sobre el capitalismo / dos naturalezas»."
+    },
+    {
+      "id": "var-019",
+      "source_file": "IMG_1472.jpg",
+      "page": "27",
+      "quote": "El resultado fue la teoría de la relatividad general, una formulación no apta para cobardes. Para entenderla, primero había que adoptar una actitud que rechazara lo que nos decían nuestros sentidos.",
+      "color": "pink",
+      "categoria": "concepto_clave",
+      "theme": ["doble_naturaleza", "relatividad"],
+      "notas_clave_b": "Metáfora de dualidad, no cloud capital."
+    },
+    {
+      "id": "var-020",
+      "source_file": "IMG_1481.jpg",
+      "page": "32",
+      "quote": "Sea cual sea tu definición, querido lector, la libertad no puede significar ser libre para perder de infinidad de maneras desalentadoras.",
+      "color": "blue",
+      "categoria": "reflexion",
+      "theme": ["libertad", "tesis"],
+      "notas_clave_b": "Tab 🟦 «tesis del autor». Articula var-006 (libertad de perder)."
+    },
+    {
+      "id": "var-021",
+      "source_file": "IMG_1488.jpg",
+      "page": "37",
+      "quote": "el valor experiencial de todas estas cosas se ha reducido a una suma de dinero, un activo comercial, un contrato negociable.",
+      "color": "blue",
+      "categoria": "reflexion",
+      "theme": ["trabajo_experiencial", "mercantilizacion"],
+      "notas_clave_b": "Tab 🟦. Cruza C.02 cuenta-como-archivo."
+    },
+    {
+      "id": "var-022",
+      "source_file": "IMG_1491.jpg",
+      "page": "40",
+      "quote": "Así es como el electromagnetismo transformó el capitalismo: mientras sus redes alimentaban a las megaempresas y sus megavatios se traducían en megabeneficios, creó las primeras megafeudas en forma de enormes líneas de descubierto para los Edison, los Westinghouse y los Ford.",
+      "color": "pink",
+      "categoria": "concepto_clave",
+      "theme": ["tecnoestructura", "redes", "feudal_lords"],
+      "notas_clave_b": "Megafeuda de crédito ≠ capital-nube. Cap.3 sigue NO DATO."
+    },
+    {
+      "id": "var-023",
+      "source_file": "IMG_1499.jpg",
+      "page": "48",
+      "quote": "Al mismo tiempo que este audaz proyecto financiero, se desarrolló otro político. En Oriente, los responsables del New Deal reescribieron la Constitución de Japón y supervisaron la transformación del país en una tecnoestructura con características japonesas.",
+      "color": "pink",
+      "categoria": "concepto_clave",
+      "theme": ["tecnoestructura", "bretton_woods"],
+      "notas_clave_b": "Tab 🟥 tecnoestructura / constitución. No citar como nube."
     }
   ]
 }

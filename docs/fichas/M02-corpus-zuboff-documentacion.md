@@ -36,7 +36,7 @@ Esta ficha no reproduce la teoría de Zuboff: **documenta el archivo de citas** 
 ## Vínculos
 
 - Fichas conceptuales: C01, C04
-- Corpus hermano: M01 (ATTAC)
+- Corpus hermano: M01 (ATTAC) · M03 (Varoufakis)
 - Superficie: P06 en `ia-inventario.json`
 
 ## Apertura
