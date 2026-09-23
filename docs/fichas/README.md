@@ -21,7 +21,8 @@ Este directorio contiene las fichas de investigación del proyecto Contra-Archiv
    - Ejemplo: C03 — Protocolo de buenas prácticas de documentación (clasificación P/R/C, gate de pre-publicación)
 
 4. **Fichas de caso etnográfico**: Documentan casos empíricos específicos
-   - [Pendientes]
+   - C05 — Lof Michillanca (extractivismo / ley anti)
+   - C06 — La máquina de hacer dinero (multi-situada; figs v18/v20; prosa Drive no basta)
 
 ### Estructura obligatoria de cada ficha
 
@@ -101,6 +102,10 @@ Toda ficha debe incluir:
 | C02 | La cuenta y el núcleo | Sistema | Borrador |
 | C03 | Protocolo de buenas prácticas de documentación | Metodológica | Borrador |
 | C04 | Bomba (Colectivo Viento Norte) | Caso etnográfico | Open coding |
+| C05 | Lof Michillanca | Caso etnográfico | Borrador |
+| M01 | Corpus ATTAC | Metodológica | Publicable (citas) |
+| M02 | Corpus Zuboff | Metodológica | Publicable (citas) |
+| M03 | Corpus Varoufakis | Metodológica | Publicable (citas; nube NO DATO) |
 
 ## Definition of Done para ficha publicable
 
@@ -139,4 +144,4 @@ La integración al grafo d3-force del sitio público se decide ficha por ficha, 
 
 ---
 
-**Última actualización:** 2026-05-20
+**Última actualización:** 2026-09-21
